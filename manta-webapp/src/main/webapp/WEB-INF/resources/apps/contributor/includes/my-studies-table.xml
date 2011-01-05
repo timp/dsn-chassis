@@ -23,7 +23,6 @@
                     <tr>
                         <th fr:sortable="true" fr:resizeable="true">ID</th>
                         <th fr:sortable="true" fr:resizeable="true">Title</th>
-                        <!-- TODO: Admins. -->
                         <th fr:sortable="true" fr:resizeable="true">Created</th>
                         <!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
                         <th fr:sortable="false" fr:resizeable="true">Administrators</th>

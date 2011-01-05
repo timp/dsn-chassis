@@ -245,9 +245,11 @@
 					<!-- Get the ACL for the study info, if allowed (e.g. contributors are not allowed). -->
 					<xforms:send submission="sub-get-study-info-permissions-entry" if="instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
 					
-					<!-- Get the ACL for the submitted media. -->
-					<!-- TODO: Check this. -->
-					<!-- <xforms:send submission="sub-get-submitted-media-permissions-entry" />  -->
+					<!-- Get the ACL for the submitted media, if allowed. -->
+					<xforms:send submission="sub-get-submitted-media-permissions-entry" if="instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
+					
+					<!-- Get the ACL for the curated media, if allowed. -->
+					<xforms:send submission="sub-get-curated-media-permissions-entry" if="instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
 					
 				</xforms:action>				
 				
@@ -321,10 +323,7 @@
 				<xforms:action ev:event="xforms-submit-done">
 		
 					<xforms:message level="modal">Your changes have been saved.</xforms:message>
-					
-					<!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
-					<xforms:send submission="sub-refresh-study-entry"/>
-				
+	
 				</xforms:action>
 		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
@@ -532,11 +531,47 @@
         	</xforms:submission>        	
 
 
+			<xforms:submission 
+				id="sub-put-all-permissions"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-permissions-entry"
+				ref="instance('ins-permissions-entry')"
+				mediatype="application/atom+xml">
+				
+				<xforms:action ev:event="xforms-submit-done">
+
+					<!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
+					<xforms:send submission="sub-refresh-study-entry"/>
+					
+					<xforms:send submission="sub-put-study-info-permissions-entry"/>
+				
+				</xforms:action>
+		        
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
+			</xforms:submission>
+
+
 			<xforms:instance id="ins-allow-study-administrators-to-update-member" xxforms:exclude-result-prefixes="#all">
 		        <atombeat:ace>
 		            <atombeat:type>ALLOW</atombeat:type>
 		            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
 		            <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
+			<xforms:instance id="ins-allow-study-administrators-to-create-media" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+		            <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
+			<xforms:instance id="ins-allow-study-administrators-to-multi-create" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+		            <atombeat:permission>MULTI_CREATE</atombeat:permission>
 		        </atombeat:ace>
 			</xforms:instance>
 			<xforms:instance id="ins-allow-curators-to-delete-member" xxforms:exclude-result-prefixes="#all">
@@ -591,7 +626,8 @@
 				instance="ins-study-info-permissions-entry"
 				ref="instance('ins-study-info-permissions-entry')"
 				mediatype="application/atom+xml">
-		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
+
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-submitted-media-permissions-entry"/>
 
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info permissions.</xforms:message>
 			</xforms:submission>
@@ -611,6 +647,37 @@
 				
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media permissions.</xforms:message>
 				
+			</xforms:submission>
+			
+			<xforms:instance id="ins-curated-media-permissions-entry">
+				<atom:entry/>
+			</xforms:instance>
+
+			<xforms:submission 
+				id="sub-get-curated-media-permissions-entry"
+				resource="{instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-curated-media-permissions-entry"
+				serialization="none">
+				
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media permissions.</xforms:message>
+				
+			</xforms:submission>			
+			
+
+			<xforms:submission 
+				id="sub-put-submitted-media-permissions-entry"
+				resource="{instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-submitted-media-permissions-entry"
+				ref="instance('ins-submitted-media-permissions-entry')"
+				mediatype="application/atom+xml">
+				
+				<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>		
+
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the submitted media permissions.</xforms:message>
 			</xforms:submission>
 
         </xforms:model>

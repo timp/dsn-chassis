@@ -563,19 +563,18 @@ declare function security-config:submitted-media-collection-security-descriptor(
                                 <atombeat:permission>DELETE_MEDIA</atombeat:permission>
                         </atombeat:ace>
                         
-                        <!-- TODO: Check this. -->
+                        <atombeat:ace>
+                            <atombeat:type>ALLOW</atombeat:type>
+                            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                            <atombeat:permission>RETRIEVE_COLLECTION_ACL</atombeat:permission>
+                        </atombeat:ace>
                         
                         <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+                            <atombeat:type>ALLOW</atombeat:type>
+                            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                            <atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission>
                         </atombeat:ace>
-        
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
-                        </atombeat:ace>
+                        
                         <!--
                                 Personal data reviewers can list the collection, and can retrieve any member or media resource. They can also modify ACLs.
                         -->
