@@ -69,7 +69,7 @@
 			<groupId>orbeon</groupId>
 			<artifactId>orbeon</artifactId>
 			<!--  FIXME need a version  -->
-			<version>unknown</version>
+			<version>3.8.0.201010131704</version>
 		</dependency>
 
 
@@ -252,6 +252,8 @@
 								<exclude>WEB-INF/lib/hsqldb-1_8_0_7.jar</exclude>
 								<exclude>WEB-INF/lib/ant-1_6_5.jar</exclude>
 								<exclude>WEB-INF/lib/antlr-2_7_4_orbeon.jar</exclude>
+								<exclude>WEB-INF/lib/orbeon-form-builder.jar</exclude>
+								<exclude>WEB-INF/lib/orbeon-form-runner.jar</exclude>
 								<!--  <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
 								<!--  <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
 								<!-- Moved these to dependencies -->
