@@ -1,11 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <user>
-  <fullName>IanW</fullName>
-  <description></description>
+  <fullName>Robert Hutton</fullName>
   <properties>
-    <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <passwordHash>CvlTXx:f463974aff4de07d37be20aa2cf591a7c289b9d999c6260c4080b7410e4cb036</passwordHash>
-    </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.model.MyViewsProperty>
       <primaryViewName>All</primaryViewName>
       <views>
@@ -17,8 +13,11 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>oOZFmB:5623719980d2936afa35ddadcbae658573b957b90538b1b5b603fac757806729</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.tasks.Mailer_-UserProperty>
-      <emailAddress>IanW@well.ox.ac.uk</emailAddress>
+      <emailAddress>robert.hutton@well.ox.ac.uk</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
   </properties>
 </user>

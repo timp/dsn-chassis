@@ -9,11 +9,7 @@
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.plugins.googlecode.GoogleCodeProjectProperty>
-      <googlecodeWebsite>http://code.google.com/p/dsn-chassis/</googlecodeWebsite>
-    </hudson.plugins.googlecode.GoogleCodeProjectProperty>
-  </properties>
+  <properties/>
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
@@ -62,7 +58,6 @@
         <color>BLUE</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <hudson.plugins.twitter.TwitterPublisher/>
   </publishers>
   <buildWrappers/>
 </maven2-moduleset>

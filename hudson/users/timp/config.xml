@@ -4,9 +4,7 @@
   <description></description>
   <properties>
     <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <!-- passwordHash>fDEJth:5bbf17e2fd08715c61f0292d44eca8a464791d78a97b76f47901d6aa526131d0</passwordHash -->
-
-<passwordHash>nKrusn:8767b3d4e51081bf0bf33c95932a63d46a5dca3b460e23ee6bb0971bd114e3b7</passwordHash>
+      <passwordHash>nKrusn:8767b3d4e51081bf0bf33c95932a63d46a5dca3b460e23ee6bb0971bd114e3b7</passwordHash>
     </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.model.MyViewsProperty>
       <primaryViewName></primaryViewName>
@@ -22,8 +20,5 @@
     <hudson.tasks.Mailer_-UserProperty>
       <emailAddress></emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <hudson.plugins.ircbot.IrcUserProperty>
-      <nick>timp</nick>
-    </hudson.plugins.ircbot.IrcUserProperty>
   </properties>
 </user>
