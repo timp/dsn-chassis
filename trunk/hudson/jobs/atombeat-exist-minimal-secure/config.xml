@@ -9,11 +9,7 @@
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.plugins.googlecode.GoogleCodeProjectProperty>
-      <googlecodeWebsite>http://atombeat.googlecode.com/</googlecodeWebsite>
-    </hudson.plugins.googlecode.GoogleCodeProjectProperty>
-  </properties>
+  <properties/>
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
@@ -56,18 +52,6 @@
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
-  <publishers>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets class="java.util.Collections$EmptyList"/>
-      <strategy>ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
-      <channels/>
-    </hudson.plugins.ircbot.IrcPublisher>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
 </maven2-moduleset>

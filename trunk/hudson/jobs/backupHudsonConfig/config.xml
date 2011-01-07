@@ -9,9 +9,7 @@
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.plugins.googlecode.GoogleCodeProjectProperty/>
-  </properties>
+  <properties/>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -52,22 +50,6 @@ svn st
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets>
-        <hudson.plugins.im.GroupChatIMMessageTarget>
-          <name>#cggh</name>
-          <password></password>
-        </hudson.plugins.im.GroupChatIMMessageTarget>
-      </targets>
-      <strategy>ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
-      <channels/>
-    </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
   <buildWrappers/>
 </project>

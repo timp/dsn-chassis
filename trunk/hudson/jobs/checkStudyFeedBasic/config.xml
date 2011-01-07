@@ -3,9 +3,7 @@
   <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.plugins.googlecode.GoogleCodeProjectProperty/>
-  </properties>
+  <properties/>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>true</disabled>
@@ -30,17 +28,6 @@ grep -q &quot;atom:feed&quot; studies.feed
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets class="java.util.Collections$EmptyList"/>
-      <strategy>ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
-      <channels/>
-    </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
   <buildWrappers/>
 </project>

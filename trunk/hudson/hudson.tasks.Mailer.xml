@@ -2,8 +2,8 @@
 <hudson.tasks.Mailer_-DescriptorImpl>
   <defaultSuffix>@well.ox.ac.uk</defaultSuffix>
   <hudsonUrl>http://hudson.cggh.org/</hudsonUrl>
-  <smtpAuthUsername>cloud1.cggh</smtpAuthUsername>
-  <smtpAuthPassword>oirG1cxVRBjI+HxYw/R6HuWyxDQvHBqso44NWu4taug=</smtpAuthPassword>
+  <smtpAuthUsername>hudson.cloud1</smtpAuthUsername>
+  <smtpAuthPassword>003Ry2t6zvHrQn0lGLXcrRReWzt2kKfRwbO3i2G5s4o=</smtpAuthPassword>
   <adminAddress>Hudson &lt;timp@well.ox.ac.uk&gt;</adminAddress>
   <smtpHost>smtp.gmail.com</smtpHost>
   <useSsl>true</useSsl>
