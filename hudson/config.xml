@@ -1,43 +1,59 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.386</version>
+  <version>1.392</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
     <permission>hudson.model.Computer.Configure:IanW</permission>
+    <permission>hudson.model.Computer.Configure:rwh</permission>
     <permission>hudson.model.Computer.Configure:timp</permission>
     <permission>hudson.model.Computer.Delete:IanW</permission>
+    <permission>hudson.model.Computer.Delete:rwh</permission>
     <permission>hudson.model.Computer.Delete:timp</permission>
     <permission>hudson.model.Hudson.Administer:IanW</permission>
+    <permission>hudson.model.Hudson.Administer:rwh</permission>
     <permission>hudson.model.Hudson.Administer:timp</permission>
     <permission>hudson.model.Hudson.Read:IanW</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Hudson.Read:rwh</permission>
     <permission>hudson.model.Hudson.Read:timp</permission>
     <permission>hudson.model.Item.Build:IanW</permission>
+    <permission>hudson.model.Item.Build:rwh</permission>
     <permission>hudson.model.Item.Build:timp</permission>
     <permission>hudson.model.Item.Configure:IanW</permission>
+    <permission>hudson.model.Item.Configure:rwh</permission>
     <permission>hudson.model.Item.Configure:timp</permission>
     <permission>hudson.model.Item.Create:IanW</permission>
+    <permission>hudson.model.Item.Create:rwh</permission>
     <permission>hudson.model.Item.Create:timp</permission>
     <permission>hudson.model.Item.Delete:IanW</permission>
+    <permission>hudson.model.Item.Delete:rwh</permission>
     <permission>hudson.model.Item.Delete:timp</permission>
     <permission>hudson.model.Item.Read:IanW</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.Read:rwh</permission>
     <permission>hudson.model.Item.Read:timp</permission>
     <permission>hudson.model.Item.Workspace:IanW</permission>
+    <permission>hudson.model.Item.Workspace:rwh</permission>
     <permission>hudson.model.Item.Workspace:timp</permission>
     <permission>hudson.model.Run.Delete:IanW</permission>
+    <permission>hudson.model.Run.Delete:rwh</permission>
     <permission>hudson.model.Run.Delete:timp</permission>
     <permission>hudson.model.Run.Update:IanW</permission>
+    <permission>hudson.model.Run.Update:rwh</permission>
     <permission>hudson.model.Run.Update:timp</permission>
     <permission>hudson.model.View.Configure:IanW</permission>
+    <permission>hudson.model.View.Configure:rwh</permission>
     <permission>hudson.model.View.Configure:timp</permission>
     <permission>hudson.model.View.Create:IanW</permission>
+    <permission>hudson.model.View.Create:rwh</permission>
     <permission>hudson.model.View.Create:timp</permission>
     <permission>hudson.model.View.Delete:IanW</permission>
+    <permission>hudson.model.View.Delete:rwh</permission>
     <permission>hudson.model.View.Delete:timp</permission>
     <permission>hudson.scm.SCM.Tag:IanW</permission>
+    <permission>hudson.scm.SCM.Tag:rwh</permission>
     <permission>hudson.scm.SCM.Tag:timp</permission>
   </authorizationStrategy>
   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
@@ -50,6 +66,7 @@
 &lt;/li&gt;&#xd;
 &lt;/ul&gt;&#xd;
 </systemMessage>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
   <jdks>
     <jdk>
       <name></name>
@@ -154,7 +171,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
           <int>2</int>
           <string></string>
