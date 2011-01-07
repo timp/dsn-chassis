@@ -99,6 +99,13 @@
     <listView>
       <owner class="hudson" reference="../../.."/>
       <name>Manta</name>
+      <description>&lt;h2&gt;Hudson Server for &lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&lt;/h2&gt;&#xd;
+&lt;ul&gt;&#xd;
+&lt;li&gt;&#xd;
+&lt;a href=&quot;http://cloud1.cggh.org/repository&quot;&gt;Manta&lt;/a&gt;&#xd;
+&lt;/li&gt;&#xd;
+&lt;/ul&gt;&#xd;
+</description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <jobNames class="tree-set">

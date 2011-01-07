@@ -26,7 +26,7 @@
     <excludedCommitMessages></excludedCommitMessages>
   </scm>
   <canRoam>true</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <authToken>foobar</authToken>
   <triggers class="vector">
@@ -39,7 +39,7 @@
     <groupId>org.atombeat</groupId>
     <artifactId>atombeat-parent</artifactId>
   </rootModule>
-  <goals>-D maven.test.skip=true clean install deploy</goals>
+  <goals>--non-recursive -Dmaven.test.skip=true  clean install deploy</goals>
   <mavenOpts>-Xmx1024M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
@@ -48,7 +48,7 @@
   <archivingDisabled>false</archivingDisabled>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk,alimanfoo@gmail.com</recipients>
+      <recipients>timp@well.ox.ac.uk </recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
