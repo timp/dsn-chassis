@@ -31,7 +31,7 @@
     <groupId>net.pizey.hudson</groupId>
     <artifactId>trigger</artifactId>
   </rootModule>
-  <goals>clean install -X  -Duser=timp -Dpassword=p5pp5r tomcat:redeploy</goals>
+  <goals>clean install -Duser=timp -Dpassword=p5pp5r tomcat:redeploy</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>

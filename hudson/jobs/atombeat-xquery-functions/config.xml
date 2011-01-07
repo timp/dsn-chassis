@@ -27,12 +27,7 @@
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <authToken>foobar</authToken>
-  <triggers class="vector">
-    <hudson.triggers.SCMTrigger>
-      <spec>5 * * * *</spec>
-    </hudson.triggers.SCMTrigger>
-  </triggers>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.atombeat</groupId>
@@ -47,7 +42,7 @@
   <archivingDisabled>false</archivingDisabled>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk alimanfoo@gmail.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
