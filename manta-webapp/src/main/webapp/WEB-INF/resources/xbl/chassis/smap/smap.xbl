@@ -27,7 +27,7 @@
     <!--
         Component to show a map, using Google Maps
      -->
-    <xbl:script src="/xbl/chassis/smap/smap-bing.js"/>
+    <xbl:script src="/xbl/chassis/smap/smap.js"/>
     <xbl:binding id="cggh-smap" element="cggh|smap">
 
         <!-- Orbeon Form Builder Component Metadata -->
@@ -77,15 +77,14 @@
                 <xforms:input class="fb-map-latitude" xbl:attr="context model ref=latitude-ref bind=latitude-bind" style="display: none"/>
             </xforms:group>
             <!-- Load script depending on configuration properties -->
-            <!--
             <xhtml:script src="https://maps-api-ssl.google.com/maps?file=api&amp;v=2&amp;{
                                         if (normalize-space(xxforms:property('oxf.xforms.xbl.fr.map.clientid')))
                                         then concat('client=gme-', xxforms:property('oxf.xforms.xbl.fr.map.clientid'))
                                         else concat('key=', xxforms:property('oxf.xforms.xbl.fr.map.key'))
                                     }&amp;sensor=false" type="text/javascript"/>
-            -->                        
+            <!--
             <xhtml:script charset="UTF-8" type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&amp;ssl=1" />
-                                    
+                -->                    
         </xbl:template>
     </xbl:binding>
 
