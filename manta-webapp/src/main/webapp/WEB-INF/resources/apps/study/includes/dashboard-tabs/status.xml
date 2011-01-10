@@ -33,6 +33,7 @@
 							
 							<div class="yui-content">
 
+								<xforms:group ref="instance('ins-control')/not-administrator">
 							     	<xforms:group ref="instance('ins-control')/study-is-editable">
 							     		<p>This study is unlocked.</p>
 							     	</xforms:group>
@@ -40,6 +41,7 @@
 							     	<xforms:group ref="instance('ins-control')/study-is-not-editable">
 							     		<p>This study is locked.</p>
 							     	</xforms:group>
+							     </xforms:group>
 							     	
 								<!-- Note: Contributors can lock their own study, since they have access to the ACL, but they could not then unlock it. -->
 								<!-- Note: Contributors could even (hypothetically) selectively lock out curators, but not administrators. -->
@@ -67,8 +69,9 @@
 												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
 												 
 												
-												<!-- TODO: Test notify on dev env -->
-												<xforms:send submission="sub-notify-put-all-permissions"/>
+												<!-- TODO: Switch back after testing locking -->
+												<!-- <xforms:send submission="sub-notify-put-all-permissions"/>  -->
+												<xforms:send submission="sub-put-all-permissions"/>
 												
 								     			
 								     		</xforms:action>
