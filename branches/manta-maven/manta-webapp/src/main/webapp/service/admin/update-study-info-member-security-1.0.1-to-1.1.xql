@@ -75,7 +75,7 @@ declare function local:content($content) as item()*
                 <h1>Data Migration - Study Info Member Security v1.0.1 to v1.1</h1>
                 <p>This script should change the study info member ACLs so that...</p>
                 <ul>
-                   <li>Curators can no longer update any study info (member). This effectively locks all the study info against curator edits, until they are unlocked again.</li>
+                   <li>Curators can no longer update any study info (member). Curator access was granted at the collection level in v1.0.1., so this only applies to the v1.1 security scheme. (Here for completeness/dev purposes.)</li>
                    <li>Contributors can no longer update any study info (member). This effectively locks all the study info against contributor edits, until they are unlocked again.</li>
                 </ul>
                 <p>
