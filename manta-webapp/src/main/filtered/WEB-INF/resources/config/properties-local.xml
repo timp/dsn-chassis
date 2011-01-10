@@ -5,7 +5,8 @@
     http://wiki.orbeon.com/forms/doc/developer-guide/configuration-properties
 -->
 <properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            xmlns:oxf="http://www.orbeon.com/oxf/processors">
+            xmlns:oxf="http://www.orbeon.com/oxf/processors"
+            xmlns:chassis="http://chassis.cggh.org/manta/processors">
 
     <!-- This is an example of property which overrides an existing property's default value:
     <property as="xs:NMTOKENS"
@@ -23,11 +24,11 @@
     
     <property as="xs:string"  name="oxf.xforms.xbl.fr.map.key"   value="${google-api-key}"/>
 
-    <property as="xs:string" processor-name="oxf:email" name="test-to" value=""/>
-    <property as="xs:string" processor-name="oxf:email" name="test-smtp-host" value="smtp.googlemail.com"/>
-    <property as="xs:string" processor-name="oxf:email" name="smtp-host" value="smtp.googlemail.com"/>
-    <property as="xs:string" processor-name="oxf:email" name="smtp-port" value="465"/>
+    <property as="xs:string" processor-name="chassis:semail" name="test-to" value=""/>
+    <property as="xs:string" processor-name="chassis:semail" name="test-smtp-host" value="smtp.googlemail.com"/>
+    <property as="xs:string" processor-name="chassis:semail" name="smtp-host" value="smtp.googlemail.com"/>
+    <property as="xs:string" processor-name="chassis:semail" name="smtp-port" value="465"/>
     <property as="xs:string"
-        name="oxf.schemas.http://chassis.cggh.org/processors/semail"
+        name="oxf.schemas.http://chassis.cggh.org/manta/processors/semail"
         value="oxf:/org/cggh/chassis/manta/processor/xml/semail.rng"/>
 </properties>

@@ -77,6 +77,7 @@ import org.orbeon.oxf.processor.ProcessorImpl;
 import org.orbeon.oxf.processor.ProcessorInputOutputInfo;
 import org.orbeon.oxf.processor.generator.URLGenerator;
 import org.orbeon.oxf.processor.serializer.BinaryTextContentHandler;
+import org.orbeon.oxf.properties.PropertySet;
 import org.orbeon.oxf.resources.URLFactory;
 import org.orbeon.oxf.util.LoggerFactory;
 import org.orbeon.oxf.util.NetUtils;
@@ -121,7 +122,7 @@ public class SecureEmailProcessor extends ProcessorImpl {
 	public static final String EMAIL_FORCE_TO_DEPRECATED = "forceto"; // deprecated
 	public static final String EMAIL_HOST_DEPRECATED = "host"; // deprecated
 
-	public static final String EMAIL_CONFIG_NAMESPACE_URI = "http://chassis.cggh.org/processors/semail";
+	public static final String EMAIL_CONFIG_NAMESPACE_URI = "http://chassis.cggh.org/manta/processors/semail";
 
 	private static final String DEFAULT_MULTIPART = "mixed";
 
@@ -266,22 +267,22 @@ public class SecureEmailProcessor extends ProcessorImpl {
 			message.addFrom(createAddresses(messageElement.element("from")));
 
 			// Set To
-			String testToProperty = getPropertySet().getString(EMAIL_TEST_TO);
-			if (testToProperty == null)
-				testToProperty = getPropertySet().getString(
-						EMAIL_FORCE_TO_DEPRECATED);
-
-			if (testToProperty != null) {
-				// Test To from properties overrides local configuration
-				message.addRecipient(Message.RecipientType.TO,
-						new InternetAddress(testToProperty));
-			} else {
+			PropertySet props = getPropertySet();
+			String testToProperty = props.getString(EMAIL_TEST_TO);
+			if (testToProperty == null) {
+				testToProperty = props.getString(EMAIL_FORCE_TO_DEPRECATED);
+			}
+			if (testToProperty == null || "".equals(testToProperty)) {
 				// Regular list of To elements
 				for (final Element toElement : Dom4jUtils.elements(
 						messageElement, "to")) {
 					final InternetAddress[] addresses = createAddresses(toElement);
 					message.addRecipients(Message.RecipientType.TO, addresses);
 				}
+			} else {
+				// Test To from properties overrides local configuration
+				message.addRecipient(Message.RecipientType.TO,
+						new InternetAddress(testToProperty));
 			}
 
 			// Set Cc
