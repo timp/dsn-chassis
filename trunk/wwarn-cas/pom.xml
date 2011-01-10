@@ -101,6 +101,7 @@
 		<host.name>localhost</host.name>
 		<servletZone>sso</servletZone>
 		<database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
+		<logDirectory>/data/atombeat/logs/</logDirectory>
 	</properties>
 	<profiles>
 		<profile>
@@ -119,6 +120,7 @@
 				<profileId>wwarn-app3</profileId>
 				<host.name>wwarn-app3.nsms.ox.ac.uk</host.name>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+				<logDirectory>/srv/chassis-manta/logs/</logDirectory>
 			</properties>
 		</profile>
 		<profile>
@@ -127,6 +129,7 @@
 				<profileId>production</profileId>
 				<host.name>www.wwarn.org</host.name>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+				<logDirectory>/srv/chassis-manta/logs/</logDirectory>
 			</properties>
 		</profile>
 	</profiles>
