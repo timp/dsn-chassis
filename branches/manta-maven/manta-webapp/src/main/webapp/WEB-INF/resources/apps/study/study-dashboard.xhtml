@@ -265,16 +265,7 @@
 				value="event('error-type')" />) while sending a message.</xforms:message>
 				<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-entry" />
 			</xforms:submission>
-			<xforms:submission id="sub-notify-put-study-entry"	action="/study/email-lock" replace="none" method="post"
-				ref="instance('ins-study-entry')">
-
-
-			<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
-				value="event('error-type')" />) while sending a message.</xforms:message>
-				<xforms:send ev:event="xforms-submit-done"	submission="sub-put-study-entry" />
-			</xforms:submission>
-
-
+			
 			<xforms:submission
 		        id="sub-put-study-entry"
 		        resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
@@ -530,7 +521,15 @@
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
         	</xforms:submission>        	
 
+			<xforms:submission id="sub-notify-put-all-permissions"	action="/study/email-lock" replace="none" method="post"
+				ref="instance('ins-study-entry')">
 
+
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+					value="event('error-type')" />) while sending a message.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done"	submission="sub-put-all-permissions" />
+			</xforms:submission>
+			
 			<xforms:submission 
 				id="sub-put-all-permissions"
 				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
