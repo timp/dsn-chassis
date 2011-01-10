@@ -683,7 +683,7 @@ declare function security-config:curated-media-collection-security-descriptor(
             <atombeat:acl>
     
                 <!--
-                        Curators can create media resources, list the collection, retrieve media resources, and retrieve and update members.
+                        Curators can create media resources, list the collection, retrieve media resources, and retrieve and update members, and retrieve and update collection ACLs.
                 -->
 
                 <atombeat:ace>
@@ -714,6 +714,18 @@ declare function security-config:curated-media-collection-security-descriptor(
                         <atombeat:type>ALLOW</atombeat:type>
                         <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                         <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+                </atombeat:ace>
+
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_COLLECTION_ACL</atombeat:permission>
+                </atombeat:ace>
+                
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission>
                 </atombeat:ace>
 
                 <!-- N.B. by default, study administrators cannot see curated media -->

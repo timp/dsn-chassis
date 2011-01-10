@@ -587,6 +587,13 @@
 		            <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
 		        </atombeat:ace>
 			</xforms:instance>
+			<xforms:instance id="ins-allow-curators-to-create-media" xxforms:exclude-result-prefixes="#all">
+		        <atombeat:ace>
+		            <atombeat:type>ALLOW</atombeat:type>
+		            <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+		            <atombeat:permission>CREATE_MEDIA</atombeat:permission>
+		        </atombeat:ace>
+			</xforms:instance>
 
 			<xforms:submission 
 				id="sub-refresh-study-entry"
@@ -673,11 +680,26 @@
 				instance="ins-submitted-media-permissions-entry"
 				ref="instance('ins-submitted-media-permissions-entry')"
 				mediatype="application/atom+xml">
-				
-				<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>		
+
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-curated-media-permissions-entry"/>	
 
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the submitted media permissions.</xforms:message>
 			</xforms:submission>
+			
+			
+			<xforms:submission 
+				id="sub-put-curated-media-permissions-entry"
+				resource="{instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-curated-media-permissions-entry"
+				ref="instance('ins-curated-media-permissions-entry')"
+				mediatype="application/atom+xml">
+				
+				<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>		
+
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the curated media permissions.</xforms:message>
+			</xforms:submission>			
 
         </xforms:model>
         
