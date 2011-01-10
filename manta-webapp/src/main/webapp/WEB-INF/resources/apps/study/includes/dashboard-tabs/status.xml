@@ -62,16 +62,14 @@
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEDIA']"/>
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'MULTI_CREATE']"/>
+
+												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']"/>
+												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
+												 
 												
-												<!-- TODO: Curated Media -->
-												
-												<!-- 
-													delete ins-curated-media-permissions-entry ALLOW ROLE_CHASSIS_CURATOR CREATE_MEDIA
-													delete ins-curated-media-permissions-entry ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER
-												 -->
-												
-												
+												<!-- TODO: Test notify on dev env -->
 												<xforms:send submission="sub-notify-put-all-permissions"/>
+												
 								     			
 								     		</xforms:action>
 								     	</xforms:trigger>
@@ -92,15 +90,10 @@
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-create-media')"/>
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-multi-create')"/>
-																								
-												
-												<!-- TODO: Curated Media -->
-												
-												<!-- 
-													insert ins-curated-media-permissions-entry ALLOW ROLE_CHASSIS_CURATOR CREATE_MEDIA
-													insert ins-curated-media-permissions-entry ALLOW ROLE_CHASSIS_CURATOR UPDATE_MEMBER
-												 -->
-												
+
+												 <xforms:insert nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-create-media')"/>
+												 <xforms:insert nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
+												 												
 												
 												<xforms:send submission="sub-put-all-permissions"/>
 				

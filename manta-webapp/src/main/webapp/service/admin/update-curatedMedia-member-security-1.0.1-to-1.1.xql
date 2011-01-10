@@ -81,6 +81,8 @@ declare function local:content($content) as item()*
                     </li>
                     <li>Curators cannot update curatedMedia in any study.
                     </li>
+                    <li>Curators can retrieve and update the curatedMedia ACLs for any study.
+                    </li>
                 </ul>
                 <p>
                     <form method="post" action="">
@@ -151,7 +153,13 @@ declare function local:modify-nodes($curatedMedia-member-securities-v1-0-1) as i
         for $v1-0-1 in $curatedMedia-member-securities-v1-0-1
         
             let $del := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']
-            return update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+            let $del2 := update delete $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']
+
+
+			let $ins := update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>RETRIEVE_COLLECTION_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_MEDIA']
+			
+			return update insert <atombeat:ace><atombeat:type>ALLOW</atombeat:type><atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient><atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission></atombeat:ace> following $v1-0-1//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']
+
 
     return $curatedMedia-member-securities-v1-1
     
@@ -176,7 +184,21 @@ declare function local:check-changes() as item() *{
                         let $msg := "Deleted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"
                         return $msg
 
-         return concat($out, '&#xD;', $out2)
+         let $out3 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']) != 1) then 
+                        let $msg := "Failed to insert //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']"
+                        return $msg
+                     else
+                        let $msg := "Inserted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'RETRIEVE_COLLECTION_ACL']"
+                        return $msg
+                        
+         let $out4 := if (count($m//atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']) != 1) then 
+                        let $msg := "Failed to insert //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']"
+                        return $msg
+                     else
+                        let $msg := "Inserted //atombeat:ace[atombeat:recipient/@type = 'role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_COLLECTION_ACL']"
+                        return $msg 
+
+         return concat($out, '&#xD;', $out2, '&#xD;', $out3, '&#xD;', $out4)
          
     return $ret
 };
