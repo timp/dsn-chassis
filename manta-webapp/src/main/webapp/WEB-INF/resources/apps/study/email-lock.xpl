@@ -29,7 +29,7 @@
                         <subject>Your study <xsl:value-of select="/atom:entry/atom:title"/> has been locked</subject>
                         <body content-type="text/plain">
                             Your study <xsl:value-of select="/atom:entry/atom:title"/> has now entered the WWARN curation process.
-                            If you wish to make any changes then you must contact us first at curator@wwarn.org
+                            If you wish to make any changes then you must contact us first
                             
                             Thank you for your submission.
                         </body>
