@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_org_cggh_quac_model_Role" items="${roles}" z="bUPe5QqjL/dvEbPIk72Xu7rreC0=">
+        <table:table data="${roles}" id="l_org_cggh_quac_model_Role" path="/roles" typeIdFieldName="rid" z="E4rPWJ1Vyi4uygo4v6OiObw7lwY=">
+            <table:column id="c_org_cggh_quac_model_Role_userss" property="userss" z="w0/m112FBGzXyUaXnWaqC2W6FFs="/>
+            <table:column id="c_org_cggh_quac_model_Role_name" property="name" z="Js5Ox4LbqHnLxxzw1Ff6lhw59GA="/>
+        </table:table>
+    </page:list>
+</div>

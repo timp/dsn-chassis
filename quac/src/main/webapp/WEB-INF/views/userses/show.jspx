@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_org_cggh_quac_model_Users" object="${users}" path="/userses" z="V3LRaHQrtcDa/3uYLd4OhJUp5MI=">
+        <field:display field="roles" id="s_org_cggh_quac_model_Users_roles" object="${users}" z="J924mPO01Fju6/rtMCCGMgiZnuU="/>
+        <field:display field="name" id="s_org_cggh_quac_model_Users_name" object="${users}" z="MWfkwgpqQkrt2XC/Tbu1JN97NO0="/>
+        <field:display field="pass" id="s_org_cggh_quac_model_Users_pass" object="${users}" z="y2bbfPyG7eqSu1wCaEEXPr2Hr/o="/>
+        <field:display field="mail" id="s_org_cggh_quac_model_Users_mail" object="${users}" z="wYsY8leh6CMWbQsqJa/sjbkyrso="/>
+        <field:display field="status" id="s_org_cggh_quac_model_Users_status" object="${users}" z="89ys54ntiJnIIL9A+2rWcPv3gYE="/>
+    </page:show>
+</div>
