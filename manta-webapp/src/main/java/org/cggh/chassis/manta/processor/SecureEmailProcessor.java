@@ -189,32 +189,30 @@ public class SecureEmailProcessor extends ProcessorImpl {
 					properties.setProperty("mail.smtp.host", host);
 
 				}
-				Element portElem = messageElement.element(EMAIL_SMTP_PORT);
-				String port = null;
-				if (portElem == null) {
-					String propPort = getPropertySet().getString(
-							EMAIL_SMTP_PORT);
-					if (propPort != null) {
-						port = propPort;
-					}
-				} else {
-					port = portElem.getTextTrim();
+			}
+			Element portElem = messageElement.element(EMAIL_SMTP_PORT);
+			String port = null;
+			if (portElem == null) {
+				String propPort = getPropertySet().getString(EMAIL_SMTP_PORT);
+				if (propPort != null) {
+					port = propPort;
 				}
-				if (port != null && !port.equals("")) {
-					// Precedence goes to the local config parameter
-					if (port.equals("465")) {
-						Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-						properties.setProperty("mail.smtp.port", port);
-						properties.setProperty("mail.smtp.socketFactory.class",
-								"javax.net.ssl.SSLSocketFactory");
-						properties.setProperty("mail.smtp.socketFactory.port",
-								"465");
-						properties.setProperty(
-								"mail.smtp.socketFactory.fallback", "false");
-						// properties.setProperty("mail.debug", "true");
-					}
+			} else {
+				port = portElem.getTextTrim();
+			}
+			if (port != null && !port.equals("")) {
+				// Precedence goes to the local config parameter
+				if (port.equals("465")) {
+					Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+					properties.setProperty("mail.smtp.port", port);
+					properties.setProperty("mail.smtp.socketFactory.class",
+							"javax.net.ssl.SSLSocketFactory");
+					properties.setProperty("mail.smtp.socketFactory.port",
+							"465");
+					properties.setProperty("mail.smtp.socketFactory.fallback",
+							"false");
+					// properties.setProperty("mail.debug", "true");
 				}
-
 			}
 
 			// Create session
@@ -568,14 +566,15 @@ public class SecureEmailProcessor extends ProcessorImpl {
 	}
 
 	private InternetAddress[] createAddresses(Element addressElement)
-			throws AddressException, UnsupportedEncodingException {
-		final String email = addressElement.element("email").getStringValue();
-		final Element nameElement = addressElement.element("name");
+			throws AddressException, UnsupportedEncodingException,
+			NamingException {
+		final String email = getProperty(addressElement, "email");// addressElement.element("email").getStringValue();
+		final String nameElement = getProperty(addressElement, "name");// addressElement.element("name");
 		// If only the <email> element is specified, allow for comma-separated
 		// addresses
 		return nameElement == null ? InternetAddress.parse(email)
 				: new InternetAddress[] { new InternetAddress(email,
-						nameElement.getStringValue()) };
+						nameElement) };
 	}
 
 	private class SimpleTextDataSource implements DataSource {
