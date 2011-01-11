@@ -14,8 +14,6 @@
             <xsl:stylesheet version="1.0" xmlns:saxon="http://saxon.sf.net/" xmlns:atom="http://www.w3.org/2005/Atom">
                 <xsl:template match="/">
                     <message>
-                        <smtp-host>smtp.googlemail.com</smtp-host>
-                        <smtp-port>465</smtp-port>
                         <credentials>
                             <username jndi-ref="smtp-user"></username>
                             <password jndi-ref="smtp-password"></password>
