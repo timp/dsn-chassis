@@ -173,7 +173,11 @@ public class SecureEmailProcessor extends ProcessorImpl {
 				properties.setProperty("mail.smtp.host", testSmtpHostProperty);
 			} else {
 				// Try regular config parameter and property
-				String host = messageElement.element("smtp-host").getTextTrim();
+				Element hostElement = messageElement.element("smtp-host"); 
+				String host = null;
+				if (hostElement != null) {
+					host = hostElement.getTextTrim();
+				}
 				if (host != null && !host.equals("")) {
 					// Precedence goes to the local config parameter
 					properties.setProperty("mail.smtp.host", host);
