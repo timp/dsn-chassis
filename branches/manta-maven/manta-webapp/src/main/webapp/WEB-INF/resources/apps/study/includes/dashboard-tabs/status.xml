@@ -112,7 +112,7 @@
 									
 									<p><!-- Only curator can view/edit curator notes and change status -->
 										
-										<p>If you wish to make changes to this study then please <a href="mailto:curator@wwarn.org?subject=Please enable {instance('ins-study-entry')/atom:title} ({instance('ins-study-entry')/manta:id}) for editing">mail curator@wwarn.org</a> and they will enable you to make changes.</p>
+										<p>If you wish to make changes to this study then please <a href="mailto:curation@wwarn.org?subject=Please enable {instance('ins-study-entry')/atom:title} ({instance('ins-study-entry')/manta:id}) for editing">mail curation@wwarn.org</a> and they will enable you to make changes.</p>
 										
 										<xforms:group ref="instance('ins-control')/curator-controls">
 											<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
