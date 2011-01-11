@@ -139,6 +139,9 @@ public class SecureEmailProcessor extends ProcessorImpl {
 			throws NamingException {
 		final Element element = parent.element(name);
 
+		if (element == null) {
+			return (null);
+		}
 		String value = (element != null) ? element.getStringValue().trim()
 				: null;
 		final Attribute ref = element.attribute("jndi-ref");
