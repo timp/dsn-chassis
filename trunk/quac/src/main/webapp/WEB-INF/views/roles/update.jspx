@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_org_cggh_quac_model_Role" idField="rid" modelAttribute="role" path="/roles" versionField="none" z="xY5pVgV3vPftWWPMEaIFeNnecl0=">
+        <field:select field="userss" id="c_org_cggh_quac_model_Role_userss" itemValue="uid" items="${userses}" multiple="true" path="/userses" z="yJLDZxc3wZ947GCDjU97rwB8II4="/>
+        <field:input field="name" id="c_org_cggh_quac_model_Role_name" required="true" z="0DBfsadqIfpBHodhe8Bju/Q4G1A="/>
+    </form:update>
+</div>
