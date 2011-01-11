@@ -6,7 +6,7 @@
 			<publications />
 			<acknowledgements />
 			<curator-notes />
-			<study-status />
+			<study-status>new</study-status>
 		</study>
 	</atom:content>
 </atom:entry>
