@@ -341,7 +341,7 @@
 		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
 		<log4j-priority>debug</log4j-priority>
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
-
+		<test-email></test-email>
 	</properties>
 
 
@@ -357,6 +357,7 @@
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>http://cloud1.cggh.org/sso</cas.url>
 				<chassis.url>http://cloud1.cggh.org</chassis.url>
+				<test-email>ian.wright@wwarn.org</test-email>
 			</properties>
 		</profile>
 		<profile>
