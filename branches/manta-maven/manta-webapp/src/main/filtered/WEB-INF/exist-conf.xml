@@ -509,17 +509,16 @@
                 backup  Set to "yes" to create a backup whenever the job runs, not just
                         when it detects errors.
         -->
-        <!--
+
         <job type="system" name="check1" 
             class="org.exist.storage.ConsistencyCheckTask"
-        	cron-trigger="0 0 * * * ?">
+        	cron-trigger="0 0 0 * * ?">
 			<parameter name="output" value="export"/>
     		<parameter name="backup" value="yes"/>
 		    <parameter name="incremental" value="no"/>
 			<parameter name="incremental-check" value="no"/>
 			<parameter name="max" value="2"/>
         </job>
-        -->
         
         <!-- 
             Automatically creates a copy of the database .dbx files every 2 minutes
