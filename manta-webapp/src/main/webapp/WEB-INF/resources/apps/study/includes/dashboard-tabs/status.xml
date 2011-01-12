@@ -69,8 +69,8 @@
 												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
 												 
 												
-												<!-- <xforms:send submission="sub-notify-put-all-permissions"/> -->
-												<xforms:send submission="sub-put-all-permissions"/>
+												<xforms:send submission="sub-notify-put-all-permissions"/>
+								     			<!-- <xforms:send submission="sub-put-all-permissions"/> -->
 												
 								     			
 								     		</xforms:action>
