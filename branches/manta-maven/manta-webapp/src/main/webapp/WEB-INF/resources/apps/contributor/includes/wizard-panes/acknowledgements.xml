@@ -48,7 +48,7 @@
 	                        		at="index('rep-person')" />
 	                        	<xforms:label>
 	                        		<img
-	                        			src="/apps/study/common/remove.gif" />
+	                        			src="/apps/contributor/common/remove.gif" />
 	                        	</xforms:label>
 	                        </xforms:trigger>
 	                	</td>
@@ -101,7 +101,7 @@
 	                			
 	                			<span class="move-acknowledgment-up-button">
 		                        <xforms:trigger ref=".[preceding-sibling::*]">
-		                            <xforms:label>Move up <img src="/apps/study/common/up.gif"/></xforms:label>
+		                            <xforms:label>Move up <img src="/apps/contributor/common/up.gif"/></xforms:label>
 		                            <xforms:action ev:event="DOMActivate">
 		                                <xforms:insert origin="context()" nodeset="preceding-sibling::*[1]" position="before"/>
 		                                <xforms:delete nodeset="."/>
@@ -111,7 +111,7 @@
 		                        
 	                			<span class="move-acknowledgment-down-button">
 		                        <xforms:trigger ref=".[following-sibling::*]">
-		                            <xforms:label>Move down <img src="/apps/study/common/down.gif"/></xforms:label>
+		                            <xforms:label>Move down <img src="/apps/contributor/common/down.gif"/></xforms:label>
 		                            <xforms:action ev:event="DOMActivate">
 		                                <xforms:insert origin="context()" nodeset="following-sibling::*[1]"/>
 		                                <xforms:delete nodeset="."/>
@@ -127,7 +127,7 @@
 	            <tr>
 	                <td>
 	                    <xforms:trigger class="addRemove">
-	                        <xforms:label><img src="/apps/study/common/add.gif"/></xforms:label>
+	                        <xforms:label><img src="/apps/contributor/common/add.gif"/></xforms:label>
 	                        <xforms:insert 
 	                            ev:event="DOMActivate" 
 	                            context="." 
