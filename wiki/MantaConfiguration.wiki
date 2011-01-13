@@ -60,3 +60,12 @@ You will also require this in the context configuration if you are using global 
 <ResourceLink global="jdbc/wwarn_drupal" name="jdbc/wwarn_drupal" type="javax.sql.DataSource"/>
 }}}
 This can also be done by editing the Spring Security configuration file
+
+=== Email set up===
+Add the following to your context configuration, obviously changing the values as appropriate.
+This can also be done by changing the properties-local.xml file
+
+ <Environment name="smtp-user" type="java.lang.String" value="me@example.org"/>
+    <Environment name="smtp-password" type="java.lang.String" value="my password"/>
+    <Environment name="smtp-from-email" type="java.lang.String" value="me@example.org"/>
+    <Environment name="smtp-from-name" type="java.lang.String" value="Me"/>
