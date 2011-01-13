@@ -1,0 +1,14 @@
+<whiteBloodCellCountSources xmlns="">
+	<whiteBloodCellCountSource>
+		<label>quantified</label>
+		<value>quantified</value>
+	</whiteBloodCellCountSource>
+	<whiteBloodCellCountSource>
+		<label>assumed</label>
+		<value>assumed</value>
+	</whiteBloodCellCountSource>
+	<whiteBloodCellCountSource>
+		<label>no WBC</label>
+		<value>none</value>
+	</whiteBloodCellCountSource>
+</whiteBloodCellCountSources>

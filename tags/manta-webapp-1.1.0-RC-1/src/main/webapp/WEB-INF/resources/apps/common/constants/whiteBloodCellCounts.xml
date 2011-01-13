@@ -1,0 +1,14 @@
+<whiteBloodCellCounts xmlns="">
+	<whiteBloodCellCount>
+		<label>200 wbc</label>
+		<value>200wbc</value>
+	</whiteBloodCellCount>
+  <whiteBloodCellCount>
+    <label>500 wbc</label>
+    <value>500wbc</value>
+  </whiteBloodCellCount>
+  <whiteBloodCellCount>
+    <label>1000 wbc</label>
+    <value>1000wbc</value>
+  </whiteBloodCellCount>
+</whiteBloodCellCounts>
