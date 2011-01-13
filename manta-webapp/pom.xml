@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.1.0-alpha-1-SNAPSHOT</version>
+	<version>1.1.0-RC-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
