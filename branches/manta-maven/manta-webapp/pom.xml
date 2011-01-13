@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.1.0-RC-1-SNAPSHOT</version>
+	<version>1.1.0-RC-1</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
@@ -169,9 +168,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.1.0-RC-1</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.1.0-RC-1</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.1.0-RC-1</url>
 	</scm>
 	<build>
 		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
@@ -341,7 +340,7 @@
 		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
 		<log4j-priority>debug</log4j-priority>
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
-		<test-email></test-email>
+		<test-email />
 	</properties>
 
 
