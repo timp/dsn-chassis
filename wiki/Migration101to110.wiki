@@ -1,4 +1,5 @@
 #summary One-sentence summary of this page.
+#labels Phase-Deploy
 
 = Introduction =
 
@@ -13,14 +14,14 @@ See configuration page for details
 Deploy the latest war
 
 == Run the following upgrade scripts ==
-/repository/service/admin/migrate-draft-1.0.1-to-1.1.xql
-/repository/service/admin/migrate-study-1.0.1-to-1.1.xql
-/repository/service/admin/update-curatedMedia-feed-config-1.0.1-to-1.1.xql
-/repository/service/admin/update-curatedMedia-member-security-1.0.1-to-1.1.xql
-/repository/service/admin/update-study-collection-security-1.0.1-to-1.1.xql
-/repository/service/admin/update-study-info-collection-security-1.0.1-to-1.1.xql
-/repository/service/admin/update-study-info-feed-config-1.0.1-to-1.1.xql
-/repository/service/admin/update-study-info-member-security-1.0.1-to-1.1.xql
-/repository/service/admin/update-study-member-security-1.0.1-to-1.1.xql
-/repository/service/admin/update-submittedMedia-feed-config-1.0.1-to-1.1.xql
-/repository/service/admin/update-submittedMedia-member-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/migrate-draft-1.0.1-to-1.1.xql
+  # /repository/service/admin/migrate-study-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-curatedMedia-feed-config-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-curatedMedia-member-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-study-collection-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-study-info-collection-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-study-info-feed-config-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-study-info-member-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-study-member-security-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-submittedMedia-feed-config-1.0.1-to-1.1.xql
+  # /repository/service/admin/update-submittedMedia-member-security-1.0.1-to-1.1.xql
