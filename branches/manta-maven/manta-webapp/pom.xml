@@ -357,6 +357,7 @@
 				<cas.url>http://cloud1.cggh.org/sso</cas.url>
 				<chassis.url>http://cloud1.cggh.org</chassis.url>
 				<test-email>ian.wright@wwarn.org</test-email>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
 			</properties>
 		</profile>
 		<profile>
@@ -382,7 +383,7 @@
 				<cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
 				<chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
 				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 			</properties>
@@ -397,7 +398,7 @@
 				<cas.url>https://www.wwarn.org/sso</cas.url>
 				<chassis.url>https://www.wwarn.org</chassis.url>
 				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/srv/chassis-data/logs/chassis.log</orbeonLogs>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 			</properties>
