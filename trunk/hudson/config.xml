@@ -121,6 +121,7 @@
         <string>manta-maven</string>
         <string>manta-trunk</string>
         <string>manta-xquery-functions</string>
+        <string>quac</string>
         <string>wwarn-cas-Spring-3</string>
       </jobNames>
       <jobFilters/>
