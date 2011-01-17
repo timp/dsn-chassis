@@ -35,7 +35,7 @@
 							<p>We invite you to supply further information about your study. This will be very helpful in curating your data &#8212; especially if it is not yet published.  
 							</p>
 							
-							<xforms:group ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+							<xforms:group model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
 							
 								<p>To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. 
 								</p>
@@ -43,7 +43,7 @@
 								<p>Be sure to save your changes after each session.
 								</p>
 							
-								<xforms:group ref="instance('ins-control')/copy-answers-control">
+								<xforms:group model="mod-study-dashboard" ref="instance('ins-control')/copy-answers-control">
 								<p>
 							
 									<span id="studies-to-copy-answers-from-menu-container">
