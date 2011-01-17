@@ -83,7 +83,7 @@
                                         else concat('key=', xxforms:property('oxf.xforms.xbl.fr.map.key'))
                                     }&amp;sensor=false" type="text/javascript"/>
             <!--
-            <xhtml:script charset="UTF-8" type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&amp;ssl=1" />
+            <xhtml:script charset="UTF-8" type="text/javascript" src="https://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0&amp;ssl=1&amp;s=1" />
                 -->                    
         </xbl:template>
     </xbl:binding>
