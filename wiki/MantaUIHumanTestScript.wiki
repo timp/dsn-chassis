@@ -1,722 +1,852 @@
-Last Tested against v1.0.1 RC on webapp3
+Last Tested against v1.1 RC on webapp3
 
--------------------------
+----
 
 All tests using Firefox 3
 
---------------------------
+----
 
 
 
-User tests:
+=User tests:=
 
-.Log in as a user (with no other roles)
+*Log in as a user (with no other roles)
 
-.Check that you can't do or access the manta application.
+*Check that you can't access the manta application.
+
+*Note: On wwarn-app3, a chassis_user will be able to see the Developer Home, but should not be able to visit any of the other pages in the application proper.
+
+----
 
 
---------------------------
+=Contributor tests:=
 
+*Log in as a contributor (with no other roles, except user)
 
-Contributor tests:
+----
 
-.Log in as a contributor (with no other roles, except user)
+==Register a study:==
 
---------------------------
-
-Register a study:
-
-.Go to /repository/contributor/home
+*Go to /repository/contributor/home
 
 >The Contributor home page will load.
 
-.Press the Register study button.
+*Press the Register study button.
 
 >The Register study wizard will load.
 
-.Provide a Study title and accept the Terms of Submission.
+*Provide a Study title and accept the Terms of Submission.
 
-.Press the Next button.
+*Press the Next button.
 
 >The Permissions pane will load.
 
-.Add an administrator and provide an email address.
+*Add an administrator and provide an email address.
 
-.Press the Next button.
+*Press the Next button.
 
 >The Acknowledgements pane will load.
 
-.Complete the details for the first acknowledgement.
+*Complete the details for the first acknowledgement.
 
-.Press the Save as draft button.
+*Check the contactable checkbox.
 
-.Add an acknowledgement.
+*Press the Save as draft button.
 
-.Complete the details for the second acknowledgement.
+*Add an acknowledgement.
 
-.Move the second acknowledgement up and down.
+*Complete the details for the second acknowledgement.
 
-.Press the Next button.
+*Leave the contactable checkbox unchecked.
+
+*Move the second acknowledgement up and down.
+
+*Press the Next button.
 
 >The Upload files pane will load.
 
-.Upload a few files, specifying the Other type for one of them.
+*Upload a few files, specifying the Other type for one of them.
 
-.Download a file.
+*Download a file.
 
-.Remove one of the files.
+*Remove one of the files.
 
-.Press the Next button.
+*Press the Next button.
 
 >The Publications pane will load.
 
-.Specify that the study is published and add a publication.
+*Specify that the study is published and add a publication.
 
-.Provide a PubMedID, a URL and a DOI.
+*Provide a PubMedID, a URL and a DOI.
 
-.Add a second publication.
+*Add a second publication.
 
-.Save as draft.
+*Save as draft.
 
-.Press the Next button.
+*Press the Next button.
 
 >The Review pane will load.
 
-.Check the details are as provided.
+*Check the details are as provided.
 
-.Click on the Edit files link.
+*Click on the Edit files link.
 
 >The Upload files pane will load.
 
-.Upload another file.
+*Upload another file.
 
-.Press the Save as draft button.
-
-.Go to /repository/contributor/home
+*Go to /repository/contributor/home
 
 >The Contributor home page will load.
 
-.Click on the link for the draft study created.
+*Click on the link for the draft study created.
 
 >The Upload files pane will load.
 
-.Click on the Skip to end link.
+*Click on the Skip to end link.
 
 >The Review pane will load.
 
-.Check the details are as provided.
+*Check the details are as provided.
 
-.Press the Confirm button.
+*Press the Confirm button.
 
->The "Thank you" page will load.
+>A confirmation question will appear, with Yes and No buttons.
 
-.Check the Clinical checkbox in the General questions section of the Study Site Questionnaire.
+*Press the "No - I've more to add" button.
 
-.Check that the Clinical Questions section then appears.
+>The confirmation question and buttons will disappear.
 
-.Input some other test data on the questionnaire.
+*Press the Confirm button again.
 
-.Press the "Save changes and stay on this page" button.
+>A confirmation question will appear again, with Yes and No buttons.
 
-.Make some more changes.
+*Press the "Yes - I've finished" button.
 
-.Press the "Save changes and return to Data Home" button.
+>The "Thank you" page will load, displaying the unique ID assigned to the new study.
+
+*Check the Clinical checkbox in the General questions section of the Study Site Questionnaire.
+
+*Check that the Clinical Questions section then appears.
+
+*Input some other test data on the questionnaire.
+
+*Check that the Map appears and that the map pin can be dragged to specify a latitude and longitude.
+
+*Press the "Save changes and stay on this page" button.
+
+*Make some more changes.
+
+*Press the "Save changes and return to Data Home" button.
 
 >The Contributor home page will load, with a link to the new study shown in the My studies table.
 
-.Click on the "My Studies" tab.
+*Click on the "My Studies" tab.
 
 >The My studies page will load.
 
 >A link to the new study will be shown in the My studies table.
 
---------------------------
 
-Add/Edit details in a study:
+----
 
-(Requires that a test study has been registered.)
+==Add/Edit details in a study:==
 
-.Go to /repository/contributor/home
+(Requires that a test study has been newly registered, and in an "unlocked" state. Also a second registered study, to test the copy-from feature.)
+
+*Go to /repository/contributor/home
 
 >The Contributor home page will load.
 
-.Click on the ID, Tiltle or View action associated with the registered study to test, listed under My studies.
+*Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
-.Check that the summary details are as previously provided.
+*Check that the summary details are as previously provided.
 
-.Click on the Permissions tab.
+*Change the title and press the "Save changes" button.
+
+>A dialogue box will appear, with a message saying "Your changes have been saved.".
+
+*Check you are unable to effect anything on the page outside the dialogue box. (On Firefox the rest of the page is greyed out. On IE it is blacked out.)
+
+*Press the Close button on the dialogue box.
+
+>The dialogue box will disappear.
+
+*Click on the Status tab.
+
+> The Status tab will load.
+
+*The page will say that the study is unlocked and the status read "Newly created study".
+
+*There will be a "Save changes - all changes complete" button.
+
+*Click on the Permissions tab.
 
 >The Permissions tab will load.
 
-.Check that the permissions details are as previously provided.
+*Check that the permissions details are as previously provided.
 
-.Add an administrator.
+*Add an administrator.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Delete an administrator.
+*Delete an administrator.
 
-.Change one of the email addresses.
+*Press refresh.
 
-.Press the Save changes button.
+>The deleted administrator will reappear.
 
-.Click on the Acknowledgements tab.
+*Delete an administrator, again.
+
+*Change one of the email addresses.
+
+*Press the Save changes button.
+
+*Press refresh.
+
+*Check that the details are as provided.
+
+*Click on the Acknowledgements tab.
 
 >The Acknowledgemests tab will load.
 
-.Check that the acknowledgements are as previously provided.
+*Check that the acknowledgements are as previously provided.
 
-.Add an acknowledgement.
+*Add an acknowledgement.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Delete an acknowledgement.
+*Delete an acknowledgement.
 
-.Change an acknowledgement.
+*Change an acknowledgement.
 
-.Press the Save changes button.
+*Check one of the Contactable checkboxes.
 
-.Move the added acknowledgement to the top.
+*Press the Save changes button.
 
-.Press the Save changes button.
+*Move an acknowledgement to the top.
 
-.Click on the Files tab.
+*Press the Save changes button.
+
+*Press refresh.
+
+*Check the details are as provided.
+
+*Click on the Files tab.
 
 >The Files tab will load.
 
-.Check that the files are as previously provided.
+*Check that the files are as previously provided.
 
-.Check that you cannot download any files that have not passed personal-data review.
+*Check that you cannot download any files that have not passed personal-data review.
 
-.Upload another file.
+*Upload another file.
 
-.Click on the Publications tab.
+*Press refresh.
+
+*Check that the files are as provided.
+
+*Click on the Publications tab.
 
 >The Publications tab will load.
 
-.Check that the publications are as previously provided.
+*Check that the publications are as previously provided.
 
-.Add another publication.
+*Add another publication.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Delete a URL.
+*Delete a URL.
 
-.Delete a DOI.
+*Delete a DOI.
 
-.Delete publication.
+*Delete publication.
 
-.Change a publication.
+[Bug found here, newItemDelimiter is null.]
 
-.Press the Save changes button.
+*Change a publication.
 
-.Click on the Study info tab.
+*Press the Save changes button.
+
+*Click on the Study info tab.
 
 >The Study info tab will load.
 
-.Check that the study info is as previously provided.
+*Check that the study info is as previously provided.
 
-.Input some more data on the study info form.
+*Input some more data on the study info form.
 
-.Check the Copy answers feature works.
+*Check the Copy answers feature works.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Click on the Data Home tab.
+*Click on the Data Home tab.
 
 >The Contributor home page will load.
 
-.Click on the amended study, listed under My studies.
+*Click on the amended study, listed under My studies.
 
 >The Study dashboard will load.
 
-.Check that the information on each tab is as previously provided.
+*Check that the information on each tab is as previously provided.
+
+*Click on the Status tab.
+
+*Press the "Save changes - all changes complete" button.
+
+>Check that an email has been sent to curation@wwarn.org (log in to Google Apps).
 
 
 
+(Locked study tested following curator tests.)
 
 
---------------------------
+----
 
 
 
-Curator tests:
+=Curator tests:=
 
-.Log in as a curator (with no other roles, except user)
+*Log in as a curator (with no other roles, except user)
 
---------------------------
+----
 
-View/Edit details in a study:
+==View/Edit details in a study:==
 
-(Requires that a test study has been registered by a different user.)
+(Requires that a test study has been registered by a different user, in an "unlocked" state.)
 
-.Go to /repository/curator/home
+*Go to /repository/curator/home
 
 >The Curator home page will load, listing all studies.
 
-.Click on the ID, Title or View action of the test study (one that your user is not the author of).
+*Click on the ID, Title or View action of the test study (one that your user is not the author or administrator of).
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
-.Check that the summary details are as previously provided.
+*Check that the summary details are as previously provided.
 
-.Check that the fields are read-only.
+*Check the title can be changed (the other fields should be read-only).
 
-.Click on the Permissions tab.
+*Check that all the fields on the other tabs are editable.
+
+*Click on the Status tab.
+
+*Press the Lock button.
+
+>The message will change from "This study is unlocked." to "This study is locked.". An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
+
+*Check that every field on every tab in the study dashboard (except the Permissions tab in v1.1, TODO) is read-only.
+
+[Bug found on SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important. Can't just hide the SSQ, need read-only.]
+
+*Press the Unlock button.
+
+*Check that the fields have returned to being editable.
+ 
+*Click on the Status tab.
+
+*Change the Study Status to "In curation" and add a note in the Notes field.
+
+*Press the Save changes button.
+
+*Check that an email has gone to curation@wwarn.org (log in user Google Apps), saying Finished making changes to study X, and an email to the study author.
+
+*Check that the Status changed from "Newly created study" to "In curation".
+
+*Click on the Permissions tab.
 
 >The Permissions tab will load.
 
-.Check that the permissions details are as previously provided.
+*Check that the permissions details are as previously provided.
 
-.Check that the fields are read-only.
+*Check that the fields are read-only.
 
-.Click on the Acknowledgements tab.
+*Click on the Acknowledgements tab.
 
->The Acknowledgemests tab will load.
+>The Acknowledgements tab will load.
 
-.Check that the acknowledgements are as previously provided.
+*Check that the acknowledgements are as previously provided.
 
-.Check that the fields are read-only.
+*Check that the fields are read-only.
 
-.Check that all the fields and values are visible and correct: Contactable, First name, Middle name, Family name, Email address, Institution.
+*Check that all the fields and values are visible and correct: Contactable, First name, Middle name, Family name, Email address, Institution.
 
-.Click on the Files tab.
+*Click on the Files tab.
 
 >The Files tab will load.
 
-.Check that the files are as previously provided.
+*Check that the files are as previously provided.
 
-.Check that you cannot submit files (except curated files).
+*Check that you cannot submit files (except curated files).
 
-.Check that you cannot download any files that have not passed personal-data review.
+*Check that you cannot download any files that have not passed personal-data review.
 
-.Check the details of a submitted file, by clicking on the Details link in the Actions column.
+*Check the details of a submitted file, by clicking on the Details link in the Actions column.
 
-.Press the Upload curated files button.
+*Press the Upload curated files button.
 
 >The Upload Curated Files page will appear.
 
-.Choose a file to upload.
+*Choose a file to upload.
 
-.Select a submitted file, from which it has derived (hypothetically).
+*Select a submitted file, from which it has derived (hypothetically).
 
-.Provide a comment.
+*Provide a comment.
 
-.Press the Confirm button.
+*Press the Confirm button.
 
 >The Files tab will load.
 
-.Check that the uploaded file appears in the Curated files list.
+*Check that the uploaded file appears in the Curated files list.
 
-.Check that the uploaded file can be downloaded.
+*Check that the uploaded file can be downloaded.
 
-.Check the details of the curated file, by clicking on the Details link in the Actions column.
+*Check the details of the curated file, by clicking on the Details link in the Actions column.
 
-.Click on the Publications tab.
+*Click on the Publications tab.
 
 >The Publications tab will load.
 
-.Check that the publications are as previously provided.
+*Check that the publications are as previously provided.
 
-.Check that the fields are read-only.
+*Check that the fields are read-only.
 
-.Click on the Study info tab.
+*Click on the Study info tab.
 
 >The Study info tab will load.
 
-.Check that the study info is as previously provided.
+*Check that the study info is as previously provided.
 
-.Input some more data on the study info form.
+*Input some more data on the study info form.
 
-.Check the Copy answers feature works.
+*Check the Copy answers feature works.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Click on the Curatoe Home tab.
+*Click on the Curatoe Home tab.
 
 >The Curator home page will load.
 
-.Click on the amended study, listed under All Studies.
+*Click on the amended study, listed under All Studies.
 
 >The Study dashboard will load.
 
-.Check that the information on the Study info tab is as previously provided.
+*Check that the information on the Study info tab is as previously provided.
 
-.Select the completed option in the Study Status menu, under General questions.
+*Select the completed option in the Study Status menu, under General questions.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Refresh the page. [This should not be necessary in future versions.]
+*Refresh the page. [This should not be necessary in future versions.]
 
 >The Flatten button and XML link will appear.
 
-.Press the Flatten button.
+*Press the Flatten button.
 
 >A download dialogue will appear.
 
-.Check that the downloaded file contains the study data in CSV format.
+*Check that the downloaded file contains the study data in CSV format.
 
-.Click on the XML link.
+*Click on the XML link.
 
-.Check that the downloaded file contains the study data in XML format.
+*Check that the downloaded file contains the study data in XML format.
 
-
-
-
-
---------------------------
+----
 
 
-Personal data reviewer tests:
+=Contributor tests, part 2 (after curated, locked study):=
 
-.Log in as a personal data reviewer (with no other roles, except user)
+*Log in as a contributor (with no other roles, except user)
 
---------------------------
+----
 
-.Go to /repository/personal-data/home
+==Cannot change details in a study:==
+
+(Requires that a test study in an "locked" state.)
+
+*Go to /repository/contributor/home
+
+>The Contributor home page will load.
+
+*Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
+
+>The Study dashboard will load, showing the Summary tab for the study.
+
+*Check that none of the fields in any of the tabs are editable.
+
+*Check that the Status tab says "This study is locked." and status "In curation".
+
+[Bug found, contributors can edit Permissions when the study is locked.]
+
+
+----
+
+
+=Personal data reviewer tests:=
+
+*Log in as a personal data reviewer (with no other roles, except user)
+
+----
+
+*Go to /repository/personal-data/home
 
 >The Personal data home will load, showing a list of files to review, and files with personal data.
 
-.Click on the Review link for one of the Files to review.
+*Click on the Review link for one of the Files to review.
 
 >The Review file page will load.
 
-.Check you can download the file, by clicking on the download link.
+*Check you can download the file, by clicking on the download link.
 
-.Make a note of the file name and code.
+*Make a note of the file name and code.
 
-.Select a review outcome of File can proceed to curation.
+*Select a review outcome of File can proceed to curation.
 
-.Provide a comment.
+*Provide a comment.
 
-.Press Submit review button.
+*Press Submit review button.
 
 >The Personal data home page with load.
 
-.Check that the file has disappeared from the Files to review list.
+*Check that the file has disappeared from the Files to review list.
 
-.Click on the Review link for a second file to review.
+*Click on the Review link for a second file to review.
 
-.Select a review outcome of File contains personal data to be removed.
+*Select a review outcome of File contains personal data to be removed.
 
-.Provide a comment.
+*Provide a comment.
 
-.Make a note of the file name and code.
+*Make a note of the file name and code.
 
-.Press the Submit review button.
+*Press the Submit review button.
 
 >The Personal data home page will load.
 
-.Check that the file had disappeared from the Files to review list, and appeared in the Files with personal data list.
+*Check that the file had disappeared from the Files to review list, and appeared in the Files with personal data list.
 
-.Check that there is *no* action to replace the file.
+*Check that there is *no* action to replace the file.
 
-.Repeat the process with another file, so that there are two files with personal data.
-
-
-
---------------------------
+*Repeat the process with another file, so that there are two files with personal data.
 
 
 
-Personal data replacer tests:
+----
 
-.Log in as a user with personal data reviewer and curator roles (with no other roles, except user).
 
---------------------------
 
-.Go to /repository/personal-data/home
+=Personal data replacer tests:=
+
+*Log in as a user with personal data reviewer and curator roles (with no other roles, except user).
+
+----
+
+*Go to /repository/personal-data/home
 
 >The Personal data home will load, showing a list of files to review, and files with personal data.
 
-.Click on the Replace link for one of the Files with personal data.
+*Click on the Replace link for one of the Files with personal data.
 
 >The Upload anonymized file page with load.
 
-.Check that the original file can be downloaded.
+*Check that the original file can be downloaded.
 
-.Select a file to upload.
+*Select a file to upload.
 
-.Provide a comment.
+*Provide a comment.
 
-.Press the confirm button.
-
-[oh, bug found. Error deleting file. Can't reproduce.]
+*Press the confirm button.
 
 >The Personal data home will load.
 
-.Check that the original file has disappeared from the list of Files with personal data.
+*Check that the original file has disappeared from the list of Files with personal data.
 
 
 
---------------------------
+----
 
 
 
-further Contributor tests:
+=further Contributor tests:=
 
-.Log in as a user with the contributor role (with no other roles, except user)
+*Log in as a user with the contributor role (with no other roles, except user)
 
---------------------------
+(Requires prior knowledge of which files have been reviewed successfully for a particular study.)
 
-.Go to /repository/contributor/home
+----
+
+*Go to /repository/contributor/home
 
 >The Contributor home page will load, listing studies that the user has access to.
 
-.Click on the test study.
+*Click on the test study.
 
 >The study dashboard will load.
 
-.Click on the Files tab.
+*Click on the Files tab.
 
 >The Files tab will load.
 
-.Check that only files that have passed personal data review can be downloaded.
+*Check that only files that have passed personal data review can be downloaded.
 
-.Check that there are no links to file details.
+*Check that there are no links to file details.
 
-.Check that there are no curated files showing.
+*Check that there are no curated files showing.
 
-.Check that the deleted file, which was replaced, appears in the list (but is not downloadable).
-
-
-
---------------------------
+*Check that the deleted file, which was replaced, appears in the list (but is not downloadable).
 
 
-further Curator tests:
 
-.Log in as a user with the curator role (with no other roles, except user)
+----
 
---------------------------
 
-.Go to /repository/curator/home
+=further Curator tests:=
+
+*Log in as a user with the curator role (with no other roles, except user)
+
+----
+
+*Go to /repository/curator/home
 
 >The Curator home page will load, listing all studies.
 
-.Click on the test study.
+*Click on the test study.
 
 >The study dashboard will load.
 
-.Click on the Files tab.
+*Click on the Files tab.
 
 >The Files tab will load.
 
-.Check that only files that have passed personal data review can be downloaded.
+*Check that only files that have passed personal data review can be downloaded.
 
-.Check the details for submitted files.
+*Check the details for submitted files.
 
-.Check that submitted files that have been replaced are listed as deleted, and show a derivation in their details.
+*Check that submitted files that have been replaced are listed as deleted, and show a derivation in their details.
 
-.Check that Curated files (replacing files that failed personal data review) can be downloaded.
+*Check that Curated files (replacing files that failed personal data review) can be downloaded.
 
-.Check the details for curated files.
-
-
-
---------------------------
+*Check the details for curated files.
 
 
 
-Contributor/Curator tests:
+----
 
-.Log in as a user with the contributor and the curator roles (with no other roles, except user)
 
---------------------------
 
-.Go to /repository/contributor/home
+=Contributor/Curator tests:=
+
+*Log in as a user with the contributor and the curator roles (with no other roles, except user)
+
+(Requires an unlocked study to test with.)
+
+----
+
+*Go to /repository/contributor/home
 
 >The Contributor home page will load, showing all studies under "My studies".
 
-.Check that the Data Home, Curator Home, Register Study, and My Studies tabs are available (and click on them to check they load).
+*Check that the Data Home, Curator Home, Register Study, and My Studies tabs are available (and click on them to check they load).
 
-.Click on the Data Home tab.
-
->The Contributor home page (welcome page) will load.
-
-.Click on a study that your user is *not* the administrator of.
-
->The Study dashboard will load.
-
-.Check that you cannot edit data on any of the tabs, except the study info tab and uploading curated files.
-
-.Check that you can change some data on the study info.
-
-.Check that you can upload a curated file.
-
-.Check that you can download and view the details of the uploaded curated file.
-
-.Click on the Data Home tab.
+*Click on the Data Home tab.
 
 >The Contributor home page (welcome page) will load.
 
-.Click on a study that your user *is* the administrator of.
+*Click on a study that your user is *not* the study administrator or original author of.
 
 >The Study dashboard will load.
 
-.Check that you can change data on the Permissions, Acknowledgements, Publications, and Study Info tabs.
+*Check that you can generally edit the data on all of the tabs, with some exceptions mentioned below.
 
-.Click on the Files tab.
+*Do not change the study status or press the "Save changes - all changes complete" button at this point.
+
+*Do not add your user as a study administrator at this point.
+
+*Check that you cannot upload submitted files.
+
+*Check that you cannot edit the ID, Creator or Terms fields on the Summary tab.
+
+*Check that you *can* upload a curated file.
+
+*Check that you can download and view the details of the uploaded curated file.
+
+*Click on the Data Home tab.
+
+>The Contributor home page (welcome page) will load.
+
+*Click on a study that your user *is* the administrator of.
+
+>The Study dashboard will load.
+
+*Check that you can change data on the Permissions, Acknowledgements, Publications, and Study Info tabs.
+
+*Click on the Files tab.
 
 >The Files tab will load.
 
-.Check that you can view the Details for all the files (and return back to the Study Dashboard using the link provided).
+*Check that you can view the Details for all the files (and return back to the Study Dashboard using the link provided).
 
-[oh, bug found. Study Dashboard link is bad.]
+*Check that you can upload a submitted file.
 
-.Check that you can only download submitted files that have passed personal data review.
+*Check that you can only download submitted files that have passed personal data review.
 
-.Check that you can download all curated files.
+*Check that you can upload a curated file.
 
-.Check that you can upload a curated file.
+*Check that you can download the uploaded curated file and view its details.
 
-.Check that you can download the uploaded curated file and view its details.
+*Check that you can download all curated files.
 
-.Click on the Study info tab.
+*Check that you can view the details for all curated files.
+
+[Bug found/Missing feature, no download link on details page for curated files.]
+
+*Click on the Study info tab.
 
 >The Study info tab will load.
 
-.Change the Study Status to completed.
+*Change the Study Status to completed. Note, this is *not* the same as the Status tab status. It appears under General questions.
 
-.Press the Save changes button.
+*Press the Save changes button.
 
-.Reload the page [This should not be necessary in future versions.]
+[Bug. Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions.]
 
 >The Flatten button and XML link will appear.
 
-.Press the Flatten button.
+*Press the Flatten button.
 
 >A download dialogue will appear.
 
-.Check that the downloaded file contains the study data in CSV format.
+*Check that the downloaded file contains the study data in CSV format.
 
-.Click on the XML link.
+*Click on the XML link.
 
-.Check that the downloaded file contains the study data in XML format.
+*Check that the downloaded file contains the study data in XML format.
 
 
 
---------------------------
+----
 
 
 
 Contributor/Administrator tests:
 
-.Log in a user with the contributor and the administrator roles (with no other roles, except user)
+*Log in a user with the contributor and the administrator roles (with no other roles, except user)
 
---------------------------
+----
 
-.Go to /repository/contributor/home
+*Go to /repository/contributor/home
 
 >The Contributor home page will load.
 
-.Check that there are tabs for Data Home, Register Study, My Studies, and that those pages load.
+*Check that there are tabs for Data Home, Register Study, My Studies, and that those pages load.
 
-.Check that all Draft studies for all users are shown.
+*Check that all Draft studies for all users are shown.
 
-.Check that all studies (for all users) are shown under My studies, on the Contributor home page.
+*Check that all studies (for all users) are shown under My studies, on the Contributor home page.
 
-.Press the Register study button.
-
->The Register study wizard will load.
-
-.Check that you can create a draft, with files (see tests for contributor).
-
-.Check that you can register a study, with files (see tests for contributor).
-
-.Click on a draft study link.
+*Press the Register study button.
 
 >The Register study wizard will load.
 
-.Check that navigation (Previous, Next) in the wizard works.
+*Check that you can create/save a draft, with files (see tests for contributor).
 
-.Check that all fields can be added, edited and deleted in the draft - except changing the Terms agreement and uploading new files to drafts that you don't own.
+*Check that you can register a study, with files (see tests for contributor).
 
-[oh, bug found. Administrator can try to upload files, causes error.]
+*Go to the Data Home.
 
-[oh, bug found. Exception in client-side code found when go to review page. Can't reproduce.]
+*Click on a draft study link.
 
-[oh, bug found. Can change any other study administrator (in draft or dashboard) except themselves.]
+>The Register study wizard will load.
 
-.Click on a study on the Data Home page.
+*Check that navigation (Previous, Next) in the wizard works.
+
+*Check that all fields can be added, edited and deleted in the draft - except changing the Terms agreement and uploading new files to drafts that you don't own.
+
+[Bug. Can change any other study administrator (in draft or dashboard) except themselves.]
+
+*Click on a study on the Data Home page.
 
 >The Study dashboard will load.
 
-.Check that all fields can be added, edited and deleted in the study - except on the Summary tab and uploading new files to studies that you don't own.
+*Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms acceptance date on the Summary tab, and uploading new files to studies that you don't own.
 
-.Check that all sumbmitted files and curated files can be downloaded.
+[Bug. The locked status is not shown to a contributor/administrator.]
 
-.Check that details for Curated files can be seen.
+*Check that all sumbmitted files and curated files can be downloaded.
 
-.Check that deleted files (through personal data replacement) are shown.
+*Check that details for Curated files can be seen, and that the back-to-dashboard link works.
 
-.Check that you can't upload curated files.
+*Check that deleted files (through personal data replacement) are shown.
 
-.Behaviour Note: The Flatten and XML features are not shown for administrators (after selecting complete, pressing save and refreshing).
+*Check that you can't upload curated files.
 
-.Click on the My Studies tab.
+*Behaviour Note: The Flatten and XML features are not shown for administrators (after selecting complete, pressing save and refreshing).
+
+*Click on the My Studies tab.
 
 >The My studies page will load.
 
-.Check that the links to the study dashboard work.
+*Check that the links to the study dashboard work.
 
 
 
---------------------------
+----
 
 
-Curator/Administrator tests:
+=Curator/Administrator tests:=
 
-.Log in a user with the curator and the administrator roles (with no other roles, except user)
+*Log in a user with the curator and the administrator roles (with no other roles, except user)
 
---------------------------
+----
 
-.Go to /repository/curator/home
+*Go to /repository/curator/home
 
 >The Curator home page will load, listing all the studies (by all users).
 
-.Click on a study.
+*Click on a study.
 
 >The Study dashboard will load.
 
-.Check that all fields can be added, edited and deleted in the study - except on the Summary tab and uploading Submitted files.
+*Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms accepted field on the Summary tab, and should not be able to upload Submitted files.
 
-.Check you can download submitted files and view details.
+[Bug. Shows a Lock button when the study is locked.]
 
-.Check you can upload curated files (creating a derivation).
+*Check you can download submitted files and view details.
 
-.Check you can download curated files and view details.
+*Check that you can't upload submitted files to studies that are either locked, or you don't own (or both).
 
-.Click on the Study info tab.
+*Check you can upload curated files (creating a derivation) *if* the study is not locked. 
+
+*Check that you can't upload curated files when the study is locked.
+
+*Check you can download curated files and view details.
+
+*Click on the Study info tab.
 
 >The Study info tab will load.
 
-.Select "completed" from the Study status menu.
+*Select "completed" from the Study status menu.
 
-.Press Save changes.
+*Press Save changes.
 
-.Refresh the page. [This should not be necessary in future versions.]
+*Refresh the page. [This should not be necessary in future versions.]
 
 >The Flatten button and XML link will appear.
 
-.Press the Flatten button.
+*Press the Flatten button.
 
 >A download dialogue will appear.
 
-.Check that the downloaded file contains the study data in CSV format.
+*Check that the downloaded file contains the study data in CSV format.
 
-.Click on the XML link.
+*Click on the XML link.
 
-.Check that the downloaded file contains the study data in XML format.
-
-
-
---------------------------
+*Check that the downloaded file contains the study data in XML format.
 
 
 
+----
 
 
 
