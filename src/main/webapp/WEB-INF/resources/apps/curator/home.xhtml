@@ -1,0 +1,241 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:ae="http://purl.org/atom/ext/">
+    
+    <head>
+    
+        <title>Curator home</title>
+        
+        <xforms:model>
+
+        	<!-- non-persistent model for application state -->
+        	<xforms:instance id="ins-control">
+        		<control xmlns="">
+        			<contributor-controls/>
+        			<curator-controls/>
+        			<administrator-controls/>
+        			<delete-study/>
+        		</control>
+        	</xforms:instance>
+        	
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+			<xforms:bind id="delete-bind" nodeset="instance('ins-control')/delete-study" />
+
+
+			<xforms:instance id="ins-study-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-retrieve-study-feed"
+				resource="/service/content/studies"
+				method="get"
+				replace="instance"
+				instance="ins-study-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed"/>
+			
+			<xforms:submission 
+        		id="sub-deprecate-study"
+        		method="delete"
+        		resource="{instance('ins-control')/delete-study}"
+        		replace="none">
+        		<!-- 
+        		<xforms:header>
+        			<xforms:name>X-Atom-Tombstone-Comment</xforms:name>
+        			<xforms:value value=""/>
+        		</xforms:header>
+        		 -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the study.</xforms:message>
+        		<xforms:message ev:event="xforms-submit-done" level="modal">Study successfully deleted</xforms:message>
+        	</xforms:submission>
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+	<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix no-help-box">
+				                <div class="no-bg">
+				                	<div class="main oneCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+		
+		<div id="content" class="home">
+    
+		<h1>Curator home</h1>
+
+		<h2>All Studies</h2>
+    	
+    	<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+
+    		<p>There are no registered studies.</p>
+    	
+    	</xforms:group>
+    	
+    	<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+
+			<div id="list-of-studies-container">
+
+	    	<fr:datatable width="100%">
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="false" fr:resizeable="true">ID</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Created</th>
+	    				<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
+	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
+	    			
+	    				<tr class="repeated-element">
+	    					<td>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+	    					</td>
+	    					<td>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+	    					</td>
+	    					<td>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+	    					<!--
+	    						<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    						</td>
+	    					-->
+	    					<td>
+	    						<xforms:repeat nodeset="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+	    							<div>
+	    								<xforms:output ref="."/>			
+	    							</div>
+	    						</xforms:repeat>
+	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+	    					</td>	    					
+	    					<td>
+	    						<span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span><span style="margin: 50px;"></span>
+	    						
+	    						<!-- Making the assumption that only a curator can be here -->
+	    						<!-- 
+	    						     <xforms:group ref="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/ae:inline/atom:entry/atom:content/atombeat:security-descriptor/atombeat:acl/atombeat:ace[atombeat:permission='DELETE_MEMBER' and atombeat:type = 'ALLOW' and atombeat:recipient[@type='role'] = 'ROLE_CHASSIS_CURATOR']">
+	    						         <span>
+	    						             <xforms:switch>
+									           <xforms:case id="delete-study">
+										          <xforms:trigger>
+											         <xforms:label>Delete</xforms:label>
+											         <xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
+										          </xforms:trigger>
+									           </xforms:case>
+									           <xforms:case id="confirm-delete-study">
+										          <br/>
+										          <strong>Are you sure that you want to delete this study?</strong><br/>
+										          <xforms:trigger>
+											         <xforms:label>Yes - I'm sure</xforms:label>
+											         <xforms:action ev:event="DOMActivate">
+												        <xforms:setvalue bind="delete-bind" value="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+												        <xforms:send submission="sub-deprecate-study"/>
+											         </xforms:action>
+										          </xforms:trigger> 
+										          <xforms:trigger>
+											         <xforms:label>No</xforms:label>
+											         <xforms:toggle case="delete-study" ev:event="DOMActivate"/>
+										          </xforms:trigger>
+									           </xforms:case>
+								              </xforms:switch>
+	    						         </span>
+	    						     </xforms:group>
+	    						 -->
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+	    	
+	    	</div>
+	    	
+    	</xforms:group>
+    	
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+
+    	
+    	
+    </body>
+</html>
+
