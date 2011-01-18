@@ -80,6 +80,7 @@
                 <sec:intercept-url pattern="/service/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
                 <sec:intercept-url pattern="/service/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
                 <sec:intercept-url pattern="/service/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/service/reports/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
                 
                 <!-- force authentication for all requests to service, but delegate
                     access control decisions to service -->
@@ -90,7 +91,7 @@
                 <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
                 
                 <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/service/reports/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+                
                 <sec:intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
                 
                 <sec:intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
