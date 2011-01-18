@@ -341,6 +341,7 @@
 		<log4j-priority>debug</log4j-priority>
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
 		<test-email />
+		<bing-maps-key>AkThinf82zQztpVxwyFn6q_vVMbo5EuYnWBQf2T6-_b1Zs9903MBf8a10Dn1OiJb</bing-maps-key>
 	</properties>
 
 
@@ -352,6 +353,7 @@
 				<profileId>cloud1</profileId>
 				<!-- TPP's account -->
 				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
+				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>http://cloud1.cggh.org/sso</cas.url>
@@ -378,6 +380,7 @@
 				<profileId>wwarn-app3</profileId>
 				<skipTests>true</skipTests>
 				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
+				<bing-maps-key>AuOCY3s1rvqxHcDurxIKubBo-z6ZGkvgCARq2OOnbeijZOovs2EtQx7j0fe5y0eB</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
@@ -393,6 +396,7 @@
 			<properties>
 				<profileId>production</profileId>
 				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxSlb90VRGuJIkqh0iHprgnoFbPqfRT6op4Km2XwtyBOI0RrlbrWQC48tA</google-api-key>
+				<bing-maps-key>AtBtTjuJsT4fHpnP4yzRA1T_Wqr6MAaTKWYU4X1Zi0Eqn5gaUM6qqMx4pYsNpK9U</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://www.wwarn.org/sso</cas.url>
