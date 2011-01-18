@@ -23,11 +23,11 @@
                             <name jndi-ref="smtp-from-name"></name>
                         </from>
                         <to>
-                            <email><xsl:value-of select="/atom:entry/atom:author/atom:email"/></email>
+                            <email>curation@wwarn.org</email>
                         </to>
                         <subject>Finished making changes to study <xsl:value-of select="/atom:entry/atom:title"/> has been updated</subject>
                         <body content-type="text/plain">
-                            <xsl:value-of select="/atom:entry/atom:title"/> 
+                            Changes to study <xsl:value-of select="/atom:entry/atom:title"/> have been completed 
                         </body>
                     </message>
                 </xsl:template>
