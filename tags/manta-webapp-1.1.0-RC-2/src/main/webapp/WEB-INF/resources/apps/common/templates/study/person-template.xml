@@ -1,0 +1,8 @@
+<person xmlns="">
+    <first-name/>
+    <middle-name/>
+    <family-name/>
+    <email-address/>
+    <institution/>
+    <person-is-contactable/>
+</person>
