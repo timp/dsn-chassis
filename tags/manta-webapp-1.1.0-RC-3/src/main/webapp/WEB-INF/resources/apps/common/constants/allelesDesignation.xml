@@ -1,0 +1,12 @@
+<!--  A closed list of resistance allele types -->
+<!--  See molecular-mixedResistanceAllelesDesignation -->
+<resistanceAllelesDesignations xmlns="">
+	<resistanceAllelesDesignation>
+		<label>Designated as mixed (listed as ‘mixed’ or both alleles reported: e.g. ‘K/T’)</label>
+		<value>mixed</value>
+	</resistanceAllelesDesignation>
+	<resistanceAllelesDesignation>
+		<label>Designated as mutant (only mutant allele is reported)</label>
+		<value>mutant</value>
+	</resistanceAllelesDesignation>
+</resistanceAllelesDesignations>
