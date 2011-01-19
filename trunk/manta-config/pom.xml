@@ -45,4 +45,17 @@
   	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-config</url>
   </scm>
   
+  <build>
+  		<plugins>
+  			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<!-- During release:perform, enable the "release" profile -->
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy assembly:assembly</goals>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
