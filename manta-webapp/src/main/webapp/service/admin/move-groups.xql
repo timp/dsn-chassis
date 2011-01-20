@@ -91,7 +91,7 @@ declare function local:do-modifications() as xs:string*
        return update replace $link/atombeat:group[not(@src) and @id='GROUP_ADMINISTRATORS'] with <atombeat:group id="GROUP_ADMINISTRATORS" src="{$src}" />
     
     (: Update ACL permissions :)
-    let $mod := for $link in collection('atombeat/security')//atombeat:ace[atombeat:type[. = 'ALLOW'] and atombeat:recipient[. = 'GROUP_ADMINISTRATORS'] and (atombeat:permission[. = 'UPDATE_MEMBER_ACL'] or atombeat:permission[. = 'RETRIEVE_MEMBER_ACL'])]
+    let $mod := for $link in collection('atombeat/security')//atombeat:ace[atombeat:type[. = 'ALLOW'] and atombeat:recipient[. = 'GROUP_ADMINISTRATORS'] and atombeat:permission[. = 'UPDATE_MEMBER_ACL']]
     return update delete $link
     
     return $mod
