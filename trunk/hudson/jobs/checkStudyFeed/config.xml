@@ -7,6 +7,7 @@
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.TimerTrigger>
@@ -24,7 +25,7 @@ grep -q &quot;atom:feed&quot; studies.feed
   </builders>
   <publishers>
     <hudson.tasks.Mailer>
-      <recipients>timp@well.ox.ac.uk, lee.hart@well.ox.ac.uk, ian.wright@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
