@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary How to upgrade from version 1.0.1 to version 1.1.0.
 #labels Phase-Deploy
 
 = Introduction =
