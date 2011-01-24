@@ -92,7 +92,7 @@
 				</xhtml:script>
 				<xhtml:script type="text/javascript">
 				try{ 
-				var pageTracker = _gat._getTracker("UA-7755559-10");
+				var pageTracker = _gat._getTracker("${google-analytics-web-property-id}");
 				pageTracker._trackPageview();
 				} catch(err) {} 
 				</xhtml:script>
