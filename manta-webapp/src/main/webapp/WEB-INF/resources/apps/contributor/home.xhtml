@@ -226,7 +226,7 @@ any time on the Data home: see &#8216;My studies&#8217;.
 		    			</tr>
 		    		</thead>
 		    		<tbody>
-		    			<xforms:repeat id="draft-list" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'descending')">
+		    			<xforms:repeat id="rep-drafts" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'descending')">
 		    			
 		    				<tr class="repeated-element">
 		    					<td>
@@ -235,10 +235,9 @@ any time on the Data home: see &#8216;My studies&#8217;.
 		    					<td>
 		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 		    					</td>
-		    					<!-- TODO: Check this renders OK. Orbeon probably adds mark-up. -->
 		    					<xforms:group ref="instance('ins-control')/administrator-controls">
 		    					<td>
-				    				by <xforms:output value="xxforms:context('rep-draft')/atom:author"/>
+				    				<xforms:output value="xxforms:context('rep-drafts')/atom:author"/>
 				    			</td>
 				    			</xforms:group>				
 		    					<td>
@@ -253,7 +252,7 @@ any time on the Data home: see &#8216;My studies&#8217;.
 							          <xforms:trigger>
 								         <xforms:label>Delete</xforms:label>
 								         <xforms:action ev:event="DOMActivate">
-											<xforms:setvalue ref="instance('ins-control')/href-of-draft-to-delete" value="xxforms:context('draft-list')/atom:link[@rel='edit']/@href" />
+											<xforms:setvalue ref="instance('ins-control')/href-of-draft-to-delete" value="xxforms:context('rep-drafts')/atom:link[@rel='edit']/@href" />
 											<xxforms:show dialog="confirm-delete-draft-dialog" />
 								         </xforms:action>
 							          </xforms:trigger> 
