@@ -38,6 +38,7 @@
         			<contributor-controls/>
         			<curator-controls/>
         			<administrator-controls/>
+        			<href-of-draft-to-delete/>
         		</control>
         	</xforms:instance>
         	
@@ -106,7 +107,19 @@
 				ev:event="xforms-model-construct-done" 
 				submission="sub-retrieve-study-feed"/>
 				
+    		<!--  -->
     		
+            <xforms:submission 
+            	id="sub-delete-draft"  
+            	method="delete"
+            	replace="none"
+            	resource="{instance('ins-control')/href-of-draft-to-delete}">
+            	
+            	<xforms:send ev:event="xforms-submit-done"  submission="sub-retrieve-draft-feed"/>
+            	
+            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
+            	
+            </xforms:submission>
 			
         </xforms:model>
 
@@ -197,25 +210,60 @@ any time on the Data home: see &#8216;My studies&#8217;.
 
     		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
 
-				<div id="list-of-drafts-container">
+				<!-- NB: issues using groups within fr:datatable -->
+		    	<table class="drafts">
+		    		<thead>
+		    			<tr>
+		    				<th>Draft Title</th>
+		    				<th>Created</th>
+	
+						 
+								<xforms:group ref="instance('ins-control')/administrator-controls">
+									<th>Creator</th>
+								</xforms:group>
+						
+		    				<th>Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat id="draft-list" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'descending')">
+		    			
+		    				<tr class="repeated-element">
+		    					<td>
+		    						<a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+		    					</td>
+		    					<!-- TODO: Check this renders OK. Orbeon probably adds mark-up. -->
+		    					<xforms:group ref="instance('ins-control')/administrator-controls">
+		    					<td>
+				    				by <xforms:output value="xxforms:context('rep-draft')/atom:author"/>
+				    			</td>
+				    			</xforms:group>				
+		    					<td>
 
-		
-							<ul>
-			    				<xforms:repeat id="rep-draft" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'ascending')">
-			    					<li class="repeated-element">
-			    						<span class="draft-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/> (<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />)
-			    						
-			    							<xforms:group ref="instance('ins-control')/administrator-controls">
-			    								by <xforms:output value="xxforms:context('rep-draft')/atom:author"/>
-			    							</xforms:group>
-			    						
-			    						</a></span>
-			    					</li>
-			    				</xforms:repeat>
-			    			</ul>
+									<xforms:trigger>
+								         <xforms:label>Edit</xforms:label>
+								         <xforms:action ev:event="DOMActivate">
+											<xforms:load resource="register-study-wizard?draft={atom:link[@rel='edit']/@href}" />
+								         </xforms:action>
+							          </xforms:trigger> 
 
-	    			
-	    		</div>
+							          <xforms:trigger>
+								         <xforms:label>Delete</xforms:label>
+								         <xforms:action ev:event="DOMActivate">
+											<xforms:setvalue ref="instance('ins-control')/href-of-draft-to-delete" value="xxforms:context('draft-list')/atom:link[@rel='edit']/@href" />
+											<xxforms:show dialog="confirm-delete-draft-dialog" />
+								         </xforms:action>
+							          </xforms:trigger> 
+	
+		    					</td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+		    	</table>
+
 		    			
     		</xforms:group>    		
 
@@ -242,6 +290,25 @@ any time on the Data home: see &#8216;My studies&#8217;.
                 </div>
 
 		<!-- End of After content id, before ft id -->
+
+		<xxforms:dialog id="confirm-delete-draft-dialog" level="modal" close="false" draggable="true"> 
+			<xforms:label>Confirm Delete</xforms:label> 
+			<p>Are you sure you want to delete the draft entitled "<xforms:output value="instance('ins-draft-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-control')/href-of-draft-to-delete]/atom:title"/>"?
+			</p> 
+			<div> 
+				<xforms:trigger> 
+					<xforms:label>Delete</xforms:label> 
+					<xforms:action ev:event="DOMActivate"> 
+						<xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-draft-dialog"/>
+						<xforms:send submission="sub-delete-draft"/>
+					</xforms:action> 
+				</xforms:trigger> 
+				<xforms:trigger> 
+					<xforms:label>Cancel</xforms:label> 
+					<xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-draft-dialog"/> 
+				</xforms:trigger> 
+			</div> 
+		</xxforms:dialog>
 
     </body>
 </html>

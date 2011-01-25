@@ -437,3 +437,10 @@ ul {
     height: 300px;
     position: relative;
 }
+
+table.drafts {
+	width: 100%;	
+}
+table.drafts th {
+	text-align: left;	
+}
