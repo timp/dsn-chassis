@@ -83,6 +83,9 @@
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the study.</xforms:message>
         		<xforms:message ev:event="xforms-submit-done" level="modal">Study successfully deleted</xforms:message>
         	</xforms:submission>
+
+			<xforms:instance id="ins-study-status" src="/apps/common/constants/studyStatusTypes.xml" />
+
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
@@ -145,12 +148,15 @@
 	    				<th fr:sortable="true" fr:resizeable="true">Created</th>
 	    				<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
 	    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Status</th>
 	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
 	    			</tr>
 	    		</thead>
 	    		<tbody>
 	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
-	    			
+
+						<xxforms:variable name="foo" select="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/>
+
 	    				<tr class="repeated-element">
 	    					<td>
 	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
@@ -173,7 +179,16 @@
 	    							</div>
 	    						</xforms:repeat>
 	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
-	    					</td>	    					
+	    					</td>	
+	    					<td>
+	    						<!-- NB: This wouldn't work because "sort keys must be valid in an element that is external to the xforms:repeat where they appear". See http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/datatable#TOC-Main-Restrictions --> 
+	    						<!-- <xforms:output ref="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/> -->
+	    						
+	    						<xforms:output ref="for $study-status in (./atom:content/study/study-status)
+					    							return
+					    							instance('ins-study-status')/statusType[value=$study-status]/label
+					    							"/>
+	    					</td>    					
 	    					<td>
 	    						<span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span><span style="margin: 50px;"></span>
 	    						
