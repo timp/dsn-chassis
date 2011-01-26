@@ -33,6 +33,14 @@ declare variable $config-collections:collection-spec :=
             </atom:feed>        
         </collection>  
         
+        <collection path-info="/groups">
+            <atom:feed atombeat:enable-versioning="true"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="false">
+                <atom:title type="text">Groups</atom:title>
+            </atom:feed>
+        </collection>
+        
         <collection path-info="/study-info">
             <atom:feed
                 atombeat:enable-versioning="true"
