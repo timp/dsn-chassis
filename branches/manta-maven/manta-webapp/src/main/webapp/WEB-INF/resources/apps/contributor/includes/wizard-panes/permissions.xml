@@ -32,7 +32,7 @@
 					<h3>Administrators</h3>
 				
 					
-					<xforms:group ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+					<xforms:group ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 				    
 						<div id="editable-list-of-administrators-container">
 				    

@@ -140,6 +140,18 @@ declare variable $security-config:default-workspace-security-descriptor :=
 ;
 
 
+declare function security-config:get-group-uri($request-path-info as xs:string) as xs:string
+{
+(: pick off study ID :)
+    
+    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
+    
+    (: construct study URI to reference group :)
+    
+    let $group-uri := concat( $config:self-link-uri-base , "/groups/" , $study-id )
+
+    return $group-uri
+};
 
 (:
  : A function to generate default collection security descriptor for any new
@@ -150,7 +162,9 @@ declare function security-config:default-collection-security-descriptor(
     $user as xs:string?
 ) as element(atombeat:security-descriptor)
 { 
-    if ( $request-path-info = "/studies" )
+    let $group-uri := security-config:get-group-uri($request-path-info)
+    
+    let $ret := if ( $request-path-info = "/studies" )
 
     then $security-config:studies-collection-security-descriptor
 
@@ -168,7 +182,7 @@ declare function security-config:default-collection-security-descriptor(
     
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+$" ) )
     
-    then security-config:submitted-media-collection-security-descriptor( $request-path-info )
+    then security-config:submitted-media-collection-security-descriptor( $group-uri )
 
     else if ( $request-path-info = "/media/curated" )
     
@@ -176,7 +190,7 @@ declare function security-config:default-collection-security-descriptor(
     
     else if ( matches( $request-path-info , "^/media/curated/[^/]+$" ) )
     
-    then security-config:curated-media-collection-security-descriptor( $request-path-info )
+    then security-config:curated-media-collection-security-descriptor( $group-uri )
 
     else if ( $request-path-info = "/derivations" )
     
@@ -184,7 +198,7 @@ declare function security-config:default-collection-security-descriptor(
     
     else if ( matches( $request-path-info , "^/derivations/[^/]+$" ) )
     
-    then security-config:derivations-collection-security-descriptor( $request-path-info )
+    then security-config:derivations-collection-security-descriptor( $group-uri )
 
     else if ( $request-path-info = "/reviews/personal-data" )
     
@@ -192,7 +206,7 @@ declare function security-config:default-collection-security-descriptor(
     
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+$" ) )
     
-    then security-config:personal-data-reviews-collection-security-descriptor( $request-path-info )
+    then security-config:personal-data-reviews-collection-security-descriptor( $group-uri )
 
     else 
     
@@ -200,6 +214,7 @@ declare function security-config:default-collection-security-descriptor(
             <atombeat:acl/>
         </atombeat:security-descriptor>
 
+    return $ret
 };
 
 
@@ -306,7 +321,100 @@ declare variable $security-config:studies-collection-security-descriptor :=
     </atombeat:security-descriptor>
 ;
 
+declare variable $security-config:groups-collection-security-descriptor :=
 
+    <atombeat:security-descriptor>
+    
+        <atombeat:acl>
+    
+            <!--
+                Contributors can list the collection and create members.
+            -->     
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>CREATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CONTRIBUTOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+            <!--
+                Personal data reviewers can list the collection and can retrieve any member or security descriptor.
+            -->
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_PERSONAL_DATA_REVIEWER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <!--
+                Curators can list the collection, and can retrieve any member, and can retrieve and update any security descriptor.
+            -->
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
+            </atombeat:ace>
+    
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_REVISION</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+
+        </atombeat:acl>
+    
+    </atombeat:security-descriptor>
+;
 
 
 declare variable $security-config:study-info-collection-security-descriptor :=
@@ -485,24 +593,13 @@ declare variable $security-config:all-derivations-collection-security-descriptor
 
 
 declare function security-config:submitted-media-collection-security-descriptor(
-    $request-path-info as xs:string
+    $group-uri as xs:string
 ) as element(atombeat:security-descriptor)
 {
-
-    (: pick off study ID :)
-    
-    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
-    
-    (: construct study URI to reference group :)
-    
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
-    
-    return 
-    
         <atombeat:security-descriptor>
         
                 <atombeat:groups>
-                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
                 </atombeat:groups>
         
                 <atombeat:acl>
@@ -600,7 +697,7 @@ declare function security-config:submitted-media-collection-security-descriptor(
                 </atombeat:acl>
         
         </atombeat:security-descriptor>    
-    
+
 };
 
 
@@ -660,24 +757,14 @@ declare function security-config:draft-media-collection-security-descriptor(
 
 
 declare function security-config:curated-media-collection-security-descriptor(
-    $request-path-info as xs:string
+    $group-uri as xs:string
 ) as element(atombeat:security-descriptor)
 {
-
-    (: pick off study ID :)
-    
-    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
-    
-    (: construct study URI to reference group :)
-    
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
-    
-    return 
-
+ 
         <atombeat:security-descriptor>
         
             <atombeat:groups>
-                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
             </atombeat:groups>
             
             <atombeat:acl>
@@ -738,24 +825,13 @@ declare function security-config:curated-media-collection-security-descriptor(
 
 
 declare function security-config:derivations-collection-security-descriptor(
-    $request-path-info as xs:string
+    $group-uri as xs:string
 ) as element(atombeat:security-descriptor)
 {
-
-    (: pick off study ID :)
-    
-    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
-    
-    (: construct study URI to reference group :)
-    
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
-    
-    return 
-
         <atombeat:security-descriptor>
         
                 <atombeat:groups>
-                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                        <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
                 </atombeat:groups>
         
                 <atombeat:acl>
@@ -809,24 +885,13 @@ declare function security-config:derivations-collection-security-descriptor(
 
 
 declare function security-config:personal-data-reviews-collection-security-descriptor(
-    $request-path-info as xs:string
+    $group-uri as xs:string
 ) as element(atombeat:security-descriptor)
 {
-
-    (: pick off study ID :)
-    
-    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
-    
-    (: construct study URI to reference group :)
-    
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
-    
-    return
-
         <atombeat:security-descriptor>
         
             <atombeat:groups>
-                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
             </atombeat:groups>
     
             <atombeat:acl>
@@ -945,12 +1010,6 @@ declare function security-config:studies-member-default-security-descriptor(
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_HISTORY</atombeat:permission>
             </atombeat:ace>
             
@@ -1008,22 +1067,15 @@ declare function security-config:submitted-media-media-security-descriptor(
 ) as element(atombeat:security-descriptor)
 {
 
-    (: add the group reference for later convenience :)
-    
-    (: pick off study ID :)
-    
-    let $study-id := text:groups( $request-path-info , "^.*/([^/]+)$" )[2]
-    
-    (: construct study URI to reference group :)
-    
-    let $study-uri := concat( $config:content-service-url , "/studies/" , $study-id )
+    (: add the group reference for later convenience :)    
+    let $group-uri := security-config:get-group-uri($request-path-info)
     
     return 
     
         <atombeat:security-descriptor>
         
             <atombeat:groups>
-                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-uri}"/>
+                    <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
             </atombeat:groups>
     
             <atombeat:acl>
@@ -1095,4 +1147,42 @@ declare function security-config:study-info-member-security-descriptor(
         </atombeat:acl>
 
     </atombeat:security-descriptor>    
+};
+
+declare function security-config:study-member-security-descriptor(
+    $study-group-uri as xs:string
+) as element(atombeat:security-descriptor)
+{
+		<atombeat:security-descriptor xmlns:atombeat="http://purl.org/atombeat/xmlns">
+			<atombeat:groups>
+				<atombeat:group id="GROUP_ADMINISTRATORS" src="{$study-group-uri}"/>
+			</atombeat:groups>
+			<atombeat:acl>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+					<atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+					<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+					<atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+					<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+					<atombeat:permission>DELETE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+			</atombeat:acl>
+		</atombeat:security-descriptor>
 };

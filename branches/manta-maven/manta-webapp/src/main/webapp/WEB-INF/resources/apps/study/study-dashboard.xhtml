@@ -160,8 +160,9 @@
                 
 				<xforms:action ev:event="xforms-submit-done">
 					
+					<xforms:send submission="sub-get-acl-entry" />
 					<xforms:send submission="sub-get-permissions-entry"/>
-					
+					<xforms:send submission="sub-get-permissions-acl"/>
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 
@@ -254,13 +255,19 @@
 		    </xforms:submission>
         	
         	
-            
+            <xforms:instance id="ins-acl-entry">
+				<atom:entry/>
+			</xforms:instance> 
             
             
 			<xforms:instance id="ins-permissions-entry">
 				<atom:entry/>
 			</xforms:instance> 
             
+            <xforms:instance id="ins-permissions-acl">
+				<atom:entry/>
+			</xforms:instance> 
+			
         	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
 			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
                 <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
@@ -268,18 +275,38 @@
   
             
 			<xforms:submission 
-				id="sub-get-permissions-entry"
+				id="sub-get-acl-entry"
 				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="get"
 				replace="instance"
-				instance="ins-permissions-entry"
+				instance="ins-acl-entry"
 				serialization="none">
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>   
             
 			<xforms:submission 
+				id="sub-get-permissions-entry"
+				resource="{instance('ins-acl-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
+				method="get"
+				replace="instance"
+				instance="ins-permissions-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+			
+			<xforms:submission 
+				id="sub-get-permissions-acl"
+				resource="{instance('ins-permissions-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-permissions-acl"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+			
+			<xforms:submission 
 				id="sub-put-permissions-entry"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				resource="{instance('ins-acl-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
 				method="put"
 				replace="instance"
 				instance="ins-permissions-entry"
@@ -510,8 +537,8 @@
 				resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 				method="put"
 				replace="instance"
-				instance="ins-permissions-entry"
-				ref="instance('ins-permissions-entry')"
+				instance="ins-acl-entry"
+				ref="instance('ins-acl-entry')"
 				mediatype="application/atom+xml">
 				
 				<xforms:action ev:event="xforms-submit-done">

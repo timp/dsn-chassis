@@ -37,9 +37,10 @@
 							    <h2>Administrators</h2>
 							
 								<!-- If the user has PUT access to the security descriptor. -->
+								
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'PUT')]">
 							
-								    <xforms:group ref="instance('ins-permissions-entry')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+								    <xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 								    	
 								    	<div id="editable-list-of-administrators-container">
 								    	
@@ -121,7 +122,7 @@
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
 									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and not(contains(@atombeat:allow, 'PUT'))]">
 										
-										<xforms:group ref="instance('ins-permissions-entry')//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+										<xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 											<table>
 												<xforms:repeat nodeset="atombeat:member" id="rep-administrator-curator">
 													<tr>
