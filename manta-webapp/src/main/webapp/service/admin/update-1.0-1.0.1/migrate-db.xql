@@ -112,7 +112,7 @@ declare function local:do-modifications() as element( atom:entry )*
 
 declare function local:rename-resources($coll as xs:string) {
     let $collection := concat('/atombeat/content',$coll)
-    let $col-root := concat($config:content-service-url, $coll, '/')
+    let $col-root := concat($config:self-link-uri-base, $coll, '/')
     let $studies := collection( $collection )
     let $mod := for $resource in $studies
         let $atom-id := $resource//atom:id
