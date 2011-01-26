@@ -4,15 +4,15 @@ declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 
 import module namespace response = "http://exist-db.org/xquery/response" ;
 
-import module namespace config = "http://purl.org/atombeat/xquery/config" at "../config/shared.xqm" ;
-import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../lib/constants.xqm" ;
-import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../lib/xutil.xqm" ;
-import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../lib/atom-security.xqm" ;
-import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../lib/atomdb.xqm" ;
-import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at "../lib/atom-protocol.xqm" ;
-import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../lib/common-protocol.xqm" ;
+import module namespace config = "http://purl.org/atombeat/xquery/config" at "../../config/shared.xqm" ;
+import module namespace CONSTANT = "http://purl.org/atombeat/xquery/constants" at "../../lib/constants.xqm" ;
+import module namespace xutil = "http://purl.org/atombeat/xquery/xutil" at "../../lib/xutil.xqm" ;
+import module namespace atomsec = "http://purl.org/atombeat/xquery/atom-security" at "../../lib/atom-security.xqm" ;
+import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "../../lib/atomdb.xqm" ;
+import module namespace ap = "http://purl.org/atombeat/xquery/atom-protocol" at "../../lib/atom-protocol.xqm" ;
+import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "collections.xqm" ;
-import module namespace security-config = "http://purl.org/atombeat/xquery/security-config" at "../config/security.xqm" ;
+import module namespace security-config = "http://purl.org/atombeat/xquery/security-config" at "../../config/security.xqm" ;
 
 
 
