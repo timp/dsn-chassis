@@ -490,7 +490,41 @@ declare function manta-plugin:after-create-member-studies(
     let $id := manta-plugin:get-id( $entry )
     let $path-info := atomdb:edit-path-info($entry)
     let $study-uri := $entry/atom:link[@rel='edit']/@href
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
     
+ (: create group :)
+    let $study-group-entry :=
+        <atom:entry>
+            <atom:title type="text">Group</atom:title>
+            <atom:content>
+                <atombeat:groups xmlns:atombeat="http://purl.org/atombeat/xmlns">
+                    <atombeat:group id="GROUP_ADMINISTRATORS">
+                        <atombeat:member>{$user-name}</atombeat:member>
+                    </atombeat:group>
+                </atombeat:groups>
+            </atom:content>
+            <atom:link 
+                rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
+                href="{$study-uri}" 
+                type="application/atom+xml;type=entry"/>
+        </atom:entry>
+        
+        
+    (: create the group member :)
+    let $member-groups := atomdb:create-member( "/groups" , $id , $study-group-entry, $user-name )
+    (: create and store the security descriptor :)
+    let $path-info-member-group := atomdb:edit-path-info( $member-groups )
+    let $security-descriptor-groups := $security-config:groups-collection-security-descriptor
+    let $descriptor-stored := atomsec:store-descriptor( $path-info-member-group , $security-descriptor-groups )
+    
+    let $group-uri := concat($config:edit-link-uri-base,$path-info-member-group)
+    (: Now that the group has been created update the study security descriptor :)
+       (: create and store the security descriptor :)
+    
+    let $security-descriptor-study := security-config:study-member-security-descriptor( $group-uri )
+    let $study-security-descriptor-path := $path-info
+    let $descriptor-stored := atomsec:store-descriptor( $study-security-descriptor-path , $security-descriptor-study )
+
     (: create study info :)
     
     let $study-info-entry :=
@@ -502,14 +536,14 @@ declare function manta-plugin:after-create-member-studies(
                 type="application/atom+xml;type=entry"/>
         </atom:entry>
         
-    (: create the member :)    
-    let $member-study-info := atomdb:create-member( "/study-info" , $id , $study-info-entry )  
+    (: create the study-info member :)
+    let $member-study-info := atomdb:create-member( "/study-info" , $id , $study-info-entry, $user-name )  
     
     (: create and store the security descriptor :)
     let $path-info-member-study-info := atomdb:edit-path-info( $member-study-info )
-    let $security-descriptor-study-info := security-config:study-info-member-security-descriptor( $study-uri )
+    let $security-descriptor-study-info := security-config:study-info-member-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $path-info-member-study-info , $security-descriptor-study-info )
-    
+
     (: create a collection for submitted media :)    
     
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
@@ -543,9 +577,9 @@ declare function manta-plugin:after-create-member-studies(
                 </atombeat:config>
             </atombeat:config-tombstones>
         </atom:feed>
-        
-    let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed )
-    let $submitted-media-collection-descriptor := security-config:submitted-media-collection-security-descriptor( $submitted-media-collection-path-info )
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
+    let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed, $user-name )
+    let $submitted-media-collection-descriptor := security-config:submitted-media-collection-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
     
     (: create a collection for curated media :)    
@@ -574,8 +608,8 @@ declare function manta-plugin:after-create-member-studies(
             </atombeat:config-link-extensions>
         </atom:feed>
         
-    let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed )
-    let $curated-media-collection-descriptor := security-config:curated-media-collection-security-descriptor( $curated-media-collection-path-info )
+    let $curated-media-collection-db-path := atomdb:create-collection( $curated-media-collection-path-info , $feed, $user-name )
+    let $curated-media-collection-descriptor := security-config:curated-media-collection-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $curated-media-collection-path-info , $curated-media-collection-descriptor )
     
     (: create a collection for derivations :)    
@@ -592,8 +626,8 @@ declare function manta-plugin:after-create-member-studies(
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
-    let $derivations-collection-db-path := atomdb:create-collection( $derivations-collection-path-info , $feed )
-    let $derivations-collection-descriptor := security-config:derivations-collection-security-descriptor( $derivations-collection-path-info )
+    let $derivations-collection-db-path := atomdb:create-collection( $derivations-collection-path-info , $feed, $user-name )
+    let $derivations-collection-descriptor := security-config:derivations-collection-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $derivations-collection-path-info , $derivations-collection-descriptor )
     
     (: create a collection for personal data reviews :)    
@@ -610,8 +644,8 @@ declare function manta-plugin:after-create-member-studies(
                 type="application/atom+xml;type=entry"/>
         </atom:feed>
         
-    let $personal-data-reviews-collection-db-path := atomdb:create-collection( $personal-data-reviews-collection-path-info , $feed )
-    let $personal-data-reviews-collection-descriptor := security-config:personal-data-reviews-collection-security-descriptor( $personal-data-reviews-collection-path-info )
+    let $personal-data-reviews-collection-db-path := atomdb:create-collection( $personal-data-reviews-collection-path-info , $feed, $user-name )
+    let $personal-data-reviews-collection-descriptor := security-config:personal-data-reviews-collection-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $personal-data-reviews-collection-path-info , $personal-data-reviews-collection-descriptor )
     
     let $entry := manta-plugin:augment-study-entry( $entry )
@@ -654,8 +688,9 @@ declare function manta-plugin:after-create-member-drafts(
                 </atombeat:extension-attribute>
             </atombeat:config-link-extensions>
         </atom:feed>
-        
-    let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed )
+    
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
+    let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed, $user-name )
     let $draft-media-collection-descriptor := security-config:draft-media-collection-security-descriptor( $draft-media-collection-path-info , $user )
     let $descriptor-stored := atomsec:store-descriptor( $draft-media-collection-path-info , $draft-media-collection-descriptor )
     
@@ -1098,35 +1133,35 @@ declare function manta-plugin:augment-study-entry(
     let $submitted-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" 
-            href="{concat( $config:content-service-url , $submitted-media-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $submitted-media-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $curated-media-collection-path-info := manta-plugin:curated-media-collection-path-info-for-study-entry( $entry )
     let $curated-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" 
-            href="{concat( $config:content-service-url , $curated-media-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $curated-media-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $derivations-collection-path-info := manta-plugin:derivations-collection-path-info-for-study-entry( $entry )
     let $derivations-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/derivations" 
-            href="{concat( $config:content-service-url , $derivations-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $derivations-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $personal-data-reviews-collection-path-info := manta-plugin:personal-data-reviews-collection-path-info-for-study-entry( $entry )
     let $personal-data-reviews-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" 
-            href="{concat( $config:content-service-url , $personal-data-reviews-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $personal-data-reviews-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $study-info-member-path-info := manta-plugin:study-info-member-path-info-for-study-entry( $entry )
     let $study-info-member-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/studyInfo" 
-            href="{concat( $config:content-service-url , $study-info-member-path-info )}"
+            href="{concat( $config:self-link-uri-base , $study-info-member-path-info )}"
             type="application/atom+xml;type=entry"/>
             
     let $children := (
@@ -1210,7 +1245,7 @@ declare function manta-plugin:augment-derivation-atom-entry(
                     <atom:link>
                     {
                         $child/attribute::* ,
-                        let $path-info := substring-after( $child/@href , $config:content-service-url )
+                        let $path-info := substring-after( $child/@href , $config:self-link-uri-base )
                         return 
                             manta-plugin:expand-atom-link($path-info)
                             
@@ -1249,7 +1284,7 @@ declare function manta-plugin:augment-derivation-tombstone(
                     <atom:link>
                     {
                         $child/attribute::* ,
-                        let $path-info := substring-after( $child/@href , $config:content-service-url )
+                        let $path-info := substring-after( $child/@href , $config:self-link-uri-base )
                         return 
                             manta-plugin:expand-atom-link($path-info)
                     }
@@ -1283,7 +1318,7 @@ declare function manta-plugin:augment-draft-entry-atom(
     let $draft-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/draftMedia" 
-            href="{concat( $config:content-service-url , $draft-media-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $draft-media-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $entry := 
@@ -1308,7 +1343,7 @@ declare function manta-plugin:augment-draft-entry-tombstone(
     let $draft-media-collection-link := 
         <atom:link 
             rel="http://www.cggh.org/2010/chassis/terms/draftMedia" 
-            href="{concat( $config:content-service-url , $draft-media-collection-path-info )}"
+            href="{concat( $config:self-link-uri-base , $draft-media-collection-path-info )}"
             type="application/atom+xml;type=feed"/>
         
     let $entry := 
@@ -1346,18 +1381,18 @@ declare function manta-plugin:augment-media-atom-entry(
     
     let $study-id := text:groups( $entry/atom:link[@rel='edit']/@href , "([^/]+)/[^/]+$" )[2]
     let $origin-study-path-info := concat( "/studies/" , $study-id )
-    let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
+    let $origin-study-uri := concat( $config:self-link-uri-base , $origin-study-path-info )
     
     let $personal-data-reviews-uri := 
         concat( 
-            $config:content-service-url , 
+            $config:self-link-uri-base , 
             manta-plugin:personal-data-reviews-collection-path-info( $study-id ) ,
             "?reviewSubject=" ,
             $entry/atom:link[@rel='edit']/@href
         )
 
-    let $derivation-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?output=" , $entry/atom:link[@rel='edit']/@href )
-    let $derived-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?input=" , $entry/atom:link[@rel='edit']/@href )
+    let $derivation-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?output=" , $entry/atom:link[@rel='edit']/@href )
+    let $derived-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?input=" , $entry/atom:link[@rel='edit']/@href )
 
     let $entry := 
         <atom:entry>
@@ -1387,18 +1422,18 @@ declare function manta-plugin:augment-media-entry-tombstone(
     let $study-id := text:groups( $ref , "([^/]+)/[^/]+$" )[2]
     let $log := local:log4jDebug(concat('augment-media-entry-tombstone:',$study-id))
     let $origin-study-path-info := concat( "/studies/" , $study-id )
-    let $origin-study-uri := concat( $config:content-service-url , $origin-study-path-info )
+    let $origin-study-uri := concat( $config:self-link-uri-base , $origin-study-path-info )
     
     let $personal-data-reviews-uri := 
         concat( 
-            $config:content-service-url , 
+            $config:self-link-uri-base , 
             manta-plugin:personal-data-reviews-collection-path-info( $study-id ) ,
             "?reviewSubject=" ,
             $ref
         )
 
-    let $derivation-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?output=" , $ref )
-    let $derived-uri := concat( $config:content-service-url , "/derivations/" , $study-id , "?input=" , $ref )
+    let $derivation-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?output=" , $ref )
+    let $derived-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?input=" , $ref )
 
     let $entry := 
         <at:deleted-entry>

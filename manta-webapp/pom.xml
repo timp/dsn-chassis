@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.1.0-RC-4-SNAPSHOT</version>
+	<version>1.2.0-alpha-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
@@ -67,7 +67,6 @@
 		<dependency>
 			<groupId>orbeon</groupId>
 			<artifactId>orbeon</artifactId>
-			<!--  FIXME need a version  -->
 			<version>3.8.0.201010131704</version>
 		</dependency>
 
@@ -314,7 +313,7 @@
 	-->
 	<properties>
 		<org.springsecurity.version>3.1.0.M1</org.springsecurity.version>
-		<org.atombeat.version>0.2-alpha-2</org.atombeat.version>
+		<org.atombeat.version>0.2-alpha-4</org.atombeat.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />

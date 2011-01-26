@@ -38,11 +38,22 @@ declare variable $config:exist-password as xs:string := manta-util:get-jndi-vari
 declare variable $config:service-url-base as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","serviceBaseURL") ;
 
 
-(:
- : The base URL for the Atom service. This URL will be prepended to all edit
- : and self link href values.
+(:~
+ : The base URI for 'self' links. Can be different from 'edit' links if you want them to be.
  :)
-declare variable $config:content-service-url as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","contentURL") ;
+declare variable $config:self-link-uri-base as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","selfURL") ;
+
+
+(:~
+ : The base URI for 'edit' links.
+ :)
+declare variable $config:edit-link-uri-base as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","editURL") ;
+
+
+(:~
+ : The base URI for 'edit-media' links.
+ :)
+declare variable $config:edit-media-link-uri-base as xs:string := manta-util:get-jndi-variable("bean/existConfigFactory","editMediaURL") ;
 
 
 (:
@@ -158,5 +169,18 @@ declare function config:generate-identifier(
 
     else util:uuid()
 };
+
+declare function config:contruct-member-atom-id(
+    $identifier as xs:string ,
+    $collection-path-info as xs:string
+) as xs:string
+{
+    (: if using UUID to generate identifier... :)
+    (: concat( 'urn:uuid:' , $identifier ) :)
+    (: alternatively, you could do something like... :)
+    concat( $config:self-link-uri-base , $collection-path-info , '/', $identifier )
+};
+
+
 
 

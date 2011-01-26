@@ -146,11 +146,11 @@
 
 			<!-- This adds the current user as an administrator to the ACL in the draft.  -->
 			<xforms:action ev:event="xforms-model-construct-done">
-           		<xforms:setvalue ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" value="xxforms:get-remote-user()"/>
+           		<xforms:setvalue ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" value="xxforms:get-remote-user()"/>
 			</xforms:action>
 
 			<!-- Require valid email addresses in the permissions field -->			
-			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
+			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
 
 			<!-- person template for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
 			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
@@ -335,7 +335,7 @@
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
 
-			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
                 <xforms:bind nodeset="user[1]" readonly="true()" />
             </xforms:bind>
 
@@ -361,7 +361,8 @@
                 instance="ins-study-entry"
                 mediatype="application/atom+xml">
                 
-  
+  				<!-- get the study permissions. -->
+                <xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
                 <!-- put the study permissions. -->
                 <xforms:send ev:event="xforms-submit-done" submission="sub-put-study-permissions"/>
                 
@@ -373,11 +374,24 @@
                          
             </xforms:submission>
 
+			<xforms:instance id="ins-study-permissions-entry">
+				<atom:entry/>
+			</xforms:instance>
+<!-- This gets the study's security descriptor link href. -->
+            <xforms:submission 
+            	id="sub-get-study-permissions"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+                method="get" 
+                replace="instance"
+				instance="ins-study-permissions-entry"
+				serialization="none">
+                </xforms:submission>
+			
 			<!-- This puts (updates) the study permission list to the study's security descriptor link href. -->
             <xforms:submission 
             	id="sub-put-study-permissions" 
             	ref="instance('ins-draft-entry')/atom:content/draft/study-permissions-entry-container/atom:entry"
-                resource="{instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+                resource="{instance('ins-study-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
                 method="put" 
                 replace="none" 
                 mediatype="application/atom+xml">
