@@ -1,0 +1,12 @@
+#summary How to upgrade from Chassis 1.1 to 1.2
+
+= Introduction =
+
+
+
+
+= Details =
+
+   # Update the manta-config library to version 0.2-alpha-4 - this jar will be in your tomcat endorsed folder (restart required)
+   # Run /service/admin/update-1.1-1.2/move-groups.xql
+   # Run /service/admin/update-1.1-1.2/migrate-draft-1.1-to-1.2.xql
