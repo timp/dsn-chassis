@@ -299,9 +299,27 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
-            </xforms:submission>            
+            </xforms:submission>
 
-			<!-- This will put the draft-entry to the edit link href and then load the home page. -->
+	<xforms:submission id="sub-query-pubmed"
+		action="/contributor/pubmed-query" replace="instance" method="post"
+		ref="instance('ins-draft-entry')" instance="ins-draft-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
+		
+	</xforms:submission>
+
+	<xforms:submission id="sub-query-crossref"
+		action="/contributor/crossref-query" replace="instance" method="post"
+		ref="instance('ins-draft-entry')" instance="ins-draft-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
+		
+	</xforms:submission>
+	
+	<!-- This will put the draft-entry to the edit link href and then load the home page. -->
             <xforms:submission 
             	id="sub-back-home" 
             	ref="instance('ins-draft-entry')"
