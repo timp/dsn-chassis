@@ -6,7 +6,7 @@
     xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
     <p:param type="input" name="instance"/>
-    <p:param name="data" type="output" debug="out"/>
+    <p:param name="data" type="output" />
     
     <p:processor name="oxf:xslt">
         <p:input name="data" href="#instance"/>
