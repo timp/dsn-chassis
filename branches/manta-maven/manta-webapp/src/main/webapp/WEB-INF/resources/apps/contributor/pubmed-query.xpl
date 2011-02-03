@@ -6,7 +6,7 @@
     xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
 
     <p:param type="input" name="instance"/>
-    <p:param name="data" type="output" debug="out"/>
+    <p:param name="data" type="output" />
     
     <p:processor name="oxf:xslt">
         <p:input name="data" href="#instance"/>
@@ -27,8 +27,8 @@
     
     <p:processor name="oxf:xforms-submission">
         <p:input name="submission">
-            <!-- http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi -->
-            <xforms:submission method="get" content-type="text/xml" action="http://localhost/pubmed.php" separator="&amp;">
+            <!-- http://localhost/pubmed.php - won't work until pubmed fix their Content-Type header to return text/xml or similar -->
+            <xforms:submission method="get" content-type="text/xml" action="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi" separator="&amp;">
                 <xforms:header>
                     <xforms:name>Accept</xforms:name>
                     <xforms:value>text/xml</xforms:value>
@@ -52,13 +52,12 @@
                 </xsl:template>
                 <xsl:template match="//acknowledgements">
                     <acknowledgements>
-                        <!-- Only copy from pubmed if there's one ack - hopefully first time through only -->
-                        <xsl:if test="count(person) = 1">
+                        <!-- Only copy from pubmed if there's a valid response -->
+                        <xsl:if test="count($metadata//Article/AuthorList/Author) &gt; 0">
                             <xsl:apply-templates select="$metadata//Article" />
                         </xsl:if>
-                        <!-- not using pubmed so leave alone -->
                         <!-- if there's no result from pubmed leave alone -->
-                        <xsl:if test="count($metadata//Article/AuthorList/Author) = 0 or count(person) &gt; 1">
+                        <xsl:if test="count($metadata//Article/AuthorList/Author) = 0">
                             <xsl:apply-templates select="person"/>
                         </xsl:if>
                     </acknowledgements>
@@ -72,7 +71,7 @@
                 <xsl:template match="Author">
                     <person>
                         <first-name><xsl:value-of select="ForeName"/></first-name>
-                        <middle-name><xsl:value-of select="Initials"/></middle-name>
+                        <middle-name></middle-name>
                         <family-name><xsl:value-of select="LastName"/></family-name>
                         <email-address></email-address>
                         <institution><xsl:value-of select="parent::node()/parent::*/Affiliation"/></institution>
