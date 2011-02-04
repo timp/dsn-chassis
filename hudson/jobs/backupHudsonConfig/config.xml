@@ -13,6 +13,7 @@
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <authToken>rof_G6T8S_bWbAGM</authToken>
   <triggers class="vector">
@@ -26,7 +27,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd /var/lib/hudson
+      <command>cd /var/lib/jenkins
 # Add any new conf files, jobs, users, and content.
 svn add -q --parents *.xml jobs/*/config.xml users/*/config.xml userContent/*
 # Ignore things in the root we don&apos;t care about.
