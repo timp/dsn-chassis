@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.392</version>
+  <version>1.396</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -59,7 +59,11 @@
   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
     <disableSignup>false</disableSignup>
   </securityRealm>
-  <systemMessage>&lt;h2&gt;Hudson Server for &lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&lt;/h2&gt;&#xd;
+  <systemMessage>&lt;h2&gt;CI Server for CGGH&lt;/h2&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
+&lt;br/&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
+&#xd;
 &lt;ul&gt;&#xd;
 &lt;li&gt;&#xd;
 &lt;a href=&quot;http://cloud1.cggh.org/manta&quot;&gt;Manta&lt;/a&gt;&#xd;
@@ -99,10 +103,14 @@
     <listView>
       <owner class="hudson" reference="../../.."/>
       <name>Manta</name>
-      <description>&lt;h2&gt;Hudson Server for &lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&lt;/h2&gt;&#xd;
+      <description>&lt;h2&gt;CI Server for CGGH&lt;/h2&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
+&lt;br/&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
+&#xd;
 &lt;ul&gt;&#xd;
 &lt;li&gt;&#xd;
-&lt;a href=&quot;http://cloud1.cggh.org/repository&quot;&gt;Manta&lt;/a&gt;&#xd;
+&lt;a href=&quot;http://cloud1.cggh.org/manta&quot;&gt;Manta&lt;/a&gt;&#xd;
 &lt;/li&gt;&#xd;
 &lt;/ul&gt;&#xd;
 </description>
