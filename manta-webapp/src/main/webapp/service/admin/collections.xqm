@@ -64,8 +64,14 @@ declare variable $config-collections:collection-spec :=
             <atom:feed
                 atombeat:enable-versioning="true"
                 atombeat:exclude-entry-content="true"
-                atombeat:recursive="false">
+                atombeat:recursive="false"
+                atombeat:enable-tombstones="true">
                 <atom:title type="text">Drafts</atom:title>
+                <atombeat:config-tombstones>
+                    <atombeat:config>
+                        <atombeat:param name="ghost-atom-elements" value="id published updated author title link"/>
+                    </atombeat:config>
+                </atombeat:config-tombstones>
             </atom:feed>
         </collection>  
         
