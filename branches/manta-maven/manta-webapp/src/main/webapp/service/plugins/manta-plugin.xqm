@@ -1032,12 +1032,23 @@ declare function manta-plugin:submitted-media-collection-path-info-for-study-ent
 
 
 declare function manta-plugin:draft-media-collection-path-info-for-draft-entry(
-    $entry as element(atom:entry)
+    $entry as element()
 ) as xs:string
 {
-    let $id := manta-plugin:get-id( $entry )
-    let $collection-path-info := concat( "/media/draft/" , $id )
+
+    (: $entry could be either $entry instance of element(atom:entry) or $entry instance of element(at:deleted-entry) :)
+
+    let $id :=  if ($entry instance of element(at:deleted-entry)) then 
+                    let $deleted-entry-id := manta-plugin:get-deleted-entry-id ($entry)
+                    return $deleted-entry-id
+                else
+                    let $entry-id := manta-plugin:get-id($entry)
+                    return $entry-id
+    
+    let $collection-path-info := concat( "/media/draft/" , $id )    
+    
     return $collection-path-info
+    
 };
 
 
