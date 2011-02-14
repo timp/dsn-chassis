@@ -312,7 +312,7 @@
 		production or -D property=value
 	-->
 	<properties>
-		<org.springsecurity.version>3.1.0.M1</org.springsecurity.version>
+		<org.springsecurity.version>3.1.0.RC1</org.springsecurity.version>
 		<org.atombeat.version>0.2-alpha-4</org.atombeat.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
