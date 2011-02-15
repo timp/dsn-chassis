@@ -22,7 +22,8 @@
     xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:app="http://www.w3.org/2007/app">
     
     <head>
     
@@ -182,7 +183,8 @@
 										instance('ins-reviews-feed')/atom:entry[ 
 											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
 										] 
-								) 
+								) and instance('ins-studies-feed')/atom:entry[atom:link[@rel='edit']/@href = $entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href and not(app:control/draft/text() = 'yes')]
+								 
 							) then $entry else ()
 						">
 		    			
