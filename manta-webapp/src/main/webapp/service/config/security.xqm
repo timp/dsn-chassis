@@ -520,13 +520,7 @@ declare function security-config:groups-collection-security-descriptor (
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-            
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>            
+            </atombeat:ace>      
 
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
@@ -544,6 +538,12 @@ declare function security-config:groups-collection-security-descriptor (
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
             </atombeat:ace>
 
         </atombeat:acl>
