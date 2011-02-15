@@ -45,6 +45,7 @@ declare variable $manta-plugin:reserved :=
             <link rel="http://www.cggh.org/2010/chassis/terms/derivation"/>
             <link rel="http://www.cggh.org/2010/chassis/terms/derived"/>
             <link rel="http://www.cggh.org/2010/chassis/terms/draftMedia"/>
+            <link rel="http://www.cggh.org/2010/chassis/terms/groups"/>
         </atom-links>
     </reserved>
 ;
