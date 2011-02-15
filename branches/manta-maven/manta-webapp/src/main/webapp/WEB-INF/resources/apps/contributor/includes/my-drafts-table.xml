@@ -3,15 +3,17 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
     
-    <h2 class="clear">My studies</h2>
+    <h2>Draft studies</h2>
     
-    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[not(app:control/draft/text() = 'yes')])]">
+    <p>Information is saved automatically as you move forward through the steps of the registration process. You don&#8217;t
+        need to upload all your information at the same session. Click the &#8216;Save as draft&#8217; button at the bottom of each
+        step to save information submitted to date. Once study registration is completed, your study can be accessed at
+        any time on the Data home: see &#8216;My studies&#8217;.
+    </p>
+    
+    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[app:control/draft/text() = 'yes'])]">
         
-        <p>Any study you register or have permission to access will be listed here. You&#8217;ll be able to navigate to each study
-            to upload files or edit the information provided when you registered the study.  
-        </p>
-        
-        
+        <!-- When no drafts. -->
     </xforms:group>
     
     <xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
@@ -30,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/draft/text() = 'yes')], atom:published, 'text', 'descending')">
+                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
                                 <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
@@ -54,7 +56,7 @@
                                 </xforms:repeat>
                                 <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
                             </td>
-                            <td><span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
+                            <td><span class="view-study-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}">View</a></span></td>
                         </tr>
                     </xforms:repeat>
                 </tbody>
