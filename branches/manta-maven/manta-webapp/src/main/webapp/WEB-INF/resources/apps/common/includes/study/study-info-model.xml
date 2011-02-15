@@ -608,8 +608,7 @@
 	<xforms:instance id="ins-month-items" src="/apps/common/constants/months.xml" />
 	<xforms:instance id="ins-country-items"
 		src="/apps/common/constants/countries.xml" />
-	<xforms:instance id="ins-module-items"
-		src="/apps/common/constants/modules.xml" />
+
 	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
 		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
 	<xforms:instance id="ins-administrationRoute-items"
