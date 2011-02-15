@@ -512,13 +512,14 @@
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
         	</xforms:submission>        	
 
-			<xforms:submission id="sub-notify-put-all-permissions"	action="/study/email-lock" replace="none" method="post"
+			<xforms:submission id="sub-notify-put-all-permissions" action="/study/email-lock" replace="none" method="post"
 				ref="instance('ins-study-entry')">
-
 
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 					value="event('error-type')" />) while sending a message.</xforms:message>
-				<xforms:send ev:event="xforms-submit-done"	submission="sub-put-all-permissions" />
+					
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-all-permissions" />
+				
 			</xforms:submission>
 			
 			<xforms:submission 
@@ -796,6 +797,27 @@
                 </div>
 
 		<!-- End of After content id, before ft id -->
+
+		<xxforms:dialog id="send-email-option-dialog" level="modal" close="false" draggable="true"> 
+			<xforms:label>Locking Study...</xforms:label> 
+			<p>Do you want to send an email to the study author?
+			</p> 
+			<div> 
+				<xforms:trigger> 
+					<xforms:label>Yes</xforms:label> 
+					<xforms:action ev:event="DOMActivate"> 
+						<xxforms:hide ev:event="DOMActivate" dialog="send-email-option-dialog"/>
+						<xforms:send submission="sub-notify-put-all-permissions"/>
+					</xforms:action> 
+				</xforms:trigger> 
+				<xforms:trigger> 
+					<xforms:label>No</xforms:label>
+					<xxforms:hide ev:event="DOMActivate" dialog="send-email-option-dialog"/>
+					<xforms:send submission="sub-put-all-permissions"/>
+				</xforms:trigger> 
+			</div> 
+		</xxforms:dialog>
+
     	
     	<!-- <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>  -->
     	

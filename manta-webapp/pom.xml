@@ -343,8 +343,9 @@
 		<bing-maps-key>AkThinf82zQztpVxwyFn6q_vVMbo5EuYnWBQf2T6-_b1Zs9903MBf8a10Dn1OiJb</bing-maps-key>
 		
 		<!-- Referenced in WEB-INF/resources/config/theme-manta.xsl -->
-		<!-- TODO: Replace this with the id for google.analytics.tests@wwarn.org -->
-		<google-analytics-web-property-id>UA-test</google-analytics-web-property-id>
+		<!-- This is one of the web-property-ids for google.analytics.tests@wwarn.org. -->
+		<!-- It is linked to the profile named test.wwarn.org, but can be triggered from any host. -->
+		<google-analytics-web-property-id>UA-21401758-1</google-analytics-web-property-id>
 	</properties>
 
 
