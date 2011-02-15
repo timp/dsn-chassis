@@ -26,11 +26,10 @@
 			<xi:include href="../help-boxes/for-wizard-panes/acknowledgements.xml"/>
 			
 			<div class="main twoCol">
-				<div id="content" class="register-study-wizard">
-					
+				<div id="content" class="register-study-wizard">	
 	<h2>Acknowledgements</h2>
 
-	<xforms:group id="list-of-acknowledgements" ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/acknowledgements">
+	<xforms:group id="list-of-acknowledgements" ref="instance('ins-draft-entry')/atom:content/study/acknowledgements">
 	        
 	        
 		<span id="editable-list-of-acknowledgements-container">	        
@@ -184,7 +183,7 @@
 							<xforms:action ev:event="DOMActivate"
 								if="../draft-entry-is-valid = 'true'">
 								<xforms:setvalue
-									ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+									ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 									value="'permissions'"/>
 								<xforms:send submission="sub-implicit-put-draft-entry"/>
 							</xforms:action>
@@ -217,7 +216,7 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+										ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 										value="'upload-files'"/>
 									<xforms:send submission="sub-implicit-put-draft-entry"/>
 								</xforms:action>
@@ -248,7 +247,7 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+										ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 										value="'review'"/>
 									<xforms:send submission="sub-implicit-put-draft-entry"/>
 								</xforms:action>

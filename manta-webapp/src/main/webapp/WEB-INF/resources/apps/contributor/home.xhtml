@@ -23,7 +23,8 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
-	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:app="http://www.w3.org/2007/app">
     
     <head>
     
@@ -193,79 +194,7 @@ administrator (see Step 2).
 	    		
 	    	</xforms:group>
 	    	
-
-		    <h2>Draft studies</h2>
-			
-			<p>Information is saved automatically as you move forward through the steps of the registration process. You don&#8217;t
-need to upload all your information at the same session. Click the &#8216;Save as draft&#8217; button at the bottom of each
-step to save information submitted to date. Once study registration is completed, your study can be accessed at
-any time on the Data home: see &#8216;My studies&#8217;.
-			</p>
-			
-			<xforms:group ref="instance('ins-draft-feed')[empty(atom:entry)]">
-			
-				<!-- When no drafts. -->
-			
-    		</xforms:group> 
-
-    		<xforms:group ref="instance('ins-draft-feed')[count(atom:entry)>0]">
-
-				<!-- NB: issues using groups within fr:datatable -->
-		    	<table class="drafts">
-		    		<thead>
-		    			<tr>
-		    				<th>Draft Title</th>
-		    				<th>Created</th>
-	
-						 
-								<xforms:group ref="instance('ins-control')/administrator-controls">
-									<th>Creator</th>
-								</xforms:group>
-						
-		    				<th>Actions</th>
-		    			</tr>
-		    		</thead>
-		    		<tbody>
-		    			<xforms:repeat id="rep-drafts" nodeset="xxforms:sort(instance('ins-draft-feed')/atom:entry, atom:published, 'text', 'descending')">
-		    			
-		    				<tr class="repeated-element">
-		    					<td>
-		    						<a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
-		    					</td>
-		    					<td>
-		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-		    					</td>
-		    					<xforms:group ref="instance('ins-control')/administrator-controls">
-		    					<td>
-				    				<xforms:output value="xxforms:context('rep-drafts')/atom:author"/>
-				    			</td>
-				    			</xforms:group>				
-		    					<td>
-
-									<xforms:trigger>
-								         <xforms:label>Edit</xforms:label>
-								         <xforms:action ev:event="DOMActivate">
-											<xforms:load resource="register-study-wizard?draft={atom:link[@rel='edit']/@href}" />
-								         </xforms:action>
-							          </xforms:trigger> 
-
-							          <xforms:trigger>
-								         <xforms:label>Delete</xforms:label>
-								         <xforms:action ev:event="DOMActivate">
-											<xforms:setvalue ref="instance('ins-control')/href-of-draft-to-delete" value="xxforms:context('rep-drafts')/atom:link[@rel='edit']/@href" />
-											<xxforms:show dialog="confirm-delete-draft-dialog" />
-								         </xforms:action>
-							          </xforms:trigger> 
-	
-		    					</td>
-		    				</tr>
-		    			</xforms:repeat>
-		    		</tbody>
-		    	</table>
-
-		    			
-    		</xforms:group>    		
-
+    		<xi:include href="includes/my-drafts-table.xml"/>
 			<xi:include href="includes/my-studies-table.xml"/>
     		
     	</div>

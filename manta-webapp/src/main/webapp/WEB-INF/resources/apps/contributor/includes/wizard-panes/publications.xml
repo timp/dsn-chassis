@@ -30,7 +30,7 @@
 					
 						<p>
 							<span id="published-status-menu-container">
-								<xforms:select1 ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/study-is-published">
+								<xforms:select1 ref="instance('ins-draft-entry')//atom:content/study/study-is-published">
 									<xforms:label>Is the study published?</xforms:label>
 									<xforms:item>
 										<xforms:label>Select...</xforms:label>
@@ -47,7 +47,7 @@
 							</span>
 						</p>
 					
-					    <xforms:group ref="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications">
+					    <xforms:group ref="instance('ins-draft-entry')//atom:content/study/publications">
 					              
 							<div id="editable-list-of-publications-container">
 					          
@@ -156,7 +156,7 @@
 						                        <xforms:label><img src="/apps/contributor/common/add.gif" alt="Add"/></xforms:label>
 						                        <xforms:insert 
 						                            ev:event="DOMActivate" 
-						                            context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications" 
+						                            context="instance('ins-draft-entry')//atom:content/study/publications" 
 						                            nodeset="publication" 
 						                            at="last()" 
 						                            position="after" 
@@ -169,7 +169,7 @@
 							                        <xforms:label>Add a publication</xforms:label>
 							                        <xforms:insert 
 							                            ev:event="DOMActivate" 
-							                            context="instance('ins-draft-entry')/atom:content/draft/study-entry-container/atom:entry/atom:content/study/publications" 
+							                            context="instance('ins-draft-entry')//atom:content/study/publications" 
 							                            nodeset="publication" 
 							                            at="last()" 
 							                            position="after" 
@@ -195,7 +195,7 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+										ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 										value="'upload-files'" />
 									<xforms:send submission="sub-implicit-put-draft-entry" />
 								</xforms:action>
@@ -229,7 +229,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'review'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />
@@ -267,7 +267,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'review'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />

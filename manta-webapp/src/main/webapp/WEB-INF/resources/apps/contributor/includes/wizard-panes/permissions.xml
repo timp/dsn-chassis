@@ -32,7 +32,7 @@
 					<h3>Administrators</h3>
 				
 					
-					<xforms:group ref="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+					<xforms:group ref="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 				    
 						<div id="editable-list-of-administrators-container">
 				    
@@ -112,9 +112,9 @@
 							<xforms:action ev:event="DOMActivate"
 								if="../draft-entry-is-valid = 'true'">
 								<xforms:setvalue
-									ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+									ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 									value="'study-terms'" />
-								<xforms:send submission="sub-implicit-put-draft-entry" />
+								<xforms:send submission="sub-implicit-put-permissions" />
 							</xforms:action>
 							<xforms:action ev:event="DOMActivate"
 								if="not(../draft-entry-is-valid = 'true')">
@@ -129,7 +129,7 @@
 							<xforms:label>Save as draft</xforms:label>
 							<xforms:action ev:event="DOMActivate"
 								if="../draft-entry-is-valid = 'true'">
-								<xforms:send submission="sub-explicit-put-draft-entry" />
+								<xforms:send submission="sub-explicit-put-permissions" />
 							</xforms:action>
 							<xforms:action ev:event="DOMActivate"
 								if="not(../draft-entry-is-valid = 'true')">
@@ -146,10 +146,10 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+										ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 										value="'acknowledgements'" />
 									<xforms:send
-										submission="sub-implicit-put-draft-entry" />
+										submission="sub-implicit-put-permissions" />
 								</xforms:action>
 								<xforms:action ev:event="DOMActivate"
 									if="not(../draft-entry-is-valid = 'true')">
@@ -185,7 +185,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/draft/wizard-pane-to-show"
+											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'review'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />

@@ -1,12 +1,18 @@
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-	<atom:title type="text" />
+	<atom:title type="text"/>
+	<app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control>
 	<atom:content type="application/vnd.chassis-manta+xml">
-		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.1">
-			<study-is-published />
-			<publications />
-			<acknowledgements />
-			<curator-notes />
+		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.2">
+			<ui-info>
+				<wizard-pane-to-show>study-terms</wizard-pane-to-show>
+			</ui-info>
+			<registrant-has-agreed-to-the-terms/>
+			<study-is-published/>
+			<publications/>
+			<acknowledgements/>
+			<curator-notes/>
 			<study-status>new</study-status>
+			<modules/>
 		</study>
 	</atom:content>
 </atom:entry>
