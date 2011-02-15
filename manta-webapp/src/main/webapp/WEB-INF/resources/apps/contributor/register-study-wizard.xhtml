@@ -132,7 +132,7 @@
   			</xforms:instance>
 
 			<!-- Require valid email addresses in the permissions field -->			
-			<xforms:bind nodeset="instance('ins-draft-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
+			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
 
 			<!-- person template for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
 			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
@@ -335,7 +335,7 @@
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
 
-			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
                 <xforms:bind nodeset="user[1]" readonly="true()" />
             </xforms:bind>
 
@@ -408,7 +408,7 @@
             
 			<!-- This will put the draft-entry to the edit link href, without a message on success. -->
             <xforms:submission 
-            	id="sub-implicit-put-study-permissions-entry" 
+            	id="sub-implicit-put-permissions" 
             	ref="instance('ins-study-permissions-entry')"
                 resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="put" 
