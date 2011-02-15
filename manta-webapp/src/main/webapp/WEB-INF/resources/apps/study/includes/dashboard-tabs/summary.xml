@@ -55,7 +55,24 @@
 												<xforms:input ref="instance('ins-study-entry')/atom:title">
 													<xforms:label>Title:</xforms:label>
 												</xforms:input>	    					
-											</p>	
+											</p>
+											<h3>Study type (WWARN modules)</h3>
+											
+											<p>Please select the WWARN modules for which this study has data.</p>
+											
+											<p>
+												<span id="wwarn-modules-menu-container">
+													<xforms:select ref="modules" appearance="full">
+														<xforms:label> WWARN modules </xforms:label>
+														<xforms:itemset 
+															nodeset="instance('ins-study-entry')/module" class="repeated-element">
+															<xforms:label ref="label" />
+															<xforms:value ref="value" />
+														</xforms:itemset>
+													</xforms:select>
+												</span>
+											</p>
+											
 										</xforms:group>
 									</xforms:group>
 										
