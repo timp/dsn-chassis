@@ -65,25 +65,7 @@
 				</xforms:itemset>
 			</xforms:select1>
 			<br />
-			<h3>Study type (WWARN modules)</h3>
-
-			<p>Please select the WWARN modules for which this study has data.</p>
-
-			<p>
-				<span id="wwarn-modules-menu-container">
-					<xforms:select ref="modules" appearance="full">
-						<xforms:label> WWARN modules </xforms:label>
-						<xforms:itemset model="mod-study-info"
-							nodeset="instance('ins-module-items')/module" class="repeated-element">
-							<xforms:label ref="label" />
-							<xforms:value ref="value" />
-						</xforms:itemset>
-						<xforms:alert>Appropriate questions are displayed only when a
-							module is selected</xforms:alert>
-					</xforms:select>
-				</span>
-			</p>
-
+			
 			<h3>Study dates</h3>
 
 			<xforms:group>
