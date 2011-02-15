@@ -13,17 +13,29 @@ import module namespace common-protocol = "http://purl.org/atombeat/xquery/commo
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "../collections.xqm" ;
 
 declare variable $testdata {
-<atom:feed xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:enable-versioning="true" atombeat:exclude-entry-content="true" atombeat:recursive="false">
-    <atom:id>http://localhost:8081/repository/service/content/drafts</atom:id>
-    <atom:updated>2011-02-11T10:29:17.667Z</atom:updated>
-    <atom:link rel="self" href="http://localhost:8081/repository/service/content/drafts" type="application/atom+xml;type=feed"/>
-    <atom:link rel="edit" href="http://localhost:8081/repository/service/content/drafts" type="application/atom+xml;type=feed"/>
+<atom:feed xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:enable-versioning="true" atombeat:exclude-entry-content="false" atombeat:recursive="false">
+    <atom:id>http://localhost:8081/repository/service/content/studies</atom:id>
+    <atom:updated>2011-02-15T10:06:05.727Z</atom:updated>
+    <atom:link rel="self" href="http://localhost:8081/repository/service/content/studies" type="application/atom+xml;type=feed"/>
+    <atom:link rel="edit" href="http://localhost:8081/repository/service/content/studies" type="application/atom+xml;type=feed"/>
     <atom:author>
         <atom:email>adam@example.org</atom:email>
     </atom:author>
-    <atom:title type="text">Drafts</atom:title>
-    <app:collection xmlns:app="http://www.w3.org/2007/app" href="http://localhost:8081/repository/service/content/drafts">
-        <atom:title type="text">Drafts</atom:title>
+    <atom:title type="text">Studies</atom:title>
+    <atombeat:config-link-expansion>
+        <atombeat:config context="entry-in-feed">
+            <atombeat:param name="match-rels" value="http://purl.org/atombeat/rel/security-descriptor"/>
+        </atombeat:config>
+    </atombeat:config-link-expansion>
+    <atombeat:config-link-extensions>
+        <atombeat:extension-attribute name="allow" namespace="http://purl.org/atombeat/xmlns">
+            <atombeat:config context="entry">
+                <atombeat:param name="match-rels" value="*"/>
+            </atombeat:config>
+        </atombeat:extension-attribute>
+    </atombeat:config-link-extensions>
+    <app:collection xmlns:app="http://www.w3.org/2007/app" href="http://localhost:8081/repository/service/content/studies">
+        <atom:title type="text">Studies</atom:title>
     </app:collection>
 </atom:feed>
 };
@@ -40,7 +52,7 @@ declare function local:do-get() as item()*
 
 declare function local:content($content) as item()*
 {
-    let $drafts-feed-config := local:get-content()
+    let $studies-feed-config := local:get-content()
 
     let $testing := request:get-parameter("testing", "no")
 
@@ -48,15 +60,13 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Drafts Feed Config v1.1 to v1.2</title>
+                <title>Data Migration - Studies Feed Config v1.1 to v1.2</title>
             </head>
             <body>
-                <h1>Data Migration - Drafts Feed Config v1.1 to v1.2</h1>
-                <p>This script should change the Drafts Feed configs so that...</p>
+                <h1>Data Migration - Studies Feed Config v1.1 to v1.2</h1>
+                <p>This script should change the Studies Feed configs so that...</p>
                 <ul>
-                    <li>The atombeat:enable-tombstone attribute is present and set to true.
-                    </li>
-                    <li>The atombeat:config-tombstone elements are present and the ghost-atom-elements options set.
+                    <li>The groups link is expanded instead of the security descriptor.
                     </li>
                 </ul>
                 <p>
@@ -74,7 +84,7 @@ declare function local:content($content) as item()*
                 </pre>
                 <p>Content (Testing: {$testing}):</p>
                 <textarea cols="120" rows="20" wrap="off">
-                {$drafts-feed-config}
+                {$studies-feed-config}
                 </textarea>
                 
                 <p>Original test data:</p>
@@ -88,18 +98,18 @@ declare function local:content($content) as item()*
 declare function local:get-content() as item()* {
   let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
-        let $ret := xmldb:document( "/db/atombeat/content/drafts/.feed" )/atom:feed
+        let $ret := xmldb:document( "/db/atombeat/content/studies/.feed" )/atom:feed
         return $ret
     else
-        let $ret := xmldb:xcollection( 'test-drafts-feed-config' )/atom:feed (: not recursive :)
+        let $ret := xmldb:xcollection( 'test-studies-feed-config' )/atom:feed (: not recursive :)
         return $ret
      
    return $content
 };
 
-declare function local:do-modifications($drafts-feed-config-v1-0-1) as item()*
+declare function local:do-modifications($studies-feed-config-v1-0-1) as item()*
 {
-    let $new := local:modify-nodes($drafts-feed-config-v1-0-1)
+    let $new := local:modify-nodes($studies-feed-config-v1-0-1)
      
     let $content := local:get-content()
 
@@ -108,7 +118,7 @@ declare function local:do-modifications($drafts-feed-config-v1-0-1) as item()*
 
 declare function local:save-testdata($testdata)
 {
-        let $descriptor-doc-db-path := xmldb:store( 'test-drafts-feed-config' , ".feed" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
+        let $descriptor-doc-db-path := xmldb:store( 'test-studies-feed-config' , ".feed" , $testdata , $CONSTANT:MEDIA-TYPE-XML )
         return $descriptor-doc-db-path     
 };
 
@@ -121,16 +131,14 @@ declare function local:do-post($content) as item()*
 };
 
 (: update works directly against the database - not on in memory fragments so this doesn't behave as expected :( :)
-declare function local:modify-nodes($drafts-feed-config-v1-0-1) as item()*
+declare function local:modify-nodes($studies-feed-config-v1-0-1) as item()*
 {
-   let $drafts-feed-config-v1-1 := 
-        for $v1-0-1 in $drafts-feed-config-v1-0-1
+   let $studies-feed-config-v1-1 := 
+        for $v1-0-1 in $studies-feed-config-v1-0-1
             
-            
-			let $ins := update insert <atombeat:config-tombstones><atombeat:config><atombeat:param name="ghost-atom-elements" value="id published updated author title link"/></atombeat:config></atombeat:config-tombstones> into $v1-0-1
-			return update insert attribute atombeat:enable-tombstones {'true'} into $v1-0-1
+			return update value $v1-0-1/atombeat:config-link-expansion/atombeat:config/atombeat:param[@name='match-rels']/@value with 'http://www.cggh.org/2010/chassis/terms/groups' 
 
-    return $drafts-feed-config-v1-1
+    return $studies-feed-config-v1-1
     
 };
 
@@ -139,21 +147,15 @@ declare function local:check-changes() as item() *{
   let $all := local:get-content()
  let $ret := for $m in $all 
  
-         let $out := if (count($m//atombeat:config-tombstones) != 1) then 
-                        let $msg := "Failed to insert atombeat:config-tombstones into atom:feed"
+         let $out := if (count($m//atombeat:config-link-expansion/atombeat:config/atombeat:param[@name='match-rels' and @value='http://www.cggh.org/2010/chassis/terms/groups']) != 1) then 
+                        let $msg := "Failed to update the value of the config-link-expansion match-rels to 'http://www.cggh.org/2010/chassis/terms/groups'"
                         return $msg
                      else
-                        let $msg := "Inserted atombeat:config-tombstones into atom:feed"
+                        let $msg := "Updated the value of the config-link-expansion match-rels to 'http://www.cggh.org/2010/chassis/terms/groups'"
                         return $msg
 
-         let $out2:= if (count($m//atom:feed[@atombeat:enable-tombstones = 'true']) != 1) then 
-                        let $msg2 := "Failed to insert @atombeat:enable-tombstone=true into atom:feed"
-                        return $msg2
-                    else
-                        let $msg2 := "Inserted @atombeat:enable-tombstone=true into atom:feed"
-                        return $msg2
 
-         return concat($out, '&#xD;', $out2)
+         return concat($out, '&#xD;')
          
     return $ret
 };
@@ -183,7 +185,7 @@ let $testing := request:get-parameter("testing", "no")
         return $ret
     else
 
-let $collection := xmldb:create-collection("xmldb:exist:///db", "test-drafts-feed-config"),
+let $collection := xmldb:create-collection("xmldb:exist:///db", "test-studies-feed-config"),
     $doc := local:save-testdata($testdata)
     return $collection
 return 
@@ -196,6 +198,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/update-drafts-feed-config-1.1-to-1.2.xql" ,"/admin/update-drafts-feed-config-1.1-to-1.2.xql" , ( "GET" , "POST" ) )
+    else common-protocol:do-method-not-allowed( "/admin/update-studies-feed-config-1.1-to-1.2.xql" ,"/admin/update-studies-feed-config-1.1-to-1.2.xql" , ( "GET" , "POST" ) )
     
     

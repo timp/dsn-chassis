@@ -38,7 +38,7 @@
 							
 								<!-- If the user has PUT access to the security descriptor. -->
 								
-								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'PUT')]">
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and contains(@atombeat:allow, 'PUT')]">
 							
 								    <xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 								    	
@@ -119,8 +119,8 @@
 								</xforms:group>
 								
 								<!-- If the user has GET access to the security descriptor, but not PUT access. -->
-								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]">
-									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and not(contains(@atombeat:allow, 'PUT'))]">
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and contains(@atombeat:allow, 'GET')]">
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and not(contains(@atombeat:allow, 'PUT'))]">
 										
 										<xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
 											<table>
