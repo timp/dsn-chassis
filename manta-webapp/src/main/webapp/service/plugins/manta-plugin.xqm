@@ -1107,6 +1107,15 @@ declare function manta-plugin:study-info-member-path-info-for-study-entry(
 };
 
 
+declare function manta-plugin:groups-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{
+    let $id := manta-plugin:get-id( $entry )
+    let $path-info := concat( "/groups/" , $id )
+    return $path-info
+};
+
 
 
 
@@ -1174,14 +1183,22 @@ declare function manta-plugin:augment-study-entry(
             rel="http://www.cggh.org/2010/chassis/terms/studyInfo" 
             href="{concat( $config:self-link-uri-base , $study-info-member-path-info )}"
             type="application/atom+xml;type=entry"/>
-            
+
+    let $groups-path-info := manta-plugin:groups-path-info-for-study-entry( $entry )
+    let $groups-link := 
+        <atom:link
+            rel="http://www.cggh.org/2010/chassis/terms/groups"
+            href="{concat( $config:self-link-uri-base , $groups-path-info )}"
+            type="application/atom+xml;type=entry"/>
+
     let $children := (
         <manta:id>{manta-plugin:get-id($entry)}</manta:id> ,
         $submitted-media-collection-link ,
         $curated-media-collection-link ,
         $derivations-collection-link ,
         $personal-data-reviews-collection-link ,
-        $study-info-member-link
+        $study-info-member-link ,
+        $groups-link
     )
         
     let $augmented-entry := xutil:append-child( $entry , $children )
