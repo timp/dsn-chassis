@@ -24,7 +24,8 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
 	xmlns:atombeat="http://purl.org/atombeat/xmlns"
-	xmlns:ae="http://purl.org/atom/ext/">
+	xmlns:ae="http://purl.org/atom/ext/"
+	xmlns:app="http://www.w3.org/2007/app">
     
     <head>
     
@@ -153,7 +154,7 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry, atom:published, 'text', 'descending')">
+	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/draft/text() = 'yes')], atom:published, 'text', 'descending')">
 
 						<xxforms:variable name="foo" select="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/>
 
