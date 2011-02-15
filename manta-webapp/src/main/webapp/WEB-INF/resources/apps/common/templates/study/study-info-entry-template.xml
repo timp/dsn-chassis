@@ -34,7 +34,6 @@
 					</transmissionIntensity>
 				</site>
 			</sites>
-			<modules />
 			<pathogens />
 			<inclusionExclusionCriteria>
 				<age xmlns:xs="http://www.w3.org/2001/XMLSchema">
