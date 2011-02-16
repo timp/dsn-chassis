@@ -214,32 +214,6 @@
 			</xforms:submission>  
 			
 
-
-
-			<!-- This creates a new draft (using the current draft-entry) and stores the returned entry in the draft-entry instance. -->
-			<!-- If successful, it reloads the page with the appropriate URL (for book-marking). -->
-            <xforms:submission 
-            	id="sub-post-draft-entry" 
-            	ref="instance('ins-draft-entry')"
-                resource="/service/content/drafts"
-                method="post" 
-                replace="instance" 
-                instance="ins-draft-entry"
-                mediatype="application/atom+xml">
-                
-                
-                <!-- If there was no error, then reload with the draft reference in the URL. -->
-                <xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?draft={instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"/>
-
-				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
-				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new draft.</xforms:message>
-                         
-            </xforms:submission>
-
-            
-           
-
 			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
             <xforms:submission 
             	id="sub-explicit-put-draft-entry" 
@@ -776,7 +750,7 @@
 				<xforms:load ev:event="xforms-submit-done" resource="home"/>
 			</xforms:submission>
 
-
+        	
 			<xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml" />
         	
         </xforms:model>
