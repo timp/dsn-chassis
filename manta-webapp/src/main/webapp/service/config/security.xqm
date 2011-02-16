@@ -309,6 +309,38 @@ declare variable $security-config:studies-collection-security-descriptor :=
     </atombeat:security-descriptor>
 ;
 
+declare variable $security-config:groups-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+    
+        <atombeat:acl>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+(: ACL required for locking :)
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+            </atombeat:ace>
+    </atombeat:acl>
+    
+</atombeat:security-descriptor>
+;
 
 
 
@@ -486,54 +518,25 @@ declare variable $security-config:all-derivations-collection-security-descriptor
 
 
 
-declare function security-config:groups-collection-security-descriptor (
+declare function security-config:group-security-descriptor (
     $group-uri as xs:string
 ) as element(atombeat:security-descriptor)
 {
         <atombeat:security-descriptor>
-        
                 <atombeat:groups>
                         <atombeat:group id="GROUP_ADMINISTRATORS" src="{$group-uri}"/>
                 </atombeat:groups>
-    
         <atombeat:acl>
-
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
             </atombeat:ace>
-            
             <atombeat:ace>
                 <atombeat:type>ALLOW</atombeat:type>
                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
             </atombeat:ace>      
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>
-
-            <atombeat:ace>
-                <atombeat:type>ALLOW</atombeat:type>
-                <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
-                <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
-            </atombeat:ace>
-
         </atombeat:acl>
     
     </atombeat:security-descriptor>
