@@ -520,7 +520,7 @@ declare function manta-plugin:after-create-member-studies(
     (: Now that the group has been created update the study security descriptor :)
        (: create and store the security descriptor :)    
     
-    let $security-descriptor-groups := security-config:groups-collection-security-descriptor( $group-uri )
+    let $security-descriptor-groups := security-config:group-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $path-info-member-group , $security-descriptor-groups )
     
 
