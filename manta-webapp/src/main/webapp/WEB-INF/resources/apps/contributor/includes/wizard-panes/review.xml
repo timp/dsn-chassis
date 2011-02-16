@@ -33,19 +33,28 @@
 					
 						<h2>Review</h2>
 					
-						<h3>(1) Title and WWARN Modules</h3>
+						<h3>(1) Title and selected WWARN modules</h3>
 						
 						<p>
-							<xforms:output ref="instance('ins-draft-entry')//atom:title" />
-						</p>
-						
-						<p>
+							<span class="study-title">
+							<xforms:output ref="instance('ins-draft-entry')//atom:title">
+								<xforms:label>Title:</xforms:label>
+							</xforms:output>
+							</span>
+
 							<!-- TODO: Get the labels for these values from ins-module-items -->
-							<xforms:output ref="instance('ins-draft-entry')//study//modules" />
+							<!-- <xforms:output ref="instance('ins-draft-entry')//study//modules" /> -->
+							<h4 class="selected-modules-title">Selected WWARN modules:</h4>
+							<ul class="selected-modules-list">
+							<xforms:repeat id="rep-study-modules" nodeset="tokenize(instance('ins-draft-entry')//study//modules, '\s')">
+								<xxforms:variable name="module" select="."/>
+								<li><xforms:output ref="instance('ins-module-items')/module[value=$module]/label"/></li>
+							</xforms:repeat>
+							</ul>
 						</p>
 						<p>
 							<xforms:trigger appearance="minimal">
-								<xforms:label>&lt;&lt; Edit title and WWARN modules</xforms:label>
+								<xforms:label>&lt;&lt; Edit title and selected WWARN modules</xforms:label>
 								<xforms:action ev:event="DOMActivate">
 									<xforms:setvalue ref="instance('ins-draft-entry')//atom:content/ui-info/wizard-pane-to-show" value="'study-terms'"/>
 									<xforms:send submission="sub-implicit-put-draft-entry"/>

@@ -195,7 +195,7 @@
 	    						
 	    						<!-- Making the assumption that only a curator can be here -->
 	    						
-	    						     <xforms:group ref="atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/ae:inline/atom:entry/atom:content/atombeat:security-descriptor/atombeat:acl/atombeat:ace[atombeat:permission='DELETE_MEMBER' and atombeat:type = 'ALLOW' and atombeat:recipient[@type='role'] = 'ROLE_CHASSIS_CURATOR']">
+	    						     <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'DELETE')]">
 	    						         <span>
 	    						             <xforms:switch>
 									           <xforms:case id="delete-study">
