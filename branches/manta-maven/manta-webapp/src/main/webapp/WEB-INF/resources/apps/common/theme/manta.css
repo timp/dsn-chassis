@@ -445,3 +445,20 @@ table.drafts {
 table.drafts th {
 	text-align: left;	
 }
+
+.study-title {
+	display: block;
+	margin-top: 2em;	
+}
+.study-title label {
+	width: auto;
+	font-weight: bold;
+}
+.selected-modules-title {
+	text-transform: none;	
+}
+.main ul.selected-modules-list {
+	list-style: disc outside none; 
+	margin-left: 3em; 
+	margin-bottom: 1em;
+}

@@ -28,6 +28,9 @@ declare variable $config-collections:collection-spec :=
                         <atombeat:config context="entry">
                             <atombeat:param name="match-rels" value="*"/>
                         </atombeat:config>
+                        <atombeat:config context="entry-in-feed">
+                            <atombeat:param name="match-rels" value="edit"/>
+                        </atombeat:config>                        
                     </atombeat:extension-attribute>
                 </atombeat:config-link-extensions>
             </atom:feed>        

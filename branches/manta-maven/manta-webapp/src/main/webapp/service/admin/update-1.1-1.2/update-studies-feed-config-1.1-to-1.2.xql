@@ -68,6 +68,8 @@ declare function local:content($content) as item()*
                 <ul>
                     <li>The groups link is expanded instead of the security descriptor.
                     </li>
+                    <li>The atombeat:allow attribute is added to the edit links in the entry-in-feed context.
+                    </li>                    
                 </ul>
                 <p>
                     <form method="post" action="">
@@ -136,7 +138,9 @@ declare function local:modify-nodes($studies-feed-config-v1-0-1) as item()*
    let $studies-feed-config-v1-1 := 
         for $v1-0-1 in $studies-feed-config-v1-0-1
             
-			return update value $v1-0-1/atombeat:config-link-expansion/atombeat:config/atombeat:param[@name='match-rels']/@value with 'http://www.cggh.org/2010/chassis/terms/groups' 
+			let $val := update value $v1-0-1/atombeat:config-link-expansion/atombeat:config/atombeat:param[@name='match-rels']/@value with 'http://www.cggh.org/2010/chassis/terms/groups' 
+			
+			return update insert <atombeat:config context="entry-in-feed"><atombeat:param name="match-rels" value="edit"/></atombeat:config> into $v1-0-1/atombeat:config-link-extensions/atombeat:extension-attribute
 
     return $studies-feed-config-v1-1
     
@@ -154,8 +158,14 @@ declare function local:check-changes() as item() *{
                         let $msg := "Updated the value of the config-link-expansion match-rels to 'http://www.cggh.org/2010/chassis/terms/groups'"
                         return $msg
 
+         let $out2 := if (count($m//atombeat:config-link-extensions/atombeat:extension-attribute/atombeat:config[@context='entry-in-feed']/atombeat:param[@name='match-rels' and @value='edit']) != 1) then 
+                        let $msg := "Failed to insert the atombeat:config element for decorating entry-in-feed edit links into the atombeat:extension-attribute element."
+                        return $msg
+                     else
+                        let $msg := "Inserted the atombeat:config element for decorating entry-in-feed edit links into the atombeat:extension-attribute element."
+                        return $msg
 
-         return concat($out, '&#xD;')
+         return concat($out, '&#xD;', $out2)
          
     return $ret
 };
