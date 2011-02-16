@@ -242,18 +242,6 @@ declare variable $security-config:studies-collection-security-descriptor :=
                 <atombeat:permission>CREATE_MEMBER</atombeat:permission>
             </atombeat:ace>
             
-            
-            
-            <!-- Because study administrators can UPDATE_MEMBER_ACL, make sure they can't
-            give themselves permission to do things we don't want them to do -->
-            
-            <!-- TODO: This will become unnecessary in v.1.1.1 -->
-            <atombeat:ace>
-                <atombeat:type>DENY</atombeat:type>
-                <atombeat:recipient type="user">*</atombeat:recipient>
-                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
-            </atombeat:ace>
-            
             <!--
                 Personal data reviewers can list the collection and can retrieve any member or security descriptor.
             -->
