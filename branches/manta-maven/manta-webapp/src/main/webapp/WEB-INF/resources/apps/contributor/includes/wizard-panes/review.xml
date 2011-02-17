@@ -300,7 +300,7 @@
 												<xforms:setvalue
 													ref="instance('ins-draft-entry')//app:control/draft"
 													value="'no'" />
-												<xforms:send submission="sub-explicit-put-draft-entry" />
+												<xforms:send submission="sub-explicit-put-finished-entry" />
 											</xforms:action>
 										</xforms:trigger> <xforms:trigger>
 											<xforms:label>No - I've more to add</xforms:label>
