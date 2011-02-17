@@ -47,44 +47,6 @@
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
-
-			<xforms:instance id="ins-draft-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-			<xforms:submission 
-				id="sub-retrieve-draft-feed"
-				resource="/service/content/drafts"
-				method="get"
-				replace="instance"
-				instance="ins-draft-feed"
-				serialization="none">
-				<!-- TODO error handling -->
-				<!-- 
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
-               	</xforms:message>
-               	 -->
-               	
-               	<xforms:action ev:event="xforms-submit-error">
-               	
-               		<xforms:message level="modal" if="event('error-type')='resource-error'">
-                			An error occurred while retrieving a list of drafts.
-               		</xforms:message>
-               		<xforms:message level="modal" if="not(event('error-type')='resource-error')">
-                			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of drafts.
-               		</xforms:message>
-               		
-               	</xforms:action>
-               	
-               	
-			</xforms:submission>
-        
-        	<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-retrieve-draft-feed"/>
-				
-				
 			<!--  -->
         
 			<xforms:instance id="ins-study-feed">
@@ -218,25 +180,6 @@ administrator (see Step 2).
                 </div>
 
 		<!-- End of After content id, before ft id -->
-
-		<xxforms:dialog id="confirm-delete-draft-dialog" level="modal" close="false" draggable="true"> 
-			<xforms:label>Confirm Delete</xforms:label> 
-			<p>Are you sure you want to delete the draft entitled "<xforms:output value="instance('ins-draft-feed')/atom:entry[atom:link[@rel='edit']/@href = instance('ins-control')/href-of-draft-to-delete]/atom:title"/>"?
-			</p> 
-			<div> 
-				<xforms:trigger> 
-					<xforms:label>Delete</xforms:label> 
-					<xforms:action ev:event="DOMActivate"> 
-						<xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-draft-dialog"/>
-						<xforms:send submission="sub-delete-draft"/>
-					</xforms:action> 
-				</xforms:trigger> 
-				<xforms:trigger> 
-					<xforms:label>Cancel</xforms:label> 
-					<xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-draft-dialog"/> 
-				</xforms:trigger> 
-			</div> 
-		</xxforms:dialog>
 
     </body>
 </html>
