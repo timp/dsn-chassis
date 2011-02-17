@@ -598,7 +598,7 @@
 				<xforms:action ev:event="xforms-submit-done">
 				
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
-					<xforms:send submission="sub-get-submitted-media-feed"/>
+					<xforms:send submission="sub-get-study-info-entry"/>
 	
 				</xforms:action>
 				
@@ -618,43 +618,6 @@
                 <xforms:load ev:event="xforms-submit-error" resource="register-study-wizard"/>
                      
 			</xforms:submission>
-			
-
-			
-
-
-
-			
-			
-			
-			<xforms:instance id="ins-submitted-media-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-			<xforms:submission
-				id="sub-get-submitted-media-feed"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-				method="get"
-				replace="instance"
-				instance="ins-submitted-media-feed"
-				serialization="none">
-				
-				<!-- Now that we have the media feed, copy to the questionnaire. -->
-				<xforms:action ev:event="xforms-submit-done">
-				
-					<!-- Copy the media feed to the questionnaire model.  -->
-					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
-					 
-
-					<!-- Get the study info entry (from the study entry's studyInfo link), which will then be copied to the questionnaire. -->
-					<xforms:send submission="sub-get-study-info-entry"/>
-					
-				</xforms:action>
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
-                
-			</xforms:submission>			
-
 
 			<xforms:submission
 				id="sub-get-study-info-entry"
@@ -673,7 +636,7 @@
 					<!-- Show the confirmation pane. -->	
 					<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="'confirmation'"  />
 					 
-					
+					<xforms:send submission="sub-retrieve-study-feed"/>		
 				</xforms:action>
 				
 				
@@ -722,9 +685,7 @@
                	</xforms:message>
 			</xforms:submission>
 			
-			<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-retrieve-study-feed"/>
+			
 
 			<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
 				<atom:entry/>
