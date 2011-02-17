@@ -101,7 +101,7 @@
 			<!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
         	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
-			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
+			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group">
                 <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
             </xforms:bind>
             
@@ -332,9 +332,14 @@
                 resource="/service/content/studies"
                 method="post" 
                 replace="instance" 
-                instance="ins-study-entry"
+                instance="ins-draft-entry"
                 mediatype="application/atom+xml">
                 
+                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+				
+				<!-- now retrieve feed of draft media -->
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
+				
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new study.</xforms:message>
