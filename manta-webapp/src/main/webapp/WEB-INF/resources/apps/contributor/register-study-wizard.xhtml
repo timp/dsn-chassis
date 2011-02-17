@@ -256,7 +256,7 @@
             	<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-info-entry"/>    
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>            
             
@@ -276,7 +276,7 @@
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
 
@@ -416,6 +416,7 @@
                 </xforms:action>
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
             </xforms:submission>
 	
 	
