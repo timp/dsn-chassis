@@ -28,85 +28,10 @@
 				<div id="content" class="register-study-wizard">
 				
 					<h2>Permissions</h2>
-				
-					<h3>Administrators</h3>
-				
+					<xi:include href="../../../common/includes/panes/permissions.xml"/>
 					
-					<xforms:group ref="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
-				    
-						<div id="editable-list-of-administrators-container">
-				    
-						<table>
-				
-							<xforms:repeat nodeset="atombeat:member" id="rep-administrator">
-								
-								<tr class="repeated-element">
-									
-									<td>
-										<xforms:trigger ref="." class="addRemove">
-					                      	<xforms:label>
-					                      		<img
-					                      			src="/apps/contributor/common/remove.gif"
-					                      			alt="Remove" />
-					                      	</xforms:label>
-					                      	<xforms:delete ev:event="DOMActivate"
-					                      		context="." nodeset="."
-					                      		at="index('rep-administrator')" />
-				                      </xforms:trigger>
-									</td>
-									<td>
-										<span class="email-address-textbox-container">
-											<xforms:input ref=".">
-												<xforms:label>Email address:</xforms:label>
-												<xforms:alert>Please provide a valid email address.</xforms:alert>
-											</xforms:input>
-										</span>
-									</td>
-								</tr>
-								
-							</xforms:repeat>
-							
-							<tr>
-								<td>
-					                  <xforms:trigger class="addRemove">
-					                      <xforms:label><img src="/apps/contributor/common/add.gif" alt="Add" /></xforms:label>
-					                      <xforms:insert 
-					                      	ev:event="DOMActivate" 
-					                      	context="." 
-					                      	nodeset="atombeat:member" 
-					                      	at="last()" 
-					                      	position="after" 
-					                      	origin="instance('ins-user-template')"/>
-					                  </xforms:trigger>
-								</td>
-								<td>
-									<span id="add-administrator-link-container">
-					                  <xforms:trigger appearance="minimal">
-					                      <xforms:label>Add an administrator</xforms:label>
-					                      <xforms:insert 
-					                      	ev:event="DOMActivate" 
-					                      	context="." 
-					                      	nodeset="atombeat:member" 
-					                      	at="last()" 
-					                      	position="after" 
-					                      	origin="instance('ins-user-template')"/>
-					                  </xforms:trigger>
-									</span>
-								</td>
-							</tr>
-							
-						</table>
-				
-					</div>
-					
-					</xforms:group>
-				
 					<p class="form-navi">
-					
-				
-						
-					
-						<xforms:trigger ref="instance('ins-control')/save-draft-trigger"
+							<xforms:trigger ref="instance('ins-control')/save-draft-trigger"
 							class="alignLeft">
 							<xforms:label>&lt; Previous</xforms:label>
 							<xforms:action ev:event="DOMActivate"
