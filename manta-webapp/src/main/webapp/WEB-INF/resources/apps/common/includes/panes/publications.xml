@@ -1,0 +1,225 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <!-- If the user has PUT access to the study entry. -->
+    <xforms:group
+        ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+
+        <p>
+            <xforms:select1 ref="instance('ins-study-entry')/atom:content/study/study-is-published">
+                <xforms:label>Is the study published?</xforms:label>
+                <xforms:item>
+                    <xforms:label>Select...</xforms:label>
+                    <xforms:value/>
+                </xforms:item>
+
+
+                <xforms:itemset nodeset="instance('ins-study-is-published-terms')/term">
+                    <xforms:label ref="label"/>
+                    <xforms:value ref="value"/>
+                </xforms:itemset>
+
+
+            </xforms:select1>
+        </p>
+
+        <xforms:group ref="instance('ins-study-entry')/atom:content/study/publications">
+
+            <div id="editable-list-of-publications-container">
+
+                <table>
+                    <xforms:repeat nodeset="publication" id="rep-publication">
+                        <tr class="repeated-element">
+                            <td class="publication-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:label>
+                                        <img src="/apps/study/common/remove.gif" alt="Remove"/>
+                                    </xforms:label>
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-publication')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td>
+                                <span class="pmid-textbox-container">
+                                    <xforms:input ref="pmid">
+                                        <xforms:label>PubMedID:</xforms:label>
+                                        <xforms:alert>Please provide a PubMed
+                                            IDentifier.</xforms:alert>
+                                    </xforms:input>
+                                </span>
+
+                                <br/>
+
+                                <xforms:group ref="publication-references">
+
+                                    <div class="editable-list-of-publication-references-container">
+
+                                        <table>
+
+                                            <xforms:repeat nodeset="publication-reference"
+                                                id="rep-publication-reference">
+
+                                                <tr class="repeated-element">
+                                                  <td>
+                                                  <xforms:trigger class="addRemove">
+                                                  <xforms:label>
+                                                  <img src="/apps/study/common/remove.gif"
+                                                  alt="Remove"/>
+                                                  </xforms:label>
+                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                  nodeset="."
+                                                  at="index('rep-publication-reference')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td>
+                                                  <span
+                                                  class="publication-reference-type-menu-container">
+                                                  <xforms:select1 appearance="minimal" ref="./@type">
+                                                  <xforms:label class="invisible">Publication
+                                                  reference type </xforms:label>
+                                                  <xforms:itemset
+                                                  nodeset="instance('ins-publication-reference-types')/publication-reference-type">
+                                                  <xforms:label ref="label"/>
+                                                  <xforms:value ref="value"/>
+                                                  </xforms:itemset>
+                                                  </xforms:select1>
+                                                  </span>
+                                                  <span
+                                                  class="publication-reference-textbox-container">
+                                                  <xforms:input ref=".">
+                                                  <xforms:label class="invisible">Publication
+                                                  reference:</xforms:label>
+                                                  <xforms:alert>Please provide a valid publication
+                                                  reference.</xforms:alert>
+                                                  </xforms:input>
+                                                  </span>
+                                                  </td>
+
+                                                </tr>
+
+                                            </xforms:repeat>
+
+                                            <tr>
+
+                                                <td>
+                                                  <xforms:trigger class="addRemove">
+                                                  <xforms:label>
+                                                  <img src="/apps/contributor/common/add.gif"
+                                                  alt="Add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="publication-reference" at="last()"
+                                                  position="after"
+                                                  origin="instance('ins-publication-reference')"/>
+                                                  </xforms:trigger>
+                                                </td>
+                                                <td>
+                                                  <span
+                                                  class="add-publication-reference-link-container">
+                                                  <xforms:trigger appearance="minimal"
+                                                  class="addRemove">
+                                                  <xforms:label>Add a URL or a DOI</xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="publication-reference" at="last()"
+                                                  position="after"
+                                                  origin="instance('ins-publication-reference')"/>
+                                                  </xforms:trigger>
+                                                  </span>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+
+                                </xforms:group>
+
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    <xforms:group ref="instance('ins-control')/add-publication-trigger">
+                        <tr>
+                            <td>
+                                <xforms:trigger class="addRemove">
+                                    <xforms:label>
+                                        <img src="/apps/study/common/add.gif" alt="Add"/>
+                                    </xforms:label>
+                                    <xforms:insert ev:event="DOMActivate"
+                                        context="instance('ins-study-entry')/atom:content/study/publications"
+                                        nodeset="publication" at="last()" position="after"
+                                        origin="instance('ins-publication-template')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td>
+                                <span id="add-publication-link-container">
+                                    <xforms:trigger appearance="minimal" class="addRemove">
+                                        <xforms:label>Add a publication</xforms:label>
+                                        <xforms:insert ev:event="DOMActivate"
+                                            context="instance('ins-study-entry')/atom:content/study/publications"
+                                            nodeset="publication" at="last()" position="after"
+                                            origin="instance('ins-publication-template')"/>
+                                    </xforms:trigger>
+                                </span>
+                            </td>
+                        </tr>
+                    </xforms:group>
+                </table>
+
+            </div>
+
+        </xforms:group>
+
+    </xforms:group>
+
+    <!-- If the user has GET access to the study entry, but not PUT access. -->
+    <xforms:group
+        ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+        <xforms:group
+            ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+
+            <xforms:group ref="instance('ins-study-entry')/atom:content/study">
+
+                <p>
+                    <xforms:output ref="study-is-published">
+                        <xforms:label>Is the study published?</xforms:label>
+                    </xforms:output>
+                    <xforms:group ref="instance('ins-control')/study-is-published-is-empty">
+                        <span>Unspecified</span>
+                    </xforms:group>
+                </p>
+
+                <xforms:group ref="publications[exists(publication)]">
+
+                    <ul>
+                        <xforms:repeat nodeset="publication" id="rep-publication-curator">
+                            <li class="publication-form-summary-item">
+                                <xforms:output ref="pmid">
+                                    <xforms:label>PubMedID:</xforms:label>
+                                </xforms:output>
+
+                                <xforms:group ref="publication-references">
+                                    <ul>
+                                        <xforms:repeat nodeset="publication-reference">
+                                            <li class="publication-reference-form-summary-item">
+                                                <xforms:output ref=".">
+                                                  <xforms:label>
+                                                  <xforms:output
+                                                  ref="instance('ins-publication-reference-types')/publication-reference-type[value=context()/@type]/label"
+                                                  />: </xforms:label>
+                                                </xforms:output>
+                                            </li>
+                                        </xforms:repeat>
+                                    </ul>
+                                </xforms:group>
+
+                            </li>
+                        </xforms:repeat>
+                    </ul>
+
+                </xforms:group>
+
+            </xforms:group>
+
+        </xforms:group>
+    </xforms:group>
+</div>

@@ -101,7 +101,7 @@
 			<!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
 
         	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
-			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group">
+			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
                 <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user() and position() = 1]" readonly="true()"/>
             </xforms:bind>
             
@@ -132,7 +132,7 @@
   			</xforms:instance>
 
 			<!-- Require valid email addresses in the permissions field -->			
-			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
+			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
 
 			<!-- person template for adding a new acknowledgement (used to add the current user and add more in the acknowledgement pane) -->
 			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
@@ -332,7 +332,7 @@
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
 
-			<xforms:bind nodeset="instance('ins-study-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
                 <xforms:bind nodeset="user[1]" readonly="true()" />
             </xforms:bind>
 
@@ -362,7 +362,7 @@
             </xforms:submission>
 
 
-			<xforms:instance id="ins-study-permissions-entry">
+			<xforms:instance id="ins-permissions-entry">
 				<atom:entry/>
 			</xforms:instance>
 			
@@ -372,7 +372,7 @@
                 resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="get" 
                 replace="instance"
-				instance="ins-study-permissions-entry"
+				instance="ins-permissions-entry"
 				serialization="none">
 					<!-- now retrieve feed of draft media -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-draft-media-feed"/>
@@ -382,11 +382,11 @@
 				<!-- This will put the draft-entry to the edit link href and show a message on success. -->
             <xforms:submission 
             	id="sub-explicit-put-permissions" 
-            	ref="instance('ins-study-permissions-entry')"
+            	ref="instance('ins-permissions-entry')"
                 resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-study-permissions-entry"
+                instance="ins-permissions-entry"
                 mediatype="application/atom+xml"
             	relevant="false"> 
                 
@@ -403,11 +403,11 @@
 			<!-- This will put the draft-entry to the edit link href, without a message on success. -->
             <xforms:submission 
             	id="sub-implicit-put-permissions" 
-            	ref="instance('ins-study-permissions-entry')"
+            	ref="instance('ins-permissions-entry')"
                 resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-study-permissions-entry"
+                instance="ins-permissions-entry"
                 mediatype="application/atom+xml"
             	relevant="false"> 
 
@@ -424,8 +424,8 @@
 			<!-- This puts (updates) the study permission list to the study's security descriptor link href. -->
             <xforms:submission 
             	id="sub-put-study-permissions" 
-            	ref="instance('ins-study-permissions-entry')/atom:content/draft/study-permissions-entry-container/atom:entry"
-                resource="{instance('ins-study-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
+            	ref="instance('ins-permissions-entry')/atom:content/draft/study-permissions-entry-container/atom:entry"
+                resource="{instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
                 method="put" 
                 replace="none" 
                 mediatype="application/atom+xml">
