@@ -60,7 +60,7 @@
 			<xforms:bind nodeset="study-info">
 				<xforms:bind nodeset="start" type="xforms:date" />
 				<xforms:bind nodeset="end" type="xforms:date" />
-				<xforms:bind nodeset="pathogens" required="contains(../modules, 'molecular')" />
+				<xforms:bind nodeset="pathogens" model="mod-register-study-wizard" required="contains(instance('ins-study-entry')//modules, 'molecular')" />
 				<xforms:bind nodeset="modules" required="true()" />
 
 				<xforms:bind nodeset="sites">
@@ -92,13 +92,13 @@
 						<xforms:bind nodeset="longitude" type="xs:double" />
 
 						<xforms:bind nodeset="testingDelay"
-							relevant="contains(../../../modules, 'invitro')" />
+							model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
 						<xforms:bind nodeset="anticoagulant"
-							relevant="contains(../../../modules, 'invitro')" />
+							model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
 						<xforms:bind nodeset="transportAndStorageTemperature"
-							relevant="contains(../../../modules, 'invitro')" />
+							model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
 						<xforms:bind nodeset="transmissionIntensity"
-							relevant="contains(../../../modules, 'clinical')">
+							model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules, 'clinical')">
 							<xforms:bind nodeset="annualParasitologicalIncidence" />
 							<!-- FIXME type="ctype:recentYear" -->
 							<xforms:bind nodeset="annualParasitologicalIncidenceYear"
@@ -154,9 +154,8 @@
 					<xforms:bind nodeset="treatmentReason" />
 					<xforms:bind nodeset="otherCriteria" />
 				</xforms:bind>
-
-
-				<xforms:bind nodeset="clinical" relevant="contains(../modules, 'clinical')">
+				
+				<xforms:bind nodeset="clinical" model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules,  'clinical')">
 					<xforms:bind nodeset="treatment">
 						<xforms:bind nodeset="regimens">
 							<xforms:bind nodeset="regimen">
@@ -329,7 +328,7 @@
 					</xforms:bind>
 				</xforms:bind>
 
-				<xforms:bind nodeset="molecular" relevant="contains(../modules, 'molecular')">
+				<xforms:bind nodeset="molecular" model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules,  'molecular')">
 					<xforms:bind nodeset="criteria">
 						<xforms:bind nodeset="sampleSourceOpen">
 							<xforms:bind nodeset="sampleSource" required="true()" />
@@ -444,7 +443,7 @@
 				</xforms:bind>
 
 
-				<xforms:bind nodeset="invitro" relevant="contains(../modules, 'invitro')">
+				<xforms:bind nodeset="invitro" model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules,  'invitro')">
 					<xforms:bind nodeset="analysisSite" />
 					<xforms:bind nodeset="culture">
 						<xforms:bind nodeset="incubatorSystem" />
@@ -537,7 +536,7 @@
 
 
 				<xforms:bind nodeset="pharmacology"
-					relevant="contains(../modules, 'pharmacology')">
+					model="mod-register-study-wizard" relevant="contains(instance('ins-study-entry')//modules,  'pharmacology')">
 					<xforms:bind nodeset="samples">
 						<xforms:bind nodeset="sample">
 							<xforms:bind nodeset="anticoagulent" />
