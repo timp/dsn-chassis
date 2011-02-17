@@ -93,9 +93,6 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:title"
-											value="instance('ins-draft-entry')/atom:title" />
-										<xforms:setvalue
 											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'permissions'" />
 										<xforms:send submission="sub-post-contribution" />
