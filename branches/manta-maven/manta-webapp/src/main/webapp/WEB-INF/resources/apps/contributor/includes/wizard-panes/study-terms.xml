@@ -32,7 +32,7 @@
 					
 						<p>
 							<span id="study-title-textbox-container">
-								<xforms:input ref="instance('ins-draft-entry')/atom:title">
+								<xforms:input ref="instance('ins-study-entry')/atom:title">
 									<xforms:label>Study title:</xforms:label>
 									<xforms:alert>The title is required.</xforms:alert>
 								</xforms:input>
@@ -40,7 +40,7 @@
 						</p>
 
 						<p>
-								<xforms:select ref="instance('ins-draft-entry')/atom:content/study/modules" appearance="full">
+								<xforms:select ref="instance('ins-study-entry')/atom:content/study/modules" appearance="full">
 									<xforms:label>WWARN modules:</xforms:label>
 									<xforms:itemset
 										nodeset="instance('ins-module-items')/module" class="repeated-element">
@@ -65,7 +65,7 @@
 							
 							<span id="agree-to-terms-checkbox-container">
 							
-								<xforms:select ref="instance('ins-draft-entry')/atom:content/study/registrant-has-agreed-to-the-terms" appearance="full">
+								<xforms:select ref="instance('ins-study-entry')/atom:content/study/registrant-has-agreed-to-the-terms" appearance="full">
 									<xforms:label class="invisible"/>
 									<xforms:item>
 										<xforms:label/>
@@ -93,7 +93,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
+											ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'permissions'" />
 										<xforms:send submission="sub-post-contribution" />
 									</xforms:action>
@@ -109,7 +109,7 @@
 					
 					
 					
-							<xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
+							<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit']">
 					
 										<xforms:trigger
 											ref="instance('ins-control')/save-draft-trigger" class="alignCenter">
@@ -130,8 +130,8 @@
 									<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 										<xforms:label>Next &gt;</xforms:label>
 										<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-											<xforms:setvalue ref="instance('ins-draft-entry')/atom:title" value="instance('ins-draft-entry')/atom:title" />
-											<xforms:setvalue ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="'permissions'" />
+											<xforms:setvalue ref="instance('ins-study-entry')/atom:title" value="instance('ins-study-entry')/atom:title" />
+											<xforms:setvalue ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="'permissions'" />
 											<xforms:send submission="sub-implicit-put-draft-entry" />
 										</xforms:action>
 										<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
@@ -143,7 +143,7 @@
 					
 							<span class="skip-links"><xforms:group ref="instance('ins-control')/pre-create-draft-back-home-link">
 								<a href="home" class="alignLeft">&lt;&lt; Data home</a>
-							</xforms:group><xforms:group ref="instance('ins-draft-entry')/atom:link[@rel='edit']">
+							</xforms:group><xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit']">
 								<xforms:trigger
 									ref="instance('ins-control')/save-draft-trigger"
 									appearance="minimal" class="alignLeft">
@@ -166,7 +166,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"
+											ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 											value="'review'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />

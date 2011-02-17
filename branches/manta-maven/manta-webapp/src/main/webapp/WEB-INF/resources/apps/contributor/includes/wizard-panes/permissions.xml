@@ -112,7 +112,7 @@
 							<xforms:action ev:event="DOMActivate"
 								if="../draft-entry-is-valid = 'true'">
 								<xforms:setvalue
-									ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show"
+									ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
 									value="'study-terms'" />
 								<xforms:send submission="sub-implicit-put-permissions" />
 							</xforms:action>
@@ -146,7 +146,7 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show"
+										ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
 										value="'acknowledgements'" />
 									<xforms:send
 										submission="sub-implicit-put-permissions" />
@@ -185,7 +185,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show"
+											ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
 											value="'review'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />

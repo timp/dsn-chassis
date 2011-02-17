@@ -169,7 +169,7 @@
 								<xforms:action ev:event="DOMActivate"
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
-										ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show"
+										ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
 										value="'acknowledgements'" />
 									<xforms:send submission="sub-implicit-put-draft-entry" />
 								</xforms:action>
@@ -204,7 +204,7 @@
 									<xforms:action ev:event="DOMActivate"
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
-											ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show"
+											ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
 											value="'publications'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />
@@ -238,7 +238,7 @@
 								<xforms:trigger ref="instance('ins-control')/save-draft-trigger" appearance="minimal" class="alignRight">
 								<xforms:label>Skip to end &gt;&gt;</xforms:label>
 								<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-									<xforms:setvalue ref="instance('ins-draft-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'review'" />
+									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'review'" />
 									<xforms:send submission="sub-implicit-put-draft-entry" />
 								</xforms:action>
 								<xforms:action ev:event="DOMActivate" if="not(../draft-entry-is-valid = 'true')">
