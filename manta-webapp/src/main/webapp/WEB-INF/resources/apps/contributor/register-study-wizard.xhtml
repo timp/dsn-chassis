@@ -237,6 +237,29 @@
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
+
+			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
+            <xforms:submission 
+            	id="sub-explicit-put-finished-entry" 
+            	ref="instance('ins-draft-entry')"
+                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-draft-entry"
+                mediatype="application/atom+xml"
+            	relevant="false"> 
+                
+                <xforms:action ev:event="xforms-submit-done">
+                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                	<xforms:message>The study is no longer a draft.</xforms:message>
+                </xforms:action>
+            	<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-info-entry"/>    
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                                
+            </xforms:submission>            
+            
             
 			<!-- This will put the draft-entry to the edit link href, without a message on success. -->
             <xforms:submission 
@@ -438,7 +461,7 @@
 			</xforms:instance>
 
 			<xforms:submission id="sub-put-study-info-entry"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}" 
+				resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}" 
 				method="put"
 				replace="instance" 
 				instance="ins-study-info-entry" 
@@ -448,7 +471,7 @@
 				validate="false">
 				
 				<!-- If successful, reload with the study edit URL (the draft URL is now irrelevant) -->
-				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"/>
+				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"/>
 				
 				
 				
