@@ -73,22 +73,22 @@
 				value="'study-terms'"
 				if="empty(xxforms:get-request-parameter('draft'))"/>
 			
-			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-draft-entry">
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-study-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
-			<xforms:action ev:event="xxforms-valid" ev:observer="ins-draft-entry">
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-study-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/draft-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-            <xforms:bind nodeset="instance('ins-control')/pre-create-draft-back-home-link" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
-            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-draft-entry')/atom:link[@rel='edit'])"/>
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-draft-entry')/atom:content/study/study-is-published='Yes'"/>
+            <xforms:bind nodeset="instance('ins-control')/pre-create-draft-back-home-link" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit'])"/>
+            <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit'])"/>
+			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
 
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
         	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
-			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-draft-entry')/atom:content/study/study-is-published=''" />
+			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
 
 
 			<!-- These binding would cause the buttons to disable when the draft-entry is invalid, but it causes a problem: The user has to change focus from a form element before the form is re-validated, causing the button to appear readonly even when the form is valid. -->
@@ -116,15 +116,15 @@
 
 
         	<!-- xincludes don't parse within instance sources. -->
-        	<!--   <xforms:instance id="ins-draft-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
+        	<!--   <xforms:instance id="ins-study-entry" src="/apps/contributor/includes/model-instances/draft-entry.xml"/> -->
         	<!--  The temptation is to factor out instances to centralised file sources, but then you can't put includes in them. -->
         	<!-- This is used to store a draft during the wizard, and the default values here also acts like a template. -->
-			<xforms:instance id="ins-draft-entry">
+			<xforms:instance id="ins-study-entry">
 				<xi:include href="../common/templates/study/study-entry-template.xml" xxi:omit-xml-base="true"/>
         	</xforms:instance>    
  
              <!-- Make the terms checkbox readonly once a draft has been saved -->
-            <xforms:bind nodeset="instance('ins-draft-entry')//study/registrant-has-agreed-to-the-terms" readonly="instance('ins-draft-entry')/atom:link[@rel='edit']"/>
+            <xforms:bind nodeset="instance('ins-study-entry')//study/registrant-has-agreed-to-the-terms" readonly="instance('ins-study-entry')/atom:link[@rel='edit']"/>
  
  			<!-- user template for adding a new administrator in the permissions pane -->
        		<xforms:instance id="ins-user-template">
@@ -140,27 +140,27 @@
 			<!-- This adds the current user (email) to the acknowledgements in the draft. -->
 			<xforms:action ev:event="xforms-model-construct-done">
 				<xforms:insert 
-					context="instance('ins-draft-entry')//atom:content/study/acknowledgements" 
+					context="instance('ins-study-entry')//atom:content/study/acknowledgements" 
 					nodeset="person"
 					at="1"
 					position="after"
 					origin="instance('ins-person-template')"/>
 				<xforms:setvalue 
-					ref="instance('ins-draft-entry')//atom:content/study/acknowledgements/person[1]/email-address"
+					ref="instance('ins-study-entry')//atom:content/study/acknowledgements/person[1]/email-address"
 					value="xxforms:get-remote-user()"/>
 			</xforms:action>
 
 
 			<!-- Check email addresses in acknowledgements (not required) -->			
-			<xforms:bind nodeset="instance('ins-draft-entry')//atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
+			<xforms:bind nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
 
 			
 
        		<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
 
-        	<xforms:bind nodeset="instance('ins-draft-entry')//atom:content/study/publications">
+        	<xforms:bind nodeset="instance('ins-study-entry')//atom:content/study/publications">
 
-			        <xforms:bind nodeset="publication" relevant="instance('ins-draft-entry')//atom:content/study/study-is-published='Yes'">
+			        <xforms:bind nodeset="publication" relevant="instance('ins-study-entry')//atom:content/study/study-is-published='Yes'">
 			            
 			           <!-- Should be able to add URLs and DOIs without adding a PubMedID. -->
 			           <!-- <xforms:bind nodeset="pmid" required="true()"/>  -->
@@ -176,7 +176,7 @@
 			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml" />
 
 
-        	<xforms:bind nodeset="instance('ins-draft-entry')//atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
+        	<xforms:bind nodeset="instance('ins-study-entry')//atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
 
 
 
@@ -192,10 +192,10 @@
 				resource="{xxforms:get-request-parameter('draft')}"
 				method="get"
 				replace="instance"
-				instance="ins-draft-entry"
+				instance="ins-study-entry"
 				serialization="none">
 				
-				<xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+				<xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
 				
 				<!-- now retrieve feed of draft media -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
@@ -217,46 +217,46 @@
 			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
             <xforms:submission 
             	id="sub-explicit-put-draft-entry" 
-            	ref="instance('ins-draft-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-study-entry')"
+                resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-draft-entry"
+                instance="ins-study-entry"
                 mediatype="application/atom+xml"
             	relevant="false"> 
                 
                 <xforms:action ev:event="xforms-submit-done">
                 	
-                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
                 	<xforms:message>The draft has been saved.</xforms:message>
                 
                 </xforms:action>
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
 
 			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
             <xforms:submission 
             	id="sub-explicit-put-finished-entry" 
-            	ref="instance('ins-draft-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-study-entry')"
+                resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-draft-entry"
+                instance="ins-study-entry"
                 mediatype="application/atom+xml"
             	relevant="false"> 
                 
                 <xforms:action ev:event="xforms-submit-done">
-                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
                 	<xforms:message>The study is no longer a draft.</xforms:message>
                 </xforms:action>
             	<xforms:send ev:event="xforms-submit-done" submission="sub-put-study-info-entry"/>    
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>            
             
@@ -264,25 +264,25 @@
 			<!-- This will put the draft-entry to the edit link href, without a message on success. -->
             <xforms:submission 
             	id="sub-implicit-put-draft-entry" 
-            	ref="instance('ins-draft-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-study-entry')"
+                resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-draft-entry"
+                instance="ins-study-entry"
                 mediatype="application/atom+xml"
             	relevant="false"> 
 
-                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
 
 	<xforms:submission id="sub-query-pubmed"
 		action="/contributor/pubmed-query" replace="instance" method="post"
-		ref="instance('ins-draft-entry')" instance="ins-draft-entry">
+		ref="instance('ins-study-entry')" instance="ins-study-entry">
 
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
@@ -291,7 +291,7 @@
 
 	<xforms:submission id="sub-query-crossref"
 		action="/contributor/crossref-query" replace="instance" method="post"
-		ref="instance('ins-draft-entry')" instance="ins-draft-entry">
+		ref="instance('ins-study-entry')" instance="ins-study-entry">
 
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
@@ -301,11 +301,11 @@
 	<!-- This will put the draft-entry to the edit link href and then load the home page. -->
             <xforms:submission 
             	id="sub-back-home" 
-            	ref="instance('ins-draft-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"
+            	ref="instance('ins-study-entry')"
+                resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
                 method="put" 
                 replace="instance" 
-                instance="ins-draft-entry"
+                instance="ins-study-entry"
                 mediatype="application/atom+xml"> 
                 
                 <xforms:action ev:event="xforms-submit-done">
@@ -315,7 +315,7 @@
                 
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
                                 
             </xforms:submission>
 
@@ -326,8 +326,8 @@
         
 
         	<!-- bindings for the study-terms pane -->
-			<xforms:bind nodeset="instance('ins-draft-entry')/atom:content/study/registrant-has-agreed-to-the-terms" required="true()"/>
-			<xforms:bind nodeset="instance('ins-draft-entry')/atom:title" required="true()"/>
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/registrant-has-agreed-to-the-terms" required="true()"/>
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:title" required="true()"/>
 
 
 			<!-- This prevents the first user (current user) from removing themselves as an administrator from the ACL in the draft. -->
@@ -341,30 +341,22 @@
 			<!-- This gets the list of different file types for the upload-files pane. -->
 			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
 
-
-
-
-			<!-- This stores the study entry once it has been posted, e.g.  -->
-			<xforms:instance id="ins-study-entry">
-				<atom:entry/>
-			</xforms:instance>
-
             <xforms:submission 
             	id="sub-post-contribution" 
-            	ref="instance('ins-draft-entry')"
+            	ref="instance('ins-study-entry')"
                 resource="/service/content/studies"
                 method="post" 
                 replace="instance" 
-                instance="ins-draft-entry"
+                instance="ins-study-entry"
                 mediatype="application/atom+xml">
                 
-                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
 				
 				<!-- now retrieve feed of draft media -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
 				
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
-				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new study.</xforms:message>
                          
             </xforms:submission>
@@ -377,7 +369,7 @@
 <!-- This gets the study's security descriptor link href. -->
             <xforms:submission 
             	id="sub-get-study-permissions"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="get" 
                 replace="instance"
 				instance="ins-study-permissions-entry"
@@ -391,7 +383,7 @@
             <xforms:submission 
             	id="sub-explicit-put-permissions" 
             	ref="instance('ins-study-permissions-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="put" 
                 replace="instance" 
                 instance="ins-study-permissions-entry"
@@ -412,7 +404,7 @@
             <xforms:submission 
             	id="sub-implicit-put-permissions" 
             	ref="instance('ins-study-permissions-entry')"
-                resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
+                resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href}"
                 method="put" 
                 replace="instance" 
                 instance="ins-study-permissions-entry"
@@ -450,7 +442,7 @@
             	
    
 				<!-- If error, then go back to the wizard-pane-being-shown and show the error. -->
-				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-draft-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
+				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while applying the study permissions.</xforms:message>
                          
             </xforms:submission>
@@ -461,7 +453,7 @@
 			</xforms:instance>
 
 			<xforms:submission id="sub-put-study-info-entry"
-				resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}" 
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}" 
 				method="put"
 				replace="instance" 
 				instance="ins-study-info-entry" 
@@ -471,7 +463,7 @@
 				validate="false">
 				
 				<!-- If successful, reload with the study edit URL (the draft URL is now irrelevant) -->
-				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-draft-entry')/atom:link[@rel='edit']/@href}"/>
+				<xforms:load ev:event="xforms-submit-done" resource="register-study-wizard?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"/>
 				
 				
 				
@@ -505,7 +497,7 @@
         	<xforms:submission
         		id="sub-get-draft-media-feed"
         		method="get"
-        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
         		serialization="none"
         		replace="instance"
         		instance="ins-draft-media-feed">
@@ -551,7 +543,7 @@
         	<xforms:submission
         		id="sub-post-upload"
         		method="form-data-post"
-        		resource="{instance('ins-draft-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
         		ref="instance('ins-upload')"
         		replace="none">
         		
@@ -787,44 +779,43 @@
 									    	<!-- Wizard panes -->
 									    	<!-- The extra wrappers hide the user interface while processing occurs, otherwise there are screen blips, i.e. momentary inappropriate UI-presentations. -->
 									    	<!--  -->
-											<xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='study-terms']">
+											<xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='study-terms']">
 									    		<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='study-terms']">
 									    			<xi:include href="includes/wizard-panes/study-terms.xml"/>
 									    		</xforms:group>
 									    	</xforms:group>
 									    	
-									    	<xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='permissions']">
+									    	<xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='permissions']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='permissions']">
 										    		<xi:include href="includes/wizard-panes/permissions.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='acknowledgements']">
+										    <xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='acknowledgements']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='acknowledgements']">
 										    		<xi:include href="includes/wizard-panes/acknowledgements.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='upload-files']">
+										    <xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='upload-files']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='upload-files']">
 										    		<xi:include href="includes/wizard-panes/upload-files.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='publications']">
+										    <xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='publications']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='publications']">
 										    		<xi:include href="includes/wizard-panes/publications.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
 										    	
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='review']">
+										    <xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='review']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='review']">
 										    		<xi:include href="includes/wizard-panes/review.xml"/>
 										    	</xforms:group>
 										    </xforms:group>
-										    	
-										    <!-- NB: wizard-pane-to-show='study-terms' rather than 'confirmation' is intended, i.e. not a typo. -->
-										    <xforms:group ref="instance('ins-draft-entry')/atom:content/study/ui-info[wizard-pane-to-show='study-terms']">
+										    
+										    <xforms:group ref="instance('ins-study-entry')/atom:content/study/ui-info[wizard-pane-to-show='confirmation']">
 										    	<xforms:group ref="instance('ins-control')[wizard-pane-being-shown='confirmation']">
 										    		<xi:include href="includes/wizard-panes/confirmation.xml"/>
 										    	</xforms:group>
