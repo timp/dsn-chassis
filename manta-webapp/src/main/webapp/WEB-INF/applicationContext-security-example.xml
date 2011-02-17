@@ -46,6 +46,7 @@
         <intercept-url pattern="/personal-data/**" access="hasAnyRole('ROLE_CHASSIS_PERSONAL_DATA_REVIEWER','ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <intercept-url pattern="/curator/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+        
         <intercept-url pattern="/reports/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         <intercept-url pattern="/study/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         
@@ -86,7 +87,7 @@
             <user-service>
                 <user name="ursula@example.org" password="bar" authorities="ROLE_CHASSIS_USER" />
                 
-                <user name="adam@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR" />
+                <user name="adam@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_CONTRIBUTOR" />
                 
                 <user name="colin@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR" />
                 <user name="cora@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR" />
