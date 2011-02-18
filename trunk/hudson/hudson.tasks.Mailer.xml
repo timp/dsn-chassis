@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.tasks.Mailer_-DescriptorImpl>
-  <defaultSuffix>@well.ox.ac.uk</defaultSuffix>
+  <defaultSuffix>@gmail.com</defaultSuffix>
   <hudsonUrl>http://jenkins.cggh.org/</hudsonUrl>
   <smtpAuthUsername>hudson.cloud1</smtpAuthUsername>
-  <smtpAuthPassword>003Ry2t6zvHrQn0lGLXcrRReWzt2kKfRwbO3i2G5s4o=</smtpAuthPassword>
+  <smtpAuthPassword>dSbw/J8LucQPDA7maNo/1v/39MlA+DafjeBtNIq/IaY=</smtpAuthPassword>
   <adminAddress>CGGH Jenkins &lt;timp@well.ox.ac.uk&gt;</adminAddress>
   <smtpHost>smtp.gmail.com</smtpHost>
   <useSsl>true</useSsl>

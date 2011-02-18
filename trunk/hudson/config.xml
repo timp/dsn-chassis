@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.396</version>
+  <version>1.397</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -122,7 +122,6 @@
         <string>atombeat-service</string>
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
-        <string>checkStudyFeed</string>
         <string>checkStudyFeedBasic</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
