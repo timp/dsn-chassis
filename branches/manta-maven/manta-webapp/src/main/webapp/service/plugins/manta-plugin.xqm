@@ -810,6 +810,17 @@ declare function manta-plugin:after-update-member-studies(
 {
     
     let $entry := $response/body/atom:entry 
+    let $comment := request:get-header( "X-Manta-Remove-Draft-Status" )
+    let $x := if ($comment = 'true') then
+        let $path-info := atomdb:edit-path-info($entry)
+        let $old-security-descriptor := atomsec:retrieve-descriptor($path-info)
+        let $new-descriptor := security-config:remove-permission($old-security-descriptor,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
+        let $study-security-descriptor-path := $path-info
+        let $descriptor-stored := atomsec:store-descriptor( $study-security-descriptor-path , $new-descriptor )
+        return $new-descriptor
+        else ()
+        
+    
     let $entry := manta-plugin:augment-study-entry( $entry )
     return manta-plugin:replace-response-body( $response , $entry )
     
