@@ -170,7 +170,7 @@
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
 										ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
-										value="'acknowledgements'" />
+										value="'permissions'" />
 									<xforms:send submission="sub-implicit-put-draft-entry" />
 								</xforms:action>
 								<xforms:action ev:event="DOMActivate"

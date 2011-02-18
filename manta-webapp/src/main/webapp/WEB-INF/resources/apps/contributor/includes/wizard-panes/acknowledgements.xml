@@ -57,7 +57,7 @@
 								if="../draft-entry-is-valid = 'true'">
 								<xforms:setvalue
 									ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
-									value="'permissions'"/>
+									value="'publications'"/>
 								<xforms:send submission="sub-implicit-put-draft-entry"/>
 							</xforms:action>
 							<xforms:action ev:event="DOMActivate"
@@ -90,7 +90,7 @@
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
 										ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
-										value="'upload-files'"/>
+										value="'review'"/>
 									<xforms:send submission="sub-implicit-put-draft-entry"/>
 								</xforms:action>
 								<xforms:action ev:event="DOMActivate"
