@@ -70,7 +70,7 @@
 										if="../draft-entry-is-valid = 'true'">
 										<xforms:setvalue
 											ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
-											value="'review'" />
+											value="'acknowledgements'" />
 										<xforms:send
 											submission="sub-implicit-put-draft-entry" />
 									</xforms:action>

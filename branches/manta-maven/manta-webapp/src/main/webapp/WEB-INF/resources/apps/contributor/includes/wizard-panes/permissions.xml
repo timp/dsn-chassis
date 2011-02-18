@@ -72,7 +72,7 @@
 									if="../draft-entry-is-valid = 'true'">
 									<xforms:setvalue
 										ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show"
-										value="'acknowledgements'" />
+										value="'upload-files'" />
 									<xforms:send
 										submission="sub-implicit-put-permissions" />
 								</xforms:action>
