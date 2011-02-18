@@ -36,7 +36,20 @@ declare variable $security-config:default-decision := "DENY" ;
 declare variable $security-config:priority := ( "WORKSPACE" , "COLLECTION" , "RESOURCE") ;
 (: declare variable $security-config:priority := ( "RESOURCE" , "COLLECTION" , "WORKSPACE") ; :)
 
-
+(:
+ : A utility function to manipulate the acl
+:)
+declare function security-config:remove-permission
+ ($element as element(), $type as xs:string, $permission as xs:string, $recipient as xs:string) as element() {
+   element {node-name($element)}
+           {$element/@*,
+            for $child in $element/node()
+            return if ($child instance of element())
+                   then if ($child[atombeat:permission=$permission and atombeat:type = $type and atombeat:recipient = $recipient])
+                        then ()
+                        else security-config:remove-permission($child, $type, $permission, $recipient)
+                   else $child }
+};
 
 
 (:
@@ -584,12 +597,6 @@ declare function security-config:submitted-media-collection-security-descriptor(
                                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
                         </atombeat:ace>
         
-                        <atombeat:ace>
-                                <atombeat:type>ALLOW</atombeat:type>
-                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
-                                <atombeat:permission>MULTI_CREATE</atombeat:permission>
-                        </atombeat:ace>
-        
                         <!--
                                 Curators can list the collection, and can retrieve any member, and can retrieve and update any ACL.
                         -->
@@ -1119,6 +1126,11 @@ declare function security-config:study-member-security-descriptor(
 					<atombeat:type>ALLOW</atombeat:type>
 					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
 					<atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+				</atombeat:ace>
+				<atombeat:ace>
+					<atombeat:type>ALLOW</atombeat:type>
+					<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+					<atombeat:permission>DELETE_MEMBER</atombeat:permission>
 				</atombeat:ace>
 				<atombeat:ace>
 					<atombeat:type>ALLOW</atombeat:type>

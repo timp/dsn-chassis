@@ -247,8 +247,12 @@
                 replace="instance" 
                 instance="ins-study-entry"
                 mediatype="application/atom+xml"
-            	relevant="false"> 
-                
+            	relevant="false">
+            	<!-- This is used to trigger side effects in the manta plugin -->
+                <xforms:header>
+        			<xforms:name>X-Manta-Remove-Draft-Status</xforms:name>
+        			<xforms:value value="'true'"/>
+        		</xforms:header>
                 <xforms:action ev:event="xforms-submit-done">
                 	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
                 	<xforms:message>The study is no longer a draft.</xforms:message>
