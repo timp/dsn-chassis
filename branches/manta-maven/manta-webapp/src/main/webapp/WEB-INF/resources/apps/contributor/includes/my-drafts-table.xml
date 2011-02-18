@@ -1,7 +1,8 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
-    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" >
     
     <h2>Draft studies</h2>
     
@@ -32,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')">
+                    <xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
                                 <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
@@ -56,7 +57,34 @@
                                 </xforms:repeat>
                                 <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
                             </td>
-                            <td><span class="view-study-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}">View</a></span></td>
+                            <td><span class="view-study-link-container"><a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}">View</a></span>
+                                <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'DELETE')]">
+                                    <span>
+                                        <xforms:switch>
+                                            <xforms:case id="delete-study">
+                                                <xforms:trigger>
+                                                    <xforms:label>Delete</xforms:label>
+                                                    <xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
+                                                </xforms:trigger>
+                                            </xforms:case>
+                                            <xforms:case id="confirm-delete-study">
+                                                <br/>
+                                                <strong>Are you sure that you want to delete this draft?</strong><br/>
+                                                <xforms:trigger>
+                                                    <xforms:label>Yes - I'm sure</xforms:label>
+                                                    <xforms:action ev:event="DOMActivate">
+                                                        <xforms:setvalue bind="delete-bind" value="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+                                                        <xforms:send submission="sub-deprecate-study"/>
+                                                    </xforms:action>
+                                                </xforms:trigger> 
+                                                <xforms:trigger>
+                                                    <xforms:label>No</xforms:label>
+                                                    <xforms:toggle case="delete-study" ev:event="DOMActivate"/>
+                                                </xforms:trigger>
+                                            </xforms:case>
+                                        </xforms:switch>
+                                    </span>
+                                </xforms:group></td>
                         </tr>
                     </xforms:repeat>
                 </tbody>

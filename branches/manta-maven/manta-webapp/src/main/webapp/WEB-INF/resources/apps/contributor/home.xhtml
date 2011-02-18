@@ -39,14 +39,14 @@
         			<contributor-controls/>
         			<curator-controls/>
         			<administrator-controls/>
-        			<href-of-draft-to-delete/>
+        			<delete-study/>
         		</control>
         	</xforms:instance>
         	
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
-
+			<xforms:bind id="delete-bind" nodeset="instance('ins-control')/delete-study" />
 			<!--  -->
         
 			<xforms:instance id="ins-study-feed">
@@ -71,19 +71,21 @@
 				submission="sub-retrieve-study-feed"/>
 				
     		<!--  -->
-    		
-            <xforms:submission 
-            	id="sub-delete-draft"  
-            	method="delete"
-            	replace="none"
-            	resource="{instance('ins-control')/href-of-draft-to-delete}">
-            	
-            	<xforms:send ev:event="xforms-submit-done"  submission="sub-retrieve-draft-feed"/>
-            	
-            	<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the draft.</xforms:message>       
-            	
-            </xforms:submission>
-			
+			<xforms:submission 
+        		id="sub-deprecate-study"
+        		method="delete"
+        		resource="{instance('ins-control')/delete-study}"
+        		replace="none">
+        		<!-- 
+        		<xforms:header>
+        			<xforms:name>X-Atom-Tombstone-Comment</xforms:name>
+        			<xforms:value value=""/>
+        		</xforms:header>
+        		 -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the study.</xforms:message>
+        		<xforms:message ev:event="xforms-submit-done" level="modal">Study successfully deleted</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-retrieve-study-feed"/>
+        	</xforms:submission>
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
