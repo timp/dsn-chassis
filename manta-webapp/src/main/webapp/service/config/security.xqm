@@ -596,7 +596,16 @@ declare function security-config:submitted-media-collection-security-descriptor(
                                 <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
                                 <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
                         </atombeat:ace>
-        
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                                <atombeat:permission>DELETE_MEMBER</atombeat:permission>
+                        </atombeat:ace>
+                        <atombeat:ace>
+                                <atombeat:type>ALLOW</atombeat:type>
+                                <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                                <atombeat:permission>DELETE_MEDIA</atombeat:permission>
+                        </atombeat:ace>
                         <!--
                                 Curators can list the collection, and can retrieve any member, and can retrieve and update any ACL.
                         -->
