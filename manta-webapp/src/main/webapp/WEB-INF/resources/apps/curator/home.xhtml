@@ -83,6 +83,7 @@
         		 -->
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the study.</xforms:message>
         		<xforms:message ev:event="xforms-submit-done" level="modal">Study successfully deleted</xforms:message>
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-retrieve-study-feed"/>
         	</xforms:submission>
 
 			<xforms:instance id="ins-study-status" src="/apps/common/constants/studyStatusTypes.xml" />
