@@ -175,9 +175,10 @@ declare function local:do-post($content) as item()*
 
 declare function local:add-modules-to-study($modules, $study) as element( atom:entry )* 
 {
-    let $study := atomdb:retrieve-members( $study , false() )
-    let $new := update insert $modules following $study//study-status
-    return $study
+    let $path := substring-after( $study , $config:edit-link-uri-base )
+    let $study-content := atomdb:retrieve-member( $path )
+    let $new := update insert $modules following $study-content//study-status
+    return $study-content
 };
 
 declare function local:move-module-info($collection-old) as element( atom:entry )*
@@ -263,6 +264,7 @@ declare function local:move-draft-nodes() as element( atom:entry )*
        for $old in $drafts
            let $draft-atom := update insert <app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control> following $old//atom:content/draft/study-entry-container/atom:entry/atom:title
             let $where := update insert <ui-info>{$old//wizard-pane-to-show}</ui-info> preceding $old//study-is-published
+            let $modules := update insert <modules/> following $old//study-status
            return update insert $old//registrant-has-agreed-to-the-terms preceding $old//study-is-published
           
    let $drafts-modified := atomdb:retrieve-members( "/drafts" , false() )   
@@ -309,8 +311,12 @@ declare function local:modify-study-nodes($collection-old) as element( atom:entr
 
 declare function local:modify-nodes($collection-old, $collection-name) as element( atom:entry )*
 {
+    let $mods := local:move-module-info($collection-old)
+    (:Need to refresh the collection as it will have changed:)
+    let $collection-modules := local:get-old-versioned-content-studies(local:get-content($collection-name))
+    let $old := local:modify-old-study-nodes($collection-modules)
+    
     let $drafts := local:move-draft-nodes()
-    let $old := local:modify-old-study-nodes($collection-old)
     (:Need to refresh the collection as it will have changed:)
     let $collection-interim := local:get-old-versioned-content-studies(local:get-content($collection-name))
     let $new := local:modify-study-nodes($collection-interim)
