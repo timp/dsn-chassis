@@ -554,7 +554,7 @@ declare function manta-plugin:after-create-member-studies(
     let $log := local:log4jDebug( $submitted-media-collection-path-info )
     
     let $feed :=
-        <atom:feed atombeat:enable-tombstones="true">
+        <atom:feed>
             <atom:title type="text">Submitted Media for Study {$id}</atom:title>
             <atom:link 
                 rel="http://www.cggh.org/2010/chassis/terms/originStudy" 
@@ -801,7 +801,26 @@ declare function manta-plugin:after-retrieve-member-curated-media(
     
 };
 
+declare function manta-plugin:enable-tombstones($feed as element(atom:feed)) as element(atom:feed) {
+        <atom:feed atombeat:enable-tombstones="true"> 
+        {        
+            $feed/attribute::* ,
+            $feed/child::*
+        }
+        </atom:feed>
 
+};
+
+declare function manta-plugin:submitted-media-enable-tombstones($entry as element(atom:entry)) as element(atom:feed) {
+   let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
+    let $log := local:log4jDebug( $submitted-media-collection-path-info )
+    
+    let $old-feed := atomdb:retrieve-feed-without-entries($submitted-media-collection-path-info)
+    let $feed := manta-plugin:enable-tombstones($old-feed)
+    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
+    let $submitted-media-collection-db-path := atomdb:update-collection( $submitted-media-collection-path-info , $feed)
+    return $feed
+};
 
 
 declare function manta-plugin:after-update-member-studies(
@@ -817,6 +836,14 @@ declare function manta-plugin:after-update-member-studies(
         let $new-descriptor := security-config:remove-permission($old-security-descriptor,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
         let $study-security-descriptor-path := $path-info
         let $descriptor-stored := atomsec:store-descriptor( $study-security-descriptor-path , $new-descriptor )
+        
+        let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
+        let $old-sm-security-descriptor := atomsec:retrieve-descriptor($submitted-media-collection-path-info)
+        let $sm-sd-1 := security-config:remove-permission($old-sm-security-descriptor,'ALLOW','DELETE_MEDIA','GROUP_ADMINISTRATORS')
+        let $submitted-media-collection-descriptor := security-config:remove-permission($sm-sd-1,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
+        let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
+        
+        let $nf := manta-plugin:submitted-media-enable-tombstones($entry)
         return $new-descriptor
         else ()
         
