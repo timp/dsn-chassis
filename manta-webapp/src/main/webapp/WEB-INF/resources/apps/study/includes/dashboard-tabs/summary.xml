@@ -61,16 +61,16 @@
 											<p>Please select the WWARN modules for which this study has data.</p>
 											
 											<p>
-												<span id="wwarn-modules-menu-container">
-													<xforms:select ref="modules" appearance="full">
-														<xforms:label> WWARN modules </xforms:label>
-														<xforms:itemset 
-															nodeset="instance('ins-study-entry')/module" class="repeated-element">
-															<xforms:label ref="label" />
-															<xforms:value ref="value" />
-														</xforms:itemset>
-													</xforms:select>
-												</span>
+												<xforms:select ref="instance('ins-study-entry')/atom:content/study/modules" appearance="full">
+													<xforms:label>WWARN modules:</xforms:label>
+													<xforms:itemset
+														nodeset="instance('ins-module-items')/module" class="repeated-element">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:alert>Appropriate questions are displayed only when a
+														module is selected</xforms:alert>
+												</xforms:select>
 											</p>
 											
 										</xforms:group>
