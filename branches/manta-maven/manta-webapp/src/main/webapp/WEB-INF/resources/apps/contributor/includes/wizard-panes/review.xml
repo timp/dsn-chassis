@@ -66,7 +66,7 @@
 						
 						<div id="list-of-administrators-container">
 							<ul>
-								<xforms:repeat nodeset="instance('ins-study-entry')//study-permissions-entry-container//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+								<xforms:repeat nodeset="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
 									<li class="repeated-element">
 									<xforms:output ref=".">
 										<xforms:label>Email address:</xforms:label>
