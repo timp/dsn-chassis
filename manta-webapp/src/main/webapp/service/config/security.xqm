@@ -783,8 +783,24 @@ declare function security-config:curated-media-collection-security-descriptor(
                     <atombeat:permission>UPDATE_COLLECTION_ACL</atombeat:permission>
                 </atombeat:ace>
 
-                <!-- N.B. by default, study administrators cannot see curated media -->
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_MEMBER_ACL</atombeat:permission>
+                </atombeat:ace>
                 
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
+                </atombeat:ace>
+                
+                <!-- N.B. by default, study administrators cannot see curated media -->
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+                    <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+                </atombeat:ace>
             </atombeat:acl>
     
         </atombeat:security-descriptor> 

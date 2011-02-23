@@ -1464,6 +1464,13 @@ declare function manta-plugin:augment-media-atom-entry(
     let $derivation-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?output=" , $entry/atom:link[@rel='edit']/@href )
     let $derived-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?input=" , $entry/atom:link[@rel='edit']/@href )
 
+    let $groups-path-info := concat( $config:self-link-uri-base , "/groups/" , $study-id) 
+    let $groups-link := 
+        <atom:link
+            rel="http://www.cggh.org/2010/chassis/terms/groups"
+            href="{$groups-path-info}"
+            type="application/atom+xml;type=entry"/>
+            
     let $entry := 
         <atom:entry>
         {
@@ -1473,7 +1480,8 @@ declare function manta-plugin:augment-media-atom-entry(
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivation" href="{$derivation-uri}" type="application/atom+xml;type=feed"/> ,
-            <atom:link rel="http://www.cggh.org/2010/chassis/terms/derived" href="{$derived-uri}" type="application/atom+xml;type=feed"/>
+            <atom:link rel="http://www.cggh.org/2010/chassis/terms/derived" href="{$derived-uri}" type="application/atom+xml;type=feed"/>,
+            $groups-link
         }
         </atom:entry>
 
