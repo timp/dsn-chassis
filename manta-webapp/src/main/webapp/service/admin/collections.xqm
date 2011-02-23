@@ -63,21 +63,6 @@ declare variable $config-collections:collection-spec :=
             </atom:feed>
         </collection>   
         
-        <collection path-info="/drafts">
-            <atom:feed
-                atombeat:enable-versioning="true"
-                atombeat:exclude-entry-content="true"
-                atombeat:recursive="false"
-                atombeat:enable-tombstones="true">
-                <atom:title type="text">Drafts</atom:title>
-                <atombeat:config-tombstones>
-                    <atombeat:config>
-                        <atombeat:param name="ghost-atom-elements" value="id published updated author title link"/>
-                    </atombeat:config>
-                </atombeat:config-tombstones>
-            </atom:feed>
-        </collection>  
-        
         <collection path-info="/media/submitted">
             <atom:feed
                 atombeat:enable-versioning="false"
@@ -93,15 +78,6 @@ declare variable $config-collections:collection-spec :=
                 atombeat:exclude-entry-content="false"
                 atombeat:recursive="true">
                 <atom:title type="text">All Curated Media</atom:title>
-            </atom:feed>
-        </collection>  
-        
-        <collection path-info="/media/draft">
-            <atom:feed
-                atombeat:enable-versioning="false"
-                atombeat:exclude-entry-content="false"
-                atombeat:recursive="true">
-                <atom:title type="text">All Draft Media</atom:title>
             </atom:feed>
         </collection>  
         
