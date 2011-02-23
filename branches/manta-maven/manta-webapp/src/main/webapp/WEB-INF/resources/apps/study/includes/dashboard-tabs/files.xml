@@ -200,17 +200,19 @@
 									</span>
 								</xforms:group>
 
+                                <!-- If the user has POST access to the curated media. -->
+                                <xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'POST')]">
+                                    <p><a class="btn" href="/curator/upload-curated-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Upload curated files</a></p>
+                                </xforms:group>
+                                
 								<!-- If the user has GET or POST access to the curated media. -->
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'GET')] | instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'POST')]">
-									<h2>Curated files</h2>
-								</xforms:group>
 								
-								<!-- If the user has POST access to the curated media. -->
-								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'POST')]">
-									
-									<p><a class="btn" href="/curator/upload-curated-files?study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}">Upload curated files</a></p>
-									
-								</xforms:group>
+								    <xforms:group ref="instance('ins-curated-media-feed')[not(empty(atom:entry))]">
+                                        <h2>WWARN files</h2>
+                                    
+								
+								
 
 								<!-- If the user has GET access to the curated media. -->
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'GET')]">
@@ -275,7 +277,8 @@
 									</xforms:group>
 							
 								</xforms:group>
-						
+						</xforms:group>
+                                </xforms:group>
 							</div>
 							
 						</div>
