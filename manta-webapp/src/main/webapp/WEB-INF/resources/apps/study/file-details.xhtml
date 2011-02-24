@@ -110,12 +110,27 @@
 		<atom:feed />
 	</xforms:instance>
 
+    <xforms:instance id="ins-media-acl-entry">
+        <atom:feed />
+    </xforms:instance>
+    
+    <xforms:submission id="sub-get-media-acl-entry"
+        resource="{instance('ins-media-link-entry')/atom:link[@rel='http://purl.org/atombeat/rel/media-security-descriptor']/@href}"
+        method="get" replace="instance" instance="ins-media-acl-entry"
+        serialization="none">
+        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+                value="event('error-type')" />) while retrieving the media acl.</xforms:message>
+    </xforms:submission>
+    
 	<xforms:submission id="sub-get-acl-entry"
 		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 		method="get" replace="instance" instance="ins-acl-entry"
 		serialization="none">
+		<xforms:action ev:event="xforms-submit-done">
+            <xforms:send submission="sub-get-media-acl-entry" />
+        </xforms:action>
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
-				value="event('error-type')" />) while retrieving the study.</xforms:message>
+				value="event('error-type')" />) while retrieving the acl.</xforms:message>
 	</xforms:submission>
 
     <xforms:instance id="ins-allow-study-administrators-to-view-member" xxforms:exclude-result-prefixes="#all">>
@@ -132,13 +147,25 @@
                     <atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
                 </atombeat:ace>
     </xforms:instance>
+    <xforms:submission id="sub-put-media-permissions"
+        resource="{instance('ins-media-link-entry')/atom:link[@rel='http://purl.org/atombeat/rel/media-security-descriptor']/@href}"
+        method="put" replace="instance" instance="ins-media-acl-entry"
+        ref="instance('ins-media-acl-entry')" mediatype="application/atom+xml">
+
+        <xforms:action ev:event="xforms-submit-done">
+            <xforms:send submission="sub-refresh-media-link-entry" />
+        </xforms:action>
+
+        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+                value="event('error-type')" />) while saving the study permissions.</xforms:message>
+    </xforms:submission>
 	<xforms:submission id="sub-put-permissions"
 		resource="{instance('ins-media-link-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
 		method="put" replace="instance" instance="ins-acl-entry"
 		ref="instance('ins-acl-entry')" mediatype="application/atom+xml">
 
 		<xforms:action ev:event="xforms-submit-done">
-			<xforms:send submission="sub-refresh-media-link-entry" />
+		    <xforms:send submission="sub-put-media-permissions" />
 		</xforms:action>
 
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
@@ -251,12 +278,16 @@
 	<xforms:trigger>
 		<xforms:label>Add viewing by administrators</xforms:label>
 		<xforms:action ev:event="DOMActivate">
-            <xforms:insert context="instance('ins-acl-entry')//atombeat:security-descriptor" origin="xxforms:element('atombeat:groups')"/>
+            <xforms:insert context="instance('ins-media-acl-entry')//atombeat:security-descriptor" origin="xxforms:element('atombeat:groups')"/>
+            <xforms:insert context="instance('ins-media-acl-entry')//atombeat:groups" origin="xxforms:element('atombeat:group',(xxforms:attribute('id', 'GROUP_ADMINISTRATORS')))"/>
+            <xforms:insert context="instance('ins-media-acl-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']" origin="xxforms:attribute('src', instance('ins-media-link-entry')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href)"/>
+            
+			<xforms:insert context="instance('ins-media-acl-entry')//atombeat:acl"
+				origin="instance('ins-allow-study-administrators-to-view-media')" />
+				
+			<xforms:insert context="instance('ins-acl-entry')//atombeat:security-descriptor" origin="xxforms:element('atombeat:groups')"/>
             <xforms:insert context="instance('ins-acl-entry')//atombeat:groups" origin="xxforms:element('atombeat:group',(xxforms:attribute('id', 'GROUP_ADMINISTRATORS')))"/>
             <xforms:insert context="instance('ins-acl-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']" origin="xxforms:attribute('src', instance('ins-media-link-entry')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href)"/>
-            
-			<xforms:insert context="instance('ins-acl-entry')//atombeat:acl"
-				origin="instance('ins-allow-study-administrators-to-view-media')" />
             <xforms:insert context="instance('ins-acl-entry')//atombeat:acl"
                 origin="instance('ins-allow-study-administrators-to-view-member')" />
 			<xforms:send submission="sub-put-permissions" />
@@ -271,10 +302,12 @@
 		<xforms:action ev:event="DOMActivate">
             <xforms:delete
                 nodeset="instance('ins-acl-entry')//atombeat:groups" />
+               <xforms:delete
+                nodeset="instance('ins-media-acl-entry')//atombeat:groups" />
 			<xforms:delete
 				nodeset="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'RETRIEVE_MEMBER']" />
             <xforms:delete
-                nodeset="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'RETRIEVE_MEDIA']" />
+                nodeset="instance('ins-media-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'RETRIEVE_MEDIA']" />
 
 			<xforms:send submission="sub-put-permissions" />
 		</xforms:action>
