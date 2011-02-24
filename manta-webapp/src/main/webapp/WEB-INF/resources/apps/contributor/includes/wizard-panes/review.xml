@@ -290,7 +290,7 @@
 										</xforms:trigger>
 									</xforms:case>
 									<xforms:case id="confirm">
-										<br/><strong>Are you sure you have completed entering the study?</strong>
+										<p><strong>Are you sure you have completed entering the study?</strong></p>
 										<xforms:trigger>
 											<xforms:label>Yes - I've finished</xforms:label>
 											<xforms:action ev:event="DOMActivate">
@@ -313,6 +313,7 @@
 							
 							
 							<span class="skip-links">
+							<p>
 								<xforms:trigger
 									ref="instance('ins-control')/save-draft-trigger"
 									appearance="minimal" class="alignLeft">
@@ -321,6 +322,7 @@
 										<xforms:send submission="sub-back-home" />
 									</xforms:action>
 								</xforms:trigger>
+								</p>
 							</span>
 					
 						</p>
