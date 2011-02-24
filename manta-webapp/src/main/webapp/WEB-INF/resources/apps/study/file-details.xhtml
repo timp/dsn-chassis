@@ -48,9 +48,8 @@
 				value="event('error-type')" />) while retrieving the media-link entry.</xforms:message>
 
 		<xforms:action ev:event="xforms-submit-done">
+            <xforms:send submission="sub-get-acl-entry" />
 			<xforms:send submission="sub-get-derivation-feed" />
-			<xforms:send submission="sub-get-derived-feed" />
-			<xforms:send submission="sub-get-acl-entry" />
 		</xforms:action>
 
 	</xforms:submission>
@@ -93,9 +92,10 @@
         </xforms:action>
         
 		<!-- handle submission errors -->
+		<!-- ignore
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while retrieving the derivation feed.</xforms:message>
-
+        -->
 	</xforms:submission>
 
 	<xforms:submission id="sub-get-derived-feed"
@@ -104,9 +104,10 @@
 		serialization="none">
 
 		<!-- handle submission errors -->
+		<!-- ignore
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while retrieving the derived feed.</xforms:message>
-
+        -->
 	</xforms:submission>
 
 	<xforms:instance id="ins-acl-entry">
@@ -132,8 +133,10 @@
 		<xforms:action ev:event="xforms-submit-done">
             <xforms:send submission="sub-get-media-acl-entry" />
         </xforms:action>
+        <!--  ignore
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while retrieving the acl.</xforms:message>
+		-->
 	</xforms:submission>
 
     <xforms:instance id="ins-allow-study-administrators-to-view-member" xxforms:exclude-result-prefixes="#all">>
@@ -273,11 +276,10 @@
 
 
 </xforms:group>
-<hr />
 
 <xforms:group
 	ref="instance('ins-acl-entry')//atombeat:acl[not(exists(atombeat:ace))]">
-
+<hr />
 	<xforms:trigger>
 		<xforms:label>Add viewing by administrators</xforms:label>
 		<xforms:action ev:event="DOMActivate">
@@ -300,6 +302,7 @@
 
 <xforms:group
 	ref="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient[@type='group'] = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'RETRIEVE_MEMBER']">
+	<hr />
 	<xforms:trigger>
 		<xforms:label>Remove viewing by administrators</xforms:label>
 		<xforms:action ev:event="DOMActivate">
@@ -317,6 +320,9 @@
 	</xforms:trigger>
 </xforms:group>
 <hr />
+
+<!-- If the feed couldn't be retrieved then don't display -->
+<xforms:group ref="instance('ins-derivation-feed')[exists(atom:id)]">
 
 <h2>Derivation</h2>
 
@@ -408,6 +414,9 @@
 
 		</fr:datatable>
 	</xforms:group>
+
+
+	
 	<h3>Other Outputs</h3>
 
 	<xforms:group
@@ -461,6 +470,10 @@
 </xforms:group>
 
 <hr />
+</xforms:group>
+
+<!-- If the feed couldn't be retrieved then don't display -->
+<xforms:group ref="instance('ins-derived-feed')[exists(atom:id)]">
 
 <h2>Derived</h2>
 
@@ -511,7 +524,10 @@
 			</xforms:repeat>
 		</tbody>
 	</fr:datatable>
-</xforms:group></div>
+</xforms:group>
+</xforms:group>
+
+</div>
 
 <!-- After content id, before ft id --></div>
 </div>
