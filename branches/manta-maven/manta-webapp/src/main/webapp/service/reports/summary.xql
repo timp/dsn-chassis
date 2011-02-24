@@ -27,6 +27,7 @@ declare function local:content($content) as item()*
     let $studies := local:get-content()
     let $study-info := local:get-study-info()
     let $submitted := local:get-submitted()
+    let $curated := local:get-curated()
     let $graves := local:get-submitted-tombstones()  
     return
     
@@ -43,6 +44,7 @@ declare function local:content($content) as item()*
                 <p>Total number of Pharmacology Studies { count( $studies//modules[contains(text(),'pharmacology')] ) }</p>
                
                 <p>Total number of submitted files { count( $submitted//atom:entry ) + count($graves//at:deleted-entry) }</p>
+                <p>Total number of curated files { count( $curated//atom:entry ) }</p>
                 <p>Total number of replaced files { count($graves//at:deleted-entry) }</p>
                 <pre>
                
@@ -62,6 +64,10 @@ declare function local:get-study-info() {
 };
 declare function local:get-submitted() {
         let $ret := atomdb:retrieve-feed( "/media/submitted" )
+        return $ret
+};
+declare function local:get-curated() {
+        let $ret := atomdb:retrieve-feed( "/media/curated" )
         return $ret
 };
 declare function local:get-submitted-tombstones() {
