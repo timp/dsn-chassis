@@ -54,7 +54,7 @@
                                 </xforms:repeat>
                                 <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
                             </td>
-                            <td><span class="view-study-link-container"><a href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a></span></td>
+                            <td><span class="view-study-link-container"><a class="btn" href="../study/dashboard?study={atom:link[@rel='edit']/@href}">Edit</a></span></td>
                         </tr>
                     </xforms:repeat>
                 </tbody>
