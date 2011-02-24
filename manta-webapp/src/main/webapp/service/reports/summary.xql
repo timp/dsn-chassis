@@ -37,10 +37,10 @@ declare function local:content($content) as item()*
             <body>
                 <h1>Summary of information held in Chassis</h1>
                 <p>Total number of Studies { count( $studies ) }</p>
-                <p>Total number of Clinical Studies { count( $study-info//modules[contains(text(),'clinical')] ) }</p>
-                <p>Total number of Molecular Studies { count( $study-info//modules[contains(text(),'molecular')] ) }</p>
-                <p>Total number of In vitro Studies { count( $study-info//modules[contains(text(),'invitro')] ) }</p>
-                <p>Total number of Pharmacology Studies { count( $study-info//modules[contains(text(),'pharmacology')] ) }</p>
+                <p>Total number of Clinical Studies { count( $studies//modules[contains(text(),'clinical')] ) }</p>
+                <p>Total number of Molecular Studies { count( $studies//modules[contains(text(),'molecular')] ) }</p>
+                <p>Total number of In vitro Studies { count( $studies//modules[contains(text(),'invitro')] ) }</p>
+                <p>Total number of Pharmacology Studies { count( $studies//modules[contains(text(),'pharmacology')] ) }</p>
                
                 <p>Total number of submitted files { count( $submitted//atom:entry ) + count($graves//at:deleted-entry) }</p>
                 <p>Total number of replaced files { count($graves//at:deleted-entry) }</p>
