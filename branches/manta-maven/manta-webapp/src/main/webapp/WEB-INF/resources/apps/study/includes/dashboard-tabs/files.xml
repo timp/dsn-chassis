@@ -265,7 +265,9 @@
 																<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
 																	<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
 																</xforms:group>
-																<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+																<xforms:group ref="instance('ins-control')/curator-controls">
+																    <a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+																</xforms:group>
 															</td>
 														</tr>
 													</xforms:repeat>
