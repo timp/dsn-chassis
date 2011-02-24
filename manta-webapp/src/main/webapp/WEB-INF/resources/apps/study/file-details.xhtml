@@ -65,9 +65,8 @@
                 value="event('error-type')" />) while retrieving the media-link entry.</xforms:message>
 
         <xforms:action ev:event="xforms-submit-done">
-            <xforms:send submission="sub-get-derivation-feed" />
-            <xforms:send submission="sub-get-derived-feed" />
             <xforms:send submission="sub-get-acl-entry" />
+            <xforms:send submission="sub-get-derivation-feed"  />
         </xforms:action>
 
     </xforms:submission>
@@ -89,6 +88,10 @@
 		method="get" replace="instance" instance="ins-derivation-feed"
 		serialization="none">
 
+        <xforms:action ev:event="xforms-submit-done">
+            <xforms:send submission="sub-get-derived-feed" />
+        </xforms:action>
+        
 		<!-- handle submission errors -->
 		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
 				value="event('error-type')" />) while retrieving the derivation feed.</xforms:message>
@@ -347,7 +350,7 @@
 			</thead>
 			<tbody>
 				<xforms:repeat
-					nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//atom:entry">
+					nodeset="instance('ins-derivation-feed')//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//atom:entry">
 					<tr>
 						<td><xforms:output ref="manta:id" /></td>
 						<td><xforms:output ref="atom:title" /></td>
