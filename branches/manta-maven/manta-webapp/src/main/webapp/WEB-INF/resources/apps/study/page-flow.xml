@@ -18,6 +18,10 @@
   <page path-info="/study/dashboard" view="study-dashboard.xhtml"/>
   <page path-info="/study/email-lock" model="email-lock.xpl"/>
   <page path-info="/study/email-complete" view="email-complete.xpl"/>
+  
+   <page path-info="/study/file-details" view="file-details.xhtml"/>
+  <page path-info="/study/tombstone-details" view="tombstone-details.xhtml"/>
+ 
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
