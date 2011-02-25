@@ -794,7 +794,17 @@ declare function security-config:curated-media-collection-security-descriptor(
                     <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
                     <atombeat:permission>UPDATE_MEMBER_ACL</atombeat:permission>
                 </atombeat:ace>
+                 <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>RETRIEVE_MEDIA_ACL</atombeat:permission>
+                </atombeat:ace>
                 
+                <atombeat:ace>
+                    <atombeat:type>ALLOW</atombeat:type>
+                    <atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+                    <atombeat:permission>UPDATE_MEDIA_ACL</atombeat:permission>
+                </atombeat:ace>
                 <!-- N.B. by default, study administrators cannot see curated media -->
                 <atombeat:ace>
                     <atombeat:type>ALLOW</atombeat:type>
