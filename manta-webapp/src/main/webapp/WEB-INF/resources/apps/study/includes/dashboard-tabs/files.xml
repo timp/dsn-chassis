@@ -189,7 +189,7 @@
 							    							</td>
 							    							<td>
 							    							<xforms:group ref="instance('ins-control')/curator-controls">
-							    								<a href="../curator/tombstone-details?media-link={xxforms:context('rep-media-deleted')/atom:link[@rel='self']/@href}">Details</a>
+							    								<a href="tombstone-details?media-link={xxforms:context('rep-media-deleted')/atom:link[@rel='self']/@href}">Details</a>
 							    							</xforms:group>
 							    							</td>
 							    						</tr>
