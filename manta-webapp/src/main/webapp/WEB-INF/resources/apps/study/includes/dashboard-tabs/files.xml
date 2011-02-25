@@ -266,7 +266,7 @@
 																	<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
 																</xforms:group>
 																<xforms:group ref="instance('ins-control')/curator-controls">
-																    <a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+																    <a href="file-details?media-link={xxforms:context('rep-curated-media-curator')/atom:link[@rel='edit']/@href}">Details</a>
 																</xforms:group>
 															</td>
 														</tr>
