@@ -349,6 +349,10 @@
             <param-value>basic</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>chassis-lookup-servlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.util.ChangeContentType</servlet-class>>
+    </servlet>
     <!--
     <servlet>
         <servlet-name>exist-atom-servlet</servlet-name>
@@ -456,6 +460,11 @@
     <servlet-mapping>
         <servlet-name>exist-rest-servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>chassis-lookup-servlet</servlet-name>
+        <url-pattern>/ChangeContentType</url-pattern>
     </servlet-mapping>
     
     <!--

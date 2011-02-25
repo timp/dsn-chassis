@@ -27,8 +27,9 @@
     
     <p:processor name="oxf:xforms-submission">
         <p:input name="submission">
-            <!-- http://localhost/pubmed.php - won't work until pubmed fix their Content-Type header to return text/xml or similar -->
-            <xforms:submission method="get" content-type="text/xml" action="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi" separator="&amp;">
+            <!-- /ChangeContentType?id= - won't work until pubmed fix their Content-Type header to return text/xml or similar -->
+            <!-- http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi -->
+            <xforms:submission method="get" content-type="text/xml" action="/ChangeContentType" separator="&amp;">
                 <xforms:header>
                     <xforms:name>Accept</xforms:name>
                     <xforms:value>text/xml</xforms:value>
