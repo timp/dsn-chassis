@@ -41,6 +41,15 @@
                             </td>
                             <td>
                                 <span class="pmid-textbox-container">
+                                    <xforms:input ref="publication-title">
+                                        <xforms:label>Title/Citation:</xforms:label>
+                                        <xforms:alert>Please provide a title or citation.</xforms:alert>
+                                    </xforms:input>
+                                </span>
+
+                                <br/>
+                            
+                                <span class="pmid-textbox-container">
                                     <xforms:input ref="pmid">
                                         <xforms:label>PubMedID:</xforms:label>
                                         <xforms:alert>Please provide a PubMed

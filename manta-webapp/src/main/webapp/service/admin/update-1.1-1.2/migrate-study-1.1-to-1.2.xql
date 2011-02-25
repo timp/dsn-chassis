@@ -300,6 +300,7 @@ declare function local:modify-study-nodes($collection-old) as element( atom:entr
 
    let $collection-new := 
        for $old in $collection-old
+       let $title := update insert <publication-title/> preceding $old//pmid
        let $rep := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.2"
        return $rep
        
