@@ -106,8 +106,6 @@ declare function manta-plugin:before-create-member(
 {
     if ( $request-path-info = "/studies" ) 
     then manta-plugin:before-create-member-study( $request-data )
-    else if ( $request-path-info = "/drafts" ) 
-    then manta-plugin:before-create-member-drafts( $request-data )
     else $request-data
 };
 
@@ -123,8 +121,6 @@ declare function manta-plugin:before-update-member(
     then manta-plugin:before-update-member-study( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/study-info/[^/]+" ) )
     then manta-plugin:before-update-member-study-info( $request-path-info , $request-data )
-    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
-    then manta-plugin:before-update-member-drafts( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/media/submitted/[^/]+/[^/]+" ) )
     then manta-plugin:before-update-member-submitted-media( $request-path-info , $request-data )
     else if ( matches( $request-path-info , "/media/curated/[^/]+/[^/]+" ) )
@@ -165,18 +161,6 @@ declare function manta-plugin:before-create-member-study(
     return $filtered-request-data
 };
 
-
-
-declare function manta-plugin:before-create-member-drafts(
-    $request-data as element(atom:entry)
-) as item()*
-{
-    let $request-data := manta-plugin:filter-draft-entry( $request-data )
-    return $request-data
-};
-
-
-
 declare function manta-plugin:before-update-member-study(
     $request-path-info as xs:string ,
     $request-data as element(atom:entry)
@@ -197,19 +181,6 @@ declare function manta-plugin:before-update-member-study-info(
     let $filtered-request-data := manta-plugin:filter-study-info-entry( $stored , $request-data )
     return $filtered-request-data
 };
-
-
-
-declare function manta-plugin:before-update-member-drafts(
-    $request-path-info as xs:string ,
-    $request-data as element(atom:entry)
-) as item()*
-{
-    let $request-data := manta-plugin:filter-draft-entry( $request-data )
-    return $request-data
-};
-
-
 
 declare function manta-plugin:before-update-member-submitted-media(
     $request-path-info as xs:string ,
@@ -276,23 +247,6 @@ declare function manta-plugin:filter-study-entry(
     return $filtered-entry
     
 };
-
-
-
-
-declare function manta-plugin:filter-draft-entry(
-    $entry as element(atom:entry)
-) as element(atom:entry)
-{
-
-    let $filtered-entry := atomdb:filter( $entry , $manta-plugin:reserved )
-    
-    return $filtered-entry
-    
-};
-
-
-
 
 declare function manta-plugin:filter-media-entry(
     $entry as element(atom:entry)
@@ -361,10 +315,6 @@ declare function manta-plugin:after-create-member(
     
     then manta-plugin:after-create-member-studies( $response )
     
-    else if ( $request-path-info = "/drafts" )
-    
-    then manta-plugin:after-create-member-drafts( $response )
-    
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
     
     then manta-plugin:after-create-member-submitted-media( $response )
@@ -400,10 +350,6 @@ declare function manta-plugin:after-retrieve-member(
     
     then manta-plugin:after-retrieve-member-studies( $response )
     
-    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
-    
-    then manta-plugin:after-retrieve-member-drafts( $response )
-    
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-submitted-media( $response )
@@ -430,11 +376,7 @@ declare function manta-plugin:after-update-member(
     if ( matches( $request-path-info , "/studies/[^/]+" ) )
     
     then manta-plugin:after-update-member-studies( $response )
-    
-    else if ( matches( $request-path-info , "/drafts/[^/]+" ) )
-    
-    then manta-plugin:after-update-member-drafts( $response )
-    
+   
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+" ) )
     
     then manta-plugin:after-update-member-submitted-media( $response )
@@ -453,11 +395,7 @@ declare function manta-plugin:after-list-collection(
     if ( $request-path-info = "/studies" )
     
     then manta-plugin:after-list-collection-studies( $response )
-    
-    else if ( $request-path-info = "/drafts" )
-    
-    then manta-plugin:after-list-collection-drafts( $response )
-    
+  
     else if ( matches( $request-path-info , "^/media/submitted" ) )
     
     then manta-plugin:after-list-collection-submitted-media( $response )
@@ -658,55 +596,6 @@ declare function manta-plugin:after-create-member-studies(
     
 };
 
-
-
-
-declare function manta-plugin:after-create-member-drafts(
-	$response as element(response)
-) as element(response)
-{
-
-    let $log := local:log4jDebug( "== manta-plugin:after-create-member-drafts() ==")
-    
-    let $entry := $response/body/atom:entry 
-    let $id := manta-plugin:get-id( $entry )
-    let $user := request:get-attribute( $config:user-name-request-attribute-key )
-    
-    let $draft-media-collection-path-info := manta-plugin:draft-media-collection-path-info-for-draft-entry( $entry )
-    let $log := local:log4jDebug( $draft-media-collection-path-info )
-    
-    let $feed :=
-        <atom:feed>
-            <atom:title type="text">Draft Media for Draft {$id}</atom:title>
-            <atom:link 
-                rel="http://www.cggh.org/2010/chassis/terms/originDraft" 
-                href="{$entry/atom:link[@rel='edit']/@href}" 
-                type="application/atom+xml;type=entry"/>
-            <atombeat:config-link-extensions>
-                <atombeat:extension-attribute
-                    name="allow"
-                    namespace="http://purl.org/atombeat/xmlns">
-                    <atombeat:config context="entry-in-feed">
-                        <atombeat:param name="match-rels" value="edit-media"/>
-                    </atombeat:config>
-                </atombeat:extension-attribute>
-            </atombeat:config-link-extensions>
-        </atom:feed>
-    
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
-    let $draft-media-collection-db-path := atomdb:create-collection( $draft-media-collection-path-info , $feed, $user-name )
-    let $draft-media-collection-descriptor := security-config:draft-media-collection-security-descriptor( $draft-media-collection-path-info , $user )
-    let $descriptor-stored := atomsec:store-descriptor( $draft-media-collection-path-info , $draft-media-collection-descriptor )
-    
-    let $entry := manta-plugin:augment-draft-entry( $entry )
-    
-    return manta-plugin:replace-response-body( $response , $entry )
-    
-};
-
-
-
-
 declare function manta-plugin:after-create-member-submitted-media(
 	$response as element(response)
 ) as element(response)
@@ -759,23 +648,6 @@ declare function manta-plugin:after-retrieve-member-derivations(
     return manta-plugin:replace-response-body( $response , $entry )
     
 };
-
-
-
-
-declare function manta-plugin:after-retrieve-member-drafts(
-	$response as element(response)
-) as element(response)
-{
-    
-    let $entry := manta-plugin:get-entry($response/body) 
-    let $entry := manta-plugin:augment-draft-entry( $entry )
-    return manta-plugin:replace-response-body( $response , $entry )
-    
-};
-
-
-
 
 declare function manta-plugin:after-retrieve-member-submitted-media(
 	$response as element(response)
@@ -853,23 +725,6 @@ declare function manta-plugin:after-update-member-studies(
     
 };
 
-
-
-
-declare function manta-plugin:after-update-member-drafts(
-	$response as element(response)
-) as element(response)
-{
-    
-    let $entry := $response/body/atom:entry 
-    let $entry := manta-plugin:augment-draft-entry( $entry )
-    return manta-plugin:replace-response-body( $response , $entry )
-    
-};
-
-
-
-
 declare function manta-plugin:after-update-member-submitted-media(
 	$response as element(response)
 ) as element(response)
@@ -904,33 +759,6 @@ declare function manta-plugin:after-list-collection-studies(
     return manta-plugin:replace-response-body( $response , $feed )
     
 };
-
-
-
-
-declare function manta-plugin:after-list-collection-drafts(
-	$response as element(response)
-) as element(response)
-{
-    
-    let $feed := $response/body/atom:feed 
-
-    let $feed := 
-        <atom:feed>
-        {
-            $feed/attribute::* ,
-            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
-            for $entry in $feed/child::*[ . instance of element(atom:entry) or . instance of element(at:deleted-entry) ]
-            return manta-plugin:augment-draft-entry( $entry )
-        }
-        </atom:feed>
-    
-    return manta-plugin:replace-response-body( $response , $feed )
-    
-};
-
-
-
 
 declare function manta-plugin:after-list-collection-submitted-media(
 	$response as element(response)
@@ -1069,32 +897,6 @@ declare function manta-plugin:submitted-media-collection-path-info-for-study-ent
     let $collection-path-info := concat( "/media/submitted/" , $id )
     return $collection-path-info
 };
-
-
-
-
-declare function manta-plugin:draft-media-collection-path-info-for-draft-entry(
-    $entry as element()
-) as xs:string
-{
-
-    (: $entry could be either $entry instance of element(atom:entry) or $entry instance of element(at:deleted-entry) :)
-
-    let $id :=  if ($entry instance of element(at:deleted-entry)) then 
-                    let $deleted-entry-id := manta-plugin:get-deleted-entry-id ($entry)
-                    return $deleted-entry-id
-                else
-                    let $entry-id := manta-plugin:get-id($entry)
-                    return $entry-id
-    
-    let $collection-path-info := concat( "/media/draft/" , $id )    
-    
-    return $collection-path-info
-    
-};
-
-
-
 
 declare function manta-plugin:curated-media-collection-path-info-for-study-entry(
     $entry as element(atom:entry)
@@ -1367,69 +1169,6 @@ declare function manta-plugin:augment-derivation-tombstone(
 
 };
 
-declare function manta-plugin:augment-draft-entry(
-    $entry as element()
-) as element()
-{
-  let $entry := if ($entry instance of element(atom:entry)) then
-        let $ret := manta-plugin:augment-draft-entry-atom($entry)
-        return $ret
-      else 
-          let $ret := manta-plugin:augment-draft-entry-tombstone($entry)
-          return $ret
-    return $entry
-};
-declare function manta-plugin:augment-draft-entry-atom(
-    $entry as element(atom:entry)
-) as element(atom:entry)
-{
-
-    let $draft-media-collection-path-info := manta-plugin:draft-media-collection-path-info-for-draft-entry( $entry )
-    let $draft-media-collection-link := 
-        <atom:link 
-            rel="http://www.cggh.org/2010/chassis/terms/draftMedia" 
-            href="{concat( $config:self-link-uri-base , $draft-media-collection-path-info )}"
-            type="application/atom+xml;type=feed"/>
-        
-    let $entry := 
-        <atom:entry>
-        {
-            $entry/attribute::* ,
-            $entry/child::* ,
-            $draft-media-collection-link
-        }
-        </atom:entry>
-            
-    return $entry
-
-};
-
-declare function manta-plugin:augment-draft-entry-tombstone(
-    $entry as element(at:deleted-entry)
-) as element(at:deleted-entry)
-{
-
-    let $draft-media-collection-path-info := manta-plugin:draft-media-collection-path-info-for-draft-entry( $entry )
-    let $draft-media-collection-link := 
-        <atom:link 
-            rel="http://www.cggh.org/2010/chassis/terms/draftMedia" 
-            href="{concat( $config:self-link-uri-base , $draft-media-collection-path-info )}"
-            type="application/atom+xml;type=feed"/>
-        
-    let $entry := 
-        <at:deleted-entry>
-        {
-            $entry/attribute::* ,
-            $entry/child::* ,
-            $draft-media-collection-link
-        }
-        </at:deleted-entry>
-            
-    return $entry
-
-};
-
-
 declare function manta-plugin:augment-media-entry(
     $entry as element()
 ) as element()
@@ -1460,7 +1199,6 @@ declare function manta-plugin:augment-media-atom-entry(
             "?reviewSubject=" ,
             $entry/atom:link[@rel='edit']/@href
         )
-
     let $derivation-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?output=" , $entry/atom:link[@rel='edit']/@href )
     let $derived-uri := concat( $config:self-link-uri-base , "/derivations/" , $study-id , "?input=" , $entry/atom:link[@rel='edit']/@href )
 
