@@ -128,9 +128,9 @@
 														</xforms:input>				
 													</p>
 													<p>
-													<xforms:input model="mod-study-dashboard" ref="instance('ins-study-entry')//study/curator-notes">
+													<xforms:textarea model="mod-study-dashboard" ref="instance('ins-study-entry')//study/curator-notes">
 														<xforms:label>Notes:</xforms:label>
-													</xforms:input>
+													</xforms:textarea>
 													</p>
 												</xforms:group>
 												<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
