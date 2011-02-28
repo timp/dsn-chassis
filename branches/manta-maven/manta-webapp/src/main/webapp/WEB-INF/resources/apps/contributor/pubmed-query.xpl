@@ -53,6 +53,10 @@
                 </xsl:template>
                 <xsl:template match="//acknowledgements">
                     <acknowledgements>
+                        <institution-ack>
+                            <institution-name><xsl:value-of select="$metadata//Affiliation"/></institution-name>
+                            <xsl:apply-templates select="//institution-websites"/>
+                        </institution-ack>
                         <!-- Only copy from pubmed if there's a valid response -->
                         <xsl:if test="count($metadata//Article/AuthorList/Author) &gt; 0">
                             <xsl:apply-templates select="$metadata//Article" />
@@ -75,7 +79,7 @@
                         <middle-name></middle-name>
                         <family-name><xsl:value-of select="LastName"/></family-name>
                         <email-address></email-address>
-                        <institution><xsl:value-of select="parent::node()/parent::*/Affiliation"/></institution>
+                        <institution></institution>
                         <person-is-contactable/>
                     </person>
                 </xsl:template>                

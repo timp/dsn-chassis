@@ -55,6 +55,7 @@
                 </xsl:template>
                 <xsl:template match="//acknowledgements">
                     <acknowledgements>
+                        <xsl:apply-templates select="//institution-ack"/>
                         <!-- Only copy from pubmed if there's one ack - hopefully first time through only -->
                         <xsl:if test="count($metadata//xref:contributor) &gt; 0">
                             <xsl:apply-templates select="$metadata//xref:contributors" />

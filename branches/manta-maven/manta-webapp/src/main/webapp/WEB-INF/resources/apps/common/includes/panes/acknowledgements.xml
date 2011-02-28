@@ -5,10 +5,73 @@
     <!-- If the user has PUT access to the study entry. -->
     <xforms:group
         ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+        
+       
+        
+        
+        
+        
+        
+        
         <xforms:group id="list-of-acknowledgements"
             ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
 
-
+            <xforms:input ref="institution-ack/institution-name">
+                <xforms:label>Institution:</xforms:label>
+            </xforms:input>
+            
+            
+            <span id="editable-list-of-acknowledgements-container">
+                
+                <table>
+                    
+                    <xforms:repeat nodeset="institution-ack/institution-websites/institution-url" id="rep-url">
+                        
+                        <tr class="repeated-element">
+                            
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-url')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td class="acknowledgement-form-cell">
+                                <span class="institution-textbox-container">
+                                    <xforms:input ref=".">
+                                        <xforms:label>Institution Website URL:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    
+                    <tr>
+                        <td colspan="2">
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institution-ack/institution-websites"
+                                    at="last()" position="after"
+                                    origin="xxforms:element('institution-url')"/>
+                            </xforms:trigger>
+                            <xforms:trigger appearance="minimal" class="addRemove">
+                                <xforms:label>Add an Institutional URL</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institution-ack/institution-websites" 
+                                    at="last()" position="after"
+                                    origin="xxforms:element('institution-url')"/>
+                            </xforms:trigger>
+                            
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            </span>
+            
             <span id="editable-list-of-acknowledgements-container">
 
                 <table>
@@ -139,11 +202,25 @@
         ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
         <xforms:group
             ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
-
-
+            <div class="institution-textbox-container">
+                <p>
+                <xforms:output ref="instance('ins-study-entry')//institution-ack/institution-name">
+                    <xforms:label>Institution:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:repeat nodeset="instance('ins-study-entry')//institution-ack/institution-websites/institution-url" id="rep-instit-url">
+                    <br/>
+                    <xforms:output ref=".">
+                        <xforms:label>URL:</xforms:label>
+                    </xforms:output>
+                   
+                </xforms:repeat>
+                </p>
+            </div>
+            
             <xforms:group
                 ref="instance('ins-study-entry')/atom:content/study/acknowledgements[empty(person)]">
-                <p>There are no acknowledgements.</p>
+                <p>There are no personal acknowledgements.</p>
             </xforms:group>
 
             <xforms:group
