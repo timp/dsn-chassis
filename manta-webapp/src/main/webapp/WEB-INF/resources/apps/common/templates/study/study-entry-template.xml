@@ -9,13 +9,15 @@
 			<registrant-has-agreed-to-the-terms/>
 			<study-is-published/>
 			<explorer-display>notset</explorer-display>
-			<publications>
-				<institution>
+			<publications/>
+			<acknowledgements>
+				<institution-ack>
 					<institution-name/>
-					<institution-websites/>
-				</institution>
-			</publications>
-			<acknowledgements/>
+					<institution-websites>
+						<institution-url/>
+					</institution-websites>
+				</institution-ack>
+			</acknowledgements>
 			<curator-notes/>
 			<study-status>new</study-status>
 			<modules/>
