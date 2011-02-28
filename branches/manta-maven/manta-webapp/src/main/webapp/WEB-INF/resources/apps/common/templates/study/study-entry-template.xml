@@ -8,7 +8,13 @@
 			</ui-info>
 			<registrant-has-agreed-to-the-terms/>
 			<study-is-published/>
-			<publications/>
+			<explorer-display>notset</explorer-display>
+			<publications>
+				<institution>
+					<institution-name/>
+					<institution-websites/>
+				</institution>
+			</publications>
 			<acknowledgements/>
 			<curator-notes/>
 			<study-status>new</study-status>

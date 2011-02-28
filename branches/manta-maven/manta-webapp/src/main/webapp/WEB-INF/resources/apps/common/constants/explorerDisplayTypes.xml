@@ -1,0 +1,19 @@
+<!--  A closed list of study status types  -->
+<displayTypes xmlns="">
+	<displayType>
+		<label></label>
+		<value>notset</value>
+	</displayType>
+	<displayType>
+		<label>Do not show</label>
+		<value>none</value>
+	</displayType>
+	<displayType>
+		<label>Short format</label>
+		<value>short</value>
+	</displayType>
+	<displayType>
+		<label>Show everything</label>
+		<value>full</value>
+	</displayType>
+</displayTypes>
