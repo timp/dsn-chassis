@@ -240,7 +240,7 @@
 
 								<div>
 									<xforms:select1 appearance="minimal" ref="testingDelay">
-										<xforms:label class="fixed-width">Sampling/testing delay
+										<xforms:label class="fixed-width">Typical sampling/testing delay
 										</xforms:label>
 										<xforms:item>
 											<xforms:label><!-- Nullable -->
