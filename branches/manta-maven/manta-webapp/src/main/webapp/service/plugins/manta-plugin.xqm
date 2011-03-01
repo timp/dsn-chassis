@@ -73,24 +73,46 @@ declare function local:log4jInfo(
 
 (: TODO add originStudy links to submitted media entries :)
 
+
+declare function manta-plugin:get-request-path-info($request as element(request) ) as xs:string
+{
+    let $request-path-info := $request/path-info/text()
+    let $log := local:log4jDebug($request-path-info)
+    return $request-path-info
+};
+
+declare function manta-plugin:get-attribute($parameter-name as xs:string, $request as element(request)) as xs:string
+{
+    let $value := $request/attributes/attribute[name = lower-case($parameter-name)]/value/text()
+    return if ( $value castable as xs:string ) then xs:string( $value ) else () 
+};
+
+declare function manta-plugin:get-user($request as element(request)) as xs:string
+{
+    let $value := $request/user/text()
+    return if ( $value castable as xs:string ) then xs:string( $value ) else () 
+};
+
 declare function manta-plugin:before(
 	$operation as xs:string ,
-	$request-path-info as xs:string ,
-	$request-data as item()* ,
-	$request-media-type as xs:string?
+	$request as element(request),
+	$entity as item()*
 ) as item()*
 {
-	
-	let $message := ( "chassis-manta plugin, before: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $request-data := $entity
+
+
+	let $message := ( "chassis-manta plugin, before: " , $operation  ) 
 	let $log := local:log4jDebug( $message )
+
 
 	return 
 	
 	    if ( $operation = $CONSTANT:OP-CREATE-MEMBER )
-	    then manta-plugin:before-create-member( $request-path-info , $request-data )
+	    then manta-plugin:before-create-member( $request , $request-data )
 	    
         else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
-        then manta-plugin:before-update-member( $request-path-info , $request-data )
+        then manta-plugin:before-update-member( $request , $request-data )
         
 	    else $request-data
 
@@ -100,11 +122,13 @@ declare function manta-plugin:before(
 
 
 declare function manta-plugin:before-create-member(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$request-data as element(atom:entry) 
 ) as item()*
 {
-    if ( $request-path-info = "/studies" ) 
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+    
+    return if ( $request-path-info = "/studies" ) 
     then manta-plugin:before-create-member-study( $request-data )
     else $request-data
 };
@@ -113,18 +137,20 @@ declare function manta-plugin:before-create-member(
 
 
 declare function manta-plugin:before-update-member(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$request-data as element(atom:entry) 
 ) as item()*
 {
-    if ( matches( $request-path-info , "/studies/[^/]+" ) )
-    then manta-plugin:before-update-member-study( $request-path-info , $request-data )
+     let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( matches( $request-path-info , "/studies/[^/]+" ) )
+    then manta-plugin:before-update-member-study( $request , $request-data )
     else if ( matches( $request-path-info , "/study-info/[^/]+" ) )
-    then manta-plugin:before-update-member-study-info( $request-path-info , $request-data )
+    then manta-plugin:before-update-member-study-info( $request , $request-data )
     else if ( matches( $request-path-info , "/media/submitted/[^/]+/[^/]+" ) )
-    then manta-plugin:before-update-member-submitted-media( $request-path-info , $request-data )
+    then manta-plugin:before-update-member-submitted-media( $request , $request-data )
     else if ( matches( $request-path-info , "/media/curated/[^/]+/[^/]+" ) )
-    then manta-plugin:before-update-member-curated-media( $request-path-info , $request-data )
+    then manta-plugin:before-update-member-curated-media( $request , $request-data )
     else $request-data 
 };
 
@@ -162,7 +188,7 @@ declare function manta-plugin:before-create-member-study(
 };
 
 declare function manta-plugin:before-update-member-study(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
     $request-data as element(atom:entry)
 ) as item()*
 {
@@ -173,17 +199,19 @@ declare function manta-plugin:before-update-member-study(
 
 
 declare function manta-plugin:before-update-member-study-info(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
     $request-data as element(atom:entry)
 ) as item()*
 {
+     let $request-path-info := manta-plugin:get-request-path-info($request)
+  
     let $stored := atomdb:retrieve-member( $request-path-info )
     let $filtered-request-data := manta-plugin:filter-study-info-entry( $stored , $request-data )
     return $filtered-request-data
 };
 
 declare function manta-plugin:before-update-member-submitted-media(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
     $request-data as element(atom:entry)
 ) as item()*
 {
@@ -195,7 +223,7 @@ declare function manta-plugin:before-update-member-submitted-media(
 
 
 declare function manta-plugin:before-update-member-curated-media(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
     $request-data as element(atom:entry)
 ) as item()*
 {
@@ -265,35 +293,35 @@ declare function manta-plugin:filter-media-entry(
 
 declare function manta-plugin:after(
 	$operation as xs:string ,
-	$request-path-info as xs:string ,
+    $request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
 
-	let $message := ( "chassis-manta plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
+	let $message := ( "chassis-manta plugin, after: " , $operation ) 
 	let $log := local:log4jDebug( $message )
 
 	return
 		
 		if ( $operation = $CONSTANT:OP-CREATE-MEMBER ) 
 		
-		then manta-plugin:after-create-member( $request-path-info , $response )
+		then manta-plugin:after-create-member( $request , $response )
 		
 		else if ( $operation = $CONSTANT:OP-RETRIEVE-MEMBER or $operation = $CONSTANT:OP-ATOM-PROTOCOL-ERROR)
 		
-		then manta-plugin:after-retrieve-member( $request-path-info , $response )
+		then manta-plugin:after-retrieve-member( $request , $response )
 		
 		else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
 		
-		then manta-plugin:after-update-member( $request-path-info , $response )
+		then manta-plugin:after-update-member( $request , $response )
 		
 		else if ( $operation = $CONSTANT:OP-LIST-COLLECTION )
 		
-		then manta-plugin:after-list-collection( $request-path-info , $response )
+		then manta-plugin:after-list-collection( $request , $response )
 		
 		else if ( $operation = $CONSTANT:OP-CREATE-MEDIA )
 		
-		then manta-plugin:after-create-media( $request-path-info , $response )
+		then manta-plugin:after-create-media( $request , $response )
 		
 		else $response
 
@@ -306,14 +334,15 @@ declare function manta-plugin:after(
 
 
 declare function manta-plugin:after-create-member(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-
-    if ( $request-path-info = "/studies" )
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( $request-path-info = "/studies" )
     
-    then manta-plugin:after-create-member-studies( $response )
+    then manta-plugin:after-create-member-studies( $request, $response )
     
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
     
@@ -326,12 +355,13 @@ declare function manta-plugin:after-create-member(
 
 
 declare function manta-plugin:after-create-media(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-
-    if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( matches( $request-path-info , "^/media/submitted/[^/]+" ) )
     
     then manta-plugin:after-create-media-submitted-media( $response )
     
@@ -342,11 +372,13 @@ declare function manta-plugin:after-create-media(
 
 
 declare function manta-plugin:after-retrieve-member(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-    if ( matches( $request-path-info , "/studies/[^/]+" ) )
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( matches( $request-path-info , "/studies/[^/]+" ) )
     
     then manta-plugin:after-retrieve-member-studies( $response )
     
@@ -369,13 +401,15 @@ declare function manta-plugin:after-retrieve-member(
 
 
 declare function manta-plugin:after-update-member(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-    if ( matches( $request-path-info , "/studies/[^/]+" ) )
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( matches( $request-path-info , "/studies/[^/]+" ) )
     
-    then manta-plugin:after-update-member-studies( $response )
+    then manta-plugin:after-update-member-studies( $request, $response )
    
     else if ( matches( $request-path-info , "^/media/submitted/[^/]+/[^/]+" ) )
     
@@ -388,11 +422,13 @@ declare function manta-plugin:after-update-member(
 
 
 declare function manta-plugin:after-list-collection(
-	$request-path-info as xs:string ,
+	$request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-    if ( $request-path-info = "/studies" )
+    let $request-path-info := manta-plugin:get-request-path-info($request)
+  
+    return if ( $request-path-info = "/studies" )
     
     then manta-plugin:after-list-collection-studies( $response )
   
@@ -406,11 +442,11 @@ declare function manta-plugin:after-list-collection(
     
     else if ( matches( $request-path-info , "^/derivations" ) )
     
-    then manta-plugin:after-list-collection-derivations( $request-path-info , $response )
+    then manta-plugin:after-list-collection-derivations( $request , $response )
     
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+" ) )
     
-    then manta-plugin:after-list-collection-personal-data-reviews( $request-path-info , $response )
+    then manta-plugin:after-list-collection-personal-data-reviews( $request , $response )
 
     else $response
 
@@ -419,6 +455,7 @@ declare function manta-plugin:after-list-collection(
 
 
 declare function manta-plugin:after-create-member-studies(
+    $request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
@@ -429,7 +466,7 @@ declare function manta-plugin:after-create-member-studies(
     let $id := manta-plugin:get-id( $entry )
     let $path-info := atomdb:edit-path-info($entry)
     let $study-uri := $entry/atom:link[@rel='edit']/@href
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
+    let $user-name := manta-plugin:get-user( $request )
     
  (: create group :)
     let $study-group-entry :=
@@ -519,7 +556,7 @@ declare function manta-plugin:after-create-member-studies(
                 </atombeat:config>
             </atombeat:config-tombstones>
         </atom:feed>
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
+    let $user-name := manta-plugin:get-user( $request )    
     let $submitted-media-collection-db-path := atomdb:create-collection( $submitted-media-collection-path-info , $feed, $user-name )
     let $submitted-media-collection-descriptor := security-config:submitted-media-collection-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
@@ -683,19 +720,22 @@ declare function manta-plugin:enable-tombstones($feed as element(atom:feed)) as 
 
 };
 
-declare function manta-plugin:submitted-media-enable-tombstones($entry as element(atom:entry)) as element(atom:feed) {
+declare function manta-plugin:submitted-media-enable-tombstones(
+        $request as element(request) ,
+        $entry as element(atom:entry)) as element(atom:feed) {
    let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
     let $log := local:log4jDebug( $submitted-media-collection-path-info )
     
     let $old-feed := atomdb:retrieve-feed-without-entries($submitted-media-collection-path-info)
     let $feed := manta-plugin:enable-tombstones($old-feed)
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )    
+    let $user-name := manta-plugin:get-user( $request )    
     let $submitted-media-collection-db-path := atomdb:update-collection( $submitted-media-collection-path-info , $feed)
     return $feed
 };
 
 
 declare function manta-plugin:after-update-member-studies(
+    $request as element(request),
 	$response as element(response)
 ) as element(response)
 {
@@ -715,7 +755,7 @@ declare function manta-plugin:after-update-member-studies(
         let $submitted-media-collection-descriptor := security-config:remove-permission($sm-sd-1,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
         let $descriptor-stored := atomsec:store-descriptor( $submitted-media-collection-path-info , $submitted-media-collection-descriptor )
         
-        let $nf := manta-plugin:submitted-media-enable-tombstones($entry)
+        let $nf := manta-plugin:submitted-media-enable-tombstones($request, $entry)
         return $new-descriptor
         else ()
         
@@ -813,15 +853,15 @@ declare function manta-plugin:after-list-collection-curated-media(
 
 
 declare function manta-plugin:after-list-collection-derivations(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
     
     let $feed := $response/body/atom:feed 
 
-    let $param-input := request:get-parameter( "input" , "" )
-    let $param-output := request:get-parameter( "output" , "" )
+    let $param-input := xutil:get-parameter( "input" , $request)
+    let $param-output := xutil:get-parameter( "output" , $request )
     
     let $feed := 
         <atom:feed>
@@ -855,13 +895,13 @@ declare function manta-plugin:after-list-collection-derivations(
 
 
 declare function manta-plugin:after-list-collection-personal-data-reviews(
-    $request-path-info as xs:string ,
+    $request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
     
     let $feed := $response/body/atom:feed 
-    let $param-review-subject := request:get-parameter( "reviewSubject" , "" )
+    let $param-review-subject := xutil:get-parameter( "reviewSubject" , $request )
     
     let $feed := 
         <atom:feed>
@@ -1285,15 +1325,15 @@ declare function manta-plugin:get-entry($unknown as item()) as element() {
 
 declare function manta-plugin:after-error(
     $operation as xs:string ,
-    $request-path-info as xs:string ,
+    $request as element(request) ,
     $response as element(response)
 ) as element(response)
 {
-let $message := ( "chassis-manta plugin, after-error: " , $operation , ", request-path-info: " , $request-path-info ) 
-	let $log := local:log4jDebug( $message )
+	let $log := local:log4jDebug( "manta-plugin after error" )
+	let $log1 := local:log4jDebug($request)
 (: This plugin is agnostic as to whether the entry is atom:entry or at:deleted-entry :)
     let $ret := if ($response/body/child::* instance of element(at:deleted-entry)) then
-            manta-plugin:after($operation,$request-path-info,$response)
+            manta-plugin:after($operation,$request,$response)
         else
             $response
     return $ret
