@@ -143,6 +143,13 @@
 			</xforms:instance>
 
 			<xforms:instance id="ins-study-status" src="/apps/common/constants/studyStatusTypes.xml" />
+			<!-- If available use the study status types stored in the config collection -->
+			<xforms:submission id="sub-get-study-status-types"
+				resource="/service/content/config/status"
+				method="get"
+				replace="instance"
+				instance="ins-study-status" />
+				
 			<xforms:instance id="ins-explorer-type" src="/apps/common/constants/explorerDisplayTypes.xml" />
 
 			<!-- Check email addresses in acknowledgements (not required) -->			
@@ -163,7 +170,7 @@
 					
 					<xforms:send submission="sub-get-acl-entry" />
 					<xforms:send submission="sub-get-permissions-entry"/>
-					
+					<xforms:send submission="sub-get-study-status-types"/>	
 					
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
