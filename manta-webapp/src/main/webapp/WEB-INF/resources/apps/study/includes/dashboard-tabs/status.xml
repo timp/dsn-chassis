@@ -137,7 +137,7 @@
 													<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
 														<p>
 															
-																	<xforms:output ref="instance('ins-study-status')/statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
+																	<xforms:output ref="instance('ins-study-status')//statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
 																		<xforms:label>Status:</xforms:label>
 																	</xforms:output>
 																			
@@ -158,7 +158,7 @@
 								</xforms:group>
 								<xforms:group ref="instance('ins-control')/not-curator">
 									<p>
-										<xforms:output model="mod-study-dashboard" ref="instance('ins-study-status')/statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
+										<xforms:output model="mod-study-dashboard" ref="instance('ins-study-status')//statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
 											<xforms:label>Status:</xforms:label>
 										</xforms:output>			
 									</p>
