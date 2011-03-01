@@ -123,6 +123,15 @@
     <category name="org.exist.http">
         <priority value="warn"/>
     </category>
+    <category name="org.exist.collections">
+        <priority value="warn"/>
+    </category>
+    <category name="org.exist.validation">
+        <priority value="warn"/>
+    </category>
+    <category name="org.apache.xmlrpc.server">
+        <priority value="warn"/>
+    </category>
     <!--
     <category name="org.exist.xquery">
         <priority value="debug"/>
@@ -155,7 +164,10 @@
     <category name="org.cggh.chassis.manta.xquery">
         <priority value="debug"/>
     </category>
-    -->
+  -->
+    <category name="org.cggh.chassis.manta.xquery.functions">
+        <priority value="warn"/>
+    </category>
     <category name="org.apache.commons.httpclient">
         <priority value="info"/>
     </category>
