@@ -71,35 +71,63 @@ return
 declare function local:do-modifications() as xs:string*
 {
     let $status-config := <statusTypes xmlns="">
-	<statusType>
+	<statusType deprecated="n">
 		<label>Newly created study</label>
 		<value>new</value>
 	</statusType>
-	<statusType>
+	<statusType deprecated="n">
 		<label>In curation</label>
 		<value>in</value>
 	</statusType>
-	<statusType>
+	<statusType deprecated="n">
 		<label>Awaiting response (curator)</label>
 		<value>wait-internal</value>
 	</statusType>
-	<statusType>
+	<statusType deprecated="n">
 		<label>Awaiting response (contributor)</label>
 		<value>wait-external</value>
 	</statusType>
-	<statusType>
+	<statusType deprecated="n">
 		<label>Complete</label>
 		<value>complete</value>
 	</statusType>
-	<statusType>
+	<statusType deprecated="n">
 		<label>Published to WWARN Explorer</label>
 		<value>exp</value>
 	</statusType>
 </statusTypes>
     
     let $entry1 := local:create-config-entry('Study Status','status',$status-config)
-	    
-    return concat($entry1, '')
+
+let $values2 :=
+<terms xmlns="">
+    <term deprecated="n" filter="submit wwarn">
+        <label>Data file</label>
+        <value>http://www.cggh.org/2010/chassis/terms/DataFile</value>
+    </term>
+    <term deprecated="n" filter="submit wwarn">
+        <label>Data dictionary</label>
+        <value>http://www.cggh.org/2010/chassis/terms/DataDictionary</value>
+    </term>
+    <term deprecated="n" filter="submit wwarn">
+        <label>Protocol</label>
+        <value>http://www.cggh.org/2010/chassis/terms/Protocol</value>
+    </term>
+    <term deprecated="n" filter="submit wwarn">
+        <label>Publication</label>
+        <value>http://www.cggh.org/2010/chassis/terms/Publication</value>
+    </term>
+    <term deprecated="n" filter="submit wwarn">
+        <label>Other</label>
+        <value>http://www.cggh.org/2010/chassis/terms/Other</value>
+    </term>
+    <term deprecated="n" filter="wwarn">
+        <label>Explorer Input</label>
+        <value>http://www.cggh.org/2010/chassis/terms/Explorer</value>
+    </term>
+</terms>
+   let $entry2 := local:create-config-entry('File data types','file-terms',$values2)
+    return concat($entry1, '<br/>', $entry2)
 };
 
 declare function local:create-atom-entry($title, $groups, $id, $author) as element(atom:entry) {
