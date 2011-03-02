@@ -819,8 +819,10 @@
 				</xforms:trigger> 
 				<xforms:trigger> 
 					<xforms:label>No</xforms:label>
-					<xxforms:hide ev:event="DOMActivate" dialog="send-email-option-dialog"/>
-					<xforms:send submission="sub-put-all-permissions"/>
+					<xforms:action ev:event="DOMActivate">
+						<xxforms:hide ev:event="DOMActivate" dialog="send-email-option-dialog"/>
+						<xforms:send submission="sub-put-all-permissions"/>
+					</xforms:action>
 				</xforms:trigger> 
 			</div> 
 		</xxforms:dialog>
