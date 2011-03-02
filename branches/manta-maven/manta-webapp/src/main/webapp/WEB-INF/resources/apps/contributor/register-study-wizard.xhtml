@@ -200,6 +200,7 @@
 				<!-- now retrieve feed of draft media -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
 				
+		 		<xforms:send ev:event="xforms-submit-done" submission="sub-get-file-terms"/>
                 <!-- If not available (error) then displays message and reloads with no request param. -->
                 <!-- Note that this behaviour will depend on the if-param-condition in the send to prevent an endless loop. -->
                 <xforms:action ev:event="xforms-submit-error">
@@ -344,7 +345,13 @@
 
 			<!-- This gets the list of different file types for the upload-files pane. -->
 			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>
-
+			<!-- If available use the types stored in the config collection -->
+			<xforms:submission id="sub-get-file-terms"
+				resource="/service/content/config/file-terms"
+				method="get"
+				replace="instance"
+				instance="ins-file-terms" />
+				
             <xforms:submission 
             	id="sub-post-contribution" 
             	ref="instance('ins-study-entry')"
@@ -596,6 +603,7 @@
 				
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-study-info-entry"/>
+					<xforms:send submission="sub-get-file-terms"/>
 	
 				</xforms:action>
 				

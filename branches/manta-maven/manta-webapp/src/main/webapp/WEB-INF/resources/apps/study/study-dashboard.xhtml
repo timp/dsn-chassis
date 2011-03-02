@@ -170,7 +170,8 @@
 					
 					<xforms:send submission="sub-get-acl-entry" />
 					<xforms:send submission="sub-get-permissions-entry"/>
-					<xforms:send submission="sub-get-study-status-types"/>	
+					<xforms:send submission="sub-get-study-status-types"/>
+					<xforms:send submission="sub-get-file-terms"/>
 					
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
 					<xforms:send submission="sub-get-submitted-media-feed"/>
@@ -355,19 +356,16 @@
 
 
         	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
- 
- 
-            
-            
-            
             
 			<!-- This gets the list of different file types for the upload-files tab. -->
 			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
 
-
-
-
-
+			<!-- If available use the study status types stored in the config collection -->
+			<xforms:submission id="sub-get-file-terms"
+				resource="/service/content/config/file-terms"
+				method="get"
+				replace="instance"
+				instance="ins-file-terms" />
         	
         	<xforms:instance id="ins-study-feed">
 				<atom:feed/>

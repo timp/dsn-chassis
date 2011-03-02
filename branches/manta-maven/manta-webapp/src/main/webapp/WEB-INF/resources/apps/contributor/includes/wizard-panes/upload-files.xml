@@ -57,7 +57,7 @@
 									<xforms:label>Select...</xforms:label>
 									<xforms:value></xforms:value>
 								</xforms:item>
-								<xforms:itemset nodeset="instance('ins-file-terms')/term">
+								<xforms:itemset nodeset="instance('ins-file-terms')//term[(contains(@filter,'submit') or empty(@filter)) and not(@deprecated='y')]">
 									<xforms:label ref="label"/>
 									<xforms:value ref="value"/>
 								</xforms:itemset>

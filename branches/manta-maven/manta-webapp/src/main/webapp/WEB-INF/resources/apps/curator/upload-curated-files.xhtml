@@ -51,6 +51,8 @@
 				<xforms:action ev:event="xforms-submit-done">
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 					<xforms:send submission="sub-get-curated-media-feed"/>
+					
+					<xforms:send submission="sub-get-file-terms" />
 				</xforms:action>
 				
 			</xforms:submission>
@@ -208,6 +210,13 @@
         	<!-- This gets the list of different file types for the upload-files tab. -->
         	<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>    
         	
+        	<!-- If available use the study status types stored in the config collection -->
+			<xforms:submission id="sub-get-file-terms"
+				resource="/service/content/config/file-terms"
+				method="get"
+				replace="instance"
+				instance="ins-file-terms" />
+				
         	<xforms:submission
         		id="sub-get-dashboard"
         		resource="../study/dashboard?tab=files&amp;study={instance('ins-study-entry')/atom:link[@rel='edit']/@href}"
@@ -299,7 +308,7 @@
     									<xforms:label>Select...</xforms:label>
     									<xforms:value></xforms:value>
     								</xforms:item>
-    								<xforms:itemset nodeset="instance('ins-file-terms')/term">
+    								<xforms:itemset nodeset="instance('ins-file-terms')//term[contains(@filter,'wwarn') and not(@deprecated='y')]">
     									<xforms:label ref="label"/>
     									<xforms:value ref="value"/>
     								</xforms:itemset>

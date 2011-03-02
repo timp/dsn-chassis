@@ -64,7 +64,7 @@
 												<xforms:label>Select...</xforms:label>
 												<xforms:value></xforms:value>
 											</xforms:item>
-											<xforms:itemset nodeset="instance('ins-file-terms')/term">
+											<xforms:itemset nodeset="instance('ins-file-terms')//term[(contains(@filter,'submit') or empty(@filter)) and not(@deprecated='y')]">
 												<xforms:label ref="label"/>
 												<xforms:value ref="value"/>
 											</xforms:itemset>
@@ -143,7 +143,7 @@
 									    							return
 									    							if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
 									    							then $cat/@label
-									    							else instance('ins-file-terms')/term[value=$cat/@term]/label
+									    							else instance('ins-file-terms')//term[value=$cat/@term]/label
 									    							"/>
 									    						
 									    					</td>
@@ -258,7 +258,7 @@
 																	return
 																	if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
 																	then $cat/@label
-																	else instance('ins-file-terms')/term[value=$cat/@term]/label
+																	else instance('ins-file-terms')//term[value=$cat/@term]/label
 																	"/>
 															</td>
 															<td>
