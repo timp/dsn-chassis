@@ -96,6 +96,7 @@
                 
                 <sec:intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
                 <sec:intercept-url pattern="/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/administration/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
                 
             </sec:filter-invocation-definition-source>
         </property>
