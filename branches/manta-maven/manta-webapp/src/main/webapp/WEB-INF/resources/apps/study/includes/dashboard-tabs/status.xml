@@ -165,14 +165,21 @@
 									
 								</xforms:group>
 								<p>
-									<xforms:select1 ref="instance('ins-study-entry')//study/explorer-display" appearance="minimal">
-										<xforms:label>Explorer Display Option:</xforms:label>
-										<xforms:itemset model="mod-study-dashboard"
-											nodeset="instance('ins-explorer-type')//displayType">
-											<xforms:label ref="label" />
-											<xforms:value ref="value" />
-										</xforms:itemset>
-									</xforms:select1>			
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+										<xforms:select1 ref="instance('ins-study-entry')//study/explorer-display" appearance="minimal">
+											<xforms:label>Explorer Display Option:</xforms:label>
+											<xforms:itemset model="mod-study-dashboard"
+												nodeset="instance('ins-explorer-type')//displayType">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select1>			
+									</xforms:group>
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+										<xforms:output model="mod-study-dashboard" ref="instance('ins-explorer-type')//displayType[value=instance('ins-study-entry')//study/explorer-display/text()]/label">
+											<xforms:label>Explorer Display Option:</xforms:label>
+										</xforms:output>
+									</xforms:group>
 								</p>
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
 									<p>
