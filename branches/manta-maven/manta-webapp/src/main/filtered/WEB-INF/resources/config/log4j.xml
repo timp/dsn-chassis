@@ -118,7 +118,9 @@
     <category name="org.exist.indexing">
         <priority value="warn"/>
     </category>
-    
+    <category name="org.exist.xquery.functions.util">
+        <priority value="warn"/>
+    </category>
     
     <category name="org.exist.http">
         <priority value="warn"/>
