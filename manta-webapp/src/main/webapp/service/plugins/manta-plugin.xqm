@@ -1318,8 +1318,9 @@ declare function manta-plugin:get-entry($unknown as item()) as element() {
      else 
          let $new-entry := $unknown
          return $new-entry
-         let $msg := local:log4jDebug("get-entry")
-   let $msg := local:log4jDebug($ret)
+(:   let $msg := local:log4jDebug("get-entry")
+     let $msg := local:log4jDebug($ret)
+   :)
    return $ret
 };
 
