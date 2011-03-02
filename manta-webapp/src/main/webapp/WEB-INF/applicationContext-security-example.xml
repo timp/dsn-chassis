@@ -52,6 +52,7 @@
         
         <intercept-url pattern="/rest/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+        <intercept-url pattern="/administration/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <!-- don't do this, it protects all css and other resources -->
         <!--    <intercept-url pattern="/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" /> -->
