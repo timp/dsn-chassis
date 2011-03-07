@@ -1,7 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <user>
-  <fullName>Robert Hutton</fullName>
+  <fullName>Robert Hutton (Jenkins)</fullName>
+  <description>Jenkins User account</description>
   <properties>
+    <hudson.tasks.Mailer_-UserProperty>
+      <emailAddress>robert.hutton@well.ox.ac.uk</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>oOZFmB:5623719980d2936afa35ddadcbae658573b957b90538b1b5b603fac757806729</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.model.MyViewsProperty>
       <primaryViewName>All</primaryViewName>
       <views>
@@ -13,11 +20,8 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <passwordHash>oOZFmB:5623719980d2936afa35ddadcbae658573b957b90538b1b5b603fac757806729</passwordHash>
-    </hudson.security.HudsonPrivateSecurityRealm_-Details>
-    <hudson.tasks.Mailer_-UserProperty>
-      <emailAddress>robert.hutton@well.ox.ac.uk</emailAddress>
-    </hudson.tasks.Mailer_-UserProperty>
+    <hudson.plugins.ircbot.IrcUserProperty>
+      <nick>rwh</nick>
+    </hudson.plugins.ircbot.IrcUserProperty>
   </properties>
 </user>
