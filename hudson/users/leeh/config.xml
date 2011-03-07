@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <user>
-  <fullName>Lee Hart (gmail SCM user)</fullName>
-  <description></description>
+  <fullName>Lee Hart (Jenkins)</fullName>
+  <description>Jenkins User account</description>
   <properties>
     <hudson.tasks.Mailer_-UserProperty>
-      <emailAddress>l33h4r7@googlemail.com</emailAddress>
+      <emailAddress>lee.hart@well.ox.ac.uk</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
     <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <passwordHash>HOGUoK:f39a620f2dd8216b21e713caa42c9c09c7a8f0d5d955e987cf35bac85c5fa430</passwordHash>
+      <passwordHash>vBQlFL:aaa420d550db10752a9ae29904a047b2076568b2b1655a3780935aad710b9192</passwordHash>
     </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.model.MyViewsProperty>
       <primaryViewName>All</primaryViewName>
@@ -21,7 +21,7 @@
       </views>
     </hudson.model.MyViewsProperty>
     <hudson.plugins.ircbot.IrcUserProperty>
-      <nick>lee</nick>
+      <nick>leeh</nick>
     </hudson.plugins.ircbot.IrcUserProperty>
   </properties>
 </user>
