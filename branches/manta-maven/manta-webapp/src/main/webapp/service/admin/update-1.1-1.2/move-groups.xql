@@ -32,16 +32,15 @@ declare function local:content($current-host, $new-host) as item()*
     
         <html>
             <head>
-                <title>Change host</title>
+                <title>Move group descriptor</title>
             </head>
             <body>
-                <h1>Change host</h1>
+                <h1>Move group descriptor</h1>
                 
                 <p>
+                    Current Repository Path {$current-host} <br/>
                     <form method="post" action="">
-                        Current Repository Path <input name="oldhost" size="90" value="{$current-host}" /> <br/>
-                        New Repository Path <input name="newhost" size="90" value="{$new-host}" /><br/>
-                        <input type="submit" value="Migrate Data"></input>
+                        <input type="submit" value="Move groups"></input>
                     </form>
                     <form method="get" action="">
                         <input type="submit" value="Refresh"></input>
@@ -195,6 +194,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/changehost.xql" ,"/admin/changehost.xql" , ( "GET" , "POST" ) )
+    else ()
     
     

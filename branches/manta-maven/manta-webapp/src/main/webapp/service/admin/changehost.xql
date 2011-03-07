@@ -126,6 +126,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/changehost.xql" ,"/admin/changehost.xql" , ( "GET" , "POST" ) )
+    else ()
     
     
