@@ -166,7 +166,7 @@
 	    					<td>
 	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
 	    					</td>
-	    					<td>
+	    					<td nowrap="nowrap">
 	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 	    					</td>
 	    					<!--
@@ -191,8 +191,14 @@
 					    							instance('ins-study-status')/statusType[value=$study-status]/label
 					    							"/>
 	    					</td>    					
-	    					<td>
-	    						<span class="view-study-link-container"><a class="btn" href="../study/dashboard?study={atom:link[@rel='edit']/@href}">Edit</a></span><span style="margin: 50px;"></span>
+	    					<td nowrap="nowrap">
+	    						<span class="view-study-link-container">
+	    							<xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+	    								<a class="btn" href="../study/dashboard?study={atom:link[@rel='edit']/@href}">Edit</a>
+	    							</xforms:group>
+	    							<xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'GET') and not(contains(@atombeat:allow, 'PUT'))]">
+	    								<a class="btn" href="../study/dashboard?study={atom:link[@rel='edit']/@href}">View</a>
+	    							</xforms:group>
 	    						
 	    						<!-- Making the assumption that only a curator can be here -->
 	    						
@@ -223,7 +229,7 @@
 								              </xforms:switch>
 	    						         </span>
 	    						     </xforms:group>
-	    						
+	    						</span>
 	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
