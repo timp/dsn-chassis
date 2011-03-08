@@ -208,6 +208,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/update-studies-feed-config-1.1-to-1.2.xql" ,"/admin/update-studies-feed-config-1.1-to-1.2.xql" , ( "GET" , "POST" ) )
+    else ()
     
     

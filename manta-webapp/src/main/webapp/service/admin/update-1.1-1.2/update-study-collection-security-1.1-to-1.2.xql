@@ -247,6 +247,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/admin/update-study-collection-security-1.1-to-1.2.xql" ,"/admin/update-study-collection-security-1.1-to-1.2.xql" , ( "GET" , "POST" ) )
+    else ()
     
     
