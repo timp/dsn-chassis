@@ -92,7 +92,18 @@ declare function manta-plugin:get-user($request as element(request)) as xs:strin
     let $value := $request/user/text()
     return if ( $value castable as xs:string ) then xs:string( $value ) else () 
 };
-
+declare function manta-plugin:edit-path-info( $entry as element(atom:entry) ) as xs:string?
+{
+    let $href := $entry/atom:link[@rel='edit']/@href
+    return
+        if ( exists( $href ) ) then 
+            let $uri := $href cast as xs:string
+            return
+                if ( starts-with( $uri , $config:edit-link-uri-base ) )
+                then substring-after( $uri , $config:edit-link-uri-base )
+                else ()
+        else ()
+};
 declare function manta-plugin:before(
 	$operation as xs:string ,
 	$request as element(request),
@@ -464,7 +475,7 @@ declare function manta-plugin:after-create-member-studies(
     
     let $entry := $response/body/atom:entry 
     let $id := manta-plugin:get-id( $entry )
-    let $path-info := atomdb:edit-path-info($entry)
+    let $path-info := manta-plugin:edit-path-info($entry)
     let $study-uri := $entry/atom:link[@rel='edit']/@href
     let $user-name := manta-plugin:get-user( $request )
     
@@ -489,7 +500,7 @@ declare function manta-plugin:after-create-member-studies(
     (: create the group member :)
     let $member-groups := atomdb:create-member( "/groups" , $id , $study-group-entry, $user-name )
     (: create and store the security descriptor :)
-    let $path-info-member-group := atomdb:edit-path-info( $member-groups )
+    let $path-info-member-group := manta-plugin:edit-path-info( $member-groups )
     
     let $group-uri := concat($config:edit-link-uri-base,$path-info-member-group)
     (: Now that the group has been created update the study security descriptor :)
@@ -519,7 +530,7 @@ declare function manta-plugin:after-create-member-studies(
     let $member-study-info := atomdb:create-member( "/study-info" , $id , $study-info-entry, $user-name )  
     
     (: create and store the security descriptor :)
-    let $path-info-member-study-info := atomdb:edit-path-info( $member-study-info )
+    let $path-info-member-study-info := manta-plugin:edit-path-info( $member-study-info )
     let $security-descriptor-study-info := security-config:study-info-member-security-descriptor( $group-uri )
     let $descriptor-stored := atomsec:store-descriptor( $path-info-member-study-info , $security-descriptor-study-info )
 
@@ -743,7 +754,7 @@ declare function manta-plugin:after-update-member-studies(
     let $entry := $response/body/atom:entry 
     let $comment := request:get-header( "X-Manta-Remove-Draft-Status" )
     let $x := if ($comment = 'true') then
-        let $path-info := atomdb:edit-path-info($entry)
+        let $path-info := manta-plugin:edit-path-info($entry)
         let $old-security-descriptor := atomsec:retrieve-descriptor($path-info)
         let $new-descriptor := security-config:remove-permission($old-security-descriptor,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
         let $study-security-descriptor-path := $path-info
@@ -1031,7 +1042,7 @@ declare function manta-plugin:augment-study-entry(
 ) as element(atom:entry)
 {
 
-    let $entry-path-info := atomdb:edit-path-info( $entry )
+    let $entry-path-info := manta-plugin:edit-path-info( $entry )
     
     let $submitted-media-collection-path-info := manta-plugin:submitted-media-collection-path-info-for-study-entry( $entry )
     let $submitted-media-collection-link := 
@@ -1139,7 +1150,7 @@ declare function manta-plugin:augment-derivation-atom-entry(
 ) as element(atom:entry)
 {
 
-    let $entry-path-info := atomdb:edit-path-info( $entry )
+    let $entry-path-info := manta-plugin:edit-path-info( $entry )
     
     let $entry := 
         <atom:entry>
@@ -1176,7 +1187,7 @@ declare function manta-plugin:augment-derivation-tombstone(
 ) as element()
 {
 
-    let $entry-path-info := atomdb:edit-path-info( $entry )
+    let $entry-path-info := manta-plugin:edit-path-info( $entry )
     
     let $entry := 
         <at:deleted-entry>
