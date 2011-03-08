@@ -227,6 +227,6 @@ return
     
     then local:do-migration()
     
-    else common-protocol:do-method-not-allowed( "/service/admin/update-1.1-1.2/update-curatedMedia-feed-security-1.1-to-1.2.xql" ,"/service/admin/update-1.1-1.2/update-curatedMedia-feed-security-1.1-to-1.2.xql" , ( "GET" , "POST" ) )
+    else ()
     
     

@@ -11,6 +11,7 @@ import module namespace atomdb = "http://purl.org/atombeat/xquery/atomdb" at "..
 import module namespace common-protocol = "http://purl.org/atombeat/xquery/common-protocol" at "../../lib/common-protocol.xqm" ;
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "../collections.xqm" ;
 import module namespace atom-protocol = "http://purl.org/atombeat/xquery/atom-protocol" at "../../lib/atom-protocol.xqm" ;
+import module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" at "../../plugins/manta-plugin.xqm";
 
 declare variable $test-study-entry {
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
@@ -203,8 +204,28 @@ declare function local:move-module-info($collection-old) as element( atom:entry 
 
 declare function local:create-study($old as element(atom:entry), $published as element(atom:published), $author as element(atom:author)*, $comment as element(ar:comment)) as element(atom:entry)*
 {
-   let $create := atom-protocol:do-post-atom-entry('/studies', $old)
-    
+    let $request := 
+    <request>
+    <path-info>/studies</path-info>
+    <method>POST</method>
+    <headers>
+        <header>
+            <name>Accept</name>
+            <value>application/atom+xml</value>
+        </header>
+        <header>
+            <name>Content-Type</name>
+            <value>application/atom+xml</value>
+        </header>
+    </headers>
+    <user>admin@wwarn.org</user>
+    <roles>
+        <role>ROLE_CHASSIS_CONTRIBUTOR</role>
+    </roles>
+</request>
+  
+   let $create := atom-protocol:do-post-atom-entry($request, $old)
+  
     let $new := local:replace-atom-content($create//body/atom:entry, $create//atom:content, $published, $author, $comment)
     let $path := atomdb:edit-path-info( $new )
     let $update := atomdb:store-member('/studies', concat($path,'.atom'), $new)
@@ -236,22 +257,74 @@ declare function local:replace-atom-content( $entry as element(atom:entry) , $gr
 declare function local:update-permissions($href, $members) as element(atom:entry)*
 {
     let $uri := substring-after($href,$config:self-link-uri-base)
-    let $group := atom-protocol:do-get-member($uri)
+    let $request := local:prepare-request('GET', $uri)
+    let $group := atom-protocol:do-get-member($request)
     let $content := <atom:content type="application/vnd.chassis-manta+xml">
         {$members}
         </atom:content>
     let $new := local:replace-atom-content($group//body/atom:entry, $content, $group//body/atom:entry/atom:published, $group//body/atom:entry/atom:author,$group//body/atom:entry/ar:comment)
-    let $update := atom-protocol:do-put-atom-entry($uri,$new)
+    let $request1 := local:prepare-request('PUT', $uri)
+    let $log1 := util:log-app("debug", "update-permissions", $request1)
+    let $log2 := util:log-app("debug", "update-permissions", $new)
+    let $update := atom-protocol:do-post-atom-entry($request1, $new)
     return $update
 };
 
+declare function local:prepare-request($op, $path) {
+   <request>
+    <path-info>{$path}</path-info>
+    <method>{$op}</method>
+    <headers>
+        <header>
+            <name>Accept</name>
+            <value>application/atom+xml</value>
+        </header>
+        <header>
+            <name>Content-Type</name>
+            <value>application/atom+xml</value>
+        </header>
+    </headers>
+    <user>admin@wwarn.org</user>
+    <roles>
+        <role>ROLE_CHASSIS_ADMINISTRATOR</role>
+        <role>ROLE_CHASSIS_CONTRIBUTOR</role>
+        <role>ROLE_CHASSIS_CURATOR</role>
+        <role>ROLE_CHASSIS_USER</role>
+    </roles>
+</request>
+};
 declare function local:move-files($src-draft, $target) as element(atom:entry)*
 {
     let $id := substring-after($src-draft,concat($config:self-link-uri-base,'/drafts/'))
     let $collection-uri := concat('/media/draft/',$id)
-    let $files := atom-protocol:do-get-collection($collection-uri)
+    let $request-orig := common-protocol:get-request()
+        let $request := 
+    <request>
+    <path-info>{$collection-uri}</path-info>
+    <method>GET</method>
+    <headers>
+        <header>
+            <name>Accept</name>
+            <value>application/atom+xml</value>
+        </header>
+        <header>
+            <name>Content-Type</name>
+            <value>application/atom+xml</value>
+        </header>
+    </headers>
+    <user>admin@wwarn.org</user>
+    <roles>
+        <role>ROLE_CHASSIS_ADMINISTRATOR</role>
+        <role>ROLE_CHASSIS_CONTRIBUTOR</role>
+        <role>ROLE_CHASSIS_CURATOR</role>
+        <role>ROLE_CHASSIS_USER</role>
+    </roles>
+</request>
+    let $files := atom-protocol:do-get-collection($request)
     let $new-feed-location := substring-after($target,$config:self-link-uri-base)
-    let $update := atom-protocol:do-post-atom-feed($new-feed-location,$files//body/atom:feed)
+    let $request1 := local:prepare-request('POST',$new-feed-location)
+ 
+    let $update := atom-protocol:do-post-atom-feed($request1,$files//body/atom:feed)
     return $update
 };
 
@@ -261,22 +334,28 @@ declare function local:move-draft-nodes() as element( atom:entry )*
     let $drafts := atomdb:retrieve-members( "/drafts" , false() )
     
    let $collection-new := 
-       for $old in $drafts
+       for $old in $drafts[empty(/atom:entry/atom:content/draft/study-entry-container/atom:entry/app:control)]
            let $draft-atom := update insert <app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control> following $old//atom:content/draft/study-entry-container/atom:entry/atom:title
             let $where := update insert <ui-info>{$old//wizard-pane-to-show}</ui-info> preceding $old//study-is-published
             let $modules := update insert <modules/> following $old//study-status
            return update insert $old//registrant-has-agreed-to-the-terms preceding $old//study-is-published
-          
+        
    let $drafts-modified := atomdb:retrieve-members( "/drafts" , false() )   
    let $new-studies := 
        for $old in $drafts-modified
-           (: Create as study :) 
-           let $move := local:create-study($old/atom:content/draft/study-entry-container/atom:entry, $old/atom:published, $old/atom:author, $old//ar:comment)
-           (: Now the media :)
-           let $files := local:move-files($old//atom:id, $move//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href)
-           (: Need to move permissions :)
-           let $perm := local:update-permissions($move//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href,$old/atom:content/draft//atombeat:security-descriptor/atombeat:groups)
-       return $move
+           let $update := if ($old//draft/text() = 'yes') then
+	           (: Create as study :) 
+	           let $move := local:create-study($old/atom:content/draft/study-entry-container/atom:entry, $old/atom:published, $old/atom:author, $old//ar:comment)
+	           (: Now the media :)
+	           let $files := local:move-files($old//atom:id, $move//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href)
+	           (: Need to move permissions :)
+	           let $perm := local:update-permissions($move//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href,$old/atom:content/draft//atombeat:security-descriptor/atombeat:groups)
+	           let $log := util:log-app("debug", "draft", concat('Move:', $old//atom:link[@rel='self']/@href,' to ',$move//atom:link[@rel='self']/@href))
+	           let $draft := update replace $old//draft/text() with 'no'
+	           return $move
+           else 
+               ()
+           return $update
        
     return $new-studies
 
@@ -314,6 +393,39 @@ declare function local:modify-study-nodes($collection-old) as element( atom:entr
 
 declare function local:modify-nodes($collection-old, $collection-name) as element( atom:entry )*
 {
+(:
+    let $published := <atom:published>2011-03-07T10:29:31.964Z</atom:published>
+   
+    let $author := <atom:author>
+        <atom:email>admin@wwarn.org</atom:email>
+    </atom:author>
+    let $comment := <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0"><atom:author><atom:email>alimanfoo@gmail.com</atom:email></atom:author><atom:updated>2010-09-13T15:36:36.429+01:00</atom:updated><atom:summary/></ar:comment>
+    let $old:=
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+    <atom:title type="text">Efficacy of chloroquine in P. falciparum malaria </atom:title>
+    <atom:content type="application/vnd.chassis-manta+xml">
+        <study profile="http://www.cggh.org/2010/chassis/manta/1.1">
+            <study-is-published/>
+            <publications/>
+            <acknowledgements>
+                <person>
+                    <first-name/>
+                    <middle-name/>
+                    <family-name/>
+                    <email-address>neenavalecha@gmail.com</email-address>
+                    <institution/>
+                    <person-is-contactable/>
+                </person>
+            </acknowledgements>
+            <curator-notes/>
+            <study-status>new</study-status>
+        </study>
+    </atom:content>
+</atom:entry>
+    
+    let $a := local:create-study($old, $published, $author, $comment)
+    return $a
+:)
     let $mods := local:move-module-info($collection-old)
     (:Need to refresh the collection as it will have changed:)
     let $collection-modules := local:get-old-versioned-content-studies(local:get-content($collection-name))
@@ -324,6 +436,7 @@ declare function local:modify-nodes($collection-old, $collection-name) as elemen
     let $collection-interim := local:get-old-versioned-content-studies(local:get-content($collection-name))
     let $new := local:modify-study-nodes($collection-interim)
     return $new
+    
 };
 
 declare function local:check-changes-studies() as item() *{
@@ -402,6 +515,6 @@ return
         let $var := local:do-migration("studies")
         return $var
         
-    else common-protocol:do-method-not-allowed( "/admin/migrate-study-1.0.1-to-1.1.xql" , "/admin/migrate-study-1.0.1-to-1.1.xql" , ( "GET" , "POST" ) )
+    else ()
     
     
