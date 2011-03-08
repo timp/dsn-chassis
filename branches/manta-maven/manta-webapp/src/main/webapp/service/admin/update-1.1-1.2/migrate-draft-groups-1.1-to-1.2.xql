@@ -204,7 +204,13 @@ declare function local:update-permissions($href, $members) as element(atom:entry
     let $request1 := local:prepare-request('PUT', $uri)
     let $log1 := util:log-app("debug", "update-permissions", $request1)
     let $log2 := util:log-app("debug", "update-permissions", $new)
-    let $update := atom-protocol:do-put-atom-entry($request1, $new)
+    let $update := if ($new != $group//atom:entry) then
+            let $logi := util:log-app("debug", "ignoring", '')
+            return ()
+        else
+            let $logi := util:log-app("debug", "updating", '')
+            return atom-protocol:do-put-atom-entry($request1, $new)
+        
     let $log3 := util:log-app("debug", "update-permissions", $update)
     return $update
 };
@@ -243,8 +249,6 @@ declare function local:move-draft-nodes() as element( atom:entry )*
            let $update1 := if ($group//draft/text() = 'no') then	           
 	           let $tgt := $group//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']/@href
 	           let $grp := $group/atom:content/draft//atombeat:security-descriptor/atombeat:groups
-	           let $log2 := util:log-app("debug", "draft", $group) 
-	           let $log3 := util:log-app("debug", "draft", $grp)
 	           (: Need to move permissions :)
 	           let $perm := local:update-permissions($tgt, $grp)         
 	           
