@@ -37,7 +37,7 @@
     <groupId>org.atombeat</groupId>
     <artifactId>atombeat-integration-tests</artifactId>
   </rootModule>
-  <goals>clean install deploy</goals>
+  <goals>-D maven.test.skip=true clean install deploy</goals>
   <mavenOpts>-Xmx1024M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
