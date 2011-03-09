@@ -6,20 +6,17 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:xi="http://www.w3.org/2001/XInclude">
 
-	<div id="bd" class="clearfix no-help-box">
+	<div id="bd" class="clearfix">
 		
 		<div class="no-bg">
 			
 			<!-- Help boxes. Comment out if not needed. -->
-<!--			<div class="help">
-
-						 <xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>  
-
-				
-			</div>-->
+			<div class="help">
+				<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>				
+			</div>
 			
 			
-			<div class="main oneCol">
+			<div class="main twoCol">
 				
 				<div id="content" class="study-dashboard">
 					
