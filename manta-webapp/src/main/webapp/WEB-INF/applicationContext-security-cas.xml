@@ -70,6 +70,8 @@
         </property>
     </bean>
     
+    <sec:http pattern="/service/stylesheets/**" security="none"/>
+    
     <bean id="fsi" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="accessDecisionManager" ref="httpRequestAccessDecisionManager"/>
