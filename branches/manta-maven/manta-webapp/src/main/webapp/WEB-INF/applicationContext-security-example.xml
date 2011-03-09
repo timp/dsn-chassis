@@ -30,6 +30,7 @@
     
     <!-- don't apply security to eXist XML-RPC endpoint, rely on eXist authentication -->
     <http pattern="/xmlrpc" security="none"/>
+    <http pattern="/service/stylesheets/**" security="none"/>
     <http use-expressions="true">
         <!-- restrict access to libraries and administrative scripts -->
         <intercept-url pattern="/service/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
