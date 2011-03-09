@@ -159,127 +159,100 @@
                                                   </xforms:item>
                                                   </xforms:select1>
                                                   <br/>
-                                                  <xforms:select1 ref="drugDosingDeterminant"
-                                                  appearance="minimal">
-                                                  <xforms:label class="fixed-width">Dosing
-                                                  determinant </xforms:label>
-                                                  <xforms:item>
-                                                  <xforms:label>please select</xforms:label>
-                                                  <xforms:value/>
-                                                  </xforms:item>
-                                                  <xforms:itemset model="mod-study-info"
-                                                  nodeset="instance('ins-drugDosingDeterminant-items')/drugDosingDeterminant">
-                                                  <xforms:label ref="label"/>
-                                                  <xforms:value ref="value"/>
-                                                  </xforms:itemset>
-                                                  <xforms:alert>
-                                                  <xforms:output
-                                                  value="concat('Enter an integer value for the ', name(), ' field ')"
-                                                  />
-                                                  </xforms:alert>
+                                                  <xforms:select1 ref="drugDosingDeterminant" appearance="minimal">
+                                                      <xforms:label class="fixed-width">Dosing determinant </xforms:label>
+                                                      <xforms:item>
+                                                          <xforms:label>please select</xforms:label>
+                                                          <xforms:value/>
+                                                      </xforms:item>
+                                                      <xforms:itemset model="mod-study-info"
+                                                          nodeset="instance('ins-drugDosingDeterminant-items')/drugDosingDeterminant">
+                                                          <xforms:label ref="label"/>
+                                                          <xforms:value ref="value"/>
+                                                       </xforms:itemset>
                                                   </xforms:select1>
-                                                  <xforms:group ref="ageDosing">
+                                            
+                                                      <xforms:group ref="ageDosing">
 
                                                   <table class="repeat-table">
-                                                  <tr>
-                                                  <th/>
-                                                  <th>Day</th>
-                                                  <th>Hour</th>
-                                                  <!--  FIXME Should this also have units? -->
-                                                  <th> From <span
-                                                  style="font-size:smaller; font-weight: normal;">
-                                                  (years)</span>
-                                                  </th>
-                                                  <th> To <span
-                                                  style="font-size:smaller; font-weight: normal;">
-                                                  (years)</span>
-                                                  </th>
-                                                  <th>Dose</th>
-                                                  <th>Unit</th>
-                                                  </tr>
+	                                                  <tr><th/><th>Day</th><th>Hour</th><th> From <span style="font-size:smaller; font-weight: normal;">(years)</span></th><th> To <span style="font-size:smaller; font-weight: normal;">(years)</span></th><th>Dose</th><th>Unit</th></tr>
                                                   <xforms:repeat nodeset="ageDosingSchedule"
                                                   id="rep-ageDosingSchedule">
-                                                  <tr>
-                                                  <td>
-                                                  <xforms:trigger appearance="minimal">
-                                                  <xforms:label>
-                                                  <img src="/apps/common/theme/remove.gif"
-                                                  alt="remove"/>
-                                                  </xforms:label>
-                                                  <xforms:delete ev:event="DOMActivate" context="."
-                                                  nodeset="." at="index('rep-ageDosingSchedule')"/>
-                                                  </xforms:trigger>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:input ref="day" class="fourWide">
-                                                  <xforms:label/>
-                                                  </xforms:input>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:input ref="hour" class="fourWide">
-                                                  <xforms:label/>
-                                                  </xforms:input>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:input ref="ageFrom" class="fourWide">
-                                                  <xforms:label/>
-                                                  <xforms:hint>years</xforms:hint>
-                                                  </xforms:input>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:input ref="ageTo" class="fourWide">
-                                                  <xforms:label/>
-                                                  <xforms:hint>years</xforms:hint>
-                                                  </xforms:input>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:input ref="dose" class="fourWide">
-                                                  <xforms:label/>
-                                                  </xforms:input>
-                                                  </td>
-                                                  <td class="form-td">
-                                                  <xforms:select1 ref="doseUnit"
-                                                  appearance="minimal">
-                                                  <xforms:label/>
-                                                  <xforms:item>
-                                                  <xforms:label>Tablets</xforms:label>
-                                                  <xforms:value>tablets</xforms:value>
-                                                  </xforms:item>
-                                                  <xforms:item>
-                                                  <xforms:label>Mg</xforms:label>
-                                                  <xforms:value>mg</xforms:value>
-                                                  </xforms:item>
-                                                  </xforms:select1>
-                                                  </td>
-                                                  </tr>
+	                                                  <tr>
+		                                                  <td>
+		                                                  <xforms:trigger appearance="minimal">
+		                                                      <xforms:label><img src="/apps/common/theme/remove.gif" alt="remove"/></xforms:label>
+		                                                      <xforms:delete ev:event="DOMActivate" context="." nodeset="." at="index('rep-ageDosingSchedule')"/>
+		                                                  </xforms:trigger>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="day" class="fourWide">
+		                                                          <xforms:label/>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="hour" class="fourWide">
+		                                                          <xforms:label/>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="ageFrom" class="fourWide">
+		                                                          <xforms:label/>
+		                                                          <xforms:hint>years</xforms:hint>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="ageTo" class="fourWide">
+		                                                          <xforms:label/>
+		                                                          <xforms:hint>years</xforms:hint>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="dose" class="fourWide">
+		                                                          <xforms:label/>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:select1 ref="doseUnit" appearance="minimal">
+		                                                          <xforms:label/>
+		                                                          <xforms:item>
+		                                                              <xforms:label>Tablets</xforms:label>
+		                                                              <xforms:value>tablets</xforms:value>
+		                                                          </xforms:item>
+		                                                          <xforms:item>
+		                                                              <xforms:label>Mg</xforms:label>
+		                                                              <xforms:value>mg</xforms:value>
+		                                                          </xforms:item>
+		                                                      </xforms:select1>
+		                                                  </td>
+	                                                  </tr>
                                                   </xforms:repeat>
-                                                  <tr>
-                                                  <td class="action-td">
-                                                  <xforms:trigger appearance="minimal">
-                                                  <xforms:label>
-                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
-                                                  </xforms:label>
-                                                  <xforms:insert ev:event="DOMActivate" context="."
-                                                  nodeset="ageDosingSchedule"
-                                                  at="count(../ageDosingSchedule)" position="after"
-                                                  origin="instance('ins-ageDosingSchedule')"/>
-                                                  </xforms:trigger>
-                                                  </td>
-                                                  <td class="add-td" colspan="6">
-                                                  <xforms:trigger appearance="minimal">
-                                                  <xforms:label>Add a schedule</xforms:label>
-                                                  <xforms:insert ev:event="DOMActivate" context="."
-                                                  nodeset="ageDosingSchedule"
-                                                  at="count(../ageDosingSchedule)" position="after"
-                                                  origin="instance('ins-ageDosingSchedule')"/>
-                                                  </xforms:trigger>
-                                                  </td>
-                                                  </tr>
+	                                                  <tr>
+	                                                      <td class="action-td">
+	                                                          <xforms:trigger appearance="minimal">
+	                                                              <xforms:label><img src="/apps/common/theme/add.gif" alt="add"/></xforms:label>
+	                                                              <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="ageDosingSchedule"
+	                                                                  at="count(../ageDosingSchedule)" position="after"
+	                                                                  origin="instance('ins-ageDosingSchedule')"/>
+	                                                          </xforms:trigger>
+	                                                      </td>
+	                                                      <td class="add-td" colspan="6">
+	                                                          <xforms:trigger appearance="minimal">
+	                                                              <xforms:label>Add a schedule</xforms:label>
+	                                                              <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="ageDosingSchedule"
+	                                                                  at="count(../ageDosingSchedule)" position="after"
+	                                                                  origin="instance('ins-ageDosingSchedule')"/>
+	                                                          </xforms:trigger>
+	                                                      </td>
+	                                                  </tr>
                                                   </table>
 
 
 
                                                   </xforms:group>
+                                                      
                                                   <xforms:group ref="weightGroupDosing">
 
                                                   <table class="repeat-table">
