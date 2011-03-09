@@ -52,6 +52,18 @@ declare variable $test-study-entry {
 </atom:entry>
 };
 
+declare function local:edit-path-info( $entry as element(atom:entry) ) as xs:string?
+{
+    let $href := $entry/atom:link[@rel='edit']/@href
+    return
+        if ( exists( $href ) ) then 
+            let $uri := $href cast as xs:string
+            return
+                if ( starts-with( $uri , $config:edit-link-uri-base ) )
+                then substring-after( $uri , $config:edit-link-uri-base )
+                else ()
+        else ()
+};
 
 declare function local:do-get() as item()*
 {
@@ -148,7 +160,7 @@ let $testing := request:get-parameter("testing", "no")
     let $content := if ($testing = "no") then
       let $migrated :=     
         for $new in $collection-new
-        let $path-info := atomdb:edit-path-info( $new )
+        let $path-info := local:edit-path-info( $new )
         return atomdb:update-member( $path-info , $new )
        return $migrated
     else 
