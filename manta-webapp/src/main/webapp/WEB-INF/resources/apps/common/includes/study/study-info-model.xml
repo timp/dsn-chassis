@@ -188,7 +188,7 @@
 											</xforms:bind>
 										</xforms:bind>
 										<xforms:bind nodeset="weightGroupDosing"
-											relevant="contains(../drugDosingDeterminant, 'weightGroup')">
+											relevant="contains(../drugDosingDeterminant, 'wGroup')">
 											<xforms:bind nodeset="weightGroupDosingSchedule">
 												<xforms:bind nodeset="weightFrom" />
 												<xforms:bind nodeset="weightTo" />
