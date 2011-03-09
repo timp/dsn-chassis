@@ -8,7 +8,7 @@ declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 (: see http://tools.ietf.org/html/draft-mehta-atom-inline-01 :)
 declare namespace ae = "http://purl.org/atom/ext/" ;
 declare namespace manta = "http://www.cggh.org/2010/chassis/manta/xmlns" ;
-
+declare namespace app = "http://www.w3.org/2007/app";
 
 import module namespace request = "http://exist-db.org/xquery/request" ;
 import module namespace response = "http://exist-db.org/xquery/response" ;
@@ -198,13 +198,37 @@ declare function manta-plugin:before-create-member-study(
     return $filtered-request-data
 };
 
+declare function manta-plugin:is-draft($old-entry as element(atom:entry)) as xs:string
+{
+    if ($old-entry/app:control/draft/text() = 'yes') then
+      'yes'
+    else 
+      'no'
+     
+};
+
 declare function manta-plugin:before-update-member-study(
     $request as element(request) ,
     $request-data as element(atom:entry)
 ) as item()*
 {
     let $filtered-request-data := manta-plugin:filter-study-entry( $request-data )
-    return $filtered-request-data
+    let $member-path-info := manta-plugin:edit-path-info($request-data)
+    return if ( atomdb:member-available( $member-path-info ) ) then 
+        let $old-entry := atomdb:retrieve-member( $member-path-info )
+        let $is-draft := manta-plugin:is-draft( $old-entry )
+            (: pass to after phase via request attribute so tombstone can be stored :)
+        let $attrs :=  
+                <attributes>
+                    <attribute>
+                        <name>chassis.manta-plugin.is-draft</name>
+                        <value>{$is-draft}</value>
+                    </attribute>
+                </attributes>
+        return ($filtered-request-data, $attrs) 
+    else
+        $filtered-request-data
+      
 };
 
 
@@ -749,11 +773,11 @@ declare function manta-plugin:after-update-member-studies(
     $request as element(request),
 	$response as element(response)
 ) as element(response)
-{
-    
-    let $entry := $response/body/atom:entry 
-    let $comment := request:get-header( "X-Manta-Remove-Draft-Status" )
-    let $x := if ($comment = 'true') then
+{   
+    let $entry := $response/body/atom:entry
+    let $was-draft := $request/attributes/attribute[name='chassis.manta-plugin.is-draft']/value/text()
+    let $is-draft := manta-plugin:is-draft($entry)
+    let $x := if ($was-draft = 'yes' and $is-draft = 'no') then
         let $path-info := manta-plugin:edit-path-info($entry)
         let $old-security-descriptor := atomsec:retrieve-descriptor($path-info)
         let $new-descriptor := security-config:remove-permission($old-security-descriptor,'ALLOW','DELETE_MEMBER','GROUP_ADMINISTRATORS')
