@@ -227,6 +227,7 @@
 					
 					<!-- copy data across to study questionnaire model -->
 					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
+					<xforms:insert nodeset="xxforms:instance('ins-sq-study-modules')" origin="instance('ins-study-entry')//modules" />
 					
 					<!-- Get the ACL for the study info, if allowed (e.g. contributors are not allowed). -->
 					<xforms:send submission="sub-get-study-info-permissions-entry" if="instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />

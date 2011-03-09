@@ -13,6 +13,10 @@
 		<atom:entry />
 	</xforms:instance>
 	
+	<xforms:instance id="ins-sq-study-modules">
+		<modules/>
+	</xforms:instance>
+	
 	<xforms:bind nodeset="instance('ins-sq-study-info-entry')" readonly="not(instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
 	
 	<xforms:instance id="ins-sq-submitted-media-feed">
@@ -60,7 +64,7 @@
 			<xforms:bind nodeset="study-info">
 				<xforms:bind nodeset="start" type="xforms:date" />
 				<xforms:bind nodeset="end" type="xforms:date" />
-				<xforms:bind nodeset="pathogens" model="mod-study-dashboard" required="contains(instance('ins-study-entry')//modules, 'molecular')" />
+				<xforms:bind nodeset="pathogens" required="contains(instance('ins-sq-study-modules')//modules, 'molecular')" />
 				<xforms:bind nodeset="modules" required="true()" />
 
 				<xforms:bind nodeset="sites">
@@ -92,13 +96,13 @@
 						<xforms:bind nodeset="longitude" type="xs:double" />
 
 						<xforms:bind nodeset="testingDelay"
-							model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
+							relevant="contains(instance('ins-sq-study-modules'), 'invitro')" />
 						<xforms:bind nodeset="anticoagulant"
-							model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
+							relevant="contains(instance('ins-sq-study-modules'), 'invitro')" />
 						<xforms:bind nodeset="transportAndStorageTemperature"
-							model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules, 'invitro')" />
+							relevant="contains(instance('ins-sq-study-modules'), 'invitro')" />
 						<xforms:bind nodeset="transmissionIntensity"
-							model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules, 'clinical')">
+							relevant="contains(instance('ins-sq-study-modules'), 'clinical')">
 							<xforms:bind nodeset="annualParasitologicalIncidence" />
 							<!-- FIXME type="ctype:recentYear" -->
 							<xforms:bind nodeset="annualParasitologicalIncidenceYear"
@@ -155,7 +159,7 @@
 					<xforms:bind nodeset="otherCriteria" />
 				</xforms:bind>
 				
-				<xforms:bind nodeset="clinical" model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules,  'clinical')">
+				<xforms:bind nodeset="clinical" relevant="contains(instance('ins-sq-study-modules'), 'clinical')">
 					<xforms:bind nodeset="treatment">
 						<xforms:bind nodeset="regimens">
 							<xforms:bind nodeset="regimen">
@@ -328,7 +332,7 @@
 					</xforms:bind>
 				</xforms:bind>
 
-				<xforms:bind nodeset="molecular" model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules,  'molecular')">
+				<xforms:bind nodeset="molecular" relevant="contains(instance('ins-sq-study-modules'),  'molecular')">
 					<xforms:bind nodeset="criteria">
 						<xforms:bind nodeset="sampleSourceOpen">
 							<xforms:bind nodeset="sampleSource" required="true()" />
@@ -443,7 +447,7 @@
 				</xforms:bind>
 
 
-				<xforms:bind nodeset="invitro" model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules,  'invitro')">
+				<xforms:bind nodeset="invitro" relevant="contains(instance('ins-sq-study-modules'),  'invitro')">
 					<xforms:bind nodeset="analysisSite" />
 					<xforms:bind nodeset="culture">
 						<xforms:bind nodeset="incubatorSystem" />
@@ -536,7 +540,7 @@
 
 
 				<xforms:bind nodeset="pharmacology"
-					model="mod-study-dashboard" relevant="contains(instance('ins-study-entry')//modules,  'pharmacology')">
+					relevant="contains(instance('ins-sq-study-modules'),  'pharmacology')">
 					<xforms:bind nodeset="samples">
 						<xforms:bind nodeset="sample">
 							<xforms:bind nodeset="anticoagulent" />
