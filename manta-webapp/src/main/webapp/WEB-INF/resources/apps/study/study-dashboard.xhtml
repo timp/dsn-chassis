@@ -275,6 +275,9 @@
 				<atom:entry/>
 			</xforms:instance> 
 
+			<xforms:instance id="ins-permissions-acl-entry">
+				<atom:entry/>
+			</xforms:instance> 
 			
         	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
 			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
@@ -292,6 +295,28 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>   
             
+            <xforms:submission 
+				id="sub-get-permissions-acl-entry"
+				resource="{instance('ins-permissions-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-permissions-acl-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+			</xforms:submission>
+			
+			<xforms:submission 
+				id="sub-put-permissions-acl-entry"
+				resource="{instance('ins-permissions-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
+				method="put"
+				replace="instance"
+				instance="ins-permissions-acl-entry"
+				ref="instance('ins-permissions-acl-entry')"
+				mediatype="application/atom+xml">
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-submitted-media-permissions-entry"/>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
+			</xforms:submission>
+			
 			<xforms:submission 
 				id="sub-get-permissions-entry"
 				resource="{instance('ins-acl-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/@src}"
@@ -299,6 +324,7 @@
 				replace="instance"
 				instance="ins-permissions-entry"
 				serialization="none">
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-permissions-acl-entry" />
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
 			
@@ -544,7 +570,6 @@
 					<xforms:send submission="sub-refresh-study-entry"/>
 					
 					<xforms:send submission="sub-put-study-info-permissions-entry"/>
-				
 				</xforms:action>
 		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
@@ -631,9 +656,8 @@
 				instance="ins-study-info-permissions-entry"
 				ref="instance('ins-study-info-permissions-entry')"
 				mediatype="application/atom+xml">
-
-				<xforms:send ev:event="xforms-submit-done" submission="sub-put-submitted-media-permissions-entry"/>
-
+				
+				<xforms:send ev:event="xforms-submit-done" submission="sub-put-permissions-acl-entry" />
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info permissions.</xforms:message>
 			</xforms:submission>
 
