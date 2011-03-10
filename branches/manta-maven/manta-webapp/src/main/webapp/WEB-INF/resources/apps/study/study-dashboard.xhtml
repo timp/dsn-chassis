@@ -295,6 +295,8 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>   
             
+            <!-- Don't throw an error as you'll only have permission to do this as a curator but it's only needed for
+            	locking/unlocking the study -->
             <xforms:submission 
 				id="sub-get-permissions-acl-entry"
 				resource="{instance('ins-permissions-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
@@ -302,7 +304,6 @@
 				replace="instance"
 				instance="ins-permissions-acl-entry"
 				serialization="none">
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
 			
 			<xforms:submission 
