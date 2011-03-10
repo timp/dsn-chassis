@@ -35,13 +35,39 @@ All tests using Firefox 3
 
 >The Register study wizard will load.
 
-*Provide a Study title and accept the Terms of Submission.
+*Provide a Study title 
+
+*Select all modules
+
+*Accept the Terms of Submission.
 
 *Press the Next button.
 
 >The Permissions pane will load.
 
 *Add an administrator and provide an email address.
+
+*Press the Next button.
+
+>The Upload files pane will load.
+
+*Upload a few files, specifying the Other type for one of them.
+
+*Remove one of the files.
+
+*Press the Next button.
+
+>The Publications pane will load.
+
+*Specify that the study is published and add a publication.
+
+*Provide a title
+
+*Provide a PubMedID (15388456), a URL and a DOI.(10.1128/AAC.48.10.3940-3943.2004)
+
+*Add a second publication.
+
+*Save as draft.
 
 *Press the Next button.
 
@@ -61,27 +87,9 @@ All tests using Firefox 3
 
 *Move the second acknowledgement up and down.
 
-*Press the Next button.
+*Lookup using PMID
 
->The Upload files pane will load.
-
-*Upload a few files, specifying the Other type for one of them.
-
-*Download a file.
-
-*Remove one of the files.
-
-*Press the Next button.
-
->The Publications pane will load.
-
-*Specify that the study is published and add a publication.
-
-*Provide a PubMedID, a URL and a DOI.
-
-*Add a second publication.
-
-*Save as draft.
+*Lookup using DOI
 
 *Press the Next button.
 
@@ -847,7 +855,5 @@ Contributor/Administrator tests:
 
 
 ----
-
-
 
 
