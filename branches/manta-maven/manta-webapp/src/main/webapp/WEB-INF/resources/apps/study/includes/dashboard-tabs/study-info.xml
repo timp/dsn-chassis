@@ -90,7 +90,7 @@
                   <input class="study-info-flatten-button" type="button" value="Flatten" 
                           onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
                    />
-                   <a href="{xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href}">XML</a>
+                  	<a class="btn" href="{concat(xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href,'?output=textxml')}">XML</a>
                    </xforms:group>
 
                  </p>
