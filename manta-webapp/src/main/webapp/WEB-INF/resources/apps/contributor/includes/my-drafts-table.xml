@@ -36,10 +36,10 @@
                     <xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
-                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+                                <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
                             </td>
                             <td>
-                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+                                <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
                             </td>
                             <td>
                                 <xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
