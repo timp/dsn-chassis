@@ -75,40 +75,6 @@ return
 </html>
 };
 
-declare function local:do-modifications() as xs:string*
-{
-    let $status-config := <statusTypes xmlns="">
-	<statusType>
-		<label>Newly created study</label>
-		<value>new</value>
-	</statusType>
-	<statusType>
-		<label>In curation</label>
-		<value>in</value>
-	</statusType>
-	<statusType>
-		<label>Awaiting response (curator)</label>
-		<value>wait-internal</value>
-	</statusType>
-	<statusType>
-		<label>Awaiting response (contributor)</label>
-		<value>wait-external</value>
-	</statusType>
-	<statusType>
-		<label>Complete</label>
-		<value>complete</value>
-	</statusType>
-	<statusType>
-		<label>Published to WWARN Explorer</label>
-		<value>exp</value>
-	</statusType>
-</statusTypes>
-    
-    let $entry1 := local:create-config-entry('status',$status-config)
-	    
-    return concat($entry1, '')
-};
-
 declare function local:create-config-collection() as xs:string {
     let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
     let $collection-path-info := '/config'
@@ -126,40 +92,6 @@ declare function local:create-config-collection() as xs:string {
     return $descriptor-stored
 };
 
-declare function local:create-atom-entry($groups, $id, $author) as element(atom:entry) {
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>{$id}</atom:id>
-    <atom:published>2010-12-08T15:47:58.242Z</atom:published>
-    <atom:updated>2010-12-13T12:57:32.002Z</atom:updated>
-    <atom:author>
-        <atom:email>{$author}</atom:email>
-    </atom:author>
-    <atom:title type="text">Config</atom:title>
-    <atom:content type="application/vnd.chassis-manta+xml">
-        {$groups}
-    </atom:content>
-    <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
-        <atom:author>
-            <atom:email>{$author}</atom:email>
-        </atom:author>
-        <atom:updated>2010-12-13T12:57:32.002Z</atom:updated>
-        <atom:summary/>
-    </ar:comment>
-</atom:entry>
-};
-
-declare function local:create-config-entry($new-name as xs:string, $atom-content) as xs:string
-{
-    
-    let $new-collection := '/config'
-    let $id := concat($config:self-link-uri-base,$new-collection,'/',$new-name)
-    
-    let $user-name := request:get-attribute( $config:user-name-request-attribute-key )
-    let $content := local:create-atom-entry($atom-content, $id, $user-name)
-    let $member-study-info := atomdb:create-member( $new-collection , $new-name , $content, $user-name )  
-    return $id
-};
-
 declare function local:do-post($old-host) as item()*
 {
 (: SEND RESPONSE :)        
@@ -172,7 +104,6 @@ declare function local:do-post($old-host) as item()*
 declare function local:do-migration() {
 
     let $new-collection := local:create-config-collection()
-    let $new-content := local:do-modifications()
         
     return local:do-post($new-content)
 };
