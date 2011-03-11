@@ -27,7 +27,7 @@ declare function local:do-get($current-host, $new-host) as item()*
 
 declare function local:content($current-host, $new-host) as item()*
 {
-    let $x := ''
+    let $x := atomdb:collection-available('/groups')
     return
     
         <html>
@@ -39,12 +39,16 @@ declare function local:content($current-host, $new-host) as item()*
                 
                 <p>
                     Current Repository Path {$current-host} <br/>
+                    Groups collection available: {$x}
                     <form method="post" action="">
                         <input type="submit" value="Move groups"></input>
                     </form>
                     <form method="get" action="">
                         <input type="submit" value="Refresh"></input>
                     </form>
+                </p>
+                <p>
+                    <a href="index.xhtml">Return to index</a>
                 </p>
             </body>
         </html>
@@ -64,6 +68,9 @@ return
         
         <p>
             {$new-content}
+        </p>
+        <p>
+            <a href="index.xhtml">Return to index</a>
         </p>
     </body>
 </html>
