@@ -27,25 +27,27 @@ declare function local:do-get($current-host, $new-host) as item()*
 
 declare function local:content($current-host, $new-host) as item()*
 {
-    let $x := ''
+    let $x := atomdb:collection-available('/config')
     return
     
         <html>
             <head>
-                <title>Change host</title>
+                <title>Creating config collection</title>
             </head>
             <body>
-                <h1>Change host</h1>
+                <h1>Creating config collection</h1>
                 
                 <p>
+                    Config collection available: {$x}<br/>
                     <form method="post" action="">
-                        Current Repository Path <input name="oldhost" size="90" value="{$current-host}" /> <br/>
-                        New Repository Path <input name="newhost" size="90" value="{$new-host}" /><br/>
-                        <input type="submit" value="Migrate Data"></input>
+                        <input type="submit" value="Create collection"></input>
                     </form>
                     <form method="get" action="">
                         <input type="submit" value="Refresh"></input>
                     </form>
+                </p>
+                 <p>
+                    <a href="index.xhtml">Return to index</a>
                 </p>
             </body>
         </html>
@@ -65,6 +67,9 @@ return
         
         <p>
             {$new-content}
+        </p>
+        <p>
+            <a href="index.xhtml">Return to index</a>
         </p>
     </body>
 </html>
