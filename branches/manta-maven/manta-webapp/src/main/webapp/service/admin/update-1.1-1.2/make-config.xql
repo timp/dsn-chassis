@@ -105,7 +105,7 @@ declare function local:do-migration() {
 
     let $new-collection := local:create-config-collection()
         
-    return local:do-post($new-content)
+    return local:do-post($new-collection)
 };
 
 let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
