@@ -897,7 +897,7 @@ declare function manta-plugin:after-list-collection-derivations(
 
     let $param-input := xutil:get-parameter( "input" , $request)
     let $param-output := xutil:get-parameter( "output" , $request )
-    
+
     let $feed := 
         <atom:feed>
         {
@@ -908,11 +908,11 @@ declare function manta-plugin:after-list-collection-derivations(
             for $entry in $feed/child::*[ ( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ]
             return 
                 if ( ( 
-                        $param-input = "" 
+                        empty($param-input) 
                         or $param-input = $entry/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/derivationInput"]/@href 
                     )
                     and (
-                        $param-output = "" 
+                        empty($param-output) 
                         or $param-output = $entry/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/derivationOutput"]/@href 
                     )
                 ) 
@@ -921,7 +921,7 @@ declare function manta-plugin:after-list-collection-derivations(
             
         }
         </atom:feed>
-    
+
     return manta-plugin:replace-response-body( $response , $feed )
     
 };
@@ -948,7 +948,7 @@ declare function manta-plugin:after-list-collection-personal-data-reviews(
             for $entry in $feed/atom:entry
             return 
                 if ( 
-                    $param-review-subject = "" 
+                    empty($param-review-subject) 
                     or $param-review-subject = $entry/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/reviewSubject"]/@href
                 ) 
                 then $entry
