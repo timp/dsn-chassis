@@ -14,7 +14,18 @@ import module namespace common-protocol = "http://purl.org/atombeat/xquery/commo
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "../collections.xqm" ;
 import module namespace security-config = "http://purl.org/atombeat/xquery/security-config" at "../../config/security.xqm" ;
 
-
+declare function local:edit-path-info( $entry as element(atom:entry) ) as xs:string?
+{
+    let $href := $entry/atom:link[@rel='edit']/@href
+    return
+        if ( exists( $href ) ) then 
+            let $uri := $href cast as xs:string
+            return
+                if ( starts-with( $uri , $config:edit-link-uri-base ) )
+                then substring-after( $uri , $config:edit-link-uri-base )
+                else ()
+        else ()
+};
 
 declare function local:do-get($current-host, $new-host) as item()*
 {
@@ -165,6 +176,9 @@ declare function local:modify-group($group) as xs:string
     let $id := local:get-group-uri($group)
     let $content := local:create-atom-entry($group, $id, $user-name)
     let $member-study-info := atomdb:create-member( $new-collection , $new-name , $content, $user-name )  
+    let $path-info-member-group := local:edit-path-info($member-study-info)
+    let $security-descriptor-groups := security-config:group-security-descriptor( $id )
+    let $descriptor-stored := atomsec:store-descriptor( $path-info-member-group , $security-descriptor-groups )
     return $id
 };
 
