@@ -53,7 +53,7 @@
   <publishers>
     <hudson.plugins.cobertura.CoberturaPublisher>
       <coberturaReportFile>**/target/site/cobertura/coverage.xml</coberturaReportFile>
-      <onlyStable>true</onlyStable>
+      <onlyStable>false</onlyStable>
       <healthyTarget>
         <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
           <entry>
