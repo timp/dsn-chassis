@@ -724,9 +724,27 @@
 				<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>		
 
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the curated media permissions.</xforms:message>
-			</xforms:submission>			
+			</xforms:submission>
 
-			<xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml" />
+	<xforms:submission id="sub-query-pubmed"
+		action="/study/pubmed-query" replace="instance" method="post"
+		ref="instance('ins-study-entry')" instance="ins-study-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
+
+	</xforms:submission>
+
+	<xforms:submission id="sub-query-crossref"
+		action="/study/crossref-query" replace="instance" method="post"
+		ref="instance('ins-study-entry')" instance="ins-study-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
+
+	</xforms:submission>
+
+	<xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml" />
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>

@@ -21,7 +21,8 @@
   
    <page path-info="/study/file-details" view="file-details.xhtml"/>
   <page path-info="/study/tombstone-details" view="tombstone-details.xhtml"/>
- 
+  <page path-info="/study/pubmed-query" view="../contributor/pubmed-query.xpl"/>
+  <page path-info="/study/crossref-query" view="../contributor/crossref-query.xpl"/>
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
