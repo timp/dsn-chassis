@@ -145,6 +145,16 @@
 							<filtering>true</filtering>
 						</resource>
 					</webResources>
+					<overlays>
+						<!-- configure overlay of atombeat -->
+						<overlay>
+							<groupId>org.jasig.cas</groupId>
+							<artifactId>cas-server-webapp</artifactId>
+							<excludes>
+								<exclude>WEB-INF/classes/messages_*</exclude>
+							</excludes>
+						</overlay>
+					</overlays>
 				</configuration>
 			</plugin>
 		</plugins>
