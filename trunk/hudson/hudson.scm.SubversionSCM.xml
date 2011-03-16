@@ -11,5 +11,4 @@
     </entry>
   </credentials>
   <workspaceFormat>8</workspaceFormat>
-  <validateRemoteUpToVar>false</validateRemoteUpToVar>
 </hudson.scm.SubversionSCM_-DescriptorImpl>
