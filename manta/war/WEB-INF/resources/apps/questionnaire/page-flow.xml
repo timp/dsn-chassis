@@ -1,9 +1,0 @@
-<config xmlns="http://www.orbeon.com/oxf/controller">
-
-    <page path-info="/questionnaire/spike-map" view="spike-map.xhtml"/>
-    <page path-info="/questionnaire/spike-map2" view="spike-map2.xhtml"/>
-    <page path-info="/questionnaire/*" view="view.xhtml"/>
-    
-    <epilogue url="oxf:/config/epilogue.xpl"/>
-
-</config>
