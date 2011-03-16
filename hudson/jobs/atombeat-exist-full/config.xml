@@ -16,12 +16,13 @@
         <remote>http://atombeat.googlecode.com/svn/trunk/parent/atombeat-exist-full</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
+    <useUpdate>false</useUpdate>
+    <doRevert>false</doRevert>
     <excludedRegions></excludedRegions>
     <includedRegions></includedRegions>
     <excludedUsers></excludedUsers>
     <excludedRevprop></excludedRevprop>
     <excludedCommitMessages></excludedCommitMessages>
-    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
