@@ -85,6 +85,7 @@
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
         <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
         <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
+        		<logDirectory>/var/log/tomcat6/</logDirectory>
 			</properties>
 		</profile>
 		<profile>
@@ -93,7 +94,7 @@
 				<profileId>wwarn-app3</profileId>
 				<host.name>wwarn-app3.nsms.ox.ac.uk</host.name>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
-				<logDirectory>/srv/chassis-manta/logs/</logDirectory>
+				<logDirectory>/var/log/tomcat6/</logDirectory>
 			</properties>
 		</profile>
 		<profile>
@@ -102,7 +103,7 @@
 				<profileId>production</profileId>
 				<host.name>www.wwarn.org</host.name>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
-				<logDirectory>/srv/chassis-manta/logs/</logDirectory>
+				<logDirectory>/var/log/tomcat6/</logDirectory>
 			</properties>
 		</profile>
 	</profiles>
@@ -146,7 +147,7 @@
 						</resource>
 					</webResources>
 					<overlays>
-						<!-- configure overlay of atombeat -->
+						<!-- configure overlay of cas -->
 						<overlay>
 							<groupId>org.jasig.cas</groupId>
 							<artifactId>cas-server-webapp</artifactId>
