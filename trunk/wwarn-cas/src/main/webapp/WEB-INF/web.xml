@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
-	<display-name>Central Authentication System (CAS) 3.0</display-name>
+	<display-name>Central Authentication System (CAS) 3.4.6</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -38,6 +38,16 @@
 		<filter-name>CAS Client Info Logging Filter</filter-name>
 		<filter-class>com.github.inspektr.common.web.ClientInfoThreadLocalFilter</filter-class>
 	</filter>
+	
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 	<filter>
         <filter-name>springSecurityFilterChain</filter-name>
