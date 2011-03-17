@@ -31,4 +31,14 @@
 	<xforms:bind
 		nodeset="instance('ins-study-entry')//atom:content/study/publications/publication/publication-references/publication-reference"
 		required="true()" />
+
+	<xforms:bind nodeset="instance('ins-control')/add-publication-trigger"
+		relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'" />
+
+
+	<xforms:bind nodeset="instance('ins-control')/copy-answers-control"
+		relevant="instance('ins-study-feed')[count(atom:entry)>1]" />
+	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger"
+		readonly="../href-to-copy-study-info-from = ''" />
+
 </div>
