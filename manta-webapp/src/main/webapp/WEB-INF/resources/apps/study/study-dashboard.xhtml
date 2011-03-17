@@ -141,10 +141,7 @@
 				instance="ins-study-status" />
 				
 			<xforms:instance id="ins-explorer-type" src="/apps/common/constants/explorerDisplayTypes.xml" />
-
-			<!-- Check email addresses in acknowledgements (not required) -->			
-			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/acknowledgements/person/email-address" type="xforms:email"/>
-
+			
 			<!-- Make sure the study has its status set. -->
 			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/study-status" required="true()"/>
 			
