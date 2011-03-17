@@ -80,12 +80,7 @@
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">true</xforms:setvalue>
 			</xforms:action>
 
-			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
-			</xforms:action>
-			<xforms:action ev:event="xxforms-valid" ev:observer="ins-upload">
-				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
-			</xforms:action>
+			
 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-study-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/study-entry-is-valid">false</xforms:setvalue>
@@ -107,10 +102,7 @@
         	
         	<xforms:bind nodeset="instance('ins-control')/study-is-editable" relevant="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]"/>
         	<xforms:bind nodeset="instance('ins-control')/study-is-not-editable" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
-        	
-      <!-- TODO: ensure a file is selected before Upload is triggered -->
-      <!--  <xforms:bind nodeset="instance('ins-upload')/media" required="true()" />  -->
-
+     
 			<!-- Show the appropriate tabs and help-boxes depending upon the current user roles. -->
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
       <xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
@@ -272,19 +264,11 @@
 			</xforms:instance> 
             
             
-			<xforms:instance id="ins-permissions-entry">
-				<atom:entry/>
-			</xforms:instance> 
+			
 
 			<xforms:instance id="ins-permissions-acl-entry">
 				<atom:entry/>
 			</xforms:instance> 
-			
-        	<!-- Ensure that the current user cannot remove themselves as administrator. -->       		
-			<xforms:bind nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
-                <xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user()]" readonly="true()"/>
-            </xforms:bind>
-  
             
 			<xforms:submission 
 				id="sub-get-acl-entry"
@@ -348,24 +332,7 @@
 		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
 			</xforms:submission>
-            
-       		<xforms:instance id="ins-user-template">
-       			<atombeat:member/>
-  			</xforms:instance>
-  			
-  			
-  			
-			<!-- Require valid email addresses in the permissions field -->			
-			<xforms:bind nodeset="instance('ins-permissions-entry')/atom:content/atombeat:security-descriptor/atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member" type="xforms:email" required="true()"/>
-  			
-  			
-  			
-  			
-  			<xforms:instance id="ins-person-template" src="/apps/common/templates/study/person-template.xml"/>
-  			
-  			
-  			<xforms:instance id="ins-publication-template" src="/apps/common/templates/study/publication-template.xml"/>
-  			
+            		
         	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications">
 
 			        <xforms:bind nodeset="publication" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'">
@@ -377,161 +344,16 @@
 			        
        		</xforms:bind>       
             
- 			<xforms:instance id="ins-publication-reference">
-				<publication-reference xmlns="" type="url"/>
-			</xforms:instance>
-			
-			<xforms:instance id="ins-publication-reference-types" src="/apps/common/constants/publication-reference-types.xml"/>
-
-
-        	<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/publications/publication/publication-references/publication-reference" required="true()"/>
-            
-			<!-- This gets the list of different file types for the upload-files tab. -->
-			<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>           
-
-			<!-- If available use the study status types stored in the config collection -->
-			<xforms:submission id="sub-get-file-terms"
-				resource="/service/content/config/file-terms"
-				method="get"
-				replace="instance"
-				instance="ins-file-terms" />
-        	
-        	<xforms:instance id="ins-study-feed">
-				<atom:feed/>
-			</xforms:instance>
-
-			<xforms:submission 
-				id="sub-retrieve-study-feed"
-				resource="/service/content/studies"
-				method="get"
-				replace="instance"
-				instance="ins-study-feed"
-				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
-               	</xforms:message>
-			</xforms:submission>
-			
+ 			
 			<xforms:send 
 				ev:event="xforms-model-construct-done" 
 				submission="sub-retrieve-study-feed"/>
 			
 			
-			<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
-				<atom:entry/>
-			</xforms:instance>
-				
-			<xforms:submission 
-				id="sub-copy-answers"
-				resource="{instance('ins-control')/href-to-copy-study-info-from}"
-				method="get"
-				replace="instance"
-				instance="ins-study-info-entry-to-copy-study-info-from">
-				
-				<xforms:action ev:event="xforms-submit-done">
-					
-					<!-- 
-						Make sure we replace only the <questionnaire> element 
-						and not the whole <atom:entry>, otherwise the edit link
-						will be wrong and the data will get PUT to the wrong
-						URL when changes are saved.
-					-->
-					
-					<xforms:delete nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info"/>
-					<xforms:insert 
-						context="xxforms:instance('ins-sq-study-info-entry')/atom:content" 
-						nodeset="study-info" 
-						origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
-						at="last()" position="after" />
-					
-					<xforms:message level="modal">
-						Answers have now been copied from "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Be sure to update any answers that differ from study "<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title"/> (<xforms:output value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id"/>)". Changes will not be saved until you click "Save changes".
-					</xforms:message>
-					
-				</xforms:action>
-				
-				
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while copying answers from the selected study.
-               	</xforms:message>
-			</xforms:submission>				
 			
-			<xforms:instance id="ins-study-is-published-terms" src="/apps/common/constants/study-is-published-terms.xml"/>
+			
 				
-				
-				
-				
-				
-				
-			<!--+
-				| New way of handling uploads, avoids the need to use an intermediate
-				| servlet for handling uploads - you can post files (one at a time) 
-				| directly to AtomBeat using a multipart/form-data request.
-				+-->
-        	
-        	
-        	<!-- files are uploaded one at a time, this instance holds the data to be posted -->
-        	
-        	<xforms:instance id="ins-upload">
-        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
-        			<summary/>
-        			<category/>
-        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
-        		</upload>
-        	</xforms:instance>
-        	
-        	<!-- this is a fresh instance to use when clearing out the main instance after each upload -->
-        	<xforms:instance id="ins-upload-empty">
-        		<upload xmlns="" scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label="">
-        			<summary/>
-        			<category/>
-        			<media xsi:type="xs:anyURI" filename="" mediatype="" size=""/>
-        		</upload>
-        	</xforms:instance>
-        	
-        	
-        	
-        	<!-- some bindings on the upload instance -->
-        	
-        	<xforms:bind nodeset="instance('ins-upload')">
-        		<xforms:bind nodeset="@term" required="true()"/>
-        		<xforms:bind nodeset="@label" relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'" required="../@term='http://www.cggh.org/2010/chassis/terms/Other'"/>
-        		<xforms:bind nodeset="category" calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')"/>
-        	</xforms:bind>        	
-        	
-        	
-        	
-        	<!-- this is the submission that sends the file to atombeat ... it uses a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat support, although this is not standard Atom Protocol ... check the http traffic to see what's being sent -->
-
-        	<xforms:submission
-        		id="sub-post-upload"
-        		method="form-data-post"
-        		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-        		ref="instance('ins-upload')"
-        		replace="none">
-        		
-        		<xforms:header>
-        			<xforms:name>Accept</xforms:name>
-        			<xforms:value>application/atom+xml</xforms:value>
-        		</xforms:header>
-        		
-        		<xforms:message ev:event="xforms-submit-done" level="modal">
-        			Your file has been submitted. Thank you.
-        		</xforms:message>
-        		
-        		<!-- clear out upload -->
-        		<xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')" origin="instance('ins-upload-empty')"/>
-        		
-        		<!-- refresh submitted media -->
-        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed"/>
-        		
-        		<!-- TODO error handling -->
-        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting a draft upload.</xforms:message>
-        		
-        	</xforms:submission>
-        	
-        	
+	     	
         	<!-- For Curator -->
 
         	<xforms:instance id="ins-curated-media-feed">
@@ -726,25 +548,11 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the curated media permissions.</xforms:message>
 			</xforms:submission>
 
-	<xforms:submission id="sub-query-pubmed"
-		action="/study/pubmed-query" replace="instance" method="post"
-		ref="instance('ins-study-entry')" instance="ins-study-entry">
-
-		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
-				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
-
-	</xforms:submission>
-
-	<xforms:submission id="sub-query-crossref"
-		action="/study/crossref-query" replace="instance" method="post"
-		ref="instance('ins-study-entry')" instance="ins-study-entry">
-
-		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
-				value="event('error-type')" />) while trying to retrieve author information.</xforms:message>
-
-	</xforms:submission>
-
-	<xforms:instance id="ins-module-items" src="/apps/common/constants/modules.xml" />
+	       <xi:include href="../common/includes/study/model.xml" />
+           <xi:include href="../common/includes/study/submitted-file-upload.xml" />
+           <xi:include href="../common/includes/study/templates.xml" />
+           <xi:include href="../common/includes/study/validation.xml" />
+    
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>
