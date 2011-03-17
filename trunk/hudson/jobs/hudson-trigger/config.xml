@@ -35,7 +35,7 @@
     <groupId>net.pizey.hudson</groupId>
     <artifactId>trigger</artifactId>
   </rootModule>
-  <goals>clean install -Duser=timp -Dpassword=p5pp5r tomcat:redeploy</goals>
+  <goals>clean install tomcat:redeploy  -Duser=TimP -Dpassword=p5pp5r21337</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
@@ -61,6 +61,7 @@
       <notifyFixers>false</notifyFixers>
       <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
       <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
+      <channels/>
     </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
   <buildWrappers/>
