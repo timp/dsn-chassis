@@ -82,10 +82,7 @@
 
             <xforms:bind nodeset="instance('ins-control')/pre-create-draft-back-home-link" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit'])"/>
             <xforms:bind nodeset="instance('ins-control')/create-draft-trigger" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit'])"/>
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
-
-        	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
-        	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+			
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
 			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />

@@ -95,10 +95,7 @@
 			<!-- <xforms:bind nodeset="instance('ins-control')/save-study-trigger" readonly="not(../study-entry-is-valid = 'true')"/> -->
 			<!-- <xforms:bind nodeset="instance('ins-control')/upload-file-trigger" readonly="not(../upload-is-valid = 'true')"/> -->
         	
-			<xforms:bind nodeset="instance('ins-control')/add-publication-trigger" relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'"/>
-
-     	<xforms:bind nodeset="instance('ins-control')/copy-answers-control" relevant="instance('ins-study-feed')[count(atom:entry)>1]"/>
-     	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger" readonly="../href-to-copy-study-info-from = ''"/>
+			
         	
         	<xforms:bind nodeset="instance('ins-control')/study-is-editable" relevant="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]"/>
         	<xforms:bind nodeset="instance('ins-control')/study-is-not-editable" relevant="not(instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')])"/>
