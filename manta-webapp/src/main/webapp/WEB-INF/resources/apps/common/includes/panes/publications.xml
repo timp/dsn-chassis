@@ -40,14 +40,7 @@
                                 </xforms:trigger>
                             </td>
                             <td>
-                                <span class="pmid-textbox-container">
-                                    <xforms:input ref="publication-title">
-                                        <xforms:label>Title/Citation:</xforms:label>
-                                        <xforms:alert>Please provide a title or citation.</xforms:alert>
-                                    </xforms:input>
-                                </span>
-
-                                <br/>
+                                
                             
                                 <span class="pmid-textbox-container">
                                     <xforms:input ref="pmid">
@@ -58,7 +51,14 @@
                                 </span>
 
                                 <br/>
-
+                                <span class="pmid-textbox-container">
+                                    <xforms:input ref="publication-title">
+                                        <xforms:label>Title/Citation:</xforms:label>
+                                        <xforms:alert>Please provide a title or citation.</xforms:alert>
+                                    </xforms:input>
+                                </span>
+                                
+                                <br/>
                                 <xforms:group ref="publication-references">
 
                                     <div class="editable-list-of-publication-references-container">

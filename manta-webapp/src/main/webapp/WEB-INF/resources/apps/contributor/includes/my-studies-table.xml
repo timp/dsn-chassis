@@ -3,13 +3,12 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
     
-    <h2 class="clear">My studies</h2>
-    
+    <h2 class="clear">Submitted studies</h2>
+    <p>Any study which you have permission to access will be listed here.  Contact WWARN to make further changes. 
+    </p>
     <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[not(app:control/draft/text() = 'yes')])]">
         
-        <p>Any study you register or have permission to access will be listed here. You&#8217;ll be able to navigate to each study
-            to upload files or edit the information provided when you registered the study.  
-        </p>
+       
         
         
     </xforms:group>

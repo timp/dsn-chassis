@@ -4,11 +4,15 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-<p>Whenever possible, we ask that you upload three types of files for each study: data file(s), a data dictionary and the associated study protocol(s). 
+<p>If possible, we ask that you upload: 
+    <ul>
+        <li>data file(s)</li>
+        <li>a data dictionary</li>
+        <li>associated study protocol(s).</li>
+    </ul>
 </p>
-<p>If you don&#8217;t have these files available at this time, you can complete the study registration by moving on to Step 5. You or an administrator can add files at a later date by logging into the WWARN website, navigating to this study in the Data home and clicking the Files tab.
-</p>
-
+    <p></p>
+    <p>Other files may be added at a later date.</p>
     <p>The maximum file size for each upload is currently 100 MB.</p>
 
 
