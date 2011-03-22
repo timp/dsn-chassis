@@ -53,7 +53,15 @@
                                 </xforms:repeat>
                                 <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
                             </td>
-                            <td><span class="view-study-link-container"><a class="btn" href="../study/dashboard?study={atom:link[@rel='edit']/@href}">Edit</a></span></td>
+                            <td><span class="view-study-link-container">
+                                <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+                                    <a class="btn" href="../study/dashboard?study={@href}">Edit</a>
+                                </xforms:group>
+                                <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'GET') and not(contains(@atombeat:allow, 'PUT'))]">
+                                    <a class="btn" href="../study/dashboard?study={@href}">View</a>
+                                </xforms:group>
+                            
+                            </span></td>
                         </tr>
                     </xforms:repeat>
                 </tbody>
