@@ -185,9 +185,9 @@ declare function security-config:default-collection-security-descriptor(
 
     then $security-config:study-info-collection-security-descriptor
 
-    else if ( $request-path-info = "/drafts" )
+    else if ( $request-path-info = "/groups" )
 
-    then $security-config:drafts-collection-security-descriptor
+    then $security-config:groups-collection-security-descriptor
     
     else if ( $request-path-info = "/media/submitted" )
     
