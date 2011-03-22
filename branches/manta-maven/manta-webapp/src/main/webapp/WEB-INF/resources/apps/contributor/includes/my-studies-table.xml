@@ -13,7 +13,7 @@
         
     </xforms:group>
     
-    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[not(app:control/draft/text() = 'yes')])]">
         
         <span id="list-of-studies-container">
             
