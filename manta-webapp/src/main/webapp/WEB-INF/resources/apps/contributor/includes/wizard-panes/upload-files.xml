@@ -128,7 +128,7 @@
 													return
 													if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
 													then $cat/@label
-													else instance('ins-file-terms')/term[value=$cat/@term]/label
+													else instance('ins-file-terms')//term[value=$cat/@term]/label
 													"/>
 											</td>
 											<td>
