@@ -3,13 +3,13 @@
 	class="inner-help">
 
 
-	<p>You have control over who can access your studies. You may want to delegate the task of uploading data to a particular member of your team or share the task amongst several individuals. In addition, you may want to share your data with a collaborator.
-	</p>
-	<p>To share study data with an individual, you will need to name them as an administrator. An administrator has all the same rights as you — the study creator — including uploading data, downloading anonymised data, adding/removing administrators and editing information about the study.
-	</p>
-	<p>An administrator must be a registered user of the WWARN website to access study information. Your administrators will only be able to access your study once it has been registered. 
-	</p>
-
+	<p>This page allows you to delegate the task of uploading data to one or more administrators by
+		providing their email address. </p>
+	<p>An administrator has all the same rights as you, the study creator. </p>
+	<p>An administrator must be a registered user of the WWARN website to access study information. </p>
+	<p>Remove an administrator by clicking on the red cross <img alt="remove"
+		src="/repository/apps/contributor/common/remove.gif"/> next to their email address. </p>
+	
 
 
 </div>
