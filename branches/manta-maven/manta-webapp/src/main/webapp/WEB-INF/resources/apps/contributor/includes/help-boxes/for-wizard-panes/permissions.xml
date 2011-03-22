@@ -4,13 +4,13 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
-<p>You have control over who can access your studies. You may want to delegate the task of uploading data to a particular member of your team or share the task amongst several individuals. In addition, you may want to share your data with a collaborator.
+<p>Step 2 allows you to delegate the task of uploading data to one or more administrators by providing their email address.
 </p>
-	<p>To share study data with an individual, you will need to name them as an administrator. An administrator has all the same rights as you — the study creator — including uploading data, downloading anonymised data, adding/removing administrators and editing information about the study.
+	<p>An administrator has all the same rights as you, the study creator.
 	</p>
-		<p>An administrator must be a registered user of the WWARN website to access study information. Your administrators will only be able to access your study once it has been registered. 
+		<p>An administrator must be a registered user of the WWARN website to access study information. 
 		</p>
-			<p>You can add or remove administrators at any time by logging into the WWARN website, navigating to this study in the Data home and clicking the Permissions tab.
+			<p>Remove an administrator by clicking on the red cross next to their email address.
 			</p>
 
 </div>

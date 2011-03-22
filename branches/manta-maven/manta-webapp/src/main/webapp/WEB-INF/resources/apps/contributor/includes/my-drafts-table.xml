@@ -6,10 +6,7 @@
     
     <h2>Draft studies</h2>
     
-    <p>Information is saved automatically as you move forward through the steps of the registration process. You don&#8217;t
-        need to upload all your information at the same session. Click the &#8216;Save as draft&#8217; button at the bottom of each
-        step to save information submitted to date. Once study registration is completed, your study can be accessed at
-        any time on the Data home: see &#8216;My studies&#8217;.
+    <p>Studies awaiting completion, only accessible by you or a nominated administrator.
     </p>
     
     <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[app:control/draft/text() = 'yes'])]">
