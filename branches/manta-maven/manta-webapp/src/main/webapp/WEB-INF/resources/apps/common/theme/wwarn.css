@@ -749,13 +749,12 @@ h1.logo a, h2.logo a {
 	font-size:12px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
-.help ul,
 .help ol,
 .callout ul,
 .callout ol {
 	list-style:none !important;
 }
-.help li,
+
 .callout li {
 	background:url(./images/bullet.gif) no-repeat 0 7px;
 	padding-left:13px;
@@ -1031,3 +1030,11 @@ ol li {
     background-color:#FFFFFF;
     color: #666666;
 }
+
+ul.bulleted {
+	list-style-type: disc;
+	list-style-position: inside;
+	margin-left: 1.5em;
+	padding-left: 0px;
+}
+

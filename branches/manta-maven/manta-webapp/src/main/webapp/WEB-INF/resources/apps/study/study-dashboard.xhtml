@@ -155,7 +155,7 @@
                 
 				<xforms:action ev:event="xforms-submit-done">
 					
-					<xforms:send submission="sub-get-acl-entry" />
+					<xforms:send submission="sub-get-acl-entry" if="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
 					<xforms:send submission="sub-get-permissions-entry"/>
 					<xforms:send submission="sub-get-study-status-types"/>
 					<xforms:send submission="sub-get-file-terms"/>
