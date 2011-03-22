@@ -5,7 +5,7 @@
 	xmlns:ev="http://www.w3.org/2001/xml-events">
 
 <p>If possible, we ask that you upload: 
-    <ul>
+    <ul class="bulleted">
         <li>data file(s)</li>
         <li>a data dictionary</li>
         <li>associated study protocol(s).</li>

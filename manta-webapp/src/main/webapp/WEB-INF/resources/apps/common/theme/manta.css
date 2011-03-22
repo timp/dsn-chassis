@@ -156,7 +156,7 @@ h2.subtitle {
     font-size: 60%;
 }
 ul {
-    padding-left: 2em;
+    margin-left: 1.5em;
 }
 .fourWide .xforms-input-input {
     width: 4em;
