@@ -9,12 +9,12 @@
 		<div class="no-bg">
 			
 			<!-- Help boxes. Comment out if not needed. -->
-			<div class="help">
+			
 
-						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/publications.xml"/>
+				<xi:include href="../../../contributor/includes/help-boxes/for-wizard-panes/publications.xml"/>
 
 				
-			</div>
+			
 			
 			
 			<div class="main twoCol">

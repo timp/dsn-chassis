@@ -9,15 +9,8 @@
 		<div class="no-bg">
 			
 			<!-- Help boxes. Comment out if not needed. -->
-			<div class="help">
-				
+			<xi:include href="../../../contributor/includes/help-boxes/for-wizard-panes/acknowledgements.xml"/>
 
-						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/acknowledgements.xml"/>
-
-				
-			</div>
-			
-			
 			<div class="main twoCol">
 				
 				<div id="content" class="study-dashboard">
