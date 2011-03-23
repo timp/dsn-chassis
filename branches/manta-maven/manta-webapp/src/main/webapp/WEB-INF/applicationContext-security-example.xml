@@ -39,7 +39,8 @@
         <intercept-url pattern="/service/plugins/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <!-- force authentication for all requests to service, but delegate
-            access control decisions to service -->
+        access control decisions to service -->
+        <intercept-url pattern="/service/reports/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         <intercept-url pattern="/service/**" access="hasRole('ROLE_CHASSIS_USER')" />
         
         <intercept-url pattern="/contributor/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_ADMINISTRATOR')" />
@@ -48,7 +49,7 @@
         
         <intercept-url pattern="/curator/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         
-        <intercept-url pattern="/reports/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+      
         <intercept-url pattern="/study/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
         
         <intercept-url pattern="/rest/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
