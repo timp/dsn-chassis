@@ -75,12 +75,13 @@
                		<xhtml:div id="footer-inner">
 					    <xhtml:div class="block">
 					        <xhtml:ul class="menu">
+					        	<xhtml:li><xhtml:a title="" href="/contact" target="_blank" f:url-norewrite="true">Feedback</xhtml:a></xhtml:li>
 					            <xhtml:li><xhtml:a title="" href="/contact" target="_blank" f:url-norewrite="true">Contact Us</xhtml:a></xhtml:li>
 					            <xhtml:li><xhtml:a title="" href="/terms-use" target="_blank" f:url-norewrite="true">Terms &#38; Conditions</xhtml:a></xhtml:li>
 					        </xhtml:ul>
 					    </xhtml:div>
 					    <xhtml:div class="block">
-					        <xhtml:p><xhtml:a href="/node/61" target="_blank" f:url-norewrite="true">Copyright &#169; 2010 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
+					        <xhtml:p><xhtml:a href="/node/61" target="_blank" f:url-norewrite="true">Copyright &#169; 2011 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
 					    </xhtml:div>
 					</xhtml:div>
 
