@@ -81,7 +81,7 @@
 					        </xhtml:ul>
 					    </xhtml:div>
 					    <xhtml:div class="block">
-					        <xhtml:p><xhtml:a href="/node/61" target="_blank" f:url-norewrite="true">Copyright &#169; 2011 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
+					        <xhtml:p><xhtml:a href="/terms-use" target="_blank" f:url-norewrite="true">Copyright &#169; 2011 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
 					    </xhtml:div>
 					</xhtml:div>
 
