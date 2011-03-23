@@ -74,7 +74,7 @@ public class TestStudyInfoCollectionSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedRetrieveMemberAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class TestStudyInfoCollectionSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedUpdateMemberAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override

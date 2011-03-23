@@ -33,7 +33,7 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 
 	@Override
 	protected String[] getUsersAllowedDeleteMedia() {
-		return new String[] { USER_ADAM, USER_CURTIS };
+		return new String[] { USER_ADAM, USER_CURTIS, USER_CORA, USER_COLIN };
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 
 	@Override
 	protected String[] getUsersAllowedRetrieveCollectionAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class TestSubmittedMediaCollectionsSecurity extends AtomSecurityTestCase 
 
 	@Override
 	protected String[] getUsersAllowedUpdateCollectionAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
