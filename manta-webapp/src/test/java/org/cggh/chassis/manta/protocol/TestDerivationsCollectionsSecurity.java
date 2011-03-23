@@ -27,7 +27,7 @@ public class TestDerivationsCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedCreateMember() {
-		return new String[] { USER_CURTIS };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override

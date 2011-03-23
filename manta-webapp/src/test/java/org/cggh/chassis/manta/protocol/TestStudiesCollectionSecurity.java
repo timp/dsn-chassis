@@ -29,7 +29,7 @@ public class TestStudiesCollectionSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedCreateMember() {
-		return new String[] { USER_CORA, USER_COLIN }; // contributors can register studies
+		return new String[] { USER_CORA, USER_COLIN, USER_ADAM }; // contributors can register studies
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class TestStudiesCollectionSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedDeleteMember() {
-		return new String[] { USER_ADAM }; 
+		return new String[] { USER_ADAM, USER_CORA, USER_COLIN, USER_CURTIS }; 
 	}
 
 	@Override
@@ -109,12 +109,12 @@ public class TestStudiesCollectionSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedUpdateMember() {
-		return new String[] { USER_ADAM, USER_CORA }; 
+		return new String[] { USER_ADAM, USER_CORA, USER_CURTIS }; 
 	}
 
 	@Override
 	protected String[] getUsersAllowedUpdateMemberAcl() {
-		return new String[] { USER_ADAM, USER_CORA }; 
+		return new String[] { USER_ADAM, USER_CURTIS }; 
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedCreateMedia() {
-		return new String[] { USER_CURTIS };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedListCollection() {
-		return new String[] { USER_ADAM, USER_CURTIS };
+		return new String[] { USER_ADAM, USER_CURTIS, USER_CORA, USER_COLIN };
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedRetrieveCollectionAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedRetrieveMediaAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedRetrieveMemberAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedUpdateCollectionAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedUpdateMediaAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class TestCuratedMediaCollectionsSecurity extends AtomSecurityTestCase {
 
 	@Override
 	protected String[] getUsersAllowedUpdateMemberAcl() {
-		return new String[] { USER_ADAM };
+		return new String[] { USER_ADAM, USER_CURTIS };
 	}
 
 	@Override
