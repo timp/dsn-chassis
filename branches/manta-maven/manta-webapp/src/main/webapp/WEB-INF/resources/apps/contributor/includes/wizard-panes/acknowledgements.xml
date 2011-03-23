@@ -30,25 +30,8 @@
 					
 					<xi:include href="../../../common/includes/panes/acknowledgements.xml"/>
 					
+					
 					<p class="form-navi">
-						<span id="lookup-container">
-							<xforms:trigger class="alignLeft" style="width: 300px">
-								<xforms:label>Look up contributors by PUBMED id</xforms:label>
-								<xforms:action ev:event="DOMActivate">
-									<xforms:send submission="sub-query-pubmed"/>
-								</xforms:action>
-							</xforms:trigger>
-							<xforms:trigger class="alignRight" >
-								<xforms:label>Look up contributors by DOI</xforms:label>
-								<xforms:action ev:event="DOMActivate">
-									<xforms:send submission="sub-query-crossref"/>
-								</xforms:action>
-							</xforms:trigger>
-						</span>
-					</p>
-					<p class="form-navi">
-
-
 
 						<xforms:trigger ref="instance('ins-control')/save-draft-trigger"
 							class="alignLeft">
