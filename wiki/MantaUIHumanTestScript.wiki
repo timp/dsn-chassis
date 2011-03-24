@@ -1,4 +1,4 @@
-Last Tested against v1.1 RC on webapp3
+Last Tested against v1.2 on local dev env.
 
 ----
 
@@ -10,24 +10,30 @@ All tests using Firefox 3
 
 =User tests:=
 
-*Log in as a user (with no other roles)
+*Log in as a user (with no other roles), i.e. ursula
 
 *Check that you can't access the manta application.
 
-*Note: On wwarn-app3, a chassis_user will be able to see the Developer Home, but should not be able to visit any of the other pages in the application proper.
+*Note (yet to reaffirm): On wwarn-app3, a chassis_user will be able to see the Developer Home, but should not be able to visit any of the other pages in the application proper.
+
+*Note: On development environment, a bare-user can see the "profile" page at "/repository", with vars such as contextConfigLocation, with a link to the developer home.
+
+[Bug: Unprivileged user can read /repository/service/reports/summary.xql]
+
+
 
 ----
 
 
 =Contributor tests:=
 
-*Log in as a contributor (with no other roles, except user)
+*Log in as a contributor (with no other roles, except user), i.e. colin
 
 ----
 
 ==Register a study:==
 
-*Go to /repository/contributor/home
+*Go to /repository/contributor/home (Data Home)
 
 >The Contributor home page will load.
 
@@ -61,9 +67,11 @@ All tests using Firefox 3
 
 *Specify that the study is published and add a publication.
 
+*Provide a PubMedID (15388456)
+
 *Provide a title
 
-*Provide a PubMedID (15388456), a URL and a DOI.(10.1128/AAC.48.10.3940-3943.2004)
+*Provide a URL and a DOI.(10.1128/AAC.48.10.3940-3943.2004)
 
 *Add a second publication.
 
@@ -73,23 +81,39 @@ All tests using Firefox 3
 
 >The Acknowledgements pane will load.
 
-*Complete the details for the first acknowledgement.
+*Provide an institution.
 
-*Check the contactable checkbox.
+*Add an Institutional URL and (provide the Intitution Website URL).
 
-*Press the Save as draft button.
+*Add another Institutional URL. (Note that it appears above the first.)
+
+*Check that the Email address for the first acknowledgement is the current user's.
+
+*Press the "Look up constributors by PUBMEDID" button.
+
+>The acknowledgements will populate based on the PUBMEDID.
+
+*Remove all the acknowledgements.
+
+*Press the "Look up contributors by DOI" button.
+
+>The acknowledgements will populate based on the DOI.
+
+*Remove all the acknowledgements.
 
 *Add an acknowledgement.
 
-*Complete the details for the second acknowledgement.
+[Minor Bug: A "Move down" button appears for the first acknowledgement]
 
-*Leave the contactable checkbox unchecked.
+*Complete the details for the first acknowledgement. (Check the contactable checkbox, provide a First name, Middle name, Family name, Email address and Institution.)
+
+*Press the Save as draft button.
+
+*Add another acknowledgement.
+
+*Complete the details for the second acknowledgement, but leave the contactable checkbox unchecked.
 
 *Move the second acknowledgement up and down.
-
-*Lookup using PMID
-
-*Lookup using DOI
 
 *Press the Next button.
 
@@ -103,7 +127,7 @@ All tests using Firefox 3
 
 *Upload another file.
 
-*Go to /repository/contributor/home
+*Go to /repository/contributor/home (Data Home)
 
 >The Contributor home page will load.
 
@@ -131,11 +155,15 @@ All tests using Firefox 3
 
 *Press the "Yes - I've finished" button.
 
+>A dialogue will appear stating "The study is no longer a draft".
+
+*Press "OK" on the dialogue box.
+
+[Minor Bug: After confirming a draft, the dialogue disappears before/without pressing OK.]
+
 >The "Thank you" page will load, displaying the unique ID assigned to the new study.
 
-*Check the Clinical checkbox in the General questions section of the Study Site Questionnaire.
-
-*Check that the Clinical Questions section then appears.
+*Check that the Clinical, Molecular, in vitro and Pharmacology questions all appear in the SSQ.
 
 *Input some other test data on the questionnaire.
 
@@ -147,13 +175,13 @@ All tests using Firefox 3
 
 *Press the "Save changes and return to Data Home" button.
 
->The Contributor home page will load, with a link to the new study shown in the My studies table.
+>The Contributor home page will load, with a link to the new study shown in the Submitted studies table.
 
 *Click on the "My Studies" tab.
 
 >The My studies page will load.
 
->A link to the new study will be shown in the My studies table.
+>A link to the new study will be shown in the Submitted studies table.
 
 
 ----
@@ -162,17 +190,19 @@ All tests using Firefox 3
 
 (Requires that a test study has been newly registered, and in an "unlocked" state. Also a second registered study, to test the copy-from feature.)
 
-*Go to /repository/contributor/home
+*Go to /repository/contributor/home (Data Home)
 
 >The Contributor home page will load.
 
-*Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
+*Click on the ID, Title or View action associated with the registered study to test, listed under Submitted studies.
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
 *Check that the summary details are as previously provided.
 
-*Change the title and press the "Save changes" button.
+*Change the title and uncheck one of the WWARN modules.
+
+*Press the "Save changes" button.
 
 >A dialogue box will appear, with a message saying "Your changes have been saved.".
 
@@ -208,6 +238,8 @@ All tests using Firefox 3
 
 *Delete an administrator, again.
 
+[Bug: Cannot delete study administrator after refreshing.]
+
 *Change one of the email addresses.
 
 *Press the Save changes button.
@@ -242,6 +274,24 @@ All tests using Firefox 3
 
 *Check the details are as provided.
 
+*Delete all the acknowledgements.
+
+[Bug: Can't delete the last/bottom acknowledgement. Note: difference in behaviour between hitting refresh and clicking on the current tab (FF3).]
+
+*Press the "Look up contributors by PUBMED id" button.
+
+> The acknowledgments will be populated based on the PUBMED id.
+
+*Delete all the acknowledgements.
+
+*Press "Save changes".
+
+*Press the "Look up contributors by DOI" button.
+
+> The acknowledgments will be populated based on the DOI.
+
+*Press "Save changes".
+
 *Click on the Files tab.
 
 >The Files tab will load.
@@ -254,6 +304,8 @@ All tests using Firefox 3
 
 *Press refresh.
 
+[Bug: "Download" and "Details" links appear in the Actions column for an empty row at the end of the Submitted files table.]
+
 *Check that the files are as provided.
 
 *Click on the Publications tab.
@@ -264,6 +316,8 @@ All tests using Firefox 3
 
 *Add another publication.
 
+[Cosmetic Bug: The fields jump around a bit as the user clicks between the text-boxes of different acknowledgements.]
+
 *Press the Save changes button.
 
 *Delete a URL.
@@ -271,8 +325,6 @@ All tests using Firefox 3
 *Delete a DOI.
 
 *Delete publication.
-
-[Bug found here, newItemDelimiter is null.]
 
 *Change a publication.
 
@@ -287,6 +339,8 @@ All tests using Firefox 3
 *Input some more data on the study info form.
 
 *Check the Copy answers feature works.
+
+[Cosmetic Bug: The dialogue box message shown after copying study info contains spaces before the study title and around the study code.]
 
 *Press the Save changes button.
 
@@ -304,6 +358,8 @@ All tests using Firefox 3
 
 *Press the "Save changes - all changes complete" button.
 
+[Bug: An error dialogue appears "An error occurred (resource-error) while sending a message."] [This is because of config settings. Re-check.]
+
 >Check that an email has been sent to curation@wwarn.org (log in to Google Apps).
 
 
@@ -317,7 +373,7 @@ All tests using Firefox 3
 
 =Curator tests:=
 
-*Log in as a curator (with no other roles, except user)
+*Log in as a curator (with no other roles, except user), i.e. curtis
 
 ----
 
@@ -335,19 +391,37 @@ All tests using Firefox 3
 
 *Check that the summary details are as previously provided.
 
-*Check the title can be changed (the other fields should be read-only).
+*Check the title and the WWARN modules can be changed (the other fields should be read-only).
 
-*Check that all the fields on the other tabs are editable.
+*Check that all the fields on the other tabs are editable. (In other words, test permissions, acknowledgements, files (upload + details), publications, study info.)
 
 *Click on the Status tab.
 
 *Press the Lock button.
 
->The message will change from "This study is unlocked." to "This study is locked.". An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
+>A dialogue box will appear, asking "Do you want to send an email to the study author?"
 
-*Check that every field on every tab in the study dashboard (except the Permissions tab in v1.1, TODO) is read-only.
+*Press the "No" button.
 
-[Bug found on SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important. Can't just hide the SSQ, need read-only.]
+TODO: Press the "Yes" button.
+
+TODO: An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
+
+[Cosmetic Bug: Another dialogue message appears, saying "changes have been saved". Perhaps "This study has now been locked."]
+
+>The message will change from "This study is unlocked." to "This study is locked.". 
+
+>The button will change from "Lock" to "Unlock".
+
+*Check that every field on every tab in the study dashboard (including the Permissions tab in v1.2) is read-only.
+
+[Minor Bug: Acknowledgement "Look up" buttons appear, but should not appear, or should at least be disabled.]
+
+[Bug: Publications doesn't show Title/Citation field.]
+
+[Minor Bug: SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important!]
+
+[Minor Bug: Slow load times, moving between tabs.]
 
 *Press the Unlock button.
 
@@ -357,9 +431,13 @@ All tests using Firefox 3
 
 *Change the Study Status to "In curation" and add a note in the Notes field.
 
+[Cosmetic Bug: The Notes label should be aligned top.]
+
 *Press the Save changes button.
 
-*Check that an email has gone to curation@wwarn.org (log in user Google Apps), saying Finished making changes to study X, and an email to the study author.
+TODO: Check that an email has gone to curation@wwarn.org (log in user Google Apps), saying Finished making changes to study X, and an email to the study author.
+
+TODO: Config dev env for emails.
 
 *Check that the Status changed from "Newly created study" to "In curation".
 
@@ -370,6 +448,12 @@ All tests using Firefox 3
 *Check that the permissions details are as previously provided.
 
 *Check that the fields are read-only.
+
+[Bug or Change: The permission fields are editable after changing status to "In curation".]
+
+TODO: Check whether intended behaviour is to no longer lock the study when Study Status = In curation.
+
+TODO: ----------- Test skip START (either email failure prevents locking or locking shouldn't happen).
 
 *Click on the Acknowledgements tab.
 
@@ -421,6 +505,8 @@ All tests using Firefox 3
 
 *Check that the fields are read-only.
 
+TODO: ----------- Test skip END (either email failure prevents locking or locking shouldn't happen).
+
 *Click on the Study info tab.
 
 >The Study info tab will load.
@@ -433,7 +519,7 @@ All tests using Firefox 3
 
 *Press the Save changes button.
 
-*Click on the Curatoe Home tab.
+*Click on the Curator Home tab.
 
 >The Curator home page will load.
 
@@ -443,11 +529,11 @@ All tests using Firefox 3
 
 *Check that the information on the Study info tab is as previously provided.
 
-*Select the completed option in the Study Status menu, under General questions.
+*Select the "complete" option in the Study Status menu, under General questions.
 
 *Press the Save changes button.
 
-*Refresh the page. [This should not be necessary in future versions.]
+*Refresh the page. [This should not be necessary in future versions. Note: Still necessary in v1.2]
 
 >The Flatten button and XML link will appear.
 
@@ -466,7 +552,7 @@ All tests using Firefox 3
 
 =Contributor tests, part 2 (after curated, locked study):=
 
-*Log in as a contributor (with no other roles, except user)
+*Log in as a contributor (with no other roles, except user), i.e. colin
 
 ----
 
@@ -474,27 +560,32 @@ All tests using Firefox 3
 
 (Requires that a test study in an "locked" state.)
 
-*Go to /repository/contributor/home
+*Go to /repository/contributor/home (i.e. Data Home)
 
 >The Contributor home page will load.
 
 *Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
 
+[Cosmetic: The button for a locked study should perhaps say "View" instead of "Edit".][fixed]
+
 >The Study dashboard will load, showing the Summary tab for the study.
 
 *Check that none of the fields in any of the tabs are editable.
 
+[Note: Contributor does not see the Notes field. Assumed intentional.]
+
 *Check that the Status tab says "This study is locked." and status "In curation".
 
-[Bug found, contributors can edit Permissions when the study is locked.]
+[Minor Bug: On Acknowledgements, buttons for "Looking up contributors" appear.]
 
+[Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation field.]
 
 ----
 
 
 =Personal data reviewer tests:=
 
-*Log in as a personal data reviewer (with no other roles, except user)
+*Log in as a personal data reviewer (with no other roles, except user), i.e. pete
 
 ----
 
@@ -546,7 +637,7 @@ All tests using Firefox 3
 
 =Personal data replacer tests:=
 
-*Log in as a user with personal data reviewer and curator roles (with no other roles, except user).
+*Log in as a user with personal data reviewer and curator roles (with no other roles, except user), i.e. mustafa
 
 ----
 
@@ -566,6 +657,10 @@ All tests using Firefox 3
 
 *Press the confirm button.
 
+[Major Bug: Get an error dialogue, "An error occurred (resource-error) while posting the upload."]
+[2011-03-24 17:55:46,349 ERROR org.orbeon.oxf.xforms.processor.XFormsServer  - xforms-submit-error - setting throwable {throwable: "org.orbeon.oxf.xforms.submission.XFormsSubmissionException:  (processing submission response): xforms:submission for submission id: sub-post-upload, error code received when submitting instance: 403]
+[Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Curator+PDR)]
+
 >The Personal data home will load.
 
 *Check that the original file has disappeared from the list of Files with personal data.
@@ -578,7 +673,7 @@ All tests using Firefox 3
 
 =further Contributor tests:=
 
-*Log in as a user with the contributor role (with no other roles, except user)
+*Log in as a user with the contributor role (with no other roles, except user), i.e. colin
 
 (Requires prior knowledge of which files have been reviewed successfully for a particular study.)
 
@@ -604,6 +699,7 @@ All tests using Firefox 3
 
 *Check that the deleted file, which was replaced, appears in the list (but is not downloadable).
 
+[Bug or Change: Files that failed PDR are not showing (as deleted files).]
 
 
 ----
@@ -611,7 +707,7 @@ All tests using Firefox 3
 
 =further Curator tests:=
 
-*Log in as a user with the curator role (with no other roles, except user)
+*Log in as a user with the curator role (with no other roles, except user), i.e. curtis
 
 ----
 
@@ -623,6 +719,8 @@ All tests using Firefox 3
 
 >The study dashboard will load.
 
+*Click on the permissions tab and note the study administrators.
+
 *Click on the Files tab.
 
 >The Files tab will load.
@@ -633,11 +731,25 @@ All tests using Firefox 3
 
 *Check that submitted files that have been replaced are listed as deleted, and show a derivation in their details.
 
+[Bug or Change: Files that failed PDR are not showing (as deleted files).]
+
 *Check that Curated files (replacing files that failed personal data review) can be downloaded.
+
+TODO: Check when PDR replace is fixed.
 
 *Check the details for curated files.
 
+*On the details for a curated file, press the "Add viewing by administrators" button.
 
+>The button changes to "Remove viewing by administrators".
+
+*Log back in as a study administrator for the study.
+
+*Check that you can now download the curated file.
+
+*Log back in as a curator and press "Remove viewing by administators" for the curated file.
+
+*Log back in as the study administator and check you can no longer download the curated file.
 
 ----
 
@@ -645,7 +757,7 @@ All tests using Firefox 3
 
 =Contributor/Curator tests:=
 
-*Log in as a user with the contributor and the curator roles (with no other roles, except user)
+*Log in as a user with the contributor and the curator roles (with no other roles, except user), i.e. mavis
 
 (Requires an unlocked study to test with.)
 
@@ -667,15 +779,15 @@ All tests using Firefox 3
 
 *Check that you can generally edit the data on all of the tabs, with some exceptions mentioned below.
 
+*Check that you cannot edit the ID, Creator or Terms fields on the Summary tab.
+
 *Do not change the study status or press the "Save changes - all changes complete" button at this point.
 
 *Do not add your user as a study administrator at this point.
 
 *Check that you cannot upload submitted files.
 
-*Check that you cannot edit the ID, Creator or Terms fields on the Summary tab.
-
-*Check that you *can* upload a curated file.
+*Check that you *can* upload a curated file (creating a derivation).
 
 *Check that you can download and view the details of the uploaded curated file.
 
@@ -707,8 +819,6 @@ All tests using Firefox 3
 
 *Check that you can view the details for all curated files.
 
-[Bug found/Missing feature, no download link on details page for curated files.]
-
 *Click on the Study info tab.
 
 >The Study info tab will load.
@@ -717,7 +827,7 @@ All tests using Firefox 3
 
 *Press the Save changes button.
 
-[Bug. Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions.]
+[Bug: Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions.]
 
 >The Flatten button and XML link will appear.
 
@@ -739,7 +849,7 @@ All tests using Firefox 3
 
 Contributor/Administrator tests:
 
-*Log in a user with the contributor and the administrator roles (with no other roles, except user)
+*Log in a user with the contributor and the administrator roles (with no other roles, except user), i.e. murray
 
 ----
 
@@ -771,7 +881,7 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the draft - except changing the Terms agreement and uploading new files to drafts that you don't own.
 
-[Bug. Can change any other study administrator (in draft or dashboard) except themselves.]
+[Bug: Cannot change/remove themselves as study administrator, even though they are a chassis administrator (should be able to change anything). Although, perhaps should not be allowed to remove all study administrators.]
 
 *Click on a study on the Data Home page.
 
@@ -779,11 +889,13 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms acceptance date on the Summary tab, and uploading new files to studies that you don't own.
 
-[Bug. The locked status is not shown to a contributor/administrator.]
+[Bug: The locked status (or button) is not shown to a contributor/administrator. An adminstrator should be able to read, update and delete anything (just not create).]
 
 *Check that all sumbmitted files and curated files can be downloaded.
 
 *Check that details for Curated files can be seen, and that the back-to-dashboard link works.
+
+[Bug or Change: Curated file details are not shown to contributors.]
 
 *Check that deleted files (through personal data replacement) are shown.
 
@@ -795,7 +907,7 @@ Contributor/Administrator tests:
 
 >The My studies page will load.
 
-*Check that the links to the study dashboard work.
+*Check that the links (from ID, Title or Edit buttons) to the study dashboard work.
 
 
 
@@ -804,7 +916,7 @@ Contributor/Administrator tests:
 
 =Curator/Administrator tests:=
 
-*Log in a user with the curator and the administrator roles (with no other roles, except user)
+*Log in a user with the curator and the administrator roles (with no other roles, except user), i.e. murphy
 
 ----
 
@@ -818,7 +930,7 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms accepted field on the Summary tab, and should not be able to upload Submitted files.
 
-[Bug. Shows a Lock button when the study is locked.]
+[Bug: When curator+administrator, shows a Lock button when the study is locked or unlocked. No locked/unlocked status given. If pressed, there is no evidence of locking (Admin can edit anything) so cannot tell when study is locked, and cannot unlock it.]
 
 *Check you can download submitted files and view details.
 
@@ -857,3 +969,38 @@ Contributor/Administrator tests:
 ----
 
 
+=1.2 Features=
+
+==Contributor==
+
+* Delete drafts
+
+* Pre-populate acknowledgements from publication details
+
+* Modules on step 1 / title page
+
+* Institutional acknowledgement field
+
+* URLs for institutional acknowledgement field
+
+* Permissions active during draft.
+
+* Contributor decision to display on explorer
+
+* SSQ "Typical Sampling/Testing delay"
+
+==Curator==
+
+* Delete studies
+
+[Note: Cannot delete locked studies.]
+
+* Study status on home page
+
+* Sort studies by status on home page
+
+* Button to send file to Explorer
+
+* Files accessible by contributor
+
+* Dialog choice to send email when locking
