@@ -18,7 +18,7 @@ All tests using Firefox 3
 
 *Note: On development environment, a bare-user can see the "profile" page at "/repository", with vars such as contextConfigLocation, with a link to the developer home.
 
-[Bug: Unprivileged user can read /repository/service/reports/summary.xql]
+_Bug: Unprivileged user can read /repository/service/reports/summary.xql_
 
 
 
@@ -103,7 +103,7 @@ All tests using Firefox 3
 
 *Add an acknowledgement.
 
-[Minor Bug: A "Move down" button appears for the first acknowledgement]
+_Minor Bug: A "Move down" button appears for the first acknowledgement_
 
 *Complete the details for the first acknowledgement. (Check the contactable checkbox, provide a First name, Middle name, Family name, Email address and Institution.)
 
@@ -159,7 +159,7 @@ All tests using Firefox 3
 
 *Press "OK" on the dialogue box.
 
-[Minor Bug: After confirming a draft, the dialogue disappears before/without pressing OK.]
+_Minor Bug: After confirming a draft, the dialogue disappears before/without pressing OK._
 
 >The "Thank you" page will load, displaying the unique ID assigned to the new study.
 
@@ -238,7 +238,7 @@ All tests using Firefox 3
 
 *Delete an administrator, again.
 
-[Bug: Cannot delete study administrator after refreshing.]
+_Bug: Cannot delete study administrator after refreshing._
 
 *Change one of the email addresses.
 
@@ -276,7 +276,7 @@ All tests using Firefox 3
 
 *Delete all the acknowledgements.
 
-[Bug: Can't delete the last/bottom acknowledgement. Note: difference in behaviour between hitting refresh and clicking on the current tab (FF3).]
+_Bug: Can't delete the last/bottom acknowledgement. Note: difference in behaviour between hitting refresh and clicking on the current tab (FF3)._
 
 *Press the "Look up contributors by PUBMED id" button.
 
@@ -304,7 +304,7 @@ All tests using Firefox 3
 
 *Press refresh.
 
-[Bug: "Download" and "Details" links appear in the Actions column for an empty row at the end of the Submitted files table.]
+_Bug: "Download" and "Details" links appear in the Actions column for an empty row at the end of the Submitted files table._
 
 *Check that the files are as provided.
 
@@ -316,7 +316,7 @@ All tests using Firefox 3
 
 *Add another publication.
 
-[Cosmetic Bug: The fields jump around a bit as the user clicks between the text-boxes of different acknowledgements.]
+_Cosmetic Bug: The fields jump around a bit as the user clicks between the text-boxes of different acknowledgements._
 
 *Press the Save changes button.
 
@@ -340,7 +340,7 @@ All tests using Firefox 3
 
 *Check the Copy answers feature works.
 
-[Cosmetic Bug: The dialogue box message shown after copying study info contains spaces before the study title and around the study code.]
+_Cosmetic Bug: The dialogue box message shown after copying study info contains spaces before the study title and around the study code._
 
 *Press the Save changes button.
 
@@ -358,7 +358,7 @@ All tests using Firefox 3
 
 *Press the "Save changes - all changes complete" button.
 
-[Bug: An error dialogue appears "An error occurred (resource-error) while sending a message."] [This is because of config settings. Re-check.]
+_Bug: An error dialogue appears "An error occurred (resource-error) while sending a message."_ _This is because of config settings. Re-check._
 
 >Check that an email has been sent to curation@wwarn.org (log in to Google Apps).
 
@@ -407,7 +407,7 @@ TODO: Press the "Yes" button.
 
 TODO: An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
 
-[Cosmetic Bug: Another dialogue message appears, saying "changes have been saved". Perhaps "This study has now been locked."]
+_Cosmetic Bug: Another dialogue message appears, saying "changes have been saved". Perhaps "This study has now been locked."_
 
 >The message will change from "This study is unlocked." to "This study is locked.". 
 
@@ -415,13 +415,13 @@ TODO: An email will be sent to the author (Shouldn't it be study administrators?
 
 *Check that every field on every tab in the study dashboard (including the Permissions tab in v1.2) is read-only.
 
-[Minor Bug: Acknowledgement "Look up" buttons appear, but should not appear, or should at least be disabled.]
+_Minor Bug: Acknowledgement "Look up" buttons appear, but should not appear, or should at least be disabled._
 
-[Bug: Publications doesn't show Title/Citation field.]
+_Bug: Publications doesn't show Title/Citation field._
 
-[Minor Bug: SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important!]
+_Minor Bug: SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important!_
 
-[Minor Bug: Slow load times, moving between tabs.]
+_Minor Bug: Slow load times, moving between tabs._
 
 *Press the Unlock button.
 
@@ -431,7 +431,7 @@ TODO: An email will be sent to the author (Shouldn't it be study administrators?
 
 *Change the Study Status to "In curation" and add a note in the Notes field.
 
-[Cosmetic Bug: The Notes label should be aligned top.]
+_Cosmetic Bug: The Notes label should be aligned top._
 
 *Press the Save changes button.
 
@@ -449,7 +449,7 @@ TODO: Config dev env for emails.
 
 *Check that the fields are read-only.
 
-[Bug or Change: The permission fields are editable after changing status to "In curation".]
+_Bug or Change: The permission fields are editable after changing status to "In curation"._
 
 TODO: Check whether intended behaviour is to no longer lock the study when Study Status = In curation.
 
@@ -533,7 +533,7 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Press the Save changes button.
 
-*Refresh the page. [This should not be necessary in future versions. Note: Still necessary in v1.2]
+*Refresh the page. _This should not be necessary in future versions. Note: Still necessary in v1.2_
 
 >The Flatten button and XML link will appear.
 
@@ -566,19 +566,19 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
 
-[Cosmetic: The button for a locked study should perhaps say "View" instead of "Edit".][fixed]
+_Cosmetic: The button for a locked study should perhaps say "View" instead of "Edit".__fixed_
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
 *Check that none of the fields in any of the tabs are editable.
 
-[Note: Contributor does not see the Notes field. Assumed intentional.]
+_Note: Contributor does not see the Notes field. Assumed intentional._
 
 *Check that the Status tab says "This study is locked." and status "In curation".
 
-[Minor Bug: On Acknowledgements, buttons for "Looking up contributors" appear.]
+_Minor Bug: On Acknowledgements, buttons for "Looking up contributors" appear._
 
-[Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation field.]
+_Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation field._
 
 ----
 
@@ -657,9 +657,9 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Press the confirm button.
 
-[Major Bug: Get an error dialogue, "An error occurred (resource-error) while posting the upload."]
-[2011-03-24 17:55:46,349 ERROR org.orbeon.oxf.xforms.processor.XFormsServer  - xforms-submit-error - setting throwable {throwable: "org.orbeon.oxf.xforms.submission.XFormsSubmissionException:  (processing submission response): xforms:submission for submission id: sub-post-upload, error code received when submitting instance: 403]
-[Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Curator+PDR)]
+_Major Bug: Get an error dialogue, "An error occurred (resource-error) while posting the upload."_
+_2011-03-24 17:55:46,349 ERROR org.orbeon.oxf.xforms.processor.XFormsServer  - xforms-submit-error - setting throwable {throwable: "org.orbeon.oxf.xforms.submission.XFormsSubmissionException:  (processing submission response): xforms:submission for submission id: sub-post-upload, error code received when submitting instance: 403_
+_Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Curator+PDR)_
 
 >The Personal data home will load.
 
@@ -699,7 +699,7 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Check that the deleted file, which was replaced, appears in the list (but is not downloadable).
 
-[Bug or Change: Files that failed PDR are not showing (as deleted files).]
+_Bug or Change: Files that failed PDR are not showing (as deleted files)._
 
 
 ----
@@ -731,7 +731,7 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Check that submitted files that have been replaced are listed as deleted, and show a derivation in their details.
 
-[Bug or Change: Files that failed PDR are not showing (as deleted files).]
+_Bug or Change: Files that failed PDR are not showing (as deleted files)._
 
 *Check that Curated files (replacing files that failed personal data review) can be downloaded.
 
@@ -827,7 +827,7 @@ TODO: Check when PDR replace is fixed.
 
 *Press the Save changes button.
 
-[Bug: Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions.]
+_Bug: Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions._
 
 >The Flatten button and XML link will appear.
 
@@ -881,7 +881,7 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the draft - except changing the Terms agreement and uploading new files to drafts that you don't own.
 
-[Bug: Cannot change/remove themselves as study administrator, even though they are a chassis administrator (should be able to change anything). Although, perhaps should not be allowed to remove all study administrators.]
+_Bug: Cannot change/remove themselves as study administrator, even though they are a chassis administrator (should be able to change anything). Although, perhaps should not be allowed to remove all study administrators._
 
 *Click on a study on the Data Home page.
 
@@ -889,13 +889,13 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms acceptance date on the Summary tab, and uploading new files to studies that you don't own.
 
-[Bug: The locked status (or button) is not shown to a contributor/administrator. An adminstrator should be able to read, update and delete anything (just not create).]
+_Bug: The locked status (or button) is not shown to a contributor/administrator. An adminstrator should be able to read, update and delete anything (just not create)._
 
 *Check that all sumbmitted files and curated files can be downloaded.
 
 *Check that details for Curated files can be seen, and that the back-to-dashboard link works.
 
-[Bug or Change: Curated file details are not shown to contributors.]
+_Bug or Change: Curated file details are not shown to contributors._
 
 *Check that deleted files (through personal data replacement) are shown.
 
@@ -930,7 +930,7 @@ Contributor/Administrator tests:
 
 *Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms accepted field on the Summary tab, and should not be able to upload Submitted files.
 
-[Bug: When curator+administrator, shows a Lock button when the study is locked or unlocked. No locked/unlocked status given. If pressed, there is no evidence of locking (Admin can edit anything) so cannot tell when study is locked, and cannot unlock it.]
+_Bug: When curator+administrator, shows a Lock button when the study is locked or unlocked. No locked/unlocked status given. If pressed, there is no evidence of locking (Admin can edit anything) so cannot tell when study is locked, and cannot unlock it._
 
 *Check you can download submitted files and view details.
 
@@ -950,7 +950,7 @@ Contributor/Administrator tests:
 
 *Press Save changes.
 
-*Refresh the page. [This should not be necessary in future versions.]
+*Refresh the page. _This should not be necessary in future versions._
 
 >The Flatten button and XML link will appear.
 
@@ -993,7 +993,7 @@ Contributor/Administrator tests:
 
 * Delete studies
 
-[Note: Cannot delete locked studies.]
+_Note: Cannot delete locked studies._
 
 * Study status on home page
 
