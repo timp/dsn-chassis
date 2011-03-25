@@ -24,3 +24,9 @@ svn co http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1
 cd manta-webapp-1.0.1-RC-1
 mvn package -P _profile_
  }}}
+
+== Ensure correct jars are in the tomcat endorsed directory ==
+
+{{{
+wget http://cloud1.cggh.org/maven2/org/cggh/chassis/manta-config/0.2-alpha-4/manta-config-0.2-alpha-4.jar
+}}}
