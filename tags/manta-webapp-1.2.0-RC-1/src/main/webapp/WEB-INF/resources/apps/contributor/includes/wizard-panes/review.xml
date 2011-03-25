@@ -1,0 +1,350 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events" 
+	class="review"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<div id="bd" class="clearfix">
+		<div class="steps clearfix">
+		
+				<h1>Register study</h1>
+				<ul>
+					<li>Step 1</li>
+					<li>Step 2</li>
+					<li>Step 3</li>
+					<li>Step 4</li>
+					<li>Step 5</li>
+					<li class="active">Review</li>
+				</ul>
+			
+		</div>
+		<div class="no-bg">
+			
+			<xi:include href="../help-boxes/for-wizard-panes/review.xml"/>
+
+			
+			<div class="main twoCol">
+				<div id="content" class="register-study-wizard">
+
+					
+						<h2>Review</h2>
+					
+						<h3>(1) Title and selected WWARN modules</h3>
+						
+						<p>
+							<span class="study-title">
+							<xforms:output ref="instance('ins-study-entry')//atom:title">
+								<xforms:label>Title:</xforms:label>
+							</xforms:output>
+							</span>
+
+							<!-- TODO: Get the labels for these values from ins-module-items -->
+							<!-- <xforms:output ref="instance('ins-study-entry')//study//modules" /> -->
+							<h4 class="selected-modules-title">Selected WWARN modules:</h4>
+							<ul class="selected-modules-list">
+							<xforms:repeat id="rep-study-modules" nodeset="tokenize(instance('ins-study-entry')//study//modules, '\s')">
+								<xxforms:variable name="module" select="."/>
+								<li><xforms:output ref="instance('ins-module-items')/module[value=$module]/label"/></li>
+							</xforms:repeat>
+							</ul>
+						</p>
+						<p>
+							<xforms:trigger appearance="minimal">
+								<xforms:label>&lt;&lt; Edit title and selected WWARN modules</xforms:label>
+								<xforms:action ev:event="DOMActivate">
+									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/ui-info/wizard-pane-to-show" value="'study-terms'"/>
+									<xforms:send submission="sub-implicit-put-draft-entry"/>
+								</xforms:action>
+							</xforms:trigger>
+						</p>	
+						
+						<h3>(2) Permissions</h3>
+						
+						<div id="list-of-administrators-container">
+							<ul>
+								<xforms:repeat nodeset="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+									<li class="repeated-element">
+									<xforms:output ref=".">
+										<xforms:label>Email address:</xforms:label>
+									</xforms:output>
+									</li>
+								</xforms:repeat>
+							</ul>
+						</div>
+					
+						<br/>
+						
+						<p>
+							<xforms:trigger appearance="minimal">
+								<xforms:label>&lt;&lt; Edit permissions</xforms:label>
+								<xforms:action ev:event="DOMActivate">
+									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'permissions'"/>
+									<xforms:send submission="sub-implicit-put-draft-entry"/>
+								</xforms:action>
+							</xforms:trigger>
+						</p>		
+						
+					<h3>(3) Files</h3>
+					
+					<xforms:group ref="instance('ins-draft-media-feed')[empty(atom:entry)]">
+						<p>You have not uploaded any files.</p>
+					</xforms:group>
+					
+					<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+						
+						<span id="list-of-uploaded-files-container">
+							
+							<fr:datatable paginated="false">
+								<thead>
+									<tr>
+										<th fr:sortable="true" fr:resizeable="true">File name</th>
+										<th fr:sortable="true" fr:resizeable="true">Uploaded on</th>
+										<th fr:sortable="false" fr:resizeable="true">Size (bytes)</th>
+										<th fr:sortable="true" fr:resizeable="true">Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									<xforms:repeat id="rep-review-draft-media" nodeset="atom:entry">
+										<tr class="repeated-element">
+											<td>
+												<xforms:output ref="atom:title"/>
+											</td>
+											<td>
+												<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+											</td>
+											<td>
+												<xforms:output ref="atom:link[@rel='edit-media']/@length"/>
+											</td>
+											<td>
+												<xforms:output ref="
+													for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+													return
+													if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+													then $cat/@label
+													else instance('ins-file-terms')//term[value=$cat/@term]/label
+													"/>
+											</td>
+										</tr>
+									</xforms:repeat>
+								</tbody>
+							</fr:datatable>
+							
+						</span>
+						
+					</xforms:group>
+					
+					<p>
+						<xforms:trigger appearance="minimal">
+							<xforms:label>&lt;&lt; Edit files</xforms:label>
+							<xforms:action ev:event="DOMActivate">
+								<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'upload-files'"/>
+								<xforms:send submission="sub-implicit-put-draft-entry"/>
+							</xforms:action>
+						</xforms:trigger>
+					</p>	
+					
+					<h3>(4) Publications</h3>
+					
+					<xforms:group ref="instance('ins-study-entry')//atom:content/study">
+						
+						<p>
+							<xforms:output ref="study-is-published">
+								<xforms:label>Is the study published?</xforms:label>
+							</xforms:output>
+							<xforms:group ref="instance('ins-control')/study-is-published-is-empty">
+								<span>Unspecified</span>
+							</xforms:group>
+						</p>
+						
+					</xforms:group>
+					
+					<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/publications[empty(publication)])">
+						<div id="list-of-publications-container">
+							<ul>
+								<xforms:repeat nodeset="instance('ins-study-entry')//atom:content/study/publications/publication">
+									<li class="repeated-element publication-form-summary-item">
+										<xforms:output ref="pmid">
+											<xforms:label>PubMedID:</xforms:label>
+										</xforms:output>
+										<xforms:group ref="publication-references">
+											<ul>
+												<xforms:repeat nodeset="publication-reference">
+													<li class="repeated-element publication-reference-form-summary-item">
+														<xforms:output ref=".">
+															<xforms:label>
+																<xforms:output ref="instance('ins-publication-reference-types')/publication-reference-type[value=context()/@type]/label"/>:
+															</xforms:label>
+														</xforms:output>
+													</li>
+												</xforms:repeat>
+											</ul>
+										</xforms:group>
+									</li>
+								</xforms:repeat>
+							</ul>
+						</div>
+					</xforms:group>
+					<xforms:group ref="instance('ins-study-entry')//atom:content/study/publications[empty(publication)]">
+						<p>No publications.</p>
+					</xforms:group>
+					
+					<p>
+						<xforms:trigger appearance="minimal">
+							<xforms:label>&lt;&lt; Edit publications</xforms:label>
+							<xforms:action ev:event="DOMActivate">
+								<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'publications'"/>
+								<xforms:send submission="sub-implicit-put-draft-entry"/>
+							</xforms:action>
+						</xforms:trigger>
+					</p>
+						<h3>(5) Acknowledgements</h3>
+						
+					<div class="institution-textbox-container">
+						<p>
+							<xforms:output ref="instance('ins-study-entry')//institution-ack/institution-name">
+								<xforms:label>Institution:</xforms:label>
+							</xforms:output>
+							<br/>
+							<xforms:repeat nodeset="instance('ins-study-entry')//institution-ack/institution-websites/institution-url">
+								<br/>
+								<xforms:output ref=".">
+									<xforms:label>URL:</xforms:label>
+								</xforms:output>
+								
+							</xforms:repeat>
+						</p>
+					</div>
+						
+						<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/acknowledgements[empty(person)])">
+						
+							<div id="list-of-acknowledgements-container">
+						
+								<ol>
+									<xforms:repeat nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/person">
+										<li class="repeated-element acknowledgement-form-summary-item">
+											<span class="first-name-text-container">
+									        <xforms:output ref="first-name">
+									            <xforms:label>First name:</xforms:label>
+									        </xforms:output>
+											</span>
+									       <br/>
+											<span class="middle-name-text-container">
+									        <xforms:output ref="middle-name">
+									            <xforms:label>Middle name:</xforms:label>
+									        </xforms:output>
+												</span>
+									       <br/>
+												<span class="family-name-text-container">
+									        <xforms:output ref="family-name">
+									            <xforms:label>Family name:</xforms:label>
+									        </xforms:output>
+												</span>
+									        <br/>
+													<span class="email-address-text-container">
+									        <xforms:output ref="email-address">
+									            <xforms:label>Email address:</xforms:label>
+									        </xforms:output>
+													</span>
+									        <br/>
+														<span class="institution-text-container">
+									        <xforms:output ref="institution">
+									            <xforms:label>Institution:</xforms:label>
+									        </xforms:output>
+														</span>
+											
+											<br/>
+											<xforms:output ref="person-is-contactable">
+												<xforms:label>Contactable?</xforms:label>
+											</xforms:output>
+								        </li>
+									</xforms:repeat>
+										
+									
+								</ol>
+								
+							</div>
+							
+						</xforms:group>
+						<xforms:group ref="instance('ins-study-entry')//atom:content/study/acknowledgements[empty(person)]">
+							<p>No personal acknowledgements.</p>
+						</xforms:group>
+					
+						<p>
+							<xforms:trigger appearance="minimal">
+								<xforms:label>&lt;&lt; Edit acknowledgements</xforms:label>
+								<xforms:action ev:event="DOMActivate">
+									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'acknowledgements'"/>
+									<xforms:send submission="sub-implicit-put-draft-entry"/>
+								</xforms:action>
+							</xforms:trigger>
+						</p>
+					
+						
+					<!--
+						<p>
+							<br/>
+						</p>
+					-->
+						<p class="form-navi">
+							<!-- TODO: Only show this control if the user has permission to create a study -->
+							<span id="review-confirm-button-container">
+								Once you click &quot;Confirm&quot; your study enters the WWARN curation process. You then have to contact WWARN
+								to make changes.
+								Return to a previous step and save your study as a draft if you have further information to add.
+								<p></p>
+								
+								<xforms:switch>
+									<xforms:case id="delete">
+										<xforms:trigger>
+											<xforms:label>Confirm</xforms:label>
+											<xforms:toggle case="confirm" ev:event="DOMActivate"/>
+										</xforms:trigger>
+									</xforms:case>
+									<xforms:case id="confirm">
+										<p><strong>Are you sure you have completed entering the study?</strong></p>
+										<xforms:trigger>
+											<xforms:label>Yes - I've finished</xforms:label>
+											<xforms:action ev:event="DOMActivate">
+												<xforms:setvalue
+													ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
+													value="'confirmation'" />
+												<xforms:setvalue
+													ref="instance('ins-study-entry')//app:control/draft"
+													value="'no'" />
+												<xforms:send submission="sub-explicit-put-finished-entry" />
+											</xforms:action>
+										</xforms:trigger> <xforms:trigger>
+											<xforms:label>No - I've more to add</xforms:label>
+											<xforms:toggle case="delete" ev:event="DOMActivate"/>
+										</xforms:trigger>
+									</xforms:case>
+								</xforms:switch>
+								
+							</span>
+							
+							
+							<span class="skip-links">
+							<p>
+								<xforms:trigger
+									ref="instance('ins-control')/save-draft-trigger"
+									appearance="minimal" class="alignLeft">
+									<xforms:label>&lt;&lt; Data home</xforms:label>
+									<xforms:action ev:event="DOMActivate">
+										<xforms:send submission="sub-back-home" />
+									</xforms:action>
+								</xforms:trigger>
+								</p>
+							</span>
+					
+						</p>
+							
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
