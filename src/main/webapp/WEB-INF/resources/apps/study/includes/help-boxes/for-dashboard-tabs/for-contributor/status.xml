@@ -1,0 +1,23 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml"
+    class="inner-help">
+    
+    <h3>Locked</h3>
+    
+    <p>When we have gathered all the information that we think we need then the study 
+        will be locked to prevent any further changes so that we know we are working with a stable set of data.</p>
+    
+    <h3>Status</h3>
+    
+    <p>The status gives you an idea of how we are progressing with processing your study.</p>
+    
+    <h3>Save changes all complete</h3>
+    
+    <p>If you click this button then an email will be automatically sent to WWARN to inform us that you've
+        finished making changes.</p>
+    
+    <h3>Explorer display option</h3>
+    
+    <p>This gives you the chance to control how your study will be shown on the WWARN Explorer. 
+        Either in full with the summarized data, just a summary of the study or not at all.</p>
+</div>

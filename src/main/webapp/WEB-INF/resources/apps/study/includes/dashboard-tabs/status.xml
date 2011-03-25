@@ -1,0 +1,227 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+
+	<div id="bd" class="clearfix">
+		
+		<div class="no-bg">
+			
+			<!-- Help boxes. Comment out if not needed. -->
+			<div class="help">
+				<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/status.xml"/>				
+			</div>
+			
+			
+			<div class="main twoCol">
+				
+				<div id="content" class="study-dashboard">
+					
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					
+					
+						<div class="yui-navset yui-navset-top">
+							
+							<xi:include href="../dashboard-tabs-menu.xml"/>
+							
+							
+							<div class="yui-content">
+
+								<xforms:group ref="instance('ins-control')/not-administrator">
+							     	<xforms:group ref="instance('ins-control')/study-is-editable">
+							     		<p>This study is unlocked.</p>
+							     	</xforms:group>
+							     	
+							     	<xforms:group ref="instance('ins-control')/study-is-not-editable">
+							     		<p>This study is locked.</p>
+							     	</xforms:group>
+							     </xforms:group>
+							     	
+								<!-- Note: Contributors can lock their own study, since they have access to the ACL, but they could not then unlock it. -->
+								<!-- Note: Contributors could even (hypothetically) selectively lock out curators, but not administrators. -->
+								<xforms:group ref="instance('ins-control')/curator-controls">
+								
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'PUT')]">	
+										
+								     	<xforms:trigger ref="instance('ins-control')/study-is-editable">
+								     		<xforms:label>Lock</xforms:label>
+								     		<xforms:action ev:event="DOMActivate">
+
+								     			<xforms:delete nodeset="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
+								     			<xforms:delete nodeset="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'DELETE_MEMBER']"/>
+								     			<xforms:delete nodeset="instance('ins-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>							     			
+								     			
+								     			<xforms:delete nodeset="instance('ins-permissions-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>							     				
+								     			<xforms:delete nodeset="instance('ins-permissions-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
+								     			
+												<xforms:delete nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>							     				
+								     			<xforms:delete nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
+												
+												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEDIA']"/>
+												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
+												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'MULTI_CREATE']"/>
+
+												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'CREATE_MEDIA']"/>
+												 <xforms:delete nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
+
+												<xxforms:show dialog="send-email-option-dialog" />
+												
+								     			
+								     		</xforms:action>
+								     	</xforms:trigger>
+								     	
+								     	
+								     	<xforms:trigger ref="instance('ins-control')/study-is-not-editable">
+								     		<xforms:label>Unlock</xforms:label>
+								     		<xforms:action ev:event="DOMActivate">
+								     			
+								     			<xforms:insert nodeset="instance('ins-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>
+								     			<xforms:insert nodeset="instance('ins-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-delete-member')"/>
+								     			<xforms:insert nodeset="instance('ins-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
+												
+								     			<xforms:insert nodeset="instance('ins-permissions-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>							     				
+								     			<xforms:insert nodeset="instance('ins-permissions-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
+								     			
+												<xforms:insert nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>							     				
+								     			<xforms:insert nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
+
+												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-create-media')"/>
+												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>
+												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-multi-create')"/>
+
+												 <xforms:insert nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-create-media')"/>
+												 <xforms:insert nodeset="instance('ins-curated-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
+												 												
+												
+												<xforms:send submission="sub-put-all-permissions"/>
+				
+								     			
+								     		</xforms:action>
+								     	</xforms:trigger>
+	
+									</xforms:group>
+									
+								</xforms:group>
+								
+								<xforms:group ref="instance('ins-study-entry')">
+									
+									<p><!-- Only curator can view/edit curator notes and change status -->
+										
+										<p>If you wish to make changes to this study then please <a href="mailto:curation@wwarn.org?subject=Please enable {instance('ins-study-entry')/atom:title} ({instance('ins-study-entry')/manta:id}) for editing">mail curation@wwarn.org</a> and they will enable you to make changes.</p>
+										
+										<xforms:group ref="instance('ins-control')/curator-controls">
+											<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+												<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+													<p>
+														<xforms:select1 ref="instance('ins-study-entry')//study/study-status" appearance="minimal">
+															<xforms:label>Study Status</xforms:label>
+															<xforms:itemset model="mod-study-dashboard"
+																nodeset="instance('ins-study-status')//statusType">
+																<xforms:label ref="label" />
+																<xforms:value ref="value" />
+															</xforms:itemset>
+														</xforms:select1>
+														<xforms:input ref="atom:content/study/study-status">
+															<xforms:label>Status:</xforms:label>
+														</xforms:input>				
+													</p>
+													<p>
+													<xforms:textarea model="mod-study-dashboard" ref="instance('ins-study-entry')//study/curator-notes">
+														<xforms:label>Notes:</xforms:label>
+													</xforms:textarea>
+													</p>
+												</xforms:group>
+												<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+													<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+														<p>
+															
+																	<xforms:output ref="instance('ins-study-status')//statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
+																		<xforms:label>Status:</xforms:label>
+																	</xforms:output>
+																			
+														</p>
+														<p>
+															<xforms:output model="mod-study-dashboard" ref="instance('ins-study-entry')//study/curator-notes">
+																<xforms:label>Notes:</xforms:label>
+															</xforms:output>
+														</p>	
+													</xforms:group>
+												</xforms:group>
+											</xforms:group>
+											
+										</xforms:group> 
+							
+										
+									</p>
+								</xforms:group>
+								<xforms:group ref="instance('ins-control')/not-curator">
+									<p>
+										<xforms:output model="mod-study-dashboard" ref="instance('ins-study-status')//statusType[value=instance('ins-study-entry')//study/study-status/text()]/label">
+											<xforms:label>Status:</xforms:label>
+										</xforms:output>			
+									</p>
+									
+								</xforms:group>
+								<p>
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+										<xforms:select1 ref="instance('ins-study-entry')//study/explorer-display" appearance="minimal">
+											<xforms:label>Explorer Display Option:</xforms:label>
+											<xforms:itemset model="mod-study-dashboard"
+												nodeset="instance('ins-explorer-type')//displayType">
+												<xforms:label ref="label" />
+												<xforms:value ref="value" />
+											</xforms:itemset>
+										</xforms:select1>			
+									</xforms:group>
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+										<xforms:output model="mod-study-dashboard" ref="instance('ins-explorer-type')//displayType[value=instance('ins-study-entry')//study/explorer-display/text()]/label">
+											<xforms:label>Explorer Display Option:</xforms:label>
+										</xforms:output>
+									</xforms:group>
+								</p>
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+									<p>
+										<span id="title-save-changes-button-container">
+											<xforms:trigger ref="instance('ins-control')/save-study-trigger">
+												<xforms:label>Save changes - all changes complete</xforms:label>
+												<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+													<xforms:send submission="sub-notify-put-study-entry-complete"/>
+												</xforms:action>
+												<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
+													<xforms:message>Please complete all required fields.</xforms:message>
+												</xforms:action>
+											</xforms:trigger>
+										</span>
+									</p>
+								</xforms:group>
+								
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+								<p>
+									<span id="title-save-changes-button-container">
+										<xforms:trigger ref="instance('ins-control')/save-study-trigger">
+											<xforms:label>Save changes</xforms:label>
+											<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+												<xforms:send submission="sub-put-study-entry"/>
+											</xforms:action>
+											<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
+												<xforms:message>Please complete all required fields.</xforms:message>
+											</xforms:action>
+										</xforms:trigger>
+									</span>
+								</p>
+								</xforms:group>
+							
+							</div>
+							
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>		
