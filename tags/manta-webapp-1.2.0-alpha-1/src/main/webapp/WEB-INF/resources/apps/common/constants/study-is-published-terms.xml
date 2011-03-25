@@ -1,0 +1,11 @@
+<!--  A list of answers to "Is the study published?". There is dependency on the answer, e.g. relevant pmid, URLs, DOIs. -->
+<terms xmlns="">
+    <term>
+        <label>Yes</label>
+        <value>Yes</value>
+    </term>
+    <term>
+        <label>No</label>
+        <value>No</value>
+    </term>
+</terms>
