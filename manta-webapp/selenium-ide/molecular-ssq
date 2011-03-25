@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>molecular-ssq</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">molecular-ssq</td></tr>
+</thead><tbody>
+<tr>
+	<td>select</td>
+	<td>xf-1764</td>
+	<td>label=clinic/hospital visit</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1778</td>
+	<td>label=asymptomatic only</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1790</td>
+	<td>label=ex-vivo parasite</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1905</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1817·1</td>
+	<td>label=pyrosequencing</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1830$$e0·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1841$$e0·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1852$$e0·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1860$xforms-input-1·1</td>
+	<td>other ovale</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1885·1</td>
+	<td>label=random subset genotyped</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1900$xforms-input-1·1</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1909</td>
+	<td>label=included in data set</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1917$$e0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1917$$e1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1924</td>
+	<td>label=no</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1933</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1946$xforms-input-1·1</td>
+	<td>locus1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1954</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1968·1</td>
+	<td>label=gene / gene fragment</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1978$xforms-input-1·1</td>
+	<td>locus2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1986</td>
+	<td>label=yes</td>
+</tr>
+</tbody></table>
+</body>
+</html>
