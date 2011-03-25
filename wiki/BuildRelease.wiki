@@ -28,5 +28,6 @@ mvn package -P _profile_
 == Ensure correct jars are in the tomcat endorsed directory ==
 
 {{{
+cd /usr/share/tomcat6/endorsed
 wget http://cloud1.cggh.org/maven2/org/cggh/chassis/manta-config/0.2-alpha-4/manta-config-0.2-alpha-4.jar
 }}}
