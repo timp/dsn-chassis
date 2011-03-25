@@ -185,6 +185,10 @@ declare function security-config:default-collection-security-descriptor(
 
     then $security-config:study-info-collection-security-descriptor
 
+     else if ( $request-path-info = "/config" )
+
+    then $security-config:config-collection-security-descriptor
+    
     else if ( $request-path-info = "/groups" )
 
     then $security-config:groups-collection-security-descriptor
