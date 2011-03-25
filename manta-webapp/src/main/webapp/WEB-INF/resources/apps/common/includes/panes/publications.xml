@@ -205,7 +205,10 @@
                                 <xforms:output ref="pmid">
                                     <xforms:label>PubMedID:</xforms:label>
                                 </xforms:output>
-
+                           <br/>
+                                <xforms:output ref="publication-title">
+                                    <xforms:label>Title/Citation:</xforms:label>
+                                </xforms:output>
                                 <xforms:group ref="publication-references">
                                     <ul>
                                         <xforms:repeat nodeset="publication-reference">
