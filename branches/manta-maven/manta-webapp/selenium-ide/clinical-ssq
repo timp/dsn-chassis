@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>clinical-ssq</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">clinical-ssq</td></tr>
+</thead><tbody>
+<tr>
+	<td>click</td>
+	<td>xf-1033$xforms-input-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Previous Year</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Previous Year</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=16</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1037$xforms-input-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=31</td>
+	<td></td>
+</tr>
+<!--species-->
+<tr>
+	<td>click</td>
+	<td>xf-1041$$e0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1041$$e1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1041$$e2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1041$$e3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1041$$e4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1067$xforms-input-1·1</td>
+	<td>s</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1067$xforms-input-1·1</td>
+	<td>south east</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1071$xforms-input-1·1</td>
+	<td>oxfordshire</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1075$xforms-input-1·1</td>
+	<td>oxford</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1088$xforms-input-1·1</td>
+	<td>site1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1123$xforms-input-1·1</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1127$xforms-input-1·1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1131$xforms-input-1·1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1142$xforms-input-1·1</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1153$xforms-input-1·1</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1157$xforms-input-1·1</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1161$xforms-input-1·1</td>
+	<td>7</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1166$xforms-input-1·1</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1170·1</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1176$$e0·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1176$$e3·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1186</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1088$xforms-input-1·2</td>
+	<td>site2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1191$xforms-input-1</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1202$xforms-input-1</td>
+	<td>80</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1214$xforms-input-1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1219$xforms-input-1</td>
+	<td>99</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1224</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1233</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1243$$e0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1243$$e3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1264</td>
+	<td>label=include</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1277</td>
+	<td>label=healthy volunteer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1284$xforms-input-1</td>
+	<td>other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1294$xforms-input-1·1</td>
+	<td>regimen 1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//a[. = 'Add a drug']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1310$xforms-input-1·1-1</td>
+	<td>drug1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1323·1-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1316$xforms-input-1·1-1-1</td>
+	<td>ingedient1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1318$xforms-input-1·1-1-1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1326·1-1</td>
+	<td>label=intravenous</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1331$xforms-input-1·1-1</td>
+	<td>manufacturer1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1334$xforms-input-1·1-1</td>
+	<td>batch1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1337$xforms-input-1·1-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=22</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1340·1-1</td>
+	<td>label=room temperature</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1360$xforms-input-1·1-1-1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1362$xforms-input-1·1-1-1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1364$xforms-input-1·1-1-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1364$xforms-input-1·1-1-1</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1367$xforms-input-1·1-1-1</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1370$xforms-input-1·1-1-1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1348·1-1</td>
+	<td>label=weight group</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1390$xforms-input-1·1-1-1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1392$xforms-input-1·1-1-1</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1394$xforms-input-1·1-1-1</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1397$xforms-input-1·1-1-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1397$xforms-input-1·1-1-1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1400$xforms-input-1·1-1-1</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1348·1-1</td>
+	<td>label=mg/kg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1420$xforms-input-1·1-1-1</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1422$xforms-input-1·1-1-1</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1424$xforms-input-1·1-1-1</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1429·1-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1420$xforms-input-1·1-1-2</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1422$xforms-input-1·1-1-2</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1424$xforms-input-1·1-1-2</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1432·1-1</td>
+	<td>label=with a meal</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1447·1-1</td>
+	<td>label=no</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1456·1-1</td>
+	<td>comments</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1461·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1310$xforms-input-1·1-2</td>
+	<td>drug2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xf-1467</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1294$xforms-input-1·2</td>
+	<td>regimen 2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1471</td>
+	<td>label=quasi-randomised</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1476</td>
+	<td>label=single (clinician/lab)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1482$xforms-input-1</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1484</td>
+	<td>label=tympanic</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1492</td>
+	<td>label=both</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1502</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1513$xforms-input-1</td>
+	<td>other micro</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1517$xforms-input-1</td>
+	<td>55</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1519</td>
+	<td>label=500 wbc</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1532</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1543$xforms-input-1</td>
+	<td>other thin films</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1547$xforms-input-1</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1549</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1560$xforms-input-1</td>
+	<td>other thick film</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1562</td>
+	<td>label=1000 rbc</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1586</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1594$xforms-input-1</td>
+	<td>other formula thick</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1637$xforms-input-1</td>
+	<td>56</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1641</td>
+	<td>label=random</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1655$xforms-input-1</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1659</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1670$xforms-input-1</td>
+	<td>other ext reread</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1673</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1684·1</td>
+	<td>label=other</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1692$xforms-input-1·1</td>
+	<td>other marker</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xf-1702$xforms-input-1</td>
+	<td>lab1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1705</td>
+	<td>label=Cap Electrophoresis</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1721</td>
+	<td>label=reinfection</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xf-1749</td>
+	<td>label=new alleles only</td>
+</tr>
+</tbody></table>
+</body>
+</html>
