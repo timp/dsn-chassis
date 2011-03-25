@@ -127,7 +127,25 @@ let $values2 :=
     </term>
 </terms>
    let $entry2 := local:create-config-entry('File data types','file-terms',$values2)
-    return concat($entry1, '<br/>', $entry2)
+   
+   let $values3 :=
+<displayTypes xmlns="">
+	<displayType deprecated="n">
+		<label></label>
+		<value>notset</value>
+	</displayType>
+	<displayType deprecated="n">
+		<label>Do not show</label>
+		<value>none</value>
+	</displayType>
+	<displayType deprecated="n">
+		<label>Show</label>
+		<value>full</value>
+	</displayType>
+</displayTypes>
+
+   let $entry3 := local:create-config-entry('Explorer display options','explorer-display-types',$values3)
+    return concat($entry1, '&#xD;', $entry2,'&#xD;', $entry3)
 };
 
 declare function local:create-atom-entry($title, $groups, $id, $author) as element(atom:entry) {

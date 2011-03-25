@@ -141,7 +141,13 @@
 				instance="ins-study-status" />
 				
 			<xforms:instance id="ins-explorer-type" src="/apps/common/constants/explorerDisplayTypes.xml" />
-			
+			<!-- If available use the explorer display types stored in the config collection -->
+			<xforms:submission id="sub-get-explorer-types"
+				resource="/service/content/config/explorer-display-types"
+				method="get"
+				replace="instance"
+				instance="ins-explorer-type" />
+				
 			<!-- Make sure the study has its status set. -->
 			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/study-status" required="true()"/>
 			
@@ -158,6 +164,7 @@
 					<xforms:send submission="sub-get-acl-entry" if="instance('ins-study-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
 					<xforms:send submission="sub-get-permissions-entry"/>
 					<xforms:send submission="sub-get-study-status-types"/>
+					<xforms:send submission="sub-get-explorer-types"/>
 					<xforms:send submission="sub-get-file-terms"/>
 					
 					<!-- The success of this get-submitted-media submission will trigger the copying of the media-feed to the SSQ. -->
