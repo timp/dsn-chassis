@@ -1,0 +1,100 @@
+<div 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:xforms="http://www.w3.org/2002/xforms" 
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    
+<h2>Administrators</h2>
+<!-- If the user has PUT access to the security descriptor. -->
+
+<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and contains(@atombeat:allow, 'PUT')]">
+    
+    <xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+        
+        <div id="editable-list-of-administrators-container">
+            
+            <table>
+                <xforms:repeat nodeset="atombeat:member" id="rep-administrator-contributor">
+                    <tr class="repeated-element">
+                        <td>
+                            <xforms:trigger ref="." class="addRemove">
+                                <xforms:label>
+                                    <img alt="remove"
+                                        src="/apps/contributor/common/remove.gif" />
+                                </xforms:label>
+                                <xforms:delete ev:event="DOMActivate"
+                                    context="." nodeset="."
+                                    at="index('rep-administrator-contributor')" />
+                            </xforms:trigger>
+                        </td>
+                        <td>
+                            <span class="email-address-textbox-container">
+                                <xforms:input ref=".">
+                                    <xforms:label>Email address:</xforms:label>
+                                    <xforms:alert>Please provide a valid email address.</xforms:alert>
+                                </xforms:input>
+                            </span>
+                        </td>
+                    </tr>
+                </xforms:repeat>
+                <tr>
+                    <td>
+                        <xforms:trigger class="addRemove">
+                            <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+                            <xforms:insert 
+                                ev:event="DOMActivate" 
+                                context="." 
+                                nodeset="atombeat:member" 
+                                at="last()" 
+                                position="after" 
+                                origin="instance('ins-user-template')"/>
+                        </xforms:trigger>
+                    </td>
+                    <td>
+                        <span id="add-administrator-link-container">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>Add an administrator</xforms:label>
+                                <xforms:insert 
+                                    ev:event="DOMActivate" 
+                                    context="." 
+                                    nodeset="atombeat:member" 
+                                    at="last()" 
+                                    position="after" 
+                                    origin="instance('ins-user-template')"/>
+                            </xforms:trigger>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+        
+    </xforms:group>
+    
+ 
+    
+</xforms:group>
+
+<!-- If the user has GET access to the security descriptor, but not PUT access. -->
+<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and contains(@atombeat:allow, 'GET')]">
+    <xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and not(contains(@atombeat:allow, 'PUT'))]">
+        
+        <xforms:group ref="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']">
+            <table>
+                <xforms:repeat nodeset="atombeat:member" id="rep-administrator-curator">
+                    <tr>
+                        <td>
+                            <xforms:output ref=".">
+                                <xforms:label>Email address:</xforms:label>
+                            </xforms:output>
+                        </td>
+                    </tr>
+                </xforms:repeat>
+            </table>
+            
+        </xforms:group>
+        
+    </xforms:group>
+</xforms:group>
+</div>
