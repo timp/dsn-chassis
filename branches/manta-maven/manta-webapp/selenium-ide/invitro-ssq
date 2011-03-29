@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2054$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'Hematocrit')]</td>
 	<td>45</td>
 </tr>
 <tr>
@@ -80,32 +80,32 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2096$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'Serum final')]</td>
 	<td>5</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2100$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'NaHCO')]</td>
 	<td>5</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label,'')]</td>
+	<td>xpath=//select[contains(../label,'Hypoxantine')]</td>
 	<td>label=yes</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2111$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'Final Hypo')]</td>
 	<td>6</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label,'oric')]</td>
+	<td>xpath=//select[contains(../label,'orotic')]</td>
 	<td>label=yes</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2122$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'Final orotic')]</td>
 	<td>7</td>
 </tr>
 <tr>
@@ -115,12 +115,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2133$xforms-input-1</td>
+	<td>xpath=//input[contains(../../label,'Final glucose')]</td>
 	<td>8</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xf-2166</td>
+	<td>xpath=//a[. = 'Add an antibiotic']</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2159$xforms-input-1·1</td>
+	<td>xpath=//input[contains(../../label,'Antibiotic final')]</td>
 	<td>9</td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label,'Method used')]</td>
+	<td>xpath=(//select[contains(../label[2],'Method used')])[2]</td>
 	<td>label=HRP2 ELISA</td>
 </tr>
 <tr>
@@ -175,57 +175,47 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[/option = 'batches']</td>
+	<td>xpath=//select[contains(../label[2],'batches')]</td>
 	<td>label=extemporaneous</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xf-2240$xforms-input-1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=16</td>
-	<td></td>
+	<td>type</td>
+	<td>xpath=(//input[contains(../../label[3],'Preparation Date')])[2]</td>
+	<td>25.3.2011</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xf-2232</td>
+	<td>xpath=//select[contains(../label[2],'batches')]</td>
 	<td>label=batches</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xf-2280</td>
+	<td>xpath=//a[. = 'Add a Batch']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xf-2246·1</td>
+	<td>xpath=//select[contains(../label,'3D7 provided')]</td>
 	<td>label=yes</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xf-2257·1</td>
+	<td>xpath=(//select[contains(../label[3],'3D7 information')])[2]</td>
 	<td>label=no</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xf-2267$xforms-input-1·1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=16</td>
-	<td></td>
+	<td>type</td>
+	<td>xpath=(//input[contains(../../label[4],'Preparation date')])[2]</td>
+	<td>26.3.2011</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2269$xforms-input-1·1</td>
+	<td>xpath=(//input[contains(../../label[5],'3D7 para')])[3]</td>
 	<td>99</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-2273$xforms-input-1·1</td>
+	<td>xpath=(//input[contains(../../label[6],'Ring forms')])[4]</td>
 	<td>23</td>
 </tr>
 </tbody></table>
