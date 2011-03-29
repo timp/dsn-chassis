@@ -4,8 +4,10 @@
 
 The Chassis REST interface can be deployed behind either CAS or Basic Auth security together with Spring Security
 
+==CAS Authentication==
 Key points are that the CAS RESTlet interface must be enabled to allow initial authentication and subsequently the Spring Security JSESSIONID cookie must be used.
 
+==REST Interface==
 A detailed introduction to using the REST interface can be found as part of the AtomBeat wiki [http://code.google.com/p/atombeat/wiki/TutorialGettingStarted]
 
 = A script to authenticate against CAS =
