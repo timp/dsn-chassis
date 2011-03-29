@@ -84,7 +84,7 @@
 <tr>
 	<td>select</td>
 	<td>xpath=//select[contains(../label,'Explorer')]</td>
-	<td>label=Show everything</td>
+	<td>label=Show</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -259,7 +259,7 @@
 <tr>
 	<td>assertXpathCount</td>
 	<td>//a[. = 'Upload curated files' and not(contains(../../@class,'xforms-disabled'))]</td>
-	<td>0</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

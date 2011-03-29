@@ -43,30 +43,19 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xf-36$xf-288·2</td>
+	<td>xpath=//a[span='s1-changed']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xf-483$$e2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xf-496</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//button[@type='button']</td>
-	<td></td>
+	<td>assertXpathCount</td>
+	<td>//input[../../label = 'Title:']</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//a[@id='xf-472']/em</td>
+	<td>//a[contains(@href,'study-info')]</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
