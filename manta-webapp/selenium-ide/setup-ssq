@@ -13,17 +13,12 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
+	<td>/repository/j_spring_security_logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
 	<td>/repository/contributor/home</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Logout cora@example.org</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Contribute</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,218 +13,178 @@
 </thead><tbody>
 <!--site section-->
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Typical sampling')]</td>
-	<td>label=greater than 72 hours</td>
+	<td>greater than 72 hours</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Anticoa')]</td>
-	<td>label=ACD</td>
+	<td>ACD</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Transport')]</td>
-	<td>label=-20°C</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>xpath=//select[contains(../label,'Transport')]</td>
-	<td>label=ambient</td>
+	<td>ambient</td>
 </tr>
 <!--clinical section-->
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Where')]</td>
 	<td>somewhere</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Incubator')]</td>
-	<td>label=CO2 incubator</td>
+	<td>CO2 incubator</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'CO')]</td>
-	<td>label=10%</td>
+	<td>10%</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'erythrocyte')]</td>
-	<td>label=blood bank</td>
+	<td>blood bank</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Hematocrit')]</td>
 	<td>45</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Blood group')]</td>
-	<td>label=O</td>
+	<td>O</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Medium')]</td>
-	<td>label=RPMI 1640</td>
+	<td>RPMI 1640</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Preparation')]</td>
-	<td>label=extemporaneous</td>
+	<td>extemporaneous</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Serum')]</td>
-	<td>label=Albumax</td>
+	<td>Albumax</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Serum final')]</td>
 	<td>5</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'NaHCO')]</td>
 	<td>5</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Hypoxantine')]</td>
-	<td>label=yes</td>
+	<td>yes</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Final Hypo')]</td>
 	<td>6</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'orotic')]</td>
-	<td>label=yes</td>
+	<td>yes</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Final orotic')]</td>
 	<td>7</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'glucose')]</td>
-	<td>label=yes</td>
+	<td>yes</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Final glucose')]</td>
 	<td>8</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xpath=//a[. = 'Add an antibiotic']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Antibiotic')]</td>
-	<td>label=gentamycin</td>
+	<td>gentamycin</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=//input[contains(../../label,'Antibiotic final')]</td>
 	<td>9</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Time of incubation')]</td>
-	<td>label=48 hours</td>
+	<td>48 hours</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=(//select[contains(../label[2],'Method used')])[2]</td>
-	<td>label=HRP2 ELISA</td>
+	<td>HRP2 ELISA</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xpath=//a[. = 'Add a drug' and ../../../../../h4[. = 'Drugs stock solutions']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label,'Molecule')]</td>
-	<td>label=atovaquone</td>
+	<td>atovaquone</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=(//select[contains((../label)[2],'Solvent of stock')])[2]</td>
-	<td>label=methanol</td>
+	<td>methanol</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=(//input[contains((../../label)[3],'Final concentration')])</td>
 	<td>10</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=(//select[contains((../label)[4],'provided by WWARN')])[3]</td>
-	<td>label=no</td>
+	<td>no</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=(//input[contains((../../label)[5],'provided')])[2]</td>
 	<td>somebody</td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>assertSelectedLabel</td>
 	<td>xpath=//select[contains(../label[2],'batches')]</td>
-	<td>label=extemporaneous</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>xpath=(//input[contains(../../label[3],'Preparation Date')])[2]</td>
-	<td>25.3.2011</td>
+	<td>batches</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>xpath=//select[contains(../label[2],'batches')]</td>
-	<td>extemporaneous</td>
+	<td>xpath=//select[contains(../label,'3D7 provided')]</td>
+	<td>yes</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=(//select[contains(../label[3],'3D7 information')])[2]</td>
+	<td>no</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>xpath=(//input[contains(../../label[3],'Preparation Date')])[2]</td>
-	<td>25.3.2011</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>xpath=//select[contains(../label[2],'batches')]</td>
-	<td>label=batches</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=//a[. = 'Add a Batch']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>xpath=//select[contains(../label,'3D7 provided')]</td>
-	<td>label=yes</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>xpath=(//select[contains(../label[3],'3D7 information')])[2]</td>
-	<td>label=no</td>
-</tr>
-<tr>
-	<td>type</td>
 	<td>xpath=(//input[contains(../../label[4],'Preparation date')])[2]</td>
 	<td>26.3.2011</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=(//input[contains(../../label[5],'3D7 para')])[3]</td>
 	<td>99</td>
 </tr>
 <tr>
-	<td>type</td>
+	<td>assertValue</td>
 	<td>xpath=(//input[contains(../../label[6],'Ring forms')])[4]</td>
 	<td>23</td>
 </tr>
