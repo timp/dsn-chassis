@@ -5,11 +5,11 @@
 		<value>notset</value>
 	</displayType>
 	<displayType>
-		<label>Do not show</label>
+		<label>Not displayed</label>
 		<value>none</value>
 	</displayType>
 	<displayType>
-		<label>Show</label>
+		<label>Displayed</label>
 		<value>full</value>
 	</displayType>
 </displayTypes>

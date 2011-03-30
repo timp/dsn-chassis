@@ -135,11 +135,11 @@ let $values2 :=
 		<value>notset</value>
 	</displayType>
 	<displayType deprecated="n">
-		<label>Do not show</label>
+		<label>Not displayed</label>
 		<value>none</value>
 	</displayType>
 	<displayType deprecated="n">
-		<label>Show</label>
+		<label>Display</label>
 		<value>full</value>
 	</displayType>
 </displayTypes>

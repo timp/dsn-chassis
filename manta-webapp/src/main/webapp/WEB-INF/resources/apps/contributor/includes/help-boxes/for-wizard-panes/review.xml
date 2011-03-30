@@ -1,8 +1,11 @@
-<div class="help"
-	xmlns="http://www.w3.org/1999/xhtml">
+<div class="help" xmlns="http://www.w3.org/1999/xhtml">
 
-<p>Please review the information you&#8217;ve provided for this study and edit it where necessary. Once you click Confirm, this study will be submitted and a curator informed.
-</p>
+    <h3>Review</h3>
+    <p>Once the study is submitted it is locked for curation. Contact <a href="mailto:curation@wwarn.org">curation@wwarn.org</a> if you wish
+        to make changes.</p>
+    <p>This step enables the study to be edited before submission. To edit, return to a previous
+        step and select ‘Save as draft’.</p>
+
 
 
 </div>
