@@ -56,7 +56,7 @@
 							<xforms:trigger appearance="minimal">
 								<xforms:label>&lt;&lt; Edit title and selected WWARN modules</xforms:label>
 								<xforms:action ev:event="DOMActivate">
-									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/ui-info/wizard-pane-to-show" value="'study-terms'"/>
+									<xforms:setvalue ref="instance('ins-study-entry')//atom:content/study/ui-info/wizard-pane-to-show" value="'study-terms'"/>
 									<xforms:send submission="sub-implicit-put-draft-entry"/>
 								</xforms:action>
 							</xforms:trigger>
