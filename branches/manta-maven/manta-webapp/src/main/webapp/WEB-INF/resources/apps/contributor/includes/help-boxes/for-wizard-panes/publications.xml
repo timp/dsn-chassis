@@ -3,15 +3,11 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:xforms="http://www.w3.org/2002/xforms" 
 	xmlns:ev="http://www.w3.org/2001/xml-events">
-
-	<p>Please provide the <b>PubMed IDentifier (PMID)</b> for each publication. For studies that are included in the WWARN Explorer, summary information will include a link to these PubMed citation(s), guiding users to your original publication(s). 
-	</p>
-	
-	<p>You also have the option to share a DOI in full or an additional web address (URL) associated with your publication. These links will only be used during the curation process and will not appear in WWARN Explorer.  
-	</p>
-	
-	<p>Is your manuscript in preparation or are you planning a further publication based on the data you&#8217;re contributing? Don&#8217;t forget to add the PubMedID, as soon as your article is published. You can add publications by logging into the WWARN website, navigating to this study in the Data home and clicking the Publications tab.
-	</p>
-
+	<h3>Publication Information</h3>
+	<p>Data contributors will be invited to supply further information about their study, which is useful during curation.</p>  
+	<p>It is also possible to extract information from any study publication.</p>   
+	<p>Provide a Pub Med ID for each publication.</p>
+	<p>Study information can also be located using a DOI or an additional website address. </p>
+	<p>The PubMed ID for ongoing manuscripts or subsequent publications can be added later.</p>
 
 </div>

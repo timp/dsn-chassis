@@ -2,22 +2,20 @@
     xmlns="http://www.w3.org/1999/xhtml"
     class="inner-help">
     
-    <h3>Locked</h3>
-    
-    <p>When we have gathered all the information that we think we need then the study 
-        will be locked to prevent any further changes so that we know we are working with a stable set of data.</p>
-    
+   
     <h3>Status</h3>
     
-    <p>The status gives you an idea of how we are progressing with processing your study.</p>
+    <p>This indicates whether the study is newly created, in curation, complete or published on WWARN Explorer.</p>
+    
+    <h3>Locked</h3>
+    
+    <p>During curation and analysis the study is locked. The study is unlocked to allow the contributor to make changes.</p>
     
     <h3>Save changes all complete</h3>
     
-    <p>If you click this button then an email will be automatically sent to WWARN to inform us that you've
-        finished making changes.</p>
+    <p>Indicates all data has been gathered and study is ready for curation.</p>
     
     <h3>Explorer display option</h3>
     
-    <p>This gives you the chance to control how your study will be shown on the WWARN Explorer. 
-        Either in full with the summarized data, just a summary of the study or not at all.</p>
+    <p>Control whether the study appears on WWARN Explorer by selecting ‘Not displayed’ or ‘Displayed’.</p>
 </div>
