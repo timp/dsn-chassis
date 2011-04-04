@@ -216,7 +216,7 @@ declare function local:update-permissions($href, $members) as element(atom:entry
     let $request1 := local:prepare-request('PUT', $uri)
     let $log1 := util:log-app("debug", "update-permissions", $request1)
     let $log2 := util:log-app("debug", "update-permissions", $new)
-    let $update := if ($new != $group//atom:entry) then
+    let $update := if ($new = $group//atom:entry) then
             let $logi := util:log-app("debug", "ignoring", '')
             return ()
         else
