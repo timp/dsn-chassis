@@ -1,0 +1,27 @@
+<!--  A closed list of study status types  -->
+<statusTypes xmlns="">
+	<statusType>
+		<label>Newly created study</label>
+		<value>new</value>
+	</statusType>
+	<statusType>
+		<label>In curation</label>
+		<value>in</value>
+	</statusType>
+	<statusType>
+		<label>Awaiting response (curator)</label>
+		<value>wait-internal</value>
+	</statusType>
+	<statusType>
+		<label>Awaiting response (contributor)</label>
+		<value>wait-external</value>
+	</statusType>
+	<statusType>
+		<label>Complete</label>
+		<value>complete</value>
+	</statusType>
+	<statusType>
+		<label>Published to WWARN Explorer</label>
+		<value>exp</value>
+	</statusType>
+</statusTypes>

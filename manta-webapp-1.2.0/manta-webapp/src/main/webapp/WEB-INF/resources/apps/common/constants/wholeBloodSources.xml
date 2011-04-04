@@ -1,0 +1,15 @@
+<!-- A closed list of possible sources  -->
+<wholeBloodSources xmlns="">
+	<wholeBloodSource>
+		<label>peripheral</label>
+		<value>peripheral</value>
+	</wholeBloodSource>
+	<wholeBloodSource>
+		<label>placental</label>
+		<value>placental</value>
+	</wholeBloodSource>
+	<wholeBloodSource>
+		<label>cord</label>
+		<value>cord</value>
+	</wholeBloodSource>
+</wholeBloodSources>
