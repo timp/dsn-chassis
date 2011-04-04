@@ -1,0 +1,12 @@
+<!-- TODO check  -->
+<mediumPreparations xmlns="">
+	<mediumPreparation>
+		<label>extemporaneous</label>
+		<value>extemporaneous</value>
+	</mediumPreparation>
+	<mediumPreparation>
+		<label>aliquots</label>
+		<value>aliquots</value>
+	</mediumPreparation>
+</mediumPreparations>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+ xmlns:ctype="http://www.cggh.org/chassis-types"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ targetNamespace="http://www.cggh.org/chassis-types"
+ elementFormDefault="qualified" 
+ attributeFormDefault="unqualified"
+ >
+   <!--  FIXME See issue 250 -->
+ <!-- 
+   <xs:simpleType name="percentage">
+    <xs:restriction base="xforms:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+    </xs:restriction>
+   </xs:simpleType>
+ -->
+    <xs:simpleType name="coordinate">
+    <xs:restriction base="xs:double">
+      <xs:minInclusive value="-180"/>
+      <xs:maxInclusive value="180"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <!--  FIXME See issue 250 -->
+   <!-- 
+   <xs:simpleType name="age">
+    <xs:restriction base="xforms:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="125"/>
+    </xs:restriction>
+   </xs:simpleType>
+    -->
+   <!--  FIXME See issue 250 -->
+   <!--FIXME  Break in 2021 ?? -->
+   <!-- 
+   <xs:simpleType name="recentYear">
+    <xs:restriction base="xforms:int">
+      <xs:minInclusive value="1920"/>
+      <xs:maxInclusive value="2020"/>
+    </xs:restriction>
+   </xs:simpleType>
+   -->
+   <xs:simpleType name="nullableHttpUrl">
+    <xs:restriction base="xs:anyURI">
+    	<xs:pattern value="|http://[a-zA-Z0-9./\?]+"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="email">
+    <xs:restriction base="xs:string">
+    	<xs:pattern value="[a-zA-Z0-9._\-]+@[a-zA-Z0-9\-]+(.[a-zA-Z0-9]+)*.[a-zA-Z]+"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <xs:element name="minAge" xsi:nil="true"></xs:element>
+</xs:schema>
+
