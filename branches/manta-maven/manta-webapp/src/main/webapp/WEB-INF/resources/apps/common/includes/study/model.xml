@@ -72,19 +72,10 @@
 				at="last()" position="after" />
 
 			<xforms:message level="modal">
-				Answers have now been copied from "
+				Answers have been copied from "
 				<xforms:output
 					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
-				(
-				<xforms:output
-					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id" />
-				)". Be sure to update any answers that differ from study "
-				<xforms:output
-					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
-				(
-				<xforms:output
-					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/manta:id" />
-				)". Changes will not be saved until you click "Save changes".
+				".   Please ensure you amend any answers which differ.
 			</xforms:message>
 
 		</xforms:action>

@@ -39,10 +39,11 @@
                         
                         <h2 class="study-site-questionnaire-heading">Study Site Questionnaire</h2>
                     	
-                        <p>
-                            To save time, and if appropriate, you have the option to copy study information from any registered study for which you have administrator rights. Copying details from an existing study will overwrite any information you&#8217;ve already supplied. Therefore if you choose to do this, we suggest that you begin by copying the details from a registered study and then make any necessary changes. Be sure to save your changes after each session.
+                        <p>Data contributors are invited to provide further information about their study.</p>
                             
-                    	</p>
+                        <p>To save time you may copy information from other studies registered with WWARN.  This should be done before making any other changes.</p> 
+                            
+                        <p>Click here to copy info from another study.</p>
                     
                         <xforms:group ref="instance('ins-control')/copy-answers-control">
                             <p>
