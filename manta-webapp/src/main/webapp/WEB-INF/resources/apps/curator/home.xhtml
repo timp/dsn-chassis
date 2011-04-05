@@ -39,14 +39,16 @@
         			<contributor-controls/>
         			<curator-controls/>
         			<administrator-controls/>
-        			<delete-study/>
+        			<delete-study-href/>
+        			<delete-study-id/>
         		</control>
         	</xforms:instance>
         	
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
-			<xforms:bind id="delete-bind" nodeset="instance('ins-control')/delete-study" />
+			<xforms:bind id="delete-study-href-bind" nodeset="instance('ins-control')/delete-study-href" />
+			<xforms:bind id="delete-study-id-bind" nodeset="instance('ins-control')/delete-study-id" />
 
 
 			<xforms:instance id="ins-study-feed">
@@ -73,7 +75,7 @@
 			<xforms:submission 
         		id="sub-deprecate-study"
         		method="delete"
-        		resource="{instance('ins-control')/delete-study}"
+        		resource="{instance('ins-control')/delete-study-href}"
         		replace="none">
         		<!-- 
         		<xforms:header>
@@ -151,7 +153,7 @@
 	    				<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
 	    				<th fr:sortable="false" fr:resizeable="true">Administrators</th>
 	    				<th fr:sortable="true" fr:resizeable="true">Status</th>
-	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    				<th fr:sortable="false" fr:resizeable="false">Actions</th>
 	    			</tr>
 	    		</thead>
 	    		<tbody>
@@ -192,44 +194,30 @@
 					    							"/>
 	    					</td>    					
 	    					<td nowrap="nowrap">
-	    						<span class="view-study-link-container">
+	    					
 	    							<xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
 	    								<a class="btn" href="../study/dashboard?study={@href}">Edit</a>
 	    							</xforms:group>
+	    							
 	    							<xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'GET') and not(contains(@atombeat:allow, 'PUT'))]">
 	    								<a class="btn" href="../study/dashboard?study={@href}">View</a>
 	    							</xforms:group>
 	    						
-	    						<!-- Making the assumption that only a curator can be here -->
+	    							<!-- Making the assumption that only a curator can be here -->
 	    						
 	    						     <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'DELETE')]">
-	    						         <span>
-	    						             <xforms:switch>
-									           <xforms:case id="delete-study">
-										          <xforms:trigger>
-											         <xforms:label>Delete</xforms:label>
-											         <xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
-										          </xforms:trigger>
-									           </xforms:case>
-									           <xforms:case id="confirm-delete-study">
-										          <br/>
-										          <strong>Are you sure that you want to delete this study?</strong><br/>
-										          <xforms:trigger>
-											         <xforms:label>Yes - I'm sure</xforms:label>
-											         <xforms:action ev:event="DOMActivate">
-												        <xforms:setvalue bind="delete-bind"  value="xxforms:repeat-nodeset('study-list')[index('study-list')]//atom:link[@rel='edit']/@href"/>
-												        <xforms:send submission="sub-deprecate-study"/>
-											         </xforms:action>
-										          </xforms:trigger> 
-										          <xforms:trigger>
-											         <xforms:label>No</xforms:label>
-											         <xforms:toggle case="delete-study" ev:event="DOMActivate"/>
-										          </xforms:trigger>
-									           </xforms:case>
-								              </xforms:switch>
-	    						         </span>
+
+								          <xforms:trigger>
+									         <xforms:label>Delete</xforms:label>
+									         <xforms:action ev:event="DOMActivate">
+									         	<xforms:setvalue bind="delete-study-href-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+									         	<xforms:setvalue bind="delete-study-id-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//manta:id"/>
+									         	<xxforms:show dialog="confirm-delete-study-dialog"/>
+									         </xforms:action>
+								          </xforms:trigger>
+
 	    						     </xforms:group>
-	    						</span>
+
 	    					</td>
 	    				</tr>
 	    			</xforms:repeat>
@@ -257,7 +245,27 @@
 
 		<!-- End of After content id, before ft id -->
 
+    	<xxforms:dialog id="confirm-delete-study-dialog" appearance="full" close="true" draggable="true">
     	
+	          <xforms:label>Confirmation</xforms:label>
+
+			  <p>Are you sure that you want to delete study <xforms:output ref="instance('ins-control')/delete-study-id"/>?</p>
+
+	          <xforms:trigger>
+		         <xforms:label>Yes - I'm sure</xforms:label>
+		         <xforms:action ev:event="DOMActivate">
+			        
+			        <xforms:send submission="sub-deprecate-study"/>
+			        <xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-study-dialog"/>
+		         </xforms:action>
+	          </xforms:trigger> 
+	          
+	          <xforms:trigger>
+		         <xforms:label>No</xforms:label>
+		         <xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-study-dialog"/>
+	          </xforms:trigger>
+	          
+		</xxforms:dialog>
     	
     </body>
 </html>

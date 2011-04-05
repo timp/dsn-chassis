@@ -55,33 +55,21 @@
                                 <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
                             </td>
                             <td><span class="view-study-link-container"><a class="btn" href="register-study-wizard?draft={atom:link[@rel='edit']/@href}">Edit</a></span>
+                                
                                 <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'DELETE')]">
-                                    <span>
-                                        <xforms:switch>
-                                            <xforms:case id="delete-study">
-                                                <xforms:trigger>
-                                                    <xforms:label>Delete</xforms:label>
-                                                    <xforms:toggle case="confirm-delete-study" ev:event="DOMActivate"/>
-                                                </xforms:trigger>
-                                            </xforms:case>
-                                            <xforms:case id="confirm-delete-study">
-                                                <br/>
-                                                <strong>Are you sure that you want to delete this draft?</strong><br/>
-                                                <xforms:trigger>
-                                                    <xforms:label>Yes - I'm sure</xforms:label>
-                                                    <xforms:action ev:event="DOMActivate">
-                                                        <xforms:setvalue bind="delete-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//atom:link[@rel='edit']/@href"/>
-                                                        <xforms:send submission="sub-deprecate-study"/>
-                                                    </xforms:action>
-                                                </xforms:trigger> 
-                                                <xforms:trigger>
-                                                    <xforms:label>No</xforms:label>
-                                                    <xforms:toggle case="delete-study" ev:event="DOMActivate"/>
-                                                </xforms:trigger>
-                                            </xforms:case>
-                                        </xforms:switch>
-                                    </span>
-                                </xforms:group></td>
+                                
+                               		  <xforms:trigger>
+								         <xforms:label>Delete</xforms:label>
+								         <xforms:action ev:event="DOMActivate">
+								         	<xforms:setvalue bind="delete-study-href-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+								         	<xforms:setvalue bind="delete-study-id-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//manta:id"/>
+								         	<xxforms:show dialog="confirm-delete-study-dialog"/>
+								         </xforms:action>
+							          </xforms:trigger>
+                                
+                                </xforms:group>
+                                
+                            </td>
                         </tr>
                     </xforms:repeat>
                 </tbody>
