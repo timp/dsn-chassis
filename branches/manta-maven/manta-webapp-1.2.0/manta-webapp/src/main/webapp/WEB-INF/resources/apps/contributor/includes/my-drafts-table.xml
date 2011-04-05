@@ -70,7 +70,7 @@
                                                 <xforms:trigger>
                                                     <xforms:label>Yes - I'm sure</xforms:label>
                                                     <xforms:action ev:event="DOMActivate">
-                                                        <xforms:setvalue bind="delete-bind" value="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')[index('study-list')]//atom:link[@rel='edit']/@href"/>
+                                                        <xforms:setvalue bind="delete-bind" value="xxforms:repeat-nodeset('study-list')[index('study-list')]//atom:link[@rel='edit']/@href"/>
                                                         <xforms:send submission="sub-deprecate-study"/>
                                                     </xforms:action>
                                                 </xforms:trigger> 
