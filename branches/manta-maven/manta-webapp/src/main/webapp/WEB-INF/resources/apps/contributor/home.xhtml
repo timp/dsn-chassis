@@ -39,14 +39,16 @@
         			<contributor-controls/>
         			<curator-controls/>
         			<administrator-controls/>
-        			<delete-study/>
+        			<delete-study-href/>
+        			<delete-study-id/>
         		</control>
         	</xforms:instance>
         	
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
-			<xforms:bind id="delete-bind" nodeset="instance('ins-control')/delete-study" />
+			<xforms:bind id="delete-study-href-bind" nodeset="instance('ins-control')/delete-study-href" />
+			<xforms:bind id="delete-study-id-bind" nodeset="instance('ins-control')/delete-study-id" />
 			<!--  -->
         
 			<xforms:instance id="ins-study-feed">
@@ -74,7 +76,7 @@
 			<xforms:submission 
         		id="sub-deprecate-study"
         		method="delete"
-        		resource="{instance('ins-control')/delete-study}"
+        		resource="{instance('ins-control')/delete-study-href}"
         		replace="none">
         		<!-- 
         		<xforms:header>
@@ -176,6 +178,28 @@ to create a &#8216;Draft study&#8217;.  Further steps may be
                 </div>
 
 		<!-- End of After content id, before ft id -->
+
+    	<xxforms:dialog id="confirm-delete-study-dialog" appearance="full" close="true" draggable="true">
+    	
+	          <xforms:label>Confirmation</xforms:label>
+
+			  <p>Are you sure that you want to delete draft study <xforms:output ref="instance('ins-control')/delete-study-id"/>?</p>
+
+	          <xforms:trigger>
+		         <xforms:label>Yes - I'm sure</xforms:label>
+		         <xforms:action ev:event="DOMActivate">
+			        
+			        <xforms:send submission="sub-deprecate-study"/>
+			        <xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-study-dialog"/>
+		         </xforms:action>
+	          </xforms:trigger> 
+	          
+	          <xforms:trigger>
+		         <xforms:label>No</xforms:label>
+		         <xxforms:hide ev:event="DOMActivate" dialog="confirm-delete-study-dialog"/>
+	          </xforms:trigger>
+	          
+		</xxforms:dialog>
 
     </body>
 </html>

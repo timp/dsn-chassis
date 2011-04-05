@@ -109,6 +109,11 @@
                 <user name="murray@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_CONTRIBUTOR" />
                 
                 <user name="murphy@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_ADMINISTRATOR, ROLE_CHASSIS_CURATOR" />
+
+                <user name="mustafa@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_PERSONAL_DATA_REVIEWER" />
+                
+                <user name="mavis@example.org" password="bar" authorities="ROLE_CHASSIS_USER, ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR" />
+
                 
             </user-service>
         </authentication-provider>
