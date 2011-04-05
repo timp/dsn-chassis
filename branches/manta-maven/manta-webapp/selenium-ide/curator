@@ -84,7 +84,7 @@
 <tr>
 	<td>select</td>
 	<td>xpath=//select[contains(../label,'Explorer')]</td>
-	<td>label=Show</td>
+	<td>label=Display</td>
 </tr>
 <tr>
 	<td>click</td>
