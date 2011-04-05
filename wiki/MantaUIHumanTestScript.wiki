@@ -995,6 +995,8 @@ _Bug: When curator+administrator, shows a Lock button when the study is locked o
 
 _Note: Cannot delete locked studies._
 
+* Make sure the appropriate study is being deleted. Don't just test the one at the top of the list.
+
 * Study status on home page
 
 * Sort studies by status on home page
