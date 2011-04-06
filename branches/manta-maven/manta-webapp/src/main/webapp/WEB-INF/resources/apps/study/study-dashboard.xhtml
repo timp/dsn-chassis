@@ -54,6 +54,7 @@
         			<upload-is-valid/>
         			<upload-file-trigger/>
         			<href-to-copy-study-info-from/>
+        			<not-copy-answers-control>true</not-copy-answers-control>
         			<copy-answers-control/>
         			<copy-answers-trigger/>
         			<contributor-controls/>
@@ -110,24 +111,7 @@
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
 			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
-
-
-			<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-get-study-entry"
-				if="not(empty(xxforms:get-request-parameter('study')))"/>
-				
-			<xforms:load 
-				ev:event="xforms-model-construct-done" 
-				resource="home"
-				if="empty(xxforms:get-request-parameter('study'))"/>
-				
-				
-				        	
-
-        	
-        	
-        	
+			        	
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -215,7 +199,8 @@
 				method="get"
 				replace="instance"
 				instance="ins-study-info-entry"
-				serialization="none">
+				serialization="none"
+				mode="asynchronous">
                 
 				<xforms:action ev:event="xforms-submit-done">
 					
@@ -231,7 +216,7 @@
 					
 					<!-- Get the ACL for the curated media, if allowed. -->
 					<xforms:send submission="sub-get-curated-media-permissions-entry" if="instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
-					
+					<xforms:send submission="sub-retrieve-study-feed"/>		
 				</xforms:action>				
 				
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
@@ -345,16 +330,6 @@
 			        
        		</xforms:bind>       
             
- 			
-			<xforms:send 
-				ev:event="xforms-model-construct-done" 
-				submission="sub-retrieve-study-feed"/>
-			
-			
-			
-			
-				
-	     	
         	<!-- For Curator -->
 
         	<xforms:instance id="ins-curated-media-feed">
@@ -553,7 +528,17 @@
            <xi:include href="../common/includes/study/submitted-file-upload.xml" />
            <xi:include href="../common/includes/study/templates.xml" />
            <xi:include href="../common/includes/study/validation.xml" />
-    
+
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-study-entry"
+				if="not(empty(xxforms:get-request-parameter('study')))"/>
+				
+			<xforms:load 
+				ev:event="xforms-model-construct-done" 
+				resource="home"
+				if="empty(xxforms:get-request-parameter('study'))"/>
+				    
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>
