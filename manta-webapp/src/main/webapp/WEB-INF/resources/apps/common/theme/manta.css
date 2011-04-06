@@ -288,6 +288,10 @@ ul {
 	display:inline-block;
 }
 
+#studies-to-copy-answers-from-menu-container .xforms-label {
+    width: auto;
+}
+
 .register-study-wizard .xforms-repeat-selected-item-1, 
 .study-dashboard .xforms-repeat-selected-item-1, 
 .home .xforms-repeat-selected-item-1 {

@@ -37,14 +37,17 @@
 								
 								<p>To save time you may copy information from other studies registered with WWARN.  This should be done before making any other changes.</p> 
 								
-								<p>Click here to copy information from another study.</p>
-							
+								
+								<xforms:group model="mod-study-dashboard" ref="instance('ins-control')/not-copy-answers-control[. = 'true']">
+									Please wait for the list of studies to load
+								</xforms:group> 
 								<xforms:group model="mod-study-dashboard" ref="instance('ins-control')/copy-answers-control">
 								<p>
 							
 									<span id="studies-to-copy-answers-from-menu-container">
+									
 									<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
-										<xforms:label>Copy information from another study?</xforms:label>
+										<xforms:label>Click here to copy information from another study.</xforms:label>
 										
 										<xforms:item>
 											<xforms:label>Select...</xforms:label>

@@ -29,7 +29,7 @@
 		<atom:feed />
 	</xforms:instance>
 
-	<xforms:submission id="sub-retrieve-study-feed"
+	<xforms:submission id="sub-retrieve-study-feed" mode="asynchronous"
 		resource="/service/content/studies" method="get" replace="instance"
 		instance="ins-study-feed" serialization="none">
 		<!-- TODO error handling -->
@@ -38,6 +38,9 @@
 			<xforms:output value="event('error-type')" />
 			) while retrieving a list of studies.
 		</xforms:message>
+		<xforms:action ev:event="xforms-submit-done">
+			<xforms:setvalue ref="instance('ins-control')/not-copy-answers-control">false</xforms:setvalue>
+		</xforms:action>
 	</xforms:submission>
 
 	
