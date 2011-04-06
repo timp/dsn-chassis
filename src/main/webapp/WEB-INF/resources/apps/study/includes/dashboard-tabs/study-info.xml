@@ -1,0 +1,118 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<div id="bd" class="clearfix no-help-box">
+		
+		<div class="no-bg">
+
+			<!-- Help boxes. Comment out if not needed. -->
+<!--			<div class="help">
+
+						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/study-info.xml"/>
+
+				
+			</div>-->
+			
+			
+			<div class="main oneCol">
+				
+				<div id="content" class="study-dashboard">
+					
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					
+					<div class="yui-navset yui-navset-top">
+						
+						<xi:include href="../dashboard-tabs-menu.xml"/>
+						
+						
+						<div class="yui-content">
+						
+							<xforms:group model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+							
+								<p>Data contributors are invited to provide further information about their study.</p>
+								
+								<p>To save time you may copy information from other studies registered with WWARN.  This should be done before making any other changes.</p> 
+								
+								<p>Click here to copy information from another study.</p>
+							
+								<xforms:group model="mod-study-dashboard" ref="instance('ins-control')/copy-answers-control">
+								<p>
+							
+									<span id="studies-to-copy-answers-from-menu-container">
+									<xforms:select1 ref="instance('ins-control')/href-to-copy-study-info-from">
+										<xforms:label>Copy information from another study?</xforms:label>
+										
+										<xforms:item>
+											<xforms:label>Select...</xforms:label>
+										    <xforms:value></xforms:value>
+										</xforms:item>
+									
+							           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
+							           		<xforms:label ref="concat(atom:title, ' (', manta:id, ')')"/>
+							           		<xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
+							           	</xforms:itemset>
+									</xforms:select1>
+									</span>
+							
+									<span id="copy-answers-button-container">
+									<xforms:trigger ref="instance('ins-control')/copy-answers-trigger">
+										<xforms:label>Copy answers</xforms:label>
+										<xforms:action ev:event="DOMActivate">
+											<xforms:send submission="sub-copy-answers" />
+										</xforms:action>
+									</xforms:trigger>
+									</span>
+									
+								</p>
+								
+							</xforms:group>
+							
+						</xforms:group>
+						
+                 <p>
+
+						         <xforms:trigger model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+									<xforms:label>Save changes</xforms:label>
+									<xforms:action ev:event="DOMActivate">
+										<xforms:send submission="sub-put-sq-study-info-entry" />
+									</xforms:action>
+								</xforms:trigger>
+								
+                  <xforms:group ref="instance('ins-control')/flatten-button">
+                  <input class="study-info-flatten-button" type="button" value="Flatten" 
+                          onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
+                   />
+                  	<a class="btn" href="{concat(xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href,'?output=textxml')}">XML</a>
+                   </xforms:group>
+
+                 </p>
+            
+            
+							
+							<xi:include href="../../../common/includes/study/study-info-input.xml" />
+							
+						     <p>
+						         <xforms:trigger model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+									<xforms:label>Save changes</xforms:label>
+									<xforms:action ev:event="DOMActivate">
+										<xforms:send submission="sub-put-sq-study-info-entry" />
+									</xforms:action>
+								</xforms:trigger>
+						     </p>
+				
+						</div>
+						
+					</div>
+									
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+</div>
