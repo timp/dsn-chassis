@@ -1,0 +1,91 @@
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<xforms:submission id="sub-query-pubmed" action="/study/pubmed-query"
+		replace="instance" method="post" ref="instance('ins-study-entry')"
+		instance="ins-study-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while trying to retrieve author information.
+		</xforms:message>
+
+	</xforms:submission>
+
+	<xforms:submission id="sub-query-crossref" action="/study/crossref-query"
+		replace="instance" method="post" ref="instance('ins-study-entry')"
+		instance="ins-study-entry">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while trying to retrieve author information.
+		</xforms:message>
+
+	</xforms:submission>
+
+	<xforms:instance id="ins-study-feed">
+		<atom:feed />
+	</xforms:instance>
+
+	<xforms:submission id="sub-retrieve-study-feed"
+		resource="/service/content/studies" method="get" replace="instance"
+		instance="ins-study-feed" serialization="none">
+		<!-- TODO error handling -->
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while retrieving a list of studies.
+		</xforms:message>
+	</xforms:submission>
+
+	
+
+	<xforms:instance id="ins-permissions-entry">
+		<atom:entry />
+	</xforms:instance>
+	
+
+	
+	
+	<xforms:instance id="ins-study-info-entry-to-copy-study-info-from">
+		<atom:entry />
+	</xforms:instance>
+
+	<xforms:submission id="sub-copy-answers"
+		resource="{instance('ins-control')/href-to-copy-study-info-from}"
+		method="get" replace="instance" instance="ins-study-info-entry-to-copy-study-info-from">
+
+		<xforms:action ev:event="xforms-submit-done">
+
+			<!-- Make sure we replace only the <questionnaire> element and not the 
+				whole <atom:entry>, otherwise the edit link will be wrong and the data will 
+				get PUT to the wrong URL when changes are saved. -->
+
+			<xforms:delete
+				nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info" />
+			<xforms:insert
+				context="xxforms:instance('ins-sq-study-info-entry')/atom:content"
+				nodeset="study-info"
+				origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
+				at="last()" position="after" />
+
+			<xforms:message level="modal">
+				Answers have been copied from "
+				<xforms:output
+					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
+				".   Please ensure you amend any answers which differ.
+			</xforms:message>
+
+		</xforms:action>
+
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while copying answers from the selected study.
+		</xforms:message>
+	</xforms:submission>
+
+</div>

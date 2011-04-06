@@ -1,0 +1,478 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.cggh.chassis</groupId>
+	<artifactId>manta-webapp</artifactId>
+	<version>1.2.0-RC-3</version>
+	<packaging>war</packaging>
+	<name>manta-webapp</name>
+	<description>Chassis Manta Web Application</description>
+
+	<repositories>
+		<repository>
+			<id>repository.springframework.maven.release</id>
+			<name>Spring Framework Maven Release Repository</name>
+			<url>http://maven.springframework.org/release</url>
+		</repository>
+		<repository>
+			<id>repository.springframework.maven.milestone</id>
+			<name>Spring Framework Maven Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone</url>
+		</repository>
+		<repository>
+			<id>repository.springframework.maven.snapshot</id>
+			<name>Spring Framework Maven Snapshot Repository</name>
+			<url>http://maven.springframework.org/snapshot</url>
+		</repository>
+		<repository> 
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>http://cloud1.cggh.org/maven2/</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>cggh</id>
+			<url>scp://cloud1.cggh.org/var/www/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>cggh</id>
+			<url>scp://cloud1.cggh.org/var/www/maven2/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<dependencies>
+
+		<!-- overlay atombeat war -->
+		<dependency>
+			<groupId>org.atombeat</groupId>
+			<artifactId>atombeat-orbeon-minimal</artifactId>
+			<version>${org.atombeat.version}</version>
+			<type>war</type>
+		</dependency>
+
+		<!-- Normal java compile-time depenencies -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>orbeon</groupId>
+			<artifactId>orbeon</artifactId>
+			<version>3.8.0.201010131704</version>
+		</dependency>
+
+
+		<!-- Used for unit tests -->
+		<dependency>
+			<groupId>org.apache.abdera</groupId>
+			<artifactId>abdera-client</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxen</artifactId>
+					<groupId>jaxen</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jmxri</artifactId>
+					<groupId>com.sun.jmx</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jmxtools</artifactId>
+					<groupId>com.sun.jdmk</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jms</artifactId>
+					<groupId>javax.jms</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- AtomBeat servlet filters to enable security -->
+		<dependency>
+			<groupId>org.atombeat</groupId>
+			<artifactId>atombeat-servlet-filters</artifactId>
+			<version>${org.atombeat.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.cggh.chassis</groupId>
+			<artifactId>manta-xquery-functions</artifactId>
+			<version>0.1-beta-1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.cggh.chassis</groupId>
+			<artifactId>manta-config</artifactId>
+			<version>0.0.1-beta-1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<scm>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.2.0-RC-3</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.2.0-RC-3</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.2.0-RC-3</url>
+	</scm>
+	<build>
+		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>surefire-it</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>${skipTests}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+					<encoding>UTF-8</encoding>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>jpg,jpeg,gif,png,pdf,xls</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+					<webResources>
+						<!--
+							counter-intuitive ordering - filtered overwrites normal, only
+							normal used in eclipse
+						-->
+						<resource>
+							<directory>src/main/filtered/</directory>
+							<filtering>true</filtering>
+						</resource>
+						<resource>
+							<directory>src/main/webapp/</directory>
+							<filtering>false</filtering>
+						</resource>
+					</webResources>
+					<overlays>
+						<!-- configure overlay of atombeat -->
+						<overlay>
+							<groupId>org.atombeat</groupId>
+							<artifactId>atombeat-orbeon-minimal</artifactId>
+							<excludes>
+								<!--
+									Comments are a form of documentation to indicate that the jar
+									is required
+								-->
+								<exclude>index.html</exclude>
+								<exclude>xforms-jsp/**</exclude>
+								<exclude>WEB-INF/resources/apps/**</exclude>
+								<exclude>WEB-INF/lib/commons-logging-1_0_4.jar</exclude>
+								<exclude>WEB-INF/lib/commons-codec-1_3.jar</exclude>
+								<exclude>WEB-INF/lib/commons-httpclient-3_1.jar</exclude>
+								<exclude>WEB-INF/lib/xmlgraphics-commons-1_1.jar</exclude>
+								<exclude>WEB-INF/lib/pdfbox-0_7_1.jar</exclude>
+								<!--  <exclude>WEB-INF/lib/batik-all-1_6.jar</exclude> -->
+								<exclude>WEB-INF/lib/fop-0_93.jar</exclude>
+								<exclude>WEB-INF/lib/hsqldb-1_8_0_7.jar</exclude>
+								<exclude>WEB-INF/lib/ant-1_6_5.jar</exclude>
+								<exclude>WEB-INF/lib/antlr-2_7_4_orbeon.jar</exclude>
+								<exclude>WEB-INF/lib/orbeon-form-builder.jar</exclude>
+								<exclude>WEB-INF/lib/orbeon-form-runner.jar</exclude>
+								<!--  <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
+								<!--  <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
+								<!-- Moved these to dependencies -->
+								<exclude>WEB-INF/lib/commons-fileupload-1.2.1.jar</exclude>
+								<exclude>WEB-INF/lib/commons-lang-2_3.jar</exclude>
+								<exclude>WEB-INF/lib/mail-1_3_2.jar</exclude>
+								<exclude>WEB-INF/lib/dom4j-1_6_1.jar</exclude>
+								<exclude>WEB-INF/lib/log4j-1_2_15.jar</exclude>
+								<exclude>WEB-INF/lib/orbeon.jar</exclude>
+							</excludes>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<classifier>${profileId}</classifier>
+				</configuration>
+			</plugin>
+			<!--
+				Conflicts with M2 eclipse <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId> <version>2.8</version>
+				<configuration>
+				<projectNameTemplate>[${project.artifactId}]-[${project.version}]</projectNameTemplate>
+				<wtpmanifest>true</wtpmanifest>
+				<wtpapplicationxml>true</wtpapplicationxml>
+				<wtpversion>2.0</wtpversion>
+				<manifest>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifest>
+				</configuration> </plugin>
+			-->
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<!-- During release:perform, enable the "release" profile -->
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy assembly:assembly</goals>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<path>/repository</path>
+					<contextFile>/srv/chassis-manta/context/repository.xml</contextFile>
+					<mode>both</mode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!--
+		Default properties, override with command line profile ie -P
+		production or -D property=value
+	-->
+	<properties>
+		<org.springsecurity.version>3.1.0.RC1</org.springsecurity.version>
+		<org.atombeat.version>0.2-alpha-9</org.atombeat.version>
+		<profileId>local</profileId>
+		<skipTests>true</skipTests>
+		<cDrive />
+
+		<!-- Name of servlet zone -->
+		<servletZone>repository</servletZone>
+
+		<!-- Referenced in WEB-INF/resources/config/properties-local.xml -->
+		<google-api-key />
+		<oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
+
+		<!-- Referenced in WEB-INF/web.xml -->
+		<contextConfigLocation>WEB-INF/applicationContext-security-example.xml</contextConfigLocation>
+
+		<!-- Referenced in WEB-INF/security-cas-drupal.properties -->
+		<cas.url>http://localhost:8080/sso</cas.url>
+		<chassis.url>http://localhost:8080</chassis.url>
+
+		<!-- Referenced in WEB-INF/exist-conf.xml -->
+		<exist-data>${cDrive}/data/atombeat/exist</exist-data>
+
+		<!-- Referenced in /WEB-INF/resources/config/log4j.xml -->
+		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
+		<log4j-priority>debug</log4j-priority>
+		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
+		<test-email />
+		<bing-maps-key>AkThinf82zQztpVxwyFn6q_vVMbo5EuYnWBQf2T6-_b1Zs9903MBf8a10Dn1OiJb</bing-maps-key>
+		
+		<!-- Referenced in WEB-INF/resources/config/theme-manta.xsl -->
+		<!-- This is one of the web-property-ids for google.analytics.tests@wwarn.org. -->
+		<!-- It is linked to the profile named test.wwarn.org, but can be triggered from any host. -->
+		<google-analytics-web-property-id>UA-21401758-1</google-analytics-web-property-id>
+	</properties>
+
+
+
+	<profiles>
+		<profile>
+			<id>cloud1</id>
+			<properties>
+				<profileId>cloud1</profileId>
+				<!-- TPP's account -->
+				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
+				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
+				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>http://cloud1.cggh.org/sso</cas.url>
+				<chassis.url>http://cloud1.cggh.org</chassis.url>
+				<test-email>ian.wright@wwarn.org</test-email>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+			</properties>
+		</profile>
+		<profile>
+			<id>localcas</id>
+			<properties>
+				<profileId>localcas</profileId>
+				<!-- TPP's account -->
+				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
+				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>http://localhost:8080/sso</cas.url>
+				<chassis.url>http://localhost:8080</chassis.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>wwarn-app3</id>
+			<properties>
+				<profileId>wwarn-app3</profileId>
+				<skipTests>true</skipTests>
+				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
+				<bing-maps-key>AuOCY3s1rvqxHcDurxIKubBo-z6ZGkvgCARq2OOnbeijZOovs2EtQx7j0fe5y0eB</bing-maps-key>
+				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
+				<chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
+				<exist-data>/srv/chassis-data/exist</exist-data>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+				<log4j-priority>info</log4j-priority>
+				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<profileId>production</profileId>
+				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxSlb90VRGuJIkqh0iHprgnoFbPqfRT6op4Km2XwtyBOI0RrlbrWQC48tA</google-api-key>
+				<bing-maps-key>AtBtTjuJsT4fHpnP4yzRA1T_Wqr6MAaTKWYU4X1Zi0Eqn5gaUM6qqMx4pYsNpK9U</bing-maps-key>
+				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>https://www.wwarn.org/sso</cas.url>
+				<chassis.url>https://www.wwarn.org</chassis.url>
+				<exist-data>/srv/chassis-data/exist</exist-data>
+				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+				<log4j-priority>info</log4j-priority>
+				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
+			</properties>
+		</profile>
+		<profile>
+			<id>tomcatNotRunning</id>
+			<!--  Ensure that something is listening on 8080 for tests -->
+			<activation>
+				<file>
+					<exists>!/var/run/tomcat6.pid</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>maven-jetty-plugin</artifactId>
+						<version>6.1.26</version>
+						<configuration>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+							<stopKey>foo</stopKey>
+							<stopPort>9999</stopPort>
+							<useTestClasspath>true</useTestClasspath>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-jetty</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<scanIntervalSeconds>0</scanIntervalSeconds>
+									<daemon>true</daemon>
+									<webAppSourceDirectory>${basedir}/target/manta-webapp</webAppSourceDirectory>
+									<jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
+									<webAppConfig>
+										<contextPath>/repository</contextPath>
+									</webAppConfig>
+								</configuration>
+							</execution>
+							<execution>
+								<id>stop-jetty</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<cDrive>C:</cDrive>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>
