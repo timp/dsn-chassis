@@ -37,14 +37,29 @@
 	<td>label=pyrosequencing</td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label = 'P. falciparum']</td>
+	<td>true</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>xpath=//input[../label='pfcrt 72']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label = 'P. vivax']</td>
+	<td>true</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>xpath=//input[../label='pvmdr1 976']</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label = 'P. ovale']</td>
+	<td>true</td>
 </tr>
 <tr>
 	<td>click</td>
