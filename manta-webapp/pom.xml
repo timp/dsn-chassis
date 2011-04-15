@@ -347,6 +347,10 @@
 		<!-- This is one of the web-property-ids for google.analytics.tests@wwarn.org. -->
 		<!-- It is linked to the profile named test.wwarn.org, but can be triggered from any host. -->
 		<google-analytics-web-property-id>UA-21401758-1</google-analytics-web-property-id>
+		<use-alfresco>false</use-alfresco>
+		<alfresco-uri/>
+		<alfresco-username/>
+		<alfresco-password/>
 	</properties>
 
 

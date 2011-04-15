@@ -39,6 +39,7 @@
         		</control>
         	</xforms:instance>
         	
+        	<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
 			<xforms:bind nodeset="instance('ins-control')/replace-controls" relevant="instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE'"/>
 			<xforms:bind nodeset="instance('ins-control')/permission-denied" relevant="not (instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE')"/>
 			
@@ -158,8 +159,33 @@
         		
         		<!-- TODO error handling -->
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while posting the upload.</xforms:message>
-        		
-        	</xforms:submission>
+
+		<xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+            <xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
+            <xxforms:variable name="file-uri" select="instance('ins-upload')/media"/>
+            <xxforms:variable name="file-name"
+					select="instance('ins-upload-result')//atom:title" />
+			<xxforms:variable name="content-type"
+					select="instance('ins-upload')//media[@mediatype]" />
+			<xxforms:variable name="category-term"
+					select="instance('ins-media-entry')//atom:category[@term]" />
+			<xxforms:variable name="category-label"
+					select="instance('ins-media-entry')//atom:category[@label]" />
+					
+            <xxforms:variable name="repo-uri" select="event('response-headers')[name = 'content-location']/value"/>
+            <xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
+                <xxforms:context name="fr:site" select="$study-id" />
+				<xxforms:context name="fr:title" select="$file-name" />
+				<xxforms:context name="fr:content-type" select="$content-type" />
+				<xxforms:context name="fr:category-term" select="$category-term" />
+				<xxforms:context name="fr:category-label" select="$category-label" />
+					
+                <xxforms:context name="fr:file-content" 
+                    select="xxforms:doc-base64($file-uri)"/>
+                <xxforms:context name="fr:atombeat-uri" select="$repo-uri"/>
+            </xforms:dispatch>
+        </xforms:action>
+	</xforms:submission>
         	
         	
         	<xforms:instance id="ins-derivation-entry">
@@ -214,6 +240,7 @@
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
+       	<xi:include href="../cmis/cmis-rest-model.xml"/>
 
     </head>
     <body>

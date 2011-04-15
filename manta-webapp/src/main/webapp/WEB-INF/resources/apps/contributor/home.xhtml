@@ -33,6 +33,8 @@
         
         <xforms:model>
 
+			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
+
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
         		<control xmlns="">
@@ -87,11 +89,18 @@
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while deleting the study.</xforms:message>
         		<xforms:message ev:event="xforms-submit-done" level="modal">Study successfully deleted</xforms:message>
         		<xforms:send ev:event="xforms-submit-done" submission="sub-retrieve-study-feed"/>
+        		
+        		<xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+                	<xxforms:variable name="study-id" select="instance('ins-control')/delete-study-id"/>
+    				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-delete-site">
+            			<xxforms:context name="fr:site" select="$study-id"/>
+    				</xforms:dispatch>
+                </xforms:action>   
         	</xforms:submission>
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
-
+		<xi:include href="../cmis/cmis-rest-model.xml"/>
     </head>
     <body>
 

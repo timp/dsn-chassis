@@ -30,4 +30,10 @@
     <property as="xs:string"
         name="oxf.schemas.http://chassis.cggh.org/manta/processors/semail"
         value="oxf:/org/cggh/chassis/manta/processor/xml/semail.rng"/>
+    
+    <property as="xs:boolean" name="chassis.alfresco.send" value="${use-alfresco}"/> 
+    <!-- Alfresco integration configuration --> 
+    <property as="xs:anyURI"  name="chassis.alfresco.uri" value="${alfresco-uri}"/> 
+    <property as="xs:string"  name="chassis.alfresco.username" value="${alfresco-username}"/> 
+    <property as="xs:string"  name="chassis.alfresco.credentials" value="${alfresco-password}"/>  
 </properties>
