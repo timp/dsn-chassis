@@ -67,7 +67,7 @@
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
-            
+			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>            
             <xforms:setvalue
 				ev:event="xforms-model-construct-done" 
 				ref="instance('ins-control')/wizard-pane-being-shown" 
@@ -172,6 +172,21 @@
                 
                 </xforms:action>
                 
+                <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+                	<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
+                	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
+    				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
+            			<xxforms:context name="fr:name" select="$study-id"/>
+            			<xxforms:context name="fr:site" select="$study-id"/>
+            			<xxforms:context name="fr:title" select="$study-title"/>
+            			<xxforms:context name="fr:author" select="instance('ins-study-entry')//atom:author/atom:email"/>
+            			<!--  should really be instance('ins-study-entry')//atom:content/@type -->
+            			<xxforms:context name="fr:mime-type" select="'text/xml'"/>
+            			<xxforms:context name="fr:file-ext" select="'.xml'"/>
+            			<xxforms:context name="fr:content" select="instance('ins-study-entry')//atom:content/*"/>
+    				</xforms:dispatch>
+                </xforms:action>   
+                
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
@@ -217,7 +232,21 @@
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
-                                
+                
+                <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+                	<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
+                	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
+    				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
+            			<xxforms:context name="fr:name" select="$study-id"/>
+            			<xxforms:context name="fr:title" select="$study-title"/>
+            			<xxforms:context name="fr:site" select="$study-id"/>
+            			<xxforms:context name="fr:author" select="instance('ins-study-entry')//atom:author/atom:email"/>
+            			<!--  should really be instance('ins-study-entry')//atom:content/@type -->
+            			<xxforms:context name="fr:mime-type" select="'text/xml'"/>
+            			<xxforms:context name="fr:file-ext" select="'.xml'"/>
+            			<xxforms:context name="fr:content" select="instance('ins-study-entry')//atom:content/*"/>
+    				</xforms:dispatch>
+                </xforms:action>                
             </xforms:submission>
 
 	<xi:include href="../common/includes/study/model.xml" />
@@ -275,7 +304,24 @@
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while creating a new study.</xforms:message>
-                         
+                
+                <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+                	<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
+                	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-site">
+            			<xxforms:context name="fr:title" select="$study-id"/>
+    				</xforms:dispatch>
+    				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-document">
+            			<xxforms:context name="fr:name" select="$study-id"/>
+            			<xxforms:context name="fr:title" select="$study-title"/>
+            			<xxforms:context name="fr:site" select="$study-id"/>
+            			<xxforms:context name="fr:author" select="instance('ins-study-entry')//atom:author/atom:email"/>
+            			<!--  should really be instance('ins-study-entry')//atom:content/@type -->
+            			<xxforms:context name="fr:mime-type" select="'text/xml'"/>
+            			<xxforms:context name="fr:file-ext" select="'.xml'"/>
+            			<xxforms:context name="fr:content" select="instance('ins-study-entry')//atom:content/*"/>
+    				</xforms:dispatch>
+                </xforms:action>   
             </xforms:submission>
 
 			
@@ -526,6 +572,7 @@
        	<xi:include href="../common/includes/study/study-info-model.xml"/>
        	
        	<xi:include href="../common/includes/current-user-model.xml"/>
+       	<xi:include href="../cmis/cmis-rest-model.xml"/>
 
         <xi:include href="oxf:/xbl/chassis/smap/smap.xbl" xxi:omit-xml-base="true"/>
         
