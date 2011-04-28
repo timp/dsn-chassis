@@ -76,23 +76,35 @@
 							
 						</xforms:group>
 						
-                 <p>
-
-						         <xforms:trigger model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
-									<xforms:label>Save changes</xforms:label>
-									<xforms:action ev:event="DOMActivate">
-										<xforms:send submission="sub-put-sq-study-info-entry" />
-									</xforms:action>
-								</xforms:trigger>
+		                <p>
+		
+					         <xforms:trigger model="mod-study-info" ref="instance('ins-sq-study-info-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+								<xforms:label>Save changes</xforms:label>
+								<xforms:action ev:event="DOMActivate">
+									<xforms:send submission="sub-put-sq-study-info-entry" />
+								</xforms:action>
+							</xforms:trigger>
+						
+						</p>
+							
 								
-                  <xforms:group ref="instance('ins-control')/flatten-button">
-                  <input class="study-info-flatten-button" type="button" value="Flatten" 
-                          onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');" 
-                   />
-                  	<a class="btn" href="{concat(xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href,'?output=textxml')}">XML</a>
-                   </xforms:group>
-
-                 </p>
+			                 <xforms:group ref="instance('ins-control')/flatten-button">
+			                 	<p>
+				                 
+				                 	<!-- 
+				                 	<input class="study-info-flatten-button" type="button" value="Flatten" onClick="flattenAtomEntry('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');"/>
+				                 	 -->
+				                 	
+				                 	
+				                 	<a class="btn" href="{concat(xxforms:instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href,'?output=textxml')}">Download as XML</a>
+				                 	
+				                 	<a class="btn" href="javascript:downloadStudyAsCsvRowsWithCustomFieldLabelsUsingStudyAtomEntryURL('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');">Download as CSV rows</a>
+				                 	<a class="btn" href="javascript:downloadStudyAsCsvColumnsWithCustomFieldLabelsUsingStudyAtomEntryURL('{instance('ins-study-entry')/atom:link[@rel='edit']/@href}');">Download as CSV columns</a>
+			                 	
+			                 	</p>
+			                  </xforms:group>
+		
+		                
             
             
 							
