@@ -34,9 +34,16 @@
     <head>
         <title>Study dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         <link rel="stylesheet" type="text/css" href="/ops/yui/tabview/assets/skins/sam/tabview.css"></link>
-        <style type="text/css"></style>
-        <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" type="text/javascript" djConfig="parseOnLoad: true" />
-        <script src="../apps/study/common/flattener.js" type="text/javascript" />
+        
+        <script src="../apps/common/theme/js/jquery.min.js" type="text/javascript" />
+        <script src="../apps/study/js/study.js" type="text/javascript" />
+        <script type="text/javascript">
+        	$(document).ready(function() {
+        		initStudyClientApp();
+			});
+        </script>
+        
+        
         
 
         <xforms:model id="mod-study-dashboard">
