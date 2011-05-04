@@ -7,7 +7,7 @@
     <cmisra:object>
         <cmis:properties>
             <cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
-                <cmis:value>F:st:site</cmis:value>
+                <cmis:value>cmis:folder</cmis:value>
             </cmis:propertyId>
             <cmis:propertyId propertyDefinitionId="cmis:baseTypeId">
                 <cmis:value>cmis:folder</cmis:value>
@@ -15,9 +15,6 @@
             <cmis:propertyId propertyDefinitionId="st:siteVisibility">
                 <cmis:value>PUBLIC</cmis:value>
             </cmis:propertyId>
-            <cmis:propertyString propertyDefinitionId="st:sitePreset">
-                <cmis:value>site-dashboard</cmis:value>
-            </cmis:propertyString>
             <alf:aspects>
                 <alf:appliedAspects>P:cm:tagscope</alf:appliedAspects>
                 <alf:appliedAspects>P:cm:titled</alf:appliedAspects>
