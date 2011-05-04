@@ -175,6 +175,10 @@
                 <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
                 	<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
                 	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
+            			<xxforms:context name="fr:title" select="$study-id"/>
+            			<xxforms:context name="fr:description" select="$study-title"/>
+    				</xforms:dispatch>
     				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
             			<xxforms:context name="fr:name" select="$study-id"/>
             			<xxforms:context name="fr:site" select="$study-id"/>
@@ -236,6 +240,11 @@
                 <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
                 	<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id"/>
                 	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
+                	<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
+            			<xxforms:context name="fr:title" select="$study-id"/>
+            			<xxforms:context name="fr:description" select="$study-title"/>
+            			<xxforms:context name="fr:modules" select="instance('ins-study-entry')//modules"/>
+    				</xforms:dispatch>
     				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
             			<xxforms:context name="fr:name" select="$study-id"/>
             			<xxforms:context name="fr:title" select="$study-title"/>
@@ -310,6 +319,7 @@
                 	<xxforms:variable name="study-title" select="instance('ins-study-entry')//atom:title"/>
                		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-site">
             			<xxforms:context name="fr:title" select="$study-id"/>
+            			<xxforms:context name="fr:description" select="$study-title"/>
     				</xforms:dispatch>
     				<xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-document">
             			<xxforms:context name="fr:name" select="$study-id"/>

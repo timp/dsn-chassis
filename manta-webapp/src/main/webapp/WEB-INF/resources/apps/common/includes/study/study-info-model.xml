@@ -963,7 +963,7 @@
 			<assayValidated />
 		</assayReference>
 	</xforms:instance>
-
+	<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
 	<xforms:submission id="sub-put-sq-study-info-entry"
 		resource="{instance('ins-sq-study-info-entry')/atom:link[@rel='edit']/@href}"
 		method="put" replace="instance" instance="ins-sq-study-info-entry"
@@ -977,6 +977,24 @@
 		<xforms:message ev:event="xforms-submit-done" level="modal">Your
 			changes have been
 			saved.</xforms:message>
+		<xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+			<xxforms:variable name="study-id" select="xxforms:instance('ins-study-entry')//manta:id"/>
+			<xxforms:variable name="study-title" select="xxforms:instance('ins-study-entry')//atom:title"/>
+			<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
+				<xxforms:context name="fr:title" select="$study-id"/>
+				<xxforms:context name="fr:description" select="$study-title"/>
+			</xforms:dispatch>
+			<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
+				<xxforms:context name="fr:name" select="$study-id"/>
+				<xxforms:context name="fr:site" select="$study-id"/>
+				<xxforms:context name="fr:title" select="$study-title"/>
+				<xxforms:context name="fr:author" select="xxforms:instance('ins-study-entry')//atom:author/atom:email"/>
+				<!--  should really be instance('ins-study-entry')//atom:content/@type -->
+				<xxforms:context name="fr:mime-type" select="'text/xml'"/>
+				<xxforms:context name="fr:file-ext" select="'.xml'"/>
+				<xxforms:context name="fr:content" select="xxforms:instance('ins-study-entry')//atom:content/*"/>
+			</xforms:dispatch>
+		</xforms:action>   
 	</xforms:submission>
 
 
