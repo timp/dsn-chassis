@@ -76,6 +76,7 @@
         		</control>
         	</xforms:instance>
         	
+        	<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
         	<xforms:bind nodeset="instance('ins-control')/not-curator" relevant="not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
         	<xforms:bind nodeset="instance('ins-control')/not-administrator" relevant="not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
         	
@@ -568,7 +569,7 @@
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>
-        
+       	<xi:include href="../cmis/cmis-rest-model.xml"/>
         <xi:include href="../common/includes/current-user-model.xml"/>
         
         <xi:include href="oxf:/xbl/chassis/smap/smap.xbl" xxi:omit-xml-base="true"/>   	
