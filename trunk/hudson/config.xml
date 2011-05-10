@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.399</version>
+  <version>1.410</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -160,6 +160,7 @@
         <string>manta-maven</string>
         <string>manta-xquery-functions</string>
         <string>quac</string>
+        <string>show maven version</string>
         <string>wwarn-cas-Spring-3</string>
       </jobNames>
       <jobFilters/>
@@ -237,7 +238,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView[3]/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
           <int>2</int>
           <string></string>
