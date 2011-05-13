@@ -7,7 +7,7 @@
     <cmisra:object>
         <cmis:properties>
             <cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
-                <cmis:value>cmis:folder</cmis:value>
+                <cmis:value>F:wc:study_folder</cmis:value>
             </cmis:propertyId>
             <cmis:propertyId propertyDefinitionId="cmis:baseTypeId">
                 <cmis:value>cmis:folder</cmis:value>
