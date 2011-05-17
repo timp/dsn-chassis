@@ -217,19 +217,19 @@ function retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray () {
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/expiryDate\\[(\\d+)\\]" : "Reg$7Drug$9ExpiryDate",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/drugStorage\\[(\\d+)\\]" : "Reg$7Drug$9Storage",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/drugDosingDeterminant\\[(\\d+)\\]" : "Reg$7Drug$9Dosing",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9AgeDosingSch$11Day",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9AgeDosingSch$11Hour",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/ageFrom\\[(\\d+)\\]" : "Reg$7Drug$9AgeDosingSch$11Agemin",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/ageTo\\[(\\d+)\\]" : "Reg$7Drug$9AgeDosingSch$11Agemax",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9AgeDosingSch$11Dose",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9WeightGroupDosingSch$11Day",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9WeightGroupDosingSch$11Hour",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/weightGroupFrom\\[(\\d+)\\]" : "Reg$7Drug$9WeightGroupDosingSch$11WeightMin",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/weightGroupTo\\[(\\d+)\\]" : "Reg$7Drug$9WeightGroupDosingSch$11WeightMax",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9WeightGroupDosingSch$11Dose",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9WeightDosingSch$11Day",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9WeightDosingSch$11Hour",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9WeightDosingSch$11WeightMin",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9AgeSch$11Day",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9AgeSch$11Hour",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/ageFrom\\[(\\d+)\\]" : "Reg$7Drug$9AgeSch$11Agemin",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/ageTo\\[(\\d+)\\]" : "Reg$7Drug$9AgeSch$11Agemax",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/ageDosing\\[(\\d+)\\]/ageDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9AgeSch$11Dose",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9WgtGrpSch$11Day",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9WgtGrpSch$11Hour",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/weightGroupFrom\\[(\\d+)\\]" : "Reg$7Drug$9WgtGrpSch$11WgtMin",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/weightGroupTo\\[(\\d+)\\]" : "Reg$7Drug$9WgtGrpSch$11WgtMax",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightGroupDosing\\[(\\d+)\\]/weightGroupDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9WgtGrpSch$11Dose",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/day\\[(\\d+)\\]" : "Reg$7Drug$9WgtSch$11Day",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/hour\\[(\\d+)\\]" : "Reg$7Drug$9WgtSch$11Hour",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/weightDosing\\[(\\d+)\\]/weightDosingSchedule\\[(\\d+)\\]/dose\\[(\\d+)\\]" : "Reg$7Drug$9WgtSch$11WeightMin",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/feeding\\[(\\d+)\\]" : "Reg$7Drug$9Foodintake",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/readministeredOnVomitting\\[(\\d+)\\]" : "Reg$7Drug$9Readmin",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/clinical\\[(\\d+)\\]/treatment\\[(\\d+)\\]/regimens\\[(\\d+)\\]/regimen\\[(\\d+)\\]/drugs\\[(\\d+)\\]/drug\\[(\\d+)\\]/comments\\[(\\d+)\\]" : "Reg$7Drug$9Comments",
@@ -307,6 +307,8 @@ function retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray () {
 
 ////Functions
 
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabels (studyAsAtomEntryXml) {
 
 	var studyAsAssociativeArrayWithXPathFieldLabels = null;
@@ -325,7 +327,9 @@ function convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabe
 
 	return studyAsAssociativeArrayWithXPathFieldLabels;		
 }
-
+*/
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathFieldLabels (studyInfoAsAtomEntryXml) {
 
 	var studyInfoAsAssociativeArrayWithXPathFieldLabels = null;
@@ -346,6 +350,49 @@ function convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathF
 	studyInfoAsAssociativeArrayWithXPathFieldLabels = convertXmlNodesIntoAssociativeArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml.documentElement.childNodes, parentNodeBaseXPath, nodeNamesToIgnoreAsAssociativeArray);
 
 	return studyInfoAsAssociativeArrayWithXPathFieldLabels;		
+}
+*/
+
+
+function convertStudyAsAtomEntryXmlIntoStudyAsObjectArrayWithXPathFieldLabels (studyAsAtomEntryXml) {
+
+	var studyAsObjectArrayWithXPathFieldLabels = null;
+
+	var parentNodeBaseXPath = "atom:entry[1]";
+	
+	var nodeNamesToIgnoreAsAssociativeArray = {
+			"#text" : true,
+		    "atom:link" : true, 
+		    "wizard-pane-to-show" : true, 
+		    "ar:comment" : true,
+		    "app:control" : true
+	};
+	
+	studyAsObjectArrayWithXPathFieldLabels = convertXmlNodesIntoObjectArrayWithXPathFieldLabels(studyAsAtomEntryXml.documentElement.childNodes, parentNodeBaseXPath, nodeNamesToIgnoreAsAssociativeArray);
+
+	return studyAsObjectArrayWithXPathFieldLabels;		
+}
+
+function convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsObjectArrayWithXPathFieldLabels (studyInfoAsAtomEntryXml) {
+
+	var studyInfoAsObjectArrayWithXPathFieldLabels = null;
+
+	var parentNodeBaseXPath = "atom:entry[1]";
+	
+	var nodeNamesToIgnoreAsAssociativeArray = {
+			"#text" : true,
+		    "atom:link" : true, 
+		    "ar:comment" : true,
+		    "app:control" : true,
+		    "atom:author" : true,
+		    "atom:id" : true,
+		    "atom:published" : true,
+		    "atom:updated" : true
+	};
+	
+	studyInfoAsObjectArrayWithXPathFieldLabels = convertXmlNodesIntoObjectArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml.documentElement.childNodes, parentNodeBaseXPath, nodeNamesToIgnoreAsAssociativeArray);
+
+	return studyInfoAsObjectArrayWithXPathFieldLabels;		
 }
 
 function convertXmlNodesIntoAssociativeArrayWithXPathFieldLabels (XmlNodes, parentNodeBaseXPath, nodeNamesToIgnoreAsAssociativeArray) {
@@ -406,11 +453,71 @@ function convertXmlNodesIntoAssociativeArrayWithXPathFieldLabels (XmlNodes, pare
 	return associativeArrayWithXPathFieldLabels;		
 }
 
+function convertXmlNodesIntoObjectArrayWithXPathFieldLabels (XmlNodes, parentNodeBaseXPath, nodeNamesToIgnoreAsAssociativeArray) {
+
+	var objectArrayWithXPathFieldLabels = null;
+	
+	objectArrayWithXPathFieldLabels = new Array();
+	
+	if (parentNodeBaseXPath == null) {
+		parentNodeBaseXPath = "";
+	}
+	
+
+	  if (XmlNodes.length == 1 && XmlNodes[0].nodeType == 3) {		  
+	  
+		// node is a leaf
+		
+			// Ignore empty nodes
+			if ($.trim(XmlNodes[0].nodeValue) != "") { 
+
+		    	objectArrayWithXPathFieldLabels.push( {"xPathFieldLabel" : parentNodeBaseXPath, "value" : XmlNodes[0].nodeValue} );
+		    	
+		    }
+		    
+	    
+	  } else {
+		  
+	    // node is a branch
+	        
+	    var siblingCount = {};
+	      
+	    for (var i = 0; i < XmlNodes.length; i++){
+	    	
+	      var node = XmlNodes[i];
+	
+	      // Ignore certain node names
+	      if (!(node.nodeName in nodeNamesToIgnoreAsAssociativeArray)) {
+	              
+	        if (siblingCount[node.nodeName]) {
+	        	siblingCount[node.nodeName]++;
+	        } else { 
+	        	siblingCount[node.nodeName] = 1;
+	        }
+	        
+	        var nodeBaseXpath = parentNodeBaseXPath + "/" + node.nodeName + "[" + siblingCount[node.nodeName] + "]";
+	        
+	        // add child nodes to associative array (recursive)
+	        var childNodesAsObjectArrayWithXPathFieldLabels = convertXmlNodesIntoObjectArrayWithXPathFieldLabels(node.childNodes, nodeBaseXpath, nodeNamesToIgnoreAsAssociativeArray);
+	        
+	        objectArrayWithXPathFieldLabels = objectArrayWithXPathFieldLabels.concat(childNodesAsObjectArrayWithXPathFieldLabels);
+	        
+
+	        
+	      }
+	      
+	    }
+	    
+	  }
+	
+	return objectArrayWithXPathFieldLabels;		
+}
+
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray (originalAssociativeArray, regExpMapAsAssociativeArray) {
 
 	var associativeArrayWithMappedKeys = null;
-	
-	//TODO
 
 	associativeArrayWithMappedKeys = {};
 	
@@ -455,7 +562,72 @@ function convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociati
 	return associativeArrayWithMappedKeys;			
 	
 }
+*/
 
+function addCustomFieldLabelPropertiesToObjectArrayWithXPathFieldLabelsUsingRegExpMapAsAssociativeArray (originalObjectArray, regExpMapAsAssociativeArray) {
+
+	var objectArrayWithCustomFieldLabelProperties = null;
+
+	objectArrayWithCustomFieldLabelProperties = new Array();
+	
+	for (var i = 0; i < originalObjectArray.length; i++) {
+		
+		var originalObject = originalObjectArray[i];
+
+		var matchFound = null;
+		
+		for (var regExpKey in regExpMapAsAssociativeArray) {
+
+			
+			var regularExpression = new RegExp(regExpKey);
+
+			if (originalObject.xPathFieldLabel.match(regularExpression)) {
+				
+				matchFound = true;
+				
+				//alert(originalObject.xPathFieldLabel + " MATCHES " + regExpKey);
+					
+				var customFieldLabel = originalObject.xPathFieldLabel.replace(regularExpression, regExpMapAsAssociativeArray[regExpKey]);		
+				
+				
+				objectArrayWithCustomFieldLabelProperties[i] = 	{
+																	"xPathFieldLabel" : originalObject.xPathFieldLabel, 
+																	"value" : originalObject.value,
+																	"customFieldLabel" : customFieldLabel  
+																};
+			
+				
+				break;
+			}
+			
+			
+		}
+		
+		if (matchFound != true) {
+			matchFound = false;
+		}
+		
+		//NOTE: Keep unmatched xPathFieldLabels
+		if (matchFound == false) {
+			
+			objectArrayWithCustomFieldLabelProperties[i] = 	{
+																"xPathFieldLabel" : originalObject.xPathFieldLabel, 
+																"value" : originalObject.value,
+																"customFieldLabel" : originalObject.xPathFieldLabel  
+															};
+			
+		}
+
+	}
+
+	
+	return objectArrayWithCustomFieldLabelProperties;			
+	
+}
+
+
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertAssociativeArrayIntoSortedKeysArray (associativeArray) {
 	
 	var sortedKeysArray = new Array();
@@ -468,6 +640,7 @@ function convertAssociativeArrayIntoSortedKeysArray (associativeArray) {
 	return sortedKeysArray.sort();
 	
 }
+*/
 
 function convertStudyAsAtomEntryXmlIntoStudyInfoAtomEntryURL (studyAsAtomEntryXml) {
 	
@@ -482,6 +655,8 @@ function convertStudyAsAtomEntryXmlIntoStudyInfoAtomEntryURL (studyAsAtomEntryXm
 	return studyInfoAtomEntryURL;
 }
 
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertStudyAsAssociativeArrayIntoStudyAsCsvColumns (studyAsAssociativeArray) {
 
 	var studyAsCsvColumns = null;
@@ -517,7 +692,39 @@ function convertStudyAsAssociativeArrayIntoStudyAsCsvColumns (studyAsAssociative
 	
 	return studyAsCsvColumns;
 }
+*/
 
+function convertStudyAsObjectArrayIntoStudyAsCsvColumns (studyAsObjectArray) {
+
+	var studyAsCsvColumns = null;
+
+	var headingsRow = "";
+	var valuesRow = "";
+	
+	var regExp = new RegExp("\\n|\\r", "g");
+	
+	for (var i = 0; i < studyAsObjectArray.length; i++) {
+		
+		if (i != 0) {
+			headingsRow += ",";
+			valuesRow += ",";
+		}
+		
+		headingsRow += studyAsObjectArray[i].customFieldLabel;
+		
+		//NOTE: Replace EOL chars with spaces. 
+		valuesRow += studyAsObjectArray[i].value.replace(regExp, " ");
+		
+	}
+	
+	//NOTE: Using Unix EOL chars.
+	studyAsCsvColumns = headingsRow + "\n" + valuesRow + "\n";
+
+	return studyAsCsvColumns;
+}
+
+//REM: Old method using associative arrays and alphabetic sorting
+/*
 function convertStudyAsAssociativeArrayIntoStudyAsCsvRows (studyAsAssociativeArray) {
 
 	var studyAsCsvRows = null;
@@ -546,6 +753,29 @@ function convertStudyAsAssociativeArrayIntoStudyAsCsvRows (studyAsAssociativeArr
 	
 	return studyAsCsvRows;
 }
+*/
+
+function convertStudyAsObjectArrayIntoStudyAsCsvRows (studyAsObjectArray) {
+
+	var studyAsCsvRows = null;
+	
+		
+	var studyAsCsvRows = "";
+	
+	var regExp = new RegExp("\\n|\\r", "g");
+	
+	for (var i = 0; i < studyAsObjectArray.length; i++) {
+		
+		//NOTE: Replace EOL chars with spaces. 
+		studyAsCsvRows += studyAsObjectArray[i].customFieldLabel + "," + studyAsObjectArray[i].value.replace(regExp, " ");
+	
+		//NOTE: Using Unix EOL chars.
+		studyAsCsvRows += "\n";
+	}
+	
+	
+	return studyAsCsvRows;
+}
 
 ////Scripts
 function generateStudyAsCsvColumnsWithStudyCustomFieldLabelsUsingStudyAtomEntryURL (studyAtomEntryURL) {
@@ -560,17 +790,37 @@ function generateStudyAsCsvColumnsWithStudyCustomFieldLabelsUsingStudyAtomEntryU
 	
 	var studyInfoAsAtomEntryXml = retrieveStudyInfoAsAtomEntryXmlUsingStudyInfoAtomEntryURL(studyInfoAtomEntryURL);
 	
-	var studyAsAssociativeArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabels(studyAsAtomEntryXml);
 	
-	var studyInfoAsAssociativeArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
+	//REM: Old method using associative arrays and alphabetic sorting
+	//var studyAsAssociativeArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabels(studyAsAtomEntryXml);
+	//var studyInfoAsAssociativeArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
 	
-	var studyAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyAsAssociativeArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	//TODO: Code - done
+	var studyAsObjectArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsObjectArrayWithXPathFieldLabels(studyAsAtomEntryXml);
+	var studyInfoAsObjectArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsObjectArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
+	
+	
+	//REM: Old method using associative arrays and alphabetic sorting
+	//var studyAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyAsAssociativeArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	//var studyInfoAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyInfoAsAssociativeArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
 
-	var studyInfoAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyInfoAsAssociativeArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
 	
-	$.extend(studyAsAssociativeArrayWithStudyCustomFieldLabels, studyInfoAsAssociativeArrayWithStudyCustomFieldLabels);
+	//TODO: Code - done
+	var studyAsObjectArrayWithStudyCustomFieldLabels = addCustomFieldLabelPropertiesToObjectArrayWithXPathFieldLabelsUsingRegExpMapAsAssociativeArray(studyAsObjectArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	var studyInfoAsObjectArrayWithStudyCustomFieldLabels = addCustomFieldLabelPropertiesToObjectArrayWithXPathFieldLabelsUsingRegExpMapAsAssociativeArray(studyInfoAsObjectArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
+
 	
-	return convertStudyAsAssociativeArrayIntoStudyAsCsvColumns(studyAsAssociativeArrayWithStudyCustomFieldLabels);
+	//REM: Old method using associative arrays and alphabetic sorting
+	//$.extend(studyAsAssociativeArrayWithStudyCustomFieldLabels, studyInfoAsAssociativeArrayWithStudyCustomFieldLabels);	
+	
+	//TODO: Combine the two object arrays
+	var studyAndStudyInfoAsObjectArrayWithStudyCustomFieldLabels = studyAsObjectArrayWithStudyCustomFieldLabels.concat(studyInfoAsObjectArrayWithStudyCustomFieldLabels);
+
+	//REM: Old method using associative arrays and alphabetic sorting
+	//return convertStudyAsAssociativeArrayIntoStudyAsCsvColumns(studyAsAssociativeArrayWithStudyCustomFieldLabels);
+	
+	//TODO: Code
+	return convertStudyAsObjectArrayIntoStudyAsCsvColumns(studyAndStudyInfoAsObjectArrayWithStudyCustomFieldLabels);
 	
 }
 function generateStudyAsCsvRowsWithStudyCustomFieldLabelsUsingStudyAtomEntryURL (studyAtomEntryURL) {
@@ -585,17 +835,37 @@ function generateStudyAsCsvRowsWithStudyCustomFieldLabelsUsingStudyAtomEntryURL 
 	
 	var studyInfoAsAtomEntryXml = retrieveStudyInfoAsAtomEntryXmlUsingStudyInfoAtomEntryURL(studyInfoAtomEntryURL);
 	
-	var studyAsAssociativeArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabels(studyAsAtomEntryXml);
 	
-	var studyInfoAsAssociativeArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
+	//REM: Old method using associative arrays and alphabetic sorting
+	//var studyAsAssociativeArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsAssociativeArrayWithXPathFieldLabels(studyAsAtomEntryXml);
+	//var studyInfoAsAssociativeArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsAssociativeArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
 	
-	var studyAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyAsAssociativeArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	//TODO: Code - done
+	var studyAsObjectArrayWithXPathFieldLabels = convertStudyAsAtomEntryXmlIntoStudyAsObjectArrayWithXPathFieldLabels(studyAsAtomEntryXml);
+	var studyInfoAsObjectArrayWithXPathFieldLabels = convertStudyInfoAsAtomEntryXmlIntoStudyInfoAsObjectArrayWithXPathFieldLabels(studyInfoAsAtomEntryXml);
+	
+	
+	//REM: Old method using associative arrays and alphabetic sorting
+	//var studyAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyAsAssociativeArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	//var studyInfoAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyInfoAsAssociativeArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
 
-	var studyInfoAsAssociativeArrayWithStudyCustomFieldLabels = convertAssociativeArrayIntoAssociativeArrayUsingRegExpKeyMapAsAssociativeArray(studyInfoAsAssociativeArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
 	
-	$.extend(studyAsAssociativeArrayWithStudyCustomFieldLabels, studyInfoAsAssociativeArrayWithStudyCustomFieldLabels);
+	//TODO: Code - done
+	var studyAsObjectArrayWithStudyCustomFieldLabels = addCustomFieldLabelPropertiesToObjectArrayWithXPathFieldLabelsUsingRegExpMapAsAssociativeArray(studyAsObjectArrayWithXPathFieldLabels, retrieveStudyCustomFieldLabelsRegExMapAsAssociativeArray());
+	var studyInfoAsObjectArrayWithStudyCustomFieldLabels = addCustomFieldLabelPropertiesToObjectArrayWithXPathFieldLabelsUsingRegExpMapAsAssociativeArray(studyInfoAsObjectArrayWithXPathFieldLabels, retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray());
+
 	
-	return convertStudyAsAssociativeArrayIntoStudyAsCsvRows(studyAsAssociativeArrayWithStudyCustomFieldLabels);
+	//REM: Old method using associative arrays and alphabetic sorting
+	//$.extend(studyAsAssociativeArrayWithStudyCustomFieldLabels, studyInfoAsAssociativeArrayWithStudyCustomFieldLabels);	
+	
+	//TODO: Combine the two object arrays
+	var studyAndStudyInfoAsObjectArrayWithStudyCustomFieldLabels = studyAsObjectArrayWithStudyCustomFieldLabels.concat(studyInfoAsObjectArrayWithStudyCustomFieldLabels);
+
+	//REM: Old method using associative arrays and alphabetic sorting
+	//return convertStudyAsAssociativeArrayIntoStudyAsCsvRows(studyAsAssociativeArrayWithStudyCustomFieldLabels);
+	
+	//TODO: Code
+	return convertStudyAsObjectArrayIntoStudyAsCsvRows(studyAndStudyInfoAsObjectArrayWithStudyCustomFieldLabels);
 	
 }
 
