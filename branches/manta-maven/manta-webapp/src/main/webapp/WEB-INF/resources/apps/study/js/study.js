@@ -357,6 +357,7 @@ function retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray () {
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/analytes\\[(\\d+)\\]/analyte\\[(\\d+)\\]/sampleMatrixType\\[(\\d+)\\]" : "analyte$6sampleMatrixType",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/referenceType\\[(\\d+)\\]" : "assayRef$6referenceType",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/url\\[(\\d+)\\]" : "assayRef$6URL",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/upload\\[(\\d+)\\]/uploadedUrl\\[(\\d+)\\]" : "assayRef$6UploadedURL",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/doi\\[(\\d+)\\]" : "assayRef$6DOI",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/note\\[(\\d+)\\]" : "assayRef$6note",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/assayValidated\\[(\\d+)\\]" : "assayRef$6assayValidated"
