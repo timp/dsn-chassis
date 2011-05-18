@@ -346,7 +346,21 @@ function retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray () {
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/plateBatches\\[(\\d+)\\]/batch\\[(\\d+)\\]/batchesIncludedInRawData\\[(\\d+)\\]" : "batches$6in_rawdata",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/plateBatches\\[(\\d+)\\]/batch\\[(\\d+)\\]/preparationDate\\[(\\d+)\\]" : "batch$6_prepa_date",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/plateBatches\\[(\\d+)\\]/batch\\[(\\d+)\\]/parasitaemia3D7percentage\\[(\\d+)\\]" : "batch$6_parsitemia_%",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/plateBatches\\[(\\d+)\\]/batch\\[(\\d+)\\]/ringFormingPercentage\\[(\\d+)\\]" : "batch$6_ringforming%"
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/plateBatches\\[(\\d+)\\]/batch\\[(\\d+)\\]/ringFormingPercentage\\[(\\d+)\\]" : "batch$6_ringforming%",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/samples\\[(\\d+)\\]/sample\\[(\\d+)\\]/anticoagulent\\[(\\d+)\\]" : "smpl$6anticoagulent",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/samples\\[(\\d+)\\]/sample\\[(\\d+)\\]/centrifugeTime\\[(\\d+)\\]" : "smpl$6centrifugeTime",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/samples\\[(\\d+)\\]/sample\\[(\\d+)\\]/storages\\[(\\d+)\\]/storage\\[(\\d+)\\]/storageTemperature\\[(\\d+)\\]" : "smpl$6storage$8Temperature",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/samples\\[(\\d+)\\]/sample\\[(\\d+)\\]/storages\\[(\\d+)\\]/storage\\[(\\d+)\\]/storageDuration\\[(\\d+)\\]" : "smpl$6storage$8Duration",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/samples\\[(\\d+)\\]/sample\\[(\\d+)\\]/storages\\[(\\d+)\\]/storage\\[(\\d+)\\]/storageDurationUnit\\[(\\d+)\\]" : "smpl$6storage$8DurationUnit",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/analytes\\[(\\d+)\\]/analyte\\[(\\d+)\\]/drugMeasured\\[(\\d+)\\]" : "analyte$6drugMeasured",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/analytes\\[(\\d+)\\]/analyte\\[(\\d+)\\]/lowerLoQ\\[(\\d+)\\]" : "analyte$6lowerLoQ",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/analytes\\[(\\d+)\\]/analyte\\[(\\d+)\\]/sampleMatrixType\\[(\\d+)\\]" : "analyte$6sampleMatrixType",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/referenceType\\[(\\d+)\\]" : "assayRef$6referenceType",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/url\\[(\\d+)\\]" : "assayRef$6URL",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/doi\\[(\\d+)\\]" : "assayRef$6DOI",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/note\\[(\\d+)\\]" : "assayRef$6note",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/pharmacology\\[(\\d+)\\]/assayReferences\\[(\\d+)\\]/assayReference\\[(\\d+)\\]/assayValidated\\[(\\d+)\\]" : "assayRef$6assayValidated"
+
 			
 	};
 	
