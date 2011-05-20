@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.scm.SubversionSCM_-DescriptorImpl>
+  <generation>83</generation>
+  <credentials class="hashtable">
+    <entry>
+      <string>&lt;https://dsn-chassis.googlecode.com:443&gt; Google Code Subversion Repository</string>
+      <hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
+        <userName>Tim.Pizey@gmail.com</userName>
+        <!-- This is dangerous and Tim should not be doing this. -->
+        <password>changed now</password>
+      </hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
+    </entry>
+  </credentials>
+  <workspaceFormat>8</workspaceFormat>
+  <validateRemoteUpToVar>false</validateRemoteUpToVar>
+</hudson.scm.SubversionSCM_-DescriptorImpl>
