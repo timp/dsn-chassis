@@ -28,19 +28,19 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
-    <hudson.triggers.SCMTrigger>
-      <spec>11 * * * *</spec>
-    </hudson.triggers.SCMTrigger>
     <hudson.triggers.TimerTrigger>
       <spec>17 3 * * *</spec>
     </hudson.triggers.TimerTrigger>
+    <hudson.triggers.SCMTrigger>
+      <spec>11 * * * *</spec>
+    </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.cggh.tools</groupId>
     <artifactId>dataMerger</artifactId>
   </rootModule>
-  <goals>clean install site</goals>
+  <goals>-Dmaven.test.failure.ignore=false clean install site</goals>
   <mavenOpts>-Xmx1024M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
@@ -67,6 +67,7 @@
       <notifyFixers>false</notifyFixers>
       <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
       <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
+      <matrixMultiplier>ONLY_CONFIGURATIONS</matrixMultiplier>
       <channels/>
     </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
