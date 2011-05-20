@@ -17,12 +17,12 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <authToken>rof_G6T8S_bWbAGM</authToken>
   <triggers class="vector">
-    <hudson.triggers.SCMTrigger>
-      <spec></spec>
-    </hudson.triggers.SCMTrigger>
     <hudson.triggers.TimerTrigger>
       <spec>@midnight</spec>
     </hudson.triggers.TimerTrigger>
+    <hudson.triggers.SCMTrigger>
+      <spec></spec>
+    </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
@@ -31,7 +31,7 @@
 # Add any new conf files, jobs, users, and content.
 svn add -q --parents *.xml jobs/*/config.xml users/*/config.xml userContent/*
 # Ignore things in the root we don&apos;t care about.
-echo -e &quot;war\nlog\n*.log\n*.tmp\n*.old\n*.bak\n*.jar\n*.json&quot; &gt; myignores
+echo -e &quot;*Subversion.xml\nwar\nlog\n*.log\n*.tmp\n*.old\n*.bak\n*.jar\n*.json&quot; &gt; myignores
 svn propset svn:ignore -F myignores . &amp;&amp; rm myignores
 # Ignore things in jobs/* we don&apos;t care about.
 echo -e &quot;builds\nlast*\nnext*\n*.txt\n*.log\nworkspace*\ncobertura\njavadoc\nhtmlreports\nncover\ndoclinks&quot; &gt; myignores
