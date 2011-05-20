@@ -7,7 +7,7 @@
       <hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
         <userName>Tim.Pizey@gmail.com</userName>
         <!-- This is dangerous and Tim should not be doing this. -->
-        <password>dEE5dEoyaGM0Vnky</password>
+        <password>changed now</password>
       </hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
     </entry>
   </credentials>
