@@ -29,7 +29,7 @@
     <hudson.tasks.Shell>
       <command>cd /var/lib/jenkins
 # Add any new conf files, jobs, users, and content.
-svn add -q --parents *.xml jobs/*/config.xml users/*/config.xml userContent/*
+svn add -q --parents  jobs/*/config.xml users/*/config.xml userContent/*
 # Ignore things in the root we don&apos;t care about.
 echo -e &quot;*Subversion.xml\nwar\nlog\n*.log\n*.tmp\n*.old\n*.bak\n*.jar\n*.json&quot; &gt; myignores
 svn propset svn:ignore -F myignores . &amp;&amp; rm myignores
