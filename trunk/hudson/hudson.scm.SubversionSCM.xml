@@ -6,6 +6,7 @@
       <string>&lt;https://dsn-chassis.googlecode.com:443&gt; Google Code Subversion Repository</string>
       <hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
         <userName>Tim.Pizey@gmail.com</userName>
+        <!-- This is dangerous and Tim should not be doing this. -->
         <password>dEE5dEoyaGM0Vnky</password>
       </hudson.scm.SubversionSCM_-DescriptorImpl_-PasswordCredential>
     </entry>
