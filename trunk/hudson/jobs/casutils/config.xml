@@ -4,48 +4,29 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM">
-    <configVersion>1</configVersion>
-    <remoteRepositories>
-      <org.spearce.jgit.transport.RemoteConfig>
-        <string>origin</string>
-        <int>5</int>
-        <string>fetch</string>
-        <string>+refs/heads/*:refs/remotes/origin/*</string>
-        <string>receivepack</string>
-        <string>git-upload-pack</string>
-        <string>uploadpack</string>
-        <string>git-upload-pack</string>
-        <string>url</string>
-        <string>git://github.com/timp21337/casutils.git</string>
-        <string>tagopt</string>
-        <string></string>
-      </org.spearce.jgit.transport.RemoteConfig>
-    </remoteRepositories>
-    <branches>
-      <hudson.plugins.git.BranchSpec>
-        <name>**</name>
-      </hudson.plugins.git.BranchSpec>
-    </branches>
-    <mergeOptions/>
-    <recursiveSubmodules>false</recursiveSubmodules>
-    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <authorOrCommitter>false</authorOrCommitter>
-    <clean>false</clean>
-    <pruneBranches>false</pruneBranches>
-    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-    <gitTool>Default</gitTool>
-    <submoduleCfg class="list"/>
-    <relativeTargetDir></relativeTargetDir>
+  <scm class="hudson.scm.SubversionSCM">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>https://dsn-chassis.googlecode.com/svn/trunk/casutils</remote>
+        <local>.</local>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
     <excludedRegions></excludedRegions>
+    <includedRegions></includedRegions>
     <excludedUsers></excludedUsers>
-    <skipTag>false</skipTag>
+    <excludedRevprop></excludedRevprop>
+    <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector"/>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>3 * * * * </spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.cggh</groupId>
