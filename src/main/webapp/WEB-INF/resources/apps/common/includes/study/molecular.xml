@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+   xmlns:ev="http://www.w3.org/2001/xml-events">
+    <xforms:group ref="molecular">
+
+				<div id="molecular-questions-container">
+
+					<h2>Molecular Questions</h2>
+					<xforms:group ref="criteria">
+						<h3> Sampling and inclusion criteria</h3>
+						<xforms:group ref="sampleSourceOpen">
+							<xforms:select1 ref="sampleSource" appearance="minimal">
+								<xforms:label>Sample source</xforms:label>
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-sampleSource-items')/sampleSource">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:item>
+									<xforms:label>other</xforms:label>
+									<xforms:value>other</xforms:value>
+								</xforms:item>
+								<xforms:alert>Please select</xforms:alert>
+							</xforms:select1>
+							<xforms:input ref="sampleSourceOther">
+								<xforms:label />
+							</xforms:input>
+						</xforms:group>
+						<xforms:select1 ref="malariaStatus" appearance="minimal">
+							<xforms:label>Malaria disease status</xforms:label>
+							<xforms:item>
+								<xforms:label>please select</xforms:label>
+								<xforms:value />
+							</xforms:item>
+							<xforms:itemset model="mod-study-info"
+								nodeset="instance('ins-malariaStatus-items')/malariaStatus">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:alert>
+								<xforms:output
+									value="concat('Enter a value for the required field ', name())" />
+							</xforms:alert>
+						</xforms:select1>
+					</xforms:group>
+					<xforms:group ref="sample">
+						<xforms:group ref="sampleTypeOpen">
+							<xforms:select1 ref="sampleType" appearance="minimal">
+								<xforms:label>Sample type</xforms:label>
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-sampleType-items')/sampleType">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:item>
+									<xforms:label>other</xforms:label>
+									<xforms:value>other</xforms:value>
+								</xforms:item>
+								<xforms:alert>Please select a value</xforms:alert>
+							</xforms:select1>
+							<xforms:input ref="sampleTypeOther">
+								<xforms:label />
+							</xforms:input>
+							<xforms:select1 ref="wholeBloodSource" appearance="minimal">
+								<xforms:label>Whole blood source</xforms:label>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-wholeBloodSource-items')/wholeBloodSource">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+							</xforms:select1>
+							<xforms:input ref="dateCultureIsolated">
+								<xforms:label>Date samples isolated </xforms:label>
+								<xforms:alert>A valid date is required</xforms:alert>
+							</xforms:input>
+						</xforms:group>
+					</xforms:group>
+
+
+					<xforms:group ref="genotypedMarkers">
+						<h3>Resistance Markers</h3>
+						<table class="repeat-table">
+							<xforms:repeat nodeset="genotypedMarker" id="genotypedMarker-rep">
+								<tr>
+									<td class="action-td">
+										<xforms:trigger appearance="minimal">
+											<xforms:label>
+												<img src="/apps/common/theme/remove.gif" alt="remove" />
+											</xforms:label>
+											<xforms:delete ev:event="DOMActivate" context="."
+												nodeset="." at="index('genotypedMarker-rep')" />
+										</xforms:trigger>
+									</td>
+									<td>
+										<xforms:group ref="genotypingMethodOpen">
+											<xforms:select1 ref="genotypingMethod"
+												appearance="minimal">
+												<xforms:label>Genotyping method</xforms:label>
+												<xforms:item>
+													<xforms:label>please select</xforms:label>
+													<xforms:value />
+												</xforms:item>
+												<xforms:itemset model="mod-study-info"
+													nodeset="instance('ins-genotypingMethod-items')/genotypingMethod">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:alert>Please select a method</xforms:alert>
+											</xforms:select1>
+											<xforms:input ref="genotypingMethodOther">
+												<xforms:label />
+												<xforms:hint>Other genotyping method</xforms:hint>
+											</xforms:input>
+										</xforms:group>
+										<div class="box">
+											<xforms:group ref="molecularMarkerFalciparumOpen">
+												<xforms:select ref="molecularMarkerFalciparum"
+													appearance="full" class="scrollableCheckboxes">
+													<xforms:label class="scrollableCheckboxesLabel">
+														Falciparum marker
+													</xforms:label>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-molecularMarkerFalciparum-items')/molecularMarker">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
+												</xforms:select>
+												<xforms:input ref="molecularMarkerFalciparumOther">
+													<xforms:label />
+												</xforms:input>
+											</xforms:group>
+										</div>
+										<div class="box">
+											<xforms:group ref="molecularMarkerVivaxOpen">
+												<xforms:select ref="molecularMarkerVivax"
+													appearance="full" class="scrollableCheckboxes">
+													<xforms:label class="scrollableCheckboxesLabel">Vivax
+														marker</xforms:label>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-molecularMarkerVivax-items')/molecularMarker">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
+												</xforms:select>
+												<xforms:input ref="molecularMarkerVivaxOther">
+													<xforms:label />
+												</xforms:input>
+											</xforms:group>
+										</div>
+										<div class="box">
+
+											<xforms:group ref="molecularMarkerOvaleOpen">
+												<xforms:select ref="molecularMarkerOvale"
+													appearance="full" class="scrollableCheckboxes">
+													<xforms:label class="scrollableCheckboxesLabel">Ovale
+														marker</xforms:label>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-molecularMarkerOvale-items')/molecularMarker">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
+												</xforms:select>
+												<xforms:input ref="molecularMarkerOvaleOther">
+													<xforms:label />
+												</xforms:input>
+											</xforms:group>
+										</div>
+										<div class="box">
+
+											<xforms:group ref="molecularMarkerMalariaeOpen">
+												<xforms:select ref="molecularMarkerMalariae"
+													appearance="full" class="scrollableCheckboxes">
+													<xforms:label class="scrollableCheckboxesLabel">Malariae
+														marker
+													</xforms:label>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-molecularMarkerMalariae-items')/molecularMarker">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
+												</xforms:select>
+												<xforms:input ref="molecularMarkerMalariaeOther">
+													<xforms:label />
+												</xforms:input>
+											</xforms:group>
+										</div>
+
+										<div class="box">
+											<xforms:group ref="molecularMarkerKnowlesiOpen">
+												<xforms:select ref="molecularMarkerKnowlesi"
+													appearance="full" class="scrollableCheckboxes">
+													<xforms:label class="scrollableCheckboxesLabel">Knowlesi
+														marker
+													</xforms:label>
+													<xforms:itemset model="mod-study-info"
+														nodeset="instance('ins-molecularMarkerKnowlesi-items')/molecularMarker">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:item>
+														<xforms:label>other</xforms:label>
+														<xforms:value>other</xforms:value>
+													</xforms:item>
+												</xforms:select>
+												<xforms:input ref="molecularMarkerKnowlesiOther">
+													<xforms:label />
+												</xforms:input>
+											</xforms:group>
+
+
+
+
+
+										</div>
+
+
+										<xforms:group ref="sampleSelectionMethodOpen">
+											<xforms:select1 ref="sampleSelectionMethod"
+												appearance="minimal">
+												<xforms:label>Sample selection method</xforms:label>
+												<xforms:item>
+													<xforms:label>please select</xforms:label>
+													<xforms:value />
+												</xforms:item>
+												<xforms:itemset model="mod-study-info"
+													nodeset="instance('ins-sampleSelectionMethod-items')/sampleSelectionMethod">
+													<xforms:label ref="label" />
+													<xforms:value ref="value" />
+												</xforms:itemset>
+												<xforms:item>
+													<xforms:label>other</xforms:label>
+													<xforms:value>other</xforms:value>
+												</xforms:item>
+												<xforms:alert>
+													<xforms:output
+														value="concat('Enter a value for the required field ', name())" />
+												</xforms:alert>
+											</xforms:select1>
+											<xforms:input ref="sampleSelectionMethodOther">
+												<xforms:label />
+											</xforms:input>
+											<xforms:input ref="sampleSelectionProportion">
+												<xforms:label> proportion </xforms:label>
+											</xforms:input>
+										</xforms:group>
+
+									</td>
+								</tr>
+							</xforms:repeat>
+							<tr>
+								<td class="action-td">
+									<xforms:trigger appearance="minimal">
+										<xforms:label>
+											<img src="/apps/common/theme/add.gif" alt="add" />
+										</xforms:label>
+										<xforms:insert ev:event="DOMActivate" context="."
+											nodeset="genotypedMarker" at="count(../genotypedMarker)"
+											position="after" origin="instance('ins-genotypedMarker')" />
+									</xforms:trigger>
+								</td>
+								<td class="add-td">
+									<xforms:trigger appearance="minimal">
+										<xforms:label>Add a genotyping method and associated markers
+										</xforms:label>
+										<xforms:insert ev:event="DOMActivate" context="."
+											nodeset="genotypedMarker" at="count(../genotypedMarker)"
+											position="after" origin="instance('ins-genotypedMarker')" />
+									</xforms:trigger>
+								</td>
+							</tr>
+						</table>
+					</xforms:group>
+
+					<xforms:group ref="mixedResistanceAlleles">
+
+						<xforms:select1 ref="mixedResistanceAllelesInclusion"
+							appearance="minimal">
+							<xforms:label>Mixed resistance alleles were </xforms:label>
+							<xforms:item>
+								<xforms:label>not identified</xforms:label>
+								<xforms:value>notIdentified</xforms:value>
+							</xforms:item>
+							<xforms:itemset model="mod-study-info"
+								nodeset="instance('ins-mixedResistanceAllelesInclusion-items')/mixedResistanceAllelesInclusion">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select1>
+						<br />
+						<xforms:select ref="mixedResistanceAllelesDesignation"
+							appearance="full" class="scrollableCheckboxes">
+							<xforms:label class="scrollableCheckboxesLabel">
+								How were mixed genotype
+								resistance loci designated in the data
+								set?
+							</xforms:label>
+							<xforms:itemset model="mod-study-info"
+								nodeset="instance('ins-mixedResistanceAllelesDesignation-items')/mixedResistanceAllelesDesignation">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+						</xforms:select>
+					</xforms:group>
+
+
+					<xforms:group ref="additionalGenotypicInformation">
+						<h3>Additional genetic information</h3>
+						<xforms:group ref="sequencedLoci">
+
+							<xforms:select1 ref="wholeGenomesSequenced"
+								appearance="minimal">
+								<xforms:label>Whole genome(s) sequenced?</xforms:label>
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-boolean-items')/boolean">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>Please select a value</xforms:alert>
+							</xforms:select1>
+							<br />
+							<xforms:select1 ref="resistanceLociSequenced"
+								appearance="minimal">
+								<xforms:label>Resistance loci sequenced?</xforms:label>
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-boolean-items')/boolean">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>Please select a value</xforms:alert>
+							</xforms:select1>
+							<br />
+							<xforms:group ref="resistanceLoci">
+								<table class="repeat-table">
+									<xforms:repeat nodeset="resistanceLocus" id="resistanceLocus-rep">
+										<tr>
+											<td class="action-td">
+												<xforms:trigger appearance="minimal">
+													<xforms:label>
+														<img src="/apps/common/theme/remove.gif" alt="remove" />
+													</xforms:label>
+													<xforms:delete ev:event="DOMActivate"
+														context="." nodeset="." at="index('resistanceLocus-rep')" />
+												</xforms:trigger>
+											</td>
+											<td>
+												<xforms:input ref="locusName">
+													<xforms:label>Locus name</xforms:label>
+												</xforms:input>
+											</td>
+										</tr>
+									</xforms:repeat>
+									<tr>
+										<td class="action-td">
+											<xforms:trigger appearance="minimal">
+												<xforms:label>
+													<img src="/apps/common/theme/add.gif" alt="add" />
+												</xforms:label>
+												<xforms:insert ev:event="DOMActivate" context="."
+													nodeset="resistanceLocus" at="count(../resistanceLocus)"
+													position="after" origin="instance('ins-resistanceLocus')" />
+											</xforms:trigger>
+										</td>
+										<td class="add-td">
+											<xforms:trigger appearance="minimal">
+												<xforms:label>Add another sequenced resistance locus
+												</xforms:label>
+												<xforms:insert ev:event="DOMActivate" context="."
+													nodeset="resistanceLocus" at="count(../resistanceLocus)"
+													position="after" origin="instance('ins-resistanceLocus')" />
+											</xforms:trigger>
+										</td>
+									</tr>
+								</table>
+							</xforms:group>
+
+							<xforms:select1 ref="otherLociGenotyped"
+								appearance="minimal">
+								<xforms:label>Other loci genotyped?</xforms:label>
+								<xforms:item>
+									<xforms:label>please select</xforms:label>
+									<xforms:value />
+								</xforms:item>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-boolean-items')/boolean">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:alert>Please select a value</xforms:alert>
+							</xforms:select1>
+
+							<xforms:group ref="otherLoci">
+								<table class="repeat-table">
+									<xforms:repeat nodeset="otherLocus" id="otherLocus-rep">
+										<tr>
+											<td class="action-td">
+												<xforms:trigger appearance="minimal">
+													<xforms:label>
+														<img src="/apps/common/theme/remove.gif" alt="remove" />
+													</xforms:label>
+													<xforms:delete ev:event="DOMActivate"
+														context="." nodeset="." at="index('otherLocus-rep')" />
+												</xforms:trigger>
+											</td>
+											<td>
+												<xforms:group ref="locusTypeOpen">
+													<xforms:select1 ref="locusType" appearance="minimal">
+														<xforms:label>Other locus type</xforms:label>
+														<xforms:itemset model="mod-study-info"
+															nodeset="instance('ins-locusType-items')/locusType">
+															<xforms:label ref="label" />
+															<xforms:value ref="value" />
+														</xforms:itemset>
+														<xforms:item>
+															<xforms:label>other</xforms:label>
+															<xforms:value>other</xforms:value>
+														</xforms:item>
+													</xforms:select1>
+													<xforms:input ref="locusTypeOther">
+														<xforms:label />
+													</xforms:input>
+												</xforms:group>
+												<br />
+												<xforms:input ref="locusName">
+													<xforms:label>Locus name</xforms:label>
+												</xforms:input>
+											</td>
+										</tr>
+									</xforms:repeat>
+									<tr>
+										<td class="action-td">
+											<xforms:trigger appearance="minimal">
+												<xforms:label>
+													<img src="/apps/common/theme/add.gif" alt="add" />
+												</xforms:label>
+												<xforms:insert ev:event="DOMActivate" context="."
+													nodeset="otherLocus" at="count(../otherLocus)" position="after"
+													origin="instance('ins-otherLocus')" />
+											</xforms:trigger>
+										</td>
+										<td class="add-td">
+											<xforms:trigger appearance="minimal">
+												<xforms:label>Add another locus </xforms:label>
+												<xforms:insert ev:event="DOMActivate" context="."
+													nodeset="otherLocus" at="count(../otherLocus)" position="after"
+													origin="instance('ins-otherLocus')" />
+											</xforms:trigger>
+										</td>
+									</tr>
+								</table>
+							</xforms:group>
+
+
+						</xforms:group>
+
+
+						<xforms:select1 ref="infectionComplexityEstimated"
+							appearance="minimal">
+							<xforms:label>Multiplicity/complexity of infection included?
+							</xforms:label>
+							<xforms:item>
+								<xforms:label>please select</xforms:label>
+								<xforms:value />
+							</xforms:item>
+							<xforms:itemset model="mod-study-info"
+								nodeset="instance('ins-boolean-items')/boolean">
+								<xforms:label ref="label" />
+								<xforms:value ref="value" />
+							</xforms:itemset>
+							<xforms:alert>Please select a value</xforms:alert>
+						</xforms:select1>
+						<xforms:group ref="infectionComplexityEstimationLociOpen">
+							<xforms:select ref="infectionComplexityEstimationLoci"
+								appearance="full" class="scrollableCheckboxes">
+								<xforms:label class="scrollableCheckboxesLabel">loci used to estimate
+								</xforms:label>
+								<xforms:itemset model="mod-study-info"
+									nodeset="instance('ins-resistanceLocus-items')/resistanceLocus">
+									<xforms:label ref="label" />
+									<xforms:value ref="value" />
+								</xforms:itemset>
+								<xforms:item>
+									<xforms:label>other</xforms:label>
+									<xforms:value>other</xforms:value>
+								</xforms:item>
+							</xforms:select>
+							<div style="clear:both;">
+								<xforms:input ref="infectionComplexityEstimationlociOther">
+									<xforms:label class="fixed-width">other</xforms:label>
+								</xforms:input>
+							</div>
+						</xforms:group>
+						<br style="clear:both;" />
+					</xforms:group>
+
+				</div>
+
+</xforms:group>
+</div>
