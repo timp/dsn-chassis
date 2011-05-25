@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -45,10 +44,16 @@ public class CasProtectedResourceDownloader {
     this.tempFileDirectory = tempFileDirectoryIn;
     this.tempUrlLocation = "file://" + tempFileDirectory;
 
-    System.err.println("ticketGrantingServiceUrl:" + ticketGrantingServiceUrl);
+    System.err.println(this);
+    
     System.err.println("usernameIn:" + usernameIn);
     System.err.println("passwordIn:" + passwordIn);
-    System.err.println("tempFileDirectoryIn:" + tempFileDirectoryIn);
+  }
+
+
+  @Override
+  public String toString() {
+    return super.toString() + " from:" + ticketGrantingServiceUrl + " to " + tempUrlLocation;
   }
 
 
