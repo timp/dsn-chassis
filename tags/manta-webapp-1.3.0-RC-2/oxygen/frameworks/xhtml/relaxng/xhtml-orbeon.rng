@@ -1,0 +1,39 @@
+<!-- XHTML -->
+<!-- This corresponds to the union of transitional and frameset. -->
+
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0">
+
+<include href="modules-orbeon/datatypes.rng"/>
+<include href="modules-orbeon/attribs.rng"/>
+<!-- <include href="modules-orbeon/struct.rng"/> -->
+<include href="modules-orbeon/frames.rng"/>
+<include href="modules-orbeon/text.rng"/>
+<include href="modules-orbeon/hypertext.rng"/>
+<include href="modules-orbeon/list.rng"/>
+<include href="modules-orbeon/image.rng"/>
+<include href="modules-orbeon/ssismap.rng"/>
+<include href="modules-orbeon/base.rng"/>
+<include href="modules-orbeon/link.rng"/>
+<include href="modules-orbeon/meta.rng"/>
+<include href="modules-orbeon/param.rng"/>
+<include href="modules-orbeon/object.rng"/>
+<include href="modules-orbeon/bdo.rng"/>
+<include href="modules-orbeon/pres.rng"/>
+<include href="modules-orbeon/edit.rng"/>
+<include href="modules-orbeon/applet.rng"/>
+<!-- <include href="modules-orbeon/basic-form.rng"/> -->
+<include href="modules-orbeon/form.rng"/>
+<include href="modules-orbeon/style.rng"/>
+<include href="modules-orbeon/script.rng"/>
+<!-- <include href="modules-orbeon/basic-table.rng"/> -->
+<include href="modules-orbeon/table.rng"/>
+<include href="modules-orbeon/csismap.rng"/>
+<include href="modules-orbeon/events.rng"/>
+<include href="modules-orbeon/inlstyle.rng"/>
+<include href="modules-orbeon/target.rng"/>
+<include href="modules-orbeon/iframe.rng"/>
+<include href="modules-orbeon/nameident.rng"/>
+<include href="modules-orbeon/legacy.rng"/>
+
+</grammar>
