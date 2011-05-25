@@ -12,6 +12,7 @@
       <password></password>
     </hudson.plugins.im.GroupChatIMMessageTarget>
   </defaultTargets>
+  <commandPrefix>!jenkins</commandPrefix>
   <hudsonLogin></hudsonLogin>
   <hudsonPassword></hudsonPassword>
   <useNotice>false</useNotice>

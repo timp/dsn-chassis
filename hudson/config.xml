@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.410</version>
+  <version>1.413</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -105,18 +105,9 @@
   <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
   <jdks>
     <jdk>
-      <name></name>
-      <home></home>
-      <properties>
-        <hudson.tools.InstallSourceProperty>
-          <installers>
-            <hudson.tools.JDKInstaller>
-              <id>jdk-6u16-oth-JPR@CDS-CDS_Developer</id>
-              <acceptLicense>true</acceptLicense>
-            </hudson.tools.JDKInstaller>
-          </installers>
-        </hudson.tools.InstallSourceProperty>
-      </properties>
+      <name>Sun java 6 (ubuntu packaged)</name>
+      <home>/usr/lib/jvm/java-6-sun/</home>
+      <properties/>
     </jdk>
   </jdks>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>

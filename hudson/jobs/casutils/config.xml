@@ -7,7 +7,7 @@
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>https://dsn-chassis.googlecode.com/svn/trunk/casutils</remote>
+        <remote>http://dsn-chassis.googlecode.com/svn/trunk/casutils</remote>
         <local>.</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
@@ -32,7 +32,7 @@
     <groupId>org.cggh</groupId>
     <artifactId>casutils</artifactId>
   </rootModule>
-  <goals>install site deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>clean install war:war site deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
