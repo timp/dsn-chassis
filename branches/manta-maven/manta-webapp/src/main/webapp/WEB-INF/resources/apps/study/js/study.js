@@ -836,11 +836,12 @@ function convertStudyAsObjectArrayIntoStudyAsCsvRows (studyAsObjectArray) {
 	var studyAsCsvRows = "";
 	
 	var regExp = new RegExp("\\n|\\r", "g");
+	var regExp2 = new RegExp('"', "g");
 	
 	for (var i = 0; i < studyAsObjectArray.length; i++) {
 		
 		//NOTE: Replace EOL chars with spaces. 
-		studyAsCsvRows += studyAsObjectArray[i].customFieldLabel + "," + studyAsObjectArray[i].value.replace(regExp, " ");
+		studyAsCsvRows += "\"" + studyAsObjectArray[i].customFieldLabel + "\"" + "," + "\"" + studyAsObjectArray[i].value.replace(regExp, " ").replace(regExp2, '""') + "\"";
 	
 		//NOTE: Using Unix EOL chars.
 		studyAsCsvRows += "\n";
