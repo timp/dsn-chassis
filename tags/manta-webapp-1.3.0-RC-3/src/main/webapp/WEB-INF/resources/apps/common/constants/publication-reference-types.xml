@@ -1,0 +1,10 @@
+<publication-reference-types xmlns="">
+    <publication-reference-type>
+        <label>URL</label>
+        <value>url</value>
+    </publication-reference-type>
+    <publication-reference-type>
+        <label>DOI</label>
+        <value>doi</value>
+    </publication-reference-type>
+</publication-reference-types>

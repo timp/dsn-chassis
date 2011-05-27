@@ -1,0 +1,18 @@
+<!--  A closed list of regimen allocation methods -->
+<!-- Required in Clinical Treatments -->
+<!--  pharmacology-treatmentRegimens-allocation -->
+<regimenAllocationMethods xmlns="">
+ 	<regimenAllocationMethod>
+		<label>non-randomised</label>
+ 		<value>nonrandomised</value>
+ 	</regimenAllocationMethod>
+ 	<regimenAllocationMethod>
+		<label>quasi-randomised</label>
+ 		<value>quasirandomised</value>
+ 	</regimenAllocationMethod>
+	<regimenAllocationMethod>
+		<label>randomised</label>
+		<value>randomised</value>
+ 	</regimenAllocationMethod>
+</regimenAllocationMethods>
+ 		
