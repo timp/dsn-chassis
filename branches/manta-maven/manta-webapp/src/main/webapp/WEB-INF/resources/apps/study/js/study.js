@@ -771,8 +771,9 @@ function convertStudyAsObjectArrayIntoStudyAsCsvColumns (studyAsObjectArray) {
 
 	var headingsRow = "";
 	var valuesRow = "";
-	
-	var regExp = new RegExp("\\n|\\r", "g");
+
+	//NOTE: Replace EOL chars and quotes with spaces.	
+	var regExp = new RegExp("\\n|\\r|\\"", "g");
 	
 	for (var i = 0; i < studyAsObjectArray.length; i++) {
 		
@@ -781,10 +782,10 @@ function convertStudyAsObjectArrayIntoStudyAsCsvColumns (studyAsObjectArray) {
 			valuesRow += ",";
 		}
 		
-		headingsRow += studyAsObjectArray[i].customFieldLabel;
+		headingsRow += "\"" + studyAsObjectArray[i].customFieldLabel + "\"";
 		
 		//NOTE: Replace EOL chars with spaces. 
-		valuesRow += studyAsObjectArray[i].value.replace(regExp, " ");
+		valuesRow += "\"" + studyAsObjectArray[i].value.replace(regExp, " ") + "\"";
 		
 	}
 	
