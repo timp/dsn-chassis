@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<processors xmlns:chassis="http://chassis.cggh.org/manta/processors">
+    <processor name="chassis:semail">
+        <class name="org.cggh.chassis.manta.processor.SecureEmailProcessor"/>
+    </processor>
+</processors>

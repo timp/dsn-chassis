@@ -1,0 +1,18 @@
+<storageDurationUnits xmlns="">
+	<storageDurationUnit>
+		<label>minutes</label>
+		<value>minutes</value>
+	</storageDurationUnit>
+	<storageDurationUnit>
+		<label>hours</label>
+		<value>hours</value>
+	</storageDurationUnit>
+	<storageDurationUnit>
+		<label>days</label>
+		<value>days</value>
+	</storageDurationUnit>
+	<storageDurationUnit>
+		<label>weeks</label>
+		<value>weeks</value>
+	</storageDurationUnit>
+</storageDurationUnits>
