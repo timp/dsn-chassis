@@ -773,7 +773,7 @@ function convertStudyAsObjectArrayIntoStudyAsCsvColumns (studyAsObjectArray) {
 	var valuesRow = "";
 
 	//NOTE: Replace EOL chars and quotes with spaces.	
-	var regExp = new RegExp("\\n|\\r|\\"", "g");
+	var regExp = new RegExp("\\n|\\r", "g");
 	
 	for (var i = 0; i < studyAsObjectArray.length; i++) {
 		
