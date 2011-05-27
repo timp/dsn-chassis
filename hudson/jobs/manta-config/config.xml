@@ -16,13 +16,12 @@
         <remote>https://dsn-chassis.googlecode.com/svn/trunk/manta-config</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
-    <useUpdate>false</useUpdate>
-    <doRevert>false</doRevert>
     <excludedRegions></excludedRegions>
     <includedRegions></includedRegions>
     <excludedUsers></excludedUsers>
     <excludedRevprop></excludedRevprop>
     <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.CheckoutUpdater"/>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -38,7 +37,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>manta-config</artifactId>
   </rootModule>
-  <goals>clean install deploy -P cloud1</goals>
+  <goals>clean install deploy -P cloud1 -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
@@ -64,6 +63,8 @@
       <notifyFixers>false</notifyFixers>
       <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
       <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
+      <matrixMultiplier>ONLY_CONFIGURATIONS</matrixMultiplier>
+      <channels/>
     </hudson.plugins.ircbot.IrcPublisher>
   </publishers>
   <buildWrappers/>

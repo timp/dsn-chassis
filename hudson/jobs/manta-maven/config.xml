@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>manta-webapp</artifactId>
   </rootModule>
-  <goals>-Dmaven.test.failure.ignore=false clean install tomcat:redeploy -P cloud1 -Djetty.skip=true</goals>
+  <goals>-Dmaven.test.failure.ignore=false clean install deploy tomcat:redeploy -P cloud1 -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <usePrivateRepository>false</usePrivateRepository>
