@@ -46,7 +46,7 @@
                                 </td>
                             -->
                             <td>
-                                <xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+                                <xforms:repeat nodeset="atom:content/study/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
                                     <div>
                                         <xforms:output ref="."/>			
                                     </div>
