@@ -338,9 +338,11 @@
 				mediatype="application/atom+xml">
 				
 				<xforms:action ev:event="xforms-submit-done">
-		
-					<xforms:message level="modal">Your changes have been saved.</xforms:message>
-	
+				    <xforms:delete nodeset="instance('ins-study-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+				     
+				    <xforms:insert nodeset="instance('ins-study-entry')//modules" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+				    
+		            <xforms:send submission="sub-put-study-entry" />
 				</xforms:action>
 		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
