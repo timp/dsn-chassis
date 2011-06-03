@@ -307,8 +307,13 @@
                 
                 <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
 				
-				<!-- now retrieve feed of draft media -->
-				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-permissions"/>
+				<xforms:action ev:event="xforms-submit-done">
+				    <xforms:send submission="sub-get-study-permissions"/>
+				    <xforms:insert nodeset="instance('ins-study-entry')//modules" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+                     
+                    <xforms:send submission="sub-implicit-put-draft-entry" />
+                     
+				</xforms:action>
 				
 				<!-- If there was an error, then go back to the wizard-pane-being-shown and show the error. -->
 				<xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"  />
@@ -361,6 +366,10 @@
                 
                 <xforms:action ev:event="xforms-submit-done">
                 	<xforms:message>The draft has been saved.</xforms:message>
+                	<xforms:delete nodeset="instance('ins-study-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+                     
+                    <xforms:insert nodeset="instance('ins-study-entry')//modules" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+                    
                 	<xforms:send submission="sub-implicit-put-draft-entry" />
                 </xforms:action>
                 
@@ -381,6 +390,10 @@
             	relevant="false"> 
 
                <xforms:action ev:event="xforms-submit-done">
+                    <xforms:delete nodeset="instance('ins-study-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+                     
+                    <xforms:insert nodeset="instance('ins-study-entry')//modules" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+                    
                 	<xforms:send submission="sub-implicit-put-draft-entry" />
                 </xforms:action>
                 <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
