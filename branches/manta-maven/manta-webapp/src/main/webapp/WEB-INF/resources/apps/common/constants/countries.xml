@@ -105,7 +105,7 @@
     <value>BT</value>
   </country>
   <country>
-    <label>BOLIVIA, PLURINATIONAL STATE OF</label>
+    <label>BOLIVIA (PLURINATIONAL STATE OF)</label>
     <value>BO</value>
   </country>
   <country>
@@ -201,7 +201,7 @@
     <value>CG</value>
   </country>
   <country>
-    <label>CONGO, THE DEMOCRATIC REPUBLIC OF THE</label>
+    <label>CONGO (THE DEMOCRATIC REPUBLIC OF THE)</label>
     <value>CD</value>
   </country>
   <country>
@@ -409,7 +409,7 @@
     <value>ID</value>
   </country>
   <country>
-    <label>IRAN, ISLAMIC REPUBLIC OF</label>
+    <label>IRAN (ISLAMIC REPUBLIC OF)</label>
     <value>IR</value>
   </country>
   <country>
@@ -500,11 +500,11 @@
     <value>KI</value>
   </country>
   <country>
-    <label>KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</label>
+    <label>KOREA (DEMOCRATIC PEOPLE'S REPUBLIC OF)</label>
     <value>KP</value>
   </country>
   <country>
-    <label>KOREA, REPUBLIC OF</label>
+    <label>KOREA (REPUBLIC OF)</label>
     <value>KR</value>
   </country>
   <country>
@@ -556,7 +556,7 @@
     <value>MO</value>
   </country>
   <country>
-    <label>MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF</label>
+    <label>MACEDONIA (THE FORMER YUGOSLAV REPUBLIC OF)</label>
     <value>MK</value>
   </country>
   <country>
@@ -608,11 +608,11 @@
     <value>MX</value>
   </country>
   <country>
-    <label>MICRONESIA, FEDERATED STATES OF</label>
+    <label>MICRONESIA (FEDERATED STATES OF)</label>
     <value>FM</value>
   </country>
   <country>
-    <label>MOLDOVA, REPUBLIC OF</label>
+    <label>MOLDOVA (REPUBLIC OF)</label>
     <value>MD</value>
   </country>
   <country>
@@ -712,7 +712,7 @@
     <value>PW</value>
   </country>
   <country>
-    <label>PALESTINIAN TERRITORY, OCCUPIED</label>
+    <label>PALESTINIAN TERRITORY (OCCUPIED)</label>
     <value>PS</value>
   </country>
   <country>
@@ -896,7 +896,7 @@
     <value>SY</value>
   </country>
   <country>
-    <label>TAIWAN, PROVINCE OF CHINA</label>
+    <label>TAIWAN (PROVINCE OF CHINA)</label>
     <value>TW</value>
   </country>
   <country>
@@ -904,7 +904,7 @@
     <value>TJ</value>
   </country>
   <country>
-    <label>TANZANIA, UNITED REPUBLIC OF</label>
+    <label>TANZANIA (UNITED REPUBLIC OF)</label>
     <value>TZ</value>
   </country>
   <country>
@@ -988,7 +988,7 @@
     <value>VU</value>
   </country>
   <country>
-    <label>VENEZUELA, BOLIVARIAN REPUBLIC OF</label>
+    <label>VENEZUELA (BOLIVARIAN REPUBLIC OF)</label>
     <value>VE</value>
   </country>
   <country>
@@ -996,11 +996,11 @@
     <value>VN</value>
   </country>
   <country>
-    <label>VIRGIN ISLANDS, BRITISH</label>
+    <label>VIRGIN ISLANDS (BRITISH)</label>
     <value>VG</value>
   </country>
   <country>
-    <label>VIRGIN ISLANDS, U.S.</label>
+    <label>VIRGIN ISLANDS (U.S.)</label>
     <value>VI</value>
   </country>
   <country>
