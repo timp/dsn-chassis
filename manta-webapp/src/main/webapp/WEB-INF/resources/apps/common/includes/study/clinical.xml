@@ -32,6 +32,11 @@
                                     <br/>
                                     <xforms:select1 ref="regimenSupervision" appearance="minimal">
                                         <xforms:label class="fixed-width">Supervision </xforms:label>
+                                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item>
                                         <xforms:itemset model="mod-study-info"
                                             nodeset="instance('ins-supervisionType-items')/supervisionType">
                                             <xforms:label ref="label"/>
@@ -120,6 +125,11 @@
                                                   appearance="minimal">
                                                   <xforms:label class="fixed-width">Administration
                                                   Route </xforms:label>
+                                                  <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item>
                                                   <xforms:itemset model="mod-study-info"
                                                   nodeset="instance('ins-administrationRoute-items')/administrationRoute">
                                                   <xforms:label ref="label"/>
@@ -148,7 +158,11 @@
                                                   <xforms:select1 ref="drugStorage"
                                                   appearance="minimal">
                                                   <xforms:label class="fixed-width">Drug storage </xforms:label>
-                                                  <xforms:itemset model="mod-study-info"
+                                                  <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                                                   nodeset="instance('ins-drugStorage-items')/drugStorage">
                                                   <xforms:label ref="label"/>
                                                   <xforms:value ref="value"/>
@@ -216,6 +230,10 @@
 		                                                      <xforms:select1 ref="doseUnit" appearance="minimal">
 		                                                          <xforms:label/>
 		                                                          <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
 		                                                              <xforms:label>Tablets</xforms:label>
 		                                                              <xforms:value>tablets</xforms:value>
 		                                                          </xforms:item>
@@ -318,6 +336,10 @@
                                                   appearance="minimal">
                                                   <xforms:label/>
                                                   <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
                                                   <xforms:label>Tablets</xforms:label>
                                                   <xforms:value>tablets</xforms:value>
                                                   </xforms:item>
@@ -526,7 +548,11 @@
 
                     <xforms:select1 appearance="minimal" ref="regimenAllocationMethod">
                         <xforms:label class="fixed-width"> Regimen allocation </xforms:label>
-                        <xforms:itemset model="mod-study-info"
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                             nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
                             <xforms:label ref="label"/>
                             <xforms:value ref="value"/>
@@ -538,7 +564,11 @@
 
                     <xforms:select1 appearance="minimal" ref="blinding">
                         <xforms:label class="fixed-width">Blinding</xforms:label>
-                        <xforms:itemset model="mod-study-info"
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                             nodeset="instance('ins-blinding-items')/blinding">
                             <xforms:label ref="label"/>
                             <xforms:value ref="value"/>
@@ -557,7 +587,11 @@
                 <br/>
                 <xforms:select1 ref="feverMeasurement" appearance="minimal">
                     <xforms:label>Fever measurement</xforms:label>
-                    <xforms:itemset model="mod-study-info"
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                         nodeset="instance('ins-feverMeasurementMethod-items')/feverMeasurementMethod">
                         <xforms:label ref="label"/>
                         <xforms:value ref="value"/>
@@ -589,7 +623,11 @@
                 </xforms:label>
                 <xforms:select1 ref="microscopyStain" appearance="minimal">
                     <xforms:label class="fixed-width">Stain</xforms:label>
-                    <xforms:itemset model="mod-study-info"
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                         nodeset="instance('ins-microscopyStain-items')/microscopyStain">
                         <xforms:label ref="label"/>
                         <xforms:value ref="value"/>
@@ -737,6 +775,10 @@
                     <xforms:select1 ref="thickFilmFormula" appearance="minimal">
                         <xforms:label>Formula for thick film </xforms:label>
                         <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
                             <xforms:label>(X per Y WBCs)/ Y WBC</xforms:label>
                             <xforms:value>wbc</xforms:value>
                         </xforms:item>
@@ -775,6 +817,10 @@
                     <xforms:select1 ref="thinFilmFormula" appearance="minimal">
                         <xforms:label>Formula for thin film</xforms:label>
                         <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
                             <xforms:label> (X per 1000 RBCs * 125.6) * Hct</xforms:label>
                             <xforms:value>htc</xforms:value>
                         </xforms:item>
@@ -885,7 +931,11 @@
             <xforms:group ref="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
                 <xforms:select1 ref="applicability" appearance="minimal">
                     <xforms:label>Was genotyping for recrudescence vs reinfection done? </xforms:label>
-                    <xforms:itemset model="mod-study-info"
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                         nodeset="instance('ins-boolean-items')/boolean">
                         <xforms:label ref="label"/>
                         <xforms:value ref="value"/>
@@ -912,7 +962,11 @@
                                     <td>
                                         <xforms:select1 ref="markerName" appearance="minimal">
                                             <xforms:label>Marker</xforms:label>
-                                            <xforms:itemset model="mod-study-info"
+                                            <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                                                 nodeset="instance('ins-recrudescenceMarker-items')/recrudescenceMarker">
                                                 <xforms:label ref="label"/>
                                                 <xforms:value ref="value"/>
