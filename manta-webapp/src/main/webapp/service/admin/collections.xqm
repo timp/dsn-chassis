@@ -14,12 +14,6 @@ declare variable $config-collections:collection-spec :=
                 atombeat:exclude-entry-content="false"
                 atombeat:recursive="false">
                 <atom:title type="text">Studies</atom:title>
-                <!-- ensure security descriptor link available when listing collection -->
-                <atombeat:config-link-expansion>
-                    <atombeat:config context="entry-in-feed">
-                        <atombeat:param name="match-rels" value="http://www.cggh.org/2010/chassis/terms/groups"/>
-                    </atombeat:config>
-                </atombeat:config-link-expansion>
                 <!-- configure atombeat:allow for entry context -->
                 <atombeat:config-link-extensions>
                     <atombeat:extension-attribute
