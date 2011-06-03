@@ -229,7 +229,11 @@
                     <p>
                         <xforms:select1 ref="hypoxantine-added" appearance="minimal">
                             <xforms:label>Do you add Hypoxantine?</xforms:label>
-                            <xforms:itemset model="mod-study-info"
+                            <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                                 nodeset="instance('ins-boolean-items')/boolean">
                                 <xforms:label ref="label"/>
                                 <xforms:value ref="value"/>
@@ -255,7 +259,11 @@
                     <p>
                         <xforms:select1 ref="oroticAcid-added" appearance="minimal">
                             <xforms:label>Do you add orotic acid?</xforms:label>
-                            <xforms:itemset model="mod-study-info"
+                            <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                                 nodeset="instance('ins-boolean-items')/boolean">
                                 <xforms:label ref="label"/>
                                 <xforms:value ref="value"/>
@@ -280,7 +288,11 @@
                     <p>
                         <xforms:select1 ref="glucose-added" appearance="minimal">
                             <xforms:label>Do you add glucose?</xforms:label>
-                            <xforms:itemset model="mod-study-info"
+                            <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
                                 nodeset="instance('ins-boolean-items')/boolean">
                                 <xforms:label ref="label"/>
                                 <xforms:value ref="value"/>

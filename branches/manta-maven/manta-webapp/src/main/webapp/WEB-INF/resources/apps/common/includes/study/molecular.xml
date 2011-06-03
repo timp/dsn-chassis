@@ -71,7 +71,11 @@
 							</xforms:input>
 							<xforms:select1 ref="wholeBloodSource" appearance="minimal">
 								<xforms:label>Whole blood source</xforms:label>
-								<xforms:itemset model="mod-study-info"
+								<xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
 									nodeset="instance('ins-wholeBloodSource-items')/wholeBloodSource">
 									<xforms:label ref="label" />
 									<xforms:value ref="value" />
@@ -437,7 +441,11 @@
 												<xforms:group ref="locusTypeOpen">
 													<xforms:select1 ref="locusType" appearance="minimal">
 														<xforms:label>Other locus type</xforms:label>
-														<xforms:itemset model="mod-study-info"
+														<xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
 															nodeset="instance('ins-locusType-items')/locusType">
 															<xforms:label ref="label" />
 															<xforms:value ref="value" />
