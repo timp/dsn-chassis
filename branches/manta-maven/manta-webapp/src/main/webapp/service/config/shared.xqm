@@ -21,6 +21,9 @@ Configuration uses server specific settings in server.xml
       username="admin" password=""/>
          
 :)
+
+declare variable $config:workspace-title := 'Chassis';
+declare variable $config:workspace-summary := 'Chassis';
 (:~
  : The eXist user to run the AtomBeat queries as. Will require privileges to
  : create collections.
