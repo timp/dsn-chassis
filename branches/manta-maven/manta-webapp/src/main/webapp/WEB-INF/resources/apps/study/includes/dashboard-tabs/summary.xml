@@ -55,7 +55,7 @@
 											</p>
 											<h3>Study type (WWARN modules)</h3>
 											
-											<p>Please select the WWARN modules for which this study has data.</p>
+											<p>Please select the WWARN Modules for which this study has data. If submitting data for parasite clearance rate estimation, select “Clinical”.</p>
 											
 											<p>
 												<xforms:select ref="instance('ins-study-entry')/atom:content/study/modules" appearance="full">
