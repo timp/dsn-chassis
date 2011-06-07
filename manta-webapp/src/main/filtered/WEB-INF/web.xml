@@ -367,6 +367,10 @@
         <servlet-name>chassis-lookup-servlet</servlet-name>
         <servlet-class>org.cggh.chassis.manta.util.ChangeContentType</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>chassis-file-lookup-servlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.util.GetFiles</servlet-class>
+    </servlet>
     <!--
     <servlet>
         <servlet-name>exist-atom-servlet</servlet-name>
@@ -486,6 +490,10 @@
         <url-pattern>/ChangeContentType</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>chassis-file-lookup-servlet</servlet-name>
+        <url-pattern>/GetFiles</url-pattern>
+    </servlet-mapping>
     <!--
     <servlet-mapping>
         <servlet-name>exist-webdav-servlet</servlet-name>
