@@ -895,6 +895,16 @@
 		</resistanceLocus>
 	</xforms:instance>
 
+	<xforms:instance id="ins-otherLocus">
+		<otherLocus xmlns="">
+			<locusTypeOpen>
+				<locusType></locusType>
+				<locusTypeOther></locusTypeOther>
+			</locusTypeOpen>
+			<locusName></locusName>
+		</otherLocus>		
+	</xforms:instance>
+	
 	<xforms:instance id="ins-genotypedMarker">
 		<genotypedMarker xmlns="">
 			<genotypingMethodOpen>
