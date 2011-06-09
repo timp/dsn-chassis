@@ -1,0 +1,13 @@
+<cmis:query xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">
+    <cmis:statement>
+        <![CDATA[select f.*, a.*, t.* from wc:study_folder as f join wc:study_folder_data as a on f.cmis:objectid = a.cmis:objectid join cm:titled as t on f.cmis:objectid = t.cmis:objectid]]>
+    </cmis:statement>
+    <cmis:skipCount>0</cmis:skipCount>
+    <cmis:maxItems>5</cmis:maxItems>
+</cmis:query>
+<!--
+Posting the query, as such:
+curl -X POST -uadmin:admin
+"http://localhost:8080/alfresco/s/cmis/queries" -H "Content-Type:
+application/cmisquery+xml" -d @/Users/jpotts/testTypeQuery.cmis.xml
+-->
