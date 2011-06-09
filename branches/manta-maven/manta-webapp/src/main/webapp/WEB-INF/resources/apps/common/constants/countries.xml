@@ -456,11 +456,7 @@
     <label>KENYA</label>
     <value>KE</value>
     <!-- http://en.wikipedia.org/wiki/ISO_3166-2:KE -->
-    <regions>
-      <region>
-        <label>select a region...</label>
-        <value/>
-      </region>      
+    <regions>   
       <region>
         <label>Nairobi Municipality</label>
         <value>KE-110</value>
