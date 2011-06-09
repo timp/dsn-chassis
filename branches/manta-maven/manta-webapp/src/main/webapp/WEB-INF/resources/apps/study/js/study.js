@@ -101,9 +101,7 @@ function retrieveStudyAsAtomEntryXmlUsingStudyAtomEntryURL (studyAtomEntryURL) {
 		    alert("Error getting study data: " + errorThrown);
 		  } 
 		});
-	
-	//TODO: get study info and Add it on
-	
+
 	return studyAsAtomEntryXML;
 }
 
@@ -124,9 +122,7 @@ function retrieveStudyInfoAsAtomEntryXmlUsingStudyInfoAtomEntryURL (studyInfoAto
 		    alert("Error getting study info data: " + errorThrown);
 		  } 
 		});
-	
-	//TODO: get study info and Add it on
-	
+
 	return studyInfoAsAtomEntryXML;
 }
 
@@ -312,9 +308,9 @@ function retrieveStudyInfoCustomFieldLabelsRegExMapAsAssociativeArray () {
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/resistanceLociSequenced\\[(\\d+)\\]" : "ResistanceLociSeq",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/resistanceLoci\\[(\\d+)\\]/resistanceLocus\\[(\\d+)\\]/locusName\\[(\\d+)\\]" : "ResistanceLociSeq$8Name",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLociGenotyped\\[(\\d+)\\]" : "OtherLociGenotyped",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusTypeOpen\\[(\\d+)\\]/locusType\\[(\\d+)\\]" : "OtherLociType",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusTypeOpen\\[(\\d+)\\]/locusTypeOther\\[(\\d+)\\]" : "OtherLociTypeOther",
-			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusName\\[(\\d+)\\]" : "OtherLociName",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusTypeOpen\\[(\\d+)\\]/locusType\\[(\\d+)\\]" : "OtherLoci$8Type",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusTypeOpen\\[(\\d+)\\]/locusTypeOther\\[(\\d+)\\]" : "OtherLoci$8TypeOther",
+			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/sequencedLoci\\[(\\d+)\\]/otherLoci\\[(\\d+)\\]/otherLocus\\[(\\d+)\\]/locusName\\[(\\d+)\\]" : "OtherLoci$8Name",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/molecular\\[(\\d+)\\]/additionalGenotypicInformation\\[(\\d+)\\]/infectionComplexityEstimated\\[(\\d+)\\]" : "COIEstimated",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/analysisSite\\[(\\d+)\\]" : "analysis_site1",
 			"atom:entry\\[(\\d+)\\]/atom:content\\[(\\d+)\\]/study-info\\[(\\d+)\\]/invitro\\[(\\d+)\\]/culture\\[(\\d+)\\]/incubatorSystem\\[(\\d+)\\]" : "incubator_system",
