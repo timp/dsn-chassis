@@ -141,6 +141,10 @@
 											ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
 											<xforms:select1 ref="region">
 												<xforms:label class="fixed-width">Region </xforms:label>
+												<xforms:item>
+													<xforms:label>please select</xforms:label>
+													<xforms:value />
+												</xforms:item>
 												<xforms:itemset
 													nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
 													<xforms:label ref="label" />

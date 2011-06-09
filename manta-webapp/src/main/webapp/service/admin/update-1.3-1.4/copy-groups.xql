@@ -13,44 +13,6 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 import module namespace atom-protocol = "http://purl.org/atombeat/xquery/atom-protocol" at "../../lib/atom-protocol.xqm" ;
 import module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" at "../../plugins/manta-plugin.xqm";
 
-declare variable $test-study-entry {
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>http://localhost:8081/repository/service/content/studies/JDYEE</atom:id>
-    <atom:published>2011-01-11T10:52:09.748Z</atom:published>
-    <atom:updated>2011-01-11T10:52:09.748Z</atom:updated>
-    <atom:link rel="self" type="application/atom+xml;type=entry" href="http://localhost:8081/repository/service/content/studies/JDYEE"/>
-    <atom:link rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8081/repository/service/content/studies/JDYEE"/>
-    <atom:author>
-        <atom:email>colin@example.org</atom:email>
-    </atom:author>
-    <atom:title type="text">Colin's study</atom:title>
-    <atom:content type="application/vnd.chassis-manta+xml">
-        <study profile="http://www.cggh.org/2010/chassis/manta/1.2">
-            <study-is-published/>
-            <publications/>
-            <acknowledgements>
-                <person>
-                    <first-name/>
-                    <middle-name/>
-                    <family-name/>
-                    <email-address>colin@example.org</email-address>
-                    <institution/>
-                    <person-is-contactable/>
-                </person>
-            </acknowledgements>
-            <curator-notes/>
-            <study-status>in</study-status>
-        </study>
-    </atom:content>
-    <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
-        <atom:author>
-            <atom:email>colin@example.org</atom:email>
-        </atom:author>
-        <atom:updated>2011-01-11T10:52:09.748Z</atom:updated>
-        <atom:summary>initial revision</atom:summary>
-    </ar:comment>
-</atom:entry>
-};
 
 declare function local:edit-path-info( $entry as element(atom:entry) ) as xs:string?
 {
@@ -92,16 +54,17 @@ declare function local:content($content) as item()*
                 <p>This script will:</p>
                 
                 <ul>
-                    <li>Move groups from draft to study</li>
+                    <li>Copy the GROUP_ADMINISTRATOR group element from groups to the study entry</li>
                 </ul>
                 
                 <p>Total number of entries in <a href="../content/studies">Study</a> collection: <strong>{ count( $studies ) }</strong></p>
                 <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.2 profile: <strong>{ count( $old-studies ) }</strong></p>
                 <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.3 profile: <strong>{ count( $new-studies ) }</strong></p>
                 
+                <p>Note: This script has no test mode.</p>
+                
                 <p>
                     <form method="post" action="">
-                        Test <input type="checkbox" name="testing" checked="checked" />
                         <input type="submit" value="Migrate Data"></input>
                     </form>
                     <form method="get" action="">
@@ -116,15 +79,9 @@ declare function local:content($content) as item()*
 };
 
 declare function local:get-content($collection) as element( atom:entry )* {
-  let $testing := request:get-parameter("testing", "no")
-    let $content := if ($testing = "no") then
-        let $ret := atomdb:retrieve-members( concat("/", $collection) , false() )
-        return $ret
-    else
-        let $ret := xmldb:xcollection( concat('test-', $collection) )/atom:entry (: not recursive :)
-        return $ret
-     
-   return $content
+
+    let $content := atomdb:retrieve-members( concat("/", $collection) , false() )
+    return $content
 };
 
 declare function local:get-new-versioned-content-studies($studies) as element( atom:entry )* {
@@ -156,21 +113,13 @@ declare function local:do-modifications-studies($old-studies, $collection-name) 
 
 declare function local:save-changes($collection-name, $collection-new)
 {
-let $testing := request:get-parameter("testing", "no")
-    let $content := if ($testing = "no") then
-      let $migrated :=     
+
+    let $content := 
+
         for $new in $collection-new
         let $path-info := local:edit-path-info( $new )
         return atomdb:update-member( $path-info , $new )
-       return $migrated
-    else 
-    for $entry in $collection-new 
-        let $member-path-info := $entry/atom:link[@rel='edit']/@href
-        let $groups := text:groups( $member-path-info , "^(.*)/([^/]+)$" )
-		let $collection-path-info := $groups[2]
-		let $entry-resource-name := $groups[3]
-        let $entry-doc-db-path := xmldb:store( concat('test-', $collection-name) , $entry-resource-name , $entry , $CONSTANT:MEDIA-TYPE-ATOM )
-        return $entry-doc-db-path        
+ 
     return $content
 };
 
@@ -233,7 +182,7 @@ declare function local:copy-admin-nodes($collection) as element( atom:entry )*
    let $groups := 
        for $group in $collection
            	           
-	          
+	          let $logi := util:log-app("debug", "group", $group)
 	           
 	           (: Need to move permissions :)
 	           let $perm := local:get-permissions($group)         
@@ -263,23 +212,13 @@ declare function local:do-migration($collection-name) {
     let $new-collection := local:do-modifications-studies($collection, $collection-name)
     let $ret := local:save-changes($collection-name, $new-collection)
 
-    let $testing := request:get-parameter("testing", "no")
-        
     return local:do-post('')
 };
 
 let $login := xmldb:login( "/" , $config:exist-user , $config:exist-password )
 
-let $testing := request:get-parameter("testing", "no")
+let $content := ''
 
-let $content := if ($testing = "no") then
-        let $ret := ''
-        return $ret
-    else
-
-        let $test-studies-collection := xmldb:create-collection("xmldb:exist:///db", "test-studies"), 
-            $doc := local:save-changes("studies", $test-study-entry)
-        return $test-studies-collection
 
     
 return 
