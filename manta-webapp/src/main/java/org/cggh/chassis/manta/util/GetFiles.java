@@ -77,7 +77,7 @@ public class GetFiles extends HttpServlet {
 				out.print(",");
 				out.print(origin.getDisplay());
 				out.print(",");
-				out.print(origin.getPublished());
+				out.print(entry.getPublished());
 				out.print(",");
 				out.print(origin.getModules());
 				out.print(",");
