@@ -144,7 +144,7 @@ public class GetFiles extends HttpServlet {
 				ret.add(article);
 			}
 			is.close();
-		}
+		} else throw new RuntimeException("Http status code other than " + HttpStatus.SC_OK + " returned: " + statusCode);
 		method.releaseConnection();
 		return ret;
 	}
