@@ -67,6 +67,8 @@ public class GetFiles extends HttpServlet {
 			// Copy the content
 			String line = "";
 
+			out.println("chassisStudyId, publish, uploadDate, modules, url");
+
 			for(StudyEntry entry : filteredEntries) {
 				StudyEntry origin = entry.getOriginStudy();
 				out.println("chassisStudyId, publish, uploadDate, modules, url");
