@@ -52,26 +52,28 @@ public class GetFiles extends HttpServlet {
 		HttpSession session = request.getSession();
 		 */
 		HttpClient client = new HttpClient();
-		String url = "http://localhost:8080/repository/service/content/media/curated";
-		ArrayList<StudyEntry> entries;
-		ArrayList<StudyEntry> filteredEntries = new ArrayList<StudyEntry>();
+		String collectionUrl = "http://localhost:8080/repository/service/content/media/curated";
+		ArrayList<AtomEntry> curatedMediaEntries;
+		//ArrayList<AtomEntry> augmentedCuratedFileEntries = new ArrayList<AtomEntry>();
 		try {
-			entries = getEntries(request, client, url, null);
+		  // get all the file entries
+			curatedMediaEntries = getEntries(request, client, collectionUrl, null);
 
 			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
 
-			//Now we fetch the origin study info
-			for(StudyEntry entry : entries) {
-				//Can ignore the return
+			//Augment each curated file entry with its origin study field
+			for(AtomEntry entry : curatedMediaEntries) {
+				
 				if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
-					getEntries(request, client, "", entry);
-					filteredEntries.add(entry);
-				} 
+				  //Can ignore the return
+					getEntries(request, client, entry.getOrigin(), entry);
+					//augmentedCuratedFileEntries.add(entry);
+				} else out.println("filtering out " + entry.getCategory());
 		  }
-      Hashtable<String, StudyEntry> latest = new Hashtable<String, StudyEntry>();
-      for (StudyEntry entry : filteredEntries) { 
-        String key = entry.getId() + ":" + entry.getTitle();
-        StudyEntry currentEntry = latest.get(key);
+      Hashtable<String, AtomEntry> latest = new Hashtable<String, AtomEntry>();
+      for (AtomEntry entry : curatedMediaEntries) { 
+        String key = entry.getOriginStudy().getId() + ":" + entry.getTitle();
+        AtomEntry currentEntry = latest.get(key);
         if (currentEntry != null){
           Date cDate;
           try {
@@ -103,10 +105,10 @@ public class GetFiles extends HttpServlet {
 
 			out.println("chassisId,title, publish, uploadDate, modules, url");
 
-			for(StudyEntry entry : filteredEntries) {
-        String key = entry.getId() + ":" + entry.getTitle();
+			for(AtomEntry entry : curatedMediaEntries) {
+        String key = entry.getOriginStudy().getId() + ":" + entry.getTitle();
         if (entry.equals(latest.get(key))) {
-  				StudyEntry origin = entry.getOriginStudy();
+  				AtomEntry origin = entry.getOriginStudy();
 
 	  			out.print(origin.getId());
 	  			out.print(",");
@@ -138,22 +140,13 @@ public class GetFiles extends HttpServlet {
 	 * 
 	 * @param request
 	 * @param client
-	 * @param explicitURL
-	 * @param studyEntry
-	 * @return
-	 * @throws IOException
-	 * @throws HttpException
-	 * @throws SAXException
+	 * @param url
+	 * @param mediaEntry may be null
+	 * @return a list with one or all AtomEntries from the Curated Media collection
 	 */
-	private ArrayList<StudyEntry> getEntries(HttpServletRequest request, HttpClient client,
-			String explicitURL, StudyEntry studyEntry) throws IOException, HttpException, SAXException {
-		ArrayList<StudyEntry> ret = new ArrayList<StudyEntry>();
-		String url;
-		if (studyEntry == null) {
-			url = explicitURL;
-		} else {
-			url = studyEntry.getOrigin();
-		}
+	private ArrayList<AtomEntry> getEntries(HttpServletRequest request, HttpClient client,
+			String url, AtomEntry mediaEntry) throws IOException, HttpException, SAXException {
+		ArrayList<AtomEntry> ret = new ArrayList<AtomEntry>();
 		GetMethod method = new GetMethod(url);
 		method.setRequestHeader("cookie", request.getHeader("cookie"));
 
@@ -166,20 +159,20 @@ public class GetFiles extends HttpServlet {
 			parser.parse(inputSource);
 
 			Document doc = parser.getDocument();
-
+			
+			
+      // atom:entry is the outermost enclosing tag of an AtomEntry but repeated for an AtomFeed
+			
 			NodeList entries = doc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
-			Element entry;
+			Element entryElement;
 			int i = 0;
-			while ((entry = (Element) entries.item(i++)) != null ) {
-				StudyEntry article;
-
-				article = new StudyEntry();
-
-				parseEntry(entry, article);
-				if (studyEntry != null) {
-					studyEntry.setOriginStudy(article);
+			while ((entryElement = (Element)entries.item(i++)) != null ) {
+				AtomEntry atomEntry = new AtomEntry();
+				parseEntry(entryElement, atomEntry);
+				if (mediaEntry != null) { // we are augmenting
+					mediaEntry.setOriginStudy(atomEntry); //atomEntry will be a Study here
 				}
-				ret.add(article);
+				ret.add(atomEntry);
 			}
 			is.close();
 		} else throw new RuntimeException("Http status code other than " + HttpStatus.SC_OK + " returned: " + statusCode);
@@ -202,7 +195,7 @@ public class GetFiles extends HttpServlet {
 	 * Generic function to parse an AtomEntry and populate the article object
 	 * Some specifics for either a study or a media entry
 	 */
-	private void parseEntry(Element entry, StudyEntry article) {
+	private void parseEntry(Element entry, AtomEntry article) {
     NodeList categories = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","category");
     if (categories.getLength() > 0) {
       Element objEl = (Element) categories.item(0);

@@ -4,14 +4,18 @@ package org.cggh.chassis.manta.util;
  * Some fields from an AtomEntry;
  * which might be a Study or a curated media entry.
  */
-public class StudyEntry {
+public class AtomEntry {
 
-	private String self;
-	private String published;
+  // Atom fields
   private String id;
+  private String category;
   private String title;
-	private String origin;
-	private StudyEntry originStudy;
+  private String self;
+  private String published;
+
+  //manta fields
+  private String origin;
+	private AtomEntry originStudy;
 	private String display;
 	private String modules;
 	
@@ -27,13 +31,12 @@ public class StudyEntry {
 	public void setModules(String modules) {
 		this.modules = modules;
 	}
-	public StudyEntry getOriginStudy() {
+	public AtomEntry getOriginStudy() {
 		return originStudy;
 	}
-	public void setOriginStudy(StudyEntry originStudy) {
+	public void setOriginStudy(AtomEntry originStudy) {
 		this.originStudy = originStudy;
 	}
-	private String category;
 	
 	public String getCategory() {
 		return category;
@@ -41,6 +44,7 @@ public class StudyEntry {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	/** url of origin study */
 	public String getOrigin() {
 		return origin;
 	}
