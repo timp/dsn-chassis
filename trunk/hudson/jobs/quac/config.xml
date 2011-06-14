@@ -57,17 +57,5 @@
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
-  <publishers>
-    <hudson.plugins.ircbot.IrcPublisher>
-      <targets class="java.util.Collections$EmptyList"/>
-      <strategy>ALL</strategy>
-      <notifyOnBuildStart>false</notifyOnBuildStart>
-      <notifySuspects>false</notifySuspects>
-      <notifyCulprits>false</notifyCulprits>
-      <notifyFixers>false</notifyFixers>
-      <notifyUpstreamCommitters>false</notifyUpstreamCommitters>
-      <buildToChatNotifier class="hudson.plugins.im.build_notify.DefaultBuildToChatNotifier"/>
-    </hudson.plugins.ircbot.IrcPublisher>
-  </publishers>
   <buildWrappers/>
 </maven2-moduleset>
