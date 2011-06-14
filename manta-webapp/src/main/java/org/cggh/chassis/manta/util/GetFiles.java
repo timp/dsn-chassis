@@ -3,7 +3,12 @@ package org.cggh.chassis.manta.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +31,8 @@ import org.xml.sax.SAXException;
  */
 public class GetFiles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	DateFormat dateFormat = new SimpleDateFormat();
 
 	public GetFiles() {
 	}
@@ -59,31 +66,53 @@ public class GetFiles extends HttpServlet {
 					filteredEntries.add(entry);
 				}
 			}
+      Hashtable<String, StudyEntry> latest = new Hashtable<String, StudyEntry>();
+      for (StudyEntry entry : filteredEntries) { 
+        String key = entry.getId() + ":" + entry.getTitle();
+        StudyEntry currentEntry = latest.get(key);
+        if (currentEntry != null){
+          Date cDate;
+          try {
+            cDate = dateFormat.parse(currentEntry.getPublished());
+          } catch (ParseException e) {
+            throw new RuntimeException(e);
+          }
+          Date tDate;
+          try {
+            tDate = dateFormat.parse(entry.getPublished());
+          } catch (ParseException e) {
+            throw new RuntimeException(e);
+          }
+          if (tDate.after(cDate))
+            latest.put(key, entry);
+        } else 
+          latest.put(key, entry);
 
+      }
+			
 			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
 
 			response.setHeader("Content-Type", "text/csv");
 			response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
-			// Copy the content
-			String line = "";
 
 			out.println("chassisStudyId, publish, uploadDate, modules, url");
 
 			for(StudyEntry entry : filteredEntries) {
-				StudyEntry origin = entry.getOriginStudy();
+        String key = entry.getId() + ":" + entry.getTitle();
+        if (entry.equals(latest.get(key))) {
+  				StudyEntry origin = entry.getOriginStudy();
 
-
-				out.print(origin.getId());
-				out.print(",");
-				out.print(origin.getDisplay());
-				out.print(",");
-				out.print(entry.getPublished());
-				out.print(",");
-				out.print(origin.getModules());
-				out.print(",");
-				out.println(entry.getSelf());
+	  			out.print(origin.getId());
+	  			out.print(",");
+	  			out.print(origin.getDisplay());
+		  		out.print(",");
+			  	out.print(entry.getPublished());
+		  		out.print(",");
+	  			out.print(origin.getModules());
+	  			out.print(",");
+		  		out.println(entry.getSelf());
+        }
 			}
-			out.print(line);
 
 			out.close();
 		} catch (SAXException e) {
@@ -164,13 +193,13 @@ public class GetFiles extends HttpServlet {
 	 * Some specifics for either a study or a media entry
 	 */
 	private void parseEntry(Element entry, StudyEntry article) {
-		NodeList categories = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","category");
-		if (categories.getLength() > 0) {
-			Element objEl = (Element) categories.item(0);
+    NodeList categories = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","category");
+    if (categories.getLength() > 0) {
+      Element objEl = (Element) categories.item(0);
 
-			String term = objEl.getAttribute("term");
-			article.setCategory(term);
-		}
+      String term = objEl.getAttribute("term");
+      article.setCategory(term);
+    }
 
 		NodeList ids = entry.getElementsByTagNameNS("http://www.cggh.org/2010/chassis/manta/xmlns","id");
 		if (ids.getLength() > 0) {
@@ -179,9 +208,13 @@ public class GetFiles extends HttpServlet {
 			String id = objEl.getFirstChild().getNodeValue();
 			article.setId(id);
 		}
-		Element pubEl = (Element) entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","published").item(0);
-
-		article.setPublished(pubEl.getFirstChild().getNodeValue());
+		
+    Element titleEl = (Element) entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","title").item(0);
+    article.setTitle(titleEl.getFirstChild().getNodeValue());
+    
+    Element pubEl = (Element) entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","published").item(0);
+    article.setPublished(pubEl.getFirstChild().getNodeValue());
+    
 		NodeList linksEl = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","link");
 		Element link;
 		int j = 0;
