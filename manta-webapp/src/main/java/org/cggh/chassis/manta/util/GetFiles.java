@@ -83,22 +83,26 @@ public class GetFiles extends HttpServlet {
         String key = explorerFileAtomEntry.getOriginStudy().getId() + ":" + explorerFileAtomEntry.getTitle();
         AtomEntry currentEntry = latest.get(key);
         if (currentEntry != null){
-          Date cDate;
+          Date cDate = null;
           try {
             cDate = dateFormat.parse(currentEntry.getPublished());
           } catch (ParseException e) {
-            throw new RuntimeException(e);
+            out.println(e.getMessage());
+            //throw new RuntimeException(e);
           }
-          Date tDate;
+          Date tDate = null;
           try {
             tDate = dateFormat.parse(explorerFileAtomEntry.getPublished());
           } catch (ParseException e) {
-            throw new RuntimeException(e);
+            out.println(e.getMessage());
+            //throw new RuntimeException(e);
           }
           if (tDate.after(cDate)) {
             latest.put(key, explorerFileAtomEntry);
             out.println("Putting earlier into latest:"+key + " " + tDate + ">" + cDate);
-          }
+          } else
+            out.println("Excluding later from latest:"+key + " " + tDate + "<" + cDate);
+            
         } else {
           latest.put(key, explorerFileAtomEntry);
           out.println("Putting unknown into latest:"+key);          
@@ -107,7 +111,7 @@ public class GetFiles extends HttpServlet {
 			
 			out.println("chassisId,title, publish, uploadDate, modules, url");
 
-			for(AtomEntry entry : curatedMediaEntries) {
+			for(AtomEntry entry : explorerFileEntries) {
         String key = entry.getOriginStudy().getId() + ":" + entry.getTitle();
         if (entry.equals(latest.get(key))) {
   				AtomEntry origin = entry.getOriginStudy();
@@ -131,7 +135,8 @@ public class GetFiles extends HttpServlet {
 			out.close();
 		} catch (SAXException e) {
 			e.printStackTrace(System.err);
-			//if there's a parse error it's probably because the user isn't authenticated and the login page isn't valid XML
+			// if there's a parse error it's probably because the user isn't authenticated 
+			// and the login page isn't valid XML
 			response.setStatus(HttpStatus.SC_FORBIDDEN);
 		}
 	}
