@@ -95,7 +95,7 @@ public class GetFiles extends HttpServlet {
 			response.setHeader("Content-Type", "text/csv");
 			response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
 
-			out.println("chassisStudyId, publish, uploadDate, modules, url");
+			out.println("chassisId, publish, uploadDate, modules, url,title");
 
 			for(StudyEntry entry : filteredEntries) {
         String key = entry.getId() + ":" + entry.getTitle();
@@ -111,6 +111,8 @@ public class GetFiles extends HttpServlet {
 	  			out.print(origin.getModules());
 	  			out.print(",");
 		  		out.println(entry.getSelf());
+          out.print(",");
+          out.println(entry.getTitle());
         }
 			}
 
