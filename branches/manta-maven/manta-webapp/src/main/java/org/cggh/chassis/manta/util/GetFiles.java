@@ -32,7 +32,7 @@ import org.xml.sax.SAXException;
 public class GetFiles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	DateFormat dateFormat = new SimpleDateFormat();
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	public GetFiles() {
 	}
