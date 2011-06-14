@@ -32,6 +32,8 @@ import org.xml.sax.SAXException;
 public class GetFiles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	PrintWriter out; // also used for debug logging 
+	
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 	public GetFiles() {
@@ -66,7 +68,7 @@ public class GetFiles extends HttpServlet {
 		  // get all the file entries
 			curatedMediaEntries = getEntries(request, client, collectionUrl, null);
 
-			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+			out = new PrintWriter(response.getOutputStream(), true);
 
 			//Augment each curated file entry with its origin study field
 			for(AtomEntry entry : curatedMediaEntries) {
@@ -75,8 +77,8 @@ public class GetFiles extends HttpServlet {
 				  //Can ignore the return
 					getEntries(request, client, entry.getOrigin(), entry);
 					explorerFileEntries.add(entry);
-					out.println("Adding explorer file entry " + entry.getOriginStudy().getId());
-				} else out.println("filtering out " + entry.getCategory());
+					debugLog("Adding explorer file entry " + entry.getOriginStudy().getId());
+				} else debugLog("filtering out " + entry.getCategory());
 		  }
       Hashtable<String, AtomEntry> latest = new Hashtable<String, AtomEntry>();
       for (AtomEntry explorerFileAtomEntry : explorerFileEntries) { 
@@ -87,25 +89,23 @@ public class GetFiles extends HttpServlet {
           try {
             cDate = dateFormat.parse(currentEntry.getPublished());
           } catch (ParseException e) {
-            out.println(e.getMessage());
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
           }
           Date tDate = null;
           try {
             tDate = dateFormat.parse(explorerFileAtomEntry.getPublished());
           } catch (ParseException e) {
-            out.println(e.getMessage());
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
           }
           if (tDate.after(cDate)) {
             latest.put(key, explorerFileAtomEntry);
-            out.println("Putting earlier into latest:"+key + " " + tDate + ">" + cDate);
+            debugLog("Putting earlier into latest:"+key + " " + tDate + ">" + cDate);
           } else
-            out.println("Excluding later from latest:"+key + " " + tDate + "<" + cDate);
+            debugLog("Excluding later from latest:"+key + " " + tDate + "<" + cDate);
             
         } else {
           latest.put(key, explorerFileAtomEntry);
-          out.println("Putting unknown into latest:"+key);          
+          debugLog("Putting unknown into latest:"+key);          
         }
       }
 			
@@ -118,7 +118,7 @@ public class GetFiles extends HttpServlet {
 
 	  			out.print(origin.getId());
 	  			out.print(",");
-          out.println(entry.getTitle());
+          out.print(entry.getTitle());
           out.print(",");
 	  			out.print(origin.getDisplay());
 		  		out.print(",");
@@ -126,9 +126,10 @@ public class GetFiles extends HttpServlet {
 		  		out.print(",");
 	  			out.print(origin.getModules());
 	  			out.print(",");
-		  		out.println(entry.getSelf());
+		  		out.print(entry.getSelf());
+		  		out.println();
         } else {
-          out.println("Ignoring "+key);
+          debugLog("Ignoring "+key);
         }
 			}
 
@@ -138,9 +139,15 @@ public class GetFiles extends HttpServlet {
 			// if there's a parse error it's probably because the user isn't authenticated 
 			// and the login page isn't valid XML
 			response.setStatus(HttpStatus.SC_FORBIDDEN);
+		} catch (RuntimeException e) { 
+      response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);		  
 		}
 	}
 
+	private void debugLog(String message) { 
+	  out.println(message);
+	}
+	
 	/**
 	 * If studyEntry is null then get the entries from explicitURL
 	 * If studyEntry is not null then get the originStudy for that entry
