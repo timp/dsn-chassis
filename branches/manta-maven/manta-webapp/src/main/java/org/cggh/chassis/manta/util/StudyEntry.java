@@ -1,10 +1,15 @@
 package org.cggh.chassis.manta.util;
 
+/** 
+ * Some fields from an AtomEntry;
+ * which might be a Study or a curated media entry.
+ */
 public class StudyEntry {
 
 	private String self;
 	private String published;
-	private String id;
+  private String id;
+  private String title;
 	private String origin;
 	private StudyEntry originStudy;
 	private String display;
@@ -54,10 +59,19 @@ public class StudyEntry {
 	public void setPublished(String published) {
 		this.published = published;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+  /** chassisStudyId */
+  public String getId() {
+    return id;
+  }
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  /** Atom:Title - may be study title or file name. */
+  public String getTitle() {
+    return title;
+  }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 }
