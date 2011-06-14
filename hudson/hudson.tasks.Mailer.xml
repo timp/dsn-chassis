@@ -3,7 +3,7 @@
   <defaultSuffix>@gmail.com</defaultSuffix>
   <hudsonUrl>http://jenkins.cggh.org/</hudsonUrl>
   <smtpAuthUsername>hudson.cloud1</smtpAuthUsername>
-  <smtpAuthPassword>dSbw/J8LucQPDA7maNo/1v/39MlA+DafjeBtNIq/IaY=</smtpAuthPassword>
+  <smtpAuthPassword>HeRxZnxspf/4eJVuGEGje2uYMXOMt2HlkKRF0XiJJEM=</smtpAuthPassword>
   <adminAddress>CGGH Jenkins &lt;timp@well.ox.ac.uk&gt;</adminAddress>
   <smtpHost>smtp.gmail.com</smtpHost>
   <useSsl>true</useSsl>
