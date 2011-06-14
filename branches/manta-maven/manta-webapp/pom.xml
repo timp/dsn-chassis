@@ -155,13 +155,13 @@
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>manta-xquery-functions</artifactId>
-			<version>0.1-beta-1</version>
+			<version>0.1-beta-2-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>manta-config</artifactId>
-			<version>0.0.1-beta-1</version>
+			<version>0.2-alpha-5-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -172,7 +172,14 @@
 		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
 	</scm>
 	<build>
-		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
+  <extensions>
+    <extension>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-ssh</artifactId>
+      <version>1.0-beta-6</version>
+    </extension>
+  </extensions>  
+  <finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
