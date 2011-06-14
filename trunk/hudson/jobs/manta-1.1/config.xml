@@ -16,16 +16,17 @@
         <remote>http://dsn-chassis.googlecode.com/svn/branches/manta-1.1</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
-    <useUpdate>true</useUpdate>
-    <doRevert>false</doRevert>
     <excludedRegions></excludedRegions>
     <includedRegions></includedRegions>
     <excludedUsers></excludedUsers>
     <excludedRevprop></excludedRevprop>
     <excludedCommitMessages></excludedCommitMessages>
+    <useUpdate>true</useUpdate>
+    <doRevert>false</doRevert>
   </scm>
   <canRoam>true</canRoam>
   <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
@@ -43,6 +44,9 @@
   <usePrivateRepository>false</usePrivateRepository>
   <ignoreUpstremChanges>true</ignoreUpstremChanges>
   <archivingDisabled>false</archivingDisabled>
+  <resolveDependencies>false</resolveDependencies>
+  <processPlugins>false</processPlugins>
+  <mavenValidationLevel>0</mavenValidationLevel>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
       <recipients>timp@well.ox.ac.uk lee.hart@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>

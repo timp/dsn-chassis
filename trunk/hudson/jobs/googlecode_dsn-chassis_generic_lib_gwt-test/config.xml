@@ -16,15 +16,16 @@
         <remote>https://dsn-chassis.googlecode.com/svn/trunk/generic/lib/gwt-test</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
-    <useUpdate>true</useUpdate>
-    <doRevert>false</doRevert>
     <excludedRegions></excludedRegions>
     <excludedUsers></excludedUsers>
     <excludedRevprop></excludedRevprop>
     <excludedCommitMessages></excludedCommitMessages>
+    <useUpdate>true</useUpdate>
+    <doRevert>false</doRevert>
   </scm>
   <canRoam>true</canRoam>
   <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
@@ -38,6 +39,9 @@
   <usePrivateRepository>false</usePrivateRepository>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>
   <archivingDisabled>false</archivingDisabled>
+  <resolveDependencies>false</resolveDependencies>
+  <processPlugins>false</processPlugins>
+  <mavenValidationLevel>0</mavenValidationLevel>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
       <recipients>timp@well.ox.ac.uk</recipients>

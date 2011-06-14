@@ -16,13 +16,13 @@
         <remote>https://dsn-chassis.googlecode.com/svn/trunk/quac</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
-    <useUpdate>false</useUpdate>
-    <doRevert>false</doRevert>
     <excludedRegions></excludedRegions>
     <includedRegions></includedRegions>
     <excludedUsers></excludedUsers>
     <excludedRevprop></excludedRevprop>
     <excludedCommitMessages></excludedCommitMessages>
+    <useUpdate>false</useUpdate>
+    <doRevert>false</doRevert>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
