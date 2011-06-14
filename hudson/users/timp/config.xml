@@ -20,8 +20,5 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <hudson.plugins.ircbot.IrcUserProperty>
-      <nick>timp</nick>
-    </hudson.plugins.ircbot.IrcUserProperty>
   </properties>
 </user>

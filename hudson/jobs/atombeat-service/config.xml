@@ -54,6 +54,5 @@
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
-  <publishers>
   <buildWrappers/>
 </maven2-moduleset>
