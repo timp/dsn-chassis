@@ -58,14 +58,16 @@ public class GetFiles extends HttpServlet {
 		try {
 			entries = getEntries(request, client, url, null);
 
+			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+
 			//Now we fetch the origin study info
 			for(StudyEntry entry : entries) {
 				//Can ignore the return
 				if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
 					getEntries(request, client, "", entry);
 					filteredEntries.add(entry);
-				}
-			}
+				} 
+		  }
       Hashtable<String, StudyEntry> latest = new Hashtable<String, StudyEntry>();
       for (StudyEntry entry : filteredEntries) { 
         String key = entry.getId() + ":" + entry.getTitle();
@@ -83,19 +85,23 @@ public class GetFiles extends HttpServlet {
           } catch (ParseException e) {
             throw new RuntimeException(e);
           }
-          if (tDate.after(cDate))
+          if (tDate.after(cDate)) {
             latest.put(key, entry);
-        } else 
-          latest.put(key, entry);
+            out.println("Putting earlier into latest:"+key + tDate + ">" + cDate);
 
+          }
+        } else {
+          latest.put(key, entry);
+          out.println("Putting unknown into latest:"+key);
+          
+        }
       }
 			
-			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
 
 			response.setHeader("Content-Type", "text/csv");
 			response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
 
-			out.println("chassisId, publish, uploadDate, modules, url,title");
+			out.println("chassisId,title, publish, uploadDate, modules, url");
 
 			for(StudyEntry entry : filteredEntries) {
         String key = entry.getId() + ":" + entry.getTitle();
@@ -104,6 +110,8 @@ public class GetFiles extends HttpServlet {
 
 	  			out.print(origin.getId());
 	  			out.print(",");
+          out.println(entry.getTitle());
+          out.print(",");
 	  			out.print(origin.getDisplay());
 		  		out.print(",");
 			  	out.print(entry.getPublished());
@@ -111,8 +119,8 @@ public class GetFiles extends HttpServlet {
 	  			out.print(origin.getModules());
 	  			out.print(",");
 		  		out.println(entry.getSelf());
-          out.print(",");
-          out.println(entry.getTitle());
+        } else {
+          out.println("Ignoring "+key);
         }
 			}
 
