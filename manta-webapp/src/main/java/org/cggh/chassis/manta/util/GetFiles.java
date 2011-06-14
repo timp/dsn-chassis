@@ -54,8 +54,15 @@ public class GetFiles extends HttpServlet {
 		HttpClient client = new HttpClient();
 		String collectionUrl = "http://localhost:8080/repository/service/content/media/curated";
 		ArrayList<AtomEntry> curatedMediaEntries;
-		//ArrayList<AtomEntry> augmentedCuratedFileEntries = new ArrayList<AtomEntry>();
+		ArrayList<AtomEntry> explorerFileEntries = new ArrayList<AtomEntry>();
 		try {
+
+
+      response.setHeader("Content-Type", "text/csv");
+      response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
+
+		  
+		  
 		  // get all the file entries
 			curatedMediaEntries = getEntries(request, client, collectionUrl, null);
 
@@ -67,12 +74,13 @@ public class GetFiles extends HttpServlet {
 				if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
 				  //Can ignore the return
 					getEntries(request, client, entry.getOrigin(), entry);
-					//augmentedCuratedFileEntries.add(entry);
+					explorerFileEntries.add(entry);
+					out.println("Adding explorer file entry " + entry.getOriginStudy().getId());
 				} else out.println("filtering out " + entry.getCategory());
 		  }
       Hashtable<String, AtomEntry> latest = new Hashtable<String, AtomEntry>();
-      for (AtomEntry entry : curatedMediaEntries) { 
-        String key = entry.getOriginStudy().getId() + ":" + entry.getTitle();
+      for (AtomEntry explorerFileAtomEntry : explorerFileEntries) { 
+        String key = explorerFileAtomEntry.getOriginStudy().getId() + ":" + explorerFileAtomEntry.getTitle();
         AtomEntry currentEntry = latest.get(key);
         if (currentEntry != null){
           Date cDate;
@@ -83,26 +91,20 @@ public class GetFiles extends HttpServlet {
           }
           Date tDate;
           try {
-            tDate = dateFormat.parse(entry.getPublished());
+            tDate = dateFormat.parse(explorerFileAtomEntry.getPublished());
           } catch (ParseException e) {
             throw new RuntimeException(e);
           }
           if (tDate.after(cDate)) {
-            latest.put(key, entry);
-            out.println("Putting earlier into latest:"+key + tDate + ">" + cDate);
-
+            latest.put(key, explorerFileAtomEntry);
+            out.println("Putting earlier into latest:"+key + " " + tDate + ">" + cDate);
           }
         } else {
-          latest.put(key, entry);
-          out.println("Putting unknown into latest:"+key);
-          
+          latest.put(key, explorerFileAtomEntry);
+          out.println("Putting unknown into latest:"+key);          
         }
       }
 			
-
-			response.setHeader("Content-Type", "text/csv");
-			response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
-
 			out.println("chassisId,title, publish, uploadDate, modules, url");
 
 			for(AtomEntry entry : curatedMediaEntries) {
@@ -180,20 +182,9 @@ public class GetFiles extends HttpServlet {
 		return ret;
 	}
 
-
-	/*
-	 * HttpClient 4.0:
-	 * 
-	 * HttpClient client = new DefaultHttpClient(); HttpGet method = new
-	 * HttpGet(url); HttpResponse httpResponse = client.execute(method); int
-	 * statusCode = httpResponse.getStatusLine().getStatusCode(); if
-	 * (statusCode == HttpStatus.SC_OK) { InputStream is =
-	 * httpResponse.getEntity().getContent(); // do something with the input
-	 * stream }
-	 */
 	/**
-	 * Generic function to parse an AtomEntry and populate the article object
-	 * Some specifics for either a study or a media entry
+	 * Generic function to parse an AtomEntry and populate the article object.
+	 * Some specifics for either a study or a media entry.
 	 */
 	private void parseEntry(Element entry, AtomEntry article) {
     NodeList categories = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","category");
