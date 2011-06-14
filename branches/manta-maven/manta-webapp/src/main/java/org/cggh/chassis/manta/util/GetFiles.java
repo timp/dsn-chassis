@@ -32,6 +32,8 @@ import org.xml.sax.SAXException;
 public class GetFiles extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private final boolean DEBUG = false;
+	
 	PrintWriter out; // also used for debug logging 
 	
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -145,7 +147,8 @@ public class GetFiles extends HttpServlet {
 	}
 
 	private void debugLog(String message) { 
-	  out.println(message);
+	  if (DEBUG)
+  	  out.println(message);
 	}
 	
 	/**
