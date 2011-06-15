@@ -152,14 +152,14 @@ public class GetFiles extends HttpServlet {
 	}
 	
 	/**
-	 * If studyEntry is null then get the entries from explicitURL
-	 * If studyEntry is not null then get the originStudy for that entry
+	 * 
+	 * If studyEntry is not null then augment it.
 	 * 
 	 * @param request
 	 * @param client
 	 * @param url
 	 * @param mediaEntry may be null
-	 * @return a list with one or all AtomEntries from the Curated Media collection
+	 * @return a list with all AtomEntries from the Curated Media collection or a specific Study AtomEntry
 	 */
 	private ArrayList<AtomEntry> getEntries(HttpServletRequest request, HttpClient client,
 			String url, AtomEntry mediaEntry) throws IOException, HttpException, SAXException {
