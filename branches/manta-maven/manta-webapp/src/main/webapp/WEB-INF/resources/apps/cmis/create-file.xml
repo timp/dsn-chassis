@@ -14,7 +14,7 @@
                 propertyDefinitionId="cmis:objectTypeId"><cmis:value>cmis:document</cmis:value></cmis:propertyId>
             <cmis:propertyString
                 propertyDefinitionId="cmis:contentStreamMimeType"><cmis:value>text/xml</cmis:value></cmis:propertyString>
-            <alf:aspects>
+            <alf:setAspects>
                 <alf:appliedAspects>P:cm:titled</alf:appliedAspects>
                 <alf:appliedAspects>P:rn:renditioned</alf:appliedAspects>
                 <alf:appliedAspects>P:cm:taggable</alf:appliedAspects>
@@ -23,8 +23,9 @@
                 <alf:appliedAspects>P:app:inlineeditable</alf:appliedAspects>
                 <alf:properties>
                     <cmis:propertyString propertyDefinitionId="cm:author" displayName="Author" queryName="cm:author"><cmis:value></cmis:value></cmis:propertyString>
+                    <cmis:propertyString propertyDefinitionId="cm:title" displayName="Title" queryName="cm:title"><cmis:value></cmis:value></cmis:propertyString>
                 </alf:properties>
-            </alf:aspects>
+            </alf:setAspects>
         </cmis:properties>
     </cmisra:object>
 </entry>

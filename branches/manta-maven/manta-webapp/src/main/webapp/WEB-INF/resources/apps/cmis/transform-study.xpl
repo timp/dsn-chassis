@@ -15,6 +15,7 @@
         <p:input name="config">
             <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
                 xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
+                xmlns:alf="http://www.alfresco.org"
                 version="1.0">
                 <xsl:template match="@*|node()">
                     <xsl:copy>
@@ -27,11 +28,22 @@
                     </cmis:value>
                 </xsl:template>
                 <!-- this will be for the countries -->
-                <!-- TODO special characters need to be handled -->
                 <xsl:template match="atom:label">
                     <cmis:value>
                         <xsl:apply-templates select="node()"/>
                     </cmis:value>
+                </xsl:template>
+                <xsl:template match="alf:aspects">
+                    <alf:setAspects><xsl:apply-templates/></alf:setAspects>
+                </xsl:template>
+                <xsl:template match="cmis:propertyString[@propertyDefinitionId='wc:modules']/text()">
+                    <xsl:for-each select="tokenize(.,'\s+')">
+                        <cmis:value><xsl:if test="'clinical' = .">Clinical</xsl:if>
+                            <xsl:if test="'molecular' = .">Molecular</xsl:if>
+                            <xsl:if test="'pharmacology' = .">Pharmacology</xsl:if>
+                            <xsl:if test="'invitro' = .">In vitro</xsl:if>
+                        </cmis:value>
+                    </xsl:for-each>
                 </xsl:template>
             </xsl:stylesheet>
         </p:input>

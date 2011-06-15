@@ -7,7 +7,7 @@
     <cmisra:object>
         <cmis:properties>
             <cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
-                <cmis:value>F:wc:study_folder</cmis:value>
+                <cmis:value>F:wc:studyFolder</cmis:value>
             </cmis:propertyId>
             <cmis:propertyId propertyDefinitionId="cmis:baseTypeId">
                 <cmis:value>cmis:folder</cmis:value>
@@ -15,14 +15,15 @@
             <cmis:propertyId propertyDefinitionId="st:siteVisibility">
                 <cmis:value>PUBLIC</cmis:value>
             </cmis:propertyId>
-            <alf:aspects>
+            <alf:setAspects>
                 <alf:appliedAspects>P:cm:tagscope</alf:appliedAspects>
                 <alf:appliedAspects>P:cm:titled</alf:appliedAspects>
                 <alf:properties>
-                    <cmis:propertyString propertyDefinitionId="cm:description" displayName="Description" queryName="cm:description"><cmis:value>testing by al</cmis:value></cmis:propertyString>
+                    <cmis:propertyString propertyDefinitionId="cm:description" displayName="Description" queryName="cm:description"><cmis:value></cmis:value></cmis:propertyString>
                     <cmis:propertyString propertyDefinitionId="cm:title" displayName="Title" queryName="cm:title"><cmis:value>altest1</cmis:value></cmis:propertyString>
+                    <cmis:propertyString propertyDefinitionId="wc:studyInfoLink" displayName="Link to the study metadata XML in Chassis" queryName="wc:studyInfoLink"><cmis:value></cmis:value></cmis:propertyString>
                 </alf:properties>
-            </alf:aspects>
+            </alf:setAspects>
             
         </cmis:properties>
     </cmisra:object>
