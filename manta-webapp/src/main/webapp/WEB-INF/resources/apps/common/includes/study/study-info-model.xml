@@ -42,15 +42,12 @@
 	-->
 
 	<xforms:instance id="ins-lookupAddress">
-		<lookupAddress xmlns="">Oxford United Kingdom
+		<lookupAddress xmlns="">
 		</lookupAddress>
 	</xforms:instance>
 
 	<xforms:bind nodeset="instance('ins-lookupAddress')"
 		calculate="
-		if (normalize-space(instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/country) = '') then 
-			'Oxford United Kingdom' 
-		else 
 		concat(instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/locality, 
 				' ', 
 				instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/district, 
@@ -76,9 +73,6 @@
 
 						<xforms:bind nodeset="lookupAddress"
 							calculate="
-							if (normalize-space(../country) = '') then 
-							'Oxford United Kingdom' 
-							else 
 							for $context in (..) return
 							concat(
 							$context/locality, 
