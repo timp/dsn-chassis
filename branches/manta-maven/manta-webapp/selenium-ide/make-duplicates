@@ -12,11 +12,6 @@
 <tr><td rowspan="1" colspan="3">duplicates</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/repository/study/dashboard?tab=study-info&amp;study=http://localhost:8080/repository/service/content/studies/JXFNU</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
 	<td>xf-1322·1-1</td>
 	<td></td>
@@ -191,7 +186,6 @@
 	<td>xf-2402</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
