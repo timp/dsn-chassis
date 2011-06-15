@@ -82,9 +82,11 @@
         	
         	geocodingID = map.mapID;
         	var address = Document.getValue(map.addressOutputID);
-        	var geocodeRequest = "https://dev.virtualearth.net/REST/v1/Locations/" + address + "?output=json&jsonp=myCallback&key=" + credentials;
+        	if(address.replace(/^\s\s*/, '').replace(/\s\s*$/, '') != '') {
+        		var geocodeRequest = "https://dev.virtualearth.net/REST/v1/Locations/" + address + "?output=json&jsonp=myCallback&key=" + credentials;
 
-        	map.CallRestService(geocodeRequest);
+        		map.CallRestService(geocodeRequest);
+        	}
         },
 
         CallRestService: function (request) {
