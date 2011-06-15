@@ -43,12 +43,12 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xf-46</td>
+	<td>xpath=//select[../label = 'Review outcome: ']</td>
 	<td>label=File contains personal data to be removed</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-58</td>
+	<td>xpath=//textarea</td>
 	<td>Has data</td>
 </tr>
 <tr>
@@ -63,17 +63,17 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xf-46</td>
+	<td>xpath=//select[../label = 'Review outcome: ']</td>
 	<td>label=File can proceed to curation</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-58</td>
+	<td>xpath=//textarea</td>
 	<td>Is OK</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xf-64</td>
+	<td>xpath=//button[. = 'Submit review']</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,17 +83,17 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-59$xforms-input</td>
+	<td>xpath=//input[@type='file']</td>
 	<td>D:\selenium\register-study</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-65</td>
+	<td>xpath=//textarea</td>
 	<td>Changed it</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xf-73</td>
+	<td>xpath=//button[. = 'Confirm']</td>
 	<td></td>
 </tr>
 <tr>
