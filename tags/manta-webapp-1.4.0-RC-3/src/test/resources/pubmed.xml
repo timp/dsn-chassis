@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2011//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_110101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID Version="1">15388456</PMID>
+        <DateCreated>
+            <Year>2004</Year>
+            <Month>09</Month>
+            <Day>24</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2004</Year>
+            <Month>11</Month>
+            <Day>29</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2009</Year>
+            <Month>11</Month>
+            <Day>18</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">0066-4804</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>48</Volume>
+                    <Issue>10</Issue>
+                    <PubDate>
+                        <Year>2004</Year>
+                        <Month>Oct</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Antimicrobial agents and chemotherapy</Title>
+                <ISOAbbreviation>Antimicrob. Agents Chemother.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Combination therapy counteracts the enhanced transmission of drug-resistant malaria parasites to mosquitoes.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>3940-3</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>Malaria parasites carrying genes conferring resistance to antimalarials are thought to have a selective advantage which leads to higher rates of transmissibility from the drug-treated host. This is a likely mechanism for the increasing prevalence of parasites with resistance to chloroquine (CQ) and sulfadoxine-pyrimethamine in sub-Saharan Africa. Combination therapy is the key strategy being implemented to reduce the impact of resistance, but its effect on the transmission of genetically resistant parasites from treated patients to mosquito vectors has not been measured directly. In a trial comparing CQ monotherapy to the combination CQ plus artesunate (AS) in Gambian children with uncomplicated falciparum malaria, we measured transmissibility by feeding Anopheles gambiae mosquitoes with blood from 43 gametocyte-positive patients through a membrane. In the CQ-treated group, gametocytes from patients carrying parasites with the CQ resistance-associated allele pfcrt-76T prior to treatment produced infected mosquitoes with 38 times higher Plasmodium falciparum oocyst burdens than mosquitoes fed on gametocytes from patients infected with sensitive parasites (P &lt; 0.001). Gametocytes from parasites carrying the resistance-associated allele pfmdr1-86Y produced 14-fold higher oocyst burdens than gametocytes from patients infected with sensitive parasites (P = 0.011). However, parasites carrying either of these resistance-associated alleles pretreatment were not associated with higher mosquito oocyst burdens in the CQ-AS-treated group. Thus, combination therapy overcomes the transmission advantage enjoyed by drug-resistant parasites.</AbstractText>
+            </Abstract>
+            <Affiliation>Department of Infectious and Tropical Diseases, London School of Hygiene and Tropical Medicine, Keppel St., London WC1E 7HT, United Kingdom.</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Hallett</LastName>
+                    <ForeName>Rachel L</ForeName>
+                    <Initials>RL</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Sutherland</LastName>
+                    <ForeName>Colin J</ForeName>
+                    <Initials>CJ</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Alexander</LastName>
+                    <ForeName>Neal</ForeName>
+                    <Initials>N</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ord</LastName>
+                    <ForeName>Rosalynn</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Jawara</LastName>
+                    <ForeName>Musa</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Drakeley</LastName>
+                    <ForeName>Chris J</ForeName>
+                    <Initials>CJ</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pinder</LastName>
+                    <ForeName>Margaret</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Walraven</LastName>
+                    <ForeName>Gijs</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Targett</LastName>
+                    <ForeName>Geoffrey A T</ForeName>
+                    <Initials>GA</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Alloueche</LastName>
+                    <ForeName>Ali</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+                <PublicationType>Research Support, Non-U.S. Gov't</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>United States</Country>
+            <MedlineTA>Antimicrob Agents Chemother</MedlineTA>
+            <NlmUniqueID>0315061</NlmUniqueID>
+            <ISSNLinking>0066-4804</ISSNLinking>
+        </MedlineJournalInfo>
+        <ChemicalList>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>ATP-Binding Cassette Transporters</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Antimalarials</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Artemisinins</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Membrane Proteins</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Membrane Transport Proteins</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>PfCRT protein, Plasmodium falciparum</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Protozoan Proteins</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>Sesquiterpenes</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>0</RegistryNumber>
+                <NameOfSubstance>mdr gene protein, Plasmodium</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>54-05-7</RegistryNumber>
+                <NameOfSubstance>Chloroquine</NameOfSubstance>
+            </Chemical>
+            <Chemical>
+                <RegistryNumber>63968-64-9</RegistryNumber>
+                <NameOfSubstance>artemisinine</NameOfSubstance>
+            </Chemical>
+        </ChemicalList>
+        <CitationSubset>IM</CitationSubset>
+        <CommentsCorrectionsList>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Lancet. 1999 Jun 5;353(9168):1965-7</RefSource>
+                <PMID Version="1">10371589</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Mol Biochem Parasitol. 2000 Mar 5;106(2):273-82</RefSource>
+                <PMID Version="1">10699256</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Trop Med Hyg. 2000 Feb;62(2):210-6</RefSource>
+                <PMID Version="1">10813475</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Parasitology. 2000 Jul;121 ( Pt 1):1-7</RefSource>
+                <PMID Version="1">11085219</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>J Infect Dis. 2001 Apr 15;183(8):1254-9</RefSource>
+                <PMID Version="1">11262208</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Lancet. 1996 Jun 15;347(9016):1654-8</RefSource>
+                <PMID Version="1">8642959</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Trop Med Hyg. 2003 Jul;69(1):19-25</RefSource>
+                <PMID Version="1">12932091</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Trop Med Int Health. 2003 Sep;8(9):783-92</RefSource>
+                <PMID Version="1">12950664</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Trop Med Int Health. 2004 Jan;9(1):1-3</RefSource>
+                <PMID Version="1">14728601</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Trans R Soc Trop Med Hyg. 1996 Sep-Oct;90(5):563-7</RefSource>
+                <PMID Version="1">8944275</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Trop Med Hyg. 1998 May;58(5):638-44</RefSource>
+                <PMID Version="1">9598454</PMID>
+            </CommentsCorrections>
+            <CommentsCorrections RefType="Cites">
+                <RefSource>Am J Trop Med Hyg. 2002 Dec;67(6):578-85</RefSource>
+                <PMID Version="1">12518847</PMID>
+            </CommentsCorrections>
+        </CommentsCorrectionsList>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">ATP-Binding Cassette Transporters</DescriptorName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Alleles</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Animals</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Anopheles</DescriptorName>
+                <QualifierName MajorTopicYN="Y">parasitology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Antimalarials</DescriptorName>
+                <QualifierName MajorTopicYN="N">pharmacology</QualifierName>
+                <QualifierName MajorTopicYN="Y">therapeutic use</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Artemisinins</DescriptorName>
+                <QualifierName MajorTopicYN="N">pharmacology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Chloroquine</DescriptorName>
+                <QualifierName MajorTopicYN="N">pharmacology</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Drug Resistance</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Drug Therapy, Combination</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Genotype</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Malaria</DescriptorName>
+                <QualifierName MajorTopicYN="N">parasitology</QualifierName>
+                <QualifierName MajorTopicYN="Y">transmission</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Membrane Proteins</DescriptorName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Membrane Transport Proteins</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Plasmodium falciparum</DescriptorName>
+                <QualifierName MajorTopicYN="N">drug effects</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Protozoan Proteins</DescriptorName>
+                <QualifierName MajorTopicYN="N">genetics</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Sesquiterpenes</DescriptorName>
+                <QualifierName MajorTopicYN="N">pharmacology</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+        <OtherID Source="NLM">PMC521891</OtherID>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2004</Year>
+                <Month>9</Month>
+                <Day>25</Day>
+                <Hour>5</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2004</Year>
+                <Month>12</Month>
+                <Day>16</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>2004</Year>
+                <Month>9</Month>
+                <Day>25</Day>
+                <Hour>5</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">15388456</ArticleId>
+            <ArticleId IdType="doi">10.1128/AAC.48.10.3940-3943.2004</ArticleId>
+            <ArticleId IdType="pii">48/10/3940</ArticleId>
+            <ArticleId IdType="pmc">PMC521891</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+</PubmedArticleSet>
