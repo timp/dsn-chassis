@@ -139,6 +139,7 @@
 </description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
       <jobNames class="tree-set">
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>atombeat-orbeon-minimal</string>
@@ -200,9 +201,10 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>dataMerger</name>
+      <name>DataMerger</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
       <jobNames class="tree-set">
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>Package dataMerger</string>
