@@ -1,0 +1,15 @@
+#summary How to upgrade between versions
+
+= Introduction =
+
+Most upgrades will require modifications to the underlying data structures.
+This page gives some basic instructions
+
+
+= Details =
+
+  # Login as an administrator
+  # Go to /repository/administration/home
+  # There you will see a list of links to the various upgrade sets.
+  # Follow the appropriate link
+  # Run each script on the upgrade page
