@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.2.0-RC-4-SNAPSHOT</version>
+	<version>1.5.0-alpha-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.exist-db</groupId>
 			<artifactId>exist-versioning-module</artifactId>
-			<version>${org.exist-db.version}</version>
+			<version>1.4.0</version>
 			<type>jar</type>
 			<scope>runtime</scope>
 			<exclusions>
@@ -103,18 +103,18 @@
 			<scope>provided</scope>
 		</dependency>
 
-<dependency>
-  <groupId>javax.mail</groupId>
-  <artifactId>mail</artifactId>
-  <version>1.4.1</version>
-</dependency>
-<!-- 
 		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.8.1</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1</version>
 		</dependency>
--->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+		<!-- <dependency> <groupId>xerces</groupId> <artifactId>xercesImpl</artifactId> 
+			<version>2.8.1</version> </dependency> -->
 		<dependency>
 			<groupId>com.orbeon</groupId>
 			<artifactId>orbeon-jar</artifactId>
@@ -123,18 +123,10 @@
 
 
 		<!-- Used for unit tests -->
-		<dependency>
-			<groupId>org.apache.abdera</groupId>
-			<artifactId>abdera-client</artifactId>
-			<version>1.1.2</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>jaxen</artifactId>
-					<groupId>jaxen</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- <dependency> <groupId>org.apache.abdera</groupId> <artifactId>abdera-client</artifactId> 
+			<version>1.1.2</version> <scope>compile</scope> <exclusions> <exclusion> 
+			<artifactId>jaxen</artifactId> <groupId>jaxen</groupId> </exclusion> </exclusions> 
+			</dependency> -->
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -212,9 +204,89 @@
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>manta-config</artifactId>
-			<version>0.0.1-beta-1</version>
+			<version>0.2-alpha-4</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- exist jars -->
+		<!-- Have to use the orbeon versions <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-expath-20100109</artifactId> <version>${org.exist-db.version}</version> 
+			<scope> runtime </scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-lucene-module</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-modules</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-ngram-module</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-optional</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-versioning</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-webdav-milton</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-xqdoc</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> -->
+		<!-- end of exist jars -->
+		<!-- exist dependencies -->
+		<!-- 
+		<dependency>
+			<groupId>xmldb</groupId>
+			<artifactId>xmldb</artifactId>
+			<version>20021118</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlrpc</groupId>
+			<artifactId>xmlrpc-common</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlrpc</groupId>
+			<artifactId>xmlrpc-client</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-regex</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jgroups</groupId>
+			<artifactId>jgroups-all</artifactId>
+			<version>2.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>xml-resolver</groupId>
+			<artifactId>xml-resolver</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		-->
+		<!-- end of exist dependencies -->
 	</dependencies>
 
 	<scm>
@@ -223,6 +295,13 @@
 		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
 	</scm>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
 		<plugins>
 			<plugin>
@@ -324,6 +403,21 @@
 								<exclude>WEB-INF/lib/dom4j-1_6_1.jar</exclude>
 								<exclude>WEB-INF/lib/log4j-1_2_15.jar</exclude>
 								<exclude>WEB-INF/lib/orbeon.jar</exclude>
+								<!-- Could possibly be done as deps - see commented out about
+								<exclude>exist-dependency-antlr-2.7.7.jar</exclude>
+								<exclude>exist-dependency-jgroups-all-2.2.6.jar</exclude>
+								<exclude>exist-dependency-jta-1.1.jar</exclude>
+								<exclude>exist-dependency-lucene-core-2.9.2.jar</exclude>
+								<exclude>exist-dependency-lucene-regex-2.9.2.jar</exclude>
+								<exclude>exist-dependency-quartz-1.6.6.jar</exclude>
+								<exclude>exist-dependency-resolver-1.2.jar</exclude>
+								<exclude>exist-dependency-stax-api-1.0.1.jar</exclude>
+								<exclude>exist-dependency-ws-commons-util-1.0.2.jar</exclude>
+								<exclude>exist-dependency-xmldb.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-client-3.1.2.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-common-3.1.2.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-server-3.1.2.jar</exclude>
+								-->
 							</excludes>
 						</overlay>
 						<overlay>
@@ -377,9 +471,9 @@
 		or -D property=value -->
 	<properties>
 		<org.springsecurity.version>3.1.0.RC2</org.springsecurity.version>
-		<org.atombeat.version>0.2-alpha-9</org.atombeat.version>
+		<org.atombeat.version>0.2-alpha-10</org.atombeat.version>
 		<com.orbeon.version>orbeon-3.9.0.201105152046-CE</com.orbeon.version>
-		<org.exist-db.version>1.4.0</org.exist-db.version>
+		<org.exist-db.version>1.4.1dev-rev14669</org.exist-db.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />
@@ -431,8 +525,8 @@
 				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>http://cloud1.cggh.org/sso</cas.url>
-				<chassis.url>http://cloud1.cggh.org</chassis.url>
+				<cas.url>https://cloud1.cggh.org/sso</cas.url>
+				<chassis.url>https://cloud1.cggh.org</chassis.url>
 				<test-email>ian.wright@wwarn.org</test-email>
 				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
 			</properties>
