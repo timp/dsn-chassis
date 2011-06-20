@@ -75,7 +75,8 @@ public class GetFiles extends HttpServlet {
 			//Augment each curated file entry with its origin study field
 			for(AtomEntry entry : curatedMediaEntries) {
 				
-				if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
+				//if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
+			  if (entry.getCategory() != null) {
 				  //Can ignore the return
 					getEntries(request, client, entry.getOrigin(), entry);
 					explorerFileEntries.add(entry);
