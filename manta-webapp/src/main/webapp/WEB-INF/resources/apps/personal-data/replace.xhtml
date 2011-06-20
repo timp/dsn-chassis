@@ -40,8 +40,8 @@
         	</xforms:instance>
         	
         	<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
-			<xforms:bind nodeset="instance('ins-control')/replace-controls" relevant="instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE'"/>
-			<xforms:bind nodeset="instance('ins-control')/permission-denied" relevant="not (instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow = 'GET, DELETE')"/>
+			<xforms:bind nodeset="instance('ins-control')/replace-controls" relevant="instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow[contains(.,'DELETE')]"/>
+			<xforms:bind nodeset="instance('ins-control')/permission-denied" relevant="not (instance('ins-media-entry')/atom:link[@rel='edit-media']/@atombeat:allow[contains(.,'DELETE')])"/>
 			
 			<xforms:instance id="ins-media-entry">
 				<atom:entry/>
