@@ -6,7 +6,7 @@
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
 	class="study-info">
 	
-	<xforms:group ref="instance('errors')" model="mod-study-info"
+	<xforms:group ref="instance('errors')" 
 		class="warnings">
 		<!--
 			<p align="right" class="warningButton"> <xforms:trigger>
@@ -48,8 +48,8 @@
 	</xforms:group>
 
 	
-	<xforms:group model="mod-study-info"
-		ref="instance('ins-sq-study-info-entry')/atom:content">
+	<xforms:group 
+		ref="instance('ins-study-entry')/atom:content/study">
 
 		
 		<xforms:group ref="study-info" id="grp-info">
@@ -124,7 +124,7 @@
 												<xforms:label>please select</xforms:label>
 												<xforms:value />
 											</xforms:item>
-											<xforms:itemset nodeset="instance('ins-country-items')/country">
+											<xforms:itemset model="mod-study-info" nodeset="instance('ins-country-items')/country">
 												<xforms:label ref="label" />
 												<xforms:value ref="value" />
 											</xforms:itemset>
@@ -138,7 +138,7 @@
 									<div>
 										<!-- if the country has regions, use a select1 -->
 										<xforms:group
-											ref=".[country/text() = instance('ins-country-items')/country[exists(regions)]/value/text()]">
+											ref=".[country/text() = xxforms:instance('ins-country-items')/country[exists(regions)]/value/text()]">
 											<xforms:select1 ref="region">
 												<xforms:label class="fixed-width">Region </xforms:label>
 												<xforms:item>
@@ -146,7 +146,7 @@
 													<xforms:value />
 												</xforms:item>
 												<xforms:itemset
-													nodeset="instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
+													nodeset="xxforms:instance('ins-country-items')/country[value/text()=xxforms:context('rep-site')/country/text()]//region">
 													<xforms:label ref="label" />
 													<xforms:value ref="value" />
 												</xforms:itemset>
@@ -157,7 +157,7 @@
 										</xforms:group>
 										<!-- if the country has no regions, use an input -->
 										<xforms:group
-											ref=".[empty(country/text()) or country/text() = instance('ins-country-items')/country[empty(regions)]/value/text()]">
+											ref=".[empty(country/text()) or country/text() = xxforms:instance('ins-country-items')/country[empty(regions)]/value/text()]">
 											<xforms:input ref="region">
 												<xforms:label class="fixed-width">Region </xforms:label>
 												<!--
@@ -489,8 +489,8 @@
 					visible="true" > <xforms:label>Location</xforms:label> <div>
 					<p>Drag the pointer to populate the Latitude and Longitude
 					fields.</p> <fr:map address-ref="instance('ins-lookupAddress')"
-					longitude-ref="instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/longitude"
-					latitude-ref="instance('ins-sq-study-info-entry')//sites/site[index('rep-site')]/latitude"
+					longitude-ref="instance('ins-study-entry')//sites/site[index('rep-site')]/longitude"
+					latitude-ref="instance('ins-study-entry')//sites/site[index('rep-site')]/latitude"
 					style="width: 600px; height: 400px; "/> </div> </xxforms:dialog>
 					</div>
 				-->

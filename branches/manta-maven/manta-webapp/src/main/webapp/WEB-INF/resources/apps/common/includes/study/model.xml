@@ -67,17 +67,17 @@
 				get PUT to the wrong URL when changes are saved. -->
 
 			<xforms:delete
-				nodeset="xxforms:instance('ins-sq-study-info-entry')/atom:content/study-info" />
+				nodeset="xxforms:instance('ins-study-entry')/atom:content//study-info/*" />
 			<xforms:insert
-				context="xxforms:instance('ins-sq-study-info-entry')/atom:content"
+				context="xxforms:instance('ins-study-entry')/atom:content//study-info"
 				nodeset="study-info"
-				origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content/study-info"
+				origin="instance('ins-study-info-entry-to-copy-study-info-from')/atom:content//study-info/*"
 				at="last()" position="after" />
 
 			<xforms:message level="modal">
 				Answers have been copied from "
 				<xforms:output
-					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
+					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
 				".   Please ensure you amend any answers which differ.
 			</xforms:message>
 

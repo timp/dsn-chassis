@@ -19,6 +19,308 @@
 			<curator-notes/>
 			<study-status>new</study-status>
 			<modules/>
+			<study-info xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+            <studyInfoStatus/>
+            <start />
+            <end />
+            <sites>
+                <site>
+                    <country />
+                    <region />
+                    <district />
+                    <locality />
+                    <lookupAddress />
+                    <siteCode />
+                    <testingDelay />
+                    <anticoagulant />
+                    <transportAndStorageTemperature />
+                    <latitude />
+                    <longitude />
+                    <transmissionIntensity>
+                        <annualParasitologicalIncidence />
+                        <annualParasitologicalIncidenceYear />
+                        <parasitePrevalence />
+                        <parasitePrevalenceYear />
+                        <transmissionIntensityAgeFrom />
+                        <transmissionIntensityAgeFromUnits />
+                        <transmissionIntensityAgeTo />
+                        <transmissionIntensityAgeToUnits />
+                        <entomologicalInoculationRate />
+                        <entomologicalInoculationRateYear />
+                        <seasonalTransmission />
+                        <transmissionMonths />
+                    </transmissionIntensity>
+                </site>
+            </sites>
+            <pathogens />
+            <inclusionExclusionCriteria>
+                <age xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <maxAge />
+                    <maxAgeUnits />
+                    <minAge />
+                    <minAgeUnits />
+                </age>
+                <parasitaemia>
+                    <minParasitaemia />
+                    <maxParasitaemia />
+                </parasitaemia>
+        <includeMixedInfections />
+                <excludeIfPriorAntimalarials />
+                <priorAntimalarialsExclusion>
+                    <priorAntimalarials />
+                    <priorAntimalarialsDetermination />
+                    <priorAntimalarialsHistoryWeeks />
+                </priorAntimalarialsExclusion>
+                <pregnancy />
+                <treatmentReason />
+                <otherCriteria />
+            </inclusionExclusionCriteria>
+            <clinical>
+                <treatment>
+                    <regimens>
+                        <regimen>
+                            <regimenName />
+                            <regimenSupervision />
+                            <regimenUrl />
+                            <drugs />
+                        </regimen>
+                    </regimens>
+                    <regimenAllocation>
+                        <regimenAllocationMethod />
+                        <blinding />
+                        <randomisationProportion />
+                    </regimenAllocation>
+                </treatment>
+                <followup>
+                    <duration />
+                    <feverMeasurement />
+                    <haemoglobinRecording>
+                        <haemoglobinRecordingType />
+                    </haemoglobinRecording>
+                </followup>
+                <microscopy>
+                    <microscopyStain />
+                    <microscopyStainOther />
+                    <asexualParasitemia>
+                     <asexualParasitemiaNegativeCount />
+           <asexualParasitemiaPositiveThickUnit />
+           <asexualParasitemiaPositiveThickUnitOther />
+           <asexualParasitemiaPositiveThinUnit />
+           <asexualParasitemiaPositiveThinUnitOther />
+                    </asexualParasitemia>
+                    <sexualParasitemia>
+                     <sexualParasitemiaNegativeCount />
+           <sexualParasitemiaPositiveThickUnit />
+           <sexualParasitemiaPositiveThickUnitOther />
+           <sexualParasitemiaPositiveThinUnit />
+           <sexualParasitemiaPositiveThinUnitOther />
+                    </sexualParasitemia>
+                    <!--   separateSpeciesCounts / -->
+                    <thickFilmCalculationOfParasitemia>
+                        <thickFilmFormula />
+                        <thickFilmFormulaOther />
+            <!-- 
+                        <WBCSource />
+                        <WBCAssumed />
+                        <thickFilmCalculationOfParasitemiaOther />
+             -->
+                    </thickFilmCalculationOfParasitemia>
+                    <thinFilmCalculationOfParasitemia>
+                        <thinFilmFormula />
+                        <thinFilmFormulaOther />
+            <!-- 
+                        <HtcSource />
+                        <HtcAssumed />
+                        <thinFilmCalculationOfParasitemiaOther />
+             -->
+                    </thinFilmCalculationOfParasitemia>
+                    <qualityControl>
+                        <internal>
+                            <percentageRereadBySecondMicroscopist />
+                            <rereadSlideSelectionMechanism />
+                            <rereadSlideSelectionMechanismOther />
+                        </internal>
+                        <external>
+                            <percentageRereadBySecondMicroscopist />
+                            <rereadSlideSelectionMechanism />
+                            <rereadSlideSelectionMechanismOther />
+                        </external>
+                    </qualityControl>
+                </microscopy>
+                <geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+                    <applicability />
+                    <applicable>
+                        <markers>
+                            <recrudescenceMarker>
+                                <markerName />
+                                <markerOther />
+                                <numberOfMicroSatellites />
+                            </recrudescenceMarker>
+                        </markers>
+                        <genotypingLaboratory />
+                        <markerDiscriminantOpen>
+                            <markerDiscriminant />
+                            <markerDiscriminantOther />
+                        </markerDiscriminantOpen>
+                        <analysisProtocol>
+                            <mixedAllelesOpen>
+                                <mixedAlleles />
+                                <mixedAllelesOther />
+                                <recrudescence />
+                                <reinfection />
+                            </mixedAllelesOpen>
+                        </analysisProtocol>
+                    </applicable>
+                </geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+            </clinical>
+
+
+
+
+
+
+
+            <molecular>
+
+                <criteria>
+                    <sampleSourceOpen>
+                        <sampleSource />
+                        <sampleSourceOther />
+                    </sampleSourceOpen>
+                    <malariaStatus />
+                </criteria>
+                <sample>
+                    <sampleTypeOpen>
+                        <sampleType />
+                        <sampleTypeOther />
+                        <wholeBloodSource />
+                        <dateCultureIsolated />
+                    </sampleTypeOpen>
+                </sample>
+
+                <genotypedMarkers />
+
+
+                <mixedResistanceAlleles>
+                    <mixedResistanceAllelesInclusion />
+                    <mixedResistanceAllelesDesignation />
+                </mixedResistanceAlleles>
+
+                <additionalGenotypicInformation>
+                    <sequencedLoci>
+                        <wholeGenomesSequenced />
+            <resistanceLociSequenced />
+                        <resistanceLoci>
+                            <resistanceLocus>
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
+                            </resistanceLocus>
+                        </resistanceLoci>
+            <otherLociGenotyped />
+                        <otherLoci>
+                          <otherLocus>
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
+                          </otherLocus>
+                        </otherLoci>
+                    </sequencedLoci>
+                    <infectionComplexityEstimated />
+                    <infectionComplexityEstimationlociOpen>
+                        <infectionComplexityEstimationloci />
+                        <infectionComplexityEstimationlociOther />
+                    </infectionComplexityEstimationlociOpen>
+                </additionalGenotypicInformation>
+            </molecular>
+            
+
+
+            <invitro>
+                <analysisSite />
+                <culture>
+                    <incubatorSystem />
+                    <co2percentage />
+                    <co2Other />
+                    <o2percentage />
+                    <o2Other />
+                    <healthyErythrocytesSource />
+                    <hematocritpercent />
+                    <bloodGroup />
+                </culture>
+                <drugSusceptibilityMedium>
+                    <medium />
+                    <mediumOther />
+                    <preparation />
+                    <serum />
+                    <serum-finalConcentration />
+                    <NaHCO3-finalConcentration />
+                    <hypoxantine>
+                        <hypoxantine-added />
+                        <hypoxantine-finalConcentration />
+                    </hypoxantine>
+                    <oroticAcid>
+                        <oroticAcid-added />
+                        <oroticAcid-finalConcentration />
+                    </oroticAcid>
+                    <glucose>
+                        <glucose-added />
+                        <glucose-finalConcentration />
+                    </glucose>
+                    <antibioticTreatments />
+                </drugSusceptibilityMedium>
+                <susceptibility>
+                    <timeOfIncubation />
+                    <susceptibilityMethod />
+                </susceptibility>
+                <drugs />
+                <platePreparationMethod />
+                <platesPreparationDate />
+                <plateBatches />
+            </invitro>
+
+            
+
+            <pharmacology>
+                <samples>
+                    <sample>
+                        <anticoagulent />
+                        <centrifugeTime />
+            <storages>
+              <storage>
+                              <storageTemperature />
+                              <storageDuration />
+                              <storageDurationUnit />
+              </storage>
+            </storages>
+                    </sample>
+                </samples>
+                <analytes>
+                    <analyte>
+                        <drugMeasured />
+                        <lowerLoQ />
+                        <sampleMatrixType />
+                    </analyte>
+                </analytes>
+                <assayReferences>
+                    <assayReference>
+                        <referenceType>url</referenceType>
+                        <url />
+                        <doi />
+                        <upload>
+                            <uploadedUrl />
+                        </upload>
+                        <note />
+                        <assayValidated />
+                    </assayReference>
+                </assayReferences>
+            </pharmacology>
+
+        </study-info>
 		</study>
 	</atom:content>
 </atom:entry>
