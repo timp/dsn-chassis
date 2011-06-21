@@ -80,7 +80,7 @@
                     
                          <p>
                              <span class="confirmation-study-info-save-changes-button-container">
-                                 <xforms:submit submission="sub-put-sq-study-info-entry">
+                                 <xforms:submit submission="sub-put-study-entry">
                                      <xforms:label>Save changes and stay on this page</xforms:label>
                                  </xforms:submit>
                              </span>
@@ -97,7 +97,7 @@
                     	
                          <p>
                              <span class="confirmation-study-info-save-changes-button-container">
-                                 <xforms:submit submission="sub-put-sq-study-info-entry">
+                                 <xforms:submit submission="sub-put-study-entry">
                                      <xforms:label>Save changes and stay on this page</xforms:label>
                                  </xforms:submit>
                              </span>

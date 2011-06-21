@@ -115,7 +115,7 @@
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
 
       <!--  Flatten button should only be visible to curators when study-info status is complete -->
-      <xforms:bind nodeset="instance('ins-control')/flatten-button" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and xxforms:instance('ins-sq-study-info-entry')//studyInfoStatus[text()='complete']"/>
+      <xforms:bind nodeset="instance('ins-control')/flatten-button" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR' and xxforms:instance('ins-study-entry')//studyInfoStatus[text()='complete']"/>
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
 			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
@@ -165,8 +165,12 @@
 					<!-- Only try to get a curated media feed if the user can get the curated media feed. -->
 					<xforms:send submission="sub-get-curated-media-feed" if="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia' and contains(@atombeat:allow, 'GET')]"/>
 					
-					<!-- Get the study info, which will use a link from the retrieved study entry. -->
-					<xforms:send submission="sub-get-study-info-entry"/>
+					<!-- Get the ACL for the submitted media, if allowed. -->
+                    <xforms:send submission="sub-get-submitted-media-permissions-entry" if="instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
+                    
+                    <!-- Get the ACL for the curated media, if allowed. -->
+                    <xforms:send submission="sub-get-curated-media-permissions-entry" if="instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
+                    <xforms:send submission="sub-retrieve-study-feed"/>     
 
 					
 				</xforms:action>				
@@ -188,11 +192,6 @@
 				instance="ins-submitted-media-feed"
 				serialization="none">
 				
-				<!-- Now that we have the media feed, copy to the questionnaire. -->
-				<xforms:action ev:event="xforms-submit-done">
-					<xforms:insert nodeset="xxforms:instance('ins-sq-submitted-media-feed')" origin="instance('ins-submitted-media-feed')" />
-				</xforms:action>
-				
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
@@ -210,13 +209,6 @@
 				serialization="none">
                 
 				<xforms:action ev:event="xforms-submit-done">
-					
-					<!-- copy data across to study questionnaire model -->
-					<xforms:insert nodeset="xxforms:instance('ins-sq-study-info-entry')" origin="instance('ins-study-info-entry')" />
-					<xforms:insert nodeset="xxforms:instance('ins-sq-study-modules')" origin="instance('ins-study-entry')//modules" />
-					
-					<!-- Get the ACL for the study info, if allowed (e.g. contributors are not allowed). -->
-					<xforms:send submission="sub-get-study-info-permissions-entry" if="instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
 					
 					<!-- Get the ACL for the submitted media, if allowed. -->
 					<xforms:send submission="sub-get-submitted-media-permissions-entry" if="instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
@@ -246,7 +238,8 @@
 		        replace="instance"
 		        instance="ins-study-entry"
 		        ref="instance('ins-study-entry')"
-		        mediatype="application/atom+xml">
+		        mediatype="application/atom+xml"
+		        validate="false">
 		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
                 
@@ -328,7 +321,7 @@
 				<xforms:action ev:event="xforms-submit-done">
 				    <xforms:delete nodeset="instance('ins-study-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
 				     
-				    <xforms:insert nodeset="instance('ins-study-entry')//modules" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
+				    <xforms:insert nodeset="instance('ins-study-entry')//study-info" position="after" origin="instance('ins-permissions-entry')//atombeat:group[@id='GROUP_ADMINISTRATORS']"/>
 				    
 		            <xforms:send submission="sub-put-study-entry" />
 				</xforms:action>
@@ -386,7 +379,7 @@
 					<!-- Reload the study to update page state, e.g. Lock status shown depends on atombeat:allow of study edit link. -->
 					<xforms:send submission="sub-refresh-study-entry"/>
 					
-					<xforms:send submission="sub-put-study-info-permissions-entry"/>
+					<xforms:send submission="sub-put-permissions-acl-entry" />
 				</xforms:action>
 		        
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study permissions.</xforms:message>
@@ -446,36 +439,6 @@
                 				
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while refreshing the study.</xforms:message>
 				
-			</xforms:submission>
-
-
-			<xforms:instance id="ins-study-info-permissions-entry">
-				<atom:entry/>
-			</xforms:instance>
-			
-			<xforms:submission 
-				id="sub-get-study-info-permissions-entry"
-				resource="{instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
-				method="get"
-				replace="instance"
-				instance="ins-study-info-permissions-entry"
-				serialization="none">
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info permissions.</xforms:message>
-				
-			</xforms:submission>
-
-			<xforms:submission 
-				id="sub-put-study-info-permissions-entry"
-				resource="{instance('ins-study-info-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']/@href}"
-				method="put"
-				replace="instance"
-				instance="ins-study-info-permissions-entry"
-				ref="instance('ins-study-info-permissions-entry')"
-				mediatype="application/atom+xml">
-				
-				<xforms:send ev:event="xforms-submit-done" submission="sub-put-permissions-acl-entry" />
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info permissions.</xforms:message>
 			</xforms:submission>
 
 
@@ -542,6 +505,7 @@
 			</xforms:submission>
 
 	       <xi:include href="../common/includes/study/model.xml" />
+	       <xi:include href="../common/includes/study/study-info-bindings.xml" />
            <xi:include href="../common/includes/study/submitted-file-upload.xml" />
            <xi:include href="../common/includes/study/templates.xml" />
            <xi:include href="../common/includes/study/validation.xml" />

@@ -90,11 +90,11 @@
 						
 					<h3>(3) Files</h3>
 					
-					<xforms:group ref="instance('ins-draft-media-feed')[empty(atom:entry)]">
+					<xforms:group ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
 						<p>You have not uploaded any files.</p>
 					</xforms:group>
 					
-					<xforms:group ref="instance('ins-draft-media-feed')[exists(atom:entry)]">
+					<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
 						
 						<span id="list-of-uploaded-files-container">
 							

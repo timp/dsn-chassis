@@ -44,7 +44,7 @@
                         </td>
                         <td class="right-hand-column">
 
-                            <xforms:select1 model="mod-study-info" ref="co2percentage"
+                            <xforms:select1  ref="co2percentage"
                                 appearance="minimal">
                                 <xforms:label> CO<sub>2</sub> percentage </xforms:label>
                                 <xforms:item>
@@ -73,7 +73,7 @@
                         <td/>
                         <td class="right-hand-column">
 
-                            <xforms:select1 model="mod-study-info" ref="o2percentage"
+                            <xforms:select1  ref="o2percentage"
                                 appearance="minimal">
                                 <xforms:label> O<sub>2</sub> percentage </xforms:label>
                                 <xforms:item>
@@ -973,7 +973,7 @@
                                 </xforms:input>
                                 <xforms:group ref="upload">
                                     <xforms:group
-                                        ref="instance('ins-sq-submitted-media-feed')[empty(atom:entry)]">
+                                        ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
 
                                         <p>You have not uploaded any documents.</p>
 
@@ -985,8 +985,8 @@
                                             <xforms:label>please select</xforms:label>
                                             <xforms:value/>
                                         </xforms:item>
-                                        <xforms:itemset model="mod-study-info"
-                                            nodeset="xxforms:sort(instance('ins-sq-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+                                        <xforms:itemset 
+                                            nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
                                             <xforms:label>
                                                 <xforms:output
                                                   value="concat(manta:id, ' - ', atom:title)"/>

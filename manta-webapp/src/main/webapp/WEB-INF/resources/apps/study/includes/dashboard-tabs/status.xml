@@ -57,9 +57,6 @@
 								     			<xforms:delete nodeset="instance('ins-permissions-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>							     				
 								     			<xforms:delete nodeset="instance('ins-permissions-acl-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
 								     			
-												<xforms:delete nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>							     				
-								     			<xforms:delete nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='role' and atombeat:recipient = 'ROLE_CHASSIS_CURATOR' and atombeat:permission = 'UPDATE_MEMBER']"/>
-												
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'CREATE_MEDIA']"/>
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'MULTI_CREATE']"/>
@@ -82,9 +79,6 @@
 								     			<xforms:insert nodeset="instance('ins-permissions-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>							     				
 								     			<xforms:insert nodeset="instance('ins-permissions-acl-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
 								     			
-												<xforms:insert nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>							     				
-								     			<xforms:insert nodeset="instance('ins-study-info-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-curators-to-update-member')"/>
-
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-create-media')"/>
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-update-member')"/>
 												 <xforms:insert nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace" at="count(../atombeat:ace)" position="after" origin="instance('ins-allow-study-administrators-to-multi-create')"/>
