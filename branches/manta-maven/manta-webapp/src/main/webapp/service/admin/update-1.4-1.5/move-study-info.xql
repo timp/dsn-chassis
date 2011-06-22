@@ -14,7 +14,7 @@ import module namespace atom-protocol = "http://purl.org/atombeat/xquery/atom-pr
 import module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" at "../../plugins/manta-plugin.xqm";
 
 declare variable $study-info-template {
-<study-info xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+<study-info>
             <studyInfoStatus/>
             <start />
             <end />
@@ -49,7 +49,7 @@ declare variable $study-info-template {
             </sites>
             <pathogens />
             <inclusionExclusionCriteria>
-                <age xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <age>
                     <maxAge />
                     <maxAgeUnits />
                     <minAge />
@@ -350,20 +350,20 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Study v1.2 to v1.3</title>
+                <title>Data Migration - Study v1.3 to v1.5</title>
             </head>
             <body>
-                <h1>Data Migration - Study v1.2 to v1.3</h1>
+                <h1>Data Migration - Study v1.3 to v1.5</h1>
                 
                 <p>This script will:</p>
                 
                 <ul>
-                    <li>Copy the GROUP_ADMINISTRATOR group element from groups to the study entry</li>
+                    <li>Copy the study-info to the study entry</li>
                 </ul>
                 
                 <p>Total number of entries in <a href="../content/studies">Study</a> collection: <strong>{ count( $studies ) }</strong></p>
-                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.2 profile: <strong>{ count( $old-studies ) }</strong></p>
-                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.3 profile: <strong>{ count( $new-studies ) }</strong></p>
+                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.3 profile: <strong>{ count( $old-studies ) }</strong></p>
+                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.5 profile: <strong>{ count( $new-studies ) }</strong></p>
                 
                 <p>Note: This script has no test mode.</p>
                 
@@ -488,15 +488,15 @@ declare function local:copy-admin-nodes($collection) as element( atom:entry )*
               let $study-info := if ($group//draft/text() = 'no') then
                 (: Need to move permissions :)
                 let $perm := local:get-study-info($group)         
-                return $perm//study-info[@profile="http://www.cggh.org/2010/chassis/manta/1.0.1"]
+                return $perm//study-info
                else
                 let $si := $study-info-template
                 return $si
-                
+                let $logi := util:log-app("debug", "si", $study-info)
                let $new := update insert $study-info following $group//modules
                (: Jump 2 versions to match Chassis version :)
                let $profile := update replace $group//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.5"
-                
+               let $ver := update delete $group//study-info/@profile
                let $ren := update rename $group//hematocritpercentage as 'hematocritpercent'
                return $ren
            
