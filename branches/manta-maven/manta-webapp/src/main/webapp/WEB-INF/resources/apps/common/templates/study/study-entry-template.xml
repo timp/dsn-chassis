@@ -19,7 +19,7 @@
 			<curator-notes/>
 			<study-status>new</study-status>
 			<modules/>
-			<study-info xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.0.1">
+			<study-info>
             <studyInfoStatus/>
             <start />
             <end />
