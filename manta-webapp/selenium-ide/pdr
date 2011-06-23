@@ -38,7 +38,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xf-27$xf-166·1</td>
+	<td>xpath=//a[contains(.,'Review')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xf-27$xf-166·1</td>
+	<td>xpath=//a[contains(.,'Review')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xf-31$xf-312·1</td>
+	<td>xpath=//a[contains(.,'Replace')]</td>
 	<td></td>
 </tr>
 <tr>
