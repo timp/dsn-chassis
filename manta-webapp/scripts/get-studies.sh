@@ -24,5 +24,5 @@ curl -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET
 
 
 #Make sure that you actually have permission to upload submitted files
-curl -k -b cookie-jar -o studies.xml -i  ${HOST}/service/content/studies
+curl -k -b cookie-jar -o studies.xml ${HOST}/service/content/studies
 
