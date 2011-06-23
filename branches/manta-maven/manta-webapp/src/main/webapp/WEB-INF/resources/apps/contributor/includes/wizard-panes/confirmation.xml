@@ -61,7 +61,7 @@
                                         
                                         <xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
                                             <xforms:label ref="concat(atom:title, ' (', manta:id, ')')"/>
-                                            <xforms:value ref="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href"/>
+                                            <xforms:value ref="atom:link[@rel='self']/@href"/>
                                         </xforms:itemset>
                                     </xforms:select1>
                                 </span>

@@ -195,33 +195,6 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
-
-			<xforms:instance id="ins-study-info-entry">
-				<atom:entry/>
-			</xforms:instance>
-			
-			<xforms:submission 
-				id="sub-get-study-info-entry"
-				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/studyInfo']/@href}"
-				method="get"
-				replace="instance"
-				instance="ins-study-info-entry"
-				serialization="none">
-                
-				<xforms:action ev:event="xforms-submit-done">
-					
-					<!-- Get the ACL for the submitted media, if allowed. -->
-					<xforms:send submission="sub-get-submitted-media-permissions-entry" if="instance('ins-submitted-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
-					
-					<!-- Get the ACL for the curated media, if allowed. -->
-					<xforms:send submission="sub-get-curated-media-permissions-entry" if="instance('ins-curated-media-feed')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" />
-					<xforms:send submission="sub-retrieve-study-feed"/>		
-				</xforms:action>				
-				
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study info.</xforms:message>
-				
-			</xforms:submission>
-
 			<xforms:submission id="sub-notify-put-study-entry-complete"	action="/study/email-complete" replace="instance" 
 				method="post" ref="instance('ins-study-entry')" instance="ins-study-entry">
 
@@ -238,15 +211,13 @@
 		        replace="instance"
 		        instance="ins-study-entry"
 		        ref="instance('ins-study-entry')"
-		        mediatype="application/atom+xml"
-		        validate="false">
+		        mediatype="application/atom+xml">
 		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
                 
                 <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
                		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
                			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
-               			<xxforms:context name="fr:info" select="instance('ins-study-info-entry')"/>
     				</xforms:dispatch>
                 </xforms:action>		        
 		       
@@ -304,6 +275,10 @@
 				replace="instance"
 				instance="ins-permissions-entry"
 				serialization="none">
+				<!--
+				if the atombeat:allow was present it would be good to ....
+				if="instance('ins-permissions-entry')/atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor' and contains(@atombeat:allow, 'GET')]" 
+				 -->
 				<xforms:send ev:event="xforms-submit-done" submission="sub-get-permissions-acl-entry" />
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 			</xforms:submission>
