@@ -31,6 +31,7 @@ import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
 import org.apache.abdera.protocol.client.RequestOptions;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -44,7 +45,7 @@ public class StoreUploadsServlet extends HttpServlet {
 	private static final long serialVersionUID = -227666119754951587L;
 	private Abdera abdera = new Abdera();
 	
-	
+	private static final Logger logger = Logger.getLogger(StoreUploadsServlet.class.getName());
 	
 	private static final DocumentBuilderFactory factory;
 	private static DocumentBuilder builder;
@@ -77,6 +78,9 @@ public class StoreUploadsServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse res) {
 		
+		// return aggregated document
+		res.setContentType("application/atom+xml");
+		res.setStatus(500);
 		try {
 			
 			org.w3c.dom.Document requestDocument = builder.parse(request.getInputStream());
@@ -94,6 +98,7 @@ public class StoreUploadsServlet extends HttpServlet {
 				
 				Element uploadElement = (Element) uploadNodeList.item(i);
 				org.w3c.dom.Document responseDocument = storeUpload(request, uploadElement, targetCollectionUri);
+				
 				responseDocumentsList.add(responseDocument);
 				
 			}
@@ -129,21 +134,10 @@ public class StoreUploadsServlet extends HttpServlet {
 		} catch (BadRequestException e) {
 		
 			sendBadRequest(e.getLocalizedMessage(), res);
-			
-		} catch (SAXException e) {
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
-		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 
 		} catch (Throwable t) {
 			
-			// TODO Auto-generated catch block
-			t.printStackTrace();
+			logger.error("StoreUploadsServlet", t);
 
 		}
 
