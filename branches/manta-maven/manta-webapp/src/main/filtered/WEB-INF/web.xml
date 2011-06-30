@@ -646,6 +646,17 @@
     </servlet-mapping>
     
     
+    <servlet>
+        <servlet-name>TransformServlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.util.transform.TransformServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>TransformServlet</servlet-name>
+        <url-pattern>/util/transform</url-pattern>
+    </servlet-mapping>
+    
+    
     <!--+
         |
         | Custom error pages
