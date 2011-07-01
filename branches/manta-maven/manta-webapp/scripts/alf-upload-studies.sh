@@ -18,7 +18,7 @@ do
 	
 	if [ $UPDATE = 'true' ]
 	then
-		curl -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
+		curl -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
 	else
 		curl -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
 	fi	
