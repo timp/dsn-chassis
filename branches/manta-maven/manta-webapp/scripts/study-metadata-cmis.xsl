@@ -10,16 +10,15 @@
 	<xsl:template match="atom:entry">
 		<atom:entry>
 		<atom:title>
-		<xsl:apply-templates select="manta:id/text()" /></atom:title>
+		<xsl:apply-templates select="manta:id/text()" /><xsl:text>.xml</xsl:text></atom:title>
+		<atom:content type="text/xml"/>
 		<cmisra:object>
 			<cmis:properties>
 				<cmis:propertyId propertyDefinitionId="cmis:objectTypeId">
-					<cmis:value>F:wc:studyFolder</cmis:value>
+					<cmis:value>D:wc:studyInfo</cmis:value>
 				</cmis:propertyId>
 				<alf:setAspects>
 					<alf:appliedAspects>P:cm:titled</alf:appliedAspects>
-					<alf:appliedAspects>P:wc:workflowInfos</alf:appliedAspects>
-					<alf:appliedAspects>P:wc:studyFolderData</alf:appliedAspects>
 					<alf:properties>
 						<cmis:propertyString propertyDefinitionId="cm:description"
 							displayName="Description" queryName="cm:description">
@@ -33,29 +32,6 @@
 								<xsl:apply-templates select="atom:title/text()" />
 							</cmis:value>
 						</cmis:propertyString>
-						<cmis:propertyString propertyDefinitionId="wc:modules"
-							displayName="The module(s) that the file belongs to" queryName="wc:modules">
-							<xsl:apply-templates select="//modules" />
-						</cmis:propertyString>
-
-						<cmis:propertyString propertyDefinitionId="wc:admins"
-							displayName="Users (first name and last name) that are the creators of this study (admins)"
-							queryName="wc:admins" ><xsl:apply-templates select="//atombeat:member" /></cmis:propertyString>
-						<cmis:propertyString propertyDefinitionId="wc:countries"
-							displayName="The country/countries where the study originated"
-							queryName="wc:countries">
-							<xsl:apply-templates select="//country" />
-						</cmis:propertyString>
-						<cmis:propertyString propertyDefinitionId="wc:studyInfoLink"
-							displayName="Link to the study metadata XML in Chassis"
-							queryName="wc:studyInfoLink">
-							<cmis:value>
-							<xsl:apply-templates select="//atom:link" />
-							</cmis:value>
-						</cmis:propertyString>
-						<cmis:propertyString propertyDefinitionId="wc:region"
-							displayName="The region where the study originated" queryName="wc:region" />
-
 					</alf:properties>
 				</alf:setAspects>
 
@@ -78,8 +54,8 @@
 	</xsl:template>
 	
 	<xsl:template match="//modules">
-	<!-- Note doesn't support \s+ -->
-		<xsl:for-each select="str:tokenize(.,' ')">
+	 
+		<xsl:for-each select="str:tokenize(.,'\s+')">
 			<cmis:value>
 				<xsl:if test="'clinical' = .">Clinical</xsl:if>
 				<xsl:if test="'molecular' = .">Molecular</xsl:if>
