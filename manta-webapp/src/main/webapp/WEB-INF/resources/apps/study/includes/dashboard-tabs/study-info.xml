@@ -98,9 +98,14 @@
 				                 	
 				                 	<a class="btn" href="{concat(xxforms:instance('ins-study-entry')/atom:link[@rel='self']/@href,'?output=textxml')}">Download as XML</a>
 				                 	
+				                 	<!-- 
 				                 	<a class="btn" href="javascript:downloadStudyAsCsvRowsWithCustomFieldLabelsUsingStudyAtomEntryURL('{instance('ins-study-entry')/atom:link[@rel='self']/@href}');">Download as CSV rows</a>
 				                 	<a class="btn" href="javascript:downloadStudyAsCsvColumnsWithCustomFieldLabelsUsingStudyAtomEntryURL('{instance('ins-study-entry')/atom:link[@rel='self']/@href}');">Download as CSV columns</a>
+				                 	 -->
 			                 	
+			                 		<a class="btn" href="/util/transform?format=rows&amp;study={instance('ins-study-entry')/atom:link[@rel='self']/@href}">Download as CSV rows</a>
+				                 	<a class="btn" href="/util/transform?format=columns&amp;study={instance('ins-study-entry')/atom:link[@rel='self']/@href}">Download as CSV columns</a>
+				                 	
 			                 	</p>
 			                  </xforms:group>
 		

@@ -1,9 +1,7 @@
 package org.cggh.chassis.manta.util.transform;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,9 +19,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.abdera.protocol.client.AbderaClient;
-import org.apache.abdera.protocol.client.ClientResponse;
-import org.apache.abdera.protocol.client.RequestOptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -71,28 +66,14 @@ public class TransformFunctions {
 	}
 
 
-	public String convertDataAsFieldModelArrayListIntoCSVRowsWithMappedCustomFieldLabelsAsString(
-			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels) {
+	public String convertDataAsFieldModelArrayListIntoCSVRowsWithMappedCustomFieldLabelsAsStringUsingFieldLabelRegExpMappingsAsPatternKeyedHashMap(
+			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels, HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap) {
 
 		String dataAsCSVRowsString = null;
 
 		//NOTE: Enclose value in quotes.
 		//NOTE: Replace EOL characters with spaces. 
 		//NOTE: Use Unix EOL character.
-		
-		
-		//TODO: Get the mapped values as a HashMap from the config collection using URL (hard-coded?)
-		//https://wwarn-app3.nsms.ox.ac.uk/repository/service/content/config/explorer-display-types
-		//https://wwarn-app3.nsms.ox.ac.uk/repository/service/content/config/study-field-mappings
-		
-		///////////
-		HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = new HashMap<String, String>();
-		
-		//TODO: replace with sourced values
-		fieldLabelRegExpMappingsAsPatternKeyedHashMap.put("/breakfast_menu\\[(\\d+)\\]/food\\[(\\d+)\\]/name\\[(\\d+)\\]", "Food$2Name");
-		
-		
-		//////////
 		
 		StringBuilder dataAsCSVStringBuilder = new StringBuilder();
 		
@@ -101,27 +82,31 @@ public class TransformFunctions {
 			StringBuffer labelAsStringBuffer = new StringBuffer("\"");
 			StringBuffer valueAsStringBuffer = new StringBuffer("\"");
 			
-			
-			//TODO: translate into mapped values
-			
-			/////////
-			
 			Boolean matchFound = null;
 		
 			
 			for (String regExpKey : fieldLabelRegExpMappingsAsPatternKeyedHashMap.keySet()) {
 
+				if (regExpKey != null) {
 				
-				Pattern pattern = Pattern.compile(regExpKey);
-				Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
-
-				if (matcher.matches()) {
+					Pattern pattern = Pattern.compile(regExpKey);
+					Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+	
+					if (matcher.matches()) {
+						
+						matchFound = true;
+						
+						labelAsStringBuffer.append(matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey))).append("\"");
+						
+						
+					} else {
+						
+						//
+						//this.getLogger().info(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel() + " does not match " + regExpKey);
+					}
 					
-					matchFound = true;
-					
-					labelAsStringBuffer.append(matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey))).append("\"");
-					
-					
+				} else {
+					this.logger.severe("regExpKey is null");
 				}
 				
 			}
@@ -139,7 +124,7 @@ public class TransformFunctions {
 			
 			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\\n|\\r", " ").replaceAll("\"", "\"\"")).append("\"");
 			
-			dataAsCSVStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer);
+			dataAsCSVStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer.toString());
 			
 			dataAsCSVStringBuilder.append("\n");
 		}
@@ -268,29 +253,7 @@ public class TransformFunctions {
 		return fileName;
 	}
 
-	public String convertUrlAsStringAndRequestOptionsIntoUrlResponseAsString(String urlAsString, RequestOptions requestOptions) throws IOException {
 
-		StringBuffer urlResponseAsStringBuffer = new StringBuffer();
-		
-			AbderaClient atomClient = new AbderaClient();
-			
-			ClientResponse clientResponse = atomClient.get(urlAsString, requestOptions);
-			
-			//This method doesn't authenticate:
-			//URL urlAsURL = new URL(urlAsString);
-			//URLConnection urlConnection = urlAsURL.openConnection();
-			
-			
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientResponse.getInputStream()));
-			String line;
-
-	        while ((line = bufferedReader.readLine()) != null) 
-	        	urlResponseAsStringBuffer.append(line);
-	        bufferedReader.close();
-			
-		
-		return urlResponseAsStringBuffer.toString();
-	}
 
 	public Document convertXmlAsStringIntoXmlAsDocument(String urlResponseAsString) throws ParserConfigurationException, SAXException, IOException {
 
@@ -309,6 +272,155 @@ public class TransformFunctions {
 	
 	public Logger getLogger() {
 		return logger;
+	}
+
+
+	public HashMap<String, String> convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelMappingsAsPatternKeyedHashMap(
+			Document fieldLabelMappingsXmlAsDocument) {
+		
+		HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = new HashMap<String, String>();
+		
+		NodeList fieldLabelMappingsAsNodeList = fieldLabelMappingsXmlAsDocument.getElementsByTagName("fieldLabelMapping");
+		
+		for (int i = 0; i < fieldLabelMappingsAsNodeList.getLength(); i++) {
+			
+			//
+			//this.getLogger().info("i node name: " +  fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+			
+			if (fieldLabelMappingsAsNodeList.item(i).getNodeName().toString().equals("fieldLabelMapping")) {
+				
+				String patternKey = null;
+				String replacementTemplate = null;
+				
+				for (int j = 0; j < fieldLabelMappingsAsNodeList.item(i).getChildNodes().getLength(); j++) {
+				
+					
+					if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("label")) {
+						
+						//
+						//this.getLogger().info("got label: " + fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent());
+						
+						patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+					}
+					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("value")) {
+						replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+					}
+					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("#text")) {
+						//ignore this type of node
+					}
+					else {
+						if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName() != null) {
+							this.getLogger().warning("Unexpected node name: " +  fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().toString());
+						} else {
+							this.getLogger().warning("Unexpected: node name is null");
+						}
+					}
+					
+				}
+				
+				//fieldLabelRegExpMappingsAsPatternKeyedHashMap.put("/breakfast_menu\\[(\\d+)\\]/food\\[(\\d+)\\]/name\\[(\\d+)\\]", "Food$2Name");
+				
+				//
+				//this.getLogger().info("got: " + patternKey + "," + replacementTemplate);
+				
+				fieldLabelRegExpMappingsAsPatternKeyedHashMap.put(patternKey, replacementTemplate);
+			
+			} else {
+				this.getLogger().warning("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+			}
+			
+		}
+		
+		return fieldLabelRegExpMappingsAsPatternKeyedHashMap;
+	}
+
+
+	public String convertDataAsFieldModelArrayListIntoCSVColumnsWithMappedCustomFieldLabelsAsStringUsingFieldLabelRegExpMappingsAsPatternKeyedHashMap(
+			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels,
+			HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap) {
+
+		//TODO: Consolidate repeated code with the rows-format version of the same/similar method.
+		
+		String dataAsCSVColumnsString = null;
+
+		//NOTE: Enclose value in quotes.
+		//NOTE: Replace EOL characters with spaces. 
+		//NOTE: Use Unix EOL character.
+		
+		StringBuilder dataAsCSVColumnsStringBuilder = new StringBuilder();
+		StringBuilder labelsAsCSVRowStringBuilder = new StringBuilder();
+		StringBuilder valuesAsCSVRowStringBuilder = new StringBuilder();
+		
+		for (int i = 0; i < dataAsFieldModelArrayListWithXpathFieldLabels.size(); i ++) {
+			
+			StringBuffer labelAsStringBuffer = new StringBuffer("\"");
+			StringBuffer valueAsStringBuffer = new StringBuffer("\"");
+			
+			Boolean matchFound = null;
+		
+			
+			for (String regExpKey : fieldLabelRegExpMappingsAsPatternKeyedHashMap.keySet()) {
+
+				if (regExpKey != null) {
+				
+					Pattern pattern = Pattern.compile(regExpKey);
+					Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+	
+					if (matcher.matches()) {
+						
+						matchFound = true;
+						
+						labelAsStringBuffer.append(matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey))).append("\"");
+						
+						
+					} else {
+						
+						//
+						//this.getLogger().info(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel() + " does not match " + regExpKey);
+					}
+					
+				} else {
+					this.logger.severe("regExpKey is null");
+				}
+				
+			}
+			
+			
+			if (matchFound == null || matchFound != true) {
+				matchFound = false;
+			}
+			
+			//NOTE: Keep unmatched xPathFieldLabels
+			if (matchFound == false) {
+				
+				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
+			}
+			
+			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\\n|\\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			
+			//dataAsCSVColumnsStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer);
+			
+			if (i > 0) {
+				labelsAsCSVRowStringBuilder.append(",");
+				valuesAsCSVRowStringBuilder.append(",");
+			}
+			
+			labelsAsCSVRowStringBuilder.append(labelAsStringBuffer.toString());
+			valuesAsCSVRowStringBuilder.append(valueAsStringBuffer.toString());
+			
+			
+		}
+		
+		dataAsCSVColumnsStringBuilder.append(labelsAsCSVRowStringBuilder.toString());
+		dataAsCSVColumnsStringBuilder.append("\n");
+		
+		dataAsCSVColumnsStringBuilder.append(valuesAsCSVRowStringBuilder.toString());
+		dataAsCSVColumnsStringBuilder.append("\n");
+		
+		dataAsCSVColumnsString = dataAsCSVColumnsStringBuilder.toString();		
+		
+		return dataAsCSVColumnsString;
+		
 	}
 
 }

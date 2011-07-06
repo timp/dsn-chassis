@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -51,56 +52,83 @@ public class TransformServlet extends HttpServlet {
 			  
 				  response.setContentType("text/csv");
 
-				  if (!transformFunctions.isInvalidURL(request.getParameter("URL"))) {
-					  
-					  
-					  //FIXME: Restrict the URLs that will be processed, e.g. by domain.
-					  
-					  
-					  try {
-						  
-						RequestOptions requestOptions = createRequestOptions(request);
-					  
-						String urlResponseAsString = transformFunctions.convertUrlAsStringAndRequestOptionsIntoUrlResponseAsString(request.getParameter("URL"), requestOptions);
-					  
-						//
-						//this.getLogger().info(urlResponseAsString);
-					  
-					  	// Checking that the URL response is actually XML is achieved through attempting to parse it.
-					    
-						Document xmlAsDocument = transformFunctions.convertXmlAsStringIntoXmlAsDocument(urlResponseAsString);
-						
-						//Note: Could introduce prefix here.
-						String parentNodeBaseXPathAsString = null;
-						ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels = transformFunctions.convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(xmlAsDocument.getChildNodes(), parentNodeBaseXPathAsString);
-						
-						String dataAsCSVRowsString = transformFunctions.convertDataAsFieldModelArrayListIntoCSVRowsWithMappedCustomFieldLabelsAsString(dataAsFieldModelArrayListWithXpathFieldLabels); 
-						
-						//FIXME: sanitize
-						String filename = transformFunctions.convertURLAsStringIntoFileName(request.getParameter("URL"));
-						
-						this.respondWithStringAsFileUsingResponseAndStringAndFilename(response, dataAsCSVRowsString, filename);
-						
-						  
-					  } catch (IOException e) {
-						  e.printStackTrace();
-					  } catch (ParserConfigurationException e) {
-						e.printStackTrace();
-					} catch (SAXException e) {
-						e.printStackTrace();
-					}
-					  
-					  
-					  
-					  
-				  } else {
-					 
-					  response.setContentType("text/plain");
-					  response.getWriter().println("Invalid URL: " + request.getParameter("URL"));
-					  
-				  }
 				  
-				  
+					  
+					  if (!transformFunctions.isInvalidURL(request.getParameter("study"))) {
+						  
+						  
+						  //FIXME: Restrict the URLs that will be processed, e.g. by domain.
+						  
+						  
+						  try {
+							  
+							RequestOptions requestOptions = createRequestOptions(request);
+						  
+							TransformCRUD transformCRUD = new TransformCRUD();
+							
+							//More verbosely
+							//String studyUrlResponseAsString = transformCRUD.retrieveUrlResponseAsStringUsingUrlAsStringAndRequestOptions(request.getParameter("study"), requestOptions)
+							//this.getLogger().info(studyUrlResponseAsString);
+	
+						  	// Checking that the URL response is actually XML is achieved through attempting to parse it.
+							Document studyXmlAsDocument = transformFunctions.convertXmlAsStringIntoXmlAsDocument(transformCRUD.retrieveUrlResponseAsStringUsingUrlAsStringAndRequestOptions(request.getParameter("study"), requestOptions));
+	
+							//TODO: How can this alter depending on the environment?
+							String fieldLabelMappingsUrlAsString = "http://localhost:8080/repository/service/content/config/field-label-mappings";
+							
+						    Document fieldLabelMappingsXmlAsDocument = transformFunctions.convertXmlAsStringIntoXmlAsDocument(transformCRUD.retrieveUrlResponseAsStringUsingUrlAsStringAndRequestOptions(fieldLabelMappingsUrlAsString, requestOptions));
+							
+						    HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = transformFunctions.convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelMappingsAsPatternKeyedHashMap(fieldLabelMappingsXmlAsDocument);
+	
+							//HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = transformCRUD.retrieveFieldLabelRegExpMappingsAsPatternKeyedHashMap();
+	
+							
+							//Note: Could introduce a base prefix here.
+							String parentNodeBaseXPathAsString = null;
+							ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels = transformFunctions.convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(studyXmlAsDocument.getChildNodes(), parentNodeBaseXPathAsString);
+
+							//FIXME: sanitize
+							String filename = transformFunctions.convertURLAsStringIntoFileName(request.getParameter("study"));							
+							
+							
+								if (request.getParameter("format") != null && request.getParameter("format").equals("rows")) { 
+								
+									String dataAsCSVRowsString = transformFunctions.convertDataAsFieldModelArrayListIntoCSVRowsWithMappedCustomFieldLabelsAsStringUsingFieldLabelRegExpMappingsAsPatternKeyedHashMap(dataAsFieldModelArrayListWithXpathFieldLabels, fieldLabelRegExpMappingsAsPatternKeyedHashMap); 
+							
+									this.respondWithStringAsFileUsingResponseAndStringAndFilename(response, dataAsCSVRowsString, filename);
+							
+								} else if (request.getParameter("format") != null && request.getParameter("format").equals("columns")) {
+								  
+									String dataAsCSVColumnsString = transformFunctions.convertDataAsFieldModelArrayListIntoCSVColumnsWithMappedCustomFieldLabelsAsStringUsingFieldLabelRegExpMappingsAsPatternKeyedHashMap(dataAsFieldModelArrayListWithXpathFieldLabels, fieldLabelRegExpMappingsAsPatternKeyedHashMap); 
+									
+									this.respondWithStringAsFileUsingResponseAndStringAndFilename(response, dataAsCSVColumnsString, filename);
+							
+								  
+								} else {
+								  
+									response.setContentType("text/plain");
+								  	response.getWriter().println("Unhandled format: " + request.getParameter("format"));
+								  
+								}
+							  
+						  } catch (IOException e) {
+							  e.printStackTrace();
+						  } catch (ParserConfigurationException e) {
+							e.printStackTrace();
+						} catch (SAXException e) {
+							e.printStackTrace();
+						}
+						  
+						  
+						  
+						  
+					  } else {
+						 
+						  response.setContentType("text/plain");
+						  response.getWriter().println("Invalid study URL: " + request.getParameter("study"));
+						  
+					  }
+
 		              
 			  } else {
 
