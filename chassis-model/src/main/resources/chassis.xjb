@@ -22,9 +22,7 @@
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="xs:element[@name='publication-references']//xs:element[@ref='publication-reference']">
-			<hj:basic>
-				<orm:column length="1024"/>
-			</hj:basic>
+			
 		</jaxb:bindings>
 		
 		<jaxb:bindings node="xs:element[@name='acknowledgements']/xs:complexType">
@@ -54,11 +52,13 @@
 			<hj:entity name="addGenotypicInformation">
 				<orm:table name="addGenotypicInformation"/>
 			</hj:entity>
+			<jaxb:property name="addGenotypicInformation"/>
 		</jaxb:bindings>
 		<jaxb:bindings node="xs:element[@name='geneotypingToDistinguishBetweenRecrudescenceAndReinfection']/xs:complexType">
 			<hj:entity name="geneotypingToDistinguish">
 				<orm:table name="geneotypingToDistinguish"/>
 			</hj:entity>
+			<jaxb:property name="geneotypingToDistinguish"/>
 		</jaxb:bindings>
 		
 	</jaxb:bindings>
