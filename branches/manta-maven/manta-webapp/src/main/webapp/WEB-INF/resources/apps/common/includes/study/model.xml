@@ -29,8 +29,8 @@
 		<atom:feed />
 	</xforms:instance>
 
-	<xforms:submission id="sub-retrieve-study-feed" mode="asynchronous"
-		resource="/service/content/studies" method="get" replace="instance"
+	<xforms:submission id="sub-retrieve-study-feed" 
+		resource="/service/content/studies?filter=simple" method="get" replace="instance"
 		instance="ins-study-feed" serialization="none">
 		<!-- TODO error handling -->
 		<xforms:message ev:event="xforms-submit-error" level="modal">
