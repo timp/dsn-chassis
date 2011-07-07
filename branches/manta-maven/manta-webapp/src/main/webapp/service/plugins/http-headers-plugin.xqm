@@ -62,15 +62,21 @@ declare function local:log4jInfo(
     util:log-app( "info" , $http-headers-plugin:logger-name , $message ) (: only use within our function :)
 };
 
-
+declare function http-headers-plugin:get-request-path-info($request as element(request) ) as xs:string
+{
+    let $request-path-info := $request/path-info/text()
+    let $log := local:log4jDebug($request-path-info)
+    return $request-path-info
+};
 
 declare function http-headers-plugin:after(
-	$operation as xs:string ,
-	$request-path-info as xs:string ,
+    $operation as xs:string ,
+    $request as element(request) ,
 	$response as element(response)
 ) as element(response)
 {
-
+ 
+    let $request-path-info := http-headers-plugin:get-request-path-info($request)
 	let $message := ( "chassis-http-headers plugin, after: " , $operation , ", request-path-info: " , $request-path-info ) 
 	let $log := local:log4jDebug( $message )
 
