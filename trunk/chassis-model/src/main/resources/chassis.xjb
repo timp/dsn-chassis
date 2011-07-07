@@ -21,6 +21,12 @@
 			</hj:basic>
 		</jaxb:bindings>
 		
+		<jaxb:bindings node="xs:element[@name='publication-references']//xs:element[@ref='publication-reference']">
+			<hj:basic>
+				<orm:column length="1024"/>
+			</hj:basic>
+		</jaxb:bindings>
+		
 		<jaxb:bindings node="xs:element[@name='acknowledgements']/xs:complexType">
 			<hj:entity name="instOrPerson">
 				
@@ -33,45 +39,7 @@
 			</hj:entity>
 		</jaxb:bindings>
 		
-		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationloci']/xs:complexType">
-			<hj:entity name="infectionCompEstLoci">
-				<orm:table name="infectionCompEstLoci"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationlociOther']/xs:complexType">
-			<hj:entity name="infectionCompEstLociOther">
-				<orm:table name="infectionCompEstLociOther"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='molecularMarkerFalciparumOther']/xs:complexType">
-			<hj:entity name="mMarkerFalciparumOther">
-				<orm:table name="mMarkerFalciparumOther"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<!--
-		<jaxb:bindings node="xs:element[@name='asexualParasitemiaPositiveThickUnitOther']">
-			<hj:entity>
-				<orm:table name="asexualParasitemiaPosThickUnitOther"/>
-			</hj:entity>
-		</jaxb:bindings>
 		
-		<jaxb:bindings node="xs:element[@name='asexualParasitemiaPositiveThinUnitOther']">
-			<hj:entity>
-				<orm:table name="asexualParasitemiaPosThinUnitOther"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='sexualParasitemiaPositiveThickUnitOther']">
-			<hj:entity>
-				<orm:table name="sexualParasitemiaPosThickUnitOther"/>
-			</hj:entity>
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="xs:element[@name='sexualParasitemiaPositiveThinUnitOther']">
-			<hj:entity>
-				<orm:table name="sexualParasitemiaPosThinUnitOther"/>
-			</hj:entity>
-		</jaxb:bindings>
-		-->
 		<jaxb:bindings node="xs:element[@name='thickFilmCalculationOfParasitemia']/xs:complexType">
 			<hj:entity name="thickFilmCalcOfParasitemia">
 				<orm:table name="thickFilmCalcOfParasitemia"/>
@@ -82,29 +50,9 @@
 				<orm:table name="thinFilmCalcOfParasitemia"/>
 			</hj:entity>
 		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='transmissionIntensityAgeFromUnits']/xs:complexType">
-			<hj:entity name="transIntensityAgeFromUnits">
-				<orm:table name="transIntensityAgeFromUnits"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='transmissionIntensityAgeToUnits']/xs:complexType">
-			<hj:entity name="transmissionIntensityAgeToUnits">
-				<orm:table name="transmissionIntensityAgeToUnits"/>
-			</hj:entity>
-		</jaxb:bindings>
 		<jaxb:bindings node="xs:element[@name='additionalGenotypicInformation']/xs:complexType">
 			<hj:entity name="addGenotypicInformation">
 				<orm:table name="addGenotypicInformation"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='annualParasitologicalIncidence']/xs:complexType">
-			<hj:entity name="annualParasitIncidence">
-				<orm:table name="annualParasitIncidence"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='annualParasitologicalIncidenceYear']/xs:complexType">
-			<hj:entity name="annualParasitIncidenceYear">
-				<orm:table name="annualParasitIncidenceYear"/>
 			</hj:entity>
 		</jaxb:bindings>
 		<jaxb:bindings node="xs:element[@name='geneotypingToDistinguishBetweenRecrudescenceAndReinfection']/xs:complexType">

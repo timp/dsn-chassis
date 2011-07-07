@@ -191,33 +191,23 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="annualParasitologicalIncidence">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="annualParasitologicalIncidenceYear">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="parasitePrevalence">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="parasitePrevalenceYear">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="transmissionIntensityAgeFrom">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="transmissionIntensityAgeFromUnits">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="transmissionIntensityAgeTo">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="transmissionIntensityAgeToUnits">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="annualParasitologicalIncidence" type="xs:string"/>
+  <xs:element name="annualParasitologicalIncidenceYear" type="xs:string"/>
+  <xs:element name="parasitePrevalence" type="xs:string"/>
+  <xs:element name="parasitePrevalenceYear"  type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeFrom" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeFromUnits" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeTo" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeToUnits" type="xs:string"/>
   <xs:element name="entomologicalInoculationRate" type="xs:string"/>
   <xs:element name="entomologicalInoculationRateYear" type="xs:string"/>
-  <xs:element name="seasonalTransmission" type="xs:string"/>
+  <xs:element name="seasonalTransmission" >
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="|true|false"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
   <xs:element name="transmissionMonths" type="xs:string"/>
   <xs:element name="pathogens" type="xs:string"/>
   <xs:element name="inclusionExclusionCriteria">
@@ -324,9 +314,7 @@
   </xs:element>
   <xs:element name="regimenAllocationMethod" type="xs:string"/>
   <xs:element name="blinding" type="xs:string"/>
-  <xs:element name="randomisationProportion">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="randomisationProportion" type="xs:string"/>
   <xs:element name="followup">
     <xs:complexType>
       <xs:sequence>
@@ -390,9 +378,7 @@
   </xs:element>
   <xs:element name="sexualParasitemiaNegativeCount" type="xs:string"/>
   <xs:element name="sexualParasitemiaPositiveThickUnit" type="xs:string"/>
-  <xs:element name="sexualParasitemiaPositiveThickUnitOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="sexualParasitemiaPositiveThickUnitOther"  type="xs:string"/>
   <xs:element name="sexualParasitemiaPositiveThinUnit" type="xs:string"/>
   <xs:element name="sexualParasitemiaPositiveThinUnitOther" type="xs:string"/>
   <xs:element name="thickFilmCalculationOfParasitemia">
@@ -539,9 +525,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="sampleSource" type="xs:string"/>
-  <xs:element name="sampleSourceOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="sampleSourceOther" type="xs:string"/>
   <xs:element name="malariaStatus" type="xs:string"/>
   <xs:element name="genotypedMarkers">
     <xs:complexType>
@@ -572,9 +556,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="genotypingMethod" type="xs:string"/>
-  <xs:element name="genotypingMethodOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="genotypingMethodOther" type="xs:string"/>
   <xs:element name="molecularMarkerFalciparumOpen">
     <xs:complexType>
       <xs:sequence>
@@ -584,9 +566,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="molecularMarkerFalciparum" type="xs:string"/>
-  <xs:element name="molecularMarkerFalciparumOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="molecularMarkerFalciparumOther" type="xs:string"/>
   <xs:element name="molecularMarkerVivaxOpen">
     <xs:complexType>
       <xs:sequence>
@@ -596,9 +576,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="molecularMarkerVivax" type="xs:string"/>
-  <xs:element name="molecularMarkerVivaxOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="molecularMarkerVivaxOther" type="xs:string"/>
   <xs:element name="molecularMarkerOvaleOpen">
     <xs:complexType>
       <xs:sequence>
@@ -617,12 +595,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="molecularMarkerMalariae">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="molecularMarkerMalariaeOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="molecularMarkerMalariae" type="xs:string"/>
+  <xs:element name="molecularMarkerMalariaeOther" type="xs:string"/>
   <xs:element name="molecularMarkerKnowlesiOpen">
     <xs:complexType>
       <xs:sequence>
@@ -631,12 +605,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="molecularMarkerKnowlesi">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="molecularMarkerKnowlesiOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="molecularMarkerKnowlesi" type="xs:string"/>
+  <xs:element name="molecularMarkerKnowlesiOther" type="xs:string"/>
   <xs:element name="sampleSelectionMethodOpen">
     <xs:complexType>
       <xs:sequence>
@@ -647,9 +617,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="sampleSelectionMethod" type="xs:NCName"/>
-  <xs:element name="sampleSelectionMethodOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="sampleSelectionMethodOther" type="xs:string"/>
   <xs:element name="sampleSelectionProportion" type="xs:string"/>
   <xs:element name="mixedResistanceAlleles">
     <xs:complexType>
@@ -723,12 +691,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="infectionComplexityEstimationloci">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="infectionComplexityEstimationlociOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="infectionComplexityEstimationloci" type="xs:string"/>
+  <xs:element name="infectionComplexityEstimationlociOther" type="xs:string"/>
   <xs:element name="invitro">
     <xs:complexType>
       <xs:sequence>
@@ -764,13 +728,9 @@
   </xs:element>
   <xs:element name="incubatorSystem" type="xs:string"/>
   <xs:element name="co2percentage" type="xs:string"/>
-  <xs:element name="co2Other">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="co2Other" type="xs:string"/>
   <xs:element name="o2percentage" type="xs:string"/>
-  <xs:element name="o2Other">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="o2Other" type="xs:string"/>
   <xs:element name="healthyErythrocytesSource" type="xs:string"/>
   <xs:element name="hematocritpercent" type="xs:string"/>
   <xs:element name="bloodGroup" type="xs:string"/>
@@ -791,9 +751,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="medium" type="xs:string"/>
-  <xs:element name="mediumOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="mediumOther" type="xs:string"/>
   <xs:element name="preparation" type="xs:string"/>
   <xs:element name="serum" type="xs:string"/>
   <xs:element name="serum-finalConcentration" type="xs:string"/>
@@ -886,9 +844,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="clone3D7ProvidedByWwarn" type="xs:boolean"/>
-  <xs:element name="clone3D7Provider">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="clone3D7Provider" type="xs:string"/>
   <xs:element name="batchesIncludedInRawData" type="xs:boolean"/>
   <xs:element name="preparationDate" type="xs:string"/>
   <xs:element name="parasitaemia3D7percentage" type="xs:string"/>
@@ -959,13 +915,9 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="uploadedUrl">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="uploadedUrl" type="xs:string"/>
   <xs:element name="note" type="xs:string"/>
-  <xs:element name="assayValidated">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="assayValidated" type="xs:string"/>
   <xs:element name="drugs">
     <xs:complexType>
       <xs:sequence>
@@ -1087,9 +1039,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="feeding" type="xs:string"/>
-  <xs:element name="fatPerMeal">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="fatPerMeal" type="xs:string"/>
   <xs:element name="feedingOther" type="xs:string"/>
   <xs:element name="readministeredOnVomitting" type="xs:string"/>
   <xs:element name="comments" type="xs:string"/>
@@ -1126,15 +1076,9 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="sampleType" type="xs:string"/>
-  <xs:element name="sampleTypeOther">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="wholeBloodSource">
-    <xs:complexType/>
-  </xs:element>
-  <xs:element name="dateCultureIsolated">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="sampleTypeOther" type="xs:string"/>
+  <xs:element name="wholeBloodSource" type="xs:string"/>
+  <xs:element name="dateCultureIsolated" type="xs:string"/>
   <xs:element name="anticoagulent" type="xs:string"/>
   <xs:element name="centrifugeTime" type="xs:string"/>
   <xs:element name="storages">
@@ -1165,9 +1109,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="locusType" type="xs:string"/>
-  <xs:element name="locusTypeOther">
-    <xs:complexType/>
-  </xs:element>
+  <xs:element name="locusTypeOther" type="xs:string"/>
   <xs:element name="locusName" type="xs:string"/>
   <xs:element name="day" type="xs:string"/>
   <xs:element name="hour" type="xs:string"/>
