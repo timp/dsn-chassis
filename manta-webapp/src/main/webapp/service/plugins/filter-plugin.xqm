@@ -62,8 +62,8 @@ declare function filter-plugin:after(
 	return
 		
 		if ($operation = $CONSTANT:OP-LIST-COLLECTION) then
-	        if ( matches( $request-path-info , "^/media/submitted" ) ) then 
-                filter-plugin:after-list-collection-submitted-media( $request, $response )	
+	        if ( matches( $request-path-info , "^/media/submitted" ) or matches( $request-path-info , "^/studies" ) ) then 
+                filter-plugin:after-list-collection( $request, $response )	
 	        else 
 	            $response
 	    else
@@ -71,7 +71,7 @@ declare function filter-plugin:after(
 
 };
 
-declare function filter-plugin:after-list-collection-submitted-media(
+declare function filter-plugin:after-list-collection(
     $request as element(request) ,
 	$response as element(response)
 ) as element(response)
@@ -85,7 +85,9 @@ declare function filter-plugin:after-list-collection-submitted-media(
             $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
             
             for $entry in $feed/child::*[. instance of element(atom:entry) ]
-                return filter-plugin:do-filter-entry( $request, $entry )
+                let $pdr := filter-plugin:do-filter-pdr( $request, $entry )
+                let $simple := filter-plugin:do-filter-simple( $request, $pdr )
+                return $simple
         }
         </atom:feed>
     
@@ -93,7 +95,7 @@ declare function filter-plugin:after-list-collection-submitted-media(
     
 };
 
-declare function filter-plugin:do-filter-entry(
+declare function filter-plugin:do-filter-pdr(
     $request as element(request) ,
 	$entry as element()
 ) as element()?
@@ -142,6 +144,45 @@ declare function filter-plugin:do-filter-entry(
          else
              ()   
      return $ret
+     else 
+         $entry
+};
+
+declare function filter-plugin:do-filter-simple(
+    $request as element(request) ,
+	$entry as element()
+) as element()?
+{
+    
+     let $param-filter := xutil:get-parameter( "filter" , $request )
+     
+     return if (contains($param-filter, "simple")) then
+     let $message := ( "chassis-filter plugin, do-filter-simple: " ) 
+	let $log := local:log4jDebug( $message )
+         let $ret := 
+        <atom:entry>
+        {        
+            $entry/attribute::* ,
+            $entry/child::*[ not( . instance of element(atom:content) ) ],
+            
+            for $content in $entry/child::*[. instance of element(atom:content) ]
+                let $simple := 
+                <atom:content>
+                {
+                    $content/attribute::*
+                }
+                <study>
+                {
+                    $content/study/attribute::*,
+                    $content/study/atombeat:group
+                }
+                </study>
+                </atom:content>
+                return $simple
+        }
+        </atom:entry>
+    
+          return $ret
      else 
          $entry
 };
