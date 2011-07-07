@@ -12,7 +12,7 @@ import module namespace tombstones-plugin = "http://purl.org/atombeat/xquery/tom
 import module namespace history-plugin = "http://purl.org/atombeat/xquery/history-plugin" at "../plugins/history-plugin.xqm" ;
 import module namespace manta-plugin = "http://www.cggh.org/2010/chassis/manta/xquery/atombeat-plugin" at "../plugins/manta-plugin.xqm" ;
 import module namespace http-headers-plugin = "http://www.cggh.org/2010/chassis/http-headers/xquery/atombeat-plugin" at "../plugins/http-headers-plugin.xqm" ;
-
+import module namespace filter-plugin = "http://www.cggh.org/2010/chassis/filter/xquery/atombeat-plugin" at "../plugins/filter-plugin.xqm" ;
 
 
 
@@ -40,6 +40,7 @@ declare function plugin:after() as function* {
         util:function( QName( "http://www.cggh.org/2010/chassis/http-headers/xquery/atombeat-plugin" , "http-headers-plugin:after" ) , 3 ) ,
 		util:function( QName( "http://purl.org/atombeat/xquery/link-extensions-plugin" , "link-extensions-plugin:after" ) , 3 ) , 
 		util:function( QName( "http://purl.org/atombeat/xquery/link-expansion-plugin" , "link-expansion-plugin:after" ) , 3 ) ,
+		util:function( QName( "http://www.cggh.org/2010/chassis/filter/xquery/atombeat-plugin" , "filter-plugin:after" ) , 3 ) ,
 		util:function( QName( "http://purl.org/atombeat/xquery/logger-plugin" , "logger-plugin:after" ) , 3 )
 	)
 };
