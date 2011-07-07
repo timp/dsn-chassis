@@ -33,43 +33,8 @@
         <xforms:model id="mod-main">
 
 			<xforms:submission 
-				id="sub-get-studies-feed"
-				resource="/service/content/studies"
-				method="get"
-				replace="instance"
-				instance="ins-studies-feed"
-				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving studies.
-               	</xforms:message>
-               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-reviews-feed"/>
-			</xforms:submission>
-
-			<xforms:submission 
-				id="sub-get-all-reviews-feed"
-				resource="/service/content/reviews/personal-data"
-				method="get"
-				replace="instance"
-				instance="ins-reviews-feed"
-				serialization="none">
-				<!-- TODO error handling -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">
-                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving reviews.
-               	</xforms:message>
-               	<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-derivations-feed"/>
-			</xforms:submission>
-        	
-        	<xforms:submission id="sub-get-all-derivations-feed" resource="/service/content/derivations" method="get" replace="instance" instance="ins-derivations-feed" serialization="none">
-        		<xforms:message ev:event="xforms-submit-error" level="modal">
-        			An error occurred (<xforms:output value="event('error-type')"/>) while retrieving derivations.
-        		</xforms:message>
-        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-all-submitted-media-feed"/>
-        	</xforms:submission>
-			
-			<xforms:submission 
 				id="sub-get-all-submitted-media-feed"
-				resource="/service/content/media/submitted"
+				resource="/service/content/media/submitted?filter=pdr"
 				method="get"
 				replace="instance"
 				instance="ins-submitted-media-feed" 
@@ -81,24 +46,12 @@
 			</xforms:submission>
 			
 			<xforms:action ev:event="xforms-model-construct-done">
-	        	<xforms:send submission="sub-get-studies-feed"/>
+	        	<xforms:send submission="sub-get-all-submitted-media-feed"/>
 			</xforms:action>
-				
-			<xforms:instance id="ins-studies-feed">
-				<atom:feed/>
-			</xforms:instance>
 			
 			<xforms:instance id="ins-submitted-media-feed">
 				<atom:feed/>
 			</xforms:instance>
-			
-			<xforms:instance id="ins-reviews-feed">
-				<atom:feed/>
-			</xforms:instance>
-        	
-        	<xforms:instance id="ins-derivations-feed">
-        		<atom:feed/>
-        	</xforms:instance>
 			
         </xforms:model>
 
@@ -142,16 +95,7 @@
 
     	<h2>Files to review</h2>
     	
-			<xxforms:variable name="media-to-review" select="
-				for $entry in instance('ins-submitted-media-feed')/atom:entry return
-					if ( 
-						empty( 
-							instance('ins-reviews-feed')/atom:entry[ 
-								atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
-							] 
-					) 
-				) then $entry else ()
-				"/>
+			<xxforms:variable name="media-to-review" select="instance('ins-submitted-media-feed')/atom:entry[not(exists(manta:review))]"/>
 
 			<xforms:group ref="instance('ins-submitted-media-feed')[empty($media-to-review)]">
 				<p>There are no files to review.</p>
@@ -176,17 +120,8 @@
 		    			</tr>
 		    		</thead>
 		    		<tbody>
-		    			<xforms:repeat nodeset="
-			    			for $entry in instance('ins-submitted-media-feed')/atom:entry return
-								if ( 
-									empty( 
-										instance('ins-reviews-feed')/atom:entry[ 
-											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
-										] 
-								) and instance('ins-studies-feed')/atom:entry[atom:link[@rel='edit']/@href = $entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href and not(app:control/draft/text() = 'yes')]
-								 
-							) then $entry else ()
-						">
+		    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry[not(exists(manta:review))]
+			    			">
 		    			
 		    				<tr class="repeated-element">
 								<td>
@@ -220,22 +155,7 @@
 			
 		<xxforms:variable
 			name="media-with-personal-data-not-replaced"
-			select="
-				for $entry in instance('ins-submitted-media-feed')/atom:entry return
-					if ( 
-						exists( 
-							instance('ins-reviews-feed')/atom:entry[ 
-								atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
-								and .//outcome='fail'
-							]     							
-						) 
-						and empty(
-							instance('ins-derivations-feed')/atom:entry[
-								atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='edit']/@href	
-							]
-						)
-					) then $entry else ()
-			"/>
+			select="instance('ins-submitted-media-feed')/atom:entry[manta:review/outcome = 'fail']"/>
     	
 			<xforms:group ref="instance('ins-submitted-media-feed')[empty($media-with-personal-data-not-replaced)]">
 				<p>There are no files with personal data that need to be replaced.</p>
@@ -262,22 +182,7 @@
 					<tbody>
 						<xforms:repeat 
 							id="rep-submitted-media"
-							nodeset="
-							for $entry in instance('ins-submitted-media-feed')/atom:entry return
-								if ( 
-									exists( 
-										instance('ins-reviews-feed')/atom:entry[ 
-											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href = $entry/atom:link[@rel='edit']/@href 
-											and .//outcome='fail'
-										]     							
-									) 
-									and empty(
-										instance('ins-derivations-feed')/atom:entry[
-											atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/@href = $entry/atom:link[@rel='edit']/@href	
-										]
-									)
-								) then $entry else ()
-							">
+							nodeset="instance('ins-submitted-media-feed')/atom:entry[manta:review/outcome = 'fail']">
 							
 							<tr class="repeated-element">
 								<td>
