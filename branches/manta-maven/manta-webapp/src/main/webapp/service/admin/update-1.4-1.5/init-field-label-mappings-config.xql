@@ -66,7 +66,7 @@ declare function local:do-modifications() as xs:string*
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/ui-info\[(\d+)\]/wizard-pane-to-show\[(\d+)\]</label>
-				<value>WizardPaneToShown</value>
+				<value>WizardPaneToShow</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/atombeat:group\[(\d+)\]/atombeat:member\[(\d+)\]</label>
@@ -102,7 +102,7 @@ declare function local:do-modifications() as xs:string*
 				<label>/atom:entry\[(\d+)\]/atom:updated\[(\d+)\]</label>
 				<value>DateLastUpdated</value>
 			</fieldLabelMapping>
-			<fieldLabelMapping deprecated="n">
+			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/registrant-has-agreed-to-the-terms\[(\d+)\]</label>
 				<value>TermsOfSubmission</value>
 			</fieldLabelMapping>
@@ -110,7 +110,7 @@ declare function local:do-modifications() as xs:string*
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-is-published\[(\d+)\]</label>
 				<value>StudyPublished</value>
 			</fieldLabelMapping>
-			<fieldLabelMapping deprecated="n">
+			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/explorer-display\[(\d+)\]</label>
 				<value>ExplorerDisplay</value>
 			</fieldLabelMapping>
