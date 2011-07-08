@@ -14,42 +14,5 @@
 			<jaxb:package name="org.cggh.chassis"/>
 		</jaxb:schemaBindings>
 		
-		
-		<jaxb:bindings node="xs:element[@name='acknowledgements']/xs:complexType">
-			<hj:entity name="instOrPerson">
-				
-			</hj:entity>
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationlociOpen']/xs:complexType">
-			<hj:entity name="infectionCompEstLociOpen">
-				<orm:table name="infectionCompEstLociOpen"/>
-			</hj:entity>
-		</jaxb:bindings>
-		
-		
-		<jaxb:bindings node="xs:element[@name='thickFilmCalculationOfParasitemia']/xs:complexType">
-			<hj:entity name="thickFilmCalcOfParasitemia">
-				<orm:table name="thickFilmCalcOfParasitemia"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='thinFilmCalculationOfParasitemia']/xs:complexType">
-			<hj:entity name="thinFilmCalcOfParasitemia">
-				<orm:table name="thinFilmCalcOfParasitemia"/>
-			</hj:entity>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='additionalGenotypicInformation']/xs:complexType">
-			<hj:entity name="addGenotypicInformation">
-				<orm:table name="addGenotypicInformation"/>
-			</hj:entity>
-			<jaxb:property name="addGenotypicInformation"/>
-		</jaxb:bindings>
-		<jaxb:bindings node="xs:element[@name='geneotypingToDistinguishBetweenRecrudescenceAndReinfection']/xs:complexType">
-			<hj:entity name="geneotypingToDistinguish">
-				<orm:table name="geneotypingToDistinguish"/>
-			</hj:entity>
-			<jaxb:property name="geneotypingToDistinguish"/>
-		</jaxb:bindings>
-		
 	</jaxb:bindings>
 </jaxb:bindings>

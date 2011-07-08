@@ -96,14 +96,16 @@
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
-  <xs:element name="acknowledgements">
-    <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
-        <xs:element ref="institution-ack"/>
-        <xs:element ref="person"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
+  
+  <xs:complexType name="ack">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="institution-ack"/>
+      <xs:element ref="person"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="acknowledgements" type="ack"/>
+    
+  
   <xs:element name="institution-ack">
     <xs:complexType>
       <xs:sequence>
@@ -113,13 +115,14 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="institution-name" type="longString" />
-  <xs:element name="institution-websites">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="institution-url"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="inst-web">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="institution-url"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="institution-websites" type="inst-web"/>
+    
+  
   <xs:element name="institution-url" type="longURI"/>
   <xs:element name="person">
     <xs:complexType>
@@ -408,24 +411,26 @@
   <xs:element name="sexualParasitemiaPositiveThickUnitOther"  type="xs:string"/>
   <xs:element name="sexualParasitemiaPositiveThinUnit" type="xs:string"/>
   <xs:element name="sexualParasitemiaPositiveThinUnitOther" type="xs:string"/>
-  <xs:element name="thickFilmCalculationOfParasitemia">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="thickFilmFormula"/>
-        <xs:element minOccurs="0" ref="thickFilmFormulaOther"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="thickFilmCalcOfParasitemia">
+    <xs:sequence>
+      <xs:element ref="thickFilmFormula"/>
+      <xs:element minOccurs="0" ref="thickFilmFormulaOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="thinFilmCalcOfParasitemia">
+    <xs:sequence>
+      <xs:element ref="thinFilmFormula"/>
+      <xs:element minOccurs="0" ref="thinFilmFormulaOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="thickFilmCalculationOfParasitemia" type="thickFilmCalcOfParasitemia"/>
+    
+  
   <xs:element name="thickFilmFormula" type="xs:string"/>
   <xs:element name="thickFilmFormulaOther" type="xs:string"/>
-  <xs:element name="thinFilmCalculationOfParasitemia">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="thinFilmFormula"/>
-        <xs:element minOccurs="0" ref="thinFilmFormulaOther"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="thinFilmCalculationOfParasitemia" type="thinFilmCalcOfParasitemia"/>
+   
+  
   <xs:element name="thinFilmFormula" type="xs:string"/>
   <xs:element name="thinFilmFormulaOther" type="xs:string"/>
   <xs:element name="qualityControl">
@@ -454,14 +459,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="applicability"/>
-        <xs:element minOccurs="0" ref="applicable"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  
+  <xs:complexType name="geneotypingToDistinguish">
+    <xs:sequence>
+      <xs:element ref="applicability"/>
+      <xs:element minOccurs="0" ref="applicable"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="geneotypingToDistinguishBetweenRecrudescenceAndReinfection" type="geneotypingToDistinguish"/>
+    
+  
   <xs:element name="applicability" type="xs:string"/>
   <xs:element name="applicable">
     <xs:complexType>
@@ -710,14 +718,17 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="infectionComplexityEstimated" type="xs:string"/>
-  <xs:element name="infectionComplexityEstimationlociOpen">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="infectionComplexityEstimationloci"/>
-        <xs:element ref="infectionComplexityEstimationlociOther"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  
+  <xs:complexType name="infectionCompEstLociOpen">
+    <xs:sequence>
+      <xs:element ref="infectionComplexityEstimationloci"/>
+      <xs:element ref="infectionComplexityEstimationlociOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="infectionComplexityEstimationlociOpen" type="infectionCompEstLociOpen"/>
+    
+  
   <xs:element name="infectionComplexityEstimationloci" type="xs:string"/>
   <xs:element name="infectionComplexityEstimationlociOther" type="xs:string"/>
   <xs:element name="invitro">
