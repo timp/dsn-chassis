@@ -125,7 +125,11 @@ public class TransformServlet extends HttpServlet {
 						  } catch (ParserConfigurationException e) {
 							e.printStackTrace();
 						} catch (SAXException e) {
-							e.printStackTrace();
+							
+							//e.printStackTrace();
+							response.setContentType("text/plain");
+							response.getWriter().println("Invalid XML from URL: " + request.getParameter("study"));
+							
 						}
 						  
 						  
