@@ -1,0 +1,27 @@
+#summary Release Notes
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+===1.5===
+Performance improvements
+Improve error handling for uploaded files
+Merge study-info into study
+Upgrade atombeat
+Rewrite flattener as servlet
+
+===1.4===
+Remove default values from study info
+Amend flattener
+GetStudies servlet
+Fix add other locus for pharma
+Update text for PCE
+Change , to () in country names
+Performance improvements
+
+===1.3===
+flattener
