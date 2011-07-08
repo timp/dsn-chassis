@@ -412,7 +412,7 @@ public class TransformFunctions {
 					//fieldLabelRegExpMappingsAsPatternKeyedHashMap.put("/breakfast_menu\\[(\\d+)\\]/food\\[(\\d+)\\]/name\\[(\\d+)\\]", "Food$2Name");
 					
 					//
-					//this.getLogger().info("got: " + patternKey + "," + replacementTemplate);
+					//this.getLogger().info("ignoring: " + patternKey + "," + replacementTemplate);
 					
 					fieldLabelsToIgnoreAsPatternKeyedHashMap.put(patternKey, replacementTemplate);
 				
@@ -520,16 +520,23 @@ public class TransformFunctions {
 
 
 	public ArrayList<FieldModel> removeFieldsToIgnoreFromFieldModelArrayListUsingFieldModelArrayListAndFieldLabelsToIgnoreAsPatternKeyedHashMap(
-			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels,
+			ArrayList<FieldModel> originalDataAsFieldModelArrayListWithXpathFieldLabels,
 			HashMap<String, String> fieldLabelsToIgnoreAsPatternKeyedHashMap) {
 		
-		for (int i = 0; i < dataAsFieldModelArrayListWithXpathFieldLabels.size(); i++) {
+		//Copy the non-ignored items to a new array.
+		ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels = new ArrayList<FieldModel>();
+		
+		
+		for (int i = 0; i < originalDataAsFieldModelArrayListWithXpathFieldLabels.size(); i++) {
 
+			
+			Boolean ignore = null;
+			
 			//NOTE: Automatically ignoring fields with blank values (as it always has been)
 			
-			if (dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().trim().equals("")) {
-			
-				dataAsFieldModelArrayListWithXpathFieldLabels.remove(i);
+			if (originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().trim().equals("")) {
+				
+				ignore = true;
 				
 			} else {
 				
@@ -538,11 +545,11 @@ public class TransformFunctions {
 					if (regExpKey != null) {
 						
 						Pattern pattern = Pattern.compile(regExpKey);
-						Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+						Matcher matcher = pattern.matcher(originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
 		
 						if (matcher.matches()) {
 							
-							dataAsFieldModelArrayListWithXpathFieldLabels.remove(i);
+							ignore = true;
 							
 							//A match has been dealt with, no need to continue looking for this item.
 							break;
@@ -561,6 +568,17 @@ public class TransformFunctions {
 					
 				}
 			
+			}
+			
+			
+			if (ignore == null || ignore != true) {
+				ignore = false;
+			}
+			
+		
+			if (ignore == false) {
+				
+				dataAsFieldModelArrayListWithXpathFieldLabels.add(originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i));
 			}
 			
 			
