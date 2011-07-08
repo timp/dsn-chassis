@@ -5,8 +5,7 @@
  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
  xmlns:xs="http://www.w3.org/2001/XMLSchema"
  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
- version="2.1"
- jaxb:extensionBindingPrefixes="hj orm">
+ version="2.1">
 	
 	
 	<jaxb:bindings schemaLocation="chassis.xsd" node="/xs:schema">
@@ -15,15 +14,6 @@
 			<jaxb:package name="org.cggh.chassis"/>
 		</jaxb:schemaBindings>
 		
-		<jaxb:bindings node="xs:element[@name='institution-ack']//xs:element[@ref='institution-name']">
-			<hj:basic>
-				<orm:column length="1024"/>
-			</hj:basic>
-		</jaxb:bindings>
-		
-		<jaxb:bindings node="xs:element[@name='publication-references']//xs:element[@ref='publication-reference']">
-			
-		</jaxb:bindings>
 		
 		<jaxb:bindings node="xs:element[@name='acknowledgements']/xs:complexType">
 			<hj:entity name="instOrPerson">
