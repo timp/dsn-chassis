@@ -123,7 +123,7 @@ public class TransformFunctions {
 				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
 			}
 			
-			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\\n|\\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n|\r", " ").replaceAll("\"", "\"\"")).append("\"");
 			
 			dataAsCSVStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer.toString());
 			
@@ -491,7 +491,7 @@ public class TransformFunctions {
 				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
 			}
 			
-			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\\n|\\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n|\r", " ").replaceAll("\"", "\"\"")).append("\"");
 			
 			//dataAsCSVColumnsStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer);
 			
