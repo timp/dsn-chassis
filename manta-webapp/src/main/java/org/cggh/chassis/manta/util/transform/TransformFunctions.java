@@ -20,6 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -288,7 +289,7 @@ public class TransformFunctions {
 			//this.getLogger().info("i node name: " +  fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
 			
 			if (fieldLabelMappingsAsNodeList.item(i).getNodeName().toString().equals("fieldLabelMapping")) {
-				
+			
 				String patternKey = null;
 				String replacementTemplate = null;
 				
@@ -324,7 +325,8 @@ public class TransformFunctions {
 				//this.getLogger().info("got: " + patternKey + "," + replacementTemplate);
 				
 				fieldLabelRegExpMappingsAsPatternKeyedHashMap.put(patternKey, replacementTemplate);
-			
+
+				
 			} else {
 				this.getLogger().warning("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
 			}
@@ -334,6 +336,97 @@ public class TransformFunctions {
 		return fieldLabelRegExpMappingsAsPatternKeyedHashMap;
 	}
 
+	public HashMap<String, String> convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelsToIgnoreAsPatternKeyedHashMap(
+			Document fieldLabelMappingsXmlAsDocument) {
+		
+		HashMap<String, String> fieldLabelsToIgnoreAsPatternKeyedHashMap = new HashMap<String, String>();
+		
+		NodeList fieldLabelMappingsAsNodeList = fieldLabelMappingsXmlAsDocument.getElementsByTagName("fieldLabelMapping");
+		
+		for (int i = 0; i < fieldLabelMappingsAsNodeList.getLength(); i++) {
+			
+			//
+			//this.getLogger().info("i node name: " +  fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+			
+			if (fieldLabelMappingsAsNodeList.item(i).getNodeName().toString().equals("fieldLabelMapping")) {
+				
+				Boolean ignore = null;
+				
+				//Get attributes
+				if (fieldLabelMappingsAsNodeList.item(i).hasAttributes()) {
+					
+					NamedNodeMap namedNodeMap = fieldLabelMappingsAsNodeList.item(i).getAttributes();
+
+					//
+					//if (namedNodeMap.getNamedItem("filter") != null) {
+					//	this.getLogger().info("got filter");
+					//	if (namedNodeMap.getNamedItem("filter").getNodeValue() != null) {
+					//		this.getLogger().info("got node value");
+					//		if (namedNodeMap.getNamedItem("filter").getNodeValue().equals("ignore")) {
+					//			this.getLogger().info("got ignore");
+					//		}
+					//	}
+					//}
+					
+					if(namedNodeMap.getNamedItem("filter") != null && namedNodeMap.getNamedItem("filter").getNodeValue() != null && namedNodeMap.getNamedItem("filter").getNodeValue().equals("ignore")) {
+						ignore = true;
+					}
+					
+				}
+				
+				if (ignore == null || ignore != true) {
+					ignore = false;
+				}
+				
+				if (ignore == true) { 
+					
+					String patternKey = null;
+					String replacementTemplate = null;
+					
+					for (int j = 0; j < fieldLabelMappingsAsNodeList.item(i).getChildNodes().getLength(); j++) {
+					
+						
+						if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("label")) {
+							
+							//
+							//this.getLogger().info("got label: " + fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent());
+							
+							patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+						}
+						else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("value")) {
+							replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+						}
+						else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("#text")) {
+							//ignore this type of node
+						}
+						else {
+							if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName() != null) {
+								this.getLogger().warning("Unexpected node name: " +  fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().toString());
+							} else {
+								this.getLogger().warning("Unexpected: node name is null");
+							}
+						}
+						
+					}
+					
+					//fieldLabelRegExpMappingsAsPatternKeyedHashMap.put("/breakfast_menu\\[(\\d+)\\]/food\\[(\\d+)\\]/name\\[(\\d+)\\]", "Food$2Name");
+					
+					//
+					//this.getLogger().info("got: " + patternKey + "," + replacementTemplate);
+					
+					fieldLabelsToIgnoreAsPatternKeyedHashMap.put(patternKey, replacementTemplate);
+				
+				}
+				
+			} else {
+				this.getLogger().warning("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+			}
+			
+		}
+		
+		return fieldLabelsToIgnoreAsPatternKeyedHashMap;
+	}	
+	
 
 	public String convertDataAsFieldModelArrayListIntoCSVColumnsWithMappedCustomFieldLabelsAsStringUsingFieldLabelRegExpMappingsAsPatternKeyedHashMap(
 			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels,
@@ -372,6 +465,8 @@ public class TransformFunctions {
 						
 						labelAsStringBuffer.append(matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey))).append("\"");
 						
+						//A match has been dealt with, no need to continue looking for this item.
+						break;
 						
 					} else {
 						
@@ -421,6 +516,58 @@ public class TransformFunctions {
 		
 		return dataAsCSVColumnsString;
 		
+	}
+
+
+	public ArrayList<FieldModel> removeFieldsToIgnoreFromFieldModelArrayListUsingFieldModelArrayListAndFieldLabelsToIgnoreAsPatternKeyedHashMap(
+			ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels,
+			HashMap<String, String> fieldLabelsToIgnoreAsPatternKeyedHashMap) {
+		
+		for (int i = 0; i < dataAsFieldModelArrayListWithXpathFieldLabels.size(); i++) {
+
+			//NOTE: Automatically ignoring fields with blank values (as it always has been)
+			
+			if (dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().trim().equals("")) {
+			
+				dataAsFieldModelArrayListWithXpathFieldLabels.remove(i);
+				
+			} else {
+				
+				for (String regExpKey : fieldLabelsToIgnoreAsPatternKeyedHashMap.keySet()) {
+					
+					if (regExpKey != null) {
+						
+						Pattern pattern = Pattern.compile(regExpKey);
+						Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+		
+						if (matcher.matches()) {
+							
+							dataAsFieldModelArrayListWithXpathFieldLabels.remove(i);
+							
+							//A match has been dealt with, no need to continue looking for this item.
+							break;
+							
+						} else {
+							
+							//
+							//this.getLogger().info(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel() + " does not match " + regExpKey);
+						}
+						
+					} else {
+						this.logger.severe("regExpKey is null");
+					}
+					
+						
+					
+				}
+			
+			}
+			
+			
+		}
+		
+		
+		return dataAsFieldModelArrayListWithXpathFieldLabels;
 	}
 
 }

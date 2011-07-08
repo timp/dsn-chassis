@@ -80,13 +80,22 @@ public class TransformServlet extends HttpServlet {
 							
 						    HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = transformFunctions.convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelMappingsAsPatternKeyedHashMap(fieldLabelMappingsXmlAsDocument);
 	
-							//HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = transformCRUD.retrieveFieldLabelRegExpMappingsAsPatternKeyedHashMap();
-	
+						    
+						    
+						    
 							
 							//Note: Could introduce a base prefix here.
 							String parentNodeBaseXPathAsString = null;
 							ArrayList<FieldModel> dataAsFieldModelArrayListWithXpathFieldLabels = transformFunctions.convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(studyXmlAsDocument.getChildNodes(), parentNodeBaseXPathAsString);
 
+							
+							//NOTE: This isn't the most efficient way of achieving this, but it breaks the task down into separate concerns. 
+							//Remove field labels to ignore from fieldModelArrayList
+							HashMap<String, String> fieldLabelsToIgnoreAsPatternKeyedHashMap = transformFunctions.convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelsToIgnoreAsPatternKeyedHashMap(fieldLabelMappingsXmlAsDocument);
+						    
+							dataAsFieldModelArrayListWithXpathFieldLabels = transformFunctions.removeFieldsToIgnoreFromFieldModelArrayListUsingFieldModelArrayListAndFieldLabelsToIgnoreAsPatternKeyedHashMap(dataAsFieldModelArrayListWithXpathFieldLabels, fieldLabelsToIgnoreAsPatternKeyedHashMap);
+							
+							
 							//FIXME: sanitize
 							String filename = transformFunctions.convertURLAsStringIntoFileName(request.getParameter("study"));							
 							
