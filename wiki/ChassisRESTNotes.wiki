@@ -1,0 +1,43 @@
+#summary Implementation notes for chassis-rest
+= Introduction =
+
+Notes on design decisions taken when implementing the chassis-rest service
+
+= Details =
+
+==Persistance Provider==
+Used EclipseLink instead of hibernate because hibernate jpa errored with 'failed to lazily initialize a collection of role' when result is marshalled by Spring view - there doesn't seem to be an easy answer to sorting this out
+Calling the .size() method moves the problem but that way madness lies....
+
+==Spring==
+
+I haven't worked out why src/main/webapp/WEB-INF/rest-servlet.xml is needed as well as src/main/resource/META-INF/spring/applicationContextrest-servlet.xml
+
+There's only a working jsp page to list the studies - other jsp pages have not been written so be aware of content negotiation i.e. other pages won't work if called from a browser.
+
+===In ApplicationContext.xml===
+EntityManagerFactory configuration follows:
+http://static.springsource.org/spring/docs/3.0.5.RELEASE/reference/orm.html#orm-jpa-setup-lcemfb
+This results in the need for installing org.springframework.instrument.tomcat.jar from Spring's dist/weaver directory into Tomcat's lib directory. (actually spring-instrument-tomcat-3.0.5.RELEASE.jar)
+    (maven spring-instrument-tomcat)
+    
+This could be done a different way but it's following best practice - I believe that this is effectively some effort required to support the @PersistenceUnit annotation
+
+The beans with class=org.springframework.web.servlet.view.xml.MarshallingView are used to marshal the output from the Controller (ModelAndView) 
+- there needs to be a marshaller defined to turn classes into XML - so to create the error XML output it was necessary to define the beans id="errors" and id="errorMarshaller"
+
+Content Negotiation works with the ModelAndView so you get sent to a jsp if in a browser and XML is marshalled from the object if using curl with the appropriate request headers
+
+
+
+===Notes on spring-model===
+
+Namespaces not particularly well dealt with hence the need in atom.xjb to change the name of manta:id to studyID
+
+I ran into problems with the DTYPE column being too short and the insertion to the database failing. The reason for this is connected to the values for the discriminator column. The way around this is to define named complexed types in the xsd (rather than using the generated names for anonymous types) and you can then define a shorter name. (I expect it would be possible to do something with hj or orm bindings as well but this seems like a more elegant solution)
+
+Where database columns are too short the correct way to sort it out is to put a restriction on the simpletype element - that way the validation will ensure that the data will fit before trying to store it as well as making the column larger. (Again a orm binding can be used to make the column larger)
+
+===Both===
+Because of the validation and id's when a study is updated (PUT) the entry table is updated (because the manta:id is defined as the primary key in atom.xjb)
+but for all other tables a new entry is inserted and the old values are left orphaned - I'm fairly sure this could be sorted out if enough effort went into sorting out the bindings in chassis.xjb (or you could just delete the original and insert the replacement instead of updating)
