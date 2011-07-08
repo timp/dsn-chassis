@@ -275,95 +275,95 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/country\[(\d+)\]</label>
-				<value>Site$5Country</value>
+				<value>Site$6Country</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/region\[(\d+)\]</label>
-				<value>Site$5Region</value>
+				<value>Site$6Region</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/district\[(\d+)\]</label>
-				<value>Site$5District</value>
+				<value>Site$6District</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/locality\[(\d+)\]</label>
-				<value>Site$5Locality</value>
+				<value>Site$6Locality</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/lookupAddress\[(\d+)\]</label>
-				<value>Site$5Address</value>
+				<value>Site$6Address</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/siteCode\[(\d+)\]</label>
-				<value>Site$5Code</value>
+				<value>Site$6Code</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/testingDelay\[(\d+)\]</label>
-				<value>site$5testing_delay</value>
+				<value>site$6testing_delay</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/anticoagulant\[(\d+)\]</label>
-				<value>site$5anticoagulant</value>
+				<value>site$6anticoagulant</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transportAndStorageTemperature\[(\d+)\]</label>
-				<value>site$5transportstorage_temp</value>
+				<value>site$6transportstorage_temp</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/latitude\[(\d+)\]</label>
-				<value>Site$5Latitude</value>
+				<value>Site$6Latitude</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/longitude\[(\d+)\]</label>
-				<value>Site$5Longitude</value>
+				<value>Site$6Longitude</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/annualParasitologicalIncidence\[(\d+)\]</label>
-				<value>Site$5API</value>
+				<value>Site$6API</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/annualParasitologicalIncidenceYear\[(\d+)\]</label>
-				<value>Site$5APIyear</value>
+				<value>Site$6APIyear</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/parasitePrevalence\[(\d+)\]</label>
-				<value>Site$5ParasitePrev</value>
+				<value>Site$6ParasitePrev</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/parasitePrevalenceYear\[(\d+)\]</label>
-				<value>Site$5ParasitePrevYear</value>
+				<value>Site$6ParasitePrevYear</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/transmissionIntensityAgeFrom\[(\d+)\]</label>
-				<value>Site$5APILowerAge</value>
+				<value>Site$6APILowerAge</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/transmissionIntensityAgeFromUnits\[(\d+)\]</label>
-				<value>Site$5APILowerAgeUnits</value>
+				<value>Site$6APILowerAgeUnits</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/transmissionIntensityAgeTo\[(\d+)\]</label>
-				<value>Site$5APIUpperAge</value>
+				<value>Site$6APIUpperAge</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/transmissionIntensityAgeToUnits\[(\d+)\]</label>
-				<value>Site$5APIAgeUnits</value>
+				<value>Site$6APIAgeUnits</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/entomologicalInoculationRate\[(\d+)\]</label>
-				<value>Site$5EIR</value>
+				<value>Site$6EIR</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/entomologicalInoculationRateYear\[(\d+)\]</label>
-				<value>Site$5EIRyear</value>
+				<value>Site$6EIRyear</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/seasonalTransmission\[(\d+)\]</label>
-				<value>Site$5SeasonalTrans</value>
+				<value>Site$6SeasonalTrans</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/transmissionMonths\[(\d+)\]</label>
-				<value>Site$5TransSeasons</value>
+				<value>Site$6TransSeasons</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pathogens\[(\d+)\]</label>
@@ -427,127 +427,127 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/regimenName\[(\d+)\]</label>
-				<value>Reg$7Name</value>
+				<value>Reg$8Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/regimenSupervision\[(\d+)\]</label>
-				<value>Reg$7Supervision</value>
+				<value>Reg$8Supervision</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/regimenUrl\[(\d+)\]</label>
-				<value>Reg$7URL</value>
+				<value>Reg$8URL</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/name\[(\d+)\]</label>
-				<value>Reg$7Drug$9Name</value>
+				<value>Reg$8Drug$10Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/activeIngredients\[(\d+)\]/activeIngredient\[(\d+)\]/activeIngredientName\[(\d+)\]</label>
-				<value>Reg$7Drug$9Act$11Name</value>
+				<value>Reg$8Drug$10Act$12Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/activeIngredients\[(\d+)\]/activeIngredient\[(\d+)\]/activeIngredientMgPerDose\[(\d+)\]</label>
-				<value>Reg$7Drug$9Act$11Dose</value>
+				<value>Reg$8Drug$10Act$12Dose</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/administrationRoute\[(\d+)\]</label>
-				<value>Reg$7Drug$9AdmRoute</value>
+				<value>Reg$8Drug$10AdmRoute</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/manufacturer\[(\d+)\]</label>
-				<value>Reg$7Drug$9Manufacturer</value>
+				<value>Reg$8Drug$10Manufacturer</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batchNumber\[(\d+)\]</label>
-				<value>Reg$7Drug$9BatchNo</value>
+				<value>Reg$8Drug$10BatchNo</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/expiryDate\[(\d+)\]</label>
-				<value>Reg$7Drug$9ExpiryDate</value>
+				<value>Reg$8Drug$10ExpiryDate</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/drugStorage\[(\d+)\]</label>
-				<value>Reg$7Drug$9Storage</value>
+				<value>Reg$8Drug$10Storage</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/drugDosingDeterminant\[(\d+)\]</label>
-				<value>Reg$7Drug$9Dosing</value>
+				<value>Reg$8Drug$10Dosing</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/day\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11Day</value>
+				<value>Reg$8Drug$10AgeSch$12Day</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/hour\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11Hour</value>
+				<value>Reg$8Drug$10AgeSch$12Hour</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/ageFrom\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11Agemin</value>
+				<value>Reg$8Drug$10AgeSch$12Agemin</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/ageTo\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11Agemax</value>
+				<value>Reg$8Drug$10AgeSch$12Agemax</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/dose\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11Dose</value>
+				<value>Reg$8Drug$10AgeSch$12Dose</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/ageDosing\[(\d+)\]/ageDosingSchedule\[(\d+)\]/doseUnit\[(\d+)\]</label>
-				<value>Reg$7Drug$9AgeSch$11DoseUnit</value>
+				<value>Reg$8Drug$10AgeSch$12DoseUnit</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/day\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11Day</value>
+				<value>Reg$8Drug$10WgtGrpSch$12Day</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/hour\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11Hour</value>
+				<value>Reg$8Drug$10WgtGrpSch$12Hour</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/weightGroupFrom\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11WgtMin</value>
+				<value>Reg$8Drug$10WgtGrpSch$12WgtMin</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/weightGroupTo\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11WgtMax</value>
+				<value>Reg$8Drug$10WgtGrpSch$12WgtMax</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/dose\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11Dose</value>
+				<value>Reg$8Drug$10WgtGrpSch$12Dose</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightGroupDosing\[(\d+)\]/weightGroupDosingSchedule\[(\d+)\]/doseUnit\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtGrpSch$11DoseUnit</value>
+				<value>Reg$8Drug$10WgtGrpSch$12DoseUnit</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightDosing\[(\d+)\]/weightDosingSchedule\[(\d+)\]/day\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtSch$11Day</value>
+				<value>Reg$8Drug$10WgtSch$12Day</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightDosing\[(\d+)\]/weightDosingSchedule\[(\d+)\]/hour\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtSch$11Hour</value>
+				<value>Reg$8Drug$10WgtSch$12Hour</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/weightDosing\[(\d+)\]/weightDosingSchedule\[(\d+)\]/dose\[(\d+)\]</label>
-				<value>Reg$7Drug$9WgtSch$11WeightMin</value>
+				<value>Reg$8Drug$10WgtSch$12WeightMin</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/feeding\[(\d+)\]</label>
-				<value>Reg$7Drug$9Foodintake</value>
+				<value>Reg$8Drug$10Foodintake</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/feedingOther\[(\d+)\]</label>
-				<value>Reg$7Drug$9FoodintakeOther</value>
+				<value>Reg$8Drug$10FoodintakeOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/readministeredOnVomitting\[(\d+)\]</label>
-				<value>Reg$7Drug$9Readmin</value>
+				<value>Reg$8Drug$10Readmin</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/comments\[(\d+)\]</label>
-				<value>Reg$7Drug$9Comments</value>
+				<value>Reg$8Drug$10Comments</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimenAllocation\[(\d+)\]/regimenAllocationMethod\[(\d+)\]</label>
@@ -663,15 +663,15 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/geneotypingToDistinguishBetweenRecrudescenceAndReinfection\[(\d+)\]/applicable\[(\d+)\]/markers\[(\d+)\]/recrudescenceMarker\[(\d+)\]/numberOfMicroSatellites\[(\d+)\]</label>
-				<value>GenotypMarker$8MicroSatels</value>
+				<value>GenotypMarker$9MicroSatels</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/geneotypingToDistinguishBetweenRecrudescenceAndReinfection\[(\d+)\]/applicable\[(\d+)\]/markers\[(\d+)\]/recrudescenceMarker\[(\d+)\]/markerName\[(\d+)\]</label>
-				<value>GenotypingMarker$8</value>
+				<value>GenotypingMarker$9</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/geneotypingToDistinguishBetweenRecrudescenceAndReinfection\[(\d+)\]/applicable\[(\d+)\]/markers\[(\d+)\]/recrudescenceMarker\[(\d+)\]/markerOther\[(\d+)\]</label>
-				<value>GenotypingMarker$8Other</value>
+				<value>GenotypingMarker$9Other</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/geneotypingToDistinguishBetweenRecrudescenceAndReinfection\[(\d+)\]/applicable\[(\d+)\]/genotypingLaboratory\[(\d+)\]</label>
@@ -723,63 +723,63 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/genotypingMethodOpen\[(\d+)\]/genotypingMethod\[(\d+)\]</label>
-				<value>MolMarker$6GenotypingMethod</value>
+				<value>MolMarker$7GenotypingMethod</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/genotypingMethodOpen\[(\d+)\]/genotypingMethodOther\[(\d+)\]</label>
-				<value>MolMarker$6GenotypMethodOther</value>
+				<value>MolMarker$7GenotypMethodOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerFalciparumOpen\[(\d+)\]/molecularMarkerFalciparum\[(\d+)\]</label>
-				<value>MolMarker$6Falciparum</value>
+				<value>MolMarker$7Falciparum</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerFalciparumOpen\[(\d+)\]/molecularMarkerFalciparumOther\[(\d+)\]</label>
-				<value>MolMarker$6FalciparumOther</value>
+				<value>MolMarker$7FalciparumOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerVivaxOpen\[(\d+)\]/molecularMarkerVivax\[(\d+)\]</label>
-				<value>MolMarker$6Vivax</value>
+				<value>MolMarker$7Vivax</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerVivaxOpen\[(\d+)\]/molecularMarkerVivaxOther\[(\d+)\]</label>
-				<value>MolMarker$6VivaxOther</value>
+				<value>MolMarker$7VivaxOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerOvaleOpen\[(\d+)\]/molecularMarkerOvale\[(\d+)\]</label>
-				<value>MolMarker$6Ovale</value>
+				<value>MolMarker$7Ovale</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerOvaleOpen\[(\d+)\]/molecularMarkerOvaleOther\[(\d+)\]</label>
-				<value>MolMarker$6OvaleFill</value>
+				<value>MolMarker$7OvaleFill</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerMalariaeOpen\[(\d+)\]/molecularMarkerMalariae\[(\d+)\]</label>
-				<value>MolMarker$6Malariae</value>
+				<value>MolMarker$7Malariae</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerMalariaeOpen\[(\d+)\]/molecularMarkerMalariaeOther\[(\d+)\]</label>
-				<value>MolMarker$6MalariaeOther</value>
+				<value>MolMarker$7MalariaeOther</value>
 			</fieldLabelMapping>			
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerKnowlesiOpen\[(\d+)\]/molecularMarkerKnowlesi\[(\d+)\]</label>
-				<value>MolMarker$6Knowlesi</value>
+				<value>MolMarker$7Knowlesi</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/molecularMarkerKnowlesiOpen\[(\d+)\]/molecularMarkerKnowlesiOther\[(\d+)\]</label>
-				<value>MolMarker$6KnowlesiOther</value>
+				<value>MolMarker$7KnowlesiOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/sampleSelectionMethodOpen\[(\d+)\]/sampleSelectionMethod\[(\d+)\]</label>
-				<value>Mol$6SampleSelectionMethod</value>
+				<value>Mol$7SampleSelectionMethod</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/sampleSelectionMethodOpen\[(\d+)\]/sampleSelectionMethodOther\[(\d+)\]</label>
-				<value>Mol$6SampleSelectnMethodOther</value>
+				<value>Mol$7SampleSelectnMethodOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/genotypedMarkers\[(\d+)\]/genotypedMarker\[(\d+)\]/sampleSelectionMethodOpen\[(\d+)\]/sampleSelectionProportion\[(\d+)\]</label>
-				<value>Mol$6SampleSelectionProport</value>
+				<value>Mol$7SampleSelectionProport</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/mixedResistanceAlleles\[(\d+)\]/mixedResistanceAllelesInclusion\[(\d+)\]</label>
@@ -799,7 +799,7 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/sequencedLoci\[(\d+)\]/resistanceLoci\[(\d+)\]/resistanceLocus\[(\d+)\]/locusName\[(\d+)\]</label>
-				<value>ResistanceLociSeq$8Name</value>
+				<value>ResistanceLociSeq$9Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/sequencedLoci\[(\d+)\]/otherLociGenotyped\[(\d+)\]</label>
@@ -807,15 +807,15 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/sequencedLoci\[(\d+)\]/otherLoci\[(\d+)\]/otherLocus\[(\d+)\]/locusTypeOpen\[(\d+)\]/locusType\[(\d+)\]</label>
-				<value>OtherLoci$8Type</value>
+				<value>OtherLoci$9Type</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/sequencedLoci\[(\d+)\]/otherLoci\[(\d+)\]/otherLocus\[(\d+)\]/locusTypeOpen\[(\d+)\]/locusTypeOther\[(\d+)\]</label>
-				<value>OtherLoci$8TypeOther</value>
+				<value>OtherLoci$9TypeOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/sequencedLoci\[(\d+)\]/otherLoci\[(\d+)\]/otherLocus\[(\d+)\]/locusName\[(\d+)\]</label>
-				<value>OtherLoci$8Name</value>
+				<value>OtherLoci$9Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/molecular\[(\d+)\]/additionalGenotypicInformation\[(\d+)\]/infectionComplexityEstimated\[(\d+)\]</label>
@@ -907,15 +907,15 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugSusceptibilityMedium\[(\d+)\]/antibioticTreatments\[(\d+)\]/antibioticTreatment\[(\d+)\]/antibioticOpen\[(\d+)\]/antibiotic\[(\d+)\]</label>
-				<value>drug1susmedium_atb$7</value>
+				<value>drug1susmedium_atb$8</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugSusceptibilityMedium\[(\d+)\]/antibioticTreatments\[(\d+)\]/antibioticTreatment\[(\d+)\]/antibioticOpen\[(\d+)\]/antibioticOther\[(\d+)\]</label>
-				<value>drug1susmedium_atb$7other</value>
+				<value>drug1susmedium_atb$8other</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugSusceptibilityMedium\[(\d+)\]/antibioticTreatments\[(\d+)\]/antibioticTreatment\[(\d+)\]/antibioticFinalConcentration\[(\d+)\]</label>
-				<value>fconcentration_atb$7</value>
+				<value>fconcentration_atb$8</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/timeOfIncubation\[(\d+)\]</label>
@@ -927,23 +927,23 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/molecule\[(\d+)\]</label>
-				<value>drug$6</value>
+				<value>drug$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/solvent\[(\d+)\]</label>
-				<value>solvent_drug$6</value>
+				<value>solvent_drug$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/solventFinalConcentration\[(\d+)\]</label>
-				<value>drug$6_fconcentration_solvent</value>
+				<value>drug$7_fconcentration_solvent</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/providedByWwarn\[(\d+)\]</label>
-				<value>drug$6_fromWWARN</value>
+				<value>drug$7_fromWWARN</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/provider\[(\d+)\]</label>
-				<value>drug$6_provider</value>
+				<value>drug$7_provider</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/platePreparationMethod\[(\d+)\]</label>
@@ -955,85 +955,85 @@ let $values2 :=
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/clone3D7ProvidedByWwarn\[(\d+)\]</label>
-				<value>batch$6_clone3D7_fromWWARN</value>
+				<value>batch$7_clone3D7_fromWWARN</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/clone3D7Provider\[(\d+)\]</label>
-				<value>batch$6_clone3D7_provider</value>
+				<value>batch$7_clone3D7_provider</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/batchesIncludedInRawData\[(\d+)\]</label>
-				<value>batches$6in_rawdata</value>
+				<value>batches$7in_rawdata</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/preparationDate\[(\d+)\]</label>
-				<value>batch$6_prepa_date</value>
+				<value>batch$7_prepa_date</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/parasitaemia3D7percentage\[(\d+)\]</label>
-				<value>batch$6_parsitemia_%</value>
+				<value>batch$7_parsitemia_%</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/ringFormingPercentage\[(\d+)\]</label>
-				<value>batch$6_ringforming%</value>
+				<value>batch$7_ringforming%</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/anticoagulent\[(\d+)\]</label>
-				<value>Anticoagulant$6</value>
+				<value>Anticoagulant$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/centrifugeTime\[(\d+)\]</label>
-				<value>TimeToCentrifuge$6</value>
+				<value>TimeToCentrifuge$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/storages\[(\d+)\]/storage\[(\d+)\]/storageTemperature\[(\d+)\]</label>
-				<value>Smpl$6TemperatureStorage$8</value>
+				<value>Smpl$7TemperatureStorage$9</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/storages\[(\d+)\]/storage\[(\d+)\]/storageDuration\[(\d+)\]</label>
-				<value>Smpl$6DuratnTemperatrStorage$8</value>
+				<value>Smpl$7DuratnTemperatrStorage$9</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/storages\[(\d+)\]/storage\[(\d+)\]/storageDurationUnit\[(\d+)\]</label>
-				<value>Smpl$6UnitStorageDuration$8</value>
+				<value>Smpl$7UnitStorageDuration$9</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/drugMeasured\[(\d+)\]</label>
-				<value>NameDrugMetoboliteMeasured$6</value>
+				<value>NameDrugMetoboliteMeasured$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/lowerLoQ\[(\d+)\]</label>
-				<value>LLOQ$6</value>
+				<value>LLOQ$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/sampleMatrixType\[(\d+)\]</label>
-				<value>SampleMatrix$6</value>
+				<value>SampleMatrix$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/referenceType\[(\d+)\]</label>
-				<value>AssayMethodsReference$6Type</value>
+				<value>AssayMethodsReference$7Type</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/url\[(\d+)\]</label>
-				<value>AssayMethodsReference$6url</value>
+				<value>AssayMethodsReference$7url</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/upload\[(\d+)\]/uploadedUrl\[(\d+)\]</label>
-				<value>AssayMethodsReference$6file</value>
+				<value>AssayMethodsReference$7file</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/doi\[(\d+)\]</label>
-				<value>AssayMethodsReference$6doi</value>
+				<value>AssayMethodsReference$7doi</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/note\[(\d+)\]</label>
-				<value>AssayMethod$6Description</value>
+				<value>AssayMethod$7Description</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/assayValidated\[(\d+)\]</label>
-				<value>AssayMethodsReference$6valid</value>
-			</fieldLabelMapping>   
-   </fieldLabelMappings>
+				<value>AssayMethodsReference$7valid</value>
+			</fieldLabelMapping>
+	</fieldLabelMappings>
 
 	let $entry4 := local:create-config-entry('Field label mappings','field-label-mappings',$values4)   
    
