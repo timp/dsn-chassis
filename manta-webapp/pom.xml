@@ -321,7 +321,7 @@
 	-->
 	<properties>
 		<org.springsecurity.version>3.1.0.RC1</org.springsecurity.version>
-		<org.atombeat.version>0.2-alpha-9</org.atombeat.version>
+		<org.atombeat.version>0.2-alpha-10</org.atombeat.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />
