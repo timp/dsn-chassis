@@ -3,7 +3,7 @@ package org.cggh.chassis.manta.util.transform;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.apache.abdera.protocol.client.AbderaClient;
 import org.apache.abdera.protocol.client.ClientResponse;
@@ -11,16 +11,16 @@ import org.apache.abdera.protocol.client.RequestOptions;
 
 public class TransformCRUD {
 
-	
+	private final Logger logger = Logger.getLogger(this.getClass().getPackage().getName());
 	
 	
 	public String retrieveUrlResponseAsStringUsingUrlAsStringAndRequestOptions(String urlAsString, RequestOptions requestOptions) throws IOException {
 
 		StringBuffer urlResponseAsStringBuffer = new StringBuffer();
 		
-			AbderaClient atomClient = new AbderaClient();
+			AbderaClient abderaClient = new AbderaClient();
 			
-			ClientResponse clientResponse = atomClient.get(urlAsString, requestOptions);
+			ClientResponse clientResponse = abderaClient.get(urlAsString, requestOptions);
 			
 			//This method doesn't authenticate:
 			//URL urlAsURL = new URL(urlAsString);
@@ -30,26 +30,20 @@ public class TransformCRUD {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientResponse.getInputStream()));
 			String line;
 
+			//Note: Replace end-of-line characters.
+			
 	        while ((line = bufferedReader.readLine()) != null) 
-	        	urlResponseAsStringBuffer.append(line);
+	        	urlResponseAsStringBuffer.append(line).append("\n");
 	        bufferedReader.close();
 			
+	        //
+	        //this.getLogger().info("urlResponseAsString = " + urlResponseAsStringBuffer.toString());
 		
 		return urlResponseAsStringBuffer.toString();
 	}
 
-	public HashMap<String, String> retrieveFieldLabelRegExpMappingsAsPatternKeyedHashMap() {
-		
-		//TODO: Get the mapped values as a HashMap from the config collection using URL (hard-coded?)
-		//http://localhost:8080/repository/service/content/config/field-label-mappings
-		
-		///////////
-		HashMap<String, String> fieldLabelRegExpMappingsAsPatternKeyedHashMap = new HashMap<String, String>();
-		
-		//TODO: replace with sourced values
-		fieldLabelRegExpMappingsAsPatternKeyedHashMap.put("/breakfast_menu\\[(\\d+)\\]/food\\[(\\d+)\\]/name\\[(\\d+)\\]", "Food$2Name");
-		
-		
-		return fieldLabelRegExpMappingsAsPatternKeyedHashMap;
+
+	public Logger getLogger() {
+		return logger;
 	}
 }
