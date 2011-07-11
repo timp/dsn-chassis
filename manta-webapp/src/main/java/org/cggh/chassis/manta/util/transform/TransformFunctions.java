@@ -123,7 +123,16 @@ public class TransformFunctions {
 				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
 			}
 			
-			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n|\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			//NOTE: replacements need to be assigned to a string
+			
+			String nodeValueAsString = dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue();
+			
+			nodeValueAsString = nodeValueAsString.replaceAll("\r\n", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\n", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\r", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\"", "\"\"");
+			
+			valueAsStringBuffer.append(nodeValueAsString + "\"");
 			
 			dataAsCSVStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer.toString());
 			
@@ -131,7 +140,7 @@ public class TransformFunctions {
 		}
 		
 		dataAsCSVRowsString = dataAsCSVStringBuilder.toString();		
-		
+
 		return dataAsCSVRowsString;
 	}
 
@@ -491,7 +500,20 @@ public class TransformFunctions {
 				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
 			}
 			
-			valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n|\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			
+			//valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n", " ").replaceAll("\r", " ").replaceAll("\"", "\"\"")).append("\"");
+			
+			//NOTE: replacements need to be assigned to a string
+			
+			String nodeValueAsString = dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue();
+			
+			nodeValueAsString = nodeValueAsString.replaceAll("\r\n", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\n", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\r", " ");
+			nodeValueAsString = nodeValueAsString.replaceAll("\"", "\"\"");
+			
+			valueAsStringBuffer.append(nodeValueAsString + "\"");
+			
 			
 			//dataAsCSVColumnsStringBuilder.append(labelAsStringBuffer.toString()).append(",").append(valueAsStringBuffer);
 			
