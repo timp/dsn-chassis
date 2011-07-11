@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    
+    <xs:simpleType name="administrationRoutes">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="oral"/>
+            <xs:enumeration value="intravenous"/>
+            <xs:enumeration value="intramuscular"/>
+            <xs:enumeration value="intrarectal"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="drugStorage">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="refrigerator"/>
+            <xs:enumeration value="aircon"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>
+

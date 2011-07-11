@@ -47,17 +47,14 @@
 
 	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
 		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
-	<xforms:instance id="ins-administrationRoute-items"
-		src="/apps/common/constants/administrationRoutes.xml" />
-
+	
 	<xforms:instance id="ins-supervisionType-items"
 		src="/apps/common/constants/supervisionTypes.xml" />
 	<xforms:instance id="ins-regimenAllocationMethod-items"
 		src="/apps/common/constants/regimenAllocationMethods.xml" />
 	<xforms:instance id="ins-blinding-items"
 		src="/apps/common/constants/blindings.xml" />
-	<xforms:instance id="ins-drugStorage-items"
-		src="/apps/common/constants/drugStorages.xml" />
+	
 	<xforms:instance id="ins-drugDosingDeterminant-items"
 		src="/apps/common/constants/drugDosingDeterminants.xml" />
 	<xforms:instance id="ins-feeding-items"
@@ -167,14 +164,21 @@
 		</recrudescenceMarker>
 	</xforms:instance>
 
+	<xforms:instance id="ins-drug-batch">
+		<drugBatch xmlns="">
+			<batchNumber/>
+			<manufactureDate/>
+			<expiryDate/>
+		</drugBatch>
+	</xforms:instance>
 	<xforms:instance id="ins-drug">
 		<drug xmlns="">
 			<name />
 			<activeIngredients />
 			<administrationRoute />
 			<manufacturer />
-			<batchNumber />
-			<expiryDate />
+			<tradeName />
+			<batches />
 			<drugStorage />
 			<drugDosingDeterminant />
 			<ageDosing>
@@ -407,7 +411,28 @@
 		</assayReference>
 	</xforms:instance>
 	
-
+	<xforms:instance id="study-info-resources" 
+		src="/apps/common/constants/studyInfoTypes.xml"/>
+	<!--
+	In your XForms model, load resources.xml in an instance. 
+	Make sure to make that instance read-only and cacheable: this way the instance will only be stored once in memory 
+	(it will be shared by all the users) and using a more efficient (because read-only) representation in memory.
+	
+	xxforms:readonly="true" xxforms:cache="true"
+	-->
+	<xforms:instance id="all-resources"
+		src="/apps/common/resources.xml"/>
+	<!--
+	NOTE: Here we point to a local file with the oxf: protocol. This is usually yields more performance than using http:, because oxf: will reach a local file on disk. However, in the online version, we use the http:, because we want to load the resource from an online server!
+	
+	Define an instance used to store the current language, e.g. en or fr.
+	-->
+	<xforms:instance id="language"><language>en</language></xforms:instance>
+	<xforms:instance id="iterator"><key></key></xforms:instance>
+	<!--
+	Define a variable ($resources), which points to <resources> for the current language. You will use this variable as a shortcut in your view to point to specific resources.
+		-->
+	<xxforms:variable name="resources" select="instance('all-resources')/resources[@xml:lang = instance('language')]"/>
 	
 
 </xforms:model>
