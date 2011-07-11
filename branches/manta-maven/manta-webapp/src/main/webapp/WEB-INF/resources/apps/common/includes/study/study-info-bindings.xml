@@ -142,8 +142,14 @@
                                         </xforms:bind>
                                         <xforms:bind nodeset="administrationRoute" />
                                         <xforms:bind nodeset="manufacturer" />
-                                        <xforms:bind nodeset="batchNumber" />
-                                        <xforms:bind nodeset="expiryDate" type="xforms:date" />
+                                        <xforms:bind nodeset="batches">
+                                            <xforms:bind nodeset="drugBatch">
+                                                <xforms:bind nodeset="batchNumber" />
+                                                <xforms:bind nodeset="manufactureDate" type="xforms:date" />
+                                                <xforms:bind nodeset="expiryDate" type="xforms:date" />        
+                                            </xforms:bind>
+                                        </xforms:bind>
+                                        
                                         <xforms:bind nodeset="drugStorage" />
                                         <!-- <xforms:bind nodeset="drugDosingDeterminant"
                                             required="true()" />

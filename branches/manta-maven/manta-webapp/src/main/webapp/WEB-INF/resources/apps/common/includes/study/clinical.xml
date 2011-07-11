@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
     xmlns:ev="http://www.w3.org/2001/xml-events">
 
     <xforms:group ref="clinical">
@@ -106,7 +107,7 @@
                                                   <xforms:insert ev:event="DOMActivate" context="."
                                                   nodeset="activeIngredient"
                                                   at="count(../activeIngredient)" position="after"
-                                                  origin="instance('ins-activeIngredient')"/>
+                                                  origin="xxforms:instance('ins-activeIngredient')"/>
                                                   </xforms:trigger>
                                                   </td>
                                                   <td class="add-td">
@@ -115,7 +116,7 @@
                                                   <xforms:insert ev:event="DOMActivate" context="."
                                                   nodeset="activeIngredient"
                                                   at="count(../activeIngredient)" position="after"
-                                                  origin="instance('ins-activeIngredient')"/>
+                                                  origin="xxforms:instance('ins-activeIngredient')"/>
                                                   </xforms:trigger>
                                                   </td>
                                                   </tr>
@@ -125,15 +126,11 @@
                                                   appearance="minimal">
                                                   <xforms:label class="fixed-width">Administration
                                                   Route </xforms:label>
-                                                  <xforms:item>
-                                            <xforms:label><!-- Nullable -->
-                                            </xforms:label>
-                                            <xforms:value />
-                                        </xforms:item>
+                                                  
                                                   <xforms:itemset model="mod-study-info"
-                                                  nodeset="instance('ins-administrationRoute-items')/administrationRoute">
-                                                  <xforms:label ref="label"/>
-                                                  <xforms:value ref="value"/>
+                                                      nodeset="instance('study-info-resources')//xs:simpleType[@name='administrationRoutes']/xs:restriction/xs:enumeration">
+                                                      <xforms:label ref="for $currentItemName in @value return $resources/clinical/drug//adminRoute[@ref = $currentItemName]"/>
+                                                      <xforms:value ref="@value"/>
                                                   </xforms:itemset>
                                                   </xforms:select1>
                                                   <br/>
@@ -143,34 +140,65 @@
                                                   drug</xforms:hint>
                                                   </xforms:input>
                                                   <br/>
-                                                  <xforms:input ref="batchNumber">
-                                                  <xforms:label class="fixed-width">Batch Number </xforms:label>
-                                                  <xforms:hint>The manufacturer of the
-                                                  drug</xforms:hint>
-                                                  </xforms:input>
-                                                  <br/>
-                                                  <xforms:input ref="expiryDate">
-                                                  <xforms:label class="fixed-width">Expiry date </xforms:label>
-                                                  <xforms:hint>The date the drug
-                                                  expires</xforms:hint>
-                                                  </xforms:input>
-                                                  <br/>
+                                                      <xforms:input ref="tradeName">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeName"/>
+                                                      </xforms:input>
+                                                      <br/>
+                                                      <xforms:group ref="batches">
+                                                          <table class="repeat-table">
+                                                          <xforms:repeat nodeset="drugBatch" id="rep-batch">
+                                                              <tr><td>
+                                                              <xforms:trigger appearance="minimal">
+                                                                  <xforms:label>
+                                                                      <img src="/apps/common/theme/remove.gif"
+                                                                          alt="remove"/>
+                                                                  </xforms:label>
+                                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                                      nodeset="." at="index('rep-batch')"/>
+                                                              </xforms:trigger>
+                                                                  </td><td class="form-td">
+                                                              <xforms:input ref="batchNumber">
+                                                                  <xforms:label class="fixed-width">Batch Number </xforms:label>
+                                                              </xforms:input>
+                                                                  </td>
+                                                              </tr>
+                                                <tr><td></td><td class="form-td">
+                                                    <xforms:input ref="manufactureDate">
+                                                        <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manDate"/>
+                                                        <xforms:hint>The date the drug was manufactured</xforms:hint>
+                                                    </xforms:input>
+                                                              <xforms:input ref="expiryDate">
+                                                                  <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/expDate"/>
+                                                                  <xforms:hint>The date the drug expires</xforms:hint>
+                                                              </xforms:input>
+                                                                  </td></tr>
+                                                          </xforms:repeat>
+                                                              </table>
+                                                          <xforms:trigger appearance="minimal">
+                                                              <xforms:label>
+                                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                              </xforms:label>
+                                                              <xforms:insert ev:event="DOMActivate" context="."
+                                                                  nodeset="drugBatch" at="count(../drugBatch)" position="after"
+                                                                  origin="xxforms:instance('ins-drug-batch')"/>
+                                                          </xforms:trigger>
+                                                          
+                                                          <xforms:trigger appearance="minimal">
+                                                              <xforms:label model="mod-study-info" ref="$resources/clinical/drug/addBatch"/>
+                                                              <xforms:insert ev:event="DOMActivate" context="."
+                                                                  nodeset="drugBatch" at="count(../drugBatch)" position="after"
+                                                                  origin="xxforms:instance('ins-drug-batch')"/>
+                                                          </xforms:trigger>
+                                                      </xforms:group>
+                                                      
                                                   <xforms:select1 ref="drugStorage"
                                                   appearance="minimal">
                                                   <xforms:label class="fixed-width">Drug storage </xforms:label>
-                                                  <xforms:item>
-                                            <xforms:label><!-- Nullable -->
-                                            </xforms:label>
-                                            <xforms:value />
-                                        </xforms:item><xforms:itemset model="mod-study-info"
-                                                  nodeset="instance('ins-drugStorage-items')/drugStorage">
-                                                  <xforms:label ref="label"/>
-                                                  <xforms:value ref="value"/>
-                                                  </xforms:itemset>
-                                                  <xforms:item>
-                                                  <xforms:label>unknown</xforms:label>
-                                                  <xforms:value/>
-                                                  </xforms:item>
+                                                      <xforms:itemset model="mod-study-info"
+                                                          nodeset="instance('study-info-resources')//xs:simpleType[@name='drugStorage']/xs:restriction/xs:enumeration">
+                                                          <xforms:label ref="for $currentItemName in @value return $resources/clinical/drug//storage[@ref = $currentItemName]"/>
+                                                          <xforms:value ref="@value"/>
+                                                      </xforms:itemset>
                                                   </xforms:select1>
                                                   <br/>
                                                   <xforms:select1 ref="drugDosingDeterminant" appearance="minimal">
@@ -252,7 +280,7 @@
 	                                                              <xforms:insert ev:event="DOMActivate" context="."
 	                                                                  nodeset="ageDosingSchedule"
 	                                                                  at="count(../ageDosingSchedule)" position="after"
-	                                                                  origin="instance('ins-ageDosingSchedule')"/>
+	                                                                  origin="xxforms:instance('ins-ageDosingSchedule')"/>
 	                                                          </xforms:trigger>
 	                                                      </td>
 	                                                      <td class="add-td" colspan="6">
@@ -261,7 +289,7 @@
 	                                                              <xforms:insert ev:event="DOMActivate" context="."
 	                                                                  nodeset="ageDosingSchedule"
 	                                                                  at="count(../ageDosingSchedule)" position="after"
-	                                                                  origin="instance('ins-ageDosingSchedule')"/>
+	                                                                  origin="xxforms:instance('ins-ageDosingSchedule')"/>
 	                                                          </xforms:trigger>
 	                                                      </td>
 	                                                  </tr>
@@ -361,7 +389,7 @@
                                                   nodeset="weightGroupDosingSchedule"
                                                   at="count(../weightGroupDosingSchedule)"
                                                   position="after"
-                                                  origin="instance('ins-weightGroupDosingSchedule')"
+                                                  origin="xxforms:instance('ins-weightGroupDosingSchedule')"
                                                   />
                                                   </xforms:trigger>
                                                   </td>
@@ -372,7 +400,7 @@
                                                   nodeset="weightGroupDosingSchedule"
                                                   at="count(../weightGroupDosingSchedule)"
                                                   position="after"
-                                                  origin="instance('ins-weightGroupDosingSchedule')"
+                                                  origin="xxforms:instance('ins-weightGroupDosingSchedule')"
                                                   />
                                                   </xforms:trigger>
                                                   </td>
@@ -430,7 +458,7 @@
                                                   nodeset="weightDosingSchedule"
                                                   at="count(../weightDosingSchedule)"
                                                   position="after"
-                                                  origin="instance('ins-weightDosingSchedule')"/>
+                                                  origin="xxforms:instance('ins-weightDosingSchedule')"/>
                                                   </xforms:trigger>
                                                   </td>
                                                   <td class="add-td" colspan="3">
@@ -440,7 +468,7 @@
                                                   nodeset="weightDosingSchedule"
                                                   at="count(../weightDosingSchedule)"
                                                   position="after"
-                                                  origin="instance('ins-weightDosingSchedule')"/>
+                                                  origin="xxforms:instance('ins-weightDosingSchedule')"/>
                                                   </xforms:trigger>
                                                   </td>
                                                   </tr>
@@ -502,7 +530,7 @@
                                                   </xforms:label>
                                                   <xforms:insert ev:event="DOMActivate" context="."
                                                   nodeset="drug" at="count(../drug)"
-                                                  position="after" origin="instance('ins-drug')"/>
+                                                  position="after" origin="xxforms:instance('ins-drug')"/>
                                                   </xforms:trigger>
                                                 </td>
                                                 <td class="add-td">
@@ -510,7 +538,7 @@
                                                   <xforms:label>Add a drug</xforms:label>
                                                   <xforms:insert ev:event="DOMActivate" context="."
                                                   nodeset="drug" at="count(../drug)"
-                                                  position="after" origin="instance('ins-drug')"/>
+                                                  position="after" origin="xxforms:instance('ins-drug')"/>
                                                   </xforms:trigger>
                                                 </td>
                                             </tr>
@@ -527,7 +555,7 @@
                                     </xforms:label>
                                     <xforms:insert ev:event="DOMActivate" context="."
                                         nodeset="regimen" at="count(../regimen)" position="after"
-                                        origin="instance('ins-regimen')"/>
+                                        origin="xxforms:instance('ins-regimen')"/>
                                 </xforms:trigger>
                             </td>
                             <td class="add-td">
@@ -535,7 +563,7 @@
                                     <xforms:label>Add a regimen</xforms:label>
                                     <xforms:insert ev:event="DOMActivate" context="."
                                         nodeset="regimen" at="count(../regimen)" position="after"
-                                        origin="instance('ins-regimen')"/>
+                                        origin="xxforms:instance('ins-regimen')"/>
                                 </xforms:trigger>
                             </td>
                         </tr>
