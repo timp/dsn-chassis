@@ -21,5 +21,13 @@
         </xs:restriction>
     </xs:simpleType>
     
+    <xs:simpleType name="population">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="resident"/>
+            <xs:enumeration value="traveller"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
 </xs:schema>
 

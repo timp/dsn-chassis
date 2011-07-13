@@ -304,6 +304,16 @@
 										</xforms:alert>
 									</xforms:select1>
 								</div>
+								<div>
+									<xforms:select1 appearance="minimal" ref="population">
+										<xforms:label model="mod-study-info" ref="$resources//studyPopulation"/>
+										<xforms:itemset model="mod-study-info"
+											nodeset="instance('study-info-resources')//xs:simpleType[@name='population']/xs:restriction/xs:enumeration">
+											<xforms:label ref="for $currentItemName in @value return $resources//population[@ref = $currentItemName]"/>
+											<xforms:value ref="@value"/>
+										</xforms:itemset>
+									</xforms:select1>
+								</div>
 								<xforms:group ref="transmissionIntensity">
 									<h3>Transmission intensity</h3>
 
@@ -464,7 +474,7 @@
 								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
-									origin="instance('ins-site-template')" />
+									origin="xxforms:instance('ins-site-template')" />
 							</xforms:trigger>
 						</td>
 						<td class="add-td">
@@ -475,7 +485,7 @@
 								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
-									origin="instance('ins-site-template')" />
+									origin="xxforms:instance('ins-site-template')" />
 							</xforms:trigger>
 						</td>
 					</tr>
@@ -715,6 +725,7 @@
 			<xi:include href="clinical.xml" />
 			<xi:include href="molecular.xml" />
 			<xi:include href="invitro.xml" />
+			<xi:include href="pharma.xml" />
 			
 		</xforms:group>
 	</xforms:group>

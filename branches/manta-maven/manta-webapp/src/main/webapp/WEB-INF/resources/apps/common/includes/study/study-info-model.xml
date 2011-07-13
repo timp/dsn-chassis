@@ -412,7 +412,7 @@
 	</xforms:instance>
 	
 	<xforms:instance id="study-info-resources" 
-		src="/apps/common/constants/studyInfoTypes.xml"/>
+		src="/apps/common/constants/studyInfoTypes.xsd"/>
 	<!--
 	In your XForms model, load resources.xml in an instance. 
 	Make sure to make that instance read-only and cacheable: this way the instance will only be stored once in memory 
