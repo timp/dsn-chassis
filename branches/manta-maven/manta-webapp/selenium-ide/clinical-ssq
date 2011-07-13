@@ -239,123 +239,128 @@
 	<td>manufacturer1</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>xpath=//a[. = 'Add a batch']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../label[4], 'Batch Number')])[3]</td>
+	<td>xpath=(//input[contains(../../label, 'Batch Number')])</td>
 	<td>batch1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../label[5], 'Expiry date')])[4]</td>
+	<td>xpath=(//input[contains(../../label[2], 'Expiry Date')])[2]</td>
 	<td>29.3.2012</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[6], 'Drug storage')])[2]</td>
+	<td>xpath=(//select[contains(../label[5], 'Drug storage')])[2]</td>
 	<td>label=room temperature</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[7], 'Dosing determinant')])[3]</td>
+	<td>xpath=(//select[contains(../label[6], 'Dosing determinant')])[3]</td>
 	<td>label=age</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[2]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and contains(../../../../tr[1]/th[4],'From')])[3]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and contains(../../../../tr[1]/th[4],'From')])[3]</td>
 	<td>2</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and contains(../../../../tr[1]/th[5],'To')])[4]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and contains(../../../../tr[1]/th[5],'To')])[4]</td>
 	<td>3</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[6] = 'Dose'])[5]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[6] = 'Dose'])[5]</td>
 	<td>4</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../../../../../../label[7], 'Dosing determinant') and ../../../tr[1]/th[7] = 'Unit'])</td>
+	<td>xpath=(//select[contains(../../../../../../label[6], 'Dosing determinant') and ../../../tr[1]/th[7] = 'Unit'])</td>
 	<td>label=Tablets</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[7], 'Dosing determinant')])[3]</td>
+	<td>xpath=(//select[contains(../label[6], 'Dosing determinant')])[3]</td>
 	<td>label=weight group</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[6]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[6]</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[6]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[6]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[7]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[7]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and contains(../../../../tr[1]/th[4],'From')])[8]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and contains(../../../../tr[1]/th[4],'From')])[8]</td>
 	<td>2</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and contains(../../../../tr[1]/th[5],'To')])[9]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and contains(../../../../tr[1]/th[5],'To')])[9]</td>
 	<td>3</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[6] = 'Dose'])[10]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[6] = 'Dose'])[10]</td>
 	<td>4</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../../../../../../label[7], 'Dosing determinant') and ../../../tr[1]/th[7] = 'Unit'])[2]</td>
+	<td>xpath=(//select[contains(../../../../../../label[6], 'Dosing determinant') and ../../../tr[1]/th[7] = 'Unit'])[2]</td>
 	<td>label=Tablets</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[7], 'Dosing determinant')])[3]</td>
+	<td>xpath=(//select[contains(../label[6], 'Dosing determinant')])[3]</td>
 	<td>label=mg/kg</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[11]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[11]</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[11]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[11]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[12]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[12]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[4] = 'Dose'])[3]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[4] = 'Dose'])[3]</td>
 	<td>4</td>
 </tr>
 <tr>
@@ -365,37 +370,37 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[14]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[14]</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[14]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[2] = 'Day'])[14]</td>
 	<td>1111</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[15]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[3] = 'Hour'])[15]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../../../../../../label[7], 'Dosing determinant') and ../../../../tr[1]/th[4] = 'Dose'])[6]</td>
+	<td>xpath=(//input[contains(../../../../../../../label[6], 'Dosing determinant') and ../../../../tr[1]/th[4] = 'Dose'])[6]</td>
 	<td>4</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[8], 'Food intake')])[4]</td>
+	<td>xpath=(//select[contains(../label[7], 'Food intake')])[4]</td>
 	<td>label=with a meal</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[11], 'vomiting')])[5]</td>
+	<td>xpath=(//select[contains(../label[10], 'vomiting')])[5]</td>
 	<td>label=no</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//textarea[contains(../label[12], 'Comments')])</td>
+	<td>xpath=(//textarea[contains(../label[11], 'Comments')])</td>
 	<td>comments</td>
 </tr>
 <tr>
