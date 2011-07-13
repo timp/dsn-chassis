@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xf-59$xforms-input·1</td>
+	<td>xpath=//input[contains(../../label,'File:')]</td>
 	<td>D:\selenium\pdr</td>
 </tr>
 <tr>
