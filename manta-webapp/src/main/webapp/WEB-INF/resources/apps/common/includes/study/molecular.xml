@@ -283,7 +283,7 @@
 										</xforms:label>
 										<xforms:insert ev:event="DOMActivate" context="."
 											nodeset="genotypedMarker" at="count(../genotypedMarker)"
-											position="after" origin="instance('ins-genotypedMarker')" />
+											position="after" origin="xxforms:instance('ins-genotypedMarker')" />
 									</xforms:trigger>
 								</td>
 								<td class="add-td">
@@ -292,7 +292,7 @@
 										</xforms:label>
 										<xforms:insert ev:event="DOMActivate" context="."
 											nodeset="genotypedMarker" at="count(../genotypedMarker)"
-											position="after" origin="instance('ins-genotypedMarker')" />
+											position="after" origin="xxforms:instance('ins-genotypedMarker')" />
 									</xforms:trigger>
 								</td>
 							</tr>
@@ -393,7 +393,7 @@
 												</xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
 													nodeset="resistanceLocus" at="count(../resistanceLocus)"
-													position="after" origin="instance('ins-resistanceLocus')" />
+													position="after" origin="xxforms:instance('ins-resistanceLocus')" />
 											</xforms:trigger>
 										</td>
 										<td class="add-td">
@@ -402,7 +402,7 @@
 												</xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
 													nodeset="resistanceLocus" at="count(../resistanceLocus)"
-													position="after" origin="instance('ins-resistanceLocus')" />
+													position="after" origin="xxforms:instance('ins-resistanceLocus')" />
 											</xforms:trigger>
 										</td>
 									</tr>
@@ -474,7 +474,7 @@
 												</xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
 													nodeset="otherLocus" at="count(../otherLocus)" position="after"
-													origin="instance('ins-otherLocus')" />
+													origin="xxforms:instance('ins-otherLocus')" />
 											</xforms:trigger>
 										</td>
 										<td class="add-td">
@@ -482,7 +482,7 @@
 												<xforms:label>Add another locus </xforms:label>
 												<xforms:insert ev:event="DOMActivate" context="."
 													nodeset="otherLocus" at="count(../otherLocus)" position="after"
-													origin="instance('ins-otherLocus')" />
+													origin="xxforms:instance('ins-otherLocus')" />
 											</xforms:trigger>
 										</td>
 									</tr>

@@ -195,8 +195,8 @@
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
 			</xforms:submission>
 
-			<xforms:submission id="sub-notify-put-study-entry-complete"	action="/study/email-complete" replace="instance" 
-				method="post" ref="instance('ins-study-entry')" instance="ins-study-entry">
+			<xforms:submission id="sub-notify-put-study-entry-complete"	action="/study/email-complete" replace="none" 
+				method="post" ref="instance('ins-study-entry')" relevant="false" instance="ins-study-entry">
 
 
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
@@ -211,7 +211,8 @@
 		        replace="instance"
 		        instance="ins-study-entry"
 		        ref="instance('ins-study-entry')"
-		        mediatype="application/atom+xml">
+		        mediatype="application/atom+xml"
+		        relevant="false">
 		        <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study.</xforms:message>
 		        <xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
                 

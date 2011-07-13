@@ -281,6 +281,7 @@
                 method="post" 
                 replace="instance" 
                 instance="ins-study-entry"
+                relevant="false"
                 mediatype="application/atom+xml">
                 
                 <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
