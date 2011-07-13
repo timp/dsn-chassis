@@ -552,6 +552,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
         for $old in $old-study-infos
             let $del := update delete $old//regimen/drugs/drug/expiryDate
             let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.5.1"
+            let $pop := update insert <population/> following $old//longitude
             let $instn := update insert <tradeName/> following $old//manufacturer
         return $instn
 
