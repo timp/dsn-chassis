@@ -150,7 +150,7 @@ declare function filter-plugin:do-filter-pdr(
 
 declare function filter-plugin:do-filter-simple(
     $request as element(request) ,
-	$entry as element()
+	$entry as element()?
 ) as element()?
 {
     
