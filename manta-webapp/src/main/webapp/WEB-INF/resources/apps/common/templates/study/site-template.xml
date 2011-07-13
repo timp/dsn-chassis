@@ -15,6 +15,7 @@
 	<transportAndStorageTemperature />
 	<latitude />
 	<longitude />
+	<population/>
 	<transmissionIntensity>
 		<annualParasitologicalIncidence />
 		<annualParasitologicalIncidenceYear />
