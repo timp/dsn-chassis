@@ -13,6 +13,12 @@ Add your content here.
   * Merge study-info into study
   * Upgrade atombeat
   * Rewrite flattener as servlet
+  * Add site population
+  * Add drug manufacturer
+  * Allow multiple clincal drug batches with manufacture date
+  * rename invitro//drugs/drug
+  * fix hematocritpercent
+ 
 
 ===1.4===
   * Remove default values from study info
