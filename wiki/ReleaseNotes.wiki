@@ -14,7 +14,7 @@ Add your content here.
   * Upgrade atombeat
   * Rewrite flattener as servlet
   * Add site population
-  * Add drug manufacturer
+  * Add drug trade name
   * Allow multiple clincal drug batches with manufacture date
   * rename invitro//drugs/drug
   * fix hematocritpercent
