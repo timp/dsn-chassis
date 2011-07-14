@@ -37,7 +37,7 @@
 						
 						<p>
 							<span class="study-title">
-							<xforms:output ref="instance('ins-study-entry')//atom:title">
+							<xforms:output ref="instance('ins-study-entry')//studyTitle">
 								<xforms:label>Title:</xforms:label>
 							</xforms:output>
 							</span>
@@ -111,7 +111,7 @@
 									<xforms:repeat id="rep-review-draft-media" nodeset="atom:entry">
 										<tr class="repeated-element">
 											<td>
-												<xforms:output ref="atom:title"/>
+												<xforms:output ref="//studyTitle"/>
 											</td>
 											<td>
 												<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>

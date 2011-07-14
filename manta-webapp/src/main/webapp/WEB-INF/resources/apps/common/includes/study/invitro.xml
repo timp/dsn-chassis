@@ -450,7 +450,7 @@
 						+ | | BEGIN IN VITRO DRUG STOCK SOLUTIONS NESTED QUESTIONNAIRE | +
 					-->
 
-            <xforms:group ref="drugs">
+            <xforms:group ref="invitroDrugs">
                 <h4>Drugs stock solutions</h4>
 
                 <p>
@@ -458,7 +458,7 @@
                 </p>
 
                 <table class="repeat-table">
-                    <xforms:repeat nodeset="drug" id="drug-rep">
+                    <xforms:repeat nodeset="invitroDrug" id="drug-rep">
                         <tr>
                             <td class="action-td">
                                 <xforms:trigger appearance="minimal">
@@ -538,16 +538,16 @@
                                 <xforms:label>
                                     <img src="/apps/common/theme/add.gif" alt="add"/>
                                 </xforms:label>
-                                <xforms:insert ev:event="DOMActivate" context="." nodeset="drug"
-                                    at="count(../drug)" position="after"
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="invitroDrug"
+                                    at="count(../invitroDrug)" position="after"
                                     origin="xxforms:instance('ins-invitro-drug-template')"/>
                             </xforms:trigger>
                         </td>
                         <td class="add-td">
                             <xforms:trigger appearance="minimal">
                                 <xforms:label>Add a drug</xforms:label>
-                                <xforms:insert ev:event="DOMActivate" context="." nodeset="drug"
-                                    at="count(../drug)" position="after"
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="invitroDrug"
+                                    at="count(../invitroDrug)" position="after"
                                     origin="xxforms:instance('ins-invitro-drug-template')"/>
                             </xforms:trigger>
                         </td>

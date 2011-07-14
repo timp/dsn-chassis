@@ -19,421 +19,399 @@ import module namespace config-collections = "http://purl.org/atombeat/xquery/co
 (: See Milestone 1.0.x :)
 
 declare variable $testdata {
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:id>https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ</atom:id>
-    <atom:published>2010-10-08T03:30:48.996+01:00</atom:published>
-    <atom:updated>2010-10-08T03:46:45.34+01:00</atom:updated>
-    <atom:author>
-        <atom:email>lydaosorio@cideim.org.co</atom:email>
-    </atom:author>
-    <atom:title type="text"/>
-    <atom:content type="application/vnd.chassis-manta+xml">
-        <study-info profile="http://www.cggh.org/2010/chassis/manta/1.0">
-            <start>2000-04-27</start>
-            <end>2004-02-27</end>
-            <sites>
-                <site>
-                    <country>CO</country>
-                    <region>Pacific coast</region>
-                    <district>Choco</district>
-                    <locality>Quibdo</locality>
-                    <lookupAddress>Quibdo Choco Pacific coast COLOMBIA</lookupAddress>
-                    <siteCode/>
-                    <testingDelay/>
-                    <anticoagulant/>
-                    <transportAndStorageTemperature/>
-                    <latitude>5.698323611780863</latitude>
-                    <longitude>76Â°40</longitude>
-                    <transmissionIntensity>
-                        <annualParasitologicalIncidence>9/1000 ihn</annualParasitologicalIncidence>
-                        <annualParasitologicalIncidenceYear>2005</annualParasitologicalIncidenceYear>
-                        <parasitePrevalence>0</parasitePrevalence>
-                        <parasitePrevalenceYear>2001</parasitePrevalenceYear>
-                        <transmissionIntensityAgeFrom>0</transmissionIntensityAgeFrom>
-                        <transmissionIntensityAgeFromUnits/>
-                        <transmissionIntensityAgeTo>99999</transmissionIntensityAgeTo>
-                        <transmissionIntensityAgeToUnits/>
-                        <entomologicalInoculationRate/>
-                        <entomologicalInoculationRateYear/>
-                        <seasonalTransmission/>
-                        <transmissionMonths/>
-                    </transmissionIntensity>
-                </site>
-            </sites>
-            <modules>clinical</modules>
-            <pathogens>pfalciparum</pathogens>
-            <inclusionExclusionCriteria>
-                <age>
-                    <maxAge>65</maxAge>
-                    <maxAgeUnits/>
-                    <minAge>1</minAge>
-                    <minAgeUnits/>
-                </age>
-                <parasitaemia>
-                    <minParasitaemia>250</minParasitaemia>
-                    <maxParasitaemia>50000</maxParasitaemia>
-                </parasitaemia>
-                <includeMixedInfections>false</includeMixedInfections>
-                <excludeIfPriorAntimalarials>true</excludeIfPriorAntimalarials>
-                <priorAntimalarialsExclusion>
-                    <priorAntimalarials>any</priorAntimalarials>
-                    <priorAntimalarialsDetermination>history</priorAntimalarialsDetermination>
-                    <priorAntimalarialsHistoryWeeks/>
-                </priorAntimalarialsExclusion>
-                <pregnancy>exclude</pregnancy>
-                <treatmentReason/>
-                <otherCriteria>no able to return to follow up</otherCriteria>
-            </inclusionExclusionCriteria>
-            <clinical>
-                <treatment>
-                    <regimens>
-                        <regimen>
-                            <regimenName>Amodiaquine plus placebo</regimenName>
-                            <regimenSupervision>full</regimenSupervision>
-                            <regimenUrl/>
-                            <drugs>
-                                <drug>
-                                    <name>Camoquin</name>
-                                    <activeIngredients>
-                                        <activeIngredient>
-                                            <activeIngredientName>amodiaquine</activeIngredientName>
-                                            <activeIngredientMgPerDose>250</activeIngredientMgPerDose>
-                                        </activeIngredient>
-                                    </activeIngredients>
-                                    <administrationRoute/>
-                                    <manufacturer/>
-                                    <batchNumber/>
-                                    <expiryDate/>
-                                    <drugStorage/>
-                                    <drugDosingDeterminant/>
-                                    <ageDosing>
-                                        <ageDosingSchedule>
-                                            <day/>
-                                            <hour/>
-                                            <ageFrom/>
-                                            <ageTo/>
-                                            <dose/>
-                                            <doseUnit/>
-                                        </ageDosingSchedule>
-                                    </ageDosing>
-                                    <wGroupDosing>
-                                        <wGroupDosingSchedule>
-                                            <day/>
-                                            <hour/>
-                                            <wGroupFrom/>
-                                            <wGroupTo/>
-                                            <dose/>
-                                            <doseUnit/>
-                                        </wGroupDosingSchedule>
-                                    </wGroupDosing>
-                                    <weightDosing>
-                                        <weightDosingSchedule>
-                                            <day/>
-                                            <hour/>
-                                            <dose/>
-                                        </weightDosingSchedule>
-                                    </weightDosing>
-                                    <feeding/>
-                                    <fatPerMeal/>
-                                    <feedingOther/>
-                                    <readministeredOnVomitting/>
-                                    <comments/>
-                                </drug>
-                            </drugs>
-                        </regimen>
-                    </regimens>
-                    <regimenAllocation>
-                        <regimenAllocationMethod/>
-                        <blinding/>
-                        <randomisationProportion/>
-                    </regimenAllocation>
-                </treatment>
-                <followup>
-                    <duration>63</duration>
-					<feverMeasurement>axial</feverMeasurement>
-					<haemoglobinRecording>
-						<haemoglobinRecordingType>hct</haemoglobinRecordingType>
-					</haemoglobinRecording>
-                </followup>
-                <microscopy>
-                    <microscopyStain/>
-                    <microscopyStainOther/>
-                    <asexualParasitemia>
-                        <asexualParasitemiaNegativeCount/>
-                        <asexualParasitemiaPositiveThickUnit/>
-                        <asexualParasitemiaPositiveThickUnitOther/>
-                        <asexualParasitemiaPositiveThinUnit/>
-                        <asexualParasitemiaPositiveThinUnitOther/>
-                    </asexualParasitemia>
-                    <sexualParasitemia>
-                        <sexualParasitemiaNegativeCount/>
-                        <sexualParasitemiaPositiveThickUnit/>
-                        <sexualParasitemiaPositiveThickUnitOther/>
-                        <sexualParasitemiaPositiveThinUnit/>
-                        <sexualParasitemiaPositiveThinUnitOther/>
-                    </sexualParasitemia>
-                    <thickFilmCalculationOfParasitemia>
-                        <thickFilmFormula/>
-                        <thickFilmFormulaOther/>
-                    </thickFilmCalculationOfParasitemia>
-                    <thinFilmCalculationOfParasitemia>
-                        <thinFilmFormula/>
-                        <thinFilmFormulaOther/>
-                    </thinFilmCalculationOfParasitemia>
-                    <qualityControl>
-                        <internal>
-                            <percentageRereadBySecondMicroscopist/>
-                            <rereadSlideSelectionMechanism/>
-                            <rereadSlideSelectionMechanismOther/>
-                        </internal>
-                        <external>
-                            <percentageRereadBySecondMicroscopist/>
-                            <rereadSlideSelectionMechanism/>
-                            <rereadSlideSelectionMechanismOther/>
-                        </external>
-                    </qualityControl>
-                </microscopy>
-                <geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
-                    <applicability/>
-                    <applicable>
-                        <markers>
-                            <recrudescenceMarker>
-                                <markerName/>
-                                <markerOther/>
-                                <numberOfMicroSatellites/>
-                            </recrudescenceMarker>
-                        </markers>
-                        <genotypingLaboratory/>
-                        <markerDiscriminant>agarroseGelVisual</markerDiscriminant>
-                        <markerDiscriminantOther>other text</markerDiscriminantOther>
-                        <analysisProtocol>
-                            <mixedAllelesOpen>
-                                <mixedAlleles/>
-                                <mixedAllelesOther/>
-                                <recrudescence/>
-                                <reinfection/>
-                            </mixedAllelesOpen>
-                        </analysisProtocol>
-                    </applicable>
-                </geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
-                <recrudescenceAndReinfection/>
-            </clinical>
-            <molecular>
-                <criteria>
-                    <sampleSourceOpen>
-                        <sampleSource>communitySurvey</sampleSource>
-                        <sampleSourceOther/>
-                    </sampleSourceOpen>
-                    <malariaStatus>asymptomatic</malariaStatus>
-                </criteria>
-                <sample>
-                    <sampleTypeOpen>
-                        <sampleType>filterPaper</sampleType>
-                        <sampleTypeOther/>
-                        <wholeBloodSource/>
-                        <dateCultureIsolated/>
-                    </sampleTypeOpen>
-                </sample>
-                <genotypedMarkers/>
-                <mixedResistanceAlleles>
-                    <mixedResistanceAllelesInclusion>included</mixedResistanceAllelesInclusion>
-                    <mixedResistanceAllelesDesignation>mixed</mixedResistanceAllelesDesignation>
-                </mixedResistanceAlleles>
-                <additionalGenotypicInformation>
-                    <sequencedLoci>
-                        <wholeGenomesSequenced>false</wholeGenomesSequenced>
-                        <resistanceLociSequenced>false</resistanceLociSequenced>
-                        <resistanceLoci>
-                            <resistanceLocus>
-                                <locusTypeOpen>
-                                    <locusType/>
-                                    <locusTypeOther/>
-                                </locusTypeOpen>
-                                <locusName/>
-                            </resistanceLocus>
-                        </resistanceLoci>
-                        <otherLociGenotyped>true</otherLociGenotyped>
-                        <otherLoci>
-                            <otherLocus>
-                                <locusTypeOpen>
-                                    <locusType>other</locusType>
-                                    <locusTypeOther>K76T, Mdr86 and mdr copy number</locusTypeOther>
-                                </locusTypeOpen>
-                                <locusName/>
-                            </otherLocus>
-                        </otherLoci>
-                    </sequencedLoci>
-                    <infectionComplexityEstimated>false</infectionComplexityEstimated>
-                    <infectionComplexityEstimationlociOpen>
-                        <infectionComplexityEstimationloci/>
-                        <infectionComplexityEstimationlociOther/>
-                    </infectionComplexityEstimationlociOpen>
-                </additionalGenotypicInformation>
-            </molecular>
-            <invitro>
-                <inclusionCriteria/>
-                <analysisSite>France, Paris, Bichat hospital</analysisSite>
-                <culture>
-                    <incubatorSystem>incubationchamber</incubatorSystem>
-                    <co2/>
-                    <healthyErythrocytesSource>bloodbank</healthyErythrocytesSource>
-                    <hematocrit>1.5</hematocrit>
-                    <bloodGroup>O</bloodGroup>
-                </culture>
-                <drugSusceptibilityMedium>
-                    <medium>RPMI1640</medium>
-                    <mediumOther/>
-                    <preparation>aliquots</preparation>
-                    <serum>humanserum</serum>
-                    <serum-finalConcentration>10%</serum-finalConcentration>
-                    <NaHCO3-finalConcentration>2.1</NaHCO3-finalConcentration>
-                    <hypoxantine>
-                        <hypoxantine-added>true</hypoxantine-added>
-                        <hypoxantine-finalConcentration>0.05</hypoxantine-finalConcentration>
-                    </hypoxantine>
-                    <oroticAcid>
-                        <oroticAcid-added/>
-                        <oroticAcid-finalConcentration/>
-                    </oroticAcid>
-                    <glucose>
-                        <glucose-added/>
-                        <glucose-finalConcentration/>
-                    </glucose>
-                    <antibioticTreatments/>
-                </drugSusceptibilityMedium>
-                <susceptibility>
-                    <timeOfIncubation>42h</timeOfIncubation>
-                    <susceptibilityMethod>isotopic</susceptibilityMethod>
-                </susceptibility>
-                <drugs>
-                    <drug>
-                        <molecule>CQ</molecule>
-                        <solvent>distilled water</solvent>
-                        <solventFinalConcentration>0.132 drug conc in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>MDA</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.061 drug conc in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>LUM</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.0131 drug conc in RSS ethanol!</solventFinalConcentration>
-                        <providedByWwarn/>
-                        <provider/>
-                    </drug>
-                    <drug>
-                        <molecule>DHA</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.057 drug in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>QN</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.102 drug in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>PPQ</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.145 drug in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>MQ</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>0.133 drug in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                    <drug>
-                        <molecule>SP</molecule>
-                        <solvent>methanol</solvent>
-                        <solventFinalConcentration>2.05 drug in RSS</solventFinalConcentration>
-                        <providedByWwarn>false</providedByWwarn>
-                        <provider>IMTSSA</provider>
-                    </drug>
-                </drugs>
-                <plateBatches>
-                    <batch>
-                        <clone3D7ProvidedByWwarn>false</clone3D7ProvidedByWwarn>
-                        <clone3D7Provider>MR4</clone3D7Provider>
-                        <batchesIncludedInRawData>true</batchesIncludedInRawData>
-                        <preparationDate/>
-                        <parasitaemia3D7/>
-                        <ringForms/>
-                    </batch>
-                </plateBatches>
-            </invitro>
-            <pharmacology>
-                <samples>
-                    <sample>
-                        <numberPlanned/>
-                        <anticoagulent/>
-                        <centrifugeTime/>
-                        <storages>
-                            <storage>
-                                <storageTemperature/>
-                                <storageDuration/>
-                                <storageDurationUnit/>
-                            </storage>
-                        </storages>
-                    </sample>
-                </samples>
-                <analytes>
-                   <analyte>
-                        <drugMeasured>SP</drugMeasured>
-                        <lowerLoQ>1</lowerLoQ>
-                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
-                    </analyte>
-                    <analyte>
-                        <drugMeasured>PPQ</drugMeasured>
-                        <lowerLoQ>1</lowerLoQ>
-                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
-                    </analyte>
-                    <analyte>
-                        <drugMeasured>AL</drugMeasured>
-                        <lowerLoQ>1</lowerLoQ>
-                        <sampleMatrixType>wholeCapillaryBlood capillaryPlasma</sampleMatrixType>
-                    </analyte>
-                </analytes>
-                <assayReferences>
-                    <assayReference>
-                        <referenceType>url</referenceType>
-                        <url/>
-                        <doi/>
-                        <upload>
-                            <uploadedUrl/>
-                        </upload>
-                        <note/>
-                        <assayValidated/>
-                    </assayReference>
-                </assayReferences>
-            </pharmacology>
-        </study-info>
-    </atom:content>
-    <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
-        <atom:author>
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">http://localhost:8080/repository/service/content/studies/MGEXQ</atom:id>
+        <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2010-10-08T03:30:48.996+01:00</atom:published>
+        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-04-13T14:55:33.543+01:00</atom:updated>
+        <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <atom:email>lydaosorio@cideim.org.co</atom:email>
         </atom:author>
-        <atom:updated>2010-10-08T03:46:45.34+01:00</atom:updated>
-        <atom:summary/>
-    </ar:comment>
-    <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ"/>
+        <atom:title xmlns:atombeat="http://purl.org/atombeat/xmlns" type="text">Efficacy, Effect on Gametocytes and Tolerability of the Addition of Artesunate to Amodiaquine in Colombia</atom:title>
+        <atom:content xmlns:atombeat="http://purl.org/atombeat/xmlns" type="application/vnd.chassis-manta+xml">
+            <study profile="http://www.cggh.org/2010/chassis/manta/1.5">
+                <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
+                <study-is-published>Yes</study-is-published>
+                <explorer-display>notset</explorer-display>
+                <publications>
+                    <publication>
+                        <publication-title/>
+                        <pmid>17328806</pmid>
+                        <publication-references>
+                            <publication-reference type="url">http://www.malariajournal.com/content/6/1/25</publication-reference>
+                        </publication-references>
+                    </publication>
+                </publications>
+                <acknowledgements>
+                    <person>
+                        <first-name/>
+                        <middle-name/>
+                        <family-name/>
+                        <email-address/>
+                        <institution>COLCIENCIAS</institution>
+                        <person-is-contactable/>
+                    </person>
+                    <person>
+                        <first-name/>
+                        <middle-name/>
+                        <family-name/>
+                        <email-address/>
+                        <institution>TDR/WHO</institution>
+                        <person-is-contactable/>
+                    </person>
+                    <person>
+                        <first-name/>
+                        <middle-name/>
+                        <family-name/>
+                        <email-address/>
+                        <institution>DASALUD-CHOCO</institution>
+                        <person-is-contactable/>
+                    </person>
+                    <person>
+                        <first-name>Rubiela</first-name>
+                        <middle-name/>
+                        <family-name>Giraldo</family-name>
+                        <email-address/>
+                        <institution/>
+                        <person-is-contactable/>
+                    </person>
+                    <person>
+                        <first-name>Maria </first-name>
+                        <middle-name>Helena</middle-name>
+                        <family-name>Chacon</family-name>
+                        <email-address/>
+                        <institution/>
+                        <person-is-contactable/>
+                    </person>
+                    <person>
+                        <first-name>Diego</first-name>
+                        <middle-name>Fernando</middle-name>
+                        <family-name>Echeverry</family-name>
+                        <email-address/>
+                        <institution/>
+                        <person-is-contactable/>
+                    </person>
+                    <institution-ack>
+                        <institution-name/>
+                        <institution-websites/>
+                    </institution-ack>
+                </acknowledgements>
+                <curator-notes/>
+                <study-status>wait-external</study-status>
+                <modules>clinical</modules>
+                <study-info>
+                    <studyInfoStatus/>
+                    <start/>
+                    <end/>
+                    <sites>
+                        <site>
+                            <country/>
+                            <region/>
+                            <district/>
+                            <locality/>
+                            <lookupAddress/>
+                            <siteCode/>
+                            <testingDelay/>
+                            <anticoagulant/>
+                            <transportAndStorageTemperature/>
+                            <latitude/>
+                            <longitude/>
+                            <transmissionIntensity>
+                                <annualParasitologicalIncidence/>
+                                <annualParasitologicalIncidenceYear/>
+                                <parasitePrevalence/>
+                                <parasitePrevalenceYear/>
+                                <transmissionIntensityAgeFrom/>
+                                <transmissionIntensityAgeFromUnits/>
+                                <transmissionIntensityAgeTo/>
+                                <transmissionIntensityAgeToUnits/>
+                                <entomologicalInoculationRate/>
+                                <entomologicalInoculationRateYear/>
+                                <seasonalTransmission/>
+                                <transmissionMonths/>
+                            </transmissionIntensity>
+                        </site>
+                    </sites>
+                    <pathogens/>
+                    <inclusionExclusionCriteria>
+                        <age>
+                            <maxAge/>
+                            <maxAgeUnits/>
+                            <minAge/>
+                            <minAgeUnits/>
+                        </age>
+                        <parasitaemia>
+                            <minParasitaemia/>
+                            <maxParasitaemia/>
+                        </parasitaemia>
+                        <includeMixedInfections/>
+                        <excludeIfPriorAntimalarials/>
+                        <priorAntimalarialsExclusion>
+                            <priorAntimalarials/>
+                            <priorAntimalarialsDetermination/>
+                            <priorAntimalarialsHistoryWeeks/>
+                        </priorAntimalarialsExclusion>
+                        <pregnancy/>
+                        <treatmentReason/>
+                        <otherCriteria/>
+                    </inclusionExclusionCriteria>
+                    <clinical>
+                        <treatment>
+                            <regimens>
+                                <regimen>
+                                    <regimenName/>
+                                    <regimenSupervision/>
+                                    <regimenUrl/>
+                                    <drugs/>
+                                </regimen>
+                            </regimens>
+                            <regimenAllocation>
+                                <regimenAllocationMethod/>
+                                <blinding/>
+                                <randomisationProportion/>
+                            </regimenAllocation>
+                        </treatment>
+                        <followup>
+                            <duration/>
+                            <feverMeasurement/>
+                            <haemoglobinRecording>
+                                <haemoglobinRecordingType/>
+                            </haemoglobinRecording>
+                        </followup>
+                        <microscopy>
+                            <microscopyStain/>
+                            <microscopyStainOther/>
+                            <asexualParasitemia>
+                                <asexualParasitemiaNegativeCount/>
+                                <asexualParasitemiaPositiveThickUnit/>
+                                <asexualParasitemiaPositiveThickUnitOther/>
+                                <asexualParasitemiaPositiveThinUnit/>
+                                <asexualParasitemiaPositiveThinUnitOther/>
+                            </asexualParasitemia>
+                            <sexualParasitemia>
+                                <sexualParasitemiaNegativeCount/>
+                                <sexualParasitemiaPositiveThickUnit/>
+                                <sexualParasitemiaPositiveThickUnitOther/>
+                                <sexualParasitemiaPositiveThinUnit/>
+                                <sexualParasitemiaPositiveThinUnitOther/>
+                            </sexualParasitemia><!--   separateSpeciesCounts / -->
+                            <thickFilmCalculationOfParasitemia>
+                                <thickFilmFormula/>
+                                <thickFilmFormulaOther/><!-- 
+                        <WBCSource />
+                        <WBCAssumed />
+                        <thickFilmCalculationOfParasitemiaOther />
+             -->
+                            </thickFilmCalculationOfParasitemia>
+                            <thinFilmCalculationOfParasitemia>
+                                <thinFilmFormula/>
+                                <thinFilmFormulaOther/><!-- 
+                        <HtcSource />
+                        <HtcAssumed />
+                        <thinFilmCalculationOfParasitemiaOther />
+             -->
+                            </thinFilmCalculationOfParasitemia>
+                            <qualityControl>
+                                <internal>
+                                    <percentageRereadBySecondMicroscopist/>
+                                    <rereadSlideSelectionMechanism/>
+                                    <rereadSlideSelectionMechanismOther/>
+                                </internal>
+                                <external>
+                                    <percentageRereadBySecondMicroscopist/>
+                                    <rereadSlideSelectionMechanism/>
+                                    <rereadSlideSelectionMechanismOther/>
+                                </external>
+                            </qualityControl>
+                        </microscopy>
+                        <geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+                            <applicability/>
+                            <applicable>
+                                <markers>
+                                    <recrudescenceMarker>
+                                        <markerName/>
+                                        <markerOther/>
+                                        <numberOfMicroSatellites/>
+                                    </recrudescenceMarker>
+                                </markers>
+                                <genotypingLaboratory/>
+                                <markerDiscriminantOpen>
+                                    <markerDiscriminant/>
+                                    <markerDiscriminantOther/>
+                                </markerDiscriminantOpen>
+                                <analysisProtocol>
+                                    <mixedAllelesOpen>
+                                        <mixedAlleles/>
+                                        <mixedAllelesOther/>
+                                        <recrudescence/>
+                                        <reinfection/>
+                                    </mixedAllelesOpen>
+                                </analysisProtocol>
+                            </applicable>
+                        </geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+                    </clinical>
+                    <molecular>
+                        <criteria>
+                            <sampleSourceOpen>
+                                <sampleSource/>
+                                <sampleSourceOther/>
+                            </sampleSourceOpen>
+                            <malariaStatus/>
+                        </criteria>
+                        <sample>
+                            <sampleTypeOpen>
+                                <sampleType/>
+                                <sampleTypeOther/>
+                                <wholeBloodSource/>
+                                <dateCultureIsolated/>
+                            </sampleTypeOpen>
+                        </sample>
+                        <genotypedMarkers/>
+                        <mixedResistanceAlleles>
+                            <mixedResistanceAllelesInclusion/>
+                            <mixedResistanceAllelesDesignation/>
+                        </mixedResistanceAlleles>
+                        <additionalGenotypicInformation>
+                            <sequencedLoci>
+                                <wholeGenomesSequenced/>
+                                <resistanceLociSequenced/>
+                                <resistanceLoci>
+                                    <resistanceLocus>
+                                        <locusTypeOpen>
+                                            <locusType/>
+                                            <locusTypeOther/>
+                                        </locusTypeOpen>
+                                        <locusName/>
+                                    </resistanceLocus>
+                                </resistanceLoci>
+                                <otherLociGenotyped/>
+                                <otherLoci>
+                                    <otherLocus>
+                                        <locusTypeOpen>
+                                            <locusType/>
+                                            <locusTypeOther/>
+                                        </locusTypeOpen>
+                                        <locusName/>
+                                    </otherLocus>
+                                </otherLoci>
+                            </sequencedLoci>
+                            <infectionComplexityEstimated/>
+                            <infectionComplexityEstimationlociOpen>
+                                <infectionComplexityEstimationloci/>
+                                <infectionComplexityEstimationlociOther/>
+                            </infectionComplexityEstimationlociOpen>
+                        </additionalGenotypicInformation>
+                    </molecular>
+                    <invitro>
+                        <analysisSite/>
+                        <culture>
+                            <incubatorSystem/>
+                            <co2percentage/>
+                            <co2Other/>
+                            <o2percentage/>
+                            <o2Other/>
+                            <healthyErythrocytesSource/>
+                            <hematocritpercent/>
+                            <bloodGroup/>
+                        </culture>
+                        <drugSusceptibilityMedium>
+                            <medium/>
+                            <mediumOther/>
+                            <preparation/>
+                            <serum/>
+                            <serum-finalConcentration/>
+                            <NaHCO3-finalConcentration/>
+                            <hypoxantine>
+                                <hypoxantine-added/>
+                                <hypoxantine-finalConcentration/>
+                            </hypoxantine>
+                            <oroticAcid>
+                                <oroticAcid-added/>
+                                <oroticAcid-finalConcentration/>
+                            </oroticAcid>
+                            <glucose>
+                                <glucose-added/>
+                                <glucose-finalConcentration/>
+                            </glucose>
+                            <antibioticTreatments/>
+                        </drugSusceptibilityMedium>
+                        <susceptibility>
+                            <timeOfIncubation/>
+                            <susceptibilityMethod/>
+                        </susceptibility>
+                        <drugs>
+                            <drug>
+                                <molecule>CQ</molecule>
+                                <solvent>distilled water</solvent>
+                                <solventFinalConcentration>3200nM</solventFinalConcentration>
+                                <providedByWwarn>false</providedByWwarn>
+                                <provider>Sigma</provider>
+                            </drug>
+                            <drug>
+                                <molecule>AQ</molecule>
+                                <solvent>distilled water</solvent>
+                                <solventFinalConcentration>320 nM</solventFinalConcentration>
+                                <providedByWwarn>false</providedByWwarn>
+                                <provider>Sigma</provider>
+                            </drug>
+                        </drugs>
+                        <platePreparationMethod/>
+                        <platesPreparationDate/>
+                        <plateBatches/>
+                    </invitro>
+                    <pharmacology>
+                        <samples>
+                            <sample>
+                                <anticoagulent/>
+                                <centrifugeTime/>
+                                <storages>
+                                    <storage>
+                                        <storageTemperature/>
+                                        <storageDuration/>
+                                        <storageDurationUnit/>
+                                    </storage>
+                                </storages>
+                            </sample>
+                        </samples>
+                        <analytes>
+                            <analyte>
+                                <drugMeasured/>
+                                <lowerLoQ/>
+                                <sampleMatrixType/>
+                            </analyte>
+                        </analytes>
+                        <assayReferences>
+                            <assayReference>
+                                <referenceType>url</referenceType>
+                                <url/>
+                                <doi/>
+                                <upload>
+                                    <uploadedUrl/>
+                                </upload>
+                                <note/>
+                                <assayValidated/>
+                            </assayReference>
+                        </assayReferences>
+                    </pharmacology>
+                </study-info>
+                <atombeat:group id="GROUP_ADMINISTRATORS">
+                    <atombeat:member>lydaosorio@cideim.org.co</atombeat:member>
+                    <atombeat:member>claribel_murillo@cideim.org.co</atombeat:member>
+                </atombeat:group>
+            </study>
+        </atom:content>
+        <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:atombeat="http://purl.org/atombeat/xmlns">
+            <atom:author>
+                <atom:email>clarissa.moreira@wwarn.org</atom:email>
+            </atom:author>
+            <atom:updated>2011-04-13T14:55:33.543+01:00</atom:updated>
+            <atom:summary/>
+        </ar:comment>
+        <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ"/>
     <atom:link rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/atombeat/content/study-info/MGEXQ"/>
     <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="https://www.wwarn.org/repository/atombeat/content/studies/MGEXQ" type="application/atom+xml;type=entry"/>
     <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/atombeat/security/study-info/MGEXQ" type="application/atom+xml;type=entry"/>
     <atom:link rel="history" href="https://www.wwarn.org/repository/atombeat/history/study-info/MGEXQ" type="application/atom+xml;type=feed"/>
-</atom:entry>
+    </atom:entry>
 };
 
 
@@ -456,13 +434,13 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Study Info v1.0 to v1.0.1</title>
+                <title>Data Migration - Study Info v1.5 to v1.5.1</title>
             </head>
             <body>
-                <h1>Data Migration - Study Info v1.0 to v1.0.1</h1>
+                <h1>Data Migration - Study v1.5 to v1.5.1</h1>
                 <p>Total number of entries in <a href="../content/studies">Study Info</a> collection: <strong>{ count( $study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../content/study-info">Study Info</a> collection using v1.0 profile: <strong>{ count( $old-study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../content/study-info">Study Info</a> collection using v1.0.1 profile: <strong>{ count( $new-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../content/study-info">Study Info</a> collection using v1.5 profile: <strong>{ count( $old-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../content/study-info">Study Info</a> collection using v1.5.1 profile: <strong>{ count( $new-study-infos ) }</strong></p>
                 <p>
                     <form method="post" action="">
                         Test <input type="checkbox" name="testing" checked="checked" />
@@ -552,7 +530,12 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
         for $old in $old-study-infos
             let $del := update delete $old//regimen/drugs/drug/expiryDate
             let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.5.1"
+            let $title := update insert <studyTitle>{$old/atom:title/text()}</studyTitle> preceding  $old//atom:content/study/*[1]
+            let $id :=  replace( $old/atom:id/text() , '^.*/([^/^.]+)$', '$1' )
+            let $new-title := update replace $old/atom:title/text() with $id
             let $pop := update insert <population/> following $old//longitude
+            let $ren1 := update rename $old//invitro/drugs/drug as 'invitroDrug'
+            let $ren2 := update rename $old//invitro/drugs as 'invitroDrugs'
             let $instn := update insert <tradeName/> following $old//manufacturer
         return $instn
 
@@ -570,153 +553,21 @@ declare function local:check-changes() as item() *{
  let $new :=  local:get-new-versioned-content($all)
  let $summary := concat('Old studies:',count($old),' New studies:',count($new),'&#xD;')
  let $ret := for $m in $new 
-         let $out := if (count($m//co2) > 0 or count($m//co2percentage) = 0) then 
-             let $msg := "Failed to change co2"
+         let $out := if (count($m//invitro/drugs/drug) > 0 or count($m//invitro/invitroDrugs/invitroDrug) = 0) then 
+             let $msg := "Failed to change invitro drugs"
              return $msg
           else
-             let $msg := "Changed co2"
+             let $msg := "Changed invitro drugs"
              return $msg
          let $new := concat($summary,$out,'&#xD;')
-         let $out := if (count($m//wGroupDosing) > 0 or count($m//weightGroupDosing) = 0) then 
-             let $msg := "Failed to change wGroupDosing"
+         let $out := if (count($m//studyTitle) = 0) then 
+             let $msg := "Failed to change studyTitle"
              return $msg
           else
-             let $msg := "Changed wGroupDosing"
+             let $msg := "Changed studyTitle"
              return $msg
          let $msg := concat($new,$out,'&#xD;')
-         
-          let $out := if (count($m//ringForms) > 0 or count($m//ringFormingPercentage) = 0) then 
-             let $msg := "Failed to change ringForms"
-             return $msg
-          else
-             let $msg := "Changed ringForms"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         
-         let $out := if (count($m//wGroupDosingSchedule) > 0 or count($m//weightGroupDosingSchedule) = 0) then 
-             let $msg := "Failed to change wGroupDosingSchedule"
-             return $msg
-          else
-             let $msg := "Changed wGroupDosingSchedule"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-
-          let $out := if (count($m//wGroupFrom) > 0 or count($m//weightGroupFrom) = 0) then 
-             let $msg := "Failed to change wGroupFrom"
-             return $msg
-          else
-             let $msg := "Changed wGroupFrom"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         let $out := if (count($m//wGroupTo) > 0 or count($m//weightGroupTo) = 0) then 
-             let $msg := "Failed to change wGroupTo"
-             return $msg
-          else
-             let $msg := "Changed wGroupTo"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         
-         let $out := if (count($m//hematocrit) > 0 or count($m//hematocritpercentage) = 0) then 
-             let $msg := "Failed to change hematocrit"
-             return $msg
-          else
-             let $msg := "Changed hematocrit"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
- (:
-             
-           
-         
-           
-           
-            let $tmp := update delete $v1-0//studyInfoStatus
-            return update insert <studyInfoStatus>new</studyInfoStatus> preceding $v1-0//start
-            :)
-            let $out := if (count($m//parasitaemia3D7) > 0 or count($m//parasitaemia3D7percentage) = 0) then 
-             let $msg := "Failed to change parasitaemia3D7"
-             return $msg
-          else
-             let $msg := "Changed parasitaemia3D7"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//clinical/recrudescenceAndReinfection) > 0) then 
-             let $msg := "Failed to delete //clinical/recrudescenceAndReinfection"
-             return $msg
-          else
-             let $msg := "Deleted //clinical/recrudescenceAndReinfection"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         let $out := if (count($m//invitro/inclusionCriteria) > 0) then 
-             let $msg := "Failed to delete //invitro/inclusionCriteria"
-             return $msg
-          else
-             let $msg := "Deleted //invitro/inclusionCriteria"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//pharmacology/samples/sample/numberPlanned) > 0) then 
-             let $msg := "Failed to delete //pharmacology/samples/sample/numberPlanned"
-             return $msg
-          else
-             let $msg := "Deleted //pharmacology/samples/sample/numberPlanned"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         let $out := if (count($m//invitro/drugs/drug[./molecule/text()="AL"]) > 0) then 
-             let $msg := "Failed to delete //invitro/drugs/drug[./molecule/text()=AL]"
-             return $msg
-          else
-             let $msg := "Deleted //invitro/drugs/drug[./molecule/text()=AL]"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//pharmacology/analytes/analyte[./drugMeasured/text()='AL']) > 0) then 
-             let $msg := "Failed to delete //pharmacology/analytes/analyte[./drugMeasured/text()='AL']"
-             return $msg
-          else
-             let $msg := "Deleted //pharmacology/analytes/analyte[./drugMeasured/text()='AL']"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-          let $out := if (count($m//molecule[. = "SP"]) > 0 or count($m//molecule[. = "SX"]) = 0) then 
-             let $msg := "Failed to change SP to SX"
-             return $msg
-          else
-             let $msg := "Changed SP to SX"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//molecule[. = "PPQ"]) > 0 or count($m//molecule[. = "PQ"]) = 0) then 
-             let $msg := "Failed to change PPQ to PQ"
-             return $msg
-          else
-             let $msg := "Changed PPQ to PQ"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         let $out := if (count($m//drugMeasured[. = "SP"]) > 0 or count($m//drugMeasured[. = "SX"]) = 0) then 
-             let $msg := "Failed to change SP to SX"
-             return $msg
-          else
-             let $msg := "Changed SP to SX"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//drugMeasured[. = "PPQ"]) > 0 or count($m//drugMeasured[. = "PQ"]) = 0) then 
-             let $msg := "Failed to change PPQ to PQ"
-             return $msg
-          else
-             let $msg := "Changed PPQ to PQ"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         let $out := if (count($m//studyInfoStatus) != 1) then 
-             let $msg := "Failed to add studyInfoStatus"
-             return $msg
-          else
-             let $msg := "Added studyInfoStatus"
-             return $msg
-         let $msg := concat($new,$out,'&#xD;')
-         let $out := if (count($m//haemoglobinRecordingType[. = "hct"]) > 0 or count($m//haemoglobinRecordingType[. = "htc"]) = 0) then 
-              let $msg := "Failed to change haemoglobinRecordingType hct to htc"
-             return $msg
-          else
-             let $msg := "Changed haemoglobinRecordingType hct to htc"
-             return $msg
-         let $new := concat($msg,$out,'&#xD;')
-         return $new
+         return $msg
     return $ret
 };
 declare function local:do-migration() {

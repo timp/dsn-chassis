@@ -14,7 +14,7 @@
 	<!-- <xforms:bind nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/person/email-address" 
 		type="xforms:email" /> -->
 
-	<xforms:bind nodeset="instance('ins-study-entry')/atom:title"
+	<xforms:bind nodeset="instance('ins-study-entry')//studyTitle"
 		required="true()" />
 	<xforms:bind
 		nodeset="instance('ins-study-entry')//atom:content/study/publications">

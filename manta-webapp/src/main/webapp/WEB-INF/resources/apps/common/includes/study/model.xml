@@ -77,7 +77,7 @@
 			<xforms:message level="modal">
 				Answers have been copied from "
 				<xforms:output
-					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-control')/href-to-copy-study-info-from]/atom:title" />
+					value="instance('ins-study-feed')/atom:entry[atom:link[@rel='self']/@href = instance('ins-control')/href-to-copy-study-info-from]//studyTitle" />
 				".   Please ensure you amend any answers which differ.
 			</xforms:message>
 

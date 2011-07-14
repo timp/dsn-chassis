@@ -32,7 +32,7 @@
 					
 						<p>
 							<span id="study-title-textbox-container">
-								<xforms:input ref="instance('ins-study-entry')/atom:title">
+								<xforms:input ref="instance('ins-study-entry')//studyTitle">
 									<xforms:label>Study title:</xforms:label>
 									<xforms:alert>The title is required.</xforms:alert>
 								</xforms:input>
@@ -130,7 +130,6 @@
 									<xforms:trigger ref="instance('ins-control')/save-draft-trigger">
 										<xforms:label>Next &gt;</xforms:label>
 										<xforms:action ev:event="DOMActivate" if="../draft-entry-is-valid = 'true'">
-											<xforms:setvalue ref="instance('ins-study-entry')/atom:title" value="instance('ins-study-entry')/atom:title" />
 											<xforms:setvalue ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="'permissions'" />
 											<xforms:send submission="sub-implicit-put-draft-entry" />
 										</xforms:action>
