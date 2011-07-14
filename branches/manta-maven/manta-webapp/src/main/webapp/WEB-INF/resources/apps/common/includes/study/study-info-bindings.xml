@@ -72,26 +72,26 @@
                             relevant="contains(instance('ins-study-entry')//modules, 'clinical')">
                             <xforms:bind nodeset="annualParasitologicalIncidence" />
                             <!-- FIXME type="ctype:recentYear" -->
-                            <xforms:bind nodeset="annualParasitologicalIncidenceYear"
-                                type="xforms:int" />
+                           <!-- <xforms:bind nodeset="annualParasitologicalIncidenceYear"
+                                type="xforms:int" /> -->
                             <xforms:bind nodeset="parasitePrevalence" />
-                            <!-- FIXME type="ctype:age" -->
+                            <!-- FIXME type="ctype:age"  type="xforms:int" -->
                             <xforms:bind nodeset="transmissionIntensityAgeFrom"
-                                type="xforms:int" relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
+                                relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
                             <xforms:bind nodeset="transmissionIntensityAgeFromUnits"
                                 relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
-                            <!-- FIXME type="ctype:age" -->
+                            <!-- FIXME type="ctype:age" type="xforms:int" -->
                             <xforms:bind nodeset="transmissionIntensityAgeTo"
-                                type="xforms:int" relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
+                                 relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
                             <xforms:bind nodeset="transmissionIntensityAgeToUnits"
                                 relevant="normalize-space( ../annualParasitologicalIncidence) != ''" />
-                            <!-- FIXME type="ctype:recentYear" -->
-                            <xforms:bind nodeset="parasitePrevalenceYear" type="xforms:int" />
-                            <xforms:bind nodeset="entomologicalInoculationRate"
+                            <!-- FIXME type="ctype:recentYear" type="xforms:int" -->
+                            <xforms:bind nodeset="parasitePrevalenceYear"  />
+                            <!-- <xforms:bind nodeset="entomologicalInoculationRate"
                                 type="xforms:int" />
-                            <!-- FIXME type="ctype:recentYear" -->
+                         FIXME type="ctype:recentYear" 
                             <xforms:bind nodeset="entomologicalInoculationRateYear"
-                                type="xforms:int" />
+                                type="xforms:int" /> -->
                             <xforms:bind nodeset="seasonalTransmission" type="xforms:boolean" />
                             <xforms:bind nodeset="transmissionMonths"
                                 relevant="contains(../seasonalTransmission, 'true')" />
@@ -100,14 +100,16 @@
                 </xforms:bind>
                 <xforms:bind nodeset="inclusionExclusionCriteria">
                     <xforms:bind nodeset="age">
-                        <!-- FIXME type="ctype:age" -->
-                        <xforms:bind nodeset="maxAge" type="xforms:int" />
-                        <!-- FIXME type="ctype:age" -->
-                        <xforms:bind nodeset="minAge" type="xforms:int" />
+                        <!-- FIXME type="ctype:age" type="xforms:int" -->
+                        <xforms:bind nodeset="maxAge"  />
+                        <!-- FIXME type="ctype:age" type="xforms:int" -->
+                        <xforms:bind nodeset="minAge"  />
                     </xforms:bind>
                     <xforms:bind nodeset="parasitaemia">
+                        <!--
                         <xforms:bind nodeset="minParasitaemia" type="xforms:int" />
                         <xforms:bind nodeset="maxParasitaemia" type="xforms:int" />
+                        -->
                     </xforms:bind>
 
                     <xforms:bind nodeset="includeMixedInfections" type="xforms:boolean" />
@@ -246,25 +248,25 @@
                             <xforms:bind nodeset="thinFilmFormulaOther"
                                 relevant="contains(../thinFilmFormula,'other')" />
                             <xforms:bind nodeset="HtcSource" />
-                            <!-- FIXME type="ctype:percentage" -->
+                            <!-- FIXME type="ctype:percentage" type="xforms:int" -->
                             <xforms:bind nodeset="HtcAssumed"
-                                relevant="contains(../HtcSource,'assumed')" type="xforms:int" />
+                                relevant="contains(../HtcSource,'assumed')"  />
                             <xforms:bind nodeset="thinFilmCalculationOfParasitemiaOther" />
                         </xforms:bind>
 
                         <xforms:bind nodeset="qualityControl">
                             <xforms:bind nodeset="internal">
-                                <!-- FIXME type="ctype:percentage" -->
+                                <!-- FIXME type="ctype:percentage"  type="xforms:int" -->
                                 <xforms:bind nodeset="percentageRereadBySecondMicroscopist"
-                                    type="xforms:int" />
+                                    />
                                 <xforms:bind nodeset="rereadSlideSelectionMechanism" />
                                 <xforms:bind nodeset="rereadSlideSelectionMechanismOther"
                                     relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
                             </xforms:bind>
-                            <!-- FIXME type="ctype:percentage" -->
+                            
                             <xforms:bind nodeset="external">
-                                <xforms:bind nodeset="percentageRereadBySecondMicroscopist"
-                                    type="xforms:int" />
+                                <!-- FIXME type="ctype:percentage" type="xforms:int" -->
+                                <xforms:bind nodeset="percentageRereadBySecondMicroscopist" />
                                 <xforms:bind nodeset="rereadSlideSelectionMechanism" />
                                 <xforms:bind nodeset="rereadSlideSelectionMechanismOther"
                                     relevant="contains(../rereadSlideSelectionMechanism, 'other')" />
@@ -434,7 +436,8 @@
                         <xforms:bind nodeset="o2Other" relevant="contains(../o2percentage,'other') and (contains(../incubatorSystem, 'incubationchamber'))" />
                         <xforms:bind nodeset="healthyErythrocytesSource" />
                         <!-- FIXME type="ctype:percentage" -->
-                        <xforms:bind nodeset="hematocritpercent" type="xforms:int" />
+                        <!--
+                        <xforms:bind nodeset="hematocritpercent" type="xforms:int" /> -->
                         <xforms:bind nodeset="bloodGroup" />
                     </xforms:bind>
                     <xforms:bind nodeset="drugSusceptibilityMedium">
@@ -442,8 +445,9 @@
                         <xforms:bind nodeset="mediumOther" relevant="contains(../medium,'other')" />
                         <xforms:bind nodeset="preparation" />
                         <xforms:bind nodeset="serum" />
+                        <!--
                         <xforms:bind nodeset="serum-finalConcentration" type="xforms:int" />
-                        <xforms:bind nodeset="NaHCO3-finalConcentration" type="xforms:int" />
+                        <xforms:bind nodeset="NaHCO3-finalConcentration" type="xforms:int" /> -->
                         <xforms:bind nodeset="hypoxantine">
                             <xforms:bind nodeset="hypoxantine-added" />
                             <xforms:bind nodeset="hypoxantine-finalConcentration"
@@ -482,8 +486,8 @@
                             <xforms:bind nodeset="susceptibilityMethod" />
                         </xforms:bind>
                     </xforms:bind>
-                    <xforms:bind nodeset="drugs">
-                        <xforms:bind nodeset="drug">
+                    <xforms:bind nodeset="invitroDrugs">
+                        <xforms:bind nodeset="invitroDrug">
                             <!--
                                 <xforms:bind nodeset="molecule" required="true()" />
                             <xforms:bind nodeset="solvent" required="true()" />

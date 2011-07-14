@@ -295,7 +295,7 @@
                                             nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
                                             <xforms:label>
                                                 <xforms:output
-                                                  value="concat(manta:id, ' - ', atom:title)"/>
+                                                  value="concat(manta:id, ' - ', //studyTitle)"/>
                                             </xforms:label>
                                             <xforms:value ref="atom:link[@rel='edit']/@href"/>
                                         </xforms:itemset>

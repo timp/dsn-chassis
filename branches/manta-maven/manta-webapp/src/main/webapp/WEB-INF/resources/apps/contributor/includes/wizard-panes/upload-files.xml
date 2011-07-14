@@ -114,7 +114,7 @@
 										
 										<tr class="repeated-element">
 											<td>
-												<xforms:output ref="atom:title"/>
+												<xforms:output ref="//studyTitle"/>
 											</td>
 											<td>
 												<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>

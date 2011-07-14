@@ -21,7 +21,7 @@
 				
 				<div id="content" class="study-dashboard">
 					
-					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')//studyTitle"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
 					
 						
 							<div class="yui-navset yui-navset-top">

@@ -20,7 +20,7 @@
 				
 				<div id="content" class="study-dashboard">
 					
-					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')/atom:title"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')//studyTitle"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
 					
 					
 						<div class="yui-navset yui-navset-top">
@@ -37,7 +37,7 @@
 										<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
 											
 									<p>
-										<xforms:output ref="instance('ins-study-entry')/atom:title">
+										<xforms:output ref="instance('ins-study-entry')//studyTitle">
 											<xforms:label>Title:</xforms:label>
 										</xforms:output>	    					
 									</p>	
@@ -49,7 +49,7 @@
 										<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
 											
 											<p>
-												<xforms:input ref="instance('ins-study-entry')/atom:title">
+												<xforms:input ref="instance('ins-study-entry')//studyTitle">
 													<xforms:label>Title:</xforms:label>
 												</xforms:input>	    					
 											</p>

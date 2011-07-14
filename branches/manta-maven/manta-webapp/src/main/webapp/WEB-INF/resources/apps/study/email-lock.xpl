@@ -24,9 +24,9 @@
                         <to>
                             <email><xsl:value-of select="/atom:entry/atom:author/atom:email"/></email>
                         </to>
-                        <subject>Your study <xsl:value-of select="/atom:entry/atom:title"/> has been locked</subject>
+                        <subject>Your study <xsl:value-of select="/atom:entry//studyTitle"/> has been locked</subject>
                         <body content-type="text/plain">
-                            Your study <xsl:value-of select="/atom:entry/atom:title"/> has now entered the WWARN curation process.
+                            Your study <xsl:value-of select="/atom:entry//studyTitle"/> has now entered the WWARN curation process.
                             If you wish to make any changes then you must contact us first
                             
                             Thank you for your submission.

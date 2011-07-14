@@ -36,7 +36,7 @@
                                 <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
                             </td>
                             <td>
-                                <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:title"/></a>
+                                <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="atom:content/study/studyTitle"/></a>
                             </td>
                             <td>
                                 <xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>

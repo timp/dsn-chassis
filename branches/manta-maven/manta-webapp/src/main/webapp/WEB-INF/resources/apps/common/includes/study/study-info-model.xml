@@ -34,7 +34,7 @@
 	</xforms:instance>
 	
 	<xforms:instance id="ins-site-template"
-		src="/apps/common/templates/study/site-template.xml" />
+		src="/apps/common/templates/study/study-entry-template.xml" />
 
 	<xforms:instance id="ins-boolean-items"
 		src="/apps/common/constants/booleans.xml" />
@@ -378,13 +378,13 @@
 
 
 	<xforms:instance id="ins-invitro-drug-template">
-		<drug xmlns="">
+		<invitroDrug xmlns="">
 			<molecule />
 			<solvent />
 			<solventFinalConcentration />
 			<providedByWwarn />
 			<provider />
-		</drug>
+		</invitroDrug>
 	</xforms:instance>
 	<xforms:instance id="ins-invitro-batch-template">
 		<batch xmlns="">

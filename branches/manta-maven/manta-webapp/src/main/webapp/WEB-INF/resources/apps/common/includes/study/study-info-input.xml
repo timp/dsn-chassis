@@ -474,7 +474,7 @@
 								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
-									origin="xxforms:instance('ins-site-template')" />
+									origin="xxforms:instance('ins-site-template')//site" />
 							</xforms:trigger>
 						</td>
 						<td class="add-td">
@@ -485,7 +485,7 @@
 								-->
 								<xforms:insert ev:event="DOMActivate" context="."
 									nodeset="site" at="count(../site)" position="after"
-									origin="xxforms:instance('ins-site-template')" />
+									origin="xxforms:instance('ins-site-template')//site" />
 							</xforms:trigger>
 						</td>
 					</tr>

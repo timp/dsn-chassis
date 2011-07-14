@@ -178,10 +178,11 @@
     				</xforms:dispatch>
                 </xforms:action>
                 
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
-                                
+                <xforms:action ev:event="xforms-submit-error">
+                	<xforms:setvalue ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                	<xforms:message level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                	<xforms:setvalue ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                </xforms:action>
             </xforms:submission>
 
 			<!-- This will put the draft-entry to the edit link href and show a message on success. -->
@@ -221,11 +222,17 @@
                 mediatype="application/atom+xml"
             	relevant="false"> 
 
-                <xforms:setvalue ev:event="xforms-submit-done" ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
+                	<xforms:setvalue ref="instance('ins-study-entry')//atom:title" value="instance('ins-study-entry')//manta:id" />
+				</xforms:action>
                 
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
-                <xforms:setvalue ev:event="xforms-submit-error" ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                <xforms:action ev:event="xforms-submit-error">
+                	<xforms:setvalue ref="instance('ins-control')/draft-is-saved">false</xforms:setvalue>
+                	<xforms:message level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the draft.</xforms:message>
+                	<xforms:setvalue ref="instance('ins-study-entry')//wizard-pane-to-show" value="instance('ins-control')/wizard-pane-being-shown"/>
+                </xforms:action>
+                
                 
                 <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
                		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">

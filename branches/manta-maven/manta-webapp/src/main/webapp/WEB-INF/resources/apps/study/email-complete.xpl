@@ -25,9 +25,9 @@
                         <to>
                             <email>curation@wwarn.org</email>
                         </to>
-                        <subject>Finished making changes to study <xsl:value-of select="/atom:entry/atom:title"/> has been updated</subject>
+                        <subject>Finished making changes to study <xsl:value-of select="/atom:entry//manta:id"/> <xsl:value-of select="/atom:entry//studyTitle"/> </subject>
                         <body content-type="text/plain">
-                            Changes to study <xsl:value-of select="/atom:entry/atom:title"/> have been completed 
+                            Changes to study <xsl:value-of select="/atom:entry//studyTitle"/> have been completed 
                         </body>
                     </message>
                 </xsl:template>
