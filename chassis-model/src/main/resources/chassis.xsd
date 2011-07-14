@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
   xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:ch="http://www.cggh.org/2011/chassis/xmlns"
   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
   version="2.1"
@@ -10,6 +11,7 @@
   <xs:import namespace="http://www.cggh.org/2010/chassis/manta/xmlns" schemaLocation="manta.xsd"/>
   <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
   <xs:import namespace="http://www.w3.org/2007/app" schemaLocation="app.xsd"/>
+  <xs:import namespace="http://www.cggh.org/2011/chassis/xmlns" schemaLocation="studyInfoTypes.xsd"/>
   
   <xs:simpleType name="longURI">
     <xs:restriction base="xs:anyURI">
@@ -22,9 +24,11 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="draft" type="xs:NCName"/>
+  <xs:element name="studyTitle" type="xs:string"/>
   <xs:element name="study">
     <xs:complexType>
       <xs:sequence>
+        <xs:element ref="studyTitle"/>
         <xs:element minOccurs="0" ref="ui-info"/>
         <xs:element ref="registrant-has-agreed-to-the-terms"/>
         <xs:element ref="study-is-published"/>
@@ -37,7 +41,13 @@
         <xs:element minOccurs="0" ref="study-info"/>
         <xs:element ref="atombeat:group"/>
       </xs:sequence>
-      <xs:attribute name="profile" use="required" type="xs:anyURI"/>
+      <xs:attribute name="profile" use="required">
+        <xs:simpleType >
+          <xs:restriction base="xs:anyURI">
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/1.5.1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="ui-info">
@@ -172,6 +182,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="population" type="ch:population"/>
   <xs:element name="site">
     <xs:complexType>
       <xs:sequence>
@@ -188,6 +199,7 @@
         </xs:sequence>
         <xs:element ref="latitude"/>
         <xs:element ref="longitude"/>
+        <xs:element ref="population" />
         <xs:element minOccurs="0" ref="transmissionIntensity"/>
       </xs:sequence>
     </xs:complexType>
@@ -738,7 +750,7 @@
         <xs:element ref="culture"/>
         <xs:element ref="drugSusceptibilityMedium"/>
         <xs:element ref="susceptibility"/>
-        <xs:element ref="drugs"/>
+        <xs:element ref="invitroDrugs"/>
         <xs:element ref="platePreparationMethod"/>
         <xs:sequence minOccurs="0">
           <xs:element ref="platesPreparationDate"/>
@@ -963,16 +975,40 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="invitroDrugs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="invitroDrug"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drugBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="batchNumber"/>
+        <xs:element ref="manufactureDate"/>
+        <xs:element ref="expiryDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="batches">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="drugBatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tradeName" type="xs:string"/>
   <xs:element name="drug">
     <xs:complexType>
-      <xs:choice>
         <xs:sequence>
           <xs:element ref="name"/>
           <xs:element ref="activeIngredients"/>
           <xs:element ref="administrationRoute"/>
           <xs:element ref="manufacturer"/>
-          <xs:element ref="batchNumber"/>
-          <xs:element ref="expiryDate"/>
+          <xs:element ref="tradeName" />
+          <xs:element ref="batches"/>
           <xs:element ref="drugStorage"/>
           <xs:element ref="drugDosingDeterminant"/>
           <xs:element ref="ageDosing"/>
@@ -984,6 +1020,10 @@
           <xs:element ref="readministeredOnVomitting"/>
           <xs:element ref="comments"/>
         </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="invitroDrug">
+    <xs:complexType>
         <xs:sequence>
           <xs:element ref="molecule"/>
           <xs:element ref="solvent"/>
@@ -991,7 +1031,6 @@
           <xs:element ref="providedByWwarn"/>
           <xs:element ref="provider"/>
         </xs:sequence>
-      </xs:choice>
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
@@ -1016,6 +1055,7 @@
   <xs:element name="manufacturer" type="xs:string"/>
   <xs:element name="batchNumber" type="xs:string"/>
   <xs:element name="expiryDate" type="xs:string"/>
+  <xs:element name="manufactureDate" type="xs:string"/>
   <xs:element name="drugStorage" type="xs:string"/>
   <xs:element name="drugDosingDeterminant" type="xs:string"/>
   <xs:element name="ageDosing">
@@ -1080,7 +1120,7 @@
   <xs:element name="fatPerMeal" type="xs:string"/>
   <xs:element name="feedingOther" type="xs:string"/>
   <xs:element name="readministeredOnVomitting" type="xs:string"/>
-  <xs:element name="comments" type="xs:string"/>
+  <xs:element name="comments" type="longString"/>
   <xs:element name="molecule" type="xs:NCName"/>
   <xs:element name="solvent" type="xs:string"/>
   <xs:element name="solventFinalConcentration" type="xs:string"/>
