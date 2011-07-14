@@ -2,7 +2,7 @@
 // @name          Delete File
 // @namespace     http://wwarn.org/userscripts
 // @description	  Adds a delete button
-// @include       */repository/curator/file-details*
+// @include       */repository/study/file-details*
 // ==/UserScript==
 // Notes:
 //   * is a wildcard character
