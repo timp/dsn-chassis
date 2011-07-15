@@ -25,6 +25,7 @@ curl -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET
 
 curl -k -b cookie-jar -o submitted.xml ${TARGET}
 curl -k -b cookie-jar -o curated.xml ${HOST}/service/content/media/curated
+curl -k -b cookie-jar -o derivations.xml ${HOST}/service/content/derivations
 
 CLASSPATH=.
 for i in `ls jars/*`
