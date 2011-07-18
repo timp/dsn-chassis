@@ -495,10 +495,23 @@
             
         	</xforms:submission>
 
-
-
-
-        	
+			<xforms:submission id="sub-put-study-entry"
+				resource="{instance('ins-study-entry')/atom:link[@rel='edit']/@href}" 
+				method="put"
+				replace="none" 
+				ref="instance('ins-study-entry')"
+				mediatype="application/atom+xml" 
+				relevant="false" 
+				validate="false">
+				<xforms:message ev:event="xforms-submit-done" level="modal">Your changes have been saved.</xforms:message>
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info.</xforms:message>
+				
+				<xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
+               			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
+    				</xforms:dispatch>
+                </xforms:action>
+			</xforms:submission>
 			
 			
 
@@ -513,6 +526,11 @@
 				relevant="false" 
 				validate="false">
 				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the study info.</xforms:message>
+				<xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco">
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-study">
+               			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
+    				</xforms:dispatch>
+                </xforms:action>
 				<xforms:load ev:event="xforms-submit-done" resource="home"/>
 			</xforms:submission>
 
