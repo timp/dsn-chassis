@@ -86,8 +86,12 @@ declare function local:do-modifications() as xs:string*
 				<label>/atom:entry\[(\d+)\]/atom:author\[(\d+)\]/atom:email\[(\d+)\]</label>
 				<value>AuthorEmail</value>
 			</fieldLabelMapping>
-			<fieldLabelMapping deprecated="n">
+			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:title\[(\d+)\]</label>
+				<value>AtomTitle</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/studyTitle\[(\d+)\]</label>
 				<value>Title</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
@@ -223,6 +227,10 @@ declare function local:do-modifications() as xs:string*
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/longitude\[(\d+)\]</label>
 				<value>Site$6Longitude</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/population\[(\d+)\]</label>
+				<value>Site$6Population</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/sites\[(\d+)\]/site\[(\d+)\]/transmissionIntensity\[(\d+)\]/annualParasitologicalIncidence\[(\d+)\]</label>
@@ -365,12 +373,20 @@ declare function local:do-modifications() as xs:string*
 				<value>Reg$8Drug$10Manufacturer</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batchNumber\[(\d+)\]</label>
-				<value>Reg$8Drug$10BatchNo</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/tradeName\[(\d+)\]</label>
+				<value>Reg$8Drug$10TradeName</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/expiryDate\[(\d+)\]</label>
-				<value>Reg$8Drug$10ExpiryDate</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batches\[(\d+)\]/drugBatch\[(\d+)\]/batchNumber\[(\d+)\]</label>
+				<value>Reg$8Drug$10Bat$12BatchNo</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batches\[(\d+)\]/drugBatch\[(\d+)\]/manufactureDate\[(\d+)\]</label>
+				<value>Reg$8Drug$10Bat$12ManfDate</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batches\[(\d+)\]/drugBatch\[(\d+)\]/expiryDate\[(\d+)\]</label>
+				<value>Reg$8Drug$10Bat$12ExpDate</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/drugStorage\[(\d+)\]</label>
@@ -447,6 +463,10 @@ declare function local:do-modifications() as xs:string*
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/feedingOther\[(\d+)\]</label>
 				<value>Reg$8Drug$10FoodintakeOther</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/fatPerMeal\[(\d+)\]</label>
+				<value>Reg$8Drug$10FatPerMeal</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/readministeredOnVomitting\[(\d+)\]</label>
@@ -833,23 +853,23 @@ declare function local:do-modifications() as xs:string*
 				<value>drugsus_method</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/molecule\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/molecule\[(\d+)\]</label>
 				<value>drug$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/solvent\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/solvent\[(\d+)\]</label>
 				<value>solvent_drug$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/solventFinalConcentration\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/solventFinalConcentration\[(\d+)\]</label>
 				<value>drug$7_fconcentration_solvent</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/providedByWwarn\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/providedByWwarn\[(\d+)\]</label>
 				<value>drug$7_fromWWARN</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/provider\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/provider\[(\d+)\]</label>
 				<value>drug$7_provider</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
