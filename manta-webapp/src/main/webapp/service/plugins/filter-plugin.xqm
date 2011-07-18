@@ -175,6 +175,7 @@ declare function filter-plugin:do-filter-simple(
                 {
                     $content/study/attribute::*,
                     $content/study/studyTitle,
+                    $content/study/study-status,
                     $content/study/atombeat:group
                 }
                 </study>
