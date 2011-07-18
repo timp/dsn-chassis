@@ -153,6 +153,23 @@
 
 		<xforms:action ev:event="xforms-submit-done"
 			if="instance('ins-review-entry')//outcome='pass'">
+			
+			<xforms:action if="$is-send-alfresco">
+				<xxforms:variable name="study-id"
+					select="instance('ins-study-entry')//manta:id" />
+				<xxforms:variable name="media-entry"
+					select="instance('ins-media-entry')"/>
+				<xxforms:variable name="file-uri"
+					select="instance('ins-media-entry')//atom:link[@rel='self']/@href" />
+				<xforms:dispatch target="cmis-rest-model"
+					name="cmis-rest-upload-file">
+					<xxforms:context name="fr:media-entry" select="$media-entry"/>
+					<xxforms:context name="fr:site" select="$study-id" />
+					<xxforms:context name="fr:file-content"
+						select="xxforms:doc-base64($file-uri)" />
+				</xforms:dispatch>
+			</xforms:action>
+			
 			<xforms:insert
 				context="instance('ins-media-security-descriptor')//atombeat:acl"
 				nodeset="atombeat:ace" at="0" position="before"
@@ -163,32 +180,6 @@
 				origin="instance('ins-ace-allow-curators')" />
 			<xforms:send submission="sub-put-media-security-descriptor" />
 
-			<xforms:action if="$is-send-alfresco">
-				<xxforms:variable name="study-id"
-					select="instance('ins-study-entry')//manta:id" />
-				<xxforms:variable name="file-name"
-					select="instance('ins-media-entry')//atom:title" />
-				<xxforms:variable name="content-type"
-					select="instance('ins-media-entry')//atom:content[@type]" />
-				<xxforms:variable name="category-term"
-					select="instance('ins-media-entry')//atom:category[@term]" />
-				<xxforms:variable name="category-label"
-					select="instance('ins-media-entry')//atom:category[@label]" />
-				<xxforms:variable name="file-uri"
-					select="instance('ins-media-entry')//atom:link[@rel='self']/@href" />
-
-				<xforms:dispatch target="cmis-rest-model"
-					name="cmis-rest-upload-file">
-					<xxforms:context name="fr:site" select="$study-id" />
-					<xxforms:context name="fr:title" select="$file-name" />
-					<xxforms:context name="fr:content-type" select="$content-type" />
-					<xxforms:context name="fr:category-term" select="$category-term" />
-					<xxforms:context name="fr:category-label" select="$category-label" />
-					<xxforms:context name="fr:file-content"
-						select="xxforms:doc-base64($file-uri)" />
-					<xxforms:context name="fr:atombeat-uri" select="$file-uri" />
-				</xforms:dispatch>
-			</xforms:action>
 		</xforms:action>
 
 	</xforms:submission>
