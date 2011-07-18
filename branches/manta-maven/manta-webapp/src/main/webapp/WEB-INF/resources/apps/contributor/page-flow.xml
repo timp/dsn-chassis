@@ -29,9 +29,7 @@
 
   <page path-info="/contributor/pubmed-query" view="pubmed-query.xpl"/>
   <page path-info="/contributor/crossref-query" view="crossref-query.xpl"/>
-  
-  <page path-info="/contributor/transform-study" view="../cmis/transform-study.xpl"/>
-  
+   
   <epilogue url="oxf:/config/epilogue.xpl"/>
 
 </config>
