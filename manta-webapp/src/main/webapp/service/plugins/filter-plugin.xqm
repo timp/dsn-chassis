@@ -82,7 +82,7 @@ declare function filter-plugin:after-list-collection(
         <atom:feed>
         {        
             $feed/attribute::* ,
-            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
+            $feed/child::*[ not( . instance of element(atom:entry) ) ],
             
             for $entry in $feed/child::*[. instance of element(atom:entry) ]
                 let $pdr := filter-plugin:do-filter-pdr( $request, $entry )
