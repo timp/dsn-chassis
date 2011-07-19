@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://purl.org/atombeat/xmlns" xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:atombeat="http://purl.org/atombeat/xmlns" xmlns:atom="http://www.w3.org/2005/Atom">
+  <xs:import schemaLocation="study-info.xsd"/>
+  <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>
+  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
+  <xs:attribute name="allow"/>
+</xs:schema>

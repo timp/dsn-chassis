@@ -1,0 +1,362 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+    
+    <head>
+    
+        <title>Personal Data - Review File</title>
+
+        
+        <xforms:model>
+
+       		<xforms:instance id="ins-control">
+                <control xmlns="">
+                	<review-entry-is-valid/>
+                	<submit-review-trigger/>
+                </control>
+            </xforms:instance>   
+
+			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
+
+			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-review-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/review-entry-is-valid">false</xforms:setvalue>
+			</xforms:action>
+			<xforms:action ev:event="xxforms-valid" ev:observer="ins-review-entry">
+				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/review-entry-is-valid">true</xforms:setvalue>
+			</xforms:action>
+			
+			<!-- TODO: Disabling the button doesn't have the expected appearance, due to current CSS. -->
+			<!-- <xforms:bind nodeset="instance('ins-control')/submit-review-trigger" readonly="not(instance('ins-control')/review-entry-is-valid = 'true')"/>  -->		
+
+			<xforms:instance id="ins-media-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-media-entry"
+				resource="{xxforms:get-request-parameter('media-link')}"
+				method="get"
+				replace="instance"
+				instance="ins-media-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-study-entry"/>
+				<xforms:send ev:event="xforms-submit-done" submission="sub-get-media-security-descriptor"/>
+				<xforms:setvalue 
+					ev:event="xforms-submit-done"
+					ref="instance('ins-review-entry')/atom:title" 
+					value="concat( 'Personal Data Review of file ' , instance('ins-media-entry')/manta:id/text() )"/>
+			</xforms:submission>
+			
+			<xforms:instance id="ins-study-entry">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-study-entry"
+				resource="{instance('ins-media-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}"
+				method="get"
+				replace="instance"
+				instance="ins-study-entry"
+				serialization="none">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study entry.</xforms:message>
+			</xforms:submission>
+        	
+        	<xforms:instance id="ins-media-security-descriptor">
+        		<atom:entry/>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
+        		id="sub-get-media-security-descriptor" 
+        		resource="{instance('ins-media-entry')/atom:link[@rel='http://purl.org/atombeat/rel/media-security-descriptor']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-media-security-descriptor"
+        		serialization="none">
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media security descriptor.</xforms:message>
+        	</xforms:submission>
+			
+			<xforms:action ev:event="xforms-model-construct-done">
+			
+				<xforms:send submission="sub-get-media-entry"/>
+
+				<xforms:setvalue 
+					ref="instance('ins-review-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/reviewSubject']/@href" 
+					value="xxforms:get-request-parameter('media-link')"/>
+
+			</xforms:action>
+			
+			<xforms:instance id="ins-review-entry">
+				<atom:entry>
+					<atom:title type="text"/>
+					<atom:summary type="text"/>
+					<atom:link rel="http://www.cggh.org/2010/chassis/terms/reviewSubject" href="" type="application/atom+xml"/>
+					<atom:content type="application/vnd.chassis-manta+xml">
+						<review xmlns="">
+							<outcome/>
+						</review>
+					</atom:content>
+				</atom:entry>
+			</xforms:instance>
+			
+			<xforms:bind ref="instance('ins-review-entry')//outcome" required="true()"/>
+        	
+        	<xforms:instance id="ins-ace-allow-study-administrators">
+        		<atombeat:ace>
+        			<atombeat:type>ALLOW</atombeat:type>
+        			<atombeat:recipient type="group">GROUP_ADMINISTRATORS</atombeat:recipient>
+        			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+        		</atombeat:ace>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-ace-allow-curators">
+        		<atombeat:ace>
+        			<atombeat:type>ALLOW</atombeat:type>
+        			<atombeat:recipient type="role">ROLE_CHASSIS_CURATOR</atombeat:recipient>
+        			<atombeat:permission>RETRIEVE_MEDIA</atombeat:permission>
+        		</atombeat:ace>
+        	</xforms:instance>
+
+	<xforms:submission id="sub-post-review" method="post"
+		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/personalDataReviews']/@href}"
+		ref="instance('ins-review-entry')" replace="instance"
+		instance="ins-review-entry" mediatype="application/atom+xml">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while posting the review.</xforms:message>
+
+		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"
+			if="instance('ins-review-entry')//outcome='fail'" />
+
+		<xforms:action ev:event="xforms-submit-done"
+			if="instance('ins-review-entry')//outcome='pass'">
+			
+			<xforms:action if="$is-send-alfresco">
+				<xxforms:variable name="study-id"
+					select="instance('ins-study-entry')//manta:id" />
+				<xxforms:variable name="media-entry"
+					select="instance('ins-media-entry')"/>
+				<xxforms:variable name="file-uri"
+					select="instance('ins-media-entry')//atom:link[@rel='self']/@href" />
+				<xforms:dispatch target="cmis-rest-model"
+					name="cmis-rest-upload-file">
+					<xxforms:context name="fr:media-entry" select="$media-entry"/>
+					<xxforms:context name="fr:site" select="$study-id" />
+					<xxforms:context name="fr:file-content"
+						select="xxforms:doc-base64($file-uri)" />
+				</xforms:dispatch>
+			</xforms:action>
+			
+			<xforms:insert
+				context="instance('ins-media-security-descriptor')//atombeat:acl"
+				nodeset="atombeat:ace" at="0" position="before"
+				origin="instance('ins-ace-allow-study-administrators')" />
+			<xforms:insert
+				context="instance('ins-media-security-descriptor')//atombeat:acl"
+				nodeset="atombeat:ace" at="0" position="before"
+				origin="instance('ins-ace-allow-curators')" />
+			<xforms:send submission="sub-put-media-security-descriptor" />
+
+		</xforms:action>
+
+	</xforms:submission>
+
+	<xforms:submission
+        		id="sub-put-media-security-descriptor"
+        		method="put"
+        		resource="{instance('ins-media-security-descriptor')/atom:link[@rel='edit']/@href}"
+        		ref="instance('ins-media-security-descriptor')"
+        		replace="instance"
+        		instance="ins-media-security-descriptor"
+        		mediatype="application/atom+xml">
+        		
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while updating the media permissions.</xforms:message>
+
+        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-home"/>
+        		
+        	</xforms:submission>
+
+			<xforms:submission
+				id="sub-get-home"
+				method="get"
+				resource="home"
+				replace="all"
+				serialization="none"/>
+				
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+       	<xi:include href="../cmis/cmis-rest-model.xml"/>
+
+    </head>
+    <body>
+
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="http://www.wwarn.org">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+					 
+				    <div id="block-menu-primary-links">
+					    <ul id="primary" class="clearfix">
+					    	<li class="active-trail"><a href="home">Personal Data Home</a></li>
+					    	<li class="current"><a href="http://www.wwarn.org">WWARN Website</a></li>
+					    </ul>
+				    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix">
+				                <div class="no-bg">
+				                
+				                
+									<div class="help">
+							
+										<p>The first step in the curation process is to check file uploads for personal data. 
+										</p>
+										<p>If there is no personal data in the file, select "file can proceed to curation". The file will be made available for download to the curator and the contributors.
+										</p>
+										<p>If the file contains personal data, please provide details in the Comments box and select "file contains personal data to be removed". This information will need to be removed. After this is done, the anonymized file can be made available for download to the curator and the contributors.
+										</p>
+									</div>				                
+											                
+				                	<div class="main twoCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+		
+		<div id="content" class="home">
+    
+		<h1>Personal data - Review file</h1>
+
+
+    	
+    	<xforms:group ref="instance('ins-media-entry')">
+    	
+	    	<p>
+	    		Code: <xforms:output value="manta:id"/>
+	    	</p>
+	    	<p>
+	    		Original file name: <xforms:output value="atom:title"/>
+	    	</p>
+	    	<p>
+	    		Contributor: <xforms:output value="atom:author/atom:email"/> 
+	    	</p>
+	    	<p>
+	    		Study: <xforms:output value="instance('ins-study-entry')/atom:title"/>
+	    	</p>
+	    	<p>
+	    		<a href="{atom:content/@src}">Download file</a>
+	    	</p>
+	    	
+	    	<p>
+	    		<span id="review-outcome-menu-container">
+	    		<xforms:select1 ref="instance('ins-review-entry')//outcome">
+	    			<xforms:label>Review outcome: </xforms:label>
+	    			<xforms:item>
+	    				<xforms:label>Please select</xforms:label>
+	    				<xforms:value/>
+	    			</xforms:item>
+	    			<xforms:item>
+	    				<xforms:label>File contains personal data to be removed</xforms:label>
+	    				<xforms:value>fail</xforms:value>
+	    			</xforms:item>
+	    			<xforms:item>
+	    				<xforms:label>File can proceed to curation</xforms:label>
+	    				<xforms:value>pass</xforms:value>
+	    			</xforms:item>
+	    			<xforms:alert>Please select a review outcome.</xforms:alert>
+	    		</xforms:select1>
+	    		</span>
+	    	</p>
+	    	
+	    	<p>
+	    		<span id="comments-textarea-container">
+	    		<xforms:textarea 
+	    			ref="instance('ins-review-entry')/atom:summary"
+	    			appearance="xxforms:autosize">
+	    			<xforms:label>Comments: </xforms:label>
+	    		</xforms:textarea>
+	    		</span>
+	    	</p>
+	    	
+	    	<p>
+	    	
+				<xforms:trigger>
+					<xforms:label>&lt;&lt; Cancel</xforms:label>
+					<xforms:action ev:event="DOMActivate">
+						<xforms:load resource="home"/>
+					</xforms:action>
+				</xforms:trigger>
+	    	
+	    		<span id="submit-review-button-container">
+	    		
+				<xforms:trigger ref="instance('ins-control')/submit-review-trigger">
+					<xforms:label>Submit review</xforms:label>
+					<xforms:action ev:event="DOMActivate" if="instance('ins-control')/review-entry-is-valid = 'true'">
+						<xforms:send submission="sub-post-review" />
+					</xforms:action>
+					<xforms:action ev:event="DOMActivate" if="not(instance('ins-control')/review-entry-is-valid = 'true')">
+						<xforms:message>Please complete all required fields.</xforms:message>
+					</xforms:action>
+				</xforms:trigger>
+	    		
+	    		</span>
+	    	</p>
+
+    	</xforms:group>
+
+
+    	
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+
+    	
+
+    </body>
+</html>
+
