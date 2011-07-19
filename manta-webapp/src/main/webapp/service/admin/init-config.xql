@@ -192,6 +192,10 @@ let $values2 :=
 				<value>StudyCode</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/ar:comment\[(\d+)\]/atom:summary\[(\d+)\]</label>
+				<value>AtomSummary</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:published\[(\d+)\]</label>
 				<value>CompletionDate</value>
 			</fieldLabelMapping>
@@ -254,6 +258,10 @@ let $values2 :=
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/person-is-contactable\[(\d+)\]</label>
 				<value>ackAuthor$5Contactable</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/curator-notes\[(\d+)\]</label>
+				<value>CuratorNotes</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-status\[(\d+)\]</label>
