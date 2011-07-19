@@ -1,4 +1,4 @@
-Last Tested against v1.2 on local dev env.
+Last Tested against v1.5 on local dev env.
 
 ----
 
@@ -18,7 +18,7 @@ All tests using Firefox 3
 
 *Note: On development environment, a bare-user can see the "profile" page at "/repository", with vars such as contextConfigLocation, with a link to the developer home.
 
-_Bug: Unprivileged user can read /repository/service/reports/summary.xql_
+_Bug: Unprivileged user can access (to some extent) http://localhost:8080/repository/questionnaire/_
 
 
 
@@ -127,7 +127,7 @@ _Minor Bug: A "Move down" button appears for the first acknowledgement_
 
 *Upload another file.
 
-*Go to /repository/contributor/home (Data Home)
+*Click on the Data Home tab
 
 >The Contributor home page will load.
 
@@ -157,9 +157,9 @@ _Minor Bug: A "Move down" button appears for the first acknowledgement_
 
 >A dialogue will appear stating "The study is no longer a draft".
 
-*Press "OK" on the dialogue box.
+*Press "Close" on the dialogue box (or wait for it to disappear automatically.. bug?).
 
-_Minor Bug: After confirming a draft, the dialogue disappears before/without pressing OK._
+_Minor Bug: After confirming a draft, the dialogue disappears before/without pressing Close._
 
 >The "Thank you" page will load, displaying the unique ID assigned to the new study.
 
@@ -194,7 +194,7 @@ _Minor Bug: After confirming a draft, the dialogue disappears before/without pre
 
 >The Contributor home page will load.
 
-*Click on the ID, Title or View action associated with the registered study to test, listed under Submitted studies.
+*Click on the ID, Title or Edit action associated with the registered study to test, listed under Submitted studies.
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
@@ -238,8 +238,6 @@ _Minor Bug: After confirming a draft, the dialogue disappears before/without pre
 
 *Delete an administrator, again.
 
-_Bug: Cannot delete study administrator after refreshing._
-
 *Change one of the email addresses.
 
 *Press the Save changes button.
@@ -276,8 +274,6 @@ _Bug: Cannot delete study administrator after refreshing._
 
 *Delete all the acknowledgements.
 
-_Bug: Can't delete the last/bottom acknowledgement. Note: difference in behaviour between hitting refresh and clicking on the current tab (FF3)._
-
 *Press the "Look up contributors by PUBMED id" button.
 
 > The acknowledgments will be populated based on the PUBMED id.
@@ -303,8 +299,6 @@ _Bug: Can't delete the last/bottom acknowledgement. Note: difference in behaviou
 *Upload another file.
 
 *Press refresh.
-
-_Bug: "Download" and "Details" links appear in the Actions column for an empty row at the end of the Submitted files table._
 
 *Check that the files are as provided.
 
@@ -340,15 +334,13 @@ _Cosmetic Bug: The fields jump around a bit as the user clicks between the text-
 
 *Check the Copy answers feature works.
 
-_Cosmetic Bug: The dialogue box message shown after copying study info contains spaces before the study title and around the study code._
-
 *Press the Save changes button.
 
 *Click on the Data Home tab.
 
 >The Contributor home page will load.
 
-*Click on the amended study, listed under My studies.
+*Click on the amended study, listed under Submitted studies.
 
 >The Study dashboard will load.
 
@@ -356,13 +348,15 @@ _Cosmetic Bug: The dialogue box message shown after copying study info contains 
 
 *Click on the Status tab.
 
+*Set teh Explorer Display option to Not displayed.
+
 *Press the "Save changes - all changes complete" button.
 
-_Bug: An error dialogue appears "An error occurred (resource-error) while sending a message."_ _This is because of config settings. Re-check._
+_Note: If an error dialogue appears "An error occurred (resource-error) while sending a message." then this is because of configuration settings._
 
->Check that an email has been sent to curation@wwarn.org (log in to Google Apps).
+>Check that an email has been sent (to chassis:semail test-to or) to curation@wwarn.org (log in to Google Apps).
 
-
+_Note: This does not lock the study._
 
 (Locked study tested following curator tests.)
 
@@ -381,7 +375,7 @@ _Bug: An error dialogue appears "An error occurred (resource-error) while sendin
 
 (Requires that a test study has been registered by a different user, in an "unlocked" state.)
 
-*Go to /repository/curator/home
+*Go to Curator Home
 
 >The Curator home page will load, listing all studies.
 
@@ -403,9 +397,23 @@ _Bug: An error dialogue appears "An error occurred (resource-error) while sendin
 
 *Press the "No" button.
 
-TODO: Press the "Yes" button.
+>The message will change from "This study is unlocked." to "This study is locked.". 
 
-TODO: An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
+>The button will change from "Lock" to "Unlock".
+
+*Press the Unlock button.
+
+>A dialogue box will appear, saying "Your changes have been saved."
+
+*Press the Lock button.
+
+>A dialogue box will appear, asking "Do you want to send an email to the study author?"
+
+*Press the "Yes" button.
+
+>A dialogue box will appear, saying "Your changes have been saved."
+
+> An email will be sent to the author (Shouldn't it be study administrators?) notifying them of the lock.
 
 _Cosmetic Bug: Another dialogue message appears, saying "changes have been saved". Perhaps "This study has now been locked."_
 
@@ -413,15 +421,9 @@ _Cosmetic Bug: Another dialogue message appears, saying "changes have been saved
 
 >The button will change from "Lock" to "Unlock".
 
-*Check that every field on every tab in the study dashboard (including the Permissions tab in v1.2) is read-only.
+*Check that every field on every tab in the study dashboard (including the Permissions tab) is read-only (can still upload curated files).
 
-_Minor Bug: Acknowledgement "Look up" buttons appear, but should not appear, or should at least be disabled._
-
-_Bug: Publications doesn't show Title/Citation field._
-
-_Minor Bug: SSQ, can add/remove sections when study is locked. Can also move the map pin, but that's not important!_
-
-_Minor Bug: Slow load times, moving between tabs._
+_Minor Bug: SSQ, can add/remove sections when study is locked. Can also move the map pin._
 
 *Press the Unlock button.
 
@@ -435,11 +437,17 @@ _Cosmetic Bug: The Notes label should be aligned top._
 
 *Press the Save changes button.
 
-TODO: Check that an email has gone to curation@wwarn.org (log in user Google Apps), saying Finished making changes to study X, and an email to the study author.
-
-TODO: Config dev env for emails.
-
 *Check that the Status changed from "Newly created study" to "In curation".
+
+*Press the Lock button.
+
+>A dialogue box will appear, asking "Do you want to send an email to the study author?"
+
+*Press the "No" button.
+
+>The message will change from "This study is unlocked." to "This study is locked.". 
+
+>The button will change from "Lock" to "Unlock".
 
 *Click on the Permissions tab.
 
@@ -448,12 +456,6 @@ TODO: Config dev env for emails.
 *Check that the permissions details are as previously provided.
 
 *Check that the fields are read-only.
-
-_Bug or Change: The permission fields are editable after changing status to "In curation"._
-
-TODO: Check whether intended behaviour is to no longer lock the study when Study Status = In curation.
-
-TODO: ----------- Test skip START (either email failure prevents locking or locking shouldn't happen).
 
 *Click on the Acknowledgements tab.
 
@@ -473,7 +475,7 @@ TODO: ----------- Test skip START (either email failure prevents locking or lock
 
 *Check that you cannot submit files (except curated files).
 
-*Check that you cannot download any files that have not passed personal-data review.
+*Check that you cannot download any files that have not passed personal-data review (except curated files).
 
 *Check the details of a submitted file, by clicking on the Details link in the Actions column.
 
@@ -505,7 +507,9 @@ TODO: ----------- Test skip START (either email failure prevents locking or lock
 
 *Check that the fields are read-only.
 
-TODO: ----------- Test skip END (either email failure prevents locking or locking shouldn't happen).
+*Click on the Status tab.
+
+*Press the Unlock button.
 
 *Click on the Study info tab.
 
@@ -516,6 +520,8 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 *Input some more data on the study info form.
 
 *Check the Copy answers feature works.
+
+_Bug: The copy answers feature doesn't work: replaces the fields with blank values._
 
 *Press the Save changes button.
 
@@ -531,21 +537,35 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 *Select the "complete" option in the Study Status menu, under General questions.
 
+>Three download buttons will appear: XML, CSV rows, CSV columns.
+
 *Press the Save changes button.
 
-*Refresh the page. _This should not be necessary in future versions. Note: Still necessary in v1.2_
+*Press the "Download as XML" button.
 
->The Flatten button and XML link will appear.
-
-*Press the Flatten button.
-
->A download dialogue will appear.
-
-*Check that the downloaded file contains the study data in CSV format.
-
-*Click on the XML link.
+>The XML will download.
 
 *Check that the downloaded file contains the study data in XML format.
+
+*Press the "Download as CSV rows" button.
+
+>The CSV will download.
+
+*Check that the downloaded files contain the study data in CSV format.
+
+*Press the "Download as CSV columns" button.
+
+>The CSV will download.
+
+*Check that the downloaded files contain the study data in CSV format.
+
+*Click on the Status tab.
+
+*Press the Lock button.
+
+>A dialogue box will appear, asking "Do you want to send an email to the study author?"
+
+*Press the "No" button.
 
 ----
 
@@ -560,13 +580,11 @@ TODO: ----------- Test skip END (either email failure prevents locking or lockin
 
 (Requires that a test study in an "locked" state.)
 
-*Go to /repository/contributor/home (i.e. Data Home)
+*Go to Data Home
 
 >The Contributor home page will load.
 
-*Click on the ID, Title or View action associated with the registered study to test, listed under My studies.
-
-_Cosmetic: The button for a locked study should perhaps say "View" instead of "Edit".__fixed_
+*Click on the ID, Title or View action associated with the locked study to test, listed under Submitted studies.
 
 >The Study dashboard will load, showing the Summary tab for the study.
 
@@ -576,9 +594,7 @@ _Note: Contributor does not see the Notes field. Assumed intentional._
 
 *Check that the Status tab says "This study is locked." and status "In curation".
 
-_Minor Bug: On Acknowledgements, buttons for "Looking up contributors" appear._
-
-_Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation field._
+_Cosmetic bug: The fields are a little awkwardly arranged, difficult to read._
 
 ----
 
@@ -589,7 +605,7 @@ _Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation
 
 ----
 
-*Go to /repository/personal-data/home
+*Go to Personal Data Home
 
 >The Personal data home will load, showing a list of files to review, and files with personal data.
 
@@ -601,7 +617,7 @@ _Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation
 
 *Make a note of the file name and code.
 
-*Select a review outcome of File can proceed to curation.
+*Select a review outcome of "File can proceed to curation".
 
 *Provide a comment.
 
@@ -641,13 +657,15 @@ _Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation
 
 ----
 
-*Go to /repository/personal-data/home
+*Go to Personal data home
 
 >The Personal data home will load, showing a list of files to review, and files with personal data.
 
 *Click on the Replace link for one of the Files with personal data.
 
 >The Upload anonymized file page with load.
+
+_Cosmetic bug: New lines characters in the review comment are not rendered._
 
 *Check that the original file can be downloaded.
 
@@ -660,6 +678,14 @@ _Bug: (Probably related to earlier bug) Publications doesn't show Title/Citation
 _Major Bug: Get an error dialogue, "An error occurred (resource-error) while posting the upload."_
 _2011-03-24 17:55:46,349 ERROR org.orbeon.oxf.xforms.processor.XFormsServer  - xforms-submit-error - setting throwable {throwable: "org.orbeon.oxf.xforms.submission.XFormsSubmissionException:  (processing submission response): xforms:submission for submission id: sub-post-upload, error code received when submitting instance: 403_
 _Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Curator+PDR)_
+
+_Major Bug:
+    Message: c is undefined
+    File: http://localhost:8080/repository/xforms-server/xforms-yuicalendar-min.js
+    Line number: 88
+_
+
+_Note: OK if you don't provide a comment with new lines?_
 
 >The Personal data home will load.
 
@@ -679,7 +705,7 @@ _Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Cura
 
 ----
 
-*Go to /repository/contributor/home
+*Go to Data Home
 
 >The Contributor home page will load, listing studies that the user has access to.
 
@@ -699,7 +725,7 @@ _Note: Doesn't work with Muriel(Contributor+Curator+PDR) or the new Mustafa(Cura
 
 *Check that the deleted file, which was replaced, appears in the list (but is not downloadable).
 
-_Bug or Change: Files that failed PDR are not showing (as deleted files)._
+_Note: Files that failed PDR are not showing (as deleted files)._
 
 
 ----
@@ -711,7 +737,7 @@ _Bug or Change: Files that failed PDR are not showing (as deleted files)._
 
 ----
 
-*Go to /repository/curator/home
+*Go to Curator Home
 
 >The Curator home page will load, listing all studies.
 
@@ -734,8 +760,6 @@ _Bug or Change: Files that failed PDR are not showing (as deleted files)._
 _Bug or Change: Files that failed PDR are not showing (as deleted files)._
 
 *Check that Curated files (replacing files that failed personal data review) can be downloaded.
-
-TODO: Check when PDR replace is fixed.
 
 *Check the details for curated files.
 
@@ -763,11 +787,13 @@ TODO: Check when PDR replace is fixed.
 
 ----
 
-*Go to /repository/contributor/home
+*Go to Contributor Home
 
->The Contributor home page will load, showing all studies under "My studies".
+>The Contributor home page will load, showing all studies under "Submitted studies".
 
 *Check that the Data Home, Curator Home, Register Study, and My Studies tabs are available (and click on them to check they load).
+
+_Note: Still takes a while to load these pages when there are many studies: Data Home, My Studies. Out of memory error (possibly unrelated)._
 
 *Click on the Data Home tab.
 
@@ -795,7 +821,7 @@ TODO: Check when PDR replace is fixed.
 
 >The Contributor home page (welcome page) will load.
 
-*Click on a study that your user *is* the administrator of.
+*Click on a study that your user *is* the administrator of. (Can quickly register a study or add self to a study.)
 
 >The Study dashboard will load.
 
@@ -827,19 +853,13 @@ TODO: Check when PDR replace is fixed.
 
 *Press the Save changes button.
 
-_Bug: Need to reload the page for the Flatten button and XML link to appear. This should not be necessary in future versions._
+>The Download buttons for XML and CSV (rows and columns) will appear.
 
->The Flatten button and XML link will appear.
-
-*Press the Flatten button.
+*Press the buttons.
 
 >A download dialogue will appear.
 
-*Check that the downloaded file contains the study data in CSV format.
-
-*Click on the XML link.
-
-*Check that the downloaded file contains the study data in XML format.
+*Check that the downloaded file contains the appropriate study data.
 
 
 
@@ -853,7 +873,7 @@ Contributor/Administrator tests:
 
 ----
 
-*Go to /repository/contributor/home
+*Go to Data Home
 
 >The Contributor home page will load.
 
@@ -893,15 +913,19 @@ _Bug: The locked status (or button) is not shown to a contributor/administrator.
 
 *Check that all sumbmitted files and curated files can be downloaded.
 
-*Check that details for Curated files can be seen, and that the back-to-dashboard link works.
+_Note: If the file doesn't exist in (e.g. has been deleted from) the media folder, then the download link will not appear (even for Administrators)._
 
-_Bug or Change: Curated file details are not shown to contributors._
+_Minor Bug: An error "retrieving the media acl" appears when looking at the details for a curated file that doesn't physically exist._
 
-*Check that deleted files (through personal data replacement) are shown.
+_Note: Curated files cannot be downloaded or details seen by contributors unless the curator has pressed the "Add viewing by administrators" button._
+
+
+
+*Check that deleted files (through personal data replacement) are shown (under submitted files with a deleted On/By column).
 
 *Check that you can't upload curated files.
 
-*Behaviour Note: The Flatten and XML features are not shown for administrators (after selecting complete, pressing save and refreshing).
+*Behaviour Note: The Flatten and XML features are not shown for contributors or administrators (after selecting complete on the SSQ).
 
 *Click on the My Studies tab.
 
@@ -920,7 +944,7 @@ _Bug or Change: Curated file details are not shown to contributors._
 
 ----
 
-*Go to /repository/curator/home
+*Go to Curator Home
 
 >The Curator home page will load, listing all the studies (by all users).
 
@@ -928,7 +952,7 @@ _Bug or Change: Curated file details are not shown to contributors._
 
 >The Study dashboard will load.
 
-*Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms accepted field on the Summary tab, and should not be able to upload Submitted files.
+*Check that all fields can be added, edited and deleted in the study - except the ID, Creator and Terms accepted field on the Summary tab, and should not be able to upload Submitted files (can upload Curated files).
 
 _Bug: When curator+administrator, shows a Lock button when the study is locked or unlocked. No locked/unlocked status given. If pressed, there is no evidence of locking (Admin can edit anything) so cannot tell when study is locked, and cannot unlock it._
 
@@ -950,13 +974,9 @@ _Bug: When curator+administrator, shows a Lock button when the study is locked o
 
 *Press Save changes.
 
-*Refresh the page. _This should not be necessary in future versions._
+>The Download as XML and CSV buttons will appear.
 
->The Flatten button and XML link will appear.
-
-*Press the Flatten button.
-
->A download dialogue will appear.
+*Press the Download buttons.
 
 *Check that the downloaded file contains the study data in CSV format.
 
@@ -967,42 +987,3 @@ _Bug: When curator+administrator, shows a Lock button when the study is locked o
 
 
 ----
-
-
-=1.2 Features=
-
-==Contributor==
-
-* Delete drafts
-
-* Pre-populate acknowledgements from publication details
-
-* Modules on step 1 / title page
-
-* Institutional acknowledgement field
-
-* URLs for institutional acknowledgement field
-
-* Permissions active during draft.
-
-* Contributor decision to display on explorer
-
-* SSQ "Typical Sampling/Testing delay"
-
-==Curator==
-
-* Delete studies
-
-_Note: Cannot delete locked studies._
-
-* Make sure the appropriate study is being deleted. Don't just test the one at the top of the list.
-
-* Study status on home page
-
-* Sort studies by status on home page
-
-* Button to send file to Explorer
-
-* Files accessible by contributor
-
-* Dialog choice to send email when locking
