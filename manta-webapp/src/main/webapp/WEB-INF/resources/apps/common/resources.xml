@@ -27,7 +27,7 @@
                     <storage ref="none">room temperature</storage>
                     <storage ref="refrigerator">refrigerator</storage>
                     <storage ref="aircon">air conditioned</storage>
-                    <storage ref="">air conditioned</storage>
+                    <storage ref="unknown">unknown</storage>
                 </storageConditions>
             </drug>
         </clinical>
