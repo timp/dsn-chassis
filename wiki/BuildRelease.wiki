@@ -15,7 +15,7 @@ Goals: release:prepare
 
 {{mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_}}}
 
-May need to also include the param: -Dresume=false
+Cannot run this with local changes. May need to also include the param -Dresume=false
 
 This will result in a new tag in the repository corresponding to the version in the pom
 
