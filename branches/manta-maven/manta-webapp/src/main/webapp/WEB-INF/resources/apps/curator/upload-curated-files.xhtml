@@ -32,6 +32,8 @@
         
         <xforms:model>
 
+			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
+			
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -119,6 +121,20 @@
         			xsi:type="xs:anyURI"/>
         	</xforms:instance>
 
+			<xforms:instance id="ins-blank-entry">
+			<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+			<atom:category term="" label=""/>
+    
+    <atom:title type="text">test title</atom:title>
+    <atom:summary type="text"></atom:summary>
+    <atom:content type=""/>
+    <atom:link rel="self" href=""/>
+    <atom:author>
+        <atom:email></atom:email>
+    </atom:author>
+    
+</atom:entry>
+			</xforms:instance>
         	<xforms:submission 
         		id="sub-post-background-uploads" 
         		ref="instance('ins-uploads')" 
@@ -162,8 +178,28 @@
         				<xforms:setvalue ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput'][last()]/@href" value="context()/atom:link[@rel='edit']/@href"/>
         			</xforms:action>
         			
+        			<xforms:action if="$is-send-alfresco" xxforms:iterate="instance('ins-uploads')//upload">
+        				<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id" />
+						<xxforms:variable name="upload" select="."/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:title" value="$upload/@filename"/>
+					
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:content/@type" value="$upload/@mediatype"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
+					 
+						<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
+						<xxforms:variable name="file-uri" select="text()" />
+						<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
+							<xxforms:context name="fr:media-entry" select="$media-entry"/>
+							<xxforms:context name="fr:site" select="$study-id" />
+							<xxforms:context name="fr:source" select="'Curator'" />
+							<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
+						</xforms:dispatch>
+					</xforms:action>
+					
         			<!-- submit the derivation -->
-        			<xforms:send submission="sub-post-derivation"/>
+        			<!--  <xforms:send submission="sub-post-derivation"/>  -->
         			
         		</xforms:action>
         	</xforms:submission>
@@ -229,7 +265,7 @@
         </xforms:model>
 
        	<xi:include href="../common/includes/current-user-model.xml"/>
-
+		<xi:include href="../cmis/cmis-rest-model.xml"/>
     </head>
     <body>
 
