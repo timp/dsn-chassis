@@ -24,6 +24,8 @@
                 <alf:properties>
                     <cmis:propertyString propertyDefinitionId="cm:author" displayName="Author" queryName="cm:author"><cmis:value></cmis:value></cmis:propertyString>
                     <cmis:propertyString propertyDefinitionId="cm:title" displayName="Title" queryName="cm:title"><cmis:value></cmis:value></cmis:propertyString>
+                    <cmis:propertyString propertyDefinitionId="cm:description" displayName="Description" queryName="cm:description"><cmis:value></cmis:value></cmis:propertyString>
+                    <cmis:propertyString propertyDefinitionId="wc:fileSource" displayName="File Source" queryName="wc:fileSource"><cmis:value></cmis:value></cmis:propertyString>
                 </alf:properties>
             </alf:setAspects>
         </cmis:properties>

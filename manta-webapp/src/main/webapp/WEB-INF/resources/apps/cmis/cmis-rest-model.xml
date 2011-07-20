@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <xforms:model id="cmis-rest-model" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
@@ -55,6 +56,13 @@ ab5be61f787c62660ff3008299"
     </xforms:instance>
     
     <xforms:instance id="ins-cmis-rest-create-file">
+        <xi:include href="create-file.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-create-file-result">
+        <atom:entry/>
+    </xforms:instance>
+    <xforms:instance id="ins-cmis-rest-create-file-template">
         <xi:include href="create-file.xml" xxi:omit-xml-base="true"/>
     </xforms:instance>
     
@@ -223,18 +231,36 @@ ab5be61f787c62660ff3008299"
     </xforms:action>
     
     <xforms:action ev:event="cmis-rest-upload-file">
+        
+        <xforms:delete
+            nodeset="instance('ins-cmis-rest-create-file')/atom:entry/*" />
+        <xforms:insert
+            context="instance('ins-cmis-rest-create-file')/atom:entry"
+            origin="instance('ins-cmis-rest-create-file-template')/atom:entry/*"
+            at="last()" position="after" />
+        
         <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
-       
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')" value="instance('ins-cmis-rest-create-file')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:title" value="event('fr:media-entry')//atom:title"/>
         
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:summary" value="event('fr:media-entry')//atom:link[@rel='self']/@href"/>
-        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category[@term]" value="event('fr:media-entry')//atom:category[@term]"/>
-        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category[@label]" value="event('fr:media-entry')//atom:category[@label]"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category/@term" value="event('fr:media-entry')//atom:category/@term"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category/@label" value="event('fr:media-entry')//atom:category/@label"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:content" value="event('fr:file-content')"/>
         
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:content/@type" value="event('fr:media-entry')//atom:content/@type"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="event('fr:media-entry')//atom:content/@type"/>
-
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:dataFile'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/DataFile')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:dataDictionary'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/DataDictionary')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:protocol'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Protocol')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:publication'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Publication')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:other'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Other')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cm:description']//cmis:value" value="event('fr:media-entry')//atom:category/@label" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Other')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:output'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Explorer')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileSource']//cmis:value" value="event('fr:source')"/>
         <xforms:send submission="cmis-rest-create-file-submission"/>
        
     </xforms:action>
@@ -257,7 +283,7 @@ ab5be61f787c62660ff3008299"
         action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
-        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+        replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
     </xforms:submission>
     <!-- upload a file -->
     <xforms:submission ref="xxforms:instance('ins-upload')" id="cmis-rest-upload-file-submission" method="post"
