@@ -362,7 +362,7 @@ declare function local:content($content) as item()*
                 </ul>
                 
                 <p>Total number of entries in <a href="../content/studies">Study</a> collection: <strong>{ count( $studies ) }</strong></p>
-                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.3 profile: <strong>{ count( $old-studies ) }</strong></p>
+                <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.5.1 profile: <strong>{ count( $old-studies ) }</strong></p>
                 <p>Number of entries in <a href="../content/studies">Study</a> collection using v1.5 profile: <strong>{ count( $new-studies ) }</strong></p>
                 
                 <p>Note: This script has no test mode.</p>
@@ -499,6 +499,7 @@ declare function local:copy-admin-nodes($collection) as element( atom:entry )*
                let $profile := update replace $group//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.5"
                let $ver := update delete $group//study-info/@profile
                let $ren := update rename $group//hematocritpercentage as 'hematocritpercent'
+                return $ren
                else
                 let $si := $study-info-template
                 return $si
