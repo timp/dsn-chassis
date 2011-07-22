@@ -499,6 +499,8 @@ declare function local:copy-admin-nodes($collection) as element( atom:entry )*
                let $profile := update replace $group//study/@profile with "http://www.cggh.org/2010/chassis/manta/1.5"
                let $ver := update delete $group//study-info/@profile
                let $ren := update rename $group//hematocritpercentage as 'hematocritpercent'
+               let $ren1 := update replace $group/atom:title/text() with $group//studyTitle/text()
+               let $ren2 := update delete $group//studyTitle
                 return $ren
                else
                 let $si := $study-info-template
