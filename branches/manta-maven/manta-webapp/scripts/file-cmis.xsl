@@ -6,7 +6,7 @@
 	xmlns:atombeat="http://purl.org/atombeat/xmlns"
 	xmlns:str="http://exslt.org/strings" extension-element-prefixes="str" version="1.0">
 	<xsl:output method="xml" />
-	<xsl:variable name="countries" select="document('../src/main/webapp/WEB-INF/resources/apps/common/constants/countries.xml')/countries"/>
+	<xsl:variable name="derivations" select="document('derivations.xml')"/>
 	<xsl:template match="atom:entry">
 		<atom:entry>
 		<xsl:apply-templates select="atom:title" />
@@ -41,13 +41,14 @@
 							displayName="File ID" queryName="wc:fileId">
 							<cmis:value><xsl:apply-templates select="manta:id/text()" /></cmis:value>
 						</cmis:propertyString>
-
+						<xsl:apply-templates mode="derivations" select="atom:link"/>
 					</alf:properties>
 				</alf:setAspects>
 
 			</cmis:properties>
 		</cmisra:object>
 		</atom:entry>
+		
 	</xsl:template>
 
 
@@ -60,6 +61,17 @@
 	<xsl:template match="//atom:link">
 		<xsl:if test="'self' = @rel">
 		<xsl:value-of select="@href"/>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template mode="derivations" match="//atom:link">
+		<xsl:if test="'self' = @rel">
+			<xsl:variable name="me" select="@href"/>
+			<cmis:propertyString propertyDefinitionId="wc:derivationsComments" displayName="Derivations comment" queryName="wc:derivationsComments">
+			<xsl:for-each select="$derivations//atom:link[@href=$me and @rel='http://www.cggh.org/2010/chassis/terms/derivationInput']/parent::*">
+				<cmis:value><xsl:value-of select="atom:summary/text()"/></cmis:value>
+			</xsl:for-each>
+			</cmis:propertyString>
 		</xsl:if>
 	</xsl:template>
 	
