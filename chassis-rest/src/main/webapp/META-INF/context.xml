@@ -1,5 +1,0 @@
-<!-- org.springframework.instrument.tomcat.jar from Spring's dist/weaver directory into Tomcat's lib directory. 
-    maven spring-instrument-tomcat -->
-<Context path="spring-rest">
-    <Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader"/>
-</Context>

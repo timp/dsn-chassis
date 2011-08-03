@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <resources xml:lang="en">
+        <site>
+            <studyPopulation>Study Population</studyPopulation>
+            <populationSources>
+                <population ref=""/>
+                <population ref="resident">Resident in endemic country</population>
+                <population ref="traveller">Returning travellers</population>
+            </populationSources>
+        </site>
+        <clinical>
+            <drug>
+                <tradeName>Trade Name</tradeName>
+                <addBatch>Add a batch</addBatch>
+                <manDate>Manufacture Date</manDate>
+                <expDate>Expiry Date</expDate>
+                <adminRoutes>
+                    <adminRoute ref=""/>
+                    <adminRoute ref="oral">oral</adminRoute>
+                    <adminRoute ref="intravenous">intravenous</adminRoute>
+                    <adminRoute ref="intramuscular">intramuscular</adminRoute>
+                    <adminRoute ref="intrarectal">intrarectal</adminRoute>
+                </adminRoutes>
+                <storageConditions>
+                    <storage ref=""/>
+                    <storage ref="none">room temperature</storage>
+                    <storage ref="refrigerator">refrigerator</storage>
+                    <storage ref="aircon">air conditioned</storage>
+                    <storage ref="unknown">unknown</storage>
+                </storageConditions>
+            </drug>
+        </clinical>
+    </resources>
+</resources>
