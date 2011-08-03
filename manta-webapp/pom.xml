@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>1.5.0-RC-2-SNAPSHOT</version>
+	<version>1.5.0-RC-2</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
 	<description>Chassis Manta Web Application</description>
@@ -167,9 +167,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.5.0-RC-2</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.5.0-RC-2</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.5.0-RC-2</url>
 	</scm>
 	<build>
   <extensions>
