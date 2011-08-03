@@ -33,3 +33,33 @@ mvn package -P _profile_
 cd /usr/share/tomcat6/endorsed
 wget http://cloud1.cggh.org/maven2/org/cggh/chassis/manta-config/0.2-alpha-4/manta-config-0.2-alpha-4.jar
 }}}
+
+== Example deployment ==
+
+
+# Unzip the WAR locally to a directory named 1.5.0-RC-2, which contains the WEB-INF, etc.
+
+
+# Upload the directory to your home directory
+
+
+# Move the directory to /srv/chassis-manta/
+
+
+# sudo su
+
+
+# Change the ownership of the directory to tomcat6:tomcat6
+
+
+# Stop Tomcat with /etc/init.d/tomcat6 stop
+
+
+# Remove the repository symlink in /var/lib/tomcat6/webapps/
+
+
+# Create a symlink to the new release with ln -s /srv/chassis-manta/1.5.0-RC-2 repository
+
+
+# Start Tomcat with /etc/init.d/tomcat6 start
+
