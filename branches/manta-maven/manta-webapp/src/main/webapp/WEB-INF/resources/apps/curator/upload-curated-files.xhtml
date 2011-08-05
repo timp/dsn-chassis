@@ -187,13 +187,15 @@
 						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
 						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
 						<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
-					 
+					 	<xforms:setvalue ref="instance('ins-blank-entry')//atom:link[@rel='self']/@href" value="instance('ins-uploads-results-feed')//atom:entry[atom:title/text() = $upload/@filename]/atom:link[@rel='self']/@href"/>
+						
 						<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
 						<xxforms:variable name="file-uri" select="text()" />
 						<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
 							<xxforms:context name="fr:media-entry" select="$media-entry"/>
 							<xxforms:context name="fr:site" select="$study-id" />
 							<xxforms:context name="fr:source" select="'Curator'" />
+							<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
 							<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
 						</xforms:dispatch>
 					</xforms:action>
