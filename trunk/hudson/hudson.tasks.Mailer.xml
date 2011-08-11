@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.tasks.Mailer_-DescriptorImpl>
+  <helpRedirect/>
   <defaultSuffix>@gmail.com</defaultSuffix>
   <hudsonUrl>http://jenkins.cggh.org/</hudsonUrl>
   <smtpAuthUsername>hudson.cloud1</smtpAuthUsername>
