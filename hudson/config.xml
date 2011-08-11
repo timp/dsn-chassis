@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.414</version>
+  <version>1.425</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -106,7 +106,9 @@
 &lt;/li&gt;&#xd;
 &lt;/ul&gt;&#xd;
 </systemMessage>
-  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter">
+    <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
+  </markupFormatter>
   <jdks>
     <jdk>
       <name>Sun java 6 (ubuntu packaged)</name>
@@ -237,9 +239,7 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>2</int>
-          <string></string>
-          <string></string>
+          <int>1</int>
           <string>MAVEN_OPTS</string>
           <string>-Xmx512m  -XX:MaxPermSize=256M</string>
         </tree-map>
