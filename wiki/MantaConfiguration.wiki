@@ -104,7 +104,7 @@ N.B. if you are using the !AtomBeat trunk, bear in mind that the version number 
 You can checkout, build and install specific versions of !AtomBeat, e.g.:
 
 {{{
-$ svn checkout http://atombeat.googlecode.com/svn/tags/atombeat-parent-0.2-alpha-2 /path/to/atombeat-0.2-alpha-10
+$ svn checkout http://atombeat.googlecode.com/svn/tags/atombeat-parent-0.2-alpha-10 /path/to/atombeat-0.2-alpha-10
 $ cd /path/to/atombeat-0.2-alpha-10
 $ mvn clean install
 }}}
