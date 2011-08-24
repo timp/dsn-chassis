@@ -18,12 +18,12 @@ auto eth1
 iface eth1 inet static
         address 192.168.56.20
         netmask 255.255.255.0
-}}
+}}}
 {{{
 sudo apt-get install-openssh-server
 
 /etc/init.d/networking restart
-}}
+}}}
 You should now be able to ssh into the VM, no need to use the VirtualBox window.
 
 You should now be able to see 'It works!' on http://chassis/
@@ -35,10 +35,10 @@ Update /etc /apache2/available-sites/default
 {{{
 ProxyPass /repository http://localhost:8080/repository
 ProxyPassReverse /repository http://localhost:8080/repository
-&lt;Proxy http://localhost:8080/repository*>
+<Proxy http://localhost:8080/repository*>
 Order deny,allow
 Allow from all
-&lt;/Proxy>
+</Proxy>
 }}}
 {{{
 sudo /etc/init.d/apache2 restart
