@@ -1,121 +1,118 @@
-#summary Build Chassis project using Maven overlay
+#summary Setup Chassis on a VirtuaBox VM
 #labels Phase-Deploy
 
-The Chassis Manta web application is built using Maven to overlay an atombeat war.
+Setup a VirtualBox VM using Ubuntu 
+  attach a second, host only adapter 
+  Install - select Tomcat and Lamp
+  
 
-Below is a complete build of all artifacts, which should enable the setup of 
-a new debian install to a developer's setup. 
-
-At the moment a developer's setup is taken to mean a Chassis install withoput CAS or https. 
-
-Steps which can be ommitted, as the artifacts are stored in the Maven repository, are marked <font color="green" style="display:block; border:1px solid green;">OMIT</font>.  
-
-To get started, follow the steps below.
-
-= 1. Checkout and Build !AtomBeat <font color="green" style="display:block; border:1px solid green;">OMIT</font>=
-
-AtomBeat is the main dependency of the new project. It's not available yet in any maven repositories, so you have to checkout, build and install it yourself.
-
-The DOS equivalent of the UNIX "export" command is "set", used in the same way.
-
+Add to /etc/hosts on host machine
 {{{
-$ svn checkout http://atombeat.googlecode.com/svn/trunk/parent /path/to/atombeat-trunk
-$ cd /path/to/atombeat-trunk
-$ export MAVEN_OPTS="-Xmx1024M -XX:MaxPermSize=256M"
-$ mvn clean install
+192.168.56.20	chassis
+}}}
+apt-get install emacs
+
+On vm add to /etc/network/interfaces
+{{{
+auto eth1
+iface eth1 inet static
+        address 192.168.56.20
+        netmask 255.255.255.0
+}}
+{{{
+sudo apt-get install-openssh-server
+
+/etc/init.d/networking restart
+}}
+You should now be able to ssh into the VM, no need to use the VirtualBox window.
+
+You should now be able to see 'It works!' on http://chassis/
+{{{
+sudo a2enmod proxy
+sudo a2enmod proxy_httpd
+}}}
+Update /etc /apache2/available-sites/default 
+{{{
+ProxyPass /repository http://localhost:8080/repository
+ProxyPassReverse /repository http://localhost:8080/repository
+&lt;Proxy http://localhost:8080/repository*>
+Order deny,allow
+Allow from all
+&lt;/Proxy>
+}}}
+{{{
+sudo /etc/init.d/apache2 restart
+sudo apt-get install maven2
+sudo apt-get install subversion
+sudo apt-get install openjdk-6-jdk
 }}}
 
-This will take a couple of minutes, to download all dependencies and run the integration tests.
-
-= 2. Checkout, build and install manta-xquery-functions <font color="green" style="display:block; border:1px solid green;">OMIT</font> =
-
+ssh into vm as non-privileged user
 {{{
-svn co http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-1
-cd manta-xquery-functions-0.1-beta-1
-mvn clean install
-}}}
-
-= 3. Checkout, build and install manta-config  <font color="green" style="display:block; border:1px solid green;">OMIT</font>=
-
-{{{
-svn co http://dsn-chassis.googlecode.com/svn/trunk/manta-config
+ssh chassis
+mkdir workspace
+cd workspace
+svn checkout https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp --username Tim.pizey@gmail.com
+cd manta-webapp
+mvn install 
+cd ..
+svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-config --username Tim.pizey@gmail.com
 cd manta-config
-mvn clean install
+mvn install
+
+sudo mkdir /usr/share/tomcat6/endorsed
+sudo cp target/manta-config-0.2-alpha-5-SNAPSHOT.jar /usr/share/tomcat6/endorsed/
+# Not really needed yet
+sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar /usr/share/tomcat6/endorsed/
+
+sudo emacs /etc/tomcat6/server.xml
 }}}
-
-= 4. Checkout and Build Manta-Maven =
-
+To GlobalNamingResources add
 {{{
-$ svn checkout https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp /path/to/manta-maven
-$ cd /path/to/manta-maven
-$ mvn clean package
+ <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
+       serviceBaseURL="http://localhost:8080/repository/service"/>
+
+    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)"
+       jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password=""
+       removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000"
+       type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1" />
 }}}
 
-If this works, then you are ready to import the project into eclipse.
 
-= 5. Import Manta-Webapp into Eclipse =
-
-Install m2eclipse from sonatype.
-
-In eclipse, do:
-
-  * File > Import
-  * General > Existing Projects into Workspace
-  * Select root directory: /path/to/manta-maven
-  * Finish
-
-Add manta-webapp to your localhost tomcat server in eclipse.
-
-Start the server, and go to http://localhost:8080/repository/
-
-Follow the usual process of installing the atom collections then trying out the UI functionality. It *should* work :-) 
-N.B., you may need to modify the configuration variable $config:media-storage-dir before the collections will install. 
-
-= Notes =
-
-== Migration Notes ==
-
-The manta-maven/manta-webapp project contains files copied from revision 3034 of the current manta project trunk. 
-This means that more recent work will need to be copied across. 
-Also, I made some minor changes to manta-plugin.xqm to get it working, but haven't fully checked or replicated the most recent work on tombstones.
-
-== Updating !AtomBeat ==
-
-Using the !AtomBeat trunk means that you can pull the latest changes from svn and rebuild. E.g., if you know some work has been done in the !AtomBeat trunk, you can do:
-
+Create file /srv/chassis-manta/context/repository.xml with the following contents: 
 {{{
-$ cd /path/to/atombeat-trunk
-$ svn up
-$ mvn clean install
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/repository" reloadable="true">
+        
+    <Resource auth="Container" 
+       factory="org.apache.naming.factory.BeanFactory" 
+       name="bean/existConfigFactory" 
+       type="org.cggh.chassis.manta.util.config.ExistConfig" 
+       username="admin" 
+       password=""
+       serviceBaseURL="http://localhost:8080/repository/service"/>
+    <Environment name="smtp-user" type="java.lang.String" value="curation@wwarn.org"/>
+    <Environment name="smtp-password" type="java.lang.String" value="ma1ar1a"/>
+    <Environment name="smtp-from-email" type="java.lang.String" value="curation@wwarn.org"/>
+    <Environment name="smtp-from-name" type="java.lang.String" value="Curator (timp_localhost)"/>
+</Context>
 }}}
-
-You will then need to clean and repackage manta, e.g.:
-
 {{{
-$ cd /path/to/manta-maven
-$ cd manta-webapp
-$ mvn clean package
+sudo chown tomcat6:tomcat6
+
+sudo emacs /etc/tomcat6/tomcat-users.xml 
+add 
 }}}
-
-Checking out the !AtomBeat trunk allows you to use snapshot builds as dependencies in the new manta project. The current version of !AtomBeat in the trunk is 0.2-alpha-11-SNAPSHOT.
-
-N.B. if you are using the !AtomBeat trunk, bear in mind that the version number in the trunk may change if a new release of !AtomBeat is issued, so you would need to update the manta-webapp POM.
-
-You can checkout, build and install specific versions of !AtomBeat, e.g.:
-
 {{{
-$ svn checkout http://atombeat.googlecode.com/svn/tags/atombeat-parent-0.2-alpha-10 /path/to/atombeat-0.2-alpha-10
-$ cd /path/to/atombeat-0.2-alpha-10
-$ mvn clean install
+<user username="admin" password="" roles="manager,admin" />
 }}}
+{{{
+sudo mkdir /data
+sudo mkdir /data/atombeat
+sudo chown tomcat6:tomcat6
+sudo /etc/init.d/tomcat6 restart
+cd ~/workspace/manta-webapp/
+mvn tomcat:deploy
+}}}
+Point browser at http://chassis:8080/repository/home/ and have a cuppa!
 
-
-== Triggering XQuery Recompile ==
-
-To trigger a recompile of the atombeat xqueries without restarting the servlet container, make a trivial change to the file /path/to/manta-maven/manta-webapp/target/manta-webapp/service/content.xql
-
-FYI the target folder is where the manta-webapp application is packaged when you build with maven. The src/main/webapp folder is where the manta-webapp files are.
-
-When you build with maven, maven constructs a web application by overlaying war dependencies (i.e., atombeat) on the contents of src/main/webapp, but src/main/webapp takes priority, so you can override some files in atombeat. The web application is first constructed in target/manta-webapp before being packaged into a war.
-
-To get instant gratification in Eclipse, the eclipse project is configured to do something similar. In fact, the eclipse project is configured to serve the content from both target/manta-webapp and src/main/webapp, where the latter takes priority. This means that what you get is the latest maven build overlaid with your source code. So any changes you make to your source (i.e., files in src/main/webapp) will get noticed by eclipse and auto-published to tomcat. If you ever want to change this behaviour, see the .settings/org.eclipse.wst.common.component file.
