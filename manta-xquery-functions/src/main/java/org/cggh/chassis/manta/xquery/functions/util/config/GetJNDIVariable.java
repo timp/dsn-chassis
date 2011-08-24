@@ -62,7 +62,8 @@ public class GetJNDIVariable extends BasicFunction {
 			o = envContext.lookup(bean);
 			
 			if (o == null) {
-				logger.error("Unable to find JNDI context for " + bean + ". Check your app server configuration.");
+				logger.error("Unable to find JNDI context for " + bean + "." + 
+				    "Check your application server configuration (server.xml).");
 			}
 			//Using reflection here so that new configuration classes can be added just by creating the appropriate bean
 			methodName = "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -72,7 +73,9 @@ public class GetJNDIVariable extends BasicFunction {
 			ret = (String) m.invoke(o, new Object[0]);
 			
 		} catch (Exception e) {
-			logger.error("Unable to find method "+ methodName + " for context " + bean + ". Check your app server configuration.");
+			logger.error("Unable to find method with name '"+ methodName + "' for context with name '" + bean + "' due to exception: " +
+		   e.getMessage() +
+		   "Check your application server configuration (server.xml).");
 			throw new XPathException(e);
 		}
 
