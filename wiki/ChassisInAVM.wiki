@@ -1,0 +1,116 @@
+#summary Setup Chassis on a VirtuaBox VM
+
+Setup VirtualBox VM using Ubuntu
+  16gB
+  attach a second, host only adapter 
+  Install - select Tomcat and Lamp
+  
+
+Add to /etc/hosts on host machine
+192.168.56.20	chassis
+
+apt-get install emacs
+
+On vm add to /etc/network/interfaces
+auto eth1
+iface eth1 inet static
+        address 192.168.56.20
+        netmask 255.255.255.0
+        
+apt-get install-openssh-server
+
+
+/etc/init.d/networking restart
+
+You should now be able to ssh into the VM, no need to use the VirtualBox window.
+
+
+You should now be able to see 'It works!' on http://chassis/
+
+a2enmod proxy
+a2enmod proxy_httpd
+
+Update /etc /apache2/available-sites/default 
+
+ProxyPass /repository http://localhost:8080/repository
+ProxyPassReverse /repository http://localhost:8080/repository
+<Proxy http://localhost:8080/repository*>
+Order deny,allow
+Allow from all
+</Proxy>
+
+/etc/init.d/apache2 restart
+
+apt-get install maven2
+apt-get install subversion
+apt-get install openjdk-6-jdk
+
+
+ssh into vm as non-privileged user
+
+ssh chassis
+mkdir workspace
+cd workspace
+svn checkout https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp --username Tim.pizey@gmail.com
+cd manta-webapp
+mvn install 
+
+cd ..
+svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-config --username Tim.pizey@gmail.com
+cd manta-config
+mvn install
+
+sudo mkdir /usr/share/tomcat6/endorsed
+sudo cp target/manta-config-0.2-alpha-5-SNAPSHOT.jar /usr/share/tomcat6/endorsed/
+# Not really needed yet
+sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar /usr/share/tomcat6/endorsed/
+
+sudo emacs /etc/tomcat6/server.xml
+To GlobalNamingResources add
+    <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
+       serviceBaseURL="http://localhost:8080/repository/service"/>
+
+    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)"
+       jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password=""
+       removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000"
+       type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1" />
+
+
+
+Create file /srv/chassis-manta/context/repository.xml with the following contents: 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/repository" reloadable="true">
+        
+    <Resource auth="Container" 
+       factory="org.apache.naming.factory.BeanFactory" 
+       name="bean/existConfigFactory" 
+       type="org.cggh.chassis.manta.util.config.ExistConfig" 
+       username="admin" 
+       password=""
+       serviceBaseURL="http://localhost:8080/repository/service"/>
+    <Environment name="smtp-user" type="java.lang.String" value="curation@wwarn.org"/>
+    <Environment name="smtp-password" type="java.lang.String" value="ma1ar1a"/>
+    <Environment name="smtp-from-email" type="java.lang.String" value="curation@wwarn.org"/>
+    <Environment name="smtp-from-name" type="java.lang.String" value="Curator (timp_localhost)"/>
+</Context>
+
+su chown tomcat6:tomcat6
+
+emacs /etc/tomcat6/tomcat-users.xml 
+add 
+<user username="admin" password="" roles="manager,admin" />
+       
+
+sudo mkdir /data
+sudo mkdir /data/atombeat
+sudo chown tomcat6:tomcat6
+
+sudo /etc/init.d/tomcat6 restart
+
+
+cd ~/workspace/manta-webapp/
+
+mvn tomcat:deploy
+
+
