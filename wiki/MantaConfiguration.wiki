@@ -71,11 +71,6 @@ To GlobalNamingResources add
 {{{
  <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
        serviceBaseURL="http://localhost:8080/repository/service"/>
-
- <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)"
-       jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password=""
-       removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000"
-       type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1" />
 }}}
 
 
@@ -83,18 +78,12 @@ Create file /srv/chassis-manta/context/repository.xml with the following content
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/repository" reloadable="true">
-        
-    <Resource auth="Container" 
-       factory="org.apache.naming.factory.BeanFactory" 
-       name="bean/existConfigFactory" 
-       type="org.cggh.chassis.manta.util.config.ExistConfig" 
-       username="admin" 
-       password=""
-       serviceBaseURL="http://localhost:8080/repository/service"/>
+   <ResourceLink global="bean/existConfigFactory" name="bean/existConfigFactory"
+        type="org.cggh.chassis.manta.util.config.ExistConfig"/>
     <Environment name="smtp-user" type="java.lang.String" value="curation@wwarn.org"/>
     <Environment name="smtp-password" type="java.lang.String" value="ma1ar1a"/>
     <Environment name="smtp-from-email" type="java.lang.String" value="curation@wwarn.org"/>
-    <Environment name="smtp-from-name" type="java.lang.String" value="Curator (timp_localhost)"/>
+    <Environment name="smtp-from-name" type="java.lang.String" value="Curator (timp_chassis_vm)"/>
 </Context>
 }}}
 {{{
