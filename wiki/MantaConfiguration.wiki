@@ -72,7 +72,7 @@ To GlobalNamingResources add
  <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
        serviceBaseURL="http://localhost:8080/repository/service"/>
 
-    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)"
+ <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)"
        jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password=""
        removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000"
        type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1" />
