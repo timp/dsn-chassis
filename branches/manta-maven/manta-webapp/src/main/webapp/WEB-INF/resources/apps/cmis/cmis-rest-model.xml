@@ -261,6 +261,8 @@ ab5be61f787c62660ff3008299"
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:output'" if="contains(event('fr:media-entry')//atom:category/@term,'http://www.cggh.org/2010/chassis/terms/Explorer')"/>
         
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileSource']//cmis:value" value="event('fr:source')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileId']//cmis:value" value="event('fr:media-entry')//atom:link[@rel='self']/@href"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:derivationsComments']//cmis:value" value="event('fr:der-comment')"/>
         <xforms:send submission="cmis-rest-create-file-submission"/>
        
     </xforms:action>
