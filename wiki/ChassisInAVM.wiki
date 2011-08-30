@@ -1,4 +1,4 @@
-#summary Setup Chassis on a VirtuaBox VM
+#summary Setup Chassis on a VirtualBox VM
 
 Setup VirtualBox VM using Ubuntu
   16gB
@@ -112,5 +112,3 @@ sudo /etc/init.d/tomcat6 restart
 cd ~/workspace/manta-webapp/
 
 mvn tomcat:deploy
-
-
