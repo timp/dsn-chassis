@@ -40,6 +40,7 @@ ab5be61f787c62660ff3008299"
             <site/>
             <file/>
             <modules/>
+            <workflowName/>
         </control>
     </xforms:instance>
     
@@ -73,7 +74,11 @@ ab5be61f787c62660ff3008299"
     <xforms:instance id="ins-cmis-rest-binary-data">
         <study/>
     </xforms:instance>
-   
+    
+    <xforms:instance id="ins-cmis-rest-workflow">
+        <atom:entry/>
+    </xforms:instance>
+        
     <!-- xxforms attribs work for http auth -->
     <xforms:submission ref="instance('ins-cmis-rest-auth')" id="cmis-rest-auth-submission" method="get"
         action="{$alfresco-uri}s/api/login?u={$alfresco-username}&amp;pw={$alfresco-credentials}"
@@ -150,6 +155,17 @@ ab5be61f787c62660ff3008299"
         <xforms:send submission="cmis-rest-create-site-submission"/>
     </xforms:action>
 
+    <xforms:action ev:event="cmis-rest-start-workflow">
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//workflowName" value="event('fr:workflowName')"/>
+        <xforms:insert 
+            context="instance('ins-cmis-rest-workflow')" 
+            nodeset="atom:entry"
+            at="1"
+            position="after"
+            origin="event('fr:content')/*"/>
+        <xforms:send submission="cmis-rest-start-workflow-submission"/>
+    </xforms:action>
     <xforms:instance id="clinical">
         <cmis:value>Clinical</cmis:value>
     </xforms:instance>
@@ -347,5 +363,12 @@ ab5be61f787c62660ff3008299"
         resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/descendants"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="none"  if="$is-send-alfresco">
+    </xforms:submission>
+    <!--  start a workflow -->
+    <xforms:submission ref="instance('ins-cmis-rest-workflow')" id="cmis-rest-start-workflow-submission" method="post"
+        resource="{$alfresco-uri}service/wwarn/startworkflow?workflow={instance('ins-cmis-rest-control')//workflowName}"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        mediatype="application/atom+xml"
+        replace="instance" if="$is-send-alfresco">
     </xforms:submission>
 </xforms:model>
