@@ -1,4 +1,4 @@
-#summary Setup Chassis on a VirtuaBox VM
+#summary Setup Chassis on a VirtualBox VM
 #labels Phase-Deploy
 
 Setup a VirtualBox VM using Ubuntu 
@@ -104,4 +104,3 @@ cd ~/workspace/manta-webapp/
 mvn tomcat:deploy
 }}}
 Point browser at http://chassis:8080/repository/home/ and have a cuppa!
-
