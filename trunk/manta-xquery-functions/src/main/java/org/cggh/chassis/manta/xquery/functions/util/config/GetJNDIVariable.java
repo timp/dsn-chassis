@@ -75,7 +75,7 @@ public class GetJNDIVariable extends BasicFunction {
 		} catch (Exception e) {
 			logger.error("Unable to find method with name '"+ methodName + "' for context with name '" + bean + "' due to exception: " +
 		   e.getMessage() +
-		   "Check your application server configuration (server.xml).");
+		   " Check your application server configuration (server.xml).");
 			throw new XPathException(e);
 		}
 
