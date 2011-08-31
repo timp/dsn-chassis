@@ -1,5 +1,5 @@
+#summary How to move a database from one server to another using a backup
 #labels Phase-Deploy
-How to move a database from one server to another using a backup
 
   # Stop tomcat
   # Clean out exist database by deleting current files
