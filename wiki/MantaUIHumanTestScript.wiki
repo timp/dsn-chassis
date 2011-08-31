@@ -1,3 +1,5 @@
+#summary Step by step test script
+
 Last Tested against v1.5 on local dev env.
 
 ----
