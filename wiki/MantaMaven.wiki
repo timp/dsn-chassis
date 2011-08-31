@@ -1,4 +1,4 @@
-#summary chassis manta project using maven overlay
+#summary Chassis manta project using maven overlay
 #labels Phase-Architecture
 
 I've created a new project for the chassis manta web application which is built using maven and which overlays atombeat as a war overlay, which should simplify the process of upgrading atombeat.
