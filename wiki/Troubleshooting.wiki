@@ -13,8 +13,9 @@ First go to /repository/service/admin/install.xql
 
 This will show you whether the collections are installed and available - if this is the first time then you will need to install them
 
-If you get an error message containing the phrase JNDI then you need to configure your application appropriately
+If you get an error message containing {{{org.cggh.chassis.manta.xquery.functions.util.config.GetJNDIVariable}}}
+ then you need to check that you have a JNDI configuration either in {{{server.xml}}} and/or {{{/srv/chassis-manta/context/repository.xml}}}
+
 
 Another place to check is /repository/service/admin/changehost.xql
-
-The values in the two input boxes should be the same
+The values in the two input boxes should be the same.
