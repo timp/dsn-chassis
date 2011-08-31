@@ -1,5 +1,5 @@
+#summary How to upgrade version 1.0 to 1.0.1
 #labels Phase-Deploy
-How to upgrade version 1.0 to 1.0.1
 
 Install the new software and then visit each of these pages in turn:
 
