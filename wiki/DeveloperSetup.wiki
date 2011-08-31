@@ -1,0 +1,22 @@
+#summary Tricks and gotchas during developer setup
+= Introduction =
+
+Whilst you can setup your system as per MantaConfiguration  
+this  will rely upon using 
+{{{
+mvn install tomcat:redeploy 
+}}}
+to make changes visible. 
+
+For a shorter edit/compile/view cycle setup tomcat 'inside ' eclipse. 
+
+= Details =
+
+Follow instructions here: 
+http://stackoverflow.com/questions/447289/problem-creating-a-tomcat-6-server-in-eclipse-form-ubuntu
+
+This makes a copy of your tomcat installation.
+
+There are however a couple of gotchas: 
+the manager application does not appear to get copied, so you can no longer use the tomcat deployer. 
+The context defined in {{{/srv/chassis-manta/context/repository.xml}}} is ignored, so you need to add its contents to the {{{server.xml}}} copied into eclipse. 
