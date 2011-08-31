@@ -10,7 +10,7 @@ to make changes visible.
 
 For a shorter edit/compile/view cycle setup tomcat 'inside ' eclipse. 
 
-= Details =
+= Setup =
 
 Follow instructions here: 
 http://stackoverflow.com/questions/447289/problem-creating-a-tomcat-6-server-in-eclipse-form-ubuntu
