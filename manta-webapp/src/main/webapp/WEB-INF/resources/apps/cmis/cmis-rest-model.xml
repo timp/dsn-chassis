@@ -296,12 +296,20 @@ ab5be61f787c62660ff3008299"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
     </xforms:submission>
     <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission" method="post"
         action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
     </xforms:submission>
     <!-- upload a file -->
     <xforms:submission ref="xxforms:instance('ins-upload')" id="cmis-rest-upload-file-submission" method="post"
@@ -309,19 +317,20 @@ ab5be61f787c62660ff3008299"
         resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="none" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
     </xforms:submission>
     <!-- updating -->
     <!-- study -->
     <xforms:submission id="sub-transform-study" action="http://localhost:8080/repository/study/transform-study"
         replace="instance" method="post" ref="instance('ins-cmis-rest-create-file')"
         instance="ins-cmis-rest-create-file">
-        
-        <xforms:message ev:event="xforms-submit-error" level="modal">
-            An error occurred (
-            <xforms:output value="event('error-type')" />
-            ) while trying to retrieve author information.
-        </xforms:message>
-        
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>                
     </xforms:submission>
     <xforms:submission id="cmis-rest-get-folder-record" method="get"
         action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}"
@@ -335,6 +344,10 @@ ab5be61f787c62660ff3008299"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
     </xforms:submission>
     <!-- file -->
     <xforms:submission id="cmis-rest-get-file-record" method="get"
@@ -349,6 +362,10 @@ ab5be61f787c62660ff3008299"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
     </xforms:submission>
     <!-- Actually update the file - this is for XML content -->
     <xforms:submission ref="xxforms:instance('ins-study-entry')//study" id="cmis-rest-update-file-content-submission" method="put"
