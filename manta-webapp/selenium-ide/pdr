@@ -84,7 +84,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[@type='file']</td>
-	<td>D:\selenium\register-study</td>
+	<td>~/workspace/manta-webapp/selenium-ide/pdr</td>
 </tr>
 <tr>
 	<td>type</td>

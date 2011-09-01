@@ -84,7 +84,7 @@
 <tr>
 	<td>select</td>
 	<td>xpath=//select[contains(../label,'Explorer')]</td>
-	<td>label=Display</td>
+	<td>label=Displayed</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -164,7 +164,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[contains(../../label,'File:')]</td>
-	<td>D:\selenium\pdr</td>
+	<td>~/workspace/manta-webapp/selenium-ide/curator</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -183,7 +183,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=(//a[. = 'Details' and ../../../../td[2]/div/span[. = 'pdr']])</td>
+	<td>xpath=(//a[. = 'Details' and ../../../../td[2]/div/span[. = 'curator']])</td>
 	<td></td>
 </tr>
 <tr>
