@@ -3,8 +3,8 @@
   <actions/>
   <description>Manta Maven development branch</description>
   <logRotator>
-    <daysToKeep>3</daysToKeep>
-    <numToKeep>4</numToKeep>
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>6</numToKeep>
     <artifactDaysToKeep>-1</artifactDaysToKeep>
     <artifactNumToKeep>-1</artifactNumToKeep>
   </logRotator>
@@ -50,6 +50,8 @@
   <processPlugins>false</processPlugins>
   <mavenValidationLevel>0</mavenValidationLevel>
   <runHeadless>false</runHeadless>
+  <settingConfigId></settingConfigId>
+  <globalSettingConfigId></globalSettingConfigId>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
       <recipients>timp@well.ox.ac.uk lee.hart@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>
