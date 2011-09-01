@@ -134,7 +134,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[contains(../../label,'File:')]</td>
-	<td>D:\software\bin\existclient.bat</td>
+	<td>~/workspace/manta-webapp/selenium-ide/register-study</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -159,7 +159,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[contains(../../label,'File:')]</td>
-	<td>D:\software\bin\existclient-balbo.bat</td>
+	<td>~/workspace/manta-webapp/selenium-ide/register-study</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -184,7 +184,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[contains(../../label,'File:')]</td>
-	<td>D:\software\bin\setup.exe</td>
+	<td>~/workspace/manta-webapp/selenium-ide/register-study</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//button[. = 'Remove' and ../../../../td/div/span[text()='existclient-balbo.bat']]</td>
+	<td>xpath=//button[. = 'Remove' and ../../../../td/div/span[text()='register-study']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -439,7 +439,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[contains(../../label,'File:')]</td>
-	<td>D:\software\bin\existclient-balbo.bat</td>
+	<td>~/workspace/manta-webapp/selenium-ide/register-study</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -508,7 +508,7 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>existclient.bat</td>
+	<td>register-study</td>
 	<td></td>
 </tr>
 <tr>
