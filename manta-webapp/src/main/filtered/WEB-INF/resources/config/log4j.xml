@@ -111,6 +111,10 @@
     </category>
     -->
 
+    <category name="org">
+        <priority value="warn"/>
+    </category>
+    
     <category name="org.exist.storage">
         <priority value="warn"/>
     </category>
@@ -152,7 +156,7 @@
     </category>
     
     <category name="org.orbeon">
-        <priority value="info"/>
+        <priority value="warn"/>
     </category>
     
     <category name="org.atombeat.http">
