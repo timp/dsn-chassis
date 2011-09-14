@@ -138,12 +138,24 @@
         </init-param>
     </filter>
     
+    <filter>
+        <filter-name>AlfrescoCASFilter</filter-name>
+        <filter-class>org.cggh.chassis.manta.security.AlfrescoCASFilter</filter-class>
+        <init-param>
+            <param-name>allowedOverrides</param-name>
+            <param-value>PUT DELETE</param-value>
+        </init-param>
+    </filter>
     
     <filter-mapping>
         <filter-name>HttpMethodOverrideFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>AlfrescoCASFilter</filter-name>
+        <url-pattern>/study/*</url-pattern>
+    </filter-mapping>
     
     <!--+
         | Spring Security Configuration
@@ -371,6 +383,10 @@
         <servlet-name>chassis-file-lookup-servlet</servlet-name>
         <servlet-class>org.cggh.chassis.manta.util.GetFiles</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cas-proxy-servlet</servlet-name>
+        <servlet-class>org.cggh.chassis.manta.util.CasAlfrescoProxy</servlet-class>
+    </servlet>
     <!--
     <servlet>
         <servlet-name>exist-atom-servlet</servlet-name>
@@ -493,6 +509,10 @@
     <servlet-mapping>
         <servlet-name>chassis-file-lookup-servlet</servlet-name>
         <url-pattern>/GetFiles</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cas-proxy-servlet</servlet-name>
+        <url-pattern>/CasProxy</url-pattern>
     </servlet-mapping>
     <!--
     <servlet-mapping>

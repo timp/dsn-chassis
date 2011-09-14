@@ -29,7 +29,8 @@
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
     xmlns:cggh="http://cggh.org/oxf/xml/form-runner"
     xmlns:p="java:org.orbeon.oxf.processor.pipeline.PipelineFunctionLibrary"
-    xmlns:app="http://www.w3.org/2007/app">
+    xmlns:app="http://www.w3.org/2007/app"
+    xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:alf="http://www.alfresco.org">
     
     <head>
         <title>Study dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
@@ -76,12 +77,24 @@
         		</control>
         	</xforms:instance>
         	
+        	<xforms:instance id="ins-alf">
+        		<request/>
+        	</xforms:instance>
+        	
         	<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
+        	<xxforms:variable name="alfresco-uri" select="xxforms:property('chassis.alfresco.uri')" as="xs:anyURI"/>
+        	
         	<xforms:bind nodeset="instance('ins-control')/not-curator" relevant="not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
         	<xforms:bind nodeset="instance('ins-control')/not-administrator" relevant="not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR')"/>
         	
         	<xforms:setvalue ev:event="xforms-model-construct-done" ref="instance('ins-control')/dashboard-tab-to-show" value="if(not(empty(xxforms:get-request-parameter('tab')))) then xxforms:get-request-parameter('tab') else 'summary'" />
-
+			 
+			<xforms:action ev:event="xforms-model-construct-done">
+        		<xforms:insert 
+            nodeset="instance('ins-alf')"
+            origin="xxforms:get-request-attribute('alf_ticket')"/>
+    		</xforms:action>
+    		 
 			<xforms:action ev:event="xxforms-invalid" ev:observer="ins-permissions-entry">
 				<xforms:setvalue ev:event="xforms-value-changed" ref="instance('ins-control')/permissions-entry-is-valid">false</xforms:setvalue>
 			</xforms:action>
@@ -179,6 +192,21 @@
 				
 			</xforms:submission>
 
+			<xforms:instance id="ins-alf-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission
+				id="sub-get-alf-media-feed"
+				resource="{$alfresco-uri}service/cmis/p/WWARN/Studies/{instance('ins-study-entry')/manta:id}/descendants?alf_ticket={instance('ins-alf')}"
+				method="get"
+				replace="instance"
+				instance="ins-alf-media-feed"
+				serialization="none">
+				<!-- Returns 500 even for permission denied - expect to get permission denied for contributor 
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the uploaded media.</xforms:message>
+                 -->
+			</xforms:submission>
 
 			<xforms:instance id="ins-submitted-media-feed">
 				<atom:feed/>
@@ -193,6 +221,9 @@
 				serialization="none">
 				
                 <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
+                <!-- Not currently used - needs to be curators only as otherwise generates a 500 error for permission denied 
+                <xforms:send ev:event="xforms-submit-done" submission="sub-get-alf-media-feed" />
+                 -->
 			</xforms:submission>
 
 			<xforms:submission id="sub-notify-put-study-entry-complete"	action="/study/email-complete" replace="none" 
