@@ -195,6 +195,7 @@
 							<xxforms:context name="fr:media-entry" select="$media-entry"/>
 							<xxforms:context name="fr:site" select="$study-id" />
 							<xxforms:context name="fr:source" select="'Curator'" />
+							<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
 							<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
 							<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
 						</xforms:dispatch>
