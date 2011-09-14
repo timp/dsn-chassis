@@ -278,6 +278,64 @@
                                 </xforms:group>
 							</div>
 							
+							<xforms:group ref="instance('ins-alf-media-feed')[exists(atom:entry)]">
+								
+								<div id="list-of-alf-files-container">
+									
+									<fr:datatable paginated="false">
+										<thead>
+											<tr>
+												<th fr:sortable="true" fr:resizeable="true">Code</th>
+												<th fr:sortable="true" fr:resizeable="true">File name</th>
+												<th fr:sortable="true" fr:resizeable="true">Date submitted</th>
+												<th fr:sortable="true" fr:resizeable="true">Curated by</th>
+												<th fr:sortable="true" fr:resizeable="true">Type</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
+											<xforms:repeat id="rep-alf-media-curator" nodeset="atom:entry">
+												<tr class="repeated-element">
+													<td>
+														<xforms:output ref="manta:id"/>
+													</td>
+													<td>
+														<xforms:output ref="atom:title"/>
+													</td>
+													<td>
+														<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+													</td>
+													<td>
+														<xforms:output ref="atom:author/atom:email"/>
+													</td>
+													<td>
+														<xforms:output ref="
+															for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+															return
+															if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+															then $cat/@label
+															else instance('ins-file-terms')//term[value=$cat/@term]/label
+															"/>
+														<xforms:output ref=".//cmis:propertyId[@queryName='cmis:objectTypeId']/cmis:value"/>
+													</td>
+													<td>
+														<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+															<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
+														</xforms:group>
+														<xforms:group ref="instance('ins-control')/curator-controls">
+															<a href="file-details?media-link={xxforms:context('rep-curated-media-curator')/atom:link[@rel='edit']/@href}">Details</a>
+														</xforms:group>
+													</td>
+												</tr>
+											</xforms:repeat>
+										</tbody>
+									</fr:datatable>
+									
+								</div>
+								
+							</xforms:group>
+							
 						</div>
 
 				</div>
