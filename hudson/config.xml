@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.425</version>
+  <version>1.430</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -96,14 +96,16 @@
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
   <systemMessage>&lt;h2&gt;CI Server for CGGH&lt;/h2&gt;&#xd;
-&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
-&lt;br/&gt;&#xd;
-&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
-&#xd;
 &lt;ul&gt;&#xd;
-&lt;li&gt;&#xd;
+  &lt;li&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
+  &lt;/li&gt;&#xd;
+  &lt;li&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
+  &lt;/li&gt;&#xd;
+  &lt;li&gt;&#xd;
 &lt;a href=&quot;http://cloud1.cggh.org/manta&quot;&gt;Manta&lt;/a&gt;&#xd;
-&lt;/li&gt;&#xd;
+  &lt;/li&gt;&#xd;
 &lt;/ul&gt;&#xd;
 </systemMessage>
   <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter">
@@ -133,14 +135,16 @@
       <owner class="hudson" reference="../../.."/>
       <name>Manta</name>
       <description>&lt;h2&gt;CI Server for CGGH&lt;/h2&gt;&#xd;
-&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
-&lt;br/&gt;&#xd;
-&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
-&#xd;
 &lt;ul&gt;&#xd;
-&lt;li&gt;&#xd;
-&lt;a href=&quot;http://cloud1.cggh.org/manta&quot;&gt;Manta&lt;/a&gt;&#xd;
-&lt;/li&gt;&#xd;
+  &lt;li&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/dsn-chassis/&quot;&gt;DSN Chassis&lt;/a&gt;&#xd;
+  &lt;/li&gt;&#xd;
+  &lt;li&gt;&#xd;
+&lt;a href=&quot;http://code.google.com/p/atombeat/&quot;&gt;Atombeat&lt;/a&gt;&#xd;
+  &lt;/li&gt;&#xd;
+  &lt;li&gt;&#xd;
+&lt;a href=&quot;http://cloud1.cggh.org/repository&quot;&gt;Manta&lt;/a&gt;&#xd;
+  &lt;/li&gt;&#xd;
 &lt;/ul&gt;&#xd;
 </description>
       <filterExecutors>false</filterExecutors>
@@ -152,6 +156,8 @@
         <string>atombeat-service</string>
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
+        <string>chassis-model</string>
+        <string>chassis-rest</string>
         <string>checkStudyFeedBasic</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
