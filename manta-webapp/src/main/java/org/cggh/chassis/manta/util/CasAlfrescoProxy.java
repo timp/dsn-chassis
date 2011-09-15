@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,6 @@ public class CasAlfrescoProxy extends HttpServlet {
 	private final static String ALFRESCO_WEBAPP_URL = "https://iwright-VirtualBox/alfresco";
 	public final static String CS_PARAM_ALF_TICKET = "alfTicket";
 	private static Log logger = LogFactory.getLog(CasAlfrescoProxy.class);
-	private ServletContext servletContext;
 
 	/**
 	 * Default constructor.
@@ -52,8 +50,6 @@ public class CasAlfrescoProxy extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		HttpSession httpSess = req.getSession(true);
-		servletContext = httpSess.getServletContext();
 		HttpClient client = new HttpClient();
 		
 		GetMethod method;
