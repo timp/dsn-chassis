@@ -41,6 +41,7 @@ ab5be61f787c62660ff3008299"
             <file/>
             <modules/>
             <workflowName/>
+            <status/>
         </control>
     </xforms:instance>
     
@@ -303,25 +304,34 @@ ab5be61f787c62660ff3008299"
 			</xforms:action>        
     </xforms:submission>
     <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission" method="post"
-        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
+    	action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
-			<xforms:action ev:event="xforms-submit-error">
-				<xforms:message  level="modal" 
-					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
-			</xforms:action>        
+		<xforms:action ev:event="xforms-submit-error">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+			<xforms:message  level="modal" 
+				value="concat('An error occurred while creating a file in Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')', 'status:', instance('ins-cmis-rest-control')//status)" />
+		</xforms:action>        
+		<xforms:action ev:event="xforms-submit-done">
+        	<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+		</xforms:action>			        
     </xforms:submission>
+    
     <!-- upload a file -->
     <xforms:submission ref="xxforms:instance('ins-upload')" id="cmis-rest-upload-file-submission" method="post"
         serialization="multipart/form-data"
         resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="none" if="$is-send-alfresco">
-			<xforms:action ev:event="xforms-submit-error">
-				<xforms:message  level="modal" 
-					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
-			</xforms:action>        
+		<xforms:action ev:event="xforms-submit-error">
+    	    <xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+			<xforms:message  level="modal" 
+				value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')', 'status:', instance('ins-cmis-rest-control')//status)" />
+		</xforms:action>
+		<xforms:action ev:event="xforms-submit-done">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+      </xforms:action>			        
     </xforms:submission>
     <!-- updating -->
     <!-- study -->
