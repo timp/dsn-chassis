@@ -30,7 +30,7 @@
     
     	<title>Upload Curated Files - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         
-        <xforms:model>
+			<xforms:model>
 
 			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
 			
@@ -47,7 +47,7 @@
 				serialization="none">
 				
 				<!-- handle submission errors -->
-                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 				
 				<!-- chained submissions -->
 				<xforms:action ev:event="xforms-submit-done">
@@ -59,11 +59,11 @@
 				
 			</xforms:submission>
 
-        	<xforms:instance id="ins-submitted-media-feed">
+      <xforms:instance id="ins-submitted-media-feed">
         		<atom:feed/>
-        	</xforms:instance>
+      </xforms:instance>
         	
-        	<xforms:submission
+      <xforms:submission
         		id="sub-get-submitted-media-feed"
         		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
         		method="get"
@@ -122,20 +122,18 @@
         	</xforms:instance>
 
 			<xforms:instance id="ins-blank-entry">
-			<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-			<atom:category term="" label=""/>
-    
-    <atom:title type="text">test title</atom:title>
-    <atom:summary type="text"></atom:summary>
-    <atom:content type=""/>
-    <atom:link rel="self" href=""/>
-    <atom:author>
-        <atom:email></atom:email>
-    </atom:author>
-    
-</atom:entry>
+				<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+					<atom:category term="" label=""/>
+					<atom:title type="text">test title</atom:title>
+					<atom:summary type="text"></atom:summary>
+					<atom:content type=""/>
+					<atom:link rel="self" href=""/>
+					<atom:author>
+						<atom:email></atom:email>
+					</atom:author>
+				</atom:entry>
 			</xforms:instance>
-        	<xforms:submission 
+     	<xforms:submission 
         		id="sub-post-background-uploads" 
         		ref="instance('ins-uploads')" 
         		method="post" 
@@ -143,7 +141,7 @@
         		resource="test:"
         		validate="false"/>
  
-        	<xforms:submission 
+			<xforms:submission 
         		id="sub-post-uploads" 
         		ref="instance('ins-uploads')" 
         		method="post" 
@@ -153,7 +151,12 @@
         		<!-- TODO proper error handling -->
         		<xforms:message ev:event="xforms-submit-error" level="modal">The upload has failed. Please try again.</xforms:message>
         		<xforms:action ev:event="xforms-submit-done">
+        			<!--  
         			
+        			Note it is possible for the Alfresco upload to fail after the chassis upload has succeeded, 
+        			but this is being done by curators, who can happily fix the issue in alfresco.
+        			
+        			 -->
         			<!-- sort the derivation input -->
         			<xforms:action xxforms:iterate="tokenize(instance('ins-derivation-selection'), ' ')">
         				<xforms:insert 
@@ -178,32 +181,35 @@
         				<xforms:setvalue ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput'][last()]/@href" value="context()/atom:link[@rel='edit']/@href"/>
         			</xforms:action>
         			
-        			<xforms:action if="$is-send-alfresco" xxforms:iterate="instance('ins-uploads')//upload">
-        				<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id" />
-						<xxforms:variable name="upload" select="."/>
-						<xforms:setvalue ref="instance('ins-blank-entry')//atom:title" value="$upload/@filename"/>
-					
-						<xforms:setvalue ref="instance('ins-blank-entry')//atom:content/@type" value="$upload/@mediatype"/>
-						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
-						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
-						<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
-					 	<xforms:setvalue ref="instance('ins-blank-entry')//atom:link[@rel='self']/@href" value="instance('ins-uploads-results-feed')//atom:entry[atom:title/text() = $upload/@filename]/atom:link[@rel='self']/@href"/>
-						
-						<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
-						<xxforms:variable name="file-uri" select="text()" />
-						<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
-							<xxforms:context name="fr:media-entry" select="$media-entry"/>
-							<xxforms:context name="fr:site" select="$study-id" />
-							<xxforms:context name="fr:source" select="'Curator'" />
-							<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
-							<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
-							<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
-						</xforms:dispatch>
-					</xforms:action>
 					
         			<!-- submit the derivation -->
         			<xforms:send submission="sub-post-derivation"/>
-        			
+
+        			<xforms:action if="$is-send-alfresco" xxforms:iterate="instance('ins-uploads')//upload">
+								<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id" />
+								<xxforms:variable name="upload" select="."/>
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:title" value="$upload/@filename"/>
+					
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:content/@type" value="$upload/@mediatype"/>
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
+								<xforms:setvalue ref="instance('ins-blank-entry')//atom:link[@rel='self']/@href" value="instance('ins-uploads-results-feed')//atom:entry[atom:title/text() = $upload/@filename]/atom:link[@rel='self']/@href"/>
+						
+								<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
+								<xxforms:variable name="file-uri" select="text()" />
+								<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
+									<xxforms:context name="fr:media-entry" select="$media-entry"/>
+									<xxforms:context name="fr:site" select="$study-id" />
+									<xxforms:context name="fr:source" select="'Curator'" />
+									<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
+									<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
+									<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
+								</xforms:dispatch>
+							</xforms:action>
+		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok'"
+      		      submission="sub-get-dashboard" />
+      		      
         		</xforms:action>
         	</xforms:submission>
         	
@@ -243,7 +249,6 @@
         		mediatype="application/atom+xml"
         		>
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
-        		<xforms:send ev:event="xforms-submit-done" submission="sub-get-dashboard"/>
         	</xforms:submission>
 
         	<!-- This gets the list of different file types for the upload-files tab. -->
