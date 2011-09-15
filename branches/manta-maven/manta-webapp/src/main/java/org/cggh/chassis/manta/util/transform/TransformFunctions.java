@@ -310,10 +310,10 @@ public class TransformFunctions {
 						//
 						//this.getLogger().info("got label: " + fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent());
 						
-						patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+						patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
 					}
 					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("value")) {
-						replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+						replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
 					}
 					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("#text")) {
 						//ignore this type of node
@@ -400,10 +400,10 @@ public class TransformFunctions {
 							//
 							//this.getLogger().info("got label: " + fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent());
 							
-							patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+							patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
 						}
 						else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("value")) {
-							replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent();
+							replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
 						}
 						else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("#text")) {
 							//ignore this type of node
