@@ -65,6 +65,11 @@ conn.close()
 
 If you get a 204 response, the script was successful.
 
+= Initialise config collection =
+http://localhost:8080/repository/administration/home
+http://localhost:8080/repository/service/admin/update-1.1-1.2/index.xhtml
+http://localhost:8080/repository/service/admin/init-config.xql
+
 = Web Server Proxy Configuration =
 
 Add or update proxy directives to the Apache configuration on your *web server*. E.g. ...
