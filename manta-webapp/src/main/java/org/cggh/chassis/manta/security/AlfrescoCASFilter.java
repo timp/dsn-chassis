@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cggh.chassis.manta.security;
 
 import java.io.IOException;
@@ -23,9 +20,7 @@ import org.cggh.chassis.manta.util.CasAlfrescoProxy;
 public class AlfrescoCASFilter extends HttpFilter {
 
 	
-	
-	
-	private Log log = LogFactory.getLog(this.getClass());
+  private Log log = LogFactory.getLog(this.getClass());
 	
 	
 	
