@@ -154,7 +154,7 @@ public class StoreUploadsServlet extends HttpServlet {
 				
 		try {
 			
-			URL tempFileUrl = new URL(ue.getTextContent());
+			URL tempFileUrl = new URL(ue.getNodeValue());
 			InputStream uploadInputStream = tempFileUrl.openStream();
 			
 			AbderaClient atomClient = new AbderaClient();
