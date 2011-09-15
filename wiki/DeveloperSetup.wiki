@@ -34,3 +34,10 @@ If you get an error message containing {{{org.cggh.chassis.manta.xquery.function
 
 Another place to check is /repository/service/admin/changehost.xql
 The values in the two input boxes should be the same.
+
+If you delete the data set then remember to recreate the config collection: 
+
+= Initialise config collection =
+  # [http://localhost:8080/repository/administration/home AdminHome]
+  # [http://localhost:8080/repository/service/admin/update-1.1-1.2/index.xhtml update-1.1-1.2]
+  # [http://localhost:8080/repository/service/admin/init-config.xql init config]
