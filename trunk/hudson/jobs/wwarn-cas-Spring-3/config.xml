@@ -50,9 +50,11 @@
   <processPlugins>false</processPlugins>
   <mavenValidationLevel>0</mavenValidationLevel>
   <runHeadless>false</runHeadless>
+  <settingConfigId></settingConfigId>
+  <globalSettingConfigId></globalSettingConfigId>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk, lee.hart@well.ox.ac.uk, ian.wright@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>

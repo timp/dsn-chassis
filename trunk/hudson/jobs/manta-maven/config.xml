@@ -54,7 +54,7 @@
   <globalSettingConfigId></globalSettingConfigId>
   <reporters>
     <hudson.maven.reporters.MavenMailer>
-      <recipients>timp@well.ox.ac.uk lee.hart@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>
+      <recipients>timp@well.ox.ac.uk ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.maven.reporters.MavenMailer>
