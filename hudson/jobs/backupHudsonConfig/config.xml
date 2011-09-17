@@ -47,7 +47,7 @@ svn st
   </builders>
   <publishers>
     <hudson.tasks.Mailer>
-      <recipients>tim.pizey@well.ox.ac.uk</recipients>
+      <recipients>tim.pizey@well.ox.ac.uk  ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
