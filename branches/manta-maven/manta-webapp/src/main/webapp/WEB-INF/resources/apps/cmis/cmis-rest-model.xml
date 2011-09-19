@@ -42,6 +42,8 @@ ab5be61f787c62660ff3008299"
             <modules/>
             <workflowName/>
             <status/>
+            <outputFileNodeRef/>
+            <studyFileNodeRef/>
         </control>
     </xforms:instance>
     
@@ -79,7 +81,41 @@ ab5be61f787c62660ff3008299"
     <xforms:instance id="ins-cmis-rest-workflow">
         <atom:entry/>
     </xforms:instance>
-        
+   <!-- start Alf media - will only work when filter is active -->     
+    <xforms:instance id="ins-cmis-rest">
+        <request/>
+    </xforms:instance>
+    
+    <!-- Note that this has to be done as part of the xforms-model-construct-done stage -->
+    <xforms:action ev:event="cmis-rest-get-ticket" if="$is-send-alfresco">
+        <xforms:insert 
+            nodeset="instance('ins-cmis-rest')"
+            origin="xxforms:get-request-attribute('alf_ticket')"/>
+    </xforms:action>
+    
+    <xforms:instance id="ins-cmis-rest-media-feed">
+        <atom:feed/>
+    </xforms:instance>
+    
+    <xforms:action ev:event="cmis-rest-get-files" if="$is-send-alfresco">
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-get-files-submission"/>
+    </xforms:action>
+    
+    <xforms:submission
+        id="cmis-rest-get-files-submission"
+        resource="{$alfresco-uri}service/cmis/p/WWARN/Studies/{instance('ins-cmis-rest-control')//site}/descendants?alf_ticket={instance('ins-cmis-rest')}"
+        method="get"
+        replace="instance"
+        instance="ins-cmis-rest-media-feed"
+        serialization="none">
+        <!-- Returns 500 even for permission denied - expect to get permission denied for contributor 
+            <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the uploaded media.</xforms:message>
+        -->
+    </xforms:submission>
+    
+    <!-- end Alf media -->
+    
     <!-- xxforms attribs work for http auth -->
     <xforms:submission ref="instance('ins-cmis-rest-auth')" id="cmis-rest-auth-submission" method="get"
         action="{$alfresco-uri}s/api/login?u={$alfresco-username}&amp;pw={$alfresco-credentials}"
@@ -281,8 +317,13 @@ ab5be61f787c62660ff3008299"
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileId']//cmis:value" value="event('fr:media-entry')//atom:link[@rel='self']/@href"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:submitter']//cmis:value" value="event('fr:submitter')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:derivationsComments']//cmis:value" value="event('fr:der-comment')"/>
-        <xforms:send submission="cmis-rest-create-file-submission"/>
+        <xforms:send submission="cmis-rest-create-file-submission-ticket"/>
        
+        <xforms:action ev:event="xforms-submit-done" xxforms:iterate="tokenize(event('fr:der-selection'), ' ')" >
+            <xforms:setvalue ref="instance('ins-cmis-rest-control')/studyFileNodeRef" value="instance('ins-cmis-rest-create-file-result')//cmis:propertyId[@queryName='cmis:objectId']/cmis:value"/>
+            <xforms:setvalue ref="instance('ins-cmis-rest-control')/outputFileNodeRef" value="context()"/>
+            <xforms:send submission="cmis-rest-create-file-derivation" />
+        </xforms:action>
     </xforms:action>
 <!-- End of actions -->   
     <xforms:submission ref="instance('ins-cmis-rest-create-site')" id="cmis-rest-create-site-submission" method="post"
@@ -304,31 +345,51 @@ ab5be61f787c62660ff3008299"
 			</xforms:action>        
     </xforms:submission>
     <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission" method="post"
-    	action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         mediatype="application/atom+xml"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
-		<xforms:action ev:event="xforms-submit-error">
+			<xforms:action ev:event="xforms-submit-error">
 			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
-			<xforms:message  level="modal" 
+				<xforms:message  level="modal" 
 				value="concat('An error occurred while creating a file in Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
 		</xforms:action>        
 		<xforms:action ev:event="xforms-submit-done">
         	<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
-		</xforms:action>			        
+			</xforms:action>        
     </xforms:submission>
-    
+    <!-- Same as above with different authentication -->
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission-ticket" method="post"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children?alf_ticket={instance('ins-cmis-rest')}"
+        mediatype="application/atom+xml"
+        replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
+        <xforms:action ev:event="xforms-submit-error">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+            <xforms:message  level="modal" 
+				value="concat('An error occurred while creating a file in Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+		</xforms:action>        
+		<xforms:action ev:event="xforms-submit-done">
+        	<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+        </xforms:action>        
+    </xforms:submission>
+    <xforms:instance id="temp">
+        <ticket xmlns=""/>
+    </xforms:instance>
+   <!-- Don't ask why but the element of ins-cmis-rest-control are passed as parameters to this get.... -->
+    <xforms:submission id="cmis-rest-create-file-derivation" method="get" replace="none" instance="temp"
+        action="{$alfresco-uri}service/wwarn/createDerivedAssoc?alf_ticket={instance('ins-cmis-rest')}" 
+        />
     <!-- upload a file -->
     <xforms:submission ref="xxforms:instance('ins-upload')" id="cmis-rest-upload-file-submission" method="post"
         serialization="multipart/form-data"
         resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         replace="none" if="$is-send-alfresco">
-		<xforms:action ev:event="xforms-submit-error">
+			<xforms:action ev:event="xforms-submit-error">
     	    <xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
-			<xforms:message  level="modal" 
-				value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
-		</xforms:action>
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
 		<xforms:action ev:event="xforms-submit-done">
 			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
       </xforms:action>			        

@@ -157,6 +157,10 @@
         <url-pattern>/study/*</url-pattern>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>AlfrescoCASFilter</filter-name>
+        <url-pattern>/curator/*</url-pattern>
+    </filter-mapping>
     <!--+
         | Spring Security Configuration
         | *****************************
