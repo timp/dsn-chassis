@@ -360,7 +360,7 @@ public class SecureEmailProcessor extends ProcessorImpl {
 			throws Exception {
 
 		// Find out if there are embedded parts
-		final Iterator parts = bodyElement.elementIterator("part");
+		final Iterator<?> parts = bodyElement.elementIterator("part");
 		String multipart;
 		if (bodyElement.getName().equals("body")) {
 			multipart = bodyElement.attributeValue("mime-multipart");
