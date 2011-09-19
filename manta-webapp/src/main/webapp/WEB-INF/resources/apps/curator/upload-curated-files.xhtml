@@ -24,13 +24,14 @@
     xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
-	xmlns:atombeat="http://purl.org/atombeat/xmlns">
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+    xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:alf="http://www.alfresco.org">
     
     <head>
     
     	<title>Upload Curated Files - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
         
-			<xforms:model>
+        <xforms:model>
 
 			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
 			
@@ -47,23 +48,28 @@
 				serialization="none">
 				
 				<!-- handle submission errors -->
-				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the study.</xforms:message>
 				
 				<!-- chained submissions -->
 				<xforms:action ev:event="xforms-submit-done">
 					<xforms:send submission="sub-get-submitted-media-feed"/>
 					<xforms:send submission="sub-get-curated-media-feed"/>
 					
+					<xforms:dispatch target="cmis-rest-model" name="cmis-rest-get-ticket"/>
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-get-files">
+               			<xxforms:context name="fr:site" select="instance('ins-study-entry')//manta:id"/>
+    				</xforms:dispatch>
+                
 					<xforms:send submission="sub-get-file-terms" />
 				</xforms:action>
 				
 			</xforms:submission>
 
-      <xforms:instance id="ins-submitted-media-feed">
+        	<xforms:instance id="ins-submitted-media-feed">
         		<atom:feed/>
-      </xforms:instance>
+        	</xforms:instance>
         	
-      <xforms:submission
+        	<xforms:submission
         		id="sub-get-submitted-media-feed"
         		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
         		method="get"
@@ -122,18 +128,20 @@
         	</xforms:instance>
 
 			<xforms:instance id="ins-blank-entry">
-				<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-					<atom:category term="" label=""/>
-					<atom:title type="text">test title</atom:title>
-					<atom:summary type="text"></atom:summary>
-					<atom:content type=""/>
-					<atom:link rel="self" href=""/>
-					<atom:author>
-						<atom:email></atom:email>
-					</atom:author>
-				</atom:entry>
+			<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+			<atom:category term="" label=""/>
+    
+    <atom:title type="text">test title</atom:title>
+    <atom:summary type="text"></atom:summary>
+    <atom:content type=""/>
+    <atom:link rel="self" href=""/>
+    <atom:author>
+        <atom:email></atom:email>
+    </atom:author>
+    
+</atom:entry>
 			</xforms:instance>
-     	<xforms:submission 
+        	<xforms:submission 
         		id="sub-post-background-uploads" 
         		ref="instance('ins-uploads')" 
         		method="post" 
@@ -141,7 +149,7 @@
         		resource="test:"
         		validate="false"/>
  
-			<xforms:submission 
+        	<xforms:submission 
         		id="sub-post-uploads" 
         		ref="instance('ins-uploads')" 
         		method="post" 
@@ -158,7 +166,7 @@
         			
         			 -->
         			<!-- sort the derivation input -->
-        			<xforms:action xxforms:iterate="tokenize(instance('ins-derivation-selection'), ' ')">
+        			<xforms:action xxforms:iterate="tokenize(instance('ins-derivation-selection'), ' ')" if="not($is-send-alfresco)">
         				<xforms:insert 
         					context="instance('ins-derivation-entry')"
         					nodeset="atom:link"
@@ -167,6 +175,19 @@
         					position="after"
         				/>
         				<xforms:setvalue ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput'][last()]/@href" value="context()"/>
+        			</xforms:action>
+        			
+        			<!-- sort the derivation input -->
+        			<xforms:action xxforms:iterate="tokenize(instance('ins-derivation-selection'), ' ')" if="$is-send-alfresco">
+        				<xforms:insert 
+        					context="instance('ins-derivation-entry')"
+        					nodeset="atom:link"
+        					origin="instance('ins-input-link-template')"
+        					at="last()"
+        					position="after"
+        				/>
+        				<xforms:setvalue ref="instance('ins-derivation-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput'][last()]/@href" 
+        					value="xxforms:instance('ins-cmis-rest-media-feed')//atom:entry[cmisra:object/cmis:properties/cmis:propertyId[@queryName='cmis:objectId']/cmis:value = context()]//cmis:propertyString[@queryName='wc:fileId']/cmis:value"/>
         			</xforms:action>
         			
         			<!-- sort the derivation output -->
@@ -186,30 +207,34 @@
         			<xforms:send submission="sub-post-derivation"/>
 
         			<xforms:action if="$is-send-alfresco" xxforms:iterate="instance('ins-uploads')//upload">
-								<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id" />
-								<xxforms:variable name="upload" select="."/>
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:title" value="$upload/@filename"/>
+        				<xxforms:variable name="study-id" select="instance('ins-study-entry')//manta:id" />
+						<xxforms:variable name="upload" select="."/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:title" value="$upload/@filename"/>
 					
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:content/@type" value="$upload/@mediatype"/>
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
-								<xforms:setvalue ref="instance('ins-blank-entry')//atom:link[@rel='self']/@href" value="instance('ins-uploads-results-feed')//atom:entry[atom:title/text() = $upload/@filename]/atom:link[@rel='self']/@href"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:content/@type" value="$upload/@mediatype"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@term" value="$upload/@typeterm"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:category/@label" value="$upload/@typelabel"/>
+						<xforms:setvalue ref="instance('ins-blank-entry')//atom:email" value="xxforms:instance('ins-current-user')//name"/>
+					 	<xforms:setvalue ref="instance('ins-blank-entry')//atom:link[@rel='self']/@href" value="instance('ins-uploads-results-feed')//atom:entry[atom:title/text() = $upload/@filename]/atom:link[@rel='self']/@href"/>
 						
-								<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
-								<xxforms:variable name="file-uri" select="text()" />
-								<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
-									<xxforms:context name="fr:media-entry" select="$media-entry"/>
-									<xxforms:context name="fr:site" select="$study-id" />
-									<xxforms:context name="fr:source" select="'Curator'" />
-									<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
-									<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
-									<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
-								</xforms:dispatch>
-							</xforms:action>
-		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok'"
+						<xxforms:variable name="media-entry" select="instance('ins-blank-entry')"/>
+						<xxforms:variable name="file-uri" select="text()" />
+						<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
+							<xxforms:context name="fr:media-entry" select="$media-entry"/>
+							<xxforms:context name="fr:site" select="$study-id" />
+							<xxforms:context name="fr:source" select="'Curator'" />
+							<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
+							<xxforms:context name="fr:der-comment" select="instance('ins-derivation-entry')/atom:summary" />
+							<xxforms:context name="fr:der-selection" select="instance('ins-derivation-selection')" />
+							<xxforms:context name="fr:file-content" select="xxforms:doc-base64($file-uri)" />
+						</xforms:dispatch>
+						
+					</xforms:action>
+					 
+		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok' or not($is-send-alfresco)"
       		      submission="sub-get-dashboard" />
       		      
+					
         		</xforms:action>
         	</xforms:submission>
         	
@@ -407,134 +432,199 @@
 
 			<xxforms:variable name="submitted-media-to-curate" select="instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]"/>
     		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[empty($submitted-media-to-curate)]">
-    			<p>There are no submitted files that have passed personal data review.</p>
-    		</xforms:group>
-    		
-    		<xforms:group ref="instance('ins-submitted-media-feed')[exists($submitted-media-to-curate)]">
-    			
-    			<fr:datatable paginated="false">
-    				<thead>
-    					<tr>
-    						<th fr:sortable="false" fr:resizeable="true">Select</th>				
-    						<th fr:sortable="false" fr:resizeable="true">Code</th>
-    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
-    						<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
-    						<th fr:sortable="true" fr:resizeable="true">Contributor</th>
-    						<th fr:sortable="true" fr:resizeable="true">Type</th>
-    						<th>Actions</th>
-    					</tr>
-    				</thead>
-    				<tbody>
-    					<xforms:repeat id="rep-submitted-media" nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )], atom:published, 'text', 'ascending')">
-    						<tr>
-    							<td>
-    								<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
-    									<xforms:label/>
-    									<xforms:item>
-    										<xforms:label/>
-    										<xforms:value value="xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href"/>
-    									</xforms:item>
-    								</xforms:select>
-    							</td>
-    							<td>
-    								<xforms:output ref="manta:id"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:title"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:author/atom:email"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="
+    		<!-- If there are files from alfresco then we don't want to list the ones from Chassis -->
+								<xforms:group
+									ref="xxforms:instance('ins-cmis-rest-media-feed')[not(exists(atom:entry))]">
+									<xforms:group
+										ref="instance('ins-submitted-media-feed')[empty($submitted-media-to-curate)]">
+										<p>There are no submitted files that have passed personal
+											data review.</p>
+									</xforms:group>
+
+									<xforms:group
+										ref="instance('ins-submitted-media-feed')[exists($submitted-media-to-curate)]">
+
+										<fr:datatable paginated="false">
+											<thead>
+												<tr>
+													<th fr:sortable="false" fr:resizeable="true">Select</th>
+													<th fr:sortable="false" fr:resizeable="true">Code</th>
+													<th fr:sortable="true" fr:resizeable="true">File Name</th>
+													<th fr:sortable="true" fr:resizeable="true">Date
+														Submitted</th>
+													<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+													<th fr:sortable="true" fr:resizeable="true">Type</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<xforms:repeat id="rep-submitted-media"
+													nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry[contains(atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )], atom:published, 'text', 'ascending')">
+													<tr>
+														<td><xforms:select
+																ref="instance('ins-derivation-selection')"
+																appearance="full">
+																<xforms:label />
+																<xforms:item>
+																	<xforms:label />
+																	<xforms:value
+																		value="xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href" />
+																</xforms:item>
+															</xforms:select></td>
+														<td><xforms:output ref="manta:id" /></td>
+														<td><xforms:output ref="atom:title" /></td>
+														<td><xforms:output ref="atom:published"
+																xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />
+														</td>
+														<td><xforms:output ref="atom:author/atom:email" /></td>
+														<td><xforms:output
+																ref="
     									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
     									return
     									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
     									then $cat/@label
     									else instance('ins-file-terms')/term[value=$cat/@term]/label
-    									"/>
-    							</td>
-    							<td>
-    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    									<a href="{atom:content/@src}">Download</a>
-    								</xforms:group>
-    							</td>
-    						</tr>
-    					</xforms:repeat>
-    				</tbody>
-    			</fr:datatable>
-    			
-    		</xforms:group>
-    		
-    		<h3>Curated Files</h3>
-    		
-    		<xforms:group ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
-    			<p>There are no curated files.</p>
-    		</xforms:group>
-    		
-    		<xforms:group ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
-    			
-    			<fr:datatable paginated="false">
-    				<thead>
-    					<tr>
-    						<th fr:sortable="false" fr:resizeable="true">Select</th>				
-    						<th fr:sortable="true" fr:resizeable="true">Code</th>
-    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
-    						<th fr:sortable="true" fr:resizeable="true">Date Submitted</th>
-    						<th fr:sortable="true" fr:resizeable="true">Curator</th>
-    						<th fr:sortable="true" fr:resizeable="true">Type</th>
-    						<th>Actions</th>
-    					</tr>
-    				</thead>
-    				<tbody>
-    					<xforms:repeat id="rep-curated-media" nodeset="xxforms:sort(instance('ins-curated-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
-    						<tr>
-    							<td>
-    								<xforms:select ref="instance('ins-derivation-selection')" appearance="full">
-    									<xforms:label/>
-    									<xforms:item>
-    										<xforms:label/>
-    										<xforms:value value="xxforms:context('rep-curated-media')/atom:link[@rel='edit']/@href"/>
-    									</xforms:item>
-    								</xforms:select>
-    							</td>
-    							<td>
-    								<xforms:output ref="manta:id"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:title"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="atom:author/atom:email"/>
-    							</td>
-    							<td>
-    								<xforms:output ref="
+    									" />
+														</td>
+														<td><xforms:group
+																ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+																<a href="{atom:content/@src}">Download</a>
+															</xforms:group></td>
+													</tr>
+												</xforms:repeat>
+											</tbody>
+										</fr:datatable>
+
+									</xforms:group>
+
+									<h3>Curated Files</h3>
+
+									<xforms:group
+										ref="instance('ins-curated-media-feed')[empty(atom:entry)]">
+										<p>There are no curated files.</p>
+									</xforms:group>
+
+									<xforms:group
+										ref="instance('ins-curated-media-feed')[exists(atom:entry)]">
+
+										<fr:datatable paginated="false">
+											<thead>
+												<tr>
+													<th fr:sortable="false" fr:resizeable="true">Select</th>
+													<th fr:sortable="true" fr:resizeable="true">Code</th>
+													<th fr:sortable="true" fr:resizeable="true">File Name</th>
+													<th fr:sortable="true" fr:resizeable="true">Date
+														Submitted</th>
+													<th fr:sortable="true" fr:resizeable="true">Curator</th>
+													<th fr:sortable="true" fr:resizeable="true">Type</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<xforms:repeat id="rep-curated-media"
+													nodeset="xxforms:sort(instance('ins-curated-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+													<tr>
+														<td><xforms:select
+																ref="instance('ins-derivation-selection')"
+																appearance="full">
+																<xforms:label />
+																<xforms:item>
+																	<xforms:label />
+																	<xforms:value
+																		value="xxforms:context('rep-curated-media')/atom:link[@rel='edit']/@href" />
+																</xforms:item>
+															</xforms:select></td>
+														<td><xforms:output ref="manta:id" /></td>
+														<td><xforms:output ref="atom:title" /></td>
+														<td><xforms:output ref="atom:published"
+																xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')" />
+														</td>
+														<td><xforms:output ref="atom:author/atom:email" /></td>
+														<td><xforms:output
+																ref="
     									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
     									return
     									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
     									then $cat/@label
     									else instance('ins-file-terms')/term[value=$cat/@term]/label
-    									"/>
-    							</td>
-    							<td>
-    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-    									<a href="{atom:content/@src}">Download</a>
-    								</xforms:group>
-    							</td>
-    						</tr>
-    					</xforms:repeat>
-    				</tbody>
-    			</fr:datatable>
-    			
-    		</xforms:group>
-    		
+    									" />
+														</td>
+														<td><xforms:group
+																ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+																<a href="{atom:content/@src}">Download</a>
+															</xforms:group></td>
+													</tr>
+												</xforms:repeat>
+											</tbody>
+										</fr:datatable>
+
+									</xforms:group>
+								</xforms:group>
+
+								<xforms:group ref="xxforms:instance('ins-cmis-rest-media-feed')[exists(atom:entry)]">
+								
+								<div id="list-of-alf-files-container">
+									
+									<fr:datatable paginated="false">
+										<thead>
+											<tr>
+												<th fr:resizeable="true">Select</th>
+												<th fr:sortable="true" fr:resizeable="true">Code</th>
+												<th fr:sortable="true" fr:resizeable="true">File name</th>
+												<th fr:sortable="true" fr:resizeable="true">Date submitted</th>
+												<th fr:sortable="true" fr:resizeable="true">Curator</th>
+												<th fr:sortable="true" fr:resizeable="true">Type</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
+											<xforms:repeat id="rep-alf-media-curator" nodeset="atom:entry">
+												<tr class="repeated-element">
+													<td>
+														<xforms:select ref="instance('ins-derivation-selection')"
+																appearance="full">
+																<xforms:label />
+																<xforms:item>
+																	<xforms:label />
+																	<xforms:value
+																		value="xxforms:context('rep-alf-media-curator')//cmis:propertyId[@queryName='cmis:objectId']/cmis:value" />
+																</xforms:item>
+															</xforms:select></td>
+													<td></td>
+													<td>
+														<xforms:output ref="atom:title"/>
+													</td>
+													<td>
+														<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+													</td>
+													<td>
+														<xforms:output ref=".//cmis:propertyString[@queryName='wc:submitter']/cmis:value"/>
+													</td>
+													<td>
+														<xforms:output ref="
+															for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+															return
+															if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+															then $cat/@label
+															else instance('ins-file-terms')//term[value=$cat/@term]/label
+															"/>
+														<xforms:output ref=".//cmis:propertyId[@queryName='cmis:objectTypeId']/cmis:value"/>
+													</td>
+													<td>
+													<!-- Authentication issues....
+														<span class="download-file-link-container"><a href="{atom:link[@rel='self']/@href}">Download</a></span><br/>
+														 -->
+													</td>
+												</tr>
+											</xforms:repeat>
+										</tbody>
+									</fr:datatable>
+									
+								</div>
+								
+							</xforms:group>
+							
     		<h3>Comments</h3>
     		
     		<p>Describe the work you did to create the files you are uploading...</p>

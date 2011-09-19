@@ -278,7 +278,7 @@
                                 </xforms:group>
 							</div>
 							
-							<xforms:group ref="instance('ins-alf-media-feed')[exists(atom:entry)]">
+							<xforms:group ref="xxforms:instance('ins-cmis-rest-media-feed')[exists(atom:entry)]">
 								
 								<div id="list-of-alf-files-container">
 									
@@ -307,7 +307,7 @@
 														<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
 													</td>
 													<td>
-														<xforms:output ref="atom:author/atom:email"/>
+														<xforms:output ref=".//cmis:propertyString[@queryName='wc:submitter']/cmis:value"/>
 													</td>
 													<td>
 														<xforms:output ref="
@@ -320,12 +320,7 @@
 														<xforms:output ref=".//cmis:propertyId[@queryName='cmis:objectTypeId']/cmis:value"/>
 													</td>
 													<td>
-														<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
-															<span class="download-file-link-container"><a href="{atom:content/@src}">Download</a></span><br/>
-														</xforms:group>
-														<xforms:group ref="instance('ins-control')/curator-controls">
-															<a href="file-details?media-link={xxforms:context('rep-curated-media-curator')/atom:link[@rel='edit']/@href}">Details</a>
-														</xforms:group>
+														
 													</td>
 												</tr>
 											</xforms:repeat>
