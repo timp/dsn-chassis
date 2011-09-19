@@ -1,9 +1,18 @@
 #alf-upload-studies.sh
+if [[ $(uname) == Cygwin ]]
+then
+ SEPARATOR=';'
+else
+ SEPARATOR=':'
+fi
+
 CLASSPATH=.
 for i in `ls jars/*`
 do
-	CLASSPATH="$CLASSPATH;./$i"
+        CLASSPATH="$CLASSPATH$SEPARATOR./$i"
 done
+echo classpath ${CLASSPATH}
+
 ALF_HOME=http://129.67.45.244:8080/alfresco/service
 UPDATE=true
 mkdir cmis-entries
@@ -58,3 +67,4 @@ cat >>${METADATA_FILE} <<+++EOT
 	
 	
 done
+
