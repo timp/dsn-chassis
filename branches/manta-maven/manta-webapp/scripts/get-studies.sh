@@ -1,17 +1,17 @@
-USERNAME=
-PASSWORD=
-HOST=http://cloud1.cggh.org/repository
+USERNAME=adam@example.org
+PASSWORD=bar
+HOST=https://cloud1.cggh.org/repository
 TICKETS=http://cloud1.cggh.org/sso/v1/tickets
 
-USERNAME=
-PASSWORD=
-HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
-TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
+#USERNAME=
+#PASSWORD=
+#HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
+#TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
 
-USERNAME=
-PASSWORD=
-HOST=https://www.wwarn.org/repository
-TICKETS=https://www.wwarn.org/sso/v1/tickets
+#USERNAME=
+#PASSWORD=
+#HOST=https://www.wwarn.org/repository
+#TICKETS=https://www.wwarn.org/sso/v1/tickets
 
 
 TARGET=${HOST}/service/content/studies
