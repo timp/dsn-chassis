@@ -1,17 +1,17 @@
-USERNAME=
-PASSWORD=
-HOST=http://cloud1.cggh.org/repository
+USERNAME=adam@example.org
+PASSWORD=bar
+HOST=https://cloud1.cggh.org/repository
 TICKETS=http://cloud1.cggh.org/sso/v1/tickets
 
-USERNAME=
-PASSWORD=
-HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
-TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
+#USERNAME=
+#PASSWORD=
+#HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
+#TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
 
-USERNAME=
-PASSWORD=
-HOST=https://www.wwarn.org/repository
-TICKETS=https://www.wwarn.org/sso/v1/tickets
+#USERNAME=
+#PASSWORD=
+#HOST=https://www.wwarn.org/repository
+#TICKETS=https://www.wwarn.org/sso/v1/tickets
 
 
 TARGET=${HOST}/service/content/media/submitted
@@ -27,11 +27,20 @@ curl -k -b cookie-jar -o submitted.xml ${TARGET}
 curl -k -b cookie-jar -o curated.xml ${HOST}/service/content/media/curated
 curl -k -b cookie-jar -o derivations.xml ${HOST}/service/content/derivations
 
+if [[ $(uname) == Cygwin ]]
+then
+ SEPARATOR=';'
+else
+ SEPARATOR=':'
+fi
+
 CLASSPATH=.
 for i in `ls jars/*`
 do
-	CLASSPATH="$CLASSPATH;./$i"
+        CLASSPATH="$CLASSPATH$SEPARATOR./$i"
 done
+echo classpath ${CLASSPATH}
+
 
 mv entries entries.$$
 mkdir entries
@@ -62,3 +71,4 @@ do
 	fi
 	test -f files/${NAME} || curl -k -b cookie-jar -o files/${NAME} ${URL}
 done
+
