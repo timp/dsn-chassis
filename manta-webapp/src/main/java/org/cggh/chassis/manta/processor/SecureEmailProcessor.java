@@ -153,7 +153,8 @@ public class SecureEmailProcessor extends ProcessorImpl {
 		return (value);
 	}
 
-	public void start(PipelineContext pipelineContext) {
+	@SuppressWarnings("restriction") // we are using a sun jar
+  public void start(PipelineContext pipelineContext) {
 		try {
 			final Document dataDocument = readInputAsDOM4J(pipelineContext,
 					INPUT_DATA);
