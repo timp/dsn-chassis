@@ -1,5 +1,0 @@
-#summary A meeting of the whole SprintGroup
-
-= Introduction =
-
-Each project reviews goals from last Sprint and agrees the goals in scope for this Sprint
