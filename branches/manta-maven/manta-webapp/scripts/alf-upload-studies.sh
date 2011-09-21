@@ -13,7 +13,9 @@ do
 done
 echo classpath ${CLASSPATH}
 
-ALF_HOME=http://129.67.45.244:8080/alfresco/service
+ALF_MACHINE_ADDRESS=alfresco:8080
+#ALF_MACHINE_ADDRESS=129.67.45.244:8080
+ALF_HOME=http://${ALF_MACHINE_ADDRESS}/alfresco/service
 UPDATE=true
 mkdir cmis-entries
 mkdir cmis-folders
