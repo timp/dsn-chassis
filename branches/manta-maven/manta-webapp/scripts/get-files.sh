@@ -33,6 +33,13 @@ then
 else
  SEPARATOR=':'
 fi
+if [[ $(uname) == Darwin ]]
+then
+ SIZE_COMMAND='stat -f %z'
+else
+ SIZE_command='stat -c %s'
+fi
+
 
 CLASSPATH=.
 for i in `ls jars/*`
@@ -63,7 +70,7 @@ do
 	RSIZE=`grep edit-media $i | awk -F\" '{print $10}'`
 	if [ -f files/${NAME} ]
 	then
-		SIZE=`stat -c %s files/${NAME}`
+		SIZE=`$SIZE_COMMAND files/${NAME}`
 		if [ ${SIZE} -ne ${RSIZE} ]
 		then
 			rm files/${NAME}
