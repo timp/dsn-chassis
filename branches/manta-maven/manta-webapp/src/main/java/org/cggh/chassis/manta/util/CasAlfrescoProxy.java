@@ -32,7 +32,7 @@ public class CasAlfrescoProxy extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// private final static String ALFRESCO_WEBAPP_URL =
 	// "http://46.137.92.130:8080/alfresco";
-	private final static String ALFRESCO_WEBAPP_URL = "https://iwright-VirtualBox/alfresco";
+	private final static String ALFRESCO_WEBAPP_URL_CONFIG = "alfrescoApp";
 	public final static String CS_PARAM_ALF_TICKET = "alfTicket";
 	private static Log logger = LogFactory.getLog(CasAlfrescoProxy.class);
 
@@ -56,6 +56,9 @@ public class CasAlfrescoProxy extends HttpServlet {
 		int statusCode;
 		String ticketXML = CasAlfrescoProxy.getAlfrescoTicket(req, client);
 		
+		if (ticketXML == null) {
+			return;
+		}
 		String ticket = CasAlfrescoProxy.extractTicket(ticketXML);
 
 		//Should really check if there are any existing parameters - this assumes that there are none
@@ -112,11 +115,14 @@ public class CasAlfrescoProxy extends HttpServlet {
 		String username = assertion.getPrincipal().getName();
 		// Read out the ticket id
 		String ticket = null;
-
+		String alfrescoWebAppURL = LookupJNDI.<String> getEnvEntry(ALFRESCO_WEBAPP_URL_CONFIG);
+		if (alfrescoWebAppURL == null) {
+			return (null);
+		}
 		String proxyticket = assertion.getPrincipal().getProxyTicketFor(
-				ALFRESCO_WEBAPP_URL);
+				alfrescoWebAppURL);
 
-		String casLoginUrl = ALFRESCO_WEBAPP_URL + "/service/api/logincas?u="
+		String casLoginUrl = alfrescoWebAppURL + "/service/api/logincas?u="
 				+ URLEncoder.encode(username, "UTF-8") + "&t="
 				+ URLEncoder.encode(proxyticket, "UTF-8");
 

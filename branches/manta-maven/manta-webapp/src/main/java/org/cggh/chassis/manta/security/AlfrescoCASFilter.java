@@ -15,26 +15,25 @@ import org.cggh.chassis.manta.util.CasAlfrescoProxy;
 
 /**
  * @author iwright
- *
+ * 
  */
 public class AlfrescoCASFilter extends HttpFilter {
 
-	
-  private Log log = LogFactory.getLog(this.getClass());
-	
-	
-	
+	private Log log = LogFactory.getLog(this.getClass());
+
 	public static final String ALFRESCO_TICKET = "alf_ticket";
-	
-	
+
 	@Override
-	public void doHttpFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doHttpFilter(HttpServletRequest request,
+			HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		log.debug("request inbound");
 
 		HttpClient client = new HttpClient();
 		String ticket = CasAlfrescoProxy.getAlfrescoTicket(request, client);
-					
-		request.setAttribute(ALFRESCO_TICKET, ticket);
+		if (ticket != null) {
+			request.setAttribute(ALFRESCO_TICKET, ticket);
+		}
 		log.debug("alfresco ticket:" + ticket);
 		chain.doFilter(request, response);
 
