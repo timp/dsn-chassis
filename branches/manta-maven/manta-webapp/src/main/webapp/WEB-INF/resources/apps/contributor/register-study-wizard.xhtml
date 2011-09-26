@@ -202,6 +202,12 @@
                			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
     				</xforms:dispatch>
                 </xforms:action>
+                <xforms:action ev:event="xforms-submit-done" if="$is-send-alfresco and contains(instance('ins-study-entry')//modules,'molecular')">
+               		<xforms:dispatch target="cmis-rest-model" name="cmis-rest-start-workflow">
+               			<xxforms:context name="fr:workflowName" select="'ww:molecularStudyProcess'"/>
+               			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
+    				</xforms:dispatch>
+                </xforms:action>
                 <xforms:action ev:event="xforms-submit-done">
                 	<xforms:setvalue ref="instance('ins-control')/wizard-pane-being-shown" value="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"  />
                 	<xforms:message>The study is no longer a draft.</xforms:message>

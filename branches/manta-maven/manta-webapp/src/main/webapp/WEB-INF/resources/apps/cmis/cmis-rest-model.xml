@@ -81,6 +81,9 @@ ab5be61f787c62660ff3008299"
     <xforms:instance id="ins-cmis-rest-workflow">
         <atom:entry/>
     </xforms:instance>
+    <xforms:instance id="ins-cmis-rest-workflow-response">
+        <atom:entry/>
+    </xforms:instance>
    <!-- start Alf media - will only work when filter is active -->     
     <xforms:instance id="ins-cmis-rest">
         <request/>
@@ -195,11 +198,10 @@ ab5be61f787c62660ff3008299"
     <xforms:action ev:event="cmis-rest-start-workflow">
         
         <xforms:setvalue ref="instance('ins-cmis-rest-control')//workflowName" value="event('fr:workflowName')"/>
+        <xforms:delete nodeset="instance('ins-cmis-rest-workflow')/atom:entry/*"/>
         <xforms:insert 
             context="instance('ins-cmis-rest-workflow')" 
             nodeset="atom:entry"
-            at="1"
-            position="after"
             origin="event('fr:content')/*"/>
         <xforms:send submission="cmis-rest-start-workflow-submission"/>
     </xforms:action>
@@ -458,6 +460,7 @@ ab5be61f787c62660ff3008299"
         resource="{$alfresco-uri}service/wwarn/startworkflow?workflow={instance('ins-cmis-rest-control')//workflowName}"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
         mediatype="application/atom+xml"
+        instance="ins-cmis-rest-workflow-response"
         replace="instance" if="$is-send-alfresco">
     </xforms:submission>
 </xforms:model>
