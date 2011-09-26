@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,12 @@ public class CasAlfrescoProxy extends HttpServlet {
 		
 		GetMethod method;
 		int statusCode;
-		String ticketXML = CasAlfrescoProxy.getAlfrescoTicket(req, client);
+		String ticketXML = null;
+		try {
+			ticketXML = CasAlfrescoProxy.getAlfrescoTicket(req, client);
+		} catch (NamingException e) {
+			logger.error("Need to set JNDI variable alfrescoApp if using Alfresco", e);
+		}
 		
 		if (ticketXML == null) {
 			return;
@@ -102,7 +108,7 @@ public class CasAlfrescoProxy extends HttpServlet {
 
 	public static String getAlfrescoTicket(HttpServletRequest req, HttpClient client)
 			throws UnsupportedEncodingException, IOException, HttpException,
-			ServletException {
+			ServletException, NamingException {
 		
 		HttpSession httpSess = req.getSession(true);
 		

@@ -2,6 +2,7 @@ package org.cggh.chassis.manta.security;
 
 import java.io.IOException;
 
+import javax.naming.NamingException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,12 @@ public class AlfrescoCASFilter extends HttpFilter {
 		log.debug("request inbound");
 
 		HttpClient client = new HttpClient();
-		String ticket = CasAlfrescoProxy.getAlfrescoTicket(request, client);
+		String ticket = null;
+		try {
+			ticket = CasAlfrescoProxy.getAlfrescoTicket(request, client);
+		} catch (NamingException e) {
+			log.error("Need to set JNDI variable alfrescoApp if using Alfresco", e);
+		}
 		if (ticket != null) {
 			request.setAttribute(ALFRESCO_TICKET, ticket);
 		}
