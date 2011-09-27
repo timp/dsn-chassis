@@ -10,7 +10,7 @@
 		<xsl:apply-templates select="atom:entry" />
 	</xsl:template>
 	<xsl:template match="atom:entry">
-		<xsl:variable name="filename" select="concat('entries/',manta:id/text(),'.xml')" />
+		<xsl:variable name="filename" select="concat('studies/',manta:id/text(),'.xml')" />
 		<redirect:write select="$filename">
 			<atom:entry>
 				<xsl:apply-templates />

@@ -16,12 +16,12 @@ echo classpath ${CLASSPATH}
 ALF_MACHINE_ADDRESS=alfresco:8080
 #ALF_MACHINE_ADDRESS=129.67.45.244:8080
 ALF_HOME=http://${ALF_MACHINE_ADDRESS}/alfresco/service
-UPDATE=true
+UPDATE=false
 mkdir cmis-entries
 mkdir cmis-folders
-for j in entries/*
+for j in studies/*
 do
-	NAME=`echo -n $j| sed -e 's#entries/##'`
+	NAME=`echo -n $j| sed -e 's#studies/##'`
 	STUDY=`echo -n ${NAME}| sed -e 's#.xml##'`
 	#Create the spaces (folders)
 	OUT=cmis-folders/${NAME}
