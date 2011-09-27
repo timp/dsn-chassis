@@ -49,17 +49,17 @@ done
 echo classpath ${CLASSPATH}
 
 
-mv entries entries.$$
-mkdir entries
+mv studies studies.$$
+mkdir studies
 for j in submitted curated
 do
 	rm -rf $j
 
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j.xml -XSL split-feed.xsl -OUT foo.out
 	
-	mv entries $j
+	mv studies $j
 done
-mv entries.$$ entries
+mv studies.$$ studies
 
 #rm -rf files
 mkdir files
