@@ -367,7 +367,7 @@
 				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>https://cloud1.cggh.org/sso</cas.url>
+				<cas.url>https://www.cggh.org/sso</cas.url>
 				<chassis.url>https://cloud1.cggh.org</chassis.url>
 				<test-email>ian.wright@wwarn.org</test-email>
 				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
