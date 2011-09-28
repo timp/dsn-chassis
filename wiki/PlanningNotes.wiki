@@ -1,4 +1,5 @@
-#summary planning notes
+#summary (superseded) Planning notes
+#labels Deprecated
 
 Milestone: WWARN explorer preview version (limited release, by invitation)
 
