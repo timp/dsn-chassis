@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Add the following to the settings.xml for the user who builds the war (you or jenkins)
+Add the following to the settings.xml for the user who builds the war (you or jenkins) (NB Use correct password)
 {{{
 <settings>
  <profiles>
@@ -16,7 +16,7 @@ Add the following to the settings.xml for the user who builds the war (you or je
 <use-alfresco>true</use-alfresco>
 <alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
 <alfresco-username>admin</alfresco-username>
-<alfresco-password>admin</alfresco-password>
+<alfresco-password>ASK_SYSADMIN</alfresco-password>
 
 <!-- Needed for cas-enabled  developer setup on localhost -->
 <!--                                                                                                                                                          
