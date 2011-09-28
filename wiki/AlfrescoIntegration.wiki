@@ -32,7 +32,7 @@ Add the following to the settings.xml for the user who builds the war (you or je
 
 
 }}}
-
+Edit your JNDI file (/srv/chassis-manta/context/repository.xml)
 {{{
 <Environment name="alfrescoApp" type="java.lang.String" value="https://www.cggh.org/alfresco"/>
 
