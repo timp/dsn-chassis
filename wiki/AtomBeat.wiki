@@ -1,4 +1,4 @@
-#summary an Atom protocol implementation for eXist
+#summary An Atom protocol implementation for eXist
 #labels Phase-Architecture
 
 = Introduction =
