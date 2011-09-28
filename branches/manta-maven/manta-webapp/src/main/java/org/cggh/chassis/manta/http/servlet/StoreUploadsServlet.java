@@ -39,10 +39,8 @@ import org.xml.sax.SAXException;
 
 public class StoreUploadsServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -227666119754951587L;
+
 	private Abdera abdera = new Abdera();
 	
 	private static final Logger logger = Logger.getLogger(StoreUploadsServlet.class.getName());
@@ -72,7 +70,6 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
 	public StoreUploadsServlet() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -109,11 +106,17 @@ public class StoreUploadsServlet extends HttpServlet {
 			Element aggregatedResponseDocumentRoot = aggregatedResponseDocument.createElementNS("http://www.w3.org/2005/Atom", "feed");
 			aggregatedResponseDocument.appendChild(aggregatedResponseDocumentRoot);
 			
+			int responseDocumentCount = 0;
 			for (org.w3c.dom.Document responseDocument : responseDocumentsList) {
-        // FIXME responseDocument can be null
-			  Element documentElement = responseDocument.getDocumentElement();
-				Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
-				aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
+			  responseDocumentCount++;
+        // FIXME Under what circumstances is responseDocument null?
+			  if (responseDocument != null) {
+			    Element documentElement = responseDocument.getDocumentElement();
+			    Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
+			    aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
+			  } else { 
+			    logger.debug("Response document (" + responseDocumentCount + " of " + responseDocumentsList.size() + ") was null");
+			  }
 			}
 			
 			// return aggregated document
@@ -189,30 +192,21 @@ public class StoreUploadsServlet extends HttpServlet {
             }
             			
 		} catch (MalformedURLException e) {
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+      throw new RuntimeException(e);
 		} catch (IOException e) {
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
+      throw new RuntimeException(e);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		} 
 		
 		return returnDocument;
 	}
 
 	private void sendBadRequest(String message, HttpServletResponse res) {
-		// TODO Auto-generated method stub
 		try {
 			res.sendError(500, "TODO");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		}
 	}
 
