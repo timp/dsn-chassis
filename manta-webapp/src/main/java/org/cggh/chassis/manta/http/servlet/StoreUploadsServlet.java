@@ -110,7 +110,8 @@ public class StoreUploadsServlet extends HttpServlet {
 			aggregatedResponseDocument.appendChild(aggregatedResponseDocumentRoot);
 			
 			for (org.w3c.dom.Document responseDocument : responseDocumentsList) {
-				Element documentElement = responseDocument.getDocumentElement();
+        // FIXME responseDocument can be null
+			  Element documentElement = responseDocument.getDocumentElement();
 				Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
 				aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
 			}
