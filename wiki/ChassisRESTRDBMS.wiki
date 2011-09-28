@@ -1,4 +1,4 @@
-#summary Chassis Rest service
+#summary Chassis Rest validation service
 = Introduction =
 
 A description of a web service which will validate a Chassis Atom entry, according to an XML schema, and store the entry in a relational database
