@@ -1,3 +1,4 @@
-#summary how code projects are organised
+#summary How code projects are organised
+#labels Deprecated
 
 This page has been temporarily removed as the information is out of date.
