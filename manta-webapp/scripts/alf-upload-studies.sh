@@ -26,11 +26,12 @@ do
 	#Create the spaces (folders)
 	OUT=cmis-folders/${NAME}
 	echo "Outputting to $OUT" 
-	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL study-cmis.xsl -OUT ${OUT} 
 	
+	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL study-cmis.xsl -OUT ${OUT} > t.tmp 
+	echo "done" 
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
+		curl -s -uadmin:admin -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
 	else
 		curl -s -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
 	fi	
@@ -40,7 +41,7 @@ do
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL study-metadata-cmis.xsl -OUT ${METADATA}
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -S -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+		curl -s -S -uadmin:admin -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 	else
 		curl -s -S -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
@@ -64,9 +65,12 @@ cat >>${METADATA_FILE} <<+++EOT
         </cmis:properties>
     </cmisra:object>
 </entry>
+
 +++EOT
 #Update metadata file
 	curl -s -S -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 done
 
 echo "end alf-upload-studies.sh" 
+
+
