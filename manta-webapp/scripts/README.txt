@@ -1,7 +1,7 @@
 General
 
 The scripts assume a user of adam@example.org on cloud1, 
-to use a diffuerent setup you'll need to fill in your account and server details 
+to use a different setup you'll need to fill in your account and server details 
 at the top of the script before running 
 
 The scripts assume admin:admin for alfresco (FIXME)
@@ -21,22 +21,20 @@ there aren't many files in studies during testing.
 
 
 alf-upload-studies.sh - uploads the studies to alfresco 
-Set UPDATE=false the first time you run it, when creating the files, 
-subsequent runs are updates.
+
+Currently the update flag does not appear to work.
+Keep UPDATE=false, always delete existing content from alfresco
+
 
 get-files.sh - downloads the files from chassis 
-This takes quite a while and is dependent on network connection - 
-there's some stuff to do with checking the file sizes at the end which 
-helps if you need to restart.
 
 alf-upload-files.sh - upload the files to alfresco 
 Need to check that all the metadata is correctly populated (in file-cmis.xsl) 
 especially submitter.
 
 
-
 TODO
-The derived from associations need to be set up 
+The derived-from associations need to be set up 
 (comments should already be done) - the syntax for the REST calls for this is:
 
 (GET) ${ALF_HOME}/wwarn/createDerivedAssoc?outputFileNodeRef=" + outputFileNodeRef + "&studyFileNodeRef=" + studyFileNodeRef;

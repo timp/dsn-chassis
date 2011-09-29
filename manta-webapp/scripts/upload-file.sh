@@ -22,10 +22,10 @@ TGT=`wget --no-check-certificate --post-data="username=${USERNAME}&password=${PA
 #get Service Ticket
 ST=`wget --no-check-certificate --post-data="service=${TARGET}" -q -O - -d ${TICKETS}/${TGT}`
 #Get the resource
-curl -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET}?ticket=$ST
+curl -s -S -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET}?ticket=$ST
 
 for i in uploaddata/*
 do
 #Make sure that you actually have permission to upload submitted files
-curl -k -b cookie-jar -o post.out -i -H "Content-Type: multipart/form-data" -F "media=@$i" -F 'category=scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes"; term="http://www.cggh.org/2010/chassis/terms/DataFile"; label="";' ${HOST}/service/content/media/submitted/${TARGET_STUDY}
+curl -s -S -k -b cookie-jar -o post.out -i -H "Content-Type: multipart/form-data" -F "media=@$i" -F 'category=scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes"; term="http://www.cggh.org/2010/chassis/terms/DataFile"; label="";' ${HOST}/service/content/media/submitted/${TARGET_STUDY}
 done

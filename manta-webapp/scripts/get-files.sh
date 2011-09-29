@@ -16,16 +16,16 @@ TICKETS=http://cloud1.cggh.org/sso/v1/tickets
 
 TARGET=${HOST}/service/content/media/submitted
 
-TGT=`curl -k -D - -d "username=${USERNAME}&password=${PASSWORD}" ${TICKETS} 2>&1 | grep Location | grep TGT | awk -F/ '{printf $NF}'`
+TGT=`curl -s -S -k -D - -d "username=${USERNAME}&password=${PASSWORD}" ${TICKETS} 2>&1 | grep Location | grep TGT | awk -F/ '{printf $NF}'`
 #get Service Ticket
-ST=`curl -k -d "service=${TARGET}" -q ${TICKETS}/${TGT}`
+ST=`curl -s -S -k -d "service=${TARGET}" -q ${TICKETS}/${TGT}`
 #Get the resource
-curl -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET}?ticket=$ST
+curl -s -S -k -c cookie-jar -o studies.ticket -i -H "Accept: text/xml" -X GET ${TARGET}?ticket=$ST
 
 
-curl -k -b cookie-jar -o submitted.xml ${TARGET}
-curl -k -b cookie-jar -o curated.xml ${HOST}/service/content/media/curated
-curl -k -b cookie-jar -o derivations.xml ${HOST}/service/content/derivations
+curl -s -S -k -b cookie-jar -o submitted.xml ${TARGET}
+curl -s -S -k -b cookie-jar -o curated.xml ${HOST}/service/content/media/curated
+curl -s -S -k -b cookie-jar -o derivations.xml ${HOST}/service/content/derivations
 
 if [[ $(uname) == Cygwin ]]
 then
@@ -76,6 +76,6 @@ do
 			rm files/${NAME}
 		fi
 	fi
-	test -f files/${NAME} || curl -k -b cookie-jar -o files/${NAME} ${URL}
+	test -f files/${NAME} || curl -s -S -k -b cookie-jar -o files/${NAME} ${URL}
 done
 
