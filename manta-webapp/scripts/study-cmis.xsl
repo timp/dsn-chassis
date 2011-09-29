@@ -98,9 +98,9 @@
 	</xsl:template>
 	<xsl:template match="//atombeat:member">
 	
-                    <cmis:value>
-                        <xsl:apply-templates select="node()"/>
-                    </cmis:value>
+     <cmis:value>
+       <xsl:apply-templates select="node()"/>
+     </cmis:value>
     
-    </xsl:template>
+  </xsl:template>
 </xsl:stylesheet>
