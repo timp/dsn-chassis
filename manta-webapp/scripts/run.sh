@@ -11,4 +11,6 @@ echo get-files.sh
 ./get-files.sh
 echo alf-upload-files.sh
 ./alf-upload-files.sh
+echo alf-set-derivations.sh
+./alf-set-derivations.sh
 
