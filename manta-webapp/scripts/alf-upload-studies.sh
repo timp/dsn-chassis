@@ -1,27 +1,13 @@
 #alf-upload-studies.sh
-if [[ $(uname) == Cygwin ]]
-then
- SEPARATOR=';'
-else
- SEPARATOR=':'
-fi
 
-CLASSPATH=.
-for i in `ls jars/*`
-do
-        CLASSPATH="$CLASSPATH$SEPARATOR./$i"
-done
-echo classpath ${CLASSPATH}
+. ./config.sh
 
-ALF_MACHINE_ADDRESS=alfresco:8080
-#ALF_MACHINE_ADDRESS=129.67.45.244:8080
-ALF_HOME=http://${ALF_MACHINE_ADDRESS}/alfresco/service
 UPDATE=false # always - update broken
 mkdir cmis-entries
 mkdir cmis-folders
-for j in studies/*
+for j in ${STUDIES_DIR}/*
 do
-	NAME=`echo -n $j| sed -e 's#studies/##'`
+	NAME=`echo -n $j| sed -e "s#${STUDIES_DIR}/##'"
 	STUDY=`echo -n ${NAME}| sed -e 's#.xml##'`
 	#Create the spaces (folders)
 	OUT=cmis-folders/${NAME}
@@ -31,9 +17,9 @@ do
 	echo "done" 
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -uadmin:admin -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
+		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
 	else
-		curl -s -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
+		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
 	fi	
 	METADATA=cmis-entries/${NAME}
 	METADATA_FILE=cmis-entries/${NAME}.load
@@ -41,9 +27,9 @@ do
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL study-metadata-cmis.xsl -OUT ${METADATA}
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -S -uadmin:admin -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+		curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 	else
-		curl -s -S -uadmin:admin -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+		curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
 #Create the content file
 cat >${METADATA_FILE} <<+++EOH
@@ -68,7 +54,7 @@ cat >>${METADATA_FILE} <<+++EOT
 
 +++EOT
 #Update metadata file
-	curl -s -S -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+	curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 done
 
 echo "end alf-upload-studies.sh" 

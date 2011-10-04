@@ -1,20 +1,6 @@
-#alf-upload-studies.sh
-if [[ $(uname) == Cygwin ]]
-then
- SEPARATOR=';'
-else
- SEPARATOR=':'
-fi
+#alf-upload-files.sh
 
-CLASSPATH=.
-for i in `ls jars/*`
-do
-        CLASSPATH="$CLASSPATH$SEPARATOR./$i"
-done
-echo classpath ${CLASSPATH}
-ALF_MACHINE_ADDRESS=alfresco:8080
-#ALF_MACHINE_ADDRESS=129.67.45.244:8080
-ALF_HOME=http://${ALF_MACHINE_ADDRESS}/alfresco/service
+. ./config.sh
 
 UPDATE=false
 DIR=cmis-files
@@ -51,9 +37,9 @@ do
 	then
 	  #FIXME need check that content is not the alfresco error page
 		UPDATE_URL=`grep edit-media ${METADATA_CREAT} | awk -F\" '{print $4}'`
-		curl -s -uadmin:admin -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${UPDATE_URL}
+		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${UPDATE_URL}
 	else
-		curl -s -uadmin:admin -X POST -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
 	
 	
