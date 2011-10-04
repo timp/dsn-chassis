@@ -61,4 +61,6 @@
   </reporters>
   <publishers/>
   <buildWrappers/>
+  <prebuilders/>
+  <postbuilders/>
 </maven2-moduleset>
