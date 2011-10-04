@@ -39,7 +39,7 @@
 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="wc:fileId"
 							displayName="File ID" queryName="wc:fileId">
-							<cmis:value><xsl:apply-templates select="manta:id/text()" /></cmis:value>
+							<cmis:value><xsl:apply-templates select="atom:id/text()" /></cmis:value>
 						</cmis:propertyString>
 						<xsl:apply-templates mode="derivations" select="atom:link"/>
 					</alf:properties>
