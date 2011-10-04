@@ -39,8 +39,10 @@ import org.xml.sax.SAXException;
 
 public class StoreUploadsServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -227666119754951587L;
-
 	private Abdera abdera = new Abdera();
 	
 	private static final Logger logger = Logger.getLogger(StoreUploadsServlet.class.getName());
@@ -70,6 +72,7 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
 	public StoreUploadsServlet() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -106,17 +109,10 @@ public class StoreUploadsServlet extends HttpServlet {
 			Element aggregatedResponseDocumentRoot = aggregatedResponseDocument.createElementNS("http://www.w3.org/2005/Atom", "feed");
 			aggregatedResponseDocument.appendChild(aggregatedResponseDocumentRoot);
 			
-			int responseDocumentCount = 0;
 			for (org.w3c.dom.Document responseDocument : responseDocumentsList) {
-			  responseDocumentCount++;
-        // FIXME Under what circumstances is responseDocument null?
-			  if (responseDocument != null) {
-			    Element documentElement = responseDocument.getDocumentElement();
-			    Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
-			    aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
-			  } else { 
-			    logger.debug("Response document (" + responseDocumentCount + " of " + responseDocumentsList.size() + ") was null");
-			  }
+				Element documentElement = responseDocument.getDocumentElement();
+				Node importedDocumentElement = aggregatedResponseDocument.importNode(documentElement, true);
+				aggregatedResponseDocumentRoot.appendChild(importedDocumentElement);
 			}
 			
 			// return aggregated document
@@ -147,78 +143,75 @@ public class StoreUploadsServlet extends HttpServlet {
 
 	}
 
-  private org.w3c.dom.Document storeUpload(HttpServletRequest req, Element ue, String targetCollectionUri) throws BadRequestException {
+	private org.w3c.dom.Document storeUpload(HttpServletRequest req, Element ue, String targetCollectionUri) throws BadRequestException {
+		
+		org.w3c.dom.Document returnDocument = null;
+		
+		String fileName = ue.getAttribute("filename");
+		String mediaType = ue.getAttribute("mediatype");
+		String typeTerm = ue.getAttribute("typeterm");
+		String typeLabel = ue.getAttribute("typelabel");
+				
+		try {
+			
+			URL tempFileUrl = new URL(ue.getTextContent());
+			InputStream uploadInputStream = tempFileUrl.openStream();
+			
+			AbderaClient atomClient = new AbderaClient();
+			RequestOptions requestOptions = createRequestOptions(req);
+            
+            if (fileName != null) {
+            	requestOptions.setHeader("Slug", fileName);
+            }
 
-    org.w3c.dom.Document returnDocument = null;
+            InputStreamRequestEntity uploadEntity = new InputStreamRequestEntity(uploadInputStream, mediaType);
+            
+            ClientResponse response = atomClient.post(targetCollectionUri, uploadEntity, requestOptions);
+            
+            if (response.getStatus() == 201) {
+            	
+    			// if success, assume atom, try to append type category and put back
+            	Document<Entry> mediaLinkEntryDocument = response.getDocument(abdera.getParser());
+            	Entry mediaLinkEntry = mediaLinkEntryDocument.getRoot();
+            	mediaLinkEntry.addCategory("http://www.cggh.org/2010/chassis/scheme/FileTypes", typeTerm, typeLabel);
+            	String editLocation = mediaLinkEntry.getEditLink().getHref().toASCIIString();
+            	
+            	response = atomClient.put(editLocation, mediaLinkEntryDocument, createRequestOptions(req));
+        		returnDocument = builder.parse(response.getInputStream());
+            }
+            
+            else {
 
-    String fileName = ue.getAttribute("filename");
-    String mediaType = ue.getAttribute("mediatype");
-    String typeTerm = ue.getAttribute("typeterm");
-    String typeLabel = ue.getAttribute("typelabel");
+            	// error document
+            	returnDocument = builder.parse(response.getInputStream());
+            	
+            }
+            			
+		} catch (MalformedURLException e) {
 
-    URL tempFileUrl = null;
-    String urlString = ue.getNodeValue();
-    try {
-      tempFileUrl = new URL(urlString);
-    } catch (MalformedURLException e) {
-      logger.debug("Url value " + urlString + " caused " + e.getMessage());
-      return null;
-    }
-    InputStream uploadInputStream;
-    try {
-      uploadInputStream = tempFileUrl.openStream();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-    AbderaClient atomClient = new AbderaClient();
-    RequestOptions requestOptions = createRequestOptions(req);
-
-    if (fileName != null) {
-      requestOptions.setHeader("Slug", fileName);
-    }
-
-    InputStreamRequestEntity uploadEntity = new InputStreamRequestEntity(uploadInputStream, mediaType);
-
-    ClientResponse response = atomClient.post(targetCollectionUri, uploadEntity, requestOptions);
-
-    if (response.getStatus() == 201) {
-
-      // if success, assume atom, try to append type category and put back
-      Document<Entry> mediaLinkEntryDocument = response.getDocument(abdera.getParser());
-      Entry mediaLinkEntry = mediaLinkEntryDocument.getRoot();
-      mediaLinkEntry.addCategory("http://www.cggh.org/2010/chassis/scheme/FileTypes", typeTerm, typeLabel);
-      String editLocation = mediaLinkEntry.getEditLink().getHref().toASCIIString();
-
-      response = atomClient.put(editLocation, mediaLinkEntryDocument, createRequestOptions(req));
-      try {
-        returnDocument = builder.parse(response.getInputStream());
-      } catch (SAXException e) {
-        throw new RuntimeException(e);
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-
-      // error document
-      try {
-        returnDocument = builder.parse(response.getInputStream());
-      } catch (SAXException e) {
-        throw new RuntimeException(e);
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-
-    }
-
-    return returnDocument;
-  }
+		} catch (IOException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return returnDocument;
+	}
 
 	private void sendBadRequest(String message, HttpServletResponse res) {
+		// TODO Auto-generated method stub
 		try {
 			res.sendError(500, "TODO");
 		} catch (IOException e) {
-      throw new RuntimeException(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
