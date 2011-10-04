@@ -1,15 +1,21 @@
-rm cookie-jar
-rm curated.xml
+. ./config.sh
+rm ${COOKIES}
+rm ${STUDIES}
+rm -r ${STUDIES_DIR}
+#This is hard coded in file-association.xsl and file-cmis.xsl
 rm derivations.xml
+rm -r derivations
+
+rm curated.xml
 rm -r curated
-rm -r cmis-folders
-rm -r cmis-files
-rm -r cmis-entries
-rm -r studies
-rm -r files
-rm foo.out
-rm studies.ticket
-rm studies.xml
+
 rm submitted.xml
 rm -r submitted
 
+rm -r cmis-folders
+rm -r cmis-files
+rm -r cmis-entries
+
+rm -r files
+rm foo.out
+rm studies.ticket
