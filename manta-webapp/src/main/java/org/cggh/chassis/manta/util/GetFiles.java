@@ -142,8 +142,10 @@ public class GetFiles extends HttpServlet {
 			// if there's a parse error it's probably because the user isn't authenticated 
 			// and the login page isn't valid XML
 			response.setStatus(HttpStatus.SC_FORBIDDEN);
+      out.print(e.getMessage());
 		} catch (RuntimeException e) { 
-      response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);		  
+      response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+      out.print(e.getMessage());
 		}
 	}
 
