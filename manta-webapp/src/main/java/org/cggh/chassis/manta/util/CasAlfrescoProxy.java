@@ -128,6 +128,9 @@ public class CasAlfrescoProxy extends HttpServlet {
 		String proxyticket = assertion.getPrincipal().getProxyTicketFor(
 				alfrescoWebAppURL);
 
+		if (proxyticket == null) {
+			return (null);
+		}
 		String casLoginUrl = alfrescoWebAppURL + "/service/api/logincas?u="
 				+ URLEncoder.encode(username, "UTF-8") + "&t="
 				+ URLEncoder.encode(proxyticket, "UTF-8");
