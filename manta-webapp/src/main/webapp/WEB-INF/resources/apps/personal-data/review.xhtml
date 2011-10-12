@@ -348,6 +348,8 @@ Pass file to alfresco before posting review, so that alfresco errors are caught 
 								<xxforms:context name="fr:source" select="'Contributor'" />
 								<xxforms:context name="fr:file-content"
 									select="xxforms:doc-base64($file-uri)" />
+								<xxforms:context name="fr:submitter" select="instance('ins-study-entry')/atom:author/atom:email/text()" />
+								<xxforms:context name="fr:der-comment" select="instance('ins-review-entry')//outcome" />
 							</xforms:dispatch>
 		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok'"
       		      submission="sub-post-review" />

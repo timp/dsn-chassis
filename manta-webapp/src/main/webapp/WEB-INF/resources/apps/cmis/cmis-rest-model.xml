@@ -44,6 +44,7 @@ ab5be61f787c62660ff3008299"
             <status/>
             <outputFileNodeRef/>
             <studyFileNodeRef/>
+            <ticketAuth/>
         </control>
     </xforms:instance>
     
@@ -94,6 +95,7 @@ ab5be61f787c62660ff3008299"
         <xforms:insert 
             nodeset="instance('ins-cmis-rest')"
             origin="xxforms:get-request-attribute('alf_ticket')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//ticketAuth" value="instance('ins-cmis-rest')"/>
     </xforms:action>
     
     <xforms:instance id="ins-cmis-rest-media-feed">
@@ -319,8 +321,10 @@ ab5be61f787c62660ff3008299"
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileId']//cmis:value" value="event('fr:media-entry')//atom:link[@rel='self']/@href"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:submitter']//cmis:value" value="event('fr:submitter')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:derivationsComments']//cmis:value" value="event('fr:der-comment')"/>
-        <xforms:send submission="cmis-rest-create-file-submission-ticket"/>
-       
+        
+        <xforms:send submission="cmis-rest-create-file-submission-ticket" if="not(empty((instance('ins-cmis-rest-control')//ticketAuth/text())))"/>
+        <xforms:send submission="cmis-rest-create-file-submission" if="empty(instance('ins-cmis-rest-control')//ticketAuth/text())"/>
+        
         <xforms:action ev:event="xforms-submit-done" xxforms:iterate="tokenize(event('fr:der-selection'), ' ')" >
             <xforms:setvalue ref="instance('ins-cmis-rest-control')/studyFileNodeRef" value="instance('ins-cmis-rest-create-file-result')//cmis:propertyId[@queryName='cmis:objectId']/cmis:value"/>
             <xforms:setvalue ref="instance('ins-cmis-rest-control')/outputFileNodeRef" value="context()"/>
