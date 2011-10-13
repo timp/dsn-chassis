@@ -129,7 +129,7 @@
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>
-		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
+		<!-- finalName>${project.artifactId}-${project.version}-${profileId}</finalName -->
 
 		<plugins>
 			<plugin>
@@ -145,7 +145,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+					<!-- webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory -->
 					<encoding>UTF-8</encoding>
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>jpg,jpeg,gif,png,pdf,xls</nonFilteredFileExtension>
@@ -165,6 +165,20 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+          <!-- url>http://localhost:8080/manager</url --> 
+          <path>/${project.artifactId}</path>
+					<mode>both</mode>
+					<user>admin</user>
+					<password/>
+				</configuration>
+			</plugin>
+			
+			
 		</plugins>
 	</build>
 	<repositories>
