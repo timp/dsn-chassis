@@ -17,7 +17,7 @@ if [[ $(uname) == Darwin ]]
 then
  SIZE_COMMAND='stat -f %z'
 else
- SIZE_command='stat -c %s'
+ SIZE_COMMAND='stat -c %s'
 fi
 
 mv ${STUDIES_DIR} ${STUDIES_DIR}.$$
@@ -39,7 +39,7 @@ do
 	URL=`grep edit-media $i | awk -F\" '{print $8}' `
 	NAME=`echo -n ${URL} | awk -F/ '{print $NF}'`
 	RSIZE=`grep edit-media $i | awk -F\" '{print $10}'`
-	if [ -f files/${NAME} ]
+	if [ test -f files/${NAME} ]
 	then
 		SIZE=`$SIZE_COMMAND files/${NAME}`
 		if [ ${SIZE} -ne ${RSIZE} ]
