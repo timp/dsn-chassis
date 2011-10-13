@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>
+</title>
+</head>
+<body>
+<h2>Chassis REST</h2>
+<p>
+Get yourself an entry, from <a href="/repository/content/studies/">studies</a> 
+for example, and post it to the service like this:
+<pre>
+$ curl -X POST -HContent-type:application/xml  --data @TBYKQ.xml http://localhost:8080/chassis-rest/service/study
+</pre>
+Fetch it again by
+<pre>
+curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
+</pre>
+or by clicking <a href="service/studies">here</a>.
+</p>
+</body>
+</html>
