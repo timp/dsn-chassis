@@ -39,11 +39,9 @@ public class StudyController {
 		try {
 			e = studyDS.getEntry(id);
 		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+      throw new RuntimeException(e1);
 		} catch (JAXBException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+      throw new RuntimeException(e1);
 		}
 		return new ModelAndView(XML_VIEW_NAME, "object", e);
 	}
@@ -67,11 +65,9 @@ public class StudyController {
 				ret = new ModelAndView("errors", "object", s);
 			}
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		}
 				
 		return ret;
@@ -96,11 +92,9 @@ public class StudyController {
 				ret = new ModelAndView("errors", "object", s);
 			}
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      throw new RuntimeException(e);
 		}
 				
 		return ret;
