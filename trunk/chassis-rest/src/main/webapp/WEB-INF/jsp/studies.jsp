@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Studies</title>
+	<title>Collection: study</title>
 </head>
 <body>
-<table border=1>
+<table border="1">
 	<thead><tr>
 		<th>ID</th>
 		<th>Title</th>
@@ -16,7 +16,7 @@
 	<tr>
 		<td>${item.studyID}</td>
 		<td>${item.title.content}</td>
-		<td><a href="study/${item.hjid}">${item.hjid}</a></td>
+		<td><a href="study/${item.studyID}">${item.studyID}</a></td>
 	</tr>
 	</c:forEach>
 </table>
