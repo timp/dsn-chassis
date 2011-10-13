@@ -1,7 +1,6 @@
 package org.cggh.chassis.rest.dao;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,7 +38,8 @@ public class StudyDAO {
 		return beta;
 	}
 
-	public Collection<Entry> getAll() {
+	@SuppressWarnings("unchecked")
+  public Collection<Entry> getAll() {
 		final EntityManager loadManager = emf.createEntityManager();
 		Query query = loadManager.createQuery("SELECT e FROM Entry e");
 		return (Collection<Entry>) query.getResultList();
