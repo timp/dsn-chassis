@@ -15,7 +15,8 @@ rm -r submitted
 rm -r cmis-folders
 rm -r cmis-files
 rm -r cmis-entries
-
-rm -r files
+#Do not delete as it takes a long time to download all the files
+#It doesn't matter if there are extra files in the directory
+#rm -r files
 rm foo.out
 rm studies.ticket
