@@ -23,14 +23,12 @@
 					<alf:properties>
 						<cmis:propertyString propertyDefinitionId="cm:description"
 							displayName="Description" queryName="cm:description">
-							<cmis:value>
-								<xsl:apply-templates select="atom:title/text()" />
-							</cmis:value>
+							<cmis:value></cmis:value>
 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="cm:title"
 							displayName="Title" queryName="cm:title">
 							<cmis:value>
-								<xsl:apply-templates select="atom:title/text()" />
+								<xsl:apply-templates select="//studyTitle/text()" />
 							</cmis:value>
 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="wc:modules"
