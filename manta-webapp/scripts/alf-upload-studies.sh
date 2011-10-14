@@ -7,7 +7,7 @@ mkdir cmis-entries
 mkdir cmis-folders
 for j in ${STUDIES_DIR}/*
 do
-	NAME=`echo -n $j| sed -e "s#${STUDIES_DIR}/##'"
+	NAME=`echo -n $j| sed -e "s#${STUDIES_DIR}/##"`
 	STUDY=`echo -n ${NAME}| sed -e 's#.xml##'`
 	#Create the spaces (folders)
 	OUT=cmis-folders/${NAME}
@@ -19,7 +19,7 @@ do
 	then
 		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
 	else
-		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
+		curl -k -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
 	fi	
 	METADATA=cmis-entries/${NAME}
 	METADATA_FILE=cmis-entries/${NAME}.load
@@ -29,7 +29,7 @@ do
 	then
 		curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 	else
-		curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+		curl -k -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
 #Create the content file
 cat >${METADATA_FILE} <<+++EOH
@@ -54,7 +54,7 @@ cat >>${METADATA_FILE} <<+++EOT
 
 +++EOT
 #Update metadata file
-	curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+	curl -k -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 done
 
 echo "end alf-upload-studies.sh" 
