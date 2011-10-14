@@ -8,14 +8,14 @@
  version="2.1"
  jaxb:extensionBindingPrefixes="hj orm">
 	
+	<!-- see http://confluence.highsource.org/display/HJ3/Purchase+Order+Tutorial	-->
+
 	
 	<jaxb:bindings schemaLocation="atom.xsd" node="/xs:schema">
 		<jaxb:globalBindings localScoping="toplevel">
 			<jaxb:serializable/>
 		</jaxb:globalBindings>
 		
-	<!--
-	-->
 		<jaxb:bindings node="//xs:element[@ref='manta:id']">
 			<jaxb:property name="studyID"/>
 			<hj:id/>
