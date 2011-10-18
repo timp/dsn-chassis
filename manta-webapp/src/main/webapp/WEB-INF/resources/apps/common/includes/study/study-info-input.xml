@@ -621,7 +621,7 @@
 
 
 					<div class="box">
-						<xforms:select ref="priorAntimalarials" appearance="full"
+						<xforms:select ref="priorAntimalarials/@selected" appearance="full"
 							class="scrollableCheckboxes">
 							<xforms:label class="scrollableCheckboxesLabel"> Prior anti-malarials
 							</xforms:label>
@@ -630,14 +630,33 @@
 								<xforms:value>any</xforms:value>
 							</xforms:item>
 							<xforms:itemset model="mod-study-info"
-								nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-								<xforms:label ref="label" />
-								<xforms:value ref="value" />
-							</xforms:itemset>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration[@value!='']">
+                               <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                               <xforms:value ref="@value"/>
+                            </xforms:itemset>
 							<xforms:alert>
 								<xforms:output
 									value="concat('Enter a value for the ', name(), ' field')" />
 							</xforms:alert>
+							<!-- It's possible to just use the ev:event attribute on xforms:insert/delete 
+							     this method allows for a little debugging with the message -->
+							<xforms:action ev:event="xforms-deselect">
+                                <xforms:delete context=".." ref="*[. = event('xxforms:item-value')]"/>
+                                <!-- 
+                                <xxforms:variable name="deselected" select="event('xxforms:item-value')" />
+                                <xforms:message level="modal">deSelect:<xforms:output value="$deselected" /></xforms:message>
+                                -->
+                            </xforms:action>
+                            <xforms:action ev:event="xforms-select">
+                                
+                                <xforms:insert context=".." ref="*" origin="xxforms:element('drugTaken',event('xxforms:item-value'))"/>
+                                <!-- 
+                                <xxforms:variable name="selected" select="event('xxforms:item-value')" />
+                                <xforms:message level="modal">Select:<xforms:output value="$selected" /></xforms:message>
+                                -->
+                            </xforms:action>
+							
+                            
 						</xforms:select>
 					</div>
 					<br style="clear:both;" />

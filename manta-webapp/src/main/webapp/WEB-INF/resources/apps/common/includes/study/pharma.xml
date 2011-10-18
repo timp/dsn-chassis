@@ -163,15 +163,10 @@
                             <td class="form-td">
                                 <xforms:select1 appearance="minimal" ref="drugMeasured">
                                     <xforms:label class="invisible">Molecule measured </xforms:label>
-
-                                    <xforms:item>
-                                        <xforms:label>please select</xforms:label>
-                                        <xforms:value/>
-                                    </xforms:item>
                                     <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-drugMolecule-items')/drugMolecule">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration">
+                                         <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                                         <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:itemset model="mod-study-info"
                                         nodeset="instance('ins-metaboliteMolecule-items')/metaboliteMolecule">

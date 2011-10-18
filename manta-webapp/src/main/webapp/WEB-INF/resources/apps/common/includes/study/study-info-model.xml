@@ -105,8 +105,7 @@
 		src="/apps/common/constants/incubationTimes.xml" />
 	<xforms:instance id="ins-susceptibilityMethod-items"
 		src="/apps/common/constants/susceptibilityMethods.xml" />
-	<xforms:instance id="ins-drugMolecule-items"
-		src="/apps/common/constants/drugMolecules.xml" />
+	
 	<xforms:instance id="ins-metaboliteMolecule-items"
 		src="/apps/common/constants/metaboliteMolecules.xml" />
 	<xforms:instance id="ins-drugSolvent-items"

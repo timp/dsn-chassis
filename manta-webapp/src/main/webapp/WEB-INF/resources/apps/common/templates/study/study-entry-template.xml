@@ -2,7 +2,7 @@
 	<atom:title type="text"/>
 	<app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control>
 	<atom:content type="application/vnd.chassis-manta+xml">
-		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/1.5.1">
+		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/2.0">
 		    <studyTitle/>
 			<ui-info>
 				<wizard-pane-to-show>study-terms</wizard-pane-to-show>
@@ -71,7 +71,7 @@
         <includeMixedInfections />
                 <excludeIfPriorAntimalarials />
                 <priorAntimalarialsExclusion>
-                    <priorAntimalarials />
+                    <priorAntimalarials selected="" />
                     <priorAntimalarialsDetermination />
                     <priorAntimalarialsHistoryWeeks />
                 </priorAntimalarialsExclusion>
