@@ -1,4 +1,4 @@
-= MalariaGEN Data Repository - Web Architecture =
+#summary MalariaGEN Data Repository - Web Architecture =
 
 == Hosted Assets ==
 
