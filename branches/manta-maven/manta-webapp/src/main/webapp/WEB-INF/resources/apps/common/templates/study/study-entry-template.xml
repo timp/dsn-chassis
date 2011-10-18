@@ -12,10 +12,12 @@
 			<explorer-display>notset</explorer-display>
 			<publications/>
 			<acknowledgements>
-				<institution-ack>
-					<institution-name/>
-					<institution-websites/>
-				</institution-ack>
+			    <institutions>
+				    <institution-ack>
+					   <institution-name/>
+					   <institution-websites/>
+				    </institution-ack>
+				</institutions>
 			</acknowledgements>
 			<curator-notes/>
 			<study-status>new</study-status>

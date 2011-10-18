@@ -30,17 +30,37 @@
         
         <xforms:group id="list-of-acknowledgements"
             ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
-
-            <xforms:input ref="institution-ack/institution-name">
-                <xforms:label>Institution:</xforms:label>
-            </xforms:input>
-            
+ 
+                       
             
             <span id="editable-list-of-acknowledgements-container">
-                
+            
+                <table>
+                <xforms:repeat nodeset="institutions/institution-ack" id="rep-inst">
+                    <tr class="repeated-element">
+                            
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-url')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td class="acknowledgement-form-cell">
+                                <span class="institution-textbox-container">
+                        
+                <xforms:input ref="institution-name">
+                    <xforms:label>Institution:</xforms:label>
+                </xforms:input>
+             </span>
+                            </td>
+                        </tr>
+                        <tr><td colspan="2">
                 <table>
                     
-                    <xforms:repeat nodeset="institution-ack/institution-websites/institution-url" id="rep-url">
+                    <xforms:repeat nodeset="institution-websites/institution-url" id="rep-url">
                         
                         <tr class="repeated-element">
                             
@@ -61,7 +81,7 @@
                                 </span>
                             </td>
                         </tr>
-                    </xforms:repeat>
+                    </xforms:repeat> <!-- rep-url -->
                     
                     <tr>
                         <td colspan="2">
@@ -69,13 +89,13 @@
                                 <xforms:label>
                                     <img alt="add" src="/apps/study/common/add.gif"/>
                                 </xforms:label>
-                                <xforms:insert ev:event="DOMActivate" context="institution-ack/institution-websites"
+                                <xforms:insert ev:event="DOMActivate" context="institution-websites"
                                     at="last()" position="after"
                                     origin="xxforms:element('institution-url')"/>
                             </xforms:trigger>
                             <xforms:trigger appearance="minimal" class="addRemove">
                                 <xforms:label>Add an Institutional URL</xforms:label>
-                                <xforms:insert ev:event="DOMActivate" context="institution-ack/institution-websites" 
+                                <xforms:insert ev:event="DOMActivate" context="institution-websites" 
                                     at="last()" position="after"
                                     origin="xxforms:element('institution-url')"/>
                             </xforms:trigger>
@@ -84,7 +104,56 @@
                     </tr>
                     
                 </table>
-                
+                </td><td>
+                <div class="acknowledgement-movement-triggers">
+
+                                    <span class="move-acknowledgment-up-button">
+                                        <xforms:trigger ref=".[preceding-sibling::*]">
+                                            <xforms:label>Move up <img alt="move up"
+                                                  src="/apps/study/common/up.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="preceding-sibling::*[1]"
+                                                  position="before"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+
+                                    <span class="move-acknowledgment-down-button">
+                                        <xforms:trigger ref=".[following-sibling::*]">
+                                            <xforms:label>Move down <img alt="move down"
+                                                  src="/apps/study/common/down.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="following-sibling::*[1]"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+                                </div>
+                </td></tr>
+                </xforms:repeat>
+                <tr>
+                        <td colspan="2">
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institutions"
+                                    at="last()" position="after"
+                                    origin="xxforms:instance('ins-site-template')//institution-ack"/>
+                            </xforms:trigger>
+                            <xforms:trigger appearance="minimal" class="addRemove">
+                                <xforms:label>Add an Institution</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institutions" 
+                                    at="last()" position="after"
+                                    origin="xxforms:instance('ins-site-template')//institution-ack"/>
+                            </xforms:trigger>
+                            
+                        </td>
+                    </tr>
+                </table>               
             </span>
             
             <span id="editable-list-of-acknowledgements-container">
@@ -218,12 +287,13 @@
         <xforms:group
             ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
             <div class="institution-textbox-container">
+                <xforms:repeat nodeset="instance('ins-study-entry')//acknowledgements/institutions/institution-ack">
                 <p>
-                <xforms:output ref="instance('ins-study-entry')//institution-ack/institution-name">
+                <xforms:output ref="institution-name">
                     <xforms:label>Institution:</xforms:label>
                 </xforms:output>
                 <br/>
-                <xforms:repeat nodeset="instance('ins-study-entry')//institution-ack/institution-websites/institution-url" id="rep-instit-url">
+                <xforms:repeat nodeset="institution-websites/institution-url" id="rep-instit-url">
                     <br/>
                     <xforms:output ref=".">
                         <xforms:label>URL:</xforms:label>
@@ -231,6 +301,7 @@
                    
                 </xforms:repeat>
                 </p>
+                </xforms:repeat>
             </div>
             
             <xforms:group
