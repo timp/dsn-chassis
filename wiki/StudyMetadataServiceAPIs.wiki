@@ -1,4 +1,5 @@
 #summary protocol/API specifications for the Chassis/* study metadata services
+#labels Deprecated
 
 = Chassis/`*` Study Metadata Persistence Service API =
 
