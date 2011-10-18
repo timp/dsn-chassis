@@ -1,4 +1,7 @@
-#summary Chassis core services, supporting the storage, update, retrieval, deletion and query of arbitrary metadata for fine-grained research activities (studies)
+#summary Chassis core services
+#labels Deprecated
+
+Supporting the storage, update, retrieval, deletion and query of arbitrary metadata for fine-grained research activities (studies)
 
 These services are part of the [ArchitectureOverview Chassis core services].
 
