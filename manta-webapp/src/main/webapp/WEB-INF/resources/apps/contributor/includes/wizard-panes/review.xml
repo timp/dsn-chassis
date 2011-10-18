@@ -204,12 +204,13 @@
 						<h3>(5) Acknowledgements</h3>
 						
 					<div class="institution-textbox-container">
+					   <xforms:repeat nodeset="instance('ins-study-entry')//acknowledgements/institutions/institution-ack">
 						<p>
-							<xforms:output ref="instance('ins-study-entry')//institution-ack/institution-name">
+							<xforms:output ref="institution-name">
 								<xforms:label>Institution:</xforms:label>
 							</xforms:output>
 							<br/>
-							<xforms:repeat nodeset="instance('ins-study-entry')//institution-ack/institution-websites/institution-url">
+							<xforms:repeat nodeset="institution-websites/institution-url">
 								<br/>
 								<xforms:output ref=".">
 									<xforms:label>URL:</xforms:label>
@@ -217,6 +218,7 @@
 								
 							</xforms:repeat>
 						</p>
+						</xforms:repeat>
 					</div>
 						
 						<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/acknowledgements[empty(person)])">
