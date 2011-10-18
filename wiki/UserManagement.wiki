@@ -1,4 +1,4 @@
-#summary notes on systems supporting various aspects of user management, including user self-registration, authentication, and access-management
+#summary Systems supporting user management, self-registration, authentication, and access-management
 #labels Phase-Requirements
 
 = Requirements =
