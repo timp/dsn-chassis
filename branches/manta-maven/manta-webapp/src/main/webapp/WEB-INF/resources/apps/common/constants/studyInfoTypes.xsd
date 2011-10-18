@@ -1,35 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.cggh.org/2011/chassis/xmlns"
-    xmlns:ch="http://www.cggh.org/2011/chassis/xmlns">
-    
-    <xs:simpleType name="administrationRoutes">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value=""/>
-            <xs:enumeration value="oral"/>
-            <xs:enumeration value="intravenous"/>
-            <xs:enumeration value="intramuscular"/>
-            <xs:enumeration value="intrarectal"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <xs:simpleType name="drugStorage">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value=""/>
-            <xs:enumeration value="none"/>
-            <xs:enumeration value="refrigerator"/>
-            <xs:enumeration value="aircon"/>
-            <xs:enumeration value="unknown"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <xs:simpleType name="population">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value=""/>
-            <xs:enumeration value="resident"/>
-            <xs:enumeration value="traveller"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://www.cggh.org/2011/chassis/xmlns"
+	xmlns:ch="http://www.cggh.org/2011/chassis/xmlns">
+
+	<xs:simpleType name="administrationRoutes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="oral" />
+			<xs:enumeration value="intravenous" />
+			<xs:enumeration value="intramuscular" />
+			<xs:enumeration value="intrarectal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="drugStorage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="none" />
+			<xs:enumeration value="refrigerator" />
+			<xs:enumeration value="aircon" />
+			<xs:enumeration value="unknown" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="population">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="resident" />
+			<xs:enumeration value="traveller" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="drugMolecules">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="ART" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AZ" />
+			<xs:enumeration value="CL" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="CY" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DOX" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="NQ" />
+			<xs:enumeration value="PIP" />
+			<xs:enumeration value="PQ" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="PYN" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="TET" />
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
 
