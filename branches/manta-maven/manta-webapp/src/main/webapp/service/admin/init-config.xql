@@ -228,11 +228,11 @@ let $values2 :=
 				<value>Publication$5URL$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institution-ack\[(\d+)\]/institution-name\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions/institution-ack\[(\d+)\]/institution-name\[(\d+)\]</label>
 				<value>ackInstitute$5</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institution-ack\[(\d+)\]/institution-websites\[(\d+)\]/institution-url\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions/institution-ack\[(\d+)\]/institution-websites\[(\d+)\]/institution-url\[(\d+)\]</label>
 				<value>ackInstitute$5URL</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
