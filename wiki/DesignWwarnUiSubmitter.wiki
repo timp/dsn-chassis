@@ -1,4 +1,4 @@
-= Design Notes for the WWARN UI Submitter Application =
+#summary Design Notes for the WWARN UI Submitter Application
 
 This page has notes on the design for the submitter application in the wwarn/ui project.
 
