@@ -1,4 +1,5 @@
 #summary How to install Chassis
+#labels Deprecated
 
 *TODO this is out of date*
 
