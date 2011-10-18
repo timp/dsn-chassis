@@ -429,12 +429,12 @@ declare function local:content($content) as item()*
             </head>
             <body>
                 <h1>Data Migration - Study v1.5.1 to v2.0</h1>
-                <p>Total number of entries in <a href="../../content/studies">Study Info</a> collection: <strong>{ count( $study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/study-info">Study Info</a> collection using v1.5.1 profile: <strong>{ count( $old-study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/study-info">Study Info</a> collection using v2.0 profile: <strong>{ count( $new-study-infos ) }</strong></p>
+                <p>Total number of entries in <a href="../../content/studies">Studies</a> collection: <strong>{ count( $study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v1.5.1 profile: <strong>{ count( $old-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.0 profile: <strong>{ count( $new-study-infos ) }</strong></p>
                 <p>
                     <form method="post" action="">
-                        Test <input type="checkbox" name="testing" checked="checked" />
+                        Use dummy test data <input type="checkbox" name="testing" checked="checked" />
                         <input type="submit" value="Migrate Data"></input>
                     </form>
                     <form method="get" action="">
