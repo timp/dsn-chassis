@@ -62,22 +62,31 @@ Now to include the resources in your model - note that the xml:lang attribute ab
 {{{
 <!--
 	In your XForms model, load resources.xml in an instance. 
-	Make sure to make that instance read-only and cacheable: this way the instance will only be stored once in memory 
-	(it will be shared by all the users) and using a more efficient (because read-only) representation in memory.
+	Make sure to make that instance read-only and cacheable: 
+        this way the instance will only be stored once in memory 
+	(it will be shared by all the users) and using a more 
+         efficient (because read-only) representation in memory.
 	
 	xxforms:readonly="true" xxforms:cache="true"
 	-->
 	<xforms:instance id="all-resources"
 		src="/apps/common/resources.xml"/>
 	<!--
-	NOTE: Here we point to a local file with the oxf: protocol. This is usually yields more performance than using http:, because oxf: will reach a local file on disk. However, in the online version, we use the http:, because we want to load the resource from an online server!
+	NOTE: Here we point to a local file with the oxf: protocol.
+        This usually yields more performance than using http:, 
+        because oxf: will reach a local file on disk. 
+        However, in the online version, we use http:, 
+        because we want to load the resource from an online server!
 	
-	Define an instance used to store the current language, e.g. en or fr.
+	Define an instance used to store the current language, 
+        e.g. en or fr.
 	-->
 	<xforms:instance id="language"><language>en</language></xforms:instance>
 	<xforms:instance id="iterator"><key></key></xforms:instance>
 	<!--
-	Define a variable ($resources), which points to <resources> for the current language. You will use this variable as a shortcut in your view to point to specific resources.
+	Define a variable ($resources), which points to <resources>
+        for the current language. You will use this variable as a 
+        shortcut in your view to point to specific resources.
 		-->
 	<xxforms:variable name="resources" select="instance('all-resources')/resources[@xml:lang = instance('language')]"/>
 	
@@ -93,8 +102,9 @@ itemset/@nodeset picks out the enumeration from the xsd file
 label/@ref uses the ref attribute to match the text in the resources file to the enumeration value.
 
 {{{
-<xforms:select ref="priorAntimalarials/@selected" appearance="full"
-							class="scrollableCheckboxes">
+<xforms:select ref="priorAntimalarials/@selected" 
+               appearance="full"
+               class="scrollableCheckboxes">
   <xforms:label class="scrollableCheckboxesLabel"> Prior anti-malarials</xforms:label>
 	<xforms:itemset model="mod-study-info"
 nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration">
