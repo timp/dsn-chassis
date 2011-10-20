@@ -40,7 +40,11 @@ The derived-from associations need to be set up
 (GET) ${ALF_HOME}/wwarn/createDerivedAssoc?outputFileNodeRef=" + outputFileNodeRef + "&studyFileNodeRef=" + studyFileNodeRef;
 
 Because this needs the Alfresco node ref probably the right way to do this is 
-to upload the files then download the feed (which contains the Alfresco node 
+to upload the files then download the feed 
+
+http://alfresco:8080/alfresco/service/cmis/p/WWARN/Studies/MTSUX/children
+
+(which contains the Alfresco node 
 ref and Chassis node refs) and cross-reference with the derivations feed 
 - this could probably be done by using a much simplified version of 
 file-cmis.xsl to produce a script file and running that.
