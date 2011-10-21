@@ -17,9 +17,9 @@ do
 	echo "done" 
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}
 	else
-		curl -k -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/children
 	fi	
 	METADATA=cmis-entries/${NAME}
 	METADATA_FILE=cmis-entries/${NAME}.load
@@ -27,9 +27,9 @@ do
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL study-metadata-cmis.xsl -OUT ${METADATA}
 	if [ $UPDATE = 'true' ]
 	then
-		curl -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT  -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 	else
-		curl -k -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml  --data @${METADATA} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
 #Create the content file
 cat >${METADATA_FILE} <<+++EOH
@@ -54,7 +54,7 @@ cat >>${METADATA_FILE} <<+++EOT
 
 +++EOT
 #Update metadata file
-	curl -k -s -S -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
+	curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/${NAME}
 done
 
 echo "end alf-upload-studies.sh" 
