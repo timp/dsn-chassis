@@ -37,9 +37,9 @@ do
 	then
 	  #FIXME need check that content is not the alfresco error page
 		UPDATE_URL=`grep edit-media ${METADATA_CREAT} | awk -F\" '{print $4}'`
-		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${UPDATE_URL}
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${UPDATE_URL}
 	else
-		curl -s -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
 	fi
 	
 	
