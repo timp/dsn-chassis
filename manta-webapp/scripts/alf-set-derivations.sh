@@ -18,17 +18,20 @@ fi
 
 DIR=derivations
 mkdir ${DIR}
+OUT=set-derivations.out
+rm ${OUT}
 for j in ${STUDIES_DIR}/*
 do
 	NAME=`echo -n $j| sed -e "s#${STUDIES_DIR}/##"`
 	STUDY=`echo -n ${NAME}| sed -e 's#.xml##'`
 	ALF_OUT=${DIR}/${STUDY}.xml
 	SRC=${TARGET}/${STUDY}
-	curl -s -S -k -u${ALF_USERNAME}:${ALF_PASSWORD} -o ${ALF_OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/descendants
+	curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -o ${ALF_OUT} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/descendants
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN ${ALF_OUT} -XSL file-association.xsl -OUT urls.$$
 	for i in `cat urls.$$`
 	do
-		curl -s -S -k -u${ALF_USERNAME}:${ALF_PASSWORD}  ${ALF_HOME}${i}
+		echo $i >> ${OUT}
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD}  ${ALF_HOME}${i} >> ${OUT}
 	done
 	rm urls.$$
 done
