@@ -37,6 +37,10 @@
 							displayName="File Source" queryName="wc:fileSource">
 							<cmis:value>Contributor</cmis:value>
 						</cmis:propertyString>
+						<cmis:propertyString propertyDefinitionId="wc:submitter" displayName="Submitter"
+ 							queryName="wc:submitter">
+ 							<cmis:value><xsl:apply-templates select="atom:author/atom:email/text()" /></cmis:value>
+ 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="wc:fileId"
 							displayName="File ID" queryName="wc:fileId">
 							<cmis:value><xsl:apply-templates select="atom:id/text()" /></cmis:value>
@@ -81,6 +85,7 @@
 				<xsl:if test="'http://www.cggh.org/2010/chassis/terms/DataFile' = @term">wc:dataFile</xsl:if>
 				<xsl:if test="'http://www.cggh.org/2010/chassis/terms/Other' = @term">wc:other</xsl:if>
 				<xsl:if test="'http://www.cggh.org/2010/chassis/terms/DataDictionary' = @term">wc:dataDictionary</xsl:if>
+				<xsl:if test="'http://www.cggh.org/2010/chassis/terms/Explorer' = @term">wc:explorerData</xsl:if>
 	</xsl:template>
 
 	<xsl:template mode="other" match="atom:category">
