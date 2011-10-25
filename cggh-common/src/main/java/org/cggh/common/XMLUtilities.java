@@ -32,11 +32,11 @@ import org.xml.sax.SAXException;
  * This class provides static helper methods for doing various
  * XML manipulations.
  * 
- * Each method has two interfaces, one with and one without an ErrorHandler
- * If the method without the ErrorHandler is called the defaulet 
+ * Each method has two interfaces, one with and one without an ErrorHandler.
+ * If the method without the ErrorHandler is called the default 
  * ElsDefaultErrorHandler is called to log the error. 
  * Alternatively the user of this class can build
- * there own ErrorHandler and pass it into the altervative method interface.
+ * their own ErrorHandler and pass it into the alternative method interface.
  */
 public class XMLUtilities {
 
@@ -383,10 +383,7 @@ public class XMLUtilities {
 	 * @throws	XMLUtilitiesException if an error occurs and the 
 	 * document can't be returned
 	 */
-	public static Document getDocument(
-		URI uri,
-		ErrorHandler eh,
-		boolean validating)
+	public static Document getDocument(URI uri, ErrorHandler eh, boolean validating)
 		throws XMLUtilitiesException {
 
 		if (uri == null) {
@@ -429,7 +426,7 @@ public class XMLUtilities {
 	 * 
 	 */
 	public static Document getDocument(URL url, ErrorHandler eh)
-		throws XMLUtilitiesException {
+		  throws XMLUtilitiesException {
 		return getDocument(url, eh, false);
 	}
 
@@ -447,11 +444,8 @@ public class XMLUtilities {
 	 * @since
 	 * 
 	 */
-	public static Document getDocument(
-		URL url,
-		ErrorHandler eh,
-		boolean validating)
-		throws XMLUtilitiesException {
+	public static Document getDocument(URL url,	ErrorHandler eh, boolean validating)
+	  	throws XMLUtilitiesException {
 		try {
 			if (url == null) {
 				throw new XMLUtilitiesException(
@@ -1058,34 +1052,30 @@ public class XMLUtilities {
 			builder.setErrorHandler(eh);
 
 			// Parse the passed in XML	
-			Document doc = builder.parse(iSource);
+			builder.parse(iSource);
+			
 		} catch (ParserConfigurationException pce) {
-			XMLUtilitiesException xue =
-				new XMLUtilitiesException(
+			throw  new XMLUtilitiesException(
 					"ParserConfiguration Exception raised because the"
 					+ " underlying parser does not support the requested"
 					+ " features; setValidating: true; setNameSpaceAware: true",
 					pce);
 		} catch (IOException ioe) {
-			new XMLUtilitiesException(
+			throw new XMLUtilitiesException(
 				"IOException Exception raised attempting to process"
 				 + " file received in InputSource: "
 				 + iSource,
 				ioe);
 		} catch (SAXException se) {
-			XMLUtilitiesException xue =
-				new XMLUtilitiesException(
+			throw	new XMLUtilitiesException(
 					"SaxException Exception raised because the underlying"
 					+ " parser does not support the requested features;"
 					+ " setValidating: true; setNameSpaceAware: true",
 					se);
-			throw xue;
 		} catch (FactoryConfigurationError e) {
-			XMLUtilitiesException xue =
-				new XMLUtilitiesException(
+			throw new XMLUtilitiesException(
 						"Could not locate a JAXP factory class.", 
 						e);
-			throw xue;
 		}
 		return true;
 	}
