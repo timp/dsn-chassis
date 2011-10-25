@@ -228,13 +228,17 @@ let $values2 :=
 				<value>Publication$5URL$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions/institution-ack\[(\d+)\]/institution-name\[(\d+)\]</label>
-				<value>ackInstitute$5</value>
-			</fieldLabelMapping>
-			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions/institution-ack\[(\d+)\]/institution-websites\[(\d+)\]/institution-url\[(\d+)\]</label>
-				<value>ackInstitute$5URL</value>
-			</fieldLabelMapping>
+                <label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions\[(\d+)\]/institution-ack\[(\d+)\]/institution-name\[(\d+)\]</label>
+                <value>ackInstitute$6</value>
+            </fieldLabelMapping>
+            <fieldLabelMapping deprecated="n">
+                <label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/institutions\[(\d+)\]/institution-ack\[(\d+)\]/institution-websites\[(\d+)\]/institution-url\[(\d+)\]</label>
+                <value>ackInstitute$6URL$8</value>
+            </fieldLabelMapping>
+            <fieldLabelMapping deprecated="n">
+                <label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/inclusionExclusionCriteria\[(\d+)\]/priorAntimalarialsExclusion\[(\d+)\]/priorAntimalarials\[(\d+)\]/drugTaken\[(\d+)\]</label>
+                <value>drugTaken$8</value>
+            </fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/first-name\[(\d+)\]</label>
 				<value>ackAuthor$5Name</value>
