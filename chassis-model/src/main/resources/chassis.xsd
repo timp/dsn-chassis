@@ -77,7 +77,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="publication-title" type="xs:string"/>
+  <xs:element name="publication-title" type="longString"/>
   <xs:element name="pmid" type="xs:anyURI"/>
   <xs:element name="publication-references">
     <xs:complexType>
