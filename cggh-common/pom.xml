@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>tools</name>
-  <url>http://maven.apache.org</url>
+  <url>http://code.google.com/p/dsn-chassis/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
