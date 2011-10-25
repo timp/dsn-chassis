@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,8 +18,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -28,7 +29,7 @@ import org.xml.sax.SAXException;
 public class TransformFunctions {
 
 	
-	private final Logger logger = Logger.getLogger(this.getClass().getPackage().getName());
+	private final static Logger logger = Logger.getLogger(TransformFunctions.class.getName());
 
 
 	public List<String> convertAcceptHeaderAsStringIntoHeaderAcceptsAsStringList(String acceptHeaderAsString) {
@@ -107,7 +108,7 @@ public class TransformFunctions {
 					}
 					
 				} else {
-					this.logger.severe("regExpKey is null");
+					logger.error("regExpKey is null");
 				}
 				
 			}
@@ -121,6 +122,8 @@ public class TransformFunctions {
 			if (matchFound == false) {
 				
 				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
+			} else {
+				logger.debug("XPath not found for");
 			}
 			
 			//NOTE: replacements need to be assigned to a string
@@ -228,7 +231,7 @@ public class TransformFunctions {
 			//e.printStackTrace();
 			
 			//Note: This happens when the certificate is invalid.
-			this.getLogger().warning("SSLHandshakeException");
+			logger.warn("SSLHandshakeException", e);
 			
 			isInvalidURL = true;
 			
@@ -251,7 +254,7 @@ public class TransformFunctions {
 			studyCode = urlAsString.substring(urlAsString.lastIndexOf("/") + 1, urlAsString.length());
 		} else {
 			
-			this.getLogger().warning("urlAsString contains no characters after its last forward slash");
+			logger.warn("urlAsString contains no characters after its last forward slash");
 		}
 		
 		if (studyCode != null && !studyCode.equals("")) {
@@ -280,11 +283,6 @@ public class TransformFunctions {
 	}
 
 	
-	public Logger getLogger() {
-		return logger;
-	}
-
-
 	public HashMap<String, String> convertFieldLabelMappingsXmlAsDocumentIntoFieldLabelMappingsAsPatternKeyedHashMap(
 			Document fieldLabelMappingsXmlAsDocument) {
 		
@@ -296,33 +294,33 @@ public class TransformFunctions {
 			
 			//
 			//this.getLogger().info("i node name: " +  fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
-			
-			if (fieldLabelMappingsAsNodeList.item(i).getNodeName().toString().equals("fieldLabelMapping")) {
+			Node mappingNode = fieldLabelMappingsAsNodeList.item(i);
+			if (mappingNode.getNodeName().toString().equals("fieldLabelMapping")) {
 			
 				String patternKey = null;
 				String replacementTemplate = null;
 				
-				for (int j = 0; j < fieldLabelMappingsAsNodeList.item(i).getChildNodes().getLength(); j++) {
-				
+				for (int j = 0; j < mappingNode.getChildNodes().getLength(); j++) {
+					Node childNode = mappingNode.getChildNodes().item(j); 
 					
-					if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("label")) {
+					if (childNode.getNodeName().equals("label")) {
 						
 						//
-						//this.getLogger().info("got label: " + fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getTextContent());
+						//this.getLogger().info("got label: " + mappingNode.getChildNodes().item(j).getTextContent());
 						
-						patternKey = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
+						patternKey = childNode.getFirstChild().getNodeValue();
 					}
-					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("value")) {
-						replacementTemplate = fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeValue();
+					else if (childNode.getNodeName().equals("value")) {
+						replacementTemplate = childNode.getFirstChild().getNodeValue();
 					}
-					else if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().equals("#text")) {
+					else if (childNode.getNodeName().equals("#text")) {
 						//ignore this type of node
 					}
 					else {
-						if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName() != null) {
-							this.getLogger().warning("Unexpected node name: " +  fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().toString());
+						if (childNode.getNodeName() != null) {
+							logger.warn("Unexpected node name: " +  childNode.getNodeName().toString());
 						} else {
-							this.getLogger().warning("Unexpected: node name is null");
+							logger.warn("Unexpected: node name is null");
 						}
 					}
 					
@@ -337,7 +335,7 @@ public class TransformFunctions {
 
 				
 			} else {
-				this.getLogger().warning("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+				logger.warn("Unexpected node name:" + mappingNode.getNodeName().toString());
 			}
 			
 		}
@@ -410,9 +408,9 @@ public class TransformFunctions {
 						}
 						else {
 							if (fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName() != null) {
-								this.getLogger().warning("Unexpected node name: " +  fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().toString());
+								logger.warn("Unexpected node name: " +  fieldLabelMappingsAsNodeList.item(i).getChildNodes().item(j).getNodeName().toString());
 							} else {
-								this.getLogger().warning("Unexpected: node name is null");
+								logger.warn("Unexpected: node name is null");
 							}
 						}
 						
@@ -428,7 +426,7 @@ public class TransformFunctions {
 				}
 				
 			} else {
-				this.getLogger().warning("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
+				logger.warn("Unexpected node name:" + fieldLabelMappingsAsNodeList.item(i).getNodeName().toString());
 			}
 			
 		}
@@ -458,21 +456,22 @@ public class TransformFunctions {
 			StringBuffer labelAsStringBuffer = new StringBuffer("\"");
 			StringBuffer valueAsStringBuffer = new StringBuffer("\"");
 			
-			Boolean matchFound = null;
+			Boolean matchFound = false;
 		
-			
+			FieldModel model = dataAsFieldModelArrayListWithXpathFieldLabels.get(i);
+			String replacementLabel = null;
 			for (String regExpKey : fieldLabelRegExpMappingsAsPatternKeyedHashMap.keySet()) {
 
 				if (regExpKey != null) {
 				
 					Pattern pattern = Pattern.compile(regExpKey);
-					Matcher matcher = pattern.matcher(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+					Matcher matcher = pattern.matcher(model.getXPathFieldLabel());
 	
 					if (matcher.matches()) {
 						
 						matchFound = true;
 						
-						labelAsStringBuffer.append(matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey))).append("\"");
+						replacementLabel = matcher.replaceAll(fieldLabelRegExpMappingsAsPatternKeyedHashMap.get(regExpKey));
 						
 						//A match has been dealt with, no need to continue looking for this item.
 						break;
@@ -484,28 +483,29 @@ public class TransformFunctions {
 					}
 					
 				} else {
-					this.logger.severe("regExpKey is null");
+					logger.error("regExpKey is null");
 				}
 				
 			}
 			
-			
-			if (matchFound == null || matchFound != true) {
-				matchFound = false;
-			}
-			
 			//NOTE: Keep unmatched xPathFieldLabels
-			if (matchFound == false) {
-				
-				labelAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel()).append("\"");
+			String label = "";
+			if (matchFound) {
+				label = replacementLabel;
+			} else {
+				label = model.getXPathFieldLabel();
+				logger.debug("No regexp found for:" + label);
 			}
+			
+			labelAsStringBuffer.append(label).append("\"");
+			
 			
 			
 			//valueAsStringBuffer.append(dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().replaceAll("\n", " ").replaceAll("\r", " ").replaceAll("\"", "\"\"")).append("\"");
 			
 			//NOTE: replacements need to be assigned to a string
 			
-			String nodeValueAsString = dataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue();
+			String nodeValueAsString = model.getNodeValue();
 			
 			nodeValueAsString = nodeValueAsString.replaceAll("\r\n", " ");
 			nodeValueAsString = nodeValueAsString.replaceAll("\n", " ");
@@ -555,8 +555,8 @@ public class TransformFunctions {
 			Boolean ignore = null;
 			
 			//NOTE: Automatically ignoring fields with blank values (as it always has been)
-			
-			if (originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i).getNodeValue().trim().equals("")) {
+			FieldModel model = originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i); 
+			if (model.getNodeValue().trim().equals("")) {
 				
 				ignore = true;
 				
@@ -567,7 +567,7 @@ public class TransformFunctions {
 					if (regExpKey != null) {
 						
 						Pattern pattern = Pattern.compile(regExpKey);
-						Matcher matcher = pattern.matcher(originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i).getXPathFieldLabel());
+						Matcher matcher = pattern.matcher(model.getXPathFieldLabel());
 		
 						if (matcher.matches()) {
 							
@@ -583,7 +583,7 @@ public class TransformFunctions {
 						}
 						
 					} else {
-						this.logger.severe("regExpKey is null");
+						logger.error("regExpKey is null");
 					}
 					
 						
@@ -599,8 +599,7 @@ public class TransformFunctions {
 			
 		
 			if (ignore == false) {
-				
-				dataAsFieldModelArrayListWithXpathFieldLabels.add(originalDataAsFieldModelArrayListWithXpathFieldLabels.get(i));
+				dataAsFieldModelArrayListWithXpathFieldLabels.add(model);
 			}
 			
 			
