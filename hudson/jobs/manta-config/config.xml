@@ -24,7 +24,7 @@
     <workspaceUpdater class="hudson.scm.subversion.CheckoutUpdater"/>
   </scm>
   <canRoam>true</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
@@ -58,4 +58,6 @@
   </reporters>
   <publishers/>
   <buildWrappers/>
+  <prebuilders/>
+  <postbuilders/>
 </maven2-moduleset>
