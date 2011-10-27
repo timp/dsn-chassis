@@ -57,8 +57,14 @@ public class StudyPoster {
     final PostMethod post = new PostMethod(restUrl);
 
     InputStream data = new FileInputStream(studyFileName);
-    post.setRequestEntity(new InputStreamRequestEntity(data));
+    post.setRequestEntity(new InputStreamRequestEntity(data));  
     post.setRequestHeader("Content-Type", "application/xml");
+    
+    // Note: curl adds a default of 
+    // Accept: */*
+    // httpclient does not.
+    // for */* spring returns xml, for nothing it throws and error. 
+    post.setRequestHeader("Accept", "application/xml");
     
     try {
       client.executeMethod(post);
