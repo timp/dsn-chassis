@@ -17,7 +17,9 @@ import org.xml.sax.SAXException;
 public class EntryUtil {
 
 	public static UnmarshalResult validate(Jaxb2Marshaller marshaller, Source source) throws JAXBException, SAXException {
-		final UnmarshalResult ret = new UnmarshalResult();
+
+	  final UnmarshalResult unmarshalResult = new UnmarshalResult();
+		
 		// Now all you need to do to validate on marshal is to provide the
 		// created schema to the marshaller:
 
@@ -32,7 +34,7 @@ public class EntryUtil {
 		marshaller.setValidationEventHandler(new ValidationEventHandler() {
 			public boolean handleEvent(ValidationEvent event) {
 				events.add(event);
-				ret.getErrors().add(new ValidationError(event.getMessage()));
+				unmarshalResult.getErrors().add(new ValidationError(event.getMessage()));
 				// Keep going
 				return true;
 			}
@@ -45,7 +47,7 @@ public class EntryUtil {
 		if (!events.isEmpty()) {
 			System.out.println(events);
 		}
-		ret.setEntry((Entry) o);
-		return ret;
+		unmarshalResult.setEntry((Entry) o);
+		return unmarshalResult;
 	}
 }
