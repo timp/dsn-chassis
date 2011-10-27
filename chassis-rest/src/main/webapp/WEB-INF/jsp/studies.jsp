@@ -12,13 +12,19 @@
 		<th>Title</th>
 		<th></th>
 	</tr></thead>
-	<c:forEach var="item" items="${studies.entry}">
+<c:if test="${not empty $object}">
 	<tr>
-		<td>${item.studyID}</td>
-		<td>${item.title.content}</td>
-		<td><a href="study/${item.studyID}">${item.studyID}</a></td>
+		<td><a href="study/${object.studyID}">${object.studyID}</a></td>
+		<td>${object.studytitle}</td>
 	</tr>
-	</c:forEach>
+</c:if>
+<c:forEach var="item" items="${studies.entry}">
+	<tr>
+		<td><a href="study/${item.studyID}">${item.studyID}</a></td>
+		<td>${item.studytitle}</td>
+	</tr>
+</c:forEach>
 </table>
 </body>
 </html>
+
