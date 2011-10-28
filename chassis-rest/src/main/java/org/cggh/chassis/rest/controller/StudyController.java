@@ -1,7 +1,6 @@
 package org.cggh.chassis.rest.controller;
 
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -50,12 +49,6 @@ public class StudyController {
 		} catch (JAXBException e1) {
       throw new RuntimeException(e1);
 		}
-    Feed feed = new Feed();
-    List<Entry> oneList = new ArrayList<Entry>();
-    oneList.add(e);
-    
-    feed.setEntry((List<Entry>)oneList);
-		
 		return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", e);
 	}
 	
