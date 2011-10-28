@@ -196,7 +196,38 @@
 				</configuration>
 			</plugin>
 
-
+     <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+          <!-- 
+          Manual invocations rather than tests,
+          consider moving to integration test phase later
+           -->
+            <exclude>**/util/**</exclude>
+          </excludes>
+        </configuration>
+        <!-- 
+        <executions>
+           <execution>
+            <id>surefire-itest</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>none</exclude>
+              </excludes>
+              <includes>
+                <include>**/util/**</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+         -->
+      </plugin>
+ 
 		</plugins>
 	</build>
 	<repositories>
