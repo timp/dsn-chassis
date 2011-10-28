@@ -1,6 +1,7 @@
 package org.cggh.chassis.rest.controller;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -31,73 +32,73 @@ public class StudyController {
 	@Autowired
 	StudyDAO studyDS;
 	
-	private static final String XML_VIEW_NAME = "studies";
+	// if the request accept header is xml, or */* then the xml bean is used
+	// if the request accept header is empty or text/html then .jsp is used
 	
+  private static final String STUDY_OBJECT_VIEW_NAME = "study";
+  private static final String STUDY_COLLECTION_VIEW_NAME = "studies";
+	private static final String ERROR_LIST_VIEW_NAME = "errors";
+	  
 	@RequestMapping(method=RequestMethod.GET, value="/study/{id}")
 	public ModelAndView getStudy(@PathVariable String id) {
 		Entry e = null;
 		try {
 			e = studyDS.getEntry(id);
+			System.err.println("Entry found: " + e);
 		} catch (NumberFormatException e1) {
       throw new RuntimeException(e1);
 		} catch (JAXBException e1) {
       throw new RuntimeException(e1);
 		}
-		return new ModelAndView(XML_VIEW_NAME, "object", e);
+    Feed feed = new Feed();
+    List<Entry> oneList = new ArrayList<Entry>();
+    oneList.add(e);
+    
+    feed.setEntry((List<Entry>)oneList);
+		
+		return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", e);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/study/{id}")
-	public ModelAndView updateStudy(@RequestBody String body,@PathVariable String id) {
+	public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id) {
 		Source source = new StreamSource(new StringReader(body));
-		ModelAndView ret = null;
-		Object s = null;
 		try {
 			UnmarshalResult res = EntryUtil.validate(validatingMarshaller, source);
 			//s = m_studyDAO.unmarshal(source);
 			//s= (Entry) jaxb2Mashaller.unmarshal(source);
 			if (res.getErrors().isEmpty()) {
 				studyDS.updateEntry(id, res.getEntry());
-				s = res.getEntry();
-				ret = new ModelAndView(XML_VIEW_NAME, "object", s);
+				return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", res.getEntry());
 			} else {
-				res.setEntry(null);
-				s = res;
-				ret = new ModelAndView("errors", "object", s);
+				//res.setEntry(null);
+				return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", res);
 			}
 		} catch (JAXBException e) {
       throw new RuntimeException(e);
 		} catch (SAXException e) {
       throw new RuntimeException(e);
 		}
-				
-		return ret;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/study")
 	public ModelAndView addStudy(@RequestBody String body) {
 		Source source = new StreamSource(new StringReader(body));
-		ModelAndView ret = null;
-		Object s = null;
 		try {
-			UnmarshalResult res = EntryUtil.validate(validatingMarshaller, source);
+			UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
 			//s = m_studyDAO.unmarshal(source);
-			//s= (Entry) jaxb2Mashaller.unmarshal(source);
-			if (res.getErrors().isEmpty()) {
-				studyDS.saveEntry(res.getEntry());
-				s = res.getEntry();
-				ret = new ModelAndView(XML_VIEW_NAME, "object", s);
+			//s = (Entry) jaxb2Mashaller.unmarshal(source);
+			if (unmarshalledResult.getErrors().isEmpty()) {
+				studyDS.saveEntry(unmarshalledResult.getEntry());
+				return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", unmarshalledResult.getEntry());
 			} else {
-				res.setEntry(null);
-				s = res;
-				ret = new ModelAndView("errors", "object", s);
+				//unmarshalled.setEntry(null);
+				return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", unmarshalledResult);
 			}
 		} catch (JAXBException e) {
       throw new RuntimeException(e);
 		} catch (SAXException e) {
       throw new RuntimeException(e);
 		}
-				
-		return ret;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/study/{id}")
@@ -110,7 +111,7 @@ public class StudyController {
 	public ModelAndView getStudies() {
 		Feed list = new Feed();
 		list.setEntry((List<Entry>) studyDS.getAll());
-		return new ModelAndView(XML_VIEW_NAME, "studies", list);
+		return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
 	}
 	
 }
