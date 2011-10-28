@@ -31,7 +31,19 @@ public class StudyPosterTest extends TestCase {
    */
   public void testPostStringString() throws Exception {
     //StudyPoster.post("TBYKQ.xml", "http://localhost:8080/chassis-rest/service/study");
-    StudyPoster.post("studies/ACXFX.xml", "http://localhost:8080/chassis-rest/service/study");
+    // invalid
+    //StudyPoster.post("studies/ACXFX.xml", "http://localhost:8080/chassis-rest/service/study");
+    //StudyPoster.post("studies/AJYER.xml", "http://localhost:8080/chassis-rest/service/study");
+    //StudyPoster.post("studies/AKUQT.xml", "http://localhost:8080/chassis-rest/service/study");
+    //StudyPoster.post("studies/EUKMD.xml", "http://localhost:8080/chassis-rest/service/study");
+    
+    // Badly formed
+    //assertEquals(200, StudyPoster.post("studies/ZZSPY.xml", "http://localhost:8888/chassis-rest/service/study"));
+    
+    
+    assertEquals(200, StudyPoster.post("studies/YGTAH.xml", "http://localhost:8888/chassis-rest/service/study"));
+    
+    
   }
   
 
