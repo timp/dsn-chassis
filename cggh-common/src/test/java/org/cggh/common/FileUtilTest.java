@@ -7,7 +7,7 @@ import java.net.URL;
 /**
  * Test the file utilities
  */
-public class FileUtilTest extends BaseTestCase {
+public class FileUtilTest extends TestCaseBase {
 
 	/**
 	 * Constructor for FileUtilTest

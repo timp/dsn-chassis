@@ -25,7 +25,7 @@ import org.xml.sax.InputSource;
  * 
  * @since
  */
-public class XMLUtilitiesTest extends BaseTestCase {
+public class XMLUtilitiesTest extends TestCaseBase {
 
 	/**
 	 * Constructor
