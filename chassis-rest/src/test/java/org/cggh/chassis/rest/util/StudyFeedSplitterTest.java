@@ -1,6 +1,7 @@
 package org.cggh.chassis.rest.util;
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 import junit.framework.TestCase;
 
@@ -36,7 +37,12 @@ public class StudyFeedSplitterTest extends TestCase {
    * Test method for {@link org.cggh.chassis.rest.util.StudyFeedSplitter#split(java.lang.String)}.
    */
   public void testSplitString() throws Exception {
-    for (File child : new File(DATA_STUDIES).listFiles()) {
+    File[] files = new File(DATA_STUDIES).listFiles(new FilenameFilter(){
+      public boolean accept(File dir, String name) {
+        return name.indexOf(".xml") > 0 ;
+      } 
+    });
+    for (File child : files) {
       if (!child.delete()) 
         throw new RuntimeException("Could not delete " + child.getCanonicalPath());
     }

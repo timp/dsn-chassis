@@ -63,7 +63,7 @@ public class StudyController {
 				studyDS.updateEntry(id, res.getEntry());
 				return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", res.getEntry());
 			} else {
-				//res.setEntry(null);
+				res.setEntry(null);
 				return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", res);
 			}
 		} catch (JAXBException e) {
