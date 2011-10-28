@@ -32,7 +32,7 @@ public class FileUtilities {
 	 *@param  clazz - the class that is trying to find the resource
 	 *@return the url of the resource file found
 	 */
-	public static URL findResource(String name, Class clazz) {
+	public static URL findResource(String name, Class<?> clazz) {
 		ClassLoader cl = null;
 		URL url = null;
 
@@ -96,7 +96,7 @@ public class FileUtilities {
 	 *@param  clazz - the class that is trying to find the file
 	 *@return a URL pointing to the file, or null if nothing can be found
 	*/
-	public static URL findFileAsURL(String name, Class clazz) {
+	public static URL findFileAsURL(String name, Class<?> clazz) {
 		URL url = null;
 
 		// No filename passed return null URL
