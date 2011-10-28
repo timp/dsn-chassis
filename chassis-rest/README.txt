@@ -47,7 +47,7 @@ Now you can mvn install and run the app.
 mvn -X clean install tomcat:redeploy
 
 Get yourself an entry and post it to the service like this:
-$ curl -X POST -HContent-type:application/xml  --data @TBYKQ.xml http://localhost:8080/chassis-rest/service/study
+$ curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @TBYKQ.xml http://localhost:8080/chassis-rest/service/study
 Fetch it again by
 curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
 
