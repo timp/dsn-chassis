@@ -37,10 +37,10 @@ import junit.framework.TestCase;
  * The class is in main rather than test because
  * it is part of the testing infrastructure rather than an actual test.
  */
-public class BaseTestCase extends TestCase {
+public abstract class TestCaseBase extends TestCase {
 	/** The name of a system property set to true if the init method has been
 	 * called. Is the name of this class.*/
-	public static final String TEST_CASE_STRING = BaseTestCase.class.getName();
+	public static final String TEST_CASE_STRING = TestCaseBase.class.getName();
 
 	/** The default name for the environment properties file: 
 	 * environment.properties */
@@ -58,7 +58,7 @@ public class BaseTestCase extends TestCase {
 	public static final String WORKSPACE_PROPERTY = "workspace.home";
 
 	/** Logger used in debug mode to list the properties read*/
-	private static Logger c_logger = Logger.getLogger(BaseTestCase.class.getName());
+	private static Logger c_logger = Logger.getLogger(TestCaseBase.class.getName());
 
 	/**
 	 * Initialize the System properties from the environment.properties file
@@ -137,7 +137,7 @@ public class BaseTestCase extends TestCase {
 	 * associated with the test
 	 * @param name java.lang.String
 	 */
-	public BaseTestCase(String name) {
+	public TestCaseBase(String name) {
 		super(name);
 		init();
 	}
@@ -176,4 +176,5 @@ public class BaseTestCase extends TestCase {
 		String val = System.getProperty(name, defval);
 		return val;
 	}
+	
 }
