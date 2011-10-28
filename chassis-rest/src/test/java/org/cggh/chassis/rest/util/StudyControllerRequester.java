@@ -11,8 +11,10 @@ import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
+ * This is meant to be the equivalent of 
+ * 
  * Get yourself an entry and post it to the service like this:
- * $ curl -X POST -HContent-type:application/xml  --data @TBYKQ.xml \ 
+ * $ curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @TBYKQ.xml \ 
  *     http://localhost:8080/chassis-rest/service/study
  * Fetch it again by
  * curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
@@ -22,13 +24,13 @@ import org.apache.commons.httpclient.methods.PostMethod;
  * @since 25 Oct 2011 11:03:47
  *
  */
-public class StudyPoster {
+public class StudyControllerRequester {
 
   
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.err.println("Usage:");
-      System.err.println("  java " + StudyPoster.class.getName()
+      System.err.println("  java " + StudyControllerRequester.class.getName()
           + " studyFileName restUrl");
       System.exit(1);
     }
