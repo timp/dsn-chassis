@@ -39,38 +39,58 @@ public class StudyControllerRequesterTest extends TestCase {
     //StudyControllerRequester.post("studies/AKUQT.xml", url("/study"));
     //StudyControllerRequester.post("studies/EUKMD.xml", url("/study"));
     
-    // Badly formed
-    //assertEquals(200, StudyControllerRequester.post("studies/ZZSPY.xml", url("/study"));
+    /*
+    HttpResponse r = StudyControllerRequester.post("studies/ZZSPY.xml", url("/study"));
+    assertEquals(200, r.getStatus());
+    System.err.println(r.getBody());
+*/
     
-    HttpResponse postResponse = StudyControllerRequester.post("studies/YGTAH.xml", url("/study")); 
+    String studiesDir = DATA_STUDIES;
+    HttpResponse postResponse = StudyControllerRequester.post(studiesDir + "XGQRX.xml", url("/study")); 
     // should be 201?
     assertEquals(postResponse.getBody(), 200, postResponse.getStatus());
 
     HttpResponse deleteCollectionResponse = StudyControllerRequester.delete(url("/study/")); 
     assertEquals(deleteCollectionResponse.getBody(), 405, deleteCollectionResponse.getStatus());
   
-    HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/YGTAH")); 
-    
+    HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/XGQRX")); 
     assertEquals(deleteEntryResponse.getBody(), 200, deleteEntryResponse.getStatus());
+    
   }
    private String url(String url) { 
      return "http://localhost:8888/chassis-rest/service" + url;
    }
 
   public void testPostAllStudies() throws Exception { 
-    File studiesDir = new File(DATA_STUDIES );
+    File studiesDir = new File(DATA_STUDIES);
+    //File studiesDir = new File("studies");
     @SuppressWarnings("unchecked")
     Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] {"xml"}, false);
     int fileCount = 0;
     while(it.hasNext()){
       fileCount++;
-      String studyFileName = DATA_STUDIES  + it.next().getName(); 
+      File f = it.next();
+      String studyFileName = DATA_STUDIES  + f.getName(); 
+      //String studyFileName = "studies/"  + it.next().getName();
+      HttpResponse r = StudyControllerRequester.post(studyFileName, url("/study"));
       System.out.print(studyFileName);
       System.out.print(" - ");
-      System.out.println(StudyControllerRequester.post(studyFileName, url("/study")));
+      System.out.println(r.getBody());
+      if (r.getStatus() == 500) { 
+        System.out.print(studyFileName);
+        System.out.print(" - ");
+        System.out.println(r.getBody());
+      } else { 
+        // FIXME should be <errors><error>
+        if (r.getBody().indexOf("error") > 0)
+          System.err.println(r.getBody());
+      }
+      // Think you need to delete to rollback
+      StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
     }
-    assertEquals(1, fileCount);
     
+    System.out.println("Files: " + fileCount);
+    assertEquals(2, fileCount);
   }
 
 
