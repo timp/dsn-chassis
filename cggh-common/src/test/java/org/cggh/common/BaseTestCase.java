@@ -70,7 +70,7 @@ public class BaseTestCase extends TestCase {
 				DEFAULT_PROPERTIES_FILE_NAME);
 		InputStream is = null;
 			/** Properties read from a file*/
-		Vector loadedProps = new Vector();
+		Vector<String> loadedProps = new Vector<String>();
 		
 		if (propfile != null && !propfile.equals("")) {
 			try {
@@ -90,10 +90,10 @@ public class BaseTestCase extends TestCase {
 					}
 					return;
 				}
-				Enumeration files = loadedProps.elements();
+				Enumeration<String> fileNames = loadedProps.elements();
 				String abPath = f.getAbsolutePath();
-				while (files.hasMoreElements()) {
-					String s = (String) files.nextElement();
+				while (fileNames.hasMoreElements()) {
+					String s = (String) fileNames.nextElement();
 					if (s.equals(abPath)) {
 						return;
 					}
@@ -109,7 +109,7 @@ public class BaseTestCase extends TestCase {
 														DEFAULT_WORKSPACE);
 				String wshVar = "${workspace.home}";
 				int pos = 0;
-				for (Enumeration propsenum = props.propertyNames(); 
+				for (Enumeration<?> propsenum = props.propertyNames(); 
 				propsenum.hasMoreElements();) {
 					String key = (String) propsenum.nextElement();
 					String value = props.getProperty(key);
