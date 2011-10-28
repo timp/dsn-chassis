@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.example.org/test" xmlns:test="http://www.example.org/test" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="test">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="test:test1"/>
+                <xs:element ref="test:test2"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="test1" type="xs:string"/>
+    <xs:element name="test2">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="test:test3"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="test3"/>
+</xs:schema>
