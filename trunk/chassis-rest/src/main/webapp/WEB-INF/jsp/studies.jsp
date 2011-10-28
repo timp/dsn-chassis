@@ -6,23 +6,17 @@
 	<title>Collection: study</title>
 </head>
 <body>
+<h1>Studies</h1>
 <table border="1">
 	<thead><tr>
 		<th>ID</th>
 		<th>Author</th>
 		<th>Title</th>
 	</tr></thead>
-<c:if test="${not empty $object}">
-	<tr>
-		<td><a href="study/${object.studyID}">${object.studyID}</a></td>
-		<td>${object.author.email}</td>
-		<td>${object.content.study.studyTitle}</td>
-	</tr>
-</c:if>
 <c:forEach var="item" items="${studies.entry}">
 	<tr>
 		<td><a href="study/${item.studyID}">${item.studyID}</a></td>
-		<td>${object.author.email}</td>
+		<td>${item.author.email}</td>
 		<td>${item.content.study.studyTitle}</td>
 	</tr>
 </c:forEach>
