@@ -147,8 +147,7 @@
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>
-		<!-- finalName>${project.artifactId}-${project.version}-${profileId}</finalName -->
-
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<inherited>true</inherited>
