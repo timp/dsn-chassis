@@ -1,5 +1,7 @@
 package org.cggh.chassis.rest.util;
 
+import java.io.File;
+
 import junit.framework.TestCase;
 
 /**
@@ -8,6 +10,9 @@ import junit.framework.TestCase;
  *
  */
 public class StudyFeedSplitterTest extends TestCase {
+
+  private static final String DATA_STUDIES = "data/studies";
+  private static final String DATA = "data";
 
   public StudyFeedSplitterTest(String name) {
     super(name);
@@ -30,8 +35,15 @@ public class StudyFeedSplitterTest extends TestCase {
   /**
    * Test method for {@link org.cggh.chassis.rest.util.StudyFeedSplitter#split(java.lang.String)}.
    */
-  public void testSplitString() {
-    StudyFeedSplitter.split("studies_feed.xml");
+  public void testSplitString() throws Exception {
+    for (File child : new File(DATA_STUDIES).listFiles()) {
+      if (!child.delete()) 
+        throw new RuntimeException("Could not delete " + child.getCanonicalPath());
+    }
+    File studyEntry = new File(DATA_STUDIES + "/XGQRX.xml");
+    assertFalse("Study file not created", studyEntry.exists());
+    StudyFeedSplitter.split(DATA + "/studies_feed.xml");
+    assertTrue("Study file created", studyEntry.exists());
   }
 
   /**
