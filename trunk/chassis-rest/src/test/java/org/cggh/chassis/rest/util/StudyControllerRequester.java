@@ -1,14 +1,19 @@
 package org.cggh.chassis.rest.util;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.DeleteMethod;
+import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.PutMethod;
 
 /**
  * This is meant to be the equivalent of 
@@ -42,7 +47,43 @@ public class StudyControllerRequester {
 
   }
 
-  public static int post(String studyFileName, String restUrl) throws IOException {
+  public static HttpResponse post(String studyFileName, String restUrl) throws IOException {
+    return update(studyFileName, restUrl, new PostMethod(restUrl));
+  }
+  public static HttpResponse put(String studyFileName, String restUrl) throws IOException {
+    return update(studyFileName, restUrl, new PutMethod(restUrl));
+  }
+  public static HttpResponse delete(String restUrl) throws IOException {
+    return request( restUrl, new DeleteMethod(restUrl));
+  }
+  
+  private static HttpResponse request(String restUrl, DeleteMethod method) throws IOException {
+    if (restUrl == null)
+      throw new NullPointerException("REST URL required");
+    try {
+      // Merely for validation of url format
+      new URL(restUrl);
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
+    
+    final HttpClient client = new HttpClient();
+
+    method.setRequestHeader("Accept", "application/xml");
+
+    HttpResponse response;
+    try {
+      client.executeMethod(method);
+      response = new HttpResponse(method.getStatusCode(), method.getResponseBodyAsString());
+    } finally {
+      method.releaseConnection();
+    }
+    return response;
+    
+  }
+
+  private static HttpResponse update(String studyFileName, String restUrl, final EntityEnclosingMethod method) 
+      throws FileNotFoundException, IOException, HttpException {
     if (studyFileName == null)
       throw new NullPointerException("File name required");
     if (restUrl == null)
@@ -56,32 +97,26 @@ public class StudyControllerRequester {
     
     final HttpClient client = new HttpClient();
 
-    final PostMethod post = new PostMethod(restUrl);
-
     InputStream data = new FileInputStream(studyFileName);
-    post.setRequestEntity(new InputStreamRequestEntity(data));  
-    post.setRequestHeader("Content-Type", "application/xml");
+    method.setRequestEntity(new InputStreamRequestEntity(data));  
+    method.setRequestHeader("Content-Type", "application/xml");
     
     // Note: curl adds a default of 
     // Accept: */*
     // httpclient does not.
     // for */* spring returns xml, for nothing it throws and error. 
-    post.setRequestHeader("Accept", "application/xml");
+    method.setRequestHeader("Accept", "application/xml");
     
+    HttpResponse response;
     try {
-      client.executeMethod(post);
-
-      final String response = post.getResponseBodyAsString();
-      System.out.println(response);
-
+      client.executeMethod(method);
+      response = new HttpResponse(method.getStatusCode(), method.getResponseBodyAsString());
     } finally {
-      post.releaseConnection();
+      method.releaseConnection();
     }
-    
-    return post.getStatusCode();
-    
-    
-  
+    return response;
   }
+  
+  
 
 }

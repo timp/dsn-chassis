@@ -39,6 +39,11 @@
 		<constructor-arg ref="marshaller" />
 	</bean>
 
+	<bean id="study" 
+	      class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<constructor-arg ref="marshaller" />
+	</bean>
+
 	<bean id="errorMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
