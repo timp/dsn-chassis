@@ -224,7 +224,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
 			xmlString = buildGoodXML();
-			Document doc = XMLUtilities.getDocument(xmlString, eh);
+			//Document doc = 
+			XMLUtilities.getDocument(xmlString, eh);
 		} catch (Exception e) {
 			Assert.assertTrue("Error Occurred while validating" 
 			+	" the following XML\n" + xmlString, false);
@@ -249,8 +250,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 			try {
 				System.out.println(f.getCanonicalPath());
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				throw new RuntimeException(e1);
 			}
 			Assert.assertTrue("Error Occurred while validating" 
 			+	" the following XML\n" + xmlString, false);
@@ -268,7 +269,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
 			String xmlString = buildBadXML();
-			Document doc = XMLUtilities.getDocument(xmlString, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(xmlString, eh, true);
 
 			Assert.assertTrue("Expected a validation failure as " 
 			+ " getDocument was passed the following incorrect XML\n" 
@@ -292,7 +294,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		try {
 			ErrorHandler eh = null;
 			String xmlString = buildGoodXML();
-			Document doc = XMLUtilities.getDocument(xmlString, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(xmlString, eh, true);
 
 			Assert.assertTrue("Expected a failure as a null " 
 			+ " ErrorHandler was passed", false);
@@ -313,7 +316,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
 			String xmlString = null;
-			Document doc = XMLUtilities.getDocument(xmlString, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(xmlString, eh, true);
 
 			Assert.assertTrue("Expected a failure as a null " 
 			+ " XMLString was passed", false);
@@ -333,9 +337,11 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		testGetDocumentWithNullInputSourceValidErrorHandlerValidatingTrue() {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
-			String xmlString =  buildGoodXML();
+			//String xmlString =  
+			buildGoodXML();
 			InputSource iSource = null;
-			Document doc = XMLUtilities.getDocument(iSource, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(iSource, eh, true);
 
 			Assert.assertTrue("Expected a failure as a null " 
 			+ " iSource was passed", false);
@@ -355,9 +361,11 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		testGetDocumentWithNullInputStreamValidErrorHandlerValidatingTrue() {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
-			String xmlString =  buildGoodXML();
+			//String xmlString =  
+			buildGoodXML();
 			InputStream iStream = null;
-			Document doc = XMLUtilities.getDocument(iStream, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(iStream, eh, true);
 
 			Assert.assertTrue("Expected a failure as a null " 
 			+ " iStream was passed", false);
@@ -377,9 +385,11 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		testGetDocumentWithNullFileValidErrorHandlerValidatingTrue() {
 		try {
 			ErrorHandler eh = new DefaultSAXErrorHandler();
-			String xmlString =  buildGoodXML();
+			//String xmlString =  
+			buildGoodXML();
 			File iFile = null;
-			Document doc = XMLUtilities.getDocument(iFile, eh, true);
+			//Document doc = 
+			XMLUtilities.getDocument(iFile, eh, true);
 
 			Assert.assertTrue("Expected a failure as a null " 
 			+ " iFile was passed", false);
@@ -429,7 +439,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 			Document doc = XMLUtilities.getDocument(xmlString);
 			doc.normalize();
 			
-			String myString = XMLUtilities.
+			//String myString = 
+			XMLUtilities.
 							  elementToString(doc.
 							  				  getDocumentElement());			
 		} catch (Exception e) {
@@ -447,7 +458,8 @@ public class XMLUtilitiesTest extends TestCaseBase {
 		try {
 			Element elem = null;	
 								
-			String myString = XMLUtilities.
+			//String myString = 
+			XMLUtilities.
 							  elementToString(elem);			
 
 			Assert.assertTrue("Expected a failure as a null " 
