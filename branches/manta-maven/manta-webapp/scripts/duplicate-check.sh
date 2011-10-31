@@ -37,13 +37,13 @@ do
 			if [ ${DATE_UPLOADED} -gt 0 ]
 			then
 				mv $LAST_FILE duplicates
-				echo "$LAST_FILE#$FILE" | sed -e 's#submitted/##' | sed -e 's#curated/##'  >> ${DUPLICATE_DEF}
+				echo "$LAST_FILE#$FILE" | sed -e 's#submitted/##g' | sed -e 's#curated/##g'  >> ${DUPLICATE_DEF}
 			fi
 			DATE_UPLOADED=$DATE_STAMP
 			LAST_FILE=${FILE}
 		else
 			mv $FILE duplicates
-			echo "$FILE#$LAST_FILE" | sed -e 's#submitted/##' | sed -e 's#curated/##' >> ${DUPLICATE_DEF}
+			echo "$FILE#$LAST_FILE" | sed -e 's#submitted/##g' | sed -e 's#curated/##g' >> ${DUPLICATE_DEF}
 		fi
 	done < ${TEMP_FILE}.2
 done < ${TEMP_DUPLICATE_NAMES}
