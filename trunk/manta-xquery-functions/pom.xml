@@ -1,29 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
 
-	<groupId>org.cggh.chassis</groupId>
+  <groupId>org.cggh.chassis</groupId>
 
-	<version>0.1-beta-3-SNAPSHOT</version>
+  <version>0.1-beta-2-SNAPSHOT</version>
 
 
-	<artifactId>manta-xquery-functions</artifactId>
-	<packaging>jar</packaging>
-	<name>manta-xquery-functions</name>
-	<url>http://cggh.org</url>
-	<repositories>
-		<repository>
-			<id>atombeat</id>
-			<name>AtomBeat Non-Maven Dependencies Repository</name>
-			<url>http://atombeat.googlecode.com/svn/repository</url>
-		</repository>
+  <artifactId>manta-xquery-functions</artifactId>
+  <packaging>jar</packaging>
+  <name>manta-xquery-functions</name>
+  <url>http://cggh.org</url>
+  <repositories>
+    <repository>
+      <id>atombeat</id>
+      <name>AtomBeat Non-Maven Dependencies Repository</name>
+      <url>http://atombeat.googlecode.com/svn/repository</url>
+    </repository>
     <repository>
       <id>cggh</id>
       <name>CGGH Maven Repository</name>
       <url>http://cloud1.cggh.org/maven2/</url>
     </repository>
-	</repositories>
+  </repositories>
   <distributionManagement>
     <repository>
       <id>cggh</id>
@@ -34,43 +34,43 @@
       <url>file:///var/www/maven2/</url>
     </snapshotRepository>
   </distributionManagement>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.exist-db.version>1.4.0</org.exist-db.version>
-	</properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <org.exist-db.version>1.4.0</org.exist-db.version>
+  </properties>
 
-	<build>
+  <build>
 
-		<plugins>
+    <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
 
-		</plugins>
+    </plugins>
 
-	</build>
+  </build>
 
-	<dependencies>
+  <dependencies>
 
-		<dependency>
-			<groupId>org.exist-db</groupId>
-			<artifactId>exist</artifactId>
-			<version>${org.exist-db.version}</version>
-			<scope>provided</scope>
-		</dependency>
+    <dependency>
+      <groupId>org.exist-db</groupId>
+      <artifactId>exist</artifactId>
+      <version>${org.exist-db.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
-	</dependencies>
+  </dependencies>
 
  <scm>
-  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</connection>
-  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</developerConnection>
-  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</developerConnection>
+    <url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</url>
   </scm>
 </project>
