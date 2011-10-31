@@ -16,7 +16,7 @@ This cannot run this with local changes, so check svn status first.
 May need to also include the param -Dresume=false
 
 {{{
-cd manta-webapp]
+cd manta-webapp
 svn status
 mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_
 }}}
