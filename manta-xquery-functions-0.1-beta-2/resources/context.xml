@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="bean/existConfigFactory" auth="Container"
+        type="org.cggh.chassis.manta.util.config.ExistConfig"
+        factory="org.apache.naming.factory.BeanFactory"
+        username="admin" password=""/>
+    <!-- Could be configured with a resource ref in web.xml or like this
+    <ResourceLink global="bean/existConfigFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig"/>
+-->    
+</Context>
