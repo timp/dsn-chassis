@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Maven is used to build a release
+Maven is used to build a release.
 
 
 = Details =
@@ -13,7 +13,10 @@ Run maven with the following settings:
 
 Goals: release:prepare
 
-{{mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_}}}
+{{
+cd manta-webapp
+mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_
+}}}
 
 Cannot run this with local changes. May need to also include the param -Dresume=false
 
