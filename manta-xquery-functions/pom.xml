@@ -5,7 +5,7 @@
 
 	<groupId>org.cggh.chassis</groupId>
 
-	<version>0.1-beta-2</version>
+	<version>0.1-beta-3-SNAPSHOT</version>
 
 
 	<artifactId>manta-xquery-functions</artifactId>
@@ -69,8 +69,8 @@
 	</dependencies>
 
  <scm>
-  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</connection>
-  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</developerConnection>
-  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-xquery-functions-0.1-beta-2</url>
+  	<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</connection>
+  	<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</developerConnection>
+  	<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-xquery-functions</url>
   </scm>
 </project>
