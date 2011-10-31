@@ -517,7 +517,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             for $d in $drugs
                 let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
             
-        return $drug
+        return $profile
 
     
      
