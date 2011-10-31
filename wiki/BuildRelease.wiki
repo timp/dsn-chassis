@@ -13,7 +13,7 @@ Run maven with the following settings:
 
 Goals: release:prepare
 
-{{
+{{{
 cd manta-webapp
 mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_
 }}}
