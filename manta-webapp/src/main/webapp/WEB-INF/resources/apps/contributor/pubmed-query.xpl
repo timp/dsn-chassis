@@ -56,6 +56,7 @@
                         <institutions>
                             <institution-ack>
                                 <institution-name><xsl:value-of select="$metadata//Affiliation"/></institution-name>
+                                <institution-websites/>
                             </institution-ack>
                         </institutions>
                         <!-- Only copy from pubmed if there's a valid response -->
