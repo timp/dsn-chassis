@@ -13,7 +13,6 @@ import module namespace common-protocol = "http://purl.org/atombeat/xquery/commo
 import module namespace config-collections = "http://purl.org/atombeat/xquery/config-collections" at "../collections.xqm" ;
 
 (: Migration actions: :)
-(: Rename PQP to PIP :)
 (: Allow for multiple institutions :)
 
 declare variable $testdata {
@@ -509,11 +508,9 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
    let $new-study-infos := 
         for $old in $old-study-infos
             let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.0"
-            let $drug := update replace $old//drugMeasured[. = "PQP"] with <drugMeasured>PIP</drugMeasured>
-            let $drug1 := update replace $old//invitroDrug/molecule[. = "PQP"] with <molecule>PIP</molecule>
             let $ins := update insert <institutions>{$old//institution-ack}</institutions> into $old//acknowledgements
             let $del := update delete $old//acknowledgements/institution-ack
-            let $prior := replace($old//priorAntimalarials, 'PQP', 'PIP')
+            let $prior := $old//priorAntimalarials
             let $pa := update insert attribute selected {$prior} into $old//priorAntimalarials
             let $pa := update delete $old//priorAntimalarials/text()
             let $drugs := tokenize($prior,'\s+')
