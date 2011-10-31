@@ -4,15 +4,25 @@
 
 UPDATE=false
 DIR=cmis-files
+ARCHIVE=archive
 mkdir ${DIR}
-for j in submitted/* curated/*
+rm -rf ${ARCHIVE}
+mkdir ${ARCHIVE}
+#
+for j in submitted/* curated/* duplicates/*
 do
-	NAME=`echo -n $j| sed -e 's#submitted/##' | sed -e 's#curated/##'`
+	NAME=`echo -n $j| sed -e 's#submitted/##' | sed -e 's#curated/##'  | sed -e 's#duplicates/##'`
 	STUDY=`grep originStudy $j | awk -F\" '{print $10}'`
-		
+	grep ${STUDY} deletedStudies
+	if [ $? -eq 0 ]
+	then
+		mv $j ${ARCHIVE}
+		continue
+	fi	
 	METADATA=${DIR}/${NAME}
 	METADATA_FILE=${DIR}/${NAME}.load
 	METADATA_CREAT=${DIR}/${NAME}.creat
+
 	#Create the metadata file in Alfresco
 	java -classpath ${CLASSPATH} org.apache.xalan.xslt.Process -IN $j -XSL file-cmis.xsl -OUT ${METADATA}
 
@@ -33,14 +43,14 @@ do
 	sed -e 's#^.*<atom:content/>##' ${METADATA} >>${METADATA_FILE}
 	echo "Alf file url"  ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children/${METADATA_CREAT}
 	
-	if [ $UPDATE = 'true' ]
+	ORIG=`grep "${NAME}" dupdef | awk -F# '{print $2}'`
+	if [ "${ORIG}" = '' -o "${ORIG}" = "${NAME}" ]
 	then
-	  #FIXME need check that content is not the alfresco error page
-		UPDATE_URL=`grep edit-media ${METADATA_CREAT} | awk -F\" '{print $4}'`
-		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml  --data @${METADATA_FILE} ${UPDATE_URL}
-	else
 		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X POST -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${ALF_HOME}/cmis/p/WWARN/Studies/${STUDY}/children
+	else	
+		UPDATE_URL=`grep edit-media cmis-files/${ORIG}.creat | awk -F\" '{print $4}'`
+		curl ${CURL_OPTS} -u${ALF_USERNAME}:${ALF_PASSWORD} -X PUT -HContent-type:application/atom+xml -o ${METADATA_CREAT} --data @${METADATA_FILE} ${UPDATE_URL}
 	fi
-	
+
 	
 done
