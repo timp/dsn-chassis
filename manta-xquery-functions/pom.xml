@@ -27,11 +27,11 @@
   <distributionManagement>
     <repository>
       <id>cggh</id>
-      <url>scp://cloud1.cggh.org/var/www/maven2/</url>
+      <url>file:///var/www/maven2/</url>
     </repository>
     <snapshotRepository>
       <id>cggh</id>
-      <url>scp://cloud1.cggh.org/var/www/maven2/</url>
+      <url>file:///var/www/maven2/</url>
     </snapshotRepository>
   </distributionManagement>
 	<properties>
