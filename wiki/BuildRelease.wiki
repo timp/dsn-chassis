@@ -12,15 +12,16 @@ Maven is used to build a release.
 Run maven with the following settings:
 
 Goals: release:prepare
+This cannot run this with local changes, so check svn status first.
+May need to also include the param -Dresume=false
 
 {{{
-cd manta-webapp
+cd manta-webapp]
+svn status
 mvn release:prepare -Dusername=_me_ -Dpassword=_mypassword_
 }}}
 
-Cannot run this with local changes. May need to also include the param -Dresume=false
-
-This will result in a new tag in the repository corresponding to the version in the pom
+This will result in a new tag in the repository corresponding to the version in the pom.
 
 == Build server specific wars ==
 
