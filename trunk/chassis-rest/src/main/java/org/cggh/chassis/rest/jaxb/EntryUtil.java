@@ -46,8 +46,9 @@ public class EntryUtil {
 		//		events.isEmpty());
 		if (!events.isEmpty()) {
 			System.out.println(events);
+		} else {
+			unmarshalResult.setEntry((Entry) o);
 		}
-		unmarshalResult.setEntry((Entry) o);
 		return unmarshalResult;
 	}
 }
