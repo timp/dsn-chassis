@@ -42,7 +42,9 @@ public class StudyDAO {
   public Collection<Entry> getAll() {
 		final EntityManager loadManager = emf.createEntityManager();
 		Query query = loadManager.createQuery("SELECT e FROM Entry e");
-		return (Collection<Entry>) query.getResultList();
+		Collection<Entry> ret = (Collection<Entry>) query.getResultList();
+		loadManager.close();
+		return (ret);
 	}
 
 	public void updateEntry(String id, Entry entry) {
