@@ -577,7 +577,7 @@
   <xs:element name="genotypedMarkers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="genotypedMarker"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="genotypedMarker"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -663,7 +663,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="sampleSelectionMethod" type="xs:NCName"/>
+  <xs:element name="sampleSelectionMethod" type="xs:string"/>
   <xs:element name="sampleSelectionMethodOther" type="xs:string"/>
   <xs:element name="sampleSelectionProportion" type="xs:string"/>
   <xs:element name="mixedResistanceAlleles">
@@ -701,7 +701,7 @@
   <xs:element name="resistanceLoci">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="resistanceLocus"/>
+        <xs:element ref="resistanceLocus" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -717,7 +717,7 @@
   <xs:element name="otherLoci">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="otherLocus"/>
+        <xs:element ref="otherLocus" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -861,7 +861,7 @@
   </xs:element>
   <xs:element name="antibiotic" type="xs:NCName"/>
   <xs:element name="antibioticOther" type="xs:string"/>
-  <xs:element name="antibioticFinalConcentration" type="xs:integer"/>
+  <xs:element name="antibioticFinalConcentration" type="xs:decimal"/>
   <xs:element name="susceptibility">
     <xs:complexType>
       <xs:sequence>
@@ -877,7 +877,7 @@
   <xs:element name="plateBatches">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="batch"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="batch"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1049,8 +1049,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="activeIngredientName" type="xs:NCName"/>
-  <xs:element name="activeIngredientMgPerDose" type="xs:decimal"/>
+  <xs:element name="activeIngredientName" type="xs:string"/>
+  <xs:element name="activeIngredientMgPerDose" type="xs:string"/>
   <xs:element name="administrationRoute" type="xs:string"/>
   <xs:element name="manufacturer" type="xs:string"/>
   <xs:element name="batchNumber" type="xs:string"/>
@@ -1162,7 +1162,7 @@
   <xs:element name="storages">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="storage"/>
+        <xs:element ref="storage" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
