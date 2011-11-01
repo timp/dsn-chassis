@@ -1,10 +1,17 @@
 package org.cggh.chassis.rest.bean;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="error")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "errorText"
+})
+@XmlRootElement(name = "error")
 public class ValidationError {
-	private String error;
+	private String errorText;
 
 	public ValidationError() {
 	
@@ -14,10 +21,10 @@ public class ValidationError {
 	}
 
 	public String getError() {
-		return error;
+		return errorText;
 	}
 
 	public void setError(String error) {
-		this.error = error;
+		this.errorText = error;
 	}
 }
