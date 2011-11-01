@@ -63,7 +63,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-instrument-tomcat</artifactId>
 			<version>${spring.version}</version>
-			<scope>runtime</scope>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Database -->
 		<dependency>
