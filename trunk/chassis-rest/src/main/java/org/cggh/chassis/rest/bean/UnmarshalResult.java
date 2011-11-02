@@ -28,8 +28,11 @@ public class UnmarshalResult {
 	public void setEntry(Entry entry) {
 		this.entry = entry;
 	}
-	
 	public List<ValidationError> getErrors() {
 		return errors;
+	}
+	
+	public void addError(ValidationError e) { 
+	  errors.add(e);
 	}
 }
