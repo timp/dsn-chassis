@@ -4,11 +4,6 @@ These notes are based up and reflect
   http://code.google.com/p/dsn-chassis/wiki/ChassisRESTRDBMS
   
 
-I've wanted to try and use a more schema based approach for the study 
-(and study-info) in Chassis so I've been playing with JAXB and Spring 
-to create a REST web service which will validate a Chassis study 
-against an XML schema.
-
 The schema itself is auto-generated at the moment so it will accept anything 
 that is currently in Chassis - over time this should become more strict.
 
@@ -57,6 +52,9 @@ Then restart (The short answer as to why this is necessary is because of
 having element names longer than 31 characters...)
 After you've done that it should work fine 
 (although I do expect other database mapping errors to crop up to start with...)
+
+Remember, Spring caches, so you will need to restart tomcat sometimes. 
+
 
  
 
