@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
@@ -20,11 +19,8 @@
 		</dependency>
 
 		<!-- Test dependencies -->
-		<!--dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-		</dependency-->
+		<!--dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>3.8.1</version> </dependency -->
 
 		<!-- Roundtrip -->
 		<dependency>
@@ -53,26 +49,15 @@
 			<id>maven2-repository.dev.java.net</id>
 			<url>http://download.java.net/maven/2</url>
 		</repository>
-		<!--
-		<repository>
-			<id>maven-repository.dev.java.net</id>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-		-->
+		<!-- <repository> <id>maven-repository.dev.java.net</id> <url>http://download.java.net/maven/1</url> 
+			<layout>legacy</layout> </repository> -->
 		<repository>
 			<id>maven2-repository.jboss.com</id>
 			<url>http://repository.jboss.com/maven2</url>
 		</repository>
 	</repositories>
-	<!--
-	<pluginRepositories>
-		<pluginRepository>
-			<id>maven2-repository.dev.java.net</id>
-			<url>http://download.java.net/maven/2</url>
-		</pluginRepository>
-	</pluginRepositories>
-	-->
+	<!-- <pluginRepositories> <pluginRepository> <id>maven2-repository.dev.java.net</id> 
+		<url>http://download.java.net/maven/2</url> </pluginRepository> </pluginRepositories> -->
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
@@ -93,9 +78,9 @@
 									</goals>
 								</pluginExecutionFilter>
 								<action>
-									<execute >
+									<execute>
 										<runOnIncremental>true</runOnIncremental>
-									</execute >
+									</execute>
 								</action>
 							</pluginExecution>
 						</pluginExecutions>
@@ -108,6 +93,7 @@
 				<version>0.5.5</version>
 				<executions>
 					<execution>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -129,5 +115,33 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jvnet.hyperjaxb3</groupId>
+										<artifactId>maven-hyperjaxb3-plugin</artifactId>
+										<versionRange>[0.0.0,)</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
