@@ -16,7 +16,8 @@ import org.xml.sax.SAXException;
 
 public class EntryUtil {
 
-	public static UnmarshalResult validate(Jaxb2Marshaller marshaller, Source source) throws JAXBException, SAXException {
+	public static UnmarshalResult validate(Jaxb2Marshaller marshaller, Source source) 
+	    throws JAXBException, SAXException {
 
 	  final UnmarshalResult unmarshalResult = new UnmarshalResult();
 		
@@ -30,16 +31,17 @@ public class EntryUtil {
 			new ClassPathResource("atom.xsd");
 		marshaller.setSchema(accountLookUpSchema);
 		*/
+	  
 		final List<ValidationEvent> events = new LinkedList<ValidationEvent>();
+		
 		marshaller.setValidationEventHandler(new ValidationEventHandler() {
 			public boolean handleEvent(ValidationEvent event) {
 				events.add(event);
-				unmarshalResult.getErrors().add(new ValidationError(event.getMessage()));
+				unmarshalResult.addError(new ValidationError(event.getMessage()));
 				// Keep going
 				return true;
 			}
 		});
-		
 
 		Object o = marshaller.unmarshal(source);
 		//assertFalse("List of validation events must not be empty.",
