@@ -9,8 +9,10 @@ import java.net.URL;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -43,21 +45,29 @@ public class StudyControllerRequester {
     String studyFileName = args[0];
     String url = args[1];
 
-    post(studyFileName, url);
+    create(studyFileName, url);
 
   }
 
-  public static HttpResponse post(String studyFileName, String restUrl) throws IOException {
+  /**C*/
+  public static HttpResponse create(String studyFileName, String restUrl) throws IOException {
     return update(studyFileName, restUrl, new PostMethod(restUrl));
   }
-  public static HttpResponse put(String studyFileName, String restUrl) throws IOException {
+  /**R*/
+  public static HttpResponse read(String restUrl) throws IOException {
+    return request(restUrl, new GetMethod(restUrl));
+  }
+  /**U*/
+  // Beware replaces entry in study, but everything else is an insert not an update
+  public static HttpResponse update(String studyFileName, String restUrl) throws IOException {
     return update(studyFileName, restUrl, new PutMethod(restUrl));
   }
+  /**D*/
   public static HttpResponse delete(String restUrl) throws IOException {
-    return request( restUrl, new DeleteMethod(restUrl));
+    return request(restUrl, new DeleteMethod(restUrl));
   }
   
-  private static HttpResponse request(String restUrl, DeleteMethod method) throws IOException {
+  private static HttpResponse request(String restUrl, HttpMethod method) throws IOException {
     if (restUrl == null)
       throw new NullPointerException("REST URL required");
     try {
