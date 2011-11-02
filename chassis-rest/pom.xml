@@ -152,6 +152,7 @@
 			<plugin>
 				<inherited>true</inherited>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -160,7 +161,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1</version>
+				<version>2.1.1</version>
 				<configuration>
 					<!-- webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory -->
 					<encoding>UTF-8</encoding>
@@ -197,6 +198,7 @@
 
      <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+     	<version>2.10</version>
         <configuration>
           <excludes>
           <!-- 
