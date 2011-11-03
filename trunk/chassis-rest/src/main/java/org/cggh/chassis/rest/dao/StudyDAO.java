@@ -19,59 +19,67 @@ public class StudyDAO {
 		this.emf = emf;
 	}
 
-	public void saveEntry(Entry alpha) {
+  public Entry getEntry(String id) {
+    final EntityManager em = emf.createEntityManager();
+    final Entry beta = em.find(Entry.class, id);
+    em.close();
+    return beta;
+  }
 
-		final EntityManager saveManager = emf.createEntityManager();
-		saveManager.getTransaction().begin();
-		try {
-      saveManager.persist(alpha);
-      saveManager.getTransaction().commit();
-		} catch (Exception e) { 
-		  saveManager.getTransaction().rollback();
-		} finally { 
-		  saveManager.close();
-		}
-	}
-
-	public Entry getEntry(String id) {
-		final EntityManager loadManager = emf.createEntityManager();
-
-		final Entry beta = loadManager.find(Entry.class, id);
-		loadManager.close();
-		return beta;
-	}
-
-	@SuppressWarnings("unchecked")
+  @SuppressWarnings("unchecked")
   public Collection<Entry> getAll() {
-		final EntityManager loadManager = emf.createEntityManager();
-		Query query = loadManager.createQuery("SELECT e FROM Entry e");
-		Collection<Entry> ret = (Collection<Entry>) query.getResultList();
-		loadManager.close();
-		return (ret);
+    final EntityManager em = emf.createEntityManager();
+    Query query = em.createQuery("SELECT e FROM Entry e");
+    Collection<Entry> resultsList = (Collection<Entry>)query.getResultList();
+    em.close();
+    return resultsList;
+  }
+
+	public void saveEntry(Entry entry) {
+		final EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		try {
+      em.persist(entry);
+      em.getTransaction().commit();
+    } catch (RuntimeException e) { 
+      em.getTransaction().rollback();
+      throw e;
+		} finally { 
+		  em.close();
+		}
 	}
 
 	public void updateEntry(String id, Entry entry) {
-		final EntityManager saveManager = emf.createEntityManager();
-
-		saveManager.getTransaction().begin();
-		
-		saveManager.merge(entry);
-
-		saveManager.getTransaction().commit();
-		saveManager.close();
+		final EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+    try {	
+		  em.merge(entry);
+	    em.getTransaction().commit();
+    } catch (RuntimeException e) { 
+      em.getTransaction().rollback();
+      throw e;
+    } finally { 
+      em.close();
+    }
 	}
 
-	public void remove(String id) {
-		final EntityManager saveManager = emf.createEntityManager();
-
-		saveManager.getTransaction().begin();
-		Entry beta = saveManager.find(Entry.class, id);
-		if (null != beta) {
-			saveManager.remove(beta);
-		}
-		
-		saveManager.getTransaction().commit();
-		saveManager.close();
-		
+	public boolean remove(String id)  {
+		final EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Entry entry = em.find(Entry.class, id);
+		boolean found = false;
+		if (entry != null) {
+		  found = true;
+    }
+		try {
+			em.remove(entry);
+	    em.getTransaction().commit();
+		} catch (RuntimeException e) { 
+      em.getTransaction().rollback();
+      throw e;
+    } finally { 
+      em.close();
+    }
+		return found;
 	}
 }
