@@ -82,11 +82,12 @@ public class StudyControllerRequesterTest extends TestCase {
     @SuppressWarnings("unchecked")
     Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] { "xml" }, false);
     int fileCount = 0;
+    int failCount = 0;
     while (it.hasNext()) {
       fileCount++;
       File f = it.next();
       String studyFileName = DATA_STUDIES + f.getName();
-      //String studyFileName = "studies/"  + it.next().getName();
+      //String studyFileName = "studies/"  + f.getName();
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
       System.out.print(studyFileName);
       System.out.print(" - ");
@@ -96,14 +97,16 @@ public class StudyControllerRequesterTest extends TestCase {
         System.out.print(" - ");
         System.out.println(r.getBody());
       } else {
-        if (r.getBody().indexOf("errors") > 0)
+        if (r.getBody().indexOf("errors") > 0) { 
           System.err.println(r.getBody());
+          failCount ++;
+        }
       }
       // Think you need to delete to rollback
       StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
     }
 
-    System.out.println("Files: " + fileCount);
+    System.out.println("Files: " + fileCount + " fail count: " + failCount);
     assertEquals(3, fileCount);
   }
 
