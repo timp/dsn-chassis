@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
-import javax.xml.bind.JAXBException;
 
 import org.w3._2005.atom.Entry;
 
@@ -20,17 +19,21 @@ public class StudyDAO {
 		this.emf = emf;
 	}
 
-	public void saveEntry(Entry alpha) throws JAXBException {
+	public void saveEntry(Entry alpha) {
 
 		final EntityManager saveManager = emf.createEntityManager();
 		saveManager.getTransaction().begin();
-		saveManager.persist(alpha);
-		saveManager.getTransaction().commit();
-		saveManager.close();
-
+		try {
+      saveManager.persist(alpha);
+      saveManager.getTransaction().commit();
+		} catch (Exception e) { 
+		  saveManager.getTransaction().rollback();
+		} finally { 
+		  saveManager.close();
+		}
 	}
 
-	public Entry getEntry(String id) throws JAXBException {
+	public Entry getEntry(String id) {
 		final EntityManager loadManager = emf.createEntityManager();
 
 		final Entry beta = loadManager.find(Entry.class, id);
