@@ -8,6 +8,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.cggh.chassis.rest.bean.UnmarshalResult;
+import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
 import org.cggh.chassis.rest.jaxb.EntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,24 +39,19 @@ public class StudyController {
   private static final String STUDY_COLLECTION_VIEW_NAME = "studies";
 	private static final String ERROR_LIST_VIEW_NAME = "errors";
 	  
-	@RequestMapping(method=RequestMethod.GET, value="/study/{id}")
-	public ModelAndView getStudy(@PathVariable String id) {
-		Entry e = null;
-		try {
-			e = studyDS.getEntry(id);
-			System.err.println("Entry found: " + e);
-		} catch (NumberFormatException e1) {
-      throw new RuntimeException(e1);
-		} catch (JAXBException e1) {
-      throw new RuntimeException(e1);
-		}
-		return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", e);
-	}
+  @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
+  public ModelAndView getStudy(@PathVariable String id) throws NotFoundException {
+    Entry e = null;
+    e = studyDS.getEntry(id);
+    if (e == null)
+      throw new NotFoundException(id);
+    System.err.println("Entry found: " + e);
+    return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", e);
+  }
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/study/{id}")
-	public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id) {
+	public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id) throws JAXBException, SAXException {
 		Source source = new StreamSource(new StringReader(body));
-		try {
 			UnmarshalResult res = EntryUtil.validate(validatingMarshaller, source);
 			//s = m_studyDAO.unmarshal(source);
 			//s= (Entry) jaxb2Mashaller.unmarshal(source);
@@ -66,17 +62,11 @@ public class StudyController {
 				res.setEntry(null);
 				return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", res);
 			}
-		} catch (JAXBException e) {
-      throw new RuntimeException(e);
-		} catch (SAXException e) {
-      throw new RuntimeException(e);
-		}
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/study")
-	public ModelAndView addStudy(@RequestBody String body) {
+	public ModelAndView addStudy(@RequestBody String body) throws JAXBException, SAXException {
 		Source source = new StreamSource(new StringReader(body));
-		try {
 			UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
 			//s = m_studyDAO.unmarshal(source);
 			//s = (Entry) jaxb2Mashaller.unmarshal(source);
@@ -87,16 +77,12 @@ public class StudyController {
 				//unmarshalled.setEntry(null);
 				return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", unmarshalledResult);
 			}
-		} catch (JAXBException e) {
-      throw new RuntimeException(e);
-		} catch (SAXException e) {
-      throw new RuntimeException(e);
-		}
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/study/{id}")
-	public ModelAndView removeStudy(@PathVariable String id) {
-		studyDS.remove(id);
+	public ModelAndView removeStudy(@PathVariable String id) throws NotFoundException {
+		if (!studyDS.remove(id)) 
+		  throw new NotFoundException(id);
 		return getStudies();
 	}
 	
