@@ -18,22 +18,21 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 
 /**
- * This is meant to be the equivalent of 
+ * This is meant to be the equivalent of
  * 
- * Get yourself an entry and post it to the service like this:
- * $ curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @TBYKQ.xml \ 
- *     http://localhost:8080/chassis-rest/service/study
- * Fetch it again by
- * curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
-
+ * Get yourself an entry and post it to the service like this: $ curl -X POST
+ * -HContent-type:application/xml -HAccept:application/xml --data @TBYKQ.xml \
+ * http://localhost:8080/chassis-rest/service/study Fetch it again by curl
+ * -HAccept:application/xml
+ * http://localhost:8080/chassis-rest/service/study/TBYKQ
+ * 
  * 
  * @author timp
  * @since 25 Oct 2011 11:03:47
- *
+ * 
  */
 public class StudyControllerRequester {
 
-  
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.err.println("Usage:");
@@ -49,84 +48,102 @@ public class StudyControllerRequester {
 
   }
 
-  /**C*/
-  public static HttpResponse create(String studyFileName, String restUrl) throws IOException {
-    return update(studyFileName, restUrl, new PostMethod(restUrl));
-  }
-  /**R*/
-  public static HttpResponse read(String restUrl) throws IOException {
-    return request(restUrl, new GetMethod(restUrl));
-  }
-  /**U*/
-  // Beware replaces entry in study, but everything else is an insert not an update
-  public static HttpResponse update(String studyFileName, String restUrl) throws IOException {
-    return update(studyFileName, restUrl, new PutMethod(restUrl));
-  }
-  /**D*/
-  public static HttpResponse delete(String restUrl) throws IOException {
-    return request(restUrl, new DeleteMethod(restUrl));
-  }
-  
-  private static HttpResponse request(String restUrl, HttpMethod method) throws IOException {
-    if (restUrl == null)
-      throw new NullPointerException("REST URL required");
-    try {
-      // Merely for validation of url format
-      new URL(restUrl);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-    
-    final HttpClient client = new HttpClient();
-
-    method.setRequestHeader("Accept", "application/xml");
-
-    HttpResponse response;
-    try {
-      client.executeMethod(method);
-      response = new HttpResponse(method.getStatusCode(), method.getResponseBodyAsString());
-    } finally {
-      method.releaseConnection();
-    }
-    return response;
-    
-  }
-
-  private static HttpResponse update(String studyFileName, String restUrl, final EntityEnclosingMethod method) 
-      throws FileNotFoundException, IOException, HttpException {
-    if (studyFileName == null)
-      throw new NullPointerException("File name required");
-    if (restUrl == null)
-      throw new NullPointerException("REST URL required");
-    try {
-      // Merely for validation of url format
-      new URL(restUrl);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-    
-    final HttpClient client = new HttpClient();
-
-    InputStream data = new FileInputStream(studyFileName);
-    method.setRequestEntity(new InputStreamRequestEntity(data));  
-    method.setRequestHeader("Content-Type", "application/xml");
-    
-    // Note: curl adds a default of 
+  static HttpMethod acceptHtmlHttpMethod(HttpMethod method) {
+    // Note: curl adds a default of
     // Accept: */*
     // httpclient does not.
-    // for */* spring returns xml, for nothing it throws and error. 
+    // for */* spring returns xml, for nothing it throws and error.
     method.setRequestHeader("Accept", "application/xml");
-    
+    return method;
+  }
+
+  static EntityEnclosingMethod acceptHtmlHttpMethod(EntityEnclosingMethod method) {
+    // Note: curl adds a default of
+    // Accept: */*
+    // httpclient does not.
+    // for */* spring returns xml, for nothing it throws and error.
+    method.setRequestHeader("Accept", "application/xml");
+    return method;
+  }
+
+  static HttpMethod acceptXmlHttpMethod(HttpMethod method) {
+    method.setRequestHeader("Accept", "text/html");
+    return method;
+  }
+
+  static EntityEnclosingMethod acceptXmlHttpMethod(EntityEnclosingMethod method) {
+    method.setRequestHeader("Accept", "text/html");
+    return method;
+  }
+  private static String valid(String url) throws MalformedURLException { 
+    if (url == null)
+      throw new NullPointerException("URL required");
+    new URL(url);
+    return url;
+  }
+
+
+  /** C */
+  public static HttpResponse create(String studyFileName, String restUrl)
+      throws IOException {
+    return update(studyFileName, acceptXmlHttpMethod(new PostMethod(
+        valid(restUrl))));
+  }
+  public static HttpResponse createAcceptingHtml(String studyFileName, String restUrl)
+      throws IOException {
+    return update(studyFileName, acceptHtmlHttpMethod(new PostMethod(
+        valid(restUrl))));
+  }
+
+  /** R */
+  public static HttpResponse read(String restUrl) throws IOException {
+    return executeMethod(acceptXmlHttpMethod(new GetMethod(valid(restUrl))));
+  }
+  public static HttpResponse readAcceptingHtml(String restUrl) throws IOException {
+    return executeMethod(acceptHtmlHttpMethod(new GetMethod(valid(restUrl))));
+  }
+
+  /** U */
+  // Beware replaces entry in study, but everything else is an insert not an
+  // update
+  public static HttpResponse update(String studyFileName, String restUrl)
+      throws IOException {
+    return update(studyFileName, acceptXmlHttpMethod(new PutMethod(valid(restUrl))));
+  }
+  public static HttpResponse updateAcceptingHtml(String studyFileName, String restUrl)
+      throws IOException {
+    return update(studyFileName, acceptHtmlHttpMethod(new PutMethod(valid(restUrl))));
+  }
+
+  /** D */
+  public static HttpResponse delete(String restUrl) throws IOException {
+    return executeMethod(acceptXmlHttpMethod(new DeleteMethod(valid(restUrl))));
+  }
+  public static HttpResponse deleteAcceptingHtml(String restUrl) throws IOException {
+    return executeMethod(acceptHtmlHttpMethod(new DeleteMethod(valid(restUrl))));
+  }
+  
+  private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method) 
+      throws FileNotFoundException, IOException, HttpException {
+    InputStream data = new FileInputStream(studyFileName);
+    method.setRequestEntity(new InputStreamRequestEntity(data));
+    method.setRequestHeader("Content-Type", "application/xml");
+
+    return executeMethod(method);
+  }
+
+  private static HttpResponse executeMethod(final HttpMethod method)
+      throws IOException, HttpException {
     HttpResponse response;
+    final HttpClient client = new HttpClient();
     try {
       client.executeMethod(method);
-      response = new HttpResponse(method.getStatusCode(), method.getResponseBodyAsString());
+      response = new HttpResponse(method.getStatusCode(),
+          method.getResponseBodyAsString());
     } finally {
       method.releaseConnection();
     }
     return response;
   }
-  
-  
 
 }
