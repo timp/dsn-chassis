@@ -35,9 +35,14 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testValidate() throws Exception { 
-    HttpResponse r = StudyControllerRequester.create("studies/AJYER.xml", url("/study"));
-    if (r.getBody().indexOf("errors") > 0)
-      System.err.println(r.getBody());
+    HttpResponse r = StudyControllerRequester.create("data/studies/AJYER.xml", url("/study"));
+    System.err.println(r.getStatus());
+    assertEquals(200, r.getStatus());
+    System.err.println(r.getBody());    
+    System.err.println(StudyControllerRequester.read(url("/study/AJYER.xml")).getBody());
+    System.err.println(StudyControllerRequester.delete(url("/study/AJYER")).getStatus());
+    System.err.println(StudyControllerRequester.read(url("/study/AJYER.xml")).getStatus());
+    assertEquals(500, StudyControllerRequester.read(url("/study/notthere.xml")).getStatus());
     
   }
   
@@ -99,16 +104,20 @@ public class StudyControllerRequesterTest extends TestCase {
     }
 
     System.out.println("Files: " + fileCount);
-    assertEquals(2, fileCount);
+    assertEquals(3, fileCount);
   }
 
   public void testRead() throws Exception {
     HttpResponse response = StudyControllerRequester.read(url("/study/"));
     assertEquals(405, response.getStatus());
-    
     response = StudyControllerRequester.read(url("/studies/"));   
     assertEquals(200, response.getStatus());
     System.out.println(response.getBody());
   }
 
+  public void testReadNotFound() throws Exception{ 
+    assertEquals(500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
+    assertEquals(500, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
+    assertEquals(500, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+  }
 }
