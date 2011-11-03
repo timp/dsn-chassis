@@ -42,7 +42,8 @@ public class StudyDAO {
       em.persist(entry);
       em.getTransaction().commit();
     } catch (RuntimeException e) { 
-      em.getTransaction().rollback();
+      if (em.isOpen() &&  em.getTransaction().isActive())
+        em.getTransaction().rollback();
       throw e;
 		} finally { 
 		  em.close();
@@ -56,7 +57,8 @@ public class StudyDAO {
 		  em.merge(entry);
 	    em.getTransaction().commit();
     } catch (RuntimeException e) { 
-      em.getTransaction().rollback();
+      if (em.isOpen() &&  em.getTransaction().isActive())
+        em.getTransaction().rollback();
       throw e;
     } finally { 
       em.close();
@@ -75,7 +77,8 @@ public class StudyDAO {
 			em.remove(entry);
 	    em.getTransaction().commit();
 		} catch (RuntimeException e) { 
-      em.getTransaction().rollback();
+      if (em.isOpen() &&  em.getTransaction().isActive())
+        em.getTransaction().rollback();
       throw e;
     } finally { 
       em.close();
