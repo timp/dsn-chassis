@@ -30,7 +30,7 @@ public class StudyController {
 	Jaxb2Marshaller validatingMarshaller;
 	
 	@Autowired
-	StudyDAO studyDS;
+	StudyDAO studyDAO;
 	
 	// if the request accept header is xml, or */* then the xml bean is used
 	// if the request accept header is empty or text/html then .jsp is used
@@ -42,7 +42,7 @@ public class StudyController {
   @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
   public ModelAndView getStudy(@PathVariable String id) throws NotFoundException {
     Entry e = null;
-    e = studyDS.getEntry(id);
+    e = studyDAO.getEntry(id);
     if (e == null)
       throw new NotFoundException(id);
     System.err.println("Entry found: " + e);
@@ -56,7 +56,7 @@ public class StudyController {
 			//s = m_studyDAO.unmarshal(source);
 			//s= (Entry) jaxb2Mashaller.unmarshal(source);
 			if (res.getErrors().isEmpty()) {
-				studyDS.updateEntry(id, res.getEntry());
+				studyDAO.updateEntry(id, res.getEntry());
 				return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", res.getEntry());
 			} else {
 				res.setEntry(null);
@@ -71,7 +71,7 @@ public class StudyController {
 			//s = m_studyDAO.unmarshal(source);
 			//s = (Entry) jaxb2Mashaller.unmarshal(source);
 			if (unmarshalledResult.getErrors().isEmpty()) {
-				studyDS.saveEntry(unmarshalledResult.getEntry());
+				studyDAO.saveEntry(unmarshalledResult.getEntry());
 				return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", unmarshalledResult.getEntry());
 			} else {
 				//unmarshalled.setEntry(null);
@@ -81,7 +81,7 @@ public class StudyController {
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/study/{id}")
 	public ModelAndView removeStudy(@PathVariable String id) throws NotFoundException {
-		if (!studyDS.remove(id)) 
+		if (!studyDAO.remove(id)) 
 		  throw new NotFoundException(id);
 		return getStudies();
 	}
@@ -89,7 +89,7 @@ public class StudyController {
 	@RequestMapping(method=RequestMethod.GET, value="/studies")
 	public ModelAndView getStudies() {
 		Feed list = new Feed();
-		list.setEntry((List<Entry>) studyDS.getAll());
+		list.setEntry((List<Entry>) studyDAO.getAll());
 		return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
 	}
 	
