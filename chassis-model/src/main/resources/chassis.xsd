@@ -24,7 +24,7 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="draft" type="xs:NCName"/>
-  <xs:element name="studyTitle" type="xs:string"/>
+  <xs:element name="studyTitle" type="longString"/>
   <xs:element name="study">
     <xs:complexType>
       <xs:sequence>
