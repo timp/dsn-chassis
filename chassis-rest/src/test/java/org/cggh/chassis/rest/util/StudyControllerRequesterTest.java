@@ -29,7 +29,7 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   private String url(String url) {
-    String fullUrl =  "http://localhost:8888/chassis-rest/service" + url;
+    String fullUrl =  "http://localhost:8080/chassis-rest/service" + url;
     //System.err.println(fullUrl);
     return fullUrl;
   }
@@ -119,8 +119,8 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testReadNotFound() throws Exception{ 
-    assertEquals(500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
-    assertEquals(500, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
-    assertEquals(500, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+    assertEquals(url("/study/notThere.xml"), 500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
+    assertEquals(url("/study/notThere.html"), 500, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
+    assertEquals(url("/study/notThere"), 500, StudyControllerRequester.read(url("/study/notThere")).getStatus());
   }
 }
