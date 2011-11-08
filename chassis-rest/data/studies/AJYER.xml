@@ -16,7 +16,7 @@
                     <wizard-pane-to-show>confirmation</wizard-pane-to-show>
                 </ui-info>
                 <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
-                <study-is-published>Yes</study-is-published>
+                <study-is-published>Yesterday</study-is-published>
                 <explorer-display>full</explorer-display>
                 <publications>
                     <publication>
