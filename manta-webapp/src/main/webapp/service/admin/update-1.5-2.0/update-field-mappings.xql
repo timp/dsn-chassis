@@ -107,6 +107,30 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 <value>drugTaken$8</value>
 </fieldLabelMapping>
             into $old//fieldLabelMappings
+            let $new3 := update insert
+<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/atombeat:group\[1\]/@id</label>
+				<value>GroupID</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new4 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/@profile</label>
+				<value>SSQVersion</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new5 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/publications\[(\d+)\]/publication\[(\d+)\]/publication-references\[(\d+)\]/publication-reference\[(\d+)\]/@type</label>
+				<value>Publication$5URLType$7</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+             let $new6 := update insert
+<fieldLabelMapping deprecated="n">
+<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/inclusionExclusionCriteria\[(\d+)\]/priorAntimalarialsExclusion\[(\d+)\]/priorAntimalarials\[(\d+)\]/@selected</label>
+<value>PriorAntimalarialList</value>
+</fieldLabelMapping>
+            into $old//fieldLabelMappings
             let $clean1 := update delete $old//fieldLabelMapping[value/text() = 'ackInstitute$5']
             let $clean2 := update delete $old//fieldLabelMapping[value/text() = 'ackInstitute$5URL']
         return $old

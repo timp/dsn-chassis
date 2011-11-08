@@ -1065,6 +1065,22 @@ let $values2 :=
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/assayValidated\[(\d+)\]</label>
 				<value>AssayMethodsReference$7valid</value>
 			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry[1]/atom:content[1]/study[1]/atombeat:group[1]/@id</label>
+				<value>GroupID</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry[1]/atom:content[1]/study[1]/@profile</label>
+				<value>SSQVersion</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/publications\[(\d+)\]/publication\[(\d+)\]/publication-references\[(\d+)\]/publication-reference\[(\d+)\]/@type</label>
+				<value>Publication$5URLType$7</value>
+			</fieldLabelMapping>
+            <fieldLabelMapping deprecated="n">
+                <label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/inclusionExclusionCriteria\[(\d+)\]/priorAntimalarialsExclusion\[(\d+)\]/priorAntimalarials\[(\d+)\]/@selected</label>
+                <value>PriorAntimalarialList</value>
+            </fieldLabelMapping>
 	</fieldLabelMappings>
 
 	let $entry4 := local:create-config-entry('Field label mappings','field-label-mappings',$values4)   

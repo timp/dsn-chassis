@@ -163,12 +163,13 @@ public class TransformFunctions {
 			// node is a leaf
 			
 			//Note: don't ignore empty nodes, remove later (separate concern)
-			
+			Node currentNode = nodeList.item(0);
+			Node parentNode = currentNode.getParentNode();
 			FieldModel fieldModel = new FieldModel();
 			
-			fieldModel.setParentNodeName(nodeList.item(0).getParentNode().getNodeName());
-			fieldModel.setNodeName(nodeList.item(0).getNodeName());
-			fieldModel.setNodeValue(nodeList.item(0).getNodeValue());
+			fieldModel.setParentNodeName(parentNode.getNodeName());
+			fieldModel.setNodeName(currentNode.getNodeName());
+			fieldModel.setNodeValue(currentNode.getNodeValue());
 			fieldModel.setXPathFieldLabel(parentNodeBaseXPathAsString);
 			
 			fieldModelArrayList.add(fieldModel);
@@ -177,26 +178,48 @@ public class TransformFunctions {
 			
 			// node is a branch
 			
-			HashMap<String, Integer> nodeSiblingCountAsNodeNameKeyedHashMap = new HashMap<String, Integer>();
+			HashMap<String, Integer> nodeSiblings = new HashMap<String, Integer>();
 			
 			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node currentNode = nodeList.item(i);
+				String currentNodeName = currentNode.getNodeName();
 				
-				if (nodeSiblingCountAsNodeNameKeyedHashMap.containsKey(nodeList.item(i).getNodeName())) {
+				if (nodeSiblings.containsKey(currentNodeName)) {
 					
-					nodeSiblingCountAsNodeNameKeyedHashMap.put(nodeList.item(i).getNodeName(), nodeSiblingCountAsNodeNameKeyedHashMap.get(nodeList.item(i).getNodeName()).intValue() + 1);
+					nodeSiblings.put(currentNodeName, nodeSiblings.get(currentNodeName).intValue() + 1);
 					
 				} else {
 
-					nodeSiblingCountAsNodeNameKeyedHashMap.put(nodeList.item(i).getNodeName(), 1);
+					nodeSiblings.put(currentNodeName, 1);
 					
 				}
+				Integer numSiblings = nodeSiblings.get(currentNodeName).intValue();
+				String nodeBaseXPathAsString = parentNodeBaseXPathAsString + "/" + currentNodeName + "[" + numSiblings + "]";
 				
-				String nodeBaseXPathAsString = parentNodeBaseXPathAsString + "/" + nodeList.item(i).getNodeName() + "[" + nodeSiblingCountAsNodeNameKeyedHashMap.get(nodeList.item(i).getNodeName()).intValue() + "]";
-				
+				if (currentNode.hasAttributes()) {
+					int numAttrs = currentNode.getAttributes().getLength();
+					for (int j = 0; j < numAttrs;j++) {
+						Node attr = currentNode.getAttributes().item(j);
+						String name = attr.getNodeName();
+						if (!(name.startsWith("xmlns") || currentNodeName.startsWith("atom:"))) {
+							FieldModel fieldModel = new FieldModel();
+
+							fieldModel.setParentNodeName(currentNode
+									.getNodeName());
+							fieldModel.setNodeName(attr.getNodeName());
+							fieldModel.setNodeValue(attr.getNodeValue());
+							fieldModel
+									.setXPathFieldLabel(nodeBaseXPathAsString
+											+ "/@" + attr.getNodeName());
+
+							fieldModelArrayList.add(fieldModel);
+						}
+					}
+				}
 				// More verbosely...
 				//ArrayList<FieldModel> childNodesAsFieldModelArrayListWithXPathFieldLabels = convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(nodeList.item(i).getChildNodes(), nodeBaseXPathAsString);
 				
-				fieldModelArrayList.addAll(convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(nodeList.item(i).getChildNodes(), nodeBaseXPathAsString));
+				fieldModelArrayList.addAll(convertNodeListIntoFieldModelArrayListWithXPathFieldLabels(currentNode.getChildNodes(), nodeBaseXPathAsString));
 				
 			}
 			
