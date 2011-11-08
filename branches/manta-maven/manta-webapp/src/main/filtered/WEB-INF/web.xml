@@ -467,6 +467,11 @@
     
     <servlet-mapping>
         <servlet-name>orbeon-main-servlet</servlet-name>
+        <url-pattern>/report/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>orbeon-main-servlet</servlet-name>
         <url-pattern>/personal-data/*</url-pattern>
     </servlet-mapping>
     

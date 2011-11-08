@@ -1,0 +1,13 @@
+<config xmlns="http://www.orbeon.com/oxf/controller">
+    
+    <page id="root" path-info="/report/">
+        <action><result page="home"/></action>
+    </page>
+    
+    <page id="home" path-info="/report/home" view="home.xhtml"/>
+    
+    <page path-info="/report/fetch-contributors" view="fetch-contributors.xpl"/>
+    
+    <epilogue url="oxf:/config/epilogue.xpl"/>
+    
+</config>
