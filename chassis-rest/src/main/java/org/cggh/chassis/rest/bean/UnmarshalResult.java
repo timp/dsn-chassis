@@ -16,6 +16,9 @@ import org.w3._2005.atom.Entry;
 
 public class UnmarshalResult {
 	
+  private String id; 
+  private String exceptionMessage; 
+  
 	private Entry entry;
 	@XmlElementWrapper(name="errorList")
 	@XmlElement(name="error")
@@ -35,4 +38,20 @@ public class UnmarshalResult {
 	public void addError(ValidationError e) { 
 	  errors.add(e);
 	}
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getExceptionMessage() {
+    return exceptionMessage;
+  }
+
+  public void setException(String exceptionMessage) {
+    this.exceptionMessage = exceptionMessage;
+  }
 }

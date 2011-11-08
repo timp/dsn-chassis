@@ -72,17 +72,19 @@ public class StudyDAO {
 		boolean found = false;
 		if (entry != null) {
 		  found = true;
-    }
-		try {
-			em.remove(entry);
-	    em.getTransaction().commit();
-		} catch (RuntimeException e) { 
-      if (em.isOpen() &&  em.getTransaction().isActive())
-        em.getTransaction().rollback();
-      throw e;
-    } finally { 
-      em.close();
-    }
+      try {
+			  em.remove(entry);
+	      em.getTransaction().commit();
+		  } catch (RuntimeException e) { 
+        if (em.isOpen() &&  em.getTransaction().isActive())
+          em.getTransaction().rollback();
+        throw e;
+      } finally { 
+        em.close();
+      }
+		} else { 
+      em.close();		  
+		}
 		return found;
 	}
 }
