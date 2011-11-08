@@ -77,8 +77,11 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testPostAllStudies() throws Exception {
-    File studiesDir = new File(DATA_STUDIES);
-    //File studiesDir = new File("studies");
+    //testPostsFromDirectory(DATA_STUDIES);
+    testPostsFromDirectory("studies/");
+  }
+  private void testPostsFromDirectory(String directory) throws Exception { 
+    File studiesDir = new File(directory);
     @SuppressWarnings("unchecked")
     Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] { "xml" }, false);
     int fileCount = 0;
@@ -86,30 +89,28 @@ public class StudyControllerRequesterTest extends TestCase {
     while (it.hasNext()) {
       fileCount++;
       File f = it.next();
-      String studyFileName = DATA_STUDIES + f.getName();
-      //String studyFileName = "studies/"  + f.getName();
+      String studyFileName = directory + f.getName();
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
-      System.out.print(studyFileName);
-      System.out.print(" - ");
-      System.out.println(r.getBody());
-      if (r.getStatus() == 500) {
+      System.out.println(studyFileName);
+      //System.out.print(" - ");
+      //System.out.println(r.getBody());
+      if (r.getStatus() != 200) {
         System.out.print(studyFileName);
         System.out.print(" - ");
         System.out.println(r.getBody());
-      } else {
-        if (r.getBody().indexOf("errors") > 0) { 
+        if (r.getBody().indexOf("errorList") > 0) { 
           System.err.println(r.getBody());
-          failCount ++;
         }
+        failCount ++;
+      } else {
+        StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
       }
-      // Think you need to delete to rollback
-      StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
     }
 
     System.out.println("Files: " + fileCount + " fail count: " + failCount);
-    assertEquals(3, fileCount);
+    
   }
-
+  
   public void testRead() throws Exception {
     HttpResponse response = StudyControllerRequester.read(url("/study/"));
     assertEquals(405, response.getStatus());
@@ -119,8 +120,8 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testReadNotFound() throws Exception{ 
-    assertEquals(url("/study/notThere.xml"), 500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
-    assertEquals(url("/study/notThere.html"), 500, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
-    assertEquals(url("/study/notThere"), 500, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+    assertEquals(url("/study/notThere.xml"),  404, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
+    assertEquals(url("/study/notThere.html"), 404, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
+    assertEquals(url("/study/notThere"),      404, StudyControllerRequester.read(url("/study/notThere")).getStatus());
   }
 }
