@@ -51,6 +51,7 @@
 				<value>org.cggh.chassis.rest.bean.UnmarshalResult</value>
 			</list>
 		</property>
+
 	</bean>
 	<bean id="errors" 
 	      class="org.springframework.web.servlet.view.xml.MarshallingView">

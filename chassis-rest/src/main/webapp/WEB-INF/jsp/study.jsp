@@ -16,9 +16,9 @@
 		<th>Title</th>
 	</tr></thead>
 	<tr>
-		<td>${object.studyID}</td>
-		<td>${object.author.email}</td>
-		<td>${object.content.study.studyTitle}</td>
+		<td>${entry.studyID}</td>
+		<td>${entry.author.email}</td>
+		<td>${entry.content.study.studyTitle}</td>
 	</tr>
 </table>
 </body>

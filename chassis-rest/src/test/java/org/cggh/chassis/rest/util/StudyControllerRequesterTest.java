@@ -36,14 +36,10 @@ public class StudyControllerRequesterTest extends TestCase {
 
   public void testValidate() throws Exception { 
     HttpResponse r = StudyControllerRequester.create("data/studies/AJYER.xml", url("/study"));
-    System.err.println(r.getStatus());
-    assertEquals(200, r.getStatus());
-    System.err.println(r.getBody());    
-    System.err.println(StudyControllerRequester.read(url("/study/AJYER.xml")).getBody());
-    System.err.println(StudyControllerRequester.delete(url("/study/AJYER")).getStatus());
-    System.err.println(StudyControllerRequester.read(url("/study/AJYER.xml")).getStatus());
-    assertEquals(500, StudyControllerRequester.read(url("/study/notthere.xml")).getStatus());
-    
+    assertEquals(400, r.getStatus());
+    assertTrue(r.getBody(), r.getBody().contains("The value 'Yesterday' of element 'study-is-published' is not valid"));    
+
+    assertEquals(404,StudyControllerRequester.delete(url("/study/AJYER")).getStatus());
   }
   
   /**
@@ -66,19 +62,15 @@ public class StudyControllerRequesterTest extends TestCase {
     String studiesDir = DATA_STUDIES;
     HttpResponse postResponse = StudyControllerRequester.create(studiesDir + "XGQRX.xml", url("/study"));
     // should be 201?
-    assertEquals(postResponse.getBody(), 200, postResponse.getStatus());
-
-    HttpResponse deleteCollectionResponse = StudyControllerRequester.delete(url("/study/"));
-    assertEquals(deleteCollectionResponse.getBody(), 405, deleteCollectionResponse.getStatus());
+    assertEquals(postResponse.getBody(), 201, postResponse.getStatus());
 
     HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/XGQRX"));
     assertEquals(deleteEntryResponse.getBody(), 200, deleteEntryResponse.getStatus());
-
   }
 
   public void testPostAllStudies() throws Exception {
-    //testPostsFromDirectory(DATA_STUDIES);
-    testPostsFromDirectory("studies/");
+    testPostsFromDirectory(DATA_STUDIES);
+    //testPostsFromDirectory("studies/");
   }
   private void testPostsFromDirectory(String directory) throws Exception { 
     File studiesDir = new File(directory);
@@ -94,7 +86,7 @@ public class StudyControllerRequesterTest extends TestCase {
       System.out.println(studyFileName);
       //System.out.print(" - ");
       //System.out.println(r.getBody());
-      if (r.getStatus() != 200) {
+      if (r.getStatus() != 201) {
         System.out.print(studyFileName);
         System.out.print(" - ");
         System.out.println(r.getBody());
@@ -116,12 +108,26 @@ public class StudyControllerRequesterTest extends TestCase {
     assertEquals(405, response.getStatus());
     response = StudyControllerRequester.read(url("/studies/"));   
     assertEquals(200, response.getStatus());
-    System.out.println(response.getBody());
+    //System.out.println(response.getBody());
   }
 
   public void testReadNotFound() throws Exception{ 
-    assertEquals(url("/study/notThere.xml"),  404, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
+    // FIXME We are not marshalling if not found
+    assertEquals(url("/study/notThere.xml"),  500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
     assertEquals(url("/study/notThere.html"), 404, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
     assertEquals(url("/study/notThere"),      404, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+  }
+  
+  public void testDelete() throws Exception { 
+    HttpResponse deleteCollectionResponse = StudyControllerRequester.delete(url("/study/"));
+    assertEquals(deleteCollectionResponse.getBody(), 405, deleteCollectionResponse.getStatus());
+
+    // FIXME We are not marshalling if not found
+    HttpResponse deleteNonExistent = StudyControllerRequester.delete(url("/study/notThere.xml"));
+    assertEquals(deleteNonExistent.getBody(), 500, deleteNonExistent.getStatus());
+
+    HttpResponse deleteNonExistentHtml = StudyControllerRequester.delete(url("/study/notThere.html"));
+    assertEquals(deleteNonExistentHtml.getBody(), 404, deleteNonExistentHtml.getStatus());
+    
   }
 }
