@@ -1,6 +1,7 @@
 package org.cggh.chassis.rest.controller;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.cggh.chassis.rest.bean.UnmarshalResult;
+import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
 import org.cggh.chassis.rest.jaxb.EntryUtil;
@@ -42,17 +44,20 @@ public class StudyController {
   private static final String ERROR_LIST_VIEW_NAME = "errors";
     
   @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
-  public ModelAndView getStudy(@PathVariable String id, HttpServletResponse response) throws NotFoundException {
-    Entry e = null;
-    e = studyDAO.getEntry(id);
-    if (e == null) { 
-      response.setStatus(HttpStatus.SC_NOT_FOUND);
-      ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "exception", new NotFoundException(id));
-      mav.addObject("id", id);
-      return mav;          
+  public ModelAndView getStudy(@PathVariable String id, HttpServletResponse response)  {
+    Entry entry = studyDAO.getEntry(id);
+    if (entry == null) { 
+      return notFound(id, response);          
+    } else {
+      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", entry);
     }
-    System.err.println("Entry found: " + e);
-    return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", e);
+  }
+
+  private ModelAndView notFound(String id, HttpServletResponse response) {
+    response.setStatus(HttpStatus.SC_NOT_FOUND);
+    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", new ArrayList<ValidationError>());
+    mav.addObject("id", id);
+    return mav;
   }
   
   @RequestMapping(method=RequestMethod.PUT, value="/study/{id}")
@@ -65,14 +70,17 @@ public class StudyController {
         try { 
           studyDAO.updateEntry(id, unmarshalledResult.getEntry());
         } catch (Exception e) { 
-          response.setStatus(HttpStatus.SC_BAD_REQUEST);          
-          return xmlErrorMAV(unmarshalledResult).addObject("exception", e.getMessage());          
+          response.setStatus(HttpStatus.SC_BAD_REQUEST);
+          ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
+          mav.addObject("id", id);
+
+          return mav.addObject("exception", e.getMessage());          
         }
         response.setStatus(HttpStatus.SC_CREATED);
-        return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", unmarshalledResult.getEntry());
+        return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getEntry());
       } else {
         //unmarshalledResult.setEntry(null);
-        return new ModelAndView(ERROR_LIST_VIEW_NAME, "object", unmarshalledResult);
+        return new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
       }
   }
   
@@ -80,40 +88,37 @@ public class StudyController {
   public ModelAndView addStudy(@RequestBody String body, HttpServletResponse response) 
         throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-      UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
-      //s = m_studyDAO.unmarshal(source);
-      //s = (Entry) jaxb2Mashaller.unmarshal(source);
+    UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
       
-      
-      if (unmarshalledResult.getErrors().isEmpty()) {
-        try { 
-          studyDAO.saveEntry(unmarshalledResult.getEntry());
-        } catch (Exception e) { 
-          response.setStatus(HttpStatus.SC_BAD_REQUEST);          
-          return xmlErrorMAV(unmarshalledResult).addObject("exception", e.getMessage());          
+    if (unmarshalledResult.getErrors().isEmpty()) {
+      try { 
+        studyDAO.saveEntry(unmarshalledResult.getEntry());
+      } catch (Exception e) { 
+          response.setStatus(HttpStatus.SC_BAD_REQUEST);
+          Entry entry = unmarshalledResult.getEntry();
+          ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
+          String studyId = entry == null ? "dummy" : entry.getStudyID();
+          mav.addObject("id", studyId);
+          return mav.addObject("exception", e.getMessage());          
         }
         response.setStatus(HttpStatus.SC_CREATED);        
-        return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "object", unmarshalledResult.getEntry());
+        return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getEntry());
       } else {
-        response.setStatus(HttpStatus.SC_BAD_REQUEST);          
-        return xmlErrorMAV(unmarshalledResult);
+        response.setStatus(HttpStatus.SC_BAD_REQUEST);
+        Entry entry = unmarshalledResult.getEntry();
+        ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
+        String studyId = entry == null ? "dummy" : entry.getStudyID();
+        mav.addObject("id", studyId);
+
+        return mav;
       }
   }
 
-  private ModelAndView xmlErrorMAV(UnmarshalResult unmarshalledResult) {
-    //unmarshalledResult.setEntry(null);
-    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "object", unmarshalledResult);
-    Entry e = unmarshalledResult.getEntry();
-    String studyId = e == null ? "dummy" : e.getStudyID();
-    mav.addObject("id", studyId);
-    return mav;
-  }
   
   @RequestMapping(method=RequestMethod.DELETE, value="/study/{id}")
   public ModelAndView removeStudy(@PathVariable String id, HttpServletResponse response) throws NotFoundException {
     if (!studyDAO.remove(id)) {
-      response.setStatus(HttpStatus.SC_NOT_FOUND);
-      throw new NotFoundException(id);
+      return notFound(id, response); 
     }
     return getStudies();
   }
@@ -121,6 +126,7 @@ public class StudyController {
   @RequestMapping(method=RequestMethod.GET, value="/studies")
   public ModelAndView getStudies() {
     Feed list = new Feed();
+    // Wouldn't it be nice it this was setEntrys or similar
     list.setEntry((List<Entry>) studyDAO.getAll());
     return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
   }

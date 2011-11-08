@@ -13,11 +13,11 @@
 		<th>Author</th>
 		<th>Title</th>
 	</tr></thead>
-<c:forEach var="item" items="${studies.entry}">
+<c:forEach var="entry" items="${studies.entry}">
 	<tr>
-		<td><a href="study/${item.studyID}">${item.studyID}</a></td>
-		<td>${item.author.email}</td>
-		<td>${item.content.study.studyTitle}</td>
+		<td><a href="study/${entry.studyID}">${entry.studyID}</a></td>
+		<td>${entry.author.email}</td>
+		<td>${entry.content.study.studyTitle}</td>
 	</tr>
 </c:forEach>
 </table>

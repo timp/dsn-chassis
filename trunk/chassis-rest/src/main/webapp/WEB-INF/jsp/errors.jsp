@@ -6,19 +6,24 @@
 	<title>Errors</title>
 </head>
 <body>
-<h2>Errors reported for study ${object.id}</h2>
+<h2>Errors reported for study ${id}</h2>
+<c:if test="${not empty exception}">
+${exception}
+</c:if>
+<c:if test="${not empty errors}">
 <table style="border:1px solid red">
 	<thead><tr>
 		<th>ID</th>
 		<th>Title</th>
 		<th></th>
 	</tr></thead>
-	<c:forEach var="errorMessage" items="${object.errors}">
+	<c:forEach var="error" items="${errors}">
 	<tr>
-		<td>${errorMessage}</td>
+		<td>${error.getError()}</td>
 	</tr>
 	</c:forEach>
 </table>
+</c:if>
 </body>
 </html>
 
