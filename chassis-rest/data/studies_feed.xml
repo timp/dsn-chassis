@@ -23,7 +23,7 @@
         <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-06-17T06:03:28.74+01:00</atom:published>
         <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-09-12T16:08:53.448+01:00</atom:updated>
         <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
-            <atom:email>francois@tropmedres.ac</atom:email>
+            <atom:email>contributor@example.org</atom:email>
         </atom:author>
         <atom:title xmlns:atombeat="http://purl.org/atombeat/xmlns" type="text">AJYER</atom:title>
         <app:control xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns">
@@ -36,7 +36,7 @@
                     <wizard-pane-to-show>confirmation</wizard-pane-to-show>
                 </ui-info>
                 <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
-                <study-is-published>Yes</study-is-published>
+                <study-is-published>Yesterday</study-is-published>
                 <explorer-display>full</explorer-display>
                 <publications>
                     <publication>
