@@ -12,8 +12,8 @@ import junit.framework.TestCase;
  */
 public class StudyFeedSplitterTest extends TestCase {
 
-  private static final String DATA_STUDIES = "data/studies";
-  private static final String DATA = "data";
+  private static final String DATA_STUDIES = "download/studies";
+  private static final String DATA = "download";
 
   public StudyFeedSplitterTest(String name) {
     super(name);

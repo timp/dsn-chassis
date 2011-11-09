@@ -14,7 +14,7 @@ import org.w3._2005.atom.Entry;
 @XmlRootElement(name="results")
 @XmlAccessorType(XmlAccessType.FIELD)
 
-public class UnmarshalResult {
+public class UnmarshalledEntry {
 	
   private String id; 
   private String exceptionMessage; 

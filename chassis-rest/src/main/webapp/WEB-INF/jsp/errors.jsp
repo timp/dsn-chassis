@@ -13,12 +13,17 @@ ${exception}
 <c:if test="${not empty errors}">
 <table style="border:1px solid red">
 	<thead><tr>
+<c:if test="${not empty entry}">
 		<th>ID</th>
+</c:if>	
 		<th>Title</th>
 		<th></th>
 	</tr></thead>
 	<c:forEach var="error" items="${errors}">
 	<tr>
+<c:if test="${not empty entry}">
+		<td>${entry.getId()}</td>
+</c:if>	
 		<td>${error.getError()}</td>
 	</tr>
 	</c:forEach>

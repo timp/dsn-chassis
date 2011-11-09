@@ -10,7 +10,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.httpclient.HttpStatus;
-import org.cggh.chassis.rest.bean.UnmarshalResult;
+import org.cggh.chassis.rest.bean.UnmarshalledEntry;
 import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
@@ -63,7 +63,7 @@ public class StudyController {
   @RequestMapping(method=RequestMethod.PUT, value="/study/{id}")
   public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-      UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+      UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
       //s = m_studyDAO.unmarshal(source);
       //s= (Entry) jaxb2Mashaller.unmarshal(source);
       if (unmarshalledResult.getErrors().isEmpty()) {
@@ -88,7 +88,7 @@ public class StudyController {
   public ModelAndView addStudy(@RequestBody String body, HttpServletResponse response) 
         throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalResult unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+    UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
       
     if (unmarshalledResult.getErrors().isEmpty()) {
       try { 
@@ -114,6 +114,15 @@ public class StudyController {
       }
   }
 
+  @RequestMapping(method=RequestMethod.POST, value="/studies")
+  public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
+    Source source = new StreamSource(new StringReader(body));
+    UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+    Feed list = new Feed();
+    list.setEntry((List<Entry>) studyDAO.getAll());
+    return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
+  }
+
   
   @RequestMapping(method=RequestMethod.DELETE, value="/study/{id}")
   public ModelAndView removeStudy(@PathVariable String id, HttpServletResponse response) throws NotFoundException {
@@ -130,5 +139,6 @@ public class StudyController {
     list.setEntry((List<Entry>) studyDAO.getAll());
     return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
   }
+  
   
 }
