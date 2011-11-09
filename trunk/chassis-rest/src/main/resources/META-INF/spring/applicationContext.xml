@@ -48,7 +48,7 @@
 		<property name="classesToBeBound">
 			<list>
 				<value>org.cggh.chassis.rest.bean.ValidationError</value>
-				<value>org.cggh.chassis.rest.bean.UnmarshalResult</value>
+				<value>org.cggh.chassis.rest.bean.UnmarshalledEntry</value>
 			</list>
 		</property>
 

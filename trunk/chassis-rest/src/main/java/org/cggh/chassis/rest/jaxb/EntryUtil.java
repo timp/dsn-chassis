@@ -8,7 +8,7 @@ import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Source;
 
-import org.cggh.chassis.rest.bean.UnmarshalResult;
+import org.cggh.chassis.rest.bean.UnmarshalledEntry;
 import org.cggh.chassis.rest.bean.ValidationError;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.w3._2005.atom.Entry;
@@ -16,10 +16,10 @@ import org.xml.sax.SAXException;
 
 public class EntryUtil {
 
-	public static UnmarshalResult validate(Jaxb2Marshaller marshaller, Source source) 
+	public static UnmarshalledEntry validate(Jaxb2Marshaller marshaller, Source source) 
 	    throws JAXBException, SAXException {
 
-	  final UnmarshalResult unmarshalResult = new UnmarshalResult();
+	  final UnmarshalledEntry unmarshalResult = new UnmarshalledEntry();
 		
 		// Now all you need to do to validate on marshal is to provide the
 		// created schema to the marshaller:

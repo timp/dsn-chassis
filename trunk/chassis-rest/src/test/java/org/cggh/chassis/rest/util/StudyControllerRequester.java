@@ -84,9 +84,9 @@ public class StudyControllerRequester {
 
 
   /** C */
-  public static HttpResponse create(String studyFileName, String restUrl)
+  public static HttpResponse create(String fileName, String restUrl)
       throws IOException {
-    return update(studyFileName, acceptXmlHttpMethod(new PostMethod(
+    return update(fileName, acceptXmlHttpMethod(new PostMethod(
         valid(restUrl))));
   }
   public static HttpResponse createAcceptingHtml(String studyFileName, String restUrl)
@@ -122,6 +122,7 @@ public class StudyControllerRequester {
   public static HttpResponse deleteAcceptingHtml(String restUrl) throws IOException {
     return executeMethod(acceptHtmlHttpMethod(new DeleteMethod(valid(restUrl))));
   }
+  
   
   private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method) 
       throws FileNotFoundException, IOException, HttpException {

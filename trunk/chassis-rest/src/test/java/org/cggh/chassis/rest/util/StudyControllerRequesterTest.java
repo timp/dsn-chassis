@@ -111,6 +111,12 @@ public class StudyControllerRequesterTest extends TestCase {
     //System.out.println(response.getBody());
   }
 
+  public void testAddStudies() throws Exception { 
+    String feedFileName = "download/studies_feed.xml";
+    HttpResponse response = StudyControllerRequester.create(feedFileName, url("/study"));
+    System.out.println(response.getBody());
+  }
+  
   public void testReadNotFound() throws Exception{ 
     // FIXME We are not marshalling if not found
     assertEquals(url("/study/notThere.xml"),  500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
