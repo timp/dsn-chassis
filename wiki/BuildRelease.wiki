@@ -26,9 +26,9 @@ This will result in a new tag in the repository corresponding to the version in 
 == Build server specific wars ==
 
 {{{ 
-svn co http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-1.0.1-RC-1
-cd manta-webapp-1.0.1-RC-1
-mvn package -P _profile_
+svn co http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-<<VERSION>>-RC-1
+cd manta-webapp-<<VERSION>>-RC-1
+mvn package -P _profile_ -Duse-alfresco=true -Dalfresco-username=chassis-alfresco -Dalfresco-password=<<SECRET>>
  }}}
 
 == Ensure correct jars are in the tomcat endorsed directory ==
