@@ -9,6 +9,7 @@ echo alf-upload-studies.sh
 ./alf-upload-studies.sh
 echo get-files.sh
 ./get-files.sh
+./duplicate-check.sh
 echo alf-upload-files.sh
 ./alf-upload-files.sh
 echo alf-set-derivations.sh
