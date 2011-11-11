@@ -1,0 +1,91 @@
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- TODO: ensure a file is selected before Upload is triggered -->
+    <!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" 
+        /> -->
+
+    <xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
+        <xforms:setvalue ev:event="xforms-value-changed"
+            ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
+    </xforms:action>
+    <xforms:action ev:event="xxforms-valid" ev:observer="ins-upload">
+        <xforms:setvalue ev:event="xforms-value-changed"
+            ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
+    </xforms:action>
+
+    <!--+ | New way of handling uploads, avoids the need to use an intermediate 
+        | servlet for handling uploads - you can post files (one at a time) | directly 
+        to AtomBeat using a multipart/form-data request. + -->
+
+
+    <!-- files are uploaded one at a time, this instance holds the data to be 
+        posted -->
+
+    <xforms:instance id="ins-upload">
+        <upload xmlns=""
+            scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term=""
+            label="">
+            <summary />
+            <category />
+            <media xsi:type="xs:anyURI" filename="" mediatype="" size="" />
+        </upload>
+    </xforms:instance>
+
+    <!-- this is a fresh instance to use when clearing out the main instance 
+        after each upload -->
+    <xforms:instance id="ins-upload-empty">
+        <upload xmlns=""
+            scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term=""
+            label="">
+            <summary />
+            <category />
+            <media xsi:type="xs:anyURI" filename="" mediatype="" size="" />
+        </upload>
+    </xforms:instance>
+
+    <!-- some bindings on the upload instance -->
+    <xforms:bind nodeset="instance('ins-upload')">
+        <xforms:bind nodeset="@term" required="true()" />
+        <xforms:bind nodeset="@label"
+            relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'"
+            required="../@term='http://www.cggh.org/2010/chassis/terms/Other'" />
+        <xforms:bind nodeset="category"
+            calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')" />
+    </xforms:bind>
+
+    <!-- this is the submission that sends the file to atombeat ... it uses 
+        a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat 
+        support, although this is not standard Atom Protocol ... check the http traffic 
+        to see what's being sent -->
+
+    <xforms:submission id="sub-post-upload" method="form-data-post"
+        resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        ref="instance('ins-upload')" replace="none">
+
+        <xforms:header>
+            <xforms:name>Accept</xforms:name>
+            <xforms:value>application/atom+xml</xforms:value>
+        </xforms:header>
+
+        <xforms:message ev:event="xforms-submit-done" level="modal">
+            Your file has been submitted. Thank you.
+                </xforms:message>
+
+        <!-- clear out upload -->
+        <xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')"
+            origin="instance('ins-upload-empty')" />
+
+        <!-- refresh submitted media -->
+        <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed" />
+
+        <!-- TODO error handling -->
+        <xforms:message ev:event="xforms-submit-error" level="modal">
+            An error occurred (
+            <xforms:output value="event('error-type')" />
+            ) while posting an upload.
+        </xforms:message>
+
+    </xforms:submission>
+	
+</div>
