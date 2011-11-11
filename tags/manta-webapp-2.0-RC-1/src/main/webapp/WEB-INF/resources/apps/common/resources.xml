@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+	<resources xml:lang="en">
+		<site>
+			<studyPopulation>Study Population</studyPopulation>
+			<populationSources>
+				<population ref="" />
+				<population ref="resident">Resident in endemic country</population>
+				<population ref="traveller">Returning travellers</population>
+			</populationSources>
+		</site>
+		<clinical>
+			<drug>
+				<tradeName>Trade Name</tradeName>
+				<addBatch>Add a batch</addBatch>
+				<manDate>Manufacture Date</manDate>
+				<expDate>Expiry Date</expDate>
+				<adminRoutes>
+					<adminRoute ref="" />
+					<adminRoute ref="oral">oral</adminRoute>
+					<adminRoute ref="intravenous">intravenous</adminRoute>
+					<adminRoute ref="intramuscular">intramuscular</adminRoute>
+					<adminRoute ref="intrarectal">intrarectal</adminRoute>
+				</adminRoutes>
+				<storageConditions>
+					<storage ref="" />
+					<storage ref="none">room temperature</storage>
+					<storage ref="refrigerator">refrigerator</storage>
+					<storage ref="aircon">air conditioned</storage>
+					<storage ref="unknown">unknown</storage>
+				</storageConditions>
+			</drug>
+		</clinical>
+		<common>
+			<drugs>
+			    <drugMolecule>
+                    <name ref="">please select</name>
+                </drugMolecule>
+				<drugMolecule>
+					<name ref="AQ">amodiaquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AM">artemether</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="ART">artemisinin</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AS">artesunate</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AV">atovaquone</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AZ">azithromycin</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="CL">clindamycine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="CQ">chloroquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="CY">cycloguanil</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="DHA">dihydro-artemisinin</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="DOX">doxycycline</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="LUM">lumefantrine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="HL">halofantrine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="MQ">mefloquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="NQ">naphroquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="PIP">piperaquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="PQ">primaquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="PG">proguanil</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="PYR">pyrimethamine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="PYN">pyronaridine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="QN">quinine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="SX">sulfadoxine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="TET">tetracycline</name>
+				</drugMolecule>
+			</drugs>
+		</common>
+	</resources>
+</resources>

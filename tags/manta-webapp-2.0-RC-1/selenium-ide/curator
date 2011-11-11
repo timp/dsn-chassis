@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>curator</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">curator</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/repository/j_spring_security_logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/repository/curator/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>j_username</td>
+	<td>curtis@example.org</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>j_password</td>
+	<td>bar</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xf-32$xf-147·1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../../label,'Title')]</td>
+	<td>s1-changed</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[contains(../label,'in vitro')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[. = 'Save changes']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Study Status')]</td>
+	<td>label=In curation</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//textarea[contains(../label,'Notes')]</td>
+	<td>Putting into curation</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Explorer')]</td>
+	<td>label=Displayed</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[. = 'Save changes']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[not(contains(../../@class,'xforms-disabled')) and em[contains(.,'Permissions')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(@href,'dashboard') and em[contains(.,'Acknowledgements')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../../label,'Institution')]</td>
+	<td>Department of Infectious and Tropical Diseases</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[. = 'Save changes']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(.,'Study Dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[. = 'Upload curated files']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../../label,'File:')]</td>
+	<td>~/workspace/manta-webapp/selenium-ide/curator</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//textarea</td>
+	<td>derived file</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//button[contains(.,'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//a[. = 'Details' and ../../../../td[2]/div/span[. = 'curator']])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=//a[contains(.,'Study Dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[. = 'Lock']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[contains(.,'No')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=summary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//input[contains(../../label,'Title')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//textarea[contains(../label,'Notes')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[contains(.,'Add an administrator')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=acknowledgements')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//input[contains(../../label,'Institution')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[. = 'Upload curated files' and not(contains(../../@class,'xforms-disabled'))]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=publications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[contains(.,'Add a publication')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=study-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//button[. = 'Unlock']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=summary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//input[contains(../../label,'Title')]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//textarea[contains(../label,'Notes')]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[contains(.,'Add an administrator')]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=acknowledgements')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//input[contains(../../label,'Institution Website')]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[. = 'Upload curated files']</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=publications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//a[contains(.,'Add a publication')]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(@href,'tab=study-info')]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
