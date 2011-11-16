@@ -35,7 +35,7 @@ declare variable $config-collections:collection-spec :=
                 atombeat:enable-versioning="true"
                 atombeat:exclude-entry-content="false"
                 atombeat:recursive="false">
-                <atom:title type="text">Studies</atom:title>
+                <atom:title type="text">Config</atom:title>
                 <!-- ensure security descriptor link available when listing collection -->
                 <atombeat:config-link-expansion>
                     <atombeat:config context="entry-in-feed">
