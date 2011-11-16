@@ -112,7 +112,7 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testAddStudies() throws Exception { 
-    String feedFileName = "download/studies_feed.xml";
+    String feedFileName = "downloaded/studies_feed.xml";
     HttpResponse response = StudyControllerRequester.create(feedFileName, url("/study"));
     System.out.println(response.getBody());
   }
