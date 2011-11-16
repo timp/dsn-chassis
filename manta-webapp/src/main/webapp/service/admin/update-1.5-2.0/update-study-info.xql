@@ -508,11 +508,17 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
    let $new-study-infos := 
         for $old in $old-study-infos
             let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.0"
+
+            (: surround existing institution-ack with new group <institutions> :)
             let $ins := update insert <institutions>{$old//institution-ack}</institutions> into $old//acknowledgements
             let $del := update delete $old//acknowledgements/institution-ack
+            
+            (: Move space separated list into an attribute called selected, in case it is still needed :) 
             let $prior := $old//priorAntimalarials
             let $pa := update insert attribute selected {$prior} into $old//priorAntimalarials
+            (: Looks like this needs to be done after the next step :( :)
             let $pa := update delete $old//priorAntimalarials/text()
+            (: then set values as proper xml :)
             let $drugs := tokenize($prior,'\s+')
             for $d in $drugs
                 let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
