@@ -59,7 +59,14 @@
   </xs:element>
   <xs:element name="wizard-pane-to-show" type="xs:NCName"/>
   <xs:element name="registrant-has-agreed-to-the-terms" type="xs:NCName"/>
-  <xs:element name="study-is-published" type="xs:string"/>
+  <xs:element name="study-is-published" >
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="|Yes|No"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
   <xs:element name="explorer-display" type="xs:NCName"/>
   <xs:element name="publications">
     <xs:complexType>
