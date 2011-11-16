@@ -175,7 +175,7 @@ public class TransformServlet extends HttpServlet {
 	            
 	              DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(string.getBytes()));
 	
-	              while ((dataInputStream != null) && ((length = dataInputStream.read(byteBuffer)) != -1)) {
+	              while ((length = dataInputStream.read(byteBuffer)) != -1) {
 	            	  response.getOutputStream().write(byteBuffer, 0, length);
 	              }
 	
