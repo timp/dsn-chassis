@@ -141,9 +141,8 @@ public class SecureEmailProcessor extends ProcessorImpl {
 
 		if (element == null) {
 			return (null);
-		}
-		String value = (element != null) ? element.getStringValue().trim()
-				: null;
+		} 
+		String value = element.getStringValue().trim();
 		final Attribute ref = element.attribute("jndi-ref");
 		if (ref != null) {
 			final String refVal = ref.getStringValue();
