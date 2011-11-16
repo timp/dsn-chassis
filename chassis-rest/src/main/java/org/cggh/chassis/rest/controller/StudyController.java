@@ -116,8 +116,9 @@ public class StudyController {
 
   @RequestMapping(method=RequestMethod.POST, value="/studies")
   public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
-    Source source = new StreamSource(new StringReader(body));
-    UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+    // Source source = new StreamSource(new StringReader(body));
+    // FIXME not working yet 
+    // UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
     Feed list = new Feed();
     list.setEntry((List<Entry>) studyDAO.getAll());
     return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
