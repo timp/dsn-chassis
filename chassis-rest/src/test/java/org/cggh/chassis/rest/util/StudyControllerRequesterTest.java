@@ -14,7 +14,10 @@ import junit.framework.TestCase;
  */
 public class StudyControllerRequesterTest extends TestCase {
 
-  private static final String DATA_STUDIES = "data/studies/";
+  private static final String DATA = "data";
+  private static final String DATA_STUDIES = DATA + "/studies/";
+  private static final String FEED_FILE_NAME = DATA +"/studies_feed.xml";
+
 
   public StudyControllerRequesterTest(String name) {
     super(name);
@@ -30,12 +33,11 @@ public class StudyControllerRequesterTest extends TestCase {
 
   private String url(String url) {
     String fullUrl =  "http://localhost:8080/chassis-rest/service" + url;
-    //System.err.println(fullUrl);
     return fullUrl;
   }
 
   public void testValidate() throws Exception { 
-    HttpResponse r = StudyControllerRequester.create("data/studies/AJYER.xml", url("/study"));
+    HttpResponse r = StudyControllerRequester.create(DATA_STUDIES + "AJYER.xml", url("/study"));
     assertEquals(400, r.getStatus());
     assertTrue(r.getBody(), r.getBody().contains("The value 'Yesterday' of element 'study-is-published' is not valid"));    
 
@@ -46,22 +48,7 @@ public class StudyControllerRequesterTest extends TestCase {
    * Test method for {@link org.cggh.chassis.rest.util.StudyControllerRequester#create(java.lang.String, java.lang.String)}.
    */
   public void testPostStringString() throws Exception {
-    //StudyControllerRequester.create("TBYKQ.xml", url("/study"));
-    // invalid
-    //StudyControllerRequester.create("studies/ACXFX.xml", url("/study"));
-    //StudyControllerRequester.create("studies/AJYER.xml", url("/study"));
-    //StudyControllerRequester.create("studies/AKUQT.xml", url("/study"));
-    //StudyControllerRequester.create("studies/EUKMD.xml", url("/study"));
-
-    /*
-    HttpResponse r = StudyControllerRequester.post("studies/ZZSPY.xml", url("/study"));
-    assertEquals(200, r.getStatus());
-    System.err.println(r.getBody());
-    */
-
-    String studiesDir = DATA_STUDIES;
-    HttpResponse postResponse = StudyControllerRequester.create(studiesDir + "XGQRX.xml", url("/study"));
-    // should be 201?
+    HttpResponse postResponse = StudyControllerRequester.create(DATA_STUDIES + "XGQRX.xml", url("/study"));
     assertEquals(postResponse.getBody(), 201, postResponse.getStatus());
 
     HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/XGQRX"));
@@ -70,7 +57,6 @@ public class StudyControllerRequesterTest extends TestCase {
 
   public void testPostAllStudies() throws Exception {
     testPostsFromDirectory(DATA_STUDIES);
-    //testPostsFromDirectory("studies/");
   }
   private void testPostsFromDirectory(String directory) throws Exception { 
     File studiesDir = new File(directory);
@@ -112,8 +98,7 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   public void testAddStudies() throws Exception { 
-    String feedFileName = "downloaded/studies_feed.xml";
-    HttpResponse response = StudyControllerRequester.create(feedFileName, url("/study"));
+    HttpResponse response = StudyControllerRequester.create(FEED_FILE_NAME, url("/study"));
     System.out.println(response.getBody());
   }
   
