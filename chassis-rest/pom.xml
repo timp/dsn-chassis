@@ -223,7 +223,9 @@
           consider moving to integration test phase later
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
            -->
+           <!--
             <exclude>**/util/**</exclude>
+            -->
           </excludes>
         </configuration>
         <!-- 
