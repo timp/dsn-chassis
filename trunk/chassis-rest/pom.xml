@@ -250,12 +250,21 @@
 		</plugins>
 	</build>
 	<repositories>
+		<repository> 
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>http://cloud1.cggh.org/maven2/</url>
+		</repository>
+	  <!-- duff
 		<repository>
 			<id>EclipseLink Repo</id>
 			<url>http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/rt/eclipselink/maven.repo/</url>
-			<!-- use this for javax.persistence <snapshots> <enabled>true</enabled> 
-				</snapshots> -->
+			use this for javax.persistence 
+			<snapshots>
+			  <enabled>true</enabled> 
+		  </snapshots> 
 		</repository>
+		-->
 	</repositories>
 
 
