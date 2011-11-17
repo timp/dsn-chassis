@@ -114,33 +114,6 @@
     </xs:complexType>
   </xs:element>
   
-  <xs:complexType name="ack">
-    <xs:choice maxOccurs="unbounded">
-      <xs:element ref="institution-ack"/>
-      <xs:element ref="person"/>
-    </xs:choice>
-  </xs:complexType>
-  <xs:element name="acknowledgements" type="ack"/>
-    
-  
-  <xs:element name="institution-ack">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="institution-name"/>
-        <xs:element ref="institution-websites"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="institution-name" type="longString" />
-  <xs:complexType name="inst-web">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" ref="institution-url"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="institution-websites" type="inst-web"/>
-    
-  
-  <xs:element name="institution-url" type="longURI"/>
   <xs:element name="person">
     <xs:complexType>
       <xs:sequence>
@@ -159,6 +132,44 @@
   <xs:element name="email-address" type="xs:string"/>
   <xs:element name="institution" type="xs:string"/>
   <xs:element name="person-is-contactable" type="xs:string"/>
+  
+  
+  <xs:element name="institution-ack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="institution-name"/>
+        <xs:element ref="institution-websites"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="institution-name" type="longString" />
+  <xs:complexType name="inst-web">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="institution-url"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="institution-websites" type="inst-web"/>  
+  <xs:element name="institution-url" type="longURI"/>
+
+  <xs:element name="institutions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="institution-ack"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="acknowledgements">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="person"/>
+        <xs:element ref="institutions"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+    
+  
+  
   <xs:element name="curator-notes" type="xs:string"/>
   <xs:element name="study-status" type="xs:NCName"/>
   <xs:element name="modules" type="xs:string"/>
@@ -308,7 +319,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="priorAntimalarials" type="xs:string"/>
+  <xs:element name="priorAntimalarials">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element  minOccurs="0" maxOccurs="unbounded" ref="drugTaken"/>
+      </xs:sequence>
+      <xs:attribute name="selected" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drugTaken" type="xs:string"/>
   <xs:element name="priorAntimalarialsDetermination" type="xs:string"/>
   <xs:element name="priorAntimalarialsHistoryWeeks" type="xs:string"/>
   <xs:element name="pregnancy" type="xs:string"/>
