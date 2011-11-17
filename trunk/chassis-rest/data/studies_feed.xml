@@ -54,12 +54,14 @@
                         <institution>A Malaria Research Unit </institution>
                         <person-is-contactable>Yes</person-is-contactable>
                     </person>
+                    <institutions>
                     <institution-ack>
                         <institution-name>A Malaria Research Unit </institution-name>
                         <institution-websites>
                             <institution-url>http://www.WWARN.org/</institution-url>
                         </institution-websites>
                     </institution-ack>
+                    </institutions>
                 </acknowledgements>
                 <curator-notes/>
                 <study-status>in</study-status>
@@ -629,13 +631,6 @@
                     </publication>
                 </publications>
                 <acknowledgements>
-                    <institution-ack>
-                        <institution-name>Ministry of Health</institution-name>
-                        <institution-websites>
-                            <institution-url>http://www.cggh.org//</institution-url>
-                            <institution-url>http://www.wwarn.org/</institution-url>
-                        </institution-websites>
-                    </institution-ack>
                     <person>
                         <first-name>Hiro</first-name>
                         <middle-name/>
@@ -652,6 +647,15 @@
                         <institution/>
                         <person-is-contactable/>
                     </person>
+                    <institutions>
+                    <institution-ack>
+                        <institution-name>Ministry of Health</institution-name>
+                        <institution-websites>
+                            <institution-url>http://www.cggh.org//</institution-url>
+                            <institution-url>http://www.wwarn.org/</institution-url>
+                        </institution-websites>
+                    </institution-ack>
+                    </institutions>
                 </acknowledgements>
                 <curator-notes/>
                 <study-status>in</study-status>
@@ -705,7 +709,9 @@
                         <includeMixedInfections>false</includeMixedInfections>
                         <excludeIfPriorAntimalarials>true</excludeIfPriorAntimalarials>
                         <priorAntimalarialsExclusion>
-                            <priorAntimalarials>any AQ</priorAntimalarials>
+                            <priorAntimalarials selected="any AQ">
+                              <drugTaken>any AQ</drugTaken>
+                            </priorAntimalarials>
                             <priorAntimalarialsDetermination>history</priorAntimalarialsDetermination>
                             <priorAntimalarialsHistoryWeeks>1</priorAntimalarialsHistoryWeeks>
                         </priorAntimalarialsExclusion>
@@ -2371,10 +2377,12 @@
                     <institution/>
                     <person-is-contactable/>
                 </person>
+               <institutions>
                 <institution-ack>
                     <institution-name/>
                     <institution-websites/>
                 </institution-ack>
+                </institutions>
             </acknowledgements>
             <curator-notes/>
             <study-status>new</study-status>

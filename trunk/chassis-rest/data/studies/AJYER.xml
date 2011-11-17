@@ -34,12 +34,14 @@
                         <institution>A Malaria Research Unit </institution>
                         <person-is-contactable>Yes</person-is-contactable>
                     </person>
+                    <institutions>
                     <institution-ack>
                         <institution-name>A Malaria Research Unit </institution-name>
                         <institution-websites>
                             <institution-url>http://www.WWARN.org/</institution-url>
                         </institution-websites>
                     </institution-ack>
+                    </institutions>
                 </acknowledgements>
                 <curator-notes/>
                 <study-status>in</study-status>
