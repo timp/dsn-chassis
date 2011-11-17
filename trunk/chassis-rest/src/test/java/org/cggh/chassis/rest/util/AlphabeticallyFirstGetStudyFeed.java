@@ -16,8 +16,8 @@ import junit.framework.TestCase;
  */
 public class AlphabeticallyFirstGetStudyFeed extends TestCase {
   private static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
-  private static final String SVN_PASSWORD = "dont_change_this";
-  private static final String CHANGE_THIS_TO_RUN_THE_TEST = "change_this";
+  private static final String SVN_PASSWORD = "password";
+  private static String CHANGE_THIS_TO_RUN_THE_TEST = "password";
 
   public void testGetWwarnStudyFeed() throws Exception {
     if (CHANGE_THIS_TO_RUN_THE_TEST != SVN_PASSWORD)
