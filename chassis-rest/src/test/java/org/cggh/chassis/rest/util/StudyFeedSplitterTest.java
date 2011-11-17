@@ -12,30 +12,19 @@ import junit.framework.TestCase;
  */
 public class StudyFeedSplitterTest extends TestCase {
 
-  private static final String DATA_STUDIES = "downloaded/studies";
-  private static final String DATA = "download";
+  // change this manually to use wwarn.org data
+  private static final String DATA = "data";
+  //private static final String DATA = "downloaded";
+  private static final String DATA_STUDIES = DATA + "/studies";
+  private static final String STUDY_ID = "XGQRX";
 
   public StudyFeedSplitterTest(String name) {
     super(name);
   }
 
-  protected void setUp() throws Exception {
-    super.setUp();
-  }
-
-  protected void tearDown() throws Exception {
-    super.tearDown();
-  }
-
-  /**
-   * Test method for {@link org.cggh.chassis.rest.util.StudyFeedSplitter#main(java.lang.String[])}.
-   */
   public void testMain() {
   }
 
-  /**
-   * Test method for {@link org.cggh.chassis.rest.util.StudyFeedSplitter#split(java.lang.String)}.
-   */
   public void testSplitString() throws Exception {
     File[] files = new File(DATA_STUDIES).listFiles(new FilenameFilter(){
       public boolean accept(File dir, String name) {
@@ -46,15 +35,12 @@ public class StudyFeedSplitterTest extends TestCase {
       if (!child.delete()) 
         throw new RuntimeException("Could not delete " + child.getCanonicalPath());
     }
-    File studyEntry = new File(DATA_STUDIES + "/XGQRX.xml");
+    File studyEntry = new File(DATA_STUDIES + "/" + STUDY_ID + ".xml");
     assertFalse("Study file not created", studyEntry.exists());
     StudyFeedSplitter.split(DATA + "/studies_feed.xml");
     assertTrue("Study file created", studyEntry.exists());
   }
 
-  /**
-   * Test method for {@link org.cggh.chassis.rest.util.StudyFeedSplitter#split(java.lang.String, java.lang.String, java.lang.String)}.
-   */
   public void testSplitStringStringString() throws Exception {
   }
 
