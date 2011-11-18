@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-rest</artifactId>
   </rootModule>
-  <goals>clean install deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>-Dmaven.test.skip=true -Dmaven.test.failure.ignore=false clean install deploy tomcat:redeploy -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <defaultGoals>install</defaultGoals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
@@ -62,4 +62,11 @@
   </reporters>
   <publishers/>
   <buildWrappers/>
+  <prebuilders/>
+  <postbuilders/>
+  <runPostStepsIfResult>
+    <name>FAILURE</name>
+    <ordinal>2</ordinal>
+    <color>RED</color>
+  </runPostStepsIfResult>
 </maven2-moduleset>
