@@ -224,6 +224,8 @@
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
            -->
             <exclude>**/util/StudyControllerRequesterDownloadedTest.java</exclude>
+            <exclude>**/util/AlphabeticallyFirstGetStudyFeed.java</exclude>
+            
           </excludes>
         </configuration>
         <!-- 
