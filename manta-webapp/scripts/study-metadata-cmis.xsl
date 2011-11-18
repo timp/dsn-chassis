@@ -9,8 +9,7 @@
 	<xsl:variable name="countries" select="document('../src/main/webapp/WEB-INF/resources/apps/common/constants/countries.xml')/countries"/>
 	<xsl:template match="atom:entry">
 		<atom:entry>
-		<atom:title>
-		<xsl:apply-templates select="manta:id/text()" /><xsl:text>.xml</xsl:text></atom:title>
+		<atom:title><xsl:text>study.xml</xsl:text></atom:title>
 		<atom:content type="text/xml"/>
 		<cmisra:object>
 			<cmis:properties>
