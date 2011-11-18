@@ -10,7 +10,7 @@
         <draft>no</draft>
     </app:control>
     <atom:content xmlns:atombeat="http://purl.org/atombeat/xmlns" type="application/vnd.chassis-manta+xml">
-        <study profile="http://www.cggh.org/2010/chassis/manta/1.5.1">
+        <study profile="http://www.cggh.org/2010/chassis/manta/2.0">
             <studyTitle>Mol1</studyTitle>
             <ui-info>
                 <wizard-pane-to-show>confirmation</wizard-pane-to-show>
