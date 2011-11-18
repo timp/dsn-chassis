@@ -7,50 +7,53 @@ import org.apache.commons.io.FileUtils;
 
 import junit.framework.TestCase;
 
-/**
- * @author timp
- * @since 25 Oct 2011 11:36:41
- *
- */
-public class StudyControllerRequesterTest extends TestCase {
+public abstract class StudyControllerRequestSpec extends TestCase {
 
-  private static final String DATA = "data";
-  private static final String DATA_STUDIES = DATA + "/studies/";
-  private static final String FEED_FILE_NAME = DATA +"/studies_feed.xml";
+  protected String DATA_STUDIES; 
+  protected String FEED_FILE_NAME;
 
+  
+  
+  public abstract String getDataDir(); 
+  
+  public StudyControllerRequestSpec() {
+    super();
+  }
 
-  public StudyControllerRequesterTest(String name) {
+  public StudyControllerRequestSpec(String name) {
     super(name);
   }
 
   protected void setUp() throws Exception {
     super.setUp();
+    DATA_STUDIES = getDataDir() + "/studies/";
+    FEED_FILE_NAME = getDataDir() +"/studies_feed.xml";
   }
 
   protected void tearDown() throws Exception {
     super.tearDown();
   }
 
-  private String url(String url) {
-    String fullUrl =  "http://localhost:8080/chassis-rest/service" + url;
-    return fullUrl;
+  protected String url(String url) {
+    return "http://localhost:8080/chassis-rest/service" + url;
   }
 
   public void testValidate() throws Exception { 
-    HttpResponse r = StudyControllerRequester.create(DATA_STUDIES + "AJYER.xml", url("/study"));
-    assertEquals(400, r.getStatus());
+    String fileName = DATA_STUDIES + "AJYER.xml";
+    HttpResponse r = StudyControllerRequester.create(fileName, url("/study"));
     assertTrue(r.getBody(), r.getBody().contains("The value 'Yesterday' of element 'study-is-published' is not valid"));    
-
+    assertEquals(400, r.getStatus());
+  
     assertEquals(404,StudyControllerRequester.delete(url("/study/AJYER")).getStatus());
   }
-  
+
   /**
    * Test method for {@link org.cggh.chassis.rest.util.StudyControllerRequester#create(java.lang.String, java.lang.String)}.
    */
   public void testPostStringString() throws Exception {
     HttpResponse postResponse = StudyControllerRequester.create(DATA_STUDIES + "XGQRX.xml", url("/study"));
     assertEquals(postResponse.getBody(), 201, postResponse.getStatus());
-
+  
     HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/XGQRX"));
     assertEquals(deleteEntryResponse.getBody(), 200, deleteEntryResponse.getStatus());
   }
@@ -58,6 +61,7 @@ public class StudyControllerRequesterTest extends TestCase {
   public void testPostAllStudies() throws Exception {
     testPostsFromDirectory(DATA_STUDIES);
   }
+
   private void testPostsFromDirectory(String directory) throws Exception { 
     File studiesDir = new File(directory);
     @SuppressWarnings("unchecked")
@@ -84,11 +88,11 @@ public class StudyControllerRequesterTest extends TestCase {
         StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
       }
     }
-
+  
     System.out.println("Files: " + fileCount + " fail count: " + failCount);
     
   }
-  
+
   public void testRead() throws Exception {
     HttpResponse response = StudyControllerRequester.read(url("/study/"));
     assertEquals(405, response.getStatus());
@@ -101,24 +105,25 @@ public class StudyControllerRequesterTest extends TestCase {
     HttpResponse response = StudyControllerRequester.create(FEED_FILE_NAME, url("/study"));
     System.out.println(response.getBody());
   }
-  
-  public void testReadNotFound() throws Exception{ 
+
+  public void testReadNotFound() throws Exception { 
     // FIXME We are not marshalling if not found
     assertEquals(url("/study/notThere.xml"),  500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
     assertEquals(url("/study/notThere.html"), 404, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
     assertEquals(url("/study/notThere"),      404, StudyControllerRequester.read(url("/study/notThere")).getStatus());
   }
-  
+
   public void testDelete() throws Exception { 
     HttpResponse deleteCollectionResponse = StudyControllerRequester.delete(url("/study/"));
     assertEquals(deleteCollectionResponse.getBody(), 405, deleteCollectionResponse.getStatus());
-
+  
     // FIXME We are not marshalling if not found
     HttpResponse deleteNonExistent = StudyControllerRequester.delete(url("/study/notThere.xml"));
     assertEquals(deleteNonExistent.getBody(), 500, deleteNonExistent.getStatus());
-
+  
     HttpResponse deleteNonExistentHtml = StudyControllerRequester.delete(url("/study/notThere.html"));
     assertEquals(deleteNonExistentHtml.getBody(), 404, deleteNonExistentHtml.getStatus());
     
   }
+
 }
