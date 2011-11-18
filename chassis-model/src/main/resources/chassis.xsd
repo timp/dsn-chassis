@@ -44,7 +44,7 @@
       <xs:attribute name="profile" use="required">
         <xs:simpleType >
           <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/1.5.1"/>
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.0"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -161,10 +161,10 @@
   
   <xs:element name="acknowledgements">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="person"/>
-        <xs:element ref="institutions"/>
-      </xs:sequence>
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
+          <xs:element ref="institutions"/>
+        </xs:sequence>
     </xs:complexType>
   </xs:element>
     
@@ -218,7 +218,7 @@
         <xs:element ref="latitude"/>
         <xs:element ref="longitude"/>
         <xs:element ref="population" />
-        <xs:element minOccurs="0" ref="transmissionIntensity"/>
+        <xs:element ref="transmissionIntensity"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -240,14 +240,14 @@
         <xs:element ref="annualParasitologicalIncidenceYear"/>
         <xs:element ref="parasitePrevalence"/>
         <xs:element ref="parasitePrevalenceYear"/>
-        <xs:element minOccurs="0" ref="transmissionIntensityAgeFrom"/>
+        <xs:element ref="transmissionIntensityAgeFrom"/>
         <xs:element minOccurs="0" ref="transmissionIntensityAgeFromUnits"/>
-        <xs:element minOccurs="0" ref="transmissionIntensityAgeTo"/>
+        <xs:element ref="transmissionIntensityAgeTo"/>
         <xs:element minOccurs="0" ref="transmissionIntensityAgeToUnits"/>
         <xs:element ref="entomologicalInoculationRate"/>
         <xs:element ref="entomologicalInoculationRateYear"/>
         <xs:element ref="seasonalTransmission"/>
-        <xs:element minOccurs="0" ref="transmissionMonths"/>
+        <xs:element ref="transmissionMonths"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -277,7 +277,7 @@
         <xs:element ref="parasitaemia"/>
         <xs:element ref="includeMixedInfections"/>
         <xs:element ref="excludeIfPriorAntimalarials"/>
-        <xs:element minOccurs="0" ref="priorAntimalarialsExclusion"/>
+        <xs:element ref="priorAntimalarialsExclusion"/>
         <xs:element ref="pregnancy"/>
         <xs:element ref="treatmentReason"/>
         <xs:element ref="otherCriteria"/>
@@ -347,7 +347,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="regimens"/>
-        <xs:element minOccurs="0" ref="regimenAllocation"/>
+        <xs:element ref="regimenAllocation"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -406,7 +406,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="microscopyStain"/>
-        <xs:element minOccurs="0" ref="microscopyStainOther"/>
+        <xs:element ref="microscopyStainOther"/>
         <xs:element ref="asexualParasitemia"/>
         <xs:element ref="sexualParasitemia"/>
         <xs:element ref="thickFilmCalculationOfParasitemia"/>
@@ -422,9 +422,9 @@
       <xs:sequence>
         <xs:element ref="asexualParasitemiaNegativeCount"/>
         <xs:element ref="asexualParasitemiaPositiveThickUnit"/>
-        <xs:element minOccurs="0" ref="asexualParasitemiaPositiveThickUnitOther"/>
+        <xs:element ref="asexualParasitemiaPositiveThickUnitOther"/>
         <xs:element ref="asexualParasitemiaPositiveThinUnit"/>
-        <xs:element minOccurs="0" ref="asexualParasitemiaPositiveThinUnitOther"/>
+        <xs:element ref="asexualParasitemiaPositiveThinUnitOther"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -438,9 +438,9 @@
       <xs:sequence>
         <xs:element ref="sexualParasitemiaNegativeCount"/>
         <xs:element ref="sexualParasitemiaPositiveThickUnit"/>
-        <xs:element minOccurs="0" ref="sexualParasitemiaPositiveThickUnitOther"/>
+        <xs:element ref="sexualParasitemiaPositiveThickUnitOther"/>
         <xs:element ref="sexualParasitemiaPositiveThinUnit"/>
-        <xs:element minOccurs="0" ref="sexualParasitemiaPositiveThinUnitOther"/>
+        <xs:element ref="sexualParasitemiaPositiveThinUnitOther"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -452,13 +452,13 @@
   <xs:complexType name="thickFilmCalcOfParasitemia">
     <xs:sequence>
       <xs:element ref="thickFilmFormula"/>
-      <xs:element minOccurs="0" ref="thickFilmFormulaOther"/>
+      <xs:element ref="thickFilmFormulaOther"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="thinFilmCalcOfParasitemia">
     <xs:sequence>
       <xs:element ref="thinFilmFormula"/>
-      <xs:element minOccurs="0" ref="thinFilmFormulaOther"/>
+      <xs:element ref="thinFilmFormulaOther"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="thickFilmCalculationOfParasitemia" type="thickFilmCalcOfParasitemia"/>
@@ -484,7 +484,7 @@
       <xs:sequence>
         <xs:element ref="percentageRereadBySecondMicroscopist"/>
         <xs:element ref="rereadSlideSelectionMechanism"/>
-        <xs:element minOccurs="0" ref="rereadSlideSelectionMechanismOther"/>
+        <xs:element ref="rereadSlideSelectionMechanismOther"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -493,7 +493,7 @@
       <xs:sequence>
         <xs:element ref="percentageRereadBySecondMicroscopist"/>
         <xs:element ref="rereadSlideSelectionMechanism"/>
-        <xs:element minOccurs="0" ref="rereadSlideSelectionMechanismOther"/>
+        <xs:element ref="rereadSlideSelectionMechanismOther"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -501,7 +501,7 @@
   <xs:complexType name="geneotypingToDistinguish">
     <xs:sequence>
       <xs:element ref="applicability"/>
-      <xs:element minOccurs="0" ref="applicable"/>
+      <xs:element ref="applicable"/>
     </xs:sequence>
   </xs:complexType>
   
@@ -593,7 +593,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="sampleSource"/>
-        <xs:element minOccurs="0" ref="sampleSourceOther"/>
+        <xs:element ref="sampleSourceOther"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -696,7 +696,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="mixedResistanceAllelesInclusion"/>
-        <xs:element minOccurs="0" ref="mixedResistanceAllelesDesignation"/>
+        <xs:element ref="mixedResistanceAllelesDesignation"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -707,7 +707,7 @@
       <xs:sequence>
         <xs:element ref="sequencedLoci"/>
         <xs:element ref="infectionComplexityEstimated"/>
-        <xs:element minOccurs="0" ref="infectionComplexityEstimationlociOpen"/>
+        <xs:element ref="infectionComplexityEstimationlociOpen"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -716,9 +716,9 @@
       <xs:sequence>
         <xs:element ref="wholeGenomesSequenced"/>
         <xs:element ref="resistanceLociSequenced"/>
-        <xs:element minOccurs="0" ref="resistanceLoci"/>
+        <xs:element ref="resistanceLoci"/>
         <xs:element ref="otherLociGenotyped"/>
-        <xs:element minOccurs="0" ref="otherLoci"/>
+        <xs:element ref="otherLoci"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -814,7 +814,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="medium"/>
-        <xs:element minOccurs="0" ref="mediumOther"/>
+        <xs:element ref="mediumOther"/>
         <xs:element ref="preparation"/>
         <xs:element ref="serum"/>
         <xs:element ref="serum-finalConcentration"/>
@@ -836,7 +836,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="hypoxantine-added"/>
-        <xs:element minOccurs="0" ref="hypoxantine-finalConcentration"/>
+        <xs:element ref="hypoxantine-finalConcentration"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -846,7 +846,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="oroticAcid-added"/>
-        <xs:element minOccurs="0" ref="oroticAcid-finalConcentration"/>
+        <xs:element ref="oroticAcid-finalConcentration"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -856,7 +856,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="glucose-added"/>
-        <xs:element minOccurs="0" ref="glucose-finalConcentration"/>
+        <xs:element ref="glucose-finalConcentration"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1087,7 +1087,7 @@
   <xs:element name="ageDosing">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="ageDosingSchedule"/>
+        <xs:element maxOccurs="unbounded" ref="ageDosingSchedule"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
