@@ -223,9 +223,7 @@
           consider moving to integration test phase later
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
            -->
-           <!--
-            <exclude>**/util/**</exclude>
-            -->
+            <exclude>**/util/StudyControllerRequesterDownloadedTest.java</exclude>
           </excludes>
         </configuration>
         <!-- 
@@ -241,7 +239,6 @@
                 <exclude>none</exclude>
               </excludes>
               <includes>
-                <include>**/util/**</include>
               </includes>
             </configuration>
           </execution>
@@ -271,9 +268,26 @@
 
 
 	<properties>
-		<profileId>local</profileId>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.4.0.GA</hibernate.version>
 		<openjpa.version>2.0.1</openjpa.version>
 	</properties>
+	<profiles>
+	  <profile>
+	     <id>local</id>
+	     <build>
+         <plugins>
+           <plugin>
+             <artifactId>maven-surefire-plugin</artifactId>
+     	       <version>2.10</version>
+             <configuration>
+               <excludes>
+               </excludes>
+             </configuration>
+           </plugin>
+         </plugins>
+       </build>
+	  </profile>
+	</profiles>
+
 </project>
