@@ -55,7 +55,6 @@
                 </xsl:template>
                 <xsl:template match="//acknowledgements">
                     <acknowledgements>
-                        <xsl:apply-templates select="//institutions"/>
                         <!-- Only copy from pubmed if there's one ack - hopefully first time through only -->
                         <xsl:if test="count($metadata//xref:contributor) &gt; 0">
                             <xsl:apply-templates select="$metadata//xref:contributors" />
@@ -64,6 +63,7 @@
                         <xsl:if test="count($metadata//xref:contributor) = 0">
                             <xsl:apply-templates select="person"/>
                         </xsl:if>
+                        <xsl:apply-templates select="//institutions"/>
                     </acknowledgements>
                 </xsl:template>
                 <xsl:template match="xref:contributors">
