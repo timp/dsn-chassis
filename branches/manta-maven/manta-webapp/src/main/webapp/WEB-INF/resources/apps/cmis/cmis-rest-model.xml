@@ -284,6 +284,9 @@ ab5be61f787c62660ff3008299"
         <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
         <xforms:send submission="cmis-rest-update-file-submission"/>
         <!-- Update the file contents -->
+        <xxforms:variable name="edit-media-link" select="instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href"
+            value="concat($alfresco-uri, substring-after($edit-media-link,'/alfresco/'))" />
         <xforms:send submission="cmis-rest-update-file-content-submission"/>
     </xforms:action>
     
