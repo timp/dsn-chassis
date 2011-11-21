@@ -82,7 +82,7 @@
 					<name ref="NQ">naphroquine</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="PIP">piperaquine</name>
+					<name ref="PQP">piperaquine</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="PQ">primaquine</name>
