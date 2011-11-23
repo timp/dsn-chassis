@@ -158,17 +158,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
-  <xs:element name="acknowledgements">
-    <xs:complexType>
-      <xs:choice maxOccurs="unbounded">
-        <xs:element ref="institutions"/>
-        <xs:element ref="person"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
-    
-  
+
+  <xs:complexType name="acks">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="institutions"/>
+      <xs:element ref="person"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="acknowledgements" type="acks" />  
   
   <xs:element name="curator-notes" type="xs:string"/>
   <xs:element name="study-status" type="xs:NCName"/>
