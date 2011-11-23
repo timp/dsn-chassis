@@ -73,14 +73,14 @@ public abstract class StudyControllerRequestSpec extends TestCase {
       File f = it.next();
       String studyFileName = directory + f.getName();
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
-      System.out.println(studyFileName);
+      //System.out.println(studyFileName);
       //System.out.print(" - ");
       //System.out.println(r.getBody());
       if (r.getStatus() != 201) {
         System.out.print(studyFileName);
         System.out.print(" - ");
         System.out.println(r.getBody());
-        if (r.getBody().indexOf("errorList") > 0) { 
+        if (r.getBody().indexOf("errors") > 0) { 
           System.err.println(r.getBody());
         }
         failCount ++;
