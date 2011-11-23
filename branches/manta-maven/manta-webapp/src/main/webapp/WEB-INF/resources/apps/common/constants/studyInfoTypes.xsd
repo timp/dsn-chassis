@@ -49,7 +49,7 @@
 			<xs:enumeration value="HL" />
 			<xs:enumeration value="MQ" />
 			<xs:enumeration value="NQ" />
-			<xs:enumeration value="PIP" />
+			<xs:enumeration value="PQP" />
 			<xs:enumeration value="PQ" />
 			<xs:enumeration value="PG" />
 			<xs:enumeration value="PYR" />
