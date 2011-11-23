@@ -20,7 +20,7 @@ public class UnmarshalledEntry {
   private String exceptionMessage; 
   
 	private Entry entry;
-	@XmlElementWrapper(name="errorList")
+	@XmlElementWrapper(name="errors")
 	@XmlElement(name="error")
 	private List<ValidationError> errors = new Vector<ValidationError>();
 	
