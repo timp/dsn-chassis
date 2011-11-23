@@ -884,7 +884,7 @@
   </xs:element>
   <xs:element name="antibiotic" type="xs:NCName"/>
   <xs:element name="antibioticOther" type="xs:string"/>
-  <xs:element name="antibioticFinalConcentration" type="xs:decimal"/>
+  <xs:element name="antibioticFinalConcentration" type="xs:string"/>
   <xs:element name="susceptibility">
     <xs:complexType>
       <xs:sequence>
