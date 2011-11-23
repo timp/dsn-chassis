@@ -161,10 +161,10 @@
   
   <xs:element name="acknowledgements">
     <xs:complexType>
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="person"/>
-          <xs:element ref="institutions"/>
-        </xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="institutions"/>
+        <xs:element ref="person"/>
+      </xs:choice>
     </xs:complexType>
   </xs:element>
     
