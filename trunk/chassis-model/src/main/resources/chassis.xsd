@@ -989,7 +989,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="uploadedUrl" type="xs:string"/>
-  <xs:element name="note" type="xs:string"/>
+  <xs:element name="note" type="longString"/>
   <xs:element name="assayValidated" type="xs:string"/>
   <xs:element name="drugs">
     <xs:complexType>
