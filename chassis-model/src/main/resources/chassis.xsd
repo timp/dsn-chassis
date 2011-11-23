@@ -365,7 +365,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="regimenName" type="xs:string"/>
+  <xs:element name="regimenName" type="longURI"/>
   <xs:element name="regimenSupervision" type="xs:string"/>
   <xs:element name="regimenUrl" type="xs:string"/>
   <xs:element name="regimenAllocation">
