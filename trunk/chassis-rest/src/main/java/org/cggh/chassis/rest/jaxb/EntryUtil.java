@@ -16,41 +16,27 @@ import org.xml.sax.SAXException;
 
 public class EntryUtil {
 
-	public static UnmarshalledEntry validate(Jaxb2Marshaller marshaller, Source source) 
-	    throws JAXBException, SAXException {
+  public static UnmarshalledEntry validate(Jaxb2Marshaller marshaller, Source source)
+          throws JAXBException, SAXException {
 
-	  final UnmarshalledEntry unmarshalResult = new UnmarshalledEntry();
-		
-		// Now all you need to do to validate on marshal is to provide the
-		// created schema to the marshaller:
+    final UnmarshalledEntry unmarshalResult = new UnmarshalledEntry();
+    final List<ValidationEvent> events = new LinkedList<ValidationEvent>();
 
-		// To receive notifications of validation events, register an
-		// appropriate event handler:
-		/*
-		ClassPathResource accountLookUpSchema =
-			new ClassPathResource("atom.xsd");
-		marshaller.setSchema(accountLookUpSchema);
-		*/
-	  
-		final List<ValidationEvent> events = new LinkedList<ValidationEvent>();
-		
-		marshaller.setValidationEventHandler(new ValidationEventHandler() {
-			public boolean handleEvent(ValidationEvent event) {
-				events.add(event);
-				unmarshalResult.addError(new ValidationError(event.getMessage()));
-				// Keep going
-				return true;
-			}
-		});
+    marshaller.setValidationEventHandler(new ValidationEventHandler() {
+      public boolean handleEvent(ValidationEvent event) {
+        events.add(event);
+        unmarshalResult.addError(new ValidationError(event.getMessage()));
+        // Keep going
+        return true;
+      }
+    });
 
-		Object o = marshaller.unmarshal(source);
-		//assertFalse("List of validation events must not be empty.",
-		//		events.isEmpty());
-		if (!events.isEmpty()) {
-			System.out.println(events);
-		} else {
-			unmarshalResult.setEntry((Entry) o);
-		}
-		return unmarshalResult;
-	}
+    if (!events.isEmpty()) {
+      System.err.println(events);
+    } 
+    unmarshalResult.setEntry((Entry) marshaller.unmarshal(source));
+    
+    return unmarshalResult;
+  }
+
 }
