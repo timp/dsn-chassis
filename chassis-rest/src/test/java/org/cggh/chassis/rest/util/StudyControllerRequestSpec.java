@@ -72,6 +72,11 @@ public abstract class StudyControllerRequestSpec extends TestCase {
       fileCount++;
       File f = it.next();
       String studyFileName = directory + f.getName();
+      String entryUrl = url("/study/" + f.getName());
+      if (StudyControllerRequester.read(url("/study/" + f.getName())).getStatus() == 200) {
+        int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
+        //System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
+      }
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
       //System.out.println(studyFileName);
       //System.out.print(" - ");
@@ -85,7 +90,7 @@ public abstract class StudyControllerRequestSpec extends TestCase {
         }
         failCount ++;
       } else {
-        StudyControllerRequester.delete(url("/study/" + f.getName())).getStatus();
+        //StudyControllerRequester.delete(url(entryUrl)).getStatus();
       }
     }
   
