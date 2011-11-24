@@ -108,14 +108,8 @@
 			
 			<!-- This adds the current user (email) to the acknowledgements in the draft. -->
 			<xforms:action ev:event="xforms-model-construct-done">
-				<xforms:insert 
-					context="instance('ins-study-entry')//atom:content/study/acknowledgements" 
-					nodeset="person"
-					at="1"
-					position="after"
-					origin="instance('ins-person-template')"/>
 				<xforms:setvalue 
-					ref="instance('ins-study-entry')//atom:content/study/acknowledgements/person[1]/email-address"
+					ref="instance('ins-study-entry')//atom:content/study/acknowledgements/people/person[1]/email-address"
 					value="xxforms:get-remote-user()"/>
 			</xforms:action>
 
