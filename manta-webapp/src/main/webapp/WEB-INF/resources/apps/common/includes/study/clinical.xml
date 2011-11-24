@@ -806,9 +806,14 @@
                                             <xforms:label><!-- Nullable -->
                                             </xforms:label>
                                             <xforms:value />
-                                        </xforms:item><xforms:item>
-                            <xforms:label>(X per Y WBCs)/ Y WBC</xforms:label>
-                            <xforms:value>wbc</xforms:value>
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>(X per Y WBC *  WBC) /  Y WBC</xforms:label>
+                            <xforms:value>(X per Y WBC *  WBC) /  Y WBC</xforms:value>
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>(X per Y WBC *  8000) /  Y WBC</xforms:label>
+                            <xforms:value>(X per Y WBC *  8000) /  Y WBC</xforms:value>
                         </xforms:item>
                         <xforms:item>
                             <xforms:label>other</xforms:label>
