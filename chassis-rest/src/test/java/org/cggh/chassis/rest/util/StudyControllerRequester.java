@@ -1,5 +1,6 @@
 package org.cggh.chassis.rest.util;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -139,8 +140,22 @@ public class StudyControllerRequester {
     final HttpClient client = new HttpClient();
     try {
       client.executeMethod(method);
-      response = new HttpResponse(method.getStatusCode(),
-          method.getResponseBodyAsString());
+      InputStream is = method.getResponseBodyAsStream();
+      BufferedInputStream bis = new BufferedInputStream( is );
+      StringBuffer sb = new StringBuffer(); 
+      byte[] bytes = new byte[ 8192 ];
+      int count = bis.read( bytes );
+      while( count != -1 && count <= 8192 ) {
+       //System.out.print( "-" );
+       sb.append(bytes);
+       count = bis.read( bytes );
+      }
+      if( count != -1 ) {
+        sb.append(bytes);
+      }
+      bis.close();
+      //System.out.println( "\nDone" );
+      response = new HttpResponse(method.getStatusCode(), sb.toString());
     } finally {
       method.releaseConnection();
     }
