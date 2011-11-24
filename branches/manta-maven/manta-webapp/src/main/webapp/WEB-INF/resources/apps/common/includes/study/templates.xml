@@ -3,11 +3,10 @@
     <xforms:instance id="ins-user-template">
         <atombeat:member />
     </xforms:instance>
-
-    <!-- person template for adding a new acknowledgement (used to add the current 
-        user and add more in the acknowledgement pane) -->
-    <xforms:instance id="ins-person-template"
-        src="/apps/common/templates/study/person-template.xml" />
+    
+    <xforms:instance id="ins-study-template"
+        src="/apps/common/templates/study/study-entry-template.xml" />
+        
     <xforms:instance id="ins-publication-template"
         src="/apps/common/templates/study/publication-template.xml" />
     <xforms:instance id="ins-publication-reference">

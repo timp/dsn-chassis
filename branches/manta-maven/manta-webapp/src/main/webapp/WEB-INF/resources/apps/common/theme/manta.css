@@ -161,6 +161,9 @@ ul {
 .fourWide .xforms-input-input {
     width: 4em;
 }
+.eightWide .xforms-input-input {
+    width: 8em;
+}
 .study-info span.xforms-group {
     display:block;
 }
