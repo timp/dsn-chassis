@@ -87,10 +87,12 @@ declare variable $testdata {
                         <institution/>
                         <person-is-contactable/>
                     </person>
-                    <institution-ack>
-                        <institution-name/>
-                        <institution-websites/>
-                    </institution-ack>
+                    <institutions>
+                        <institution-ack>
+                            <institution-name/>
+                            <institution-websites/>
+                        </institution-ack>
+                    </institutions>
                 </acknowledgements>
                 <curator-notes/>
                 <study-status>wait-external</study-status>
@@ -424,13 +426,13 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Study Info v1.5.1 to v2.0</title>
+                <title>Data Migration - Study Info v2.0 to v2.1</title>
             </head>
             <body>
-                <h1>Data Migration - Study v1.5.1 to v2.0</h1>
+                <h1>Data Migration - Study v2.0 to v2.1</h1>
                 <p>Total number of entries in <a href="../../content/studies">Studies</a> collection: <strong>{ count( $study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v1.5.1 profile: <strong>{ count( $old-study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.0 profile: <strong>{ count( $new-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.0 profile: <strong>{ count( $old-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.1 profile: <strong>{ count( $new-study-infos ) }</strong></p>
                 <p>
                     <form method="post" action="">
                         Use dummy test data <input type="checkbox" name="testing" checked="checked" />
@@ -461,13 +463,13 @@ declare function local:get-content() as element( atom:entry )* {
 
 declare function local:get-new-versioned-content($study-infos) as element( atom:entry )* {
     
-    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.0']
+    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.1']
     return $ret
 };
 
 declare function local:get-old-versioned-content($study-infos) as element( atom:entry )* {
     
-    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/1.5.1']
+    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.0']
     return $ret
 };
 
@@ -507,21 +509,26 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
    
    let $new-study-infos := 
         for $old in $old-study-infos
-            let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.0"
+            let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.1"
 
-            (: surround existing institution-ack with new group <institutions> :)
-            let $ins := update insert <institutions>{$old//institution-ack}</institutions> into $old//acknowledgements
-            let $del := update delete $old//acknowledgements/institution-ack
+            (: surround existing person ack with new group <people> :)
+            let $ins := update insert <people>{$old//person}</people> into $old//acknowledgements
+            let $del := update delete $old//acknowledgements/person
             
             (: Move space separated list into an attribute called selected, in case it is still needed :) 
-            let $prior := $old//priorAntimalarials
-            let $pa := update insert attribute selected {$prior} into $old//priorAntimalarials
-            (: Looks like this needs to be done after the next step :( :)
-            let $pa := update delete $old//priorAntimalarials/text()
+            let $prior := $old//priorAntimalarials/@selected
+            (: Need to clear out any inserted via UI :)
+            let $del1 := update delete $old//priorAntimalarials/drugTaken
             (: then set values as proper xml :)
             let $drugs := tokenize($prior,'\s+')
             for $d in $drugs
                 let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
+            let $sd := update insert <studyDesign/> preceding $old//pharmacology/samples
+            let $st := update insert <samplingTimes/> preceding $old//pharmacology/samples
+            let $pkc := update insert <comments/> preceding $old//pharmacology/samples
+            let $td := update insert <targetDose/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
+            let $tdu := update insert <targetDoseUnit/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
+            let $fa := update insert <fatAmount/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             
         return $profile
 

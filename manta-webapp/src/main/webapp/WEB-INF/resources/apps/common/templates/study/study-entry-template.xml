@@ -2,7 +2,7 @@
 	<atom:title type="text"/>
 	<app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control>
 	<atom:content type="application/vnd.chassis-manta+xml">
-		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/2.0">
+		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/2.1">
 		    <studyTitle/>
 			<ui-info>
 				<wizard-pane-to-show>study-terms</wizard-pane-to-show>
@@ -18,6 +18,16 @@
 					   <institution-websites/>
 				    </institution-ack>
 				</institutions>
+				<people>
+				    <person>
+                        <first-name></first-name>
+                        <middle-name></middle-name>
+                        <family-name></family-name>
+                        <email-address/>
+                        <institution/>
+                        <person-is-contactable/>
+                    </person>
+                 </people>
 			</acknowledgements>
 			<curator-notes/>
 			<study-status>new</study-status>
@@ -290,22 +300,28 @@
             
 
             <pharmacology>
+                <studyDesign/>
+                <samplingTimes/>
+                <comments/>
                 <samples>
                     <sample>
                         <anticoagulent />
                         <centrifugeTime />
-            <storages>
-              <storage>
+                        <storages>
+                            <storage>
                               <storageTemperature />
                               <storageDuration />
                               <storageDurationUnit />
-              </storage>
-            </storages>
+                            </storage>
+                        </storages>
                     </sample>
                 </samples>
                 <analytes>
                     <analyte>
                         <drugMeasured />
+                        <targetDose />
+                        <targetDoseUnit />
+                        <fatAmount />
                         <lowerLoQ />
                         <sampleMatrixType />
                     </analyte>

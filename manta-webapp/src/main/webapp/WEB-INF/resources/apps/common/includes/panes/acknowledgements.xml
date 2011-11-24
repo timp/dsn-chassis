@@ -160,7 +160,7 @@
 
                 <table>
 
-                    <xforms:repeat nodeset="person" id="rep-person">
+                    <xforms:repeat nodeset="people/person" id="rep-person">
 
                         <tr class="repeated-element">
 
@@ -257,18 +257,18 @@
                                 <xforms:label>
                                     <img alt="add" src="/apps/study/common/add.gif"/>
                                 </xforms:label>
-                                <xforms:insert ev:event="DOMActivate" context="." nodeset="person"
+                                <xforms:insert ev:event="DOMActivate" context="people" nodeset="person"
                                     at="last()" position="after"
-                                    origin="instance('ins-person-template')"/>
+                                    origin="instance('ins-study-template')//person"/>
                             </xforms:trigger>
                         </td>
                         <td>
                             <span id="add-acknowledgement-link-container">
                                 <xforms:trigger appearance="minimal" class="addRemove">
                                     <xforms:label>Add an acknowledgement</xforms:label>
-                                    <xforms:insert ev:event="DOMActivate" context="."
+                                    <xforms:insert ev:event="DOMActivate" context="people"
                                         nodeset="person" at="last()" position="after"
-                                        origin="instance('ins-person-template')"/>
+                                        origin="instance('ins-study-template')//person"/>
                                 </xforms:trigger>
                             </span>
                         </td>

@@ -262,39 +262,7 @@
 	</xforms:instance>
 	<xforms:instance id="ins-antibiotic-items"
 		src="/apps/common/constants/antibiotics.xml" />
-
-	<xforms:instance id="ins-pharmacology-sample-template">
-		<sample xmlns="">
-			<anticoagulent />
-			<centrifugeTime />
-			<matrix />
-			<storages>
-				<storage>
-					<storageTemperature />
-					<storageDuration />
-					<storageDurationUnit />
-				</storage>
-			</storages>
-		</sample>
-	</xforms:instance>
-
-	<xforms:instance id="ins-pharmacology-storage-template">
-		<storage xmlns="">
-			<storageTemperature />
-			<storageDuration />
-			<storageDurationUnit />
-		</storage>
-	</xforms:instance>
-
-
-	<xforms:instance id="ins-analyte">
-		<analyte xmlns="">
-			<drugMeasured />
-			<lowerLoQ />
-			<sampleMatrixType />
-		</analyte>
-	</xforms:instance>
-
+	
 
 	<xforms:instance id="ins-genotypingMethod-items"
 		src="/apps/common/constants/genotypingMethods.xml" />
@@ -394,20 +362,6 @@
 			<parasitaemia3D7percentage />
 			<ringFormingPercentage />
 		</batch>
-	</xforms:instance>
-
-
-	<xforms:instance id="ins-assayReference">
-		<assayReference xmlns="">
-			<referenceType>url</referenceType>
-			<url />
-			<doi />
-			<upload>
-				<uploadedUrl />
-			</upload>
-			<note />
-			<assayValidated />
-		</assayReference>
 	</xforms:instance>
 	
 	<xforms:instance id="study-info-resources" 
