@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://purl.org/atombeat/xmlns" xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+  <xs:import schemaLocation="chassis.xsd"/>
+  <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>
+  <xs:import namespace="http://www.cggh.org/2010/chassis/manta/xmlns" schemaLocation="manta.xsd"/>
+  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
+  <xs:import namespace="http://www.w3.org/2007/app" schemaLocation="app.xsd"/>
+  <xs:attribute name="enable-versioning" type="xs:boolean"/>
+  <xs:attribute name="exclude-entry-content" type="xs:boolean"/>
+  <xs:attribute name="recursive" type="xs:boolean"/>
+  <xs:element name="config-link-extensions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atombeat:extension-attribute"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="extension-attribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="atombeat:config"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="namespace" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atombeat:param"/>
+      </xs:sequence>
+      <xs:attribute name="context" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="value" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="group">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="atombeat:member"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="member" type="xs:string"/>
+  <xs:attribute name="allow"/>
+</xs:schema>
