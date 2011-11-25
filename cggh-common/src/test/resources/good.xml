@@ -1,6 +1,0 @@
-<test xmlns="http://www.example.org/test" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/test file:///src/test/resources/good.xsd">
-  <test1>test data1</test1>
-  <test2>
-    <test3>test data3</test3>
-  </test2>
-</test>
