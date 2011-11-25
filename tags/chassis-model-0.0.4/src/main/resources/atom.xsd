@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  targetNamespace="http://www.w3.org/2005/Atom" xmlns:ar="http://purl.org/atompub/revision/1.0"
+  xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+  jaxb:version="2.1"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+  jaxb:extensionBindingPrefixes="hj orm">
+  <xs:import schemaLocation="chassis.xsd"/>
+  <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
+  <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>
+  <xs:import namespace="http://www.cggh.org/2010/chassis/manta/xmlns" schemaLocation="manta.xsd"/>
+  <xs:import namespace="http://www.w3.org/2007/app" schemaLocation="app.xsd"/>
+  <xs:element name="feed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atom:id"/>
+        <xs:element ref="atom:updated"/>
+        <xs:element ref="atom:author"/>
+        <xs:element ref="atom:title"/>
+        <xs:element ref="atombeat:config-link-extensions"/>
+        <xs:element maxOccurs="unbounded" ref="atom:link"/>
+        <xs:element maxOccurs="unbounded" ref="atom:entry"/>
+      </xs:sequence>
+      <xs:attribute ref="atombeat:enable-versioning" use="required"/>
+      <xs:attribute ref="atombeat:exclude-entry-content" use="required"/>
+      <xs:attribute ref="atombeat:recursive" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atom:id"/>
+        <xs:element ref="atom:published"/>
+        <xs:element ref="atom:updated"/>
+        <xs:element ref="atom:author"/>
+        <xs:element ref="atom:title"/>
+        <xs:element minOccurs="0" ref="app:control"/>
+        <xs:element ref="atom:content"/>
+        <xs:element ref="ar:comment"/>
+
+        <xs:element ref="manta:id">
+          <!--
+          <xs:annotation>
+            <xs:appinfo>
+              <jaxb:property name="studyID"/>
+            </xs:appinfo>
+          </xs:annotation>
+          -->
+        </xs:element>
+        <xs:element maxOccurs="unbounded" ref="atom:link"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="published" type="xs:dateTime"/>
+  <xs:element name="content">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="study"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="summary" type="xs:string"/>
+  <xs:element name="id" type="xs:anyURI"/>
+  <xs:element name="updated" type="xs:dateTime"/>
+  <xs:element name="author">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atom:email"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="email" type="xs:string"/>
+  <xs:element name="title">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="link">
+    <xs:complexType>
+      <xs:attribute name="href" use="required" type="xs:anyURI"/>
+      <xs:attribute name="rel" use="required" type="xs:anyURI"/>
+      <xs:attribute name="type" use="required"/>
+      <xs:attribute ref="atombeat:allow"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
