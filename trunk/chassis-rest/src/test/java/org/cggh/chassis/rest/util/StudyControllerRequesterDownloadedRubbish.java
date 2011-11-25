@@ -5,17 +5,14 @@ package org.cggh.chassis.rest.util;
  * @since 25 Oct 2011 11:36:41
  *
  */
-public class StudyControllerRequesterDownloadedTest extends StudyControllerRequestSpec {
+public class StudyControllerRequesterDownloadedRubbish  {
 
-  public StudyControllerRequesterDownloadedTest(String name) {
-    super(name);
-  }
-  @Override
   public String getDataDir() {
     return "downloaded";
   }
   
   public void testValidate() throws Exception { 
+    /**
     String invalidStudyId = "TFCBZ";  
     String fileName = DATA_STUDIES + invalidStudyId +".xml";
     HttpResponse r = StudyControllerRequester.create(fileName, url("/study"));
@@ -24,6 +21,7 @@ public class StudyControllerRequesterDownloadedTest extends StudyControllerReque
     assertEquals(400, r.getStatus());
   
     assertEquals(404,StudyControllerRequester.delete(url("/study/" + invalidStudyId)).getStatus());
+    */
   }
 
 

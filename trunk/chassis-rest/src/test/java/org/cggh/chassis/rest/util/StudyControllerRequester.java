@@ -141,21 +141,25 @@ public class StudyControllerRequester {
     try {
       client.executeMethod(method);
       InputStream is = method.getResponseBodyAsStream();
-      BufferedInputStream bis = new BufferedInputStream( is );
-      StringBuffer sb = new StringBuffer(); 
+      BufferedInputStream bis = new BufferedInputStream(is);
+      StringBuffer sb = new StringBuffer();
+      String s = "";
       byte[] bytes = new byte[ 8192 ];
       int count = bis.read( bytes );
       while( count != -1 && count <= 8192 ) {
        //System.out.print( "-" );
-       sb.append(bytes);
+       sb.append(new String(bytes));
        count = bis.read( bytes );
+       s = s + new String(bytes);
       }
-      if( count != -1 ) {
+      if(count != -1) {
         sb.append(bytes);
+        s = s + bytes;
       }
       bis.close();
       //System.out.println( "\nDone" );
-      response = new HttpResponse(method.getStatusCode(), sb.toString());
+      String body = sb.toString();
+      response = new HttpResponse(method.getStatusCode(), body);
     } finally {
       method.releaseConnection();
     }

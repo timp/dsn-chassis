@@ -7,27 +7,27 @@ import org.apache.commons.io.FileUtils;
 
 import junit.framework.TestCase;
 
-public abstract class StudyControllerRequestSpec extends TestCase {
+public class StudyControllerRequestTest extends TestCase {
+
 
   protected String DATA_STUDIES; 
-  protected String FEED_FILE_NAME;
+  protected String FULL_FEED_FILENAME;
 
+  protected static ChassisRestConfig config;
   
-  
-  public abstract String getDataDir(); 
-  
-  public StudyControllerRequestSpec() {
+  public StudyControllerRequestTest() {
     super();
   }
 
-  public StudyControllerRequestSpec(String name) {
+  public StudyControllerRequestTest(String name) {
     super(name);
   }
 
   protected void setUp() throws Exception {
     super.setUp();
-    DATA_STUDIES = getDataDir() + "/studies/";
-    FEED_FILE_NAME = getDataDir() +"/studies_feed.xml";
+    config =  new ChassisRestConfig();
+    DATA_STUDIES = config.getConfiguration().get("STUDIES_DIR_NAME") + "/";
+    FULL_FEED_FILENAME = config.getConfiguration().get("FULL_FEED_FILENAME");
   }
 
   protected void tearDown() throws Exception {
@@ -38,24 +38,24 @@ public abstract class StudyControllerRequestSpec extends TestCase {
     return "http://localhost:8080/chassis-rest/service" + url;
   }
 
-  public void testValidate() throws Exception { 
-    String fileName = DATA_STUDIES + "AJYER.xml";
+  public void testValidate() throws Exception {
+    String invalidStudyId = config.getConfiguration().get("INVALID_STUDY_ID");
+    String fileName = DATA_STUDIES + "/" + invalidStudyId + ".xml";
     HttpResponse r = StudyControllerRequester.create(fileName, url("/study"));
-    assertTrue(r.getBody(), r.getBody().contains("The value 'Yesterday' of element 'study-is-published' is not valid"));    
+    assertTrue(r.getBody(), r.getBody().contains(" is not valid"));    
     assertEquals(400, r.getStatus());
   
-    assertEquals(404,StudyControllerRequester.delete(url("/study/AJYER")).getStatus());
+    assertEquals(404,StudyControllerRequester.delete(url("/study/" + invalidStudyId)).getStatus());
   }
 
   /**
    * Test method for {@link org.cggh.chassis.rest.util.StudyControllerRequester#create(java.lang.String, java.lang.String)}.
    */
   public void testPostStringString() throws Exception {
-    HttpResponse postResponse = StudyControllerRequester.create(DATA_STUDIES + "XGQRX.xml", url("/study"));
-    assertEquals(postResponse.getBody(), 201, postResponse.getStatus());
+    String studyId = config.getConfiguration().get("STUDY_ID");
+    HttpResponse postResponse = StudyControllerRequester.create(DATA_STUDIES + "/" + studyId + ".xml", url("/study"));
+    assertEquals(postResponse.getBody() + "\nDelete:" + StudyControllerRequester.delete(url("/study/" + studyId)), 201, postResponse.getStatus());
   
-    HttpResponse deleteEntryResponse = StudyControllerRequester.delete(url("/study/XGQRX"));
-    assertEquals(deleteEntryResponse.getBody(), 200, deleteEntryResponse.getStatus());
   }
 
   public void testPostAllStudies() throws Exception {
@@ -75,7 +75,7 @@ public abstract class StudyControllerRequestSpec extends TestCase {
       String entryUrl = url("/study/" + f.getName());
       if (StudyControllerRequester.read(url("/study/" + f.getName())).getStatus() == 200) {
         int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
-        //System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
+        System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
       }
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
       //System.out.println(studyFileName);
@@ -107,7 +107,8 @@ public abstract class StudyControllerRequestSpec extends TestCase {
   }
 
   public void testAddStudies() throws Exception { 
-    HttpResponse response = StudyControllerRequester.create(FEED_FILE_NAME, url("/study"));
+    System.err.println(FULL_FEED_FILENAME);
+    HttpResponse response = StudyControllerRequester.create(FULL_FEED_FILENAME, url("/study"));
     System.out.println(response.getBody());
   }
 
