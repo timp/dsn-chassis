@@ -58,6 +58,11 @@
  </repositories>
 	<!-- <pluginRepositories> <pluginRepository> <id>maven2-repository.dev.java.net</id> 
 		<url>http://download.java.net/maven/2</url> </pluginRepository> </pluginRepositories> -->
+	<scm>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-model</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-model</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-model</url>
+	</scm>
  <build>
   <defaultGoal>install</defaultGoal>
   <plugins>
