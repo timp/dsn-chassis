@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
-    <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_org_cggh_quac_model_Role" object="${role}" path="/roles" z="wfCAvCigy+CDES4pyu3PCXFhNLY=">
-        <field:display field="userss" id="s_org_cggh_quac_model_Role_userss" object="${role}" z="myx0MPD4vzVaYcR1qzoDIBno5gY="/>
-        <field:display field="name" id="s_org_cggh_quac_model_Role_name" object="${role}" z="TRlh8hVe8V9kOqoMxLI3NpMAYcU="/>
-    </page:show>
-</div>
