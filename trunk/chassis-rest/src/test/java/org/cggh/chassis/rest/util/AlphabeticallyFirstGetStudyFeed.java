@@ -7,6 +7,7 @@ import java.util.Date;
 import org.cggh.casutils.CasProtectedResourceDownloader;
 import org.cggh.casutils.CasProtectedResourceDownloaderFactory;
 import org.cggh.casutils.NotFoundException;
+import org.cggh.chassis.rest.configuration.Configuration;
 
 import junit.framework.TestCase;
 
@@ -15,15 +16,19 @@ import junit.framework.TestCase;
  * @since 2011-11-16
  */
 public class AlphabeticallyFirstGetStudyFeed extends TestCase {
+  
+  static Configuration configuration = new Configuration("chassis-rest");
+  
   private static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
-  private static final String SVN_PASSWORD = "password";
-  private static String CHANGE_THIS_TO_RUN_THE_TEST = "password";
-
+  private static final String wwarnLivePassord = configuration.get("wwarn-live-password");
+  
   public void testGetWwarnStudyFeed() throws Exception {
-    if (CHANGE_THIS_TO_RUN_THE_TEST != SVN_PASSWORD)
-    {
+    if (wwarnLivePassord != null) {
       runIt();
+    } else { 
+      System.err.println("No password set in " + configuration.getFileName());
     }
+      
   }
 
   private void runIt() throws NotFoundException, IOException {
@@ -32,7 +37,7 @@ public class AlphabeticallyFirstGetStudyFeed extends TestCase {
     CasProtectedResourceDownloaderFactory.downloaders.put(
             CasProtectedResourceDownloaderFactory.keyFromUrl("https://www.wwarn.org/"),
             new CasProtectedResourceDownloader("https://", "www.wwarn.org:443",
-                    "timp", CHANGE_THIS_TO_RUN_THE_TEST, "/tmp"));
+                    "timp", wwarnLivePassord, "/tmp"));
 
     File studyOut = new File(LOCAL_STUDIES_FEED_FILENAME);
     studyOut.delete();
