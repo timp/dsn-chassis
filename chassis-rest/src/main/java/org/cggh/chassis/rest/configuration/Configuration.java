@@ -21,12 +21,14 @@ public class Configuration {
   private String configurationDirectoryName; 
   private String propertiesFileName;
   private Properties properties;
+  private Properties defaults;
   
   public Configuration(String appName) {
     this(appName, null);
   }
   public Configuration(String appName, Properties defaults) {
     super();
+    this.defaults = defaults;
     this.homeVariableName = appName.toUpperCase() + "_HOME";
     String envHome = System.getenv(this.homeVariableName);
     if (envHome == null) 
@@ -51,6 +53,14 @@ public class Configuration {
   public String getFileName() { 
     return propertiesFileName;
   }
+  
+  public String toString() { 
+    StringBuffer val =  new StringBuffer("Set:\n");
+    val.append(properties.toString());
+    val.append("\nDefaults:\n");
+    val.append(defaults.toString());
+    return val.toString();
+  }
 
   /**
    * @param existingFile must exist
@@ -63,7 +73,7 @@ public class Configuration {
     } catch (FileNotFoundException e1) {
       throw new IllegalArgumentException("Path (" + existingFile + ") does not exist");
     }
-    Properties them = new Properties();
+    Properties them = new Properties(defaults);
     try{
       them.load(data);
     } catch (IOException e) {
@@ -73,4 +83,5 @@ public class Configuration {
 
     return them;
   }
+  
 }
