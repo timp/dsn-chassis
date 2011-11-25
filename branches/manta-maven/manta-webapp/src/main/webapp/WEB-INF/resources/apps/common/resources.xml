@@ -9,12 +9,23 @@
 				<population ref="traveller">Returning travellers</population>
 			</populationSources>
 		</site>
+		<includeExclude>
+		  <criteria ref="">please select</criteria>
+		  <criteria ref="include">include</criteria>
+		  <criteria ref="exclude">exclude</criteria>
+		</includeExclude>
+		<yesNo>
+          <option ref="">please select</option>
+          <option ref="yes">yes</option>
+          <option ref="no">no</option>
+        </yesNo>
 		<clinical>
 			<drug>
 				<tradeName>Trade Name</tradeName>
 				<addBatch>Add a batch</addBatch>
 				<manDate>Manufacture Date</manDate>
 				<expDate>Expiry Date</expDate>
+				<readmin>Was treatment readministered in the event of vomiting?</readmin>
 				<adminRoutes>
 					<adminRoute ref="" />
 					<adminRoute ref="oral">oral</adminRoute>

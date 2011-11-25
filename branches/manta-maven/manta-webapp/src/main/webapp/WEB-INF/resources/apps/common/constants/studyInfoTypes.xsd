@@ -31,6 +31,22 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+    <xs:simpleType name="includeExclude">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="include" />
+            <xs:enumeration value="exclude" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="yesNo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+        </xs:restriction>
+    </xs:simpleType>
+    
 	<xs:simpleType name="drugMolecules">
 		<xs:restriction base="xs:string">
             <xs:enumeration value="" />
