@@ -501,17 +501,12 @@
                                                   <br/>
                                                   <xforms:select1 appearance="minimal"
                                                   ref="readministeredOnVomitting">
-                                                  <xforms:label> Was treatment readministered in the
-                                                  event of vomiting? </xforms:label>
-                                                  <xforms:item>
-                                                  <xforms:label>unknown</xforms:label>
-                                                  <xforms:value/>
-                                                  </xforms:item>
+                                                  <xforms:label model="mod-study-info" ref="$resources/clinical/drug/readmin"/>
                                                   <xforms:itemset model="mod-study-info"
-                                                  nodeset="instance('ins-boolean-items')/boolean">
-                                                  <xforms:label ref="label"/>
-                                                  <xforms:value ref="value"/>
-                                                  </xforms:itemset>
+                            nodeset="instance('study-info-resources')//xs:simpleType[@name='yesNo']/xs:restriction/xs:enumeration">
+                        <xforms:label ref="for $currentItemName in @value return $resources/yesNo/option[@ref = $currentItemName]"/>
+                        <xforms:value ref="@value"/>
+                    </xforms:itemset>
                                                   <xforms:alert>Please select</xforms:alert>
                                                   </xforms:select1>
                                                   <br/>

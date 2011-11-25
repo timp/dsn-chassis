@@ -320,7 +320,7 @@
                     <analyte>
                         <drugMeasured />
                         <targetDose />
-                        <targetDoseUnit />
+                        <unitsOfMeasure />
                         <fatAmount />
                         <lowerLoQ />
                         <sampleMatrixType />

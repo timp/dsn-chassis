@@ -519,16 +519,23 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             let $prior := $old//priorAntimalarials/@selected
             (: Need to clear out any inserted via UI :)
             let $del1 := update delete $old//priorAntimalarials/drugTaken
-            (: then set values as proper xml :)
-            let $drugs := tokenize($prior,'\s+')
-            for $d in $drugs
-                let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
             let $sd := update insert <studyDesign/> preceding $old//pharmacology/samples
             let $st := update insert <samplingTimes/> preceding $old//pharmacology/samples
             let $pkc := update insert <comments/> preceding $old//pharmacology/samples
             let $td := update insert <targetDose/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
-            let $tdu := update insert <targetDoseUnit/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
+            let $tdu := update insert <unitsOfMeasure/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             let $fa := update insert <fatAmount/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
+            let $incInf := update replace $old//includeMixedInfections[. = 'true']/text() with 'include'
+            let $exInf := update replace $old//includeMixedInfections[. = 'false']/text() with 'exclude'
+            let $incPrior := update replace $old//excludeIfPriorAntimalarials[. = 'false']/text() with 'include'
+            let $exPrior := update replace $old//excludeIfPriorAntimalarials[. = 'true']/text() with 'exclude'
+            let $yv := update replace $old//readministeredOnVomitting[. = 'true']/text() with 'yes'
+            let $nv := update replace $old//readministeredOnVomitting[. = 'false']/text() with 'no'
+            (: then set values as proper xml :)
+            let $drugs := tokenize($prior,'\s+')
+            (: do at end otherwise everything in loop :)
+            for $d in $drugs
+                let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
             
         return $profile
 

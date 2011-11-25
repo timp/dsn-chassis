@@ -112,11 +112,13 @@
                         -->
                     </xforms:bind>
 
+                    <!-- 
                     <xforms:bind nodeset="includeMixedInfections" type="xforms:boolean" />
                     <xforms:bind nodeset="excludeIfPriorAntimalarials"
                         type="xforms:boolean" />
+                         -->
                     <xforms:bind nodeset="priorAntimalarialsExclusion"
-                        relevant="contains(../excludeIfPriorAntimalarials, 'true')">
+                        relevant="contains(../excludeIfPriorAntimalarials, 'exclude')">
                         <xforms:bind nodeset="priorAntimalarials" type="xs:string" />
                         <xforms:bind nodeset="priorAntimalarialsDetermination"
                             type="xs:string" />
