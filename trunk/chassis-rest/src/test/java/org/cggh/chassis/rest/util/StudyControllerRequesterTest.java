@@ -12,6 +12,7 @@ public class StudyControllerRequesterTest extends TestCase {
 
   protected String DATA_STUDIES; 
   protected String FULL_FEED_FILENAME;
+  protected String SERVICE_PROTOCOL_HOST_PORT;
 
   protected static ChassisRestConfig config;
   
@@ -28,6 +29,7 @@ public class StudyControllerRequesterTest extends TestCase {
     config =  new ChassisRestConfig();
     DATA_STUDIES = config.getConfiguration().get("STUDIES_DIR_NAME") + "/";
     FULL_FEED_FILENAME = config.getConfiguration().get("FULL_FEED_FILENAME");
+    SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
   }
 
   protected void tearDown() throws Exception {
@@ -35,7 +37,7 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   protected String url(String url) {
-    return "http://localhost:8080/chassis-rest/service" + url;
+    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
   }
 
   public void testValidate() throws Exception {
