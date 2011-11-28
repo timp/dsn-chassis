@@ -58,8 +58,11 @@ public class StudyControllerRequesterTest extends TestCase {
     String studyId = config.getConfiguration().get("STUDY_ID");
     String studyFileName = DATA_STUDIES + "/" + studyId + ".xml";
     System.out.println("Posting " + studyFileName + " to " + url("/study"));
+    // It may have been created already
+    HttpResponse delResponse = StudyControllerRequester.delete(url("/study/" + studyId));
+    System.err.println("Del reponse=" + delResponse.getStatus());
     HttpResponse postResponse = StudyControllerRequester.create(studyFileName, url("/study"));
-    assertEquals(postResponse.getBody() + "\nDelete:" + StudyControllerRequester.delete(url("/study/" + studyId)), 201, postResponse.getStatus());
+    assertEquals(postResponse.getBody() , 201, postResponse.getStatus());
   
   }
 
