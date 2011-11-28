@@ -23,6 +23,13 @@ public class AlphabeticallyFirstGetStudyFeed extends TestCase {
   private static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
   private static String wwarnLivePassord;
   
+  public AlphabeticallyFirstGetStudyFeed() { 
+    super();
+  }
+  public AlphabeticallyFirstGetStudyFeed(String name) { 
+    super(name);
+  }
+  
   
   @Override
   protected void setUp() throws Exception {
