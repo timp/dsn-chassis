@@ -76,6 +76,36 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="drugName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="AM-LUM" />
+			<xs:enumeration value="AM-NQ" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AS-AQ" />
+			<xs:enumeration value="AS-MQ" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AV-PG" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="LAP-DAP" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DHA-PQP" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="SX-PYR" />
+			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="drugTradeName">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="" />
