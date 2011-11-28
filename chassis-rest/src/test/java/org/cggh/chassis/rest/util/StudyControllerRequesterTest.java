@@ -40,8 +40,9 @@ public class StudyControllerRequesterTest extends TestCase {
 
   public void testValidate() throws Exception {
     String invalidStudyId = config.getConfiguration().get("INVALID_STUDY_ID");
-    String fileName = DATA_STUDIES + "/" + invalidStudyId + ".xml";
-    HttpResponse r = StudyControllerRequester.create(fileName, url("/study"));
+    String studyFileName = DATA_STUDIES + "/" + invalidStudyId + ".xml";
+    System.out.println("Posting " + studyFileName + " to " + url("/study"));
+    HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
     assertTrue(r.getBody(), r.getBody().contains(" is not valid"));    
     assertEquals(400, r.getStatus());
   
@@ -53,7 +54,9 @@ public class StudyControllerRequesterTest extends TestCase {
    */
   public void testPostStringString() throws Exception {
     String studyId = config.getConfiguration().get("STUDY_ID");
-    HttpResponse postResponse = StudyControllerRequester.create(DATA_STUDIES + "/" + studyId + ".xml", url("/study"));
+    String studyFileName = DATA_STUDIES + "/" + studyId + ".xml";
+    System.out.println("Posting " + studyFileName + " to " + url("/study"));
+    HttpResponse postResponse = StudyControllerRequester.create(studyFileName, url("/study"));
     assertEquals(postResponse.getBody() + "\nDelete:" + StudyControllerRequester.delete(url("/study/" + studyId)), 201, postResponse.getStatus());
   
   }
