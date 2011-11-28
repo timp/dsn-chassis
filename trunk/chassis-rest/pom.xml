@@ -136,6 +136,7 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
+  <!--  Note that thi sis behind the spring eclipse server which is running 3.0 -->
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
           <version>2.5</version>
@@ -227,8 +228,8 @@
           Manual invocations rather than tests,
           consider moving to integration test phase later
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
-           -->
             <exclude>**/util/AlphabeticallyFirstGetStudyFeed.java</exclude>
+           -->
             
           </excludes>
         </configuration>
@@ -278,22 +279,26 @@
 		<hibernate.version>3.4.0.GA</hibernate.version>
 		<openjpa.version>2.0.1</openjpa.version>
 	</properties>
-	<profiles>
-	  <profile>
-	     <id>local</id>
-	     <build>
-         <plugins>
-           <plugin>
-             <artifactId>maven-surefire-plugin</artifactId>
-     	       <version>2.10</version>
-             <configuration>
-               <excludes>
-               </excludes>
-             </configuration>
-           </plugin>
-         </plugins>
-       </build>
-	  </profile>
-	</profiles>
+  <profiles>
+  <!-- No profile will give defaults of redeploying locally with username admin and no password -->
+    <profile>
+      <id>charlie</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>tomcat-maven-plugin</artifactId>
+            <version>1.1</version>
+            <configuration>
+              <url>http://charlie.well.ox.ac.uk:8080/manager</url>
+              <username>richardc</username>
+              <password>${tomcat.password}</password>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 
 </project>
