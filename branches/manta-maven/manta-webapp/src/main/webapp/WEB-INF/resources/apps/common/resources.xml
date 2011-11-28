@@ -22,6 +22,9 @@
 		<clinical>
 			<drug>
 				<tradeName>Trade Name</tradeName>
+				<tradeNameOther>Other Name</tradeNameOther>
+				<manufacturer>Manufacturer</manufacturer>
+				<manufacturerOther>Other Name</manufacturerOther>
 				<addBatch>Add a batch</addBatch>
 				<manDate>Manufacture Date</manDate>
 				<expDate>Expiry Date</expDate>
@@ -40,6 +43,42 @@
 					<storage ref="aircon">air conditioned</storage>
 					<storage ref="unknown">unknown</storage>
 				</storageConditions>
+				<manufacturers>
+					<manufacturer tradeName="Amobin">Regal Pharmaceuticals</manufacturer>
+					<manufacturer tradeName="Amonate">Dafra Pharma</manufacturer>
+					<manufacturer tradeName="Arco">Arco</manufacturer>
+					<manufacturer tradeName="Arsudar">Sanofi</manufacturer>
+					<manufacturer tradeName="Arsumax">Sanofi</manufacturer>
+					<manufacturer tradeName="Artefan">Ajanta Pharma</manufacturer>
+					<manufacturer tradeName="Artekin">Holleykin Pharmaceuticals</manufacturer>
+					<manufacturer tradeName="Avloclor">AstraZeneca</manufacturer>
+					<manufacturer tradeName="Basoquin">Pfizer</manufacturer>
+					<manufacturer tradeName="Camoquin">Pfizer</manufacturer>
+					<manufacturer tradeName="Co-artesiane">Dafra Pharma</manufacturer>
+					<manufacturer tradeName="Coarsucam">Sanofi Aventis</manufacturer>
+					<manufacturer tradeName="Coartem">Novartis</manufacturer>
+					<manufacturer tradeName="Cosmoquin">Cosmos</manufacturer>
+					<manufacturer tradeName="Duo-Cotecxin">Holley-Cotec Pharmaceuticals</manufacturer>
+					<manufacturer tradeName="Eloquine">Mepha</manufacturer>
+					<manufacturer tradeName="Eurartesim">SigmaTau</manufacturer>
+					<manufacturer tradeName="Falcidin">Cosmos</manufacturer>
+					<manufacturer tradeName="Fansidar">Roche</manufacturer>
+					<manufacturer tradeName="Farenax">Swipha</manufacturer>
+					<manufacturer tradeName="Flavoquine">Aventis</manufacturer>
+					<manufacturer tradeName="Halfan">SmithKline Beeham</manufacturer>
+					<manufacturer tradeName="LapDap">Glaxo-SmithKline</manufacturer>
+					<manufacturer tradeName="Lariam">Roche</manufacturer>
+					<manufacturer tradeName="Malaratab">Cosmos</manufacturer>
+					<manufacturer tradeName="Malarine">Mepha</manufacturer>
+					<manufacturer tradeName="Malarone">Glaxo-SmithKline</manufacturer>
+					<manufacturer tradeName="Malmed">Medinomics Healthcare</manufacturer>
+					<manufacturer tradeName="Mequin">Atlantic Laboratories</manufacturer>
+					<manufacturer tradeName="Nivaquine">Aventis</manufacturer>
+					<manufacturer tradeName="Plasmotrin">Mepha</manufacturer>
+					<manufacturer tradeName="Resunate">Regal Pharmaceuticals</manufacturer>
+					<manufacturer tradeName="Riamet">Novartis</manufacturer>
+					<manufacturer tradeName="Other">Other</manufacturer>
+				</manufacturers>
 			</drug>
 		</clinical>
 		<common>
@@ -54,13 +93,25 @@
 					<name ref="AM">artemether</name>
 				</drugMolecule>
 				<drugMolecule>
+					<name ref="AM-LUM">artemether-lumefantrine</name>
+				</drugMolecule>
+				<drugMolecule>
 					<name ref="ART">artemisinin</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="AS">artesunate</name>
 				</drugMolecule>
 				<drugMolecule>
+					<name ref="AS-AQ">artesunate-amodiaquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AS-MQ">artesunate-mefloquine</name>
+				</drugMolecule>
+				<drugMolecule>
 					<name ref="AV">atovaquone</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AV-PG">atovaquone-proguanil</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="AZ">azithromycin</name>
@@ -75,16 +126,19 @@
 					<name ref="CY">cycloguanil</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="DHA">dihydro-artemisinin</name>
+					<name ref="DHA">dihydroartemisinin</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="DHA-PQP">dihydroartemisinin-piperaquine</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="DOX">doxycycline</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="LUM">lumefantrine</name>
+					<name ref="HL">halofantrine</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="HL">halofantrine</name>
+					<name ref="LUM">lumefantrine</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="MQ">mefloquine</name>
@@ -112,6 +166,9 @@
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="SX">sulfadoxine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="SX-PYR">sulfadoxine-pyrimethamine</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="TET">tetracycline</name>

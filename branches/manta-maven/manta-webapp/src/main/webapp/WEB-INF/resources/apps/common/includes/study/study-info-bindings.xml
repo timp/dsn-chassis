@@ -26,6 +26,7 @@
                 ' ', 
                 xxforms:instance('ins-country-items')/country[value=instance('ins-study-entry')//sites/site[index('rep-site')]/country]/label)" />
 
+
     <xforms:bind nodeset="instance('ins-study-entry')/atom:content/study">
         
             <xforms:bind nodeset="study-info">
@@ -140,12 +141,24 @@
                                 <xforms:bind nodeset="drugs">
                                     <xforms:bind nodeset="drug">
                                         <xforms:bind nodeset="name" />
+                                        <xforms:bind nodeset="drugNameOther" relevant="../name = 'Other'"/>
                                         <xforms:bind nodeset="activeIngredients">
-                                            <xforms:bind nodeset="activeIngredient" />
+                                            <xforms:bind nodeset="activeIngredient" >
+                                                <xforms:bind nodeset="activeIngredientNameOther" relevant="../activeIngredientName = 'Other'"/>
+                                            </xforms:bind>
                                             <xforms:bind nodeset="activeIngredientMgPerDose" />
                                         </xforms:bind>
                                         <xforms:bind nodeset="administrationRoute" />
-                                        <xforms:bind nodeset="manufacturer" />
+                                        
+                                        <xforms:bind nodeset="manufacturerOther" relevant="../manufacturer = 'Other'"/>
+                                        
+                                        
+                                        <xforms:bind nodeset="manufacturer" 
+                                            calculate="
+                                            for $currentItemName in ../tradeName return xxforms:instance('all-resources')//manufacturer[@tradeName = $currentItemName]
+                                            " />
+                                        
+                                        <xforms:bind nodeset="tradeNameOther" relevant="../tradeName = 'Other'"/>
                                         <xforms:bind nodeset="batches">
                                             <xforms:bind nodeset="drugBatch">
                                                 <xforms:bind nodeset="batchNumber" />

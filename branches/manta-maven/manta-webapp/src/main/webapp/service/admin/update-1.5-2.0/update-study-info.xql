@@ -521,6 +521,10 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             let $del1 := update delete $old//priorAntimalarials/drugTaken
             let $sd := update insert <studyDesign/> preceding $old//pharmacology/samples
             let $st := update insert <samplingTimes/> preceding $old//pharmacology/samples
+            let $mo := update insert <drugNameOther/> following $old//drug/name
+            let $aino := update insert <activeIngredientNameOther/> following $old//activeIngredientName
+            let $mo := update insert <manufacturerOther/> following $old//drug/manufacturer
+            let $tno := update insert <tradeNameOther/> following $old//drug/tradeName
             let $pkc := update insert <comments/> preceding $old//pharmacology/samples
             let $td := update insert <targetDose/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             let $tdu := update insert <unitsOfMeasure/> preceding $old//pharmacology/analytes/analyte/lowerLoQ

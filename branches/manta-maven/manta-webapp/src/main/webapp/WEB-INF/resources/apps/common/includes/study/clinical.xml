@@ -133,16 +133,37 @@
                                                       <xforms:value ref="@value"/>
                                                   </xforms:itemset>
                                                   </xforms:select1>
+                                                      <br/>
+                                                      <xforms:select1 ref="tradeName"
+                                                          appearance="minimal">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeName"/>
+                                                          
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugTradeName']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="@value"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                      </xforms:select1>
+                                                      <xforms:input ref="tradeNameOther">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeNameOther"/>
+                                                      </xforms:input>
                                                   <br/>
-                                                  <xforms:input ref="manufacturer">
-                                                  <xforms:label class="fixed-width">Manufacturer </xforms:label>
+                                                      <xforms:select1 ref="manufacturer"
+                                                          appearance="minimal">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manufacturer"/>
+                                                          
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugManufacturer']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="@value"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                      </xforms:select1>
+                                                  <xforms:input ref="manufacturerOther">
+                                                      <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manufacturerOther"/>
                                                   <xforms:hint>The manufacturer of the
                                                   drug</xforms:hint>
                                                   </xforms:input>
-                                                  <br/>
-                                                      <xforms:input ref="tradeName">
-                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeName"/>
-                                                      </xforms:input>
+                                                  
                                                       <br/>
                                                       <xforms:group ref="batches">
                                                           <table class="repeat-table">
