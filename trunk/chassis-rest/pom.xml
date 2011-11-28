@@ -213,7 +213,6 @@
 				<configuration>
 					<!-- url>http://localhost:8080/manager</url -->
 					<path>/${project.artifactId}</path>
-					<mode>both</mode>
 					<user>admin</user>
 					<password />
 				</configuration>
