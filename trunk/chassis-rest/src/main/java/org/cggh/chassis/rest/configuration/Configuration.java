@@ -54,6 +54,10 @@ public class Configuration {
     return propertiesFileName;
   }
   
+  public boolean configFileExists() { 
+    return new File(getFileName()).exists();
+  }
+  
   public String toString() { 
     StringBuffer val =  new StringBuffer("Set:\n");
     val.append(properties.toString());
