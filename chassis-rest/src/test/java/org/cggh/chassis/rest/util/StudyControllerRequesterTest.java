@@ -7,7 +7,7 @@ import org.apache.commons.io.FileUtils;
 
 import junit.framework.TestCase;
 
-public class StudyControllerRequestTest extends TestCase {
+public class StudyControllerRequesterTest extends TestCase {
 
 
   protected String DATA_STUDIES; 
@@ -15,11 +15,11 @@ public class StudyControllerRequestTest extends TestCase {
 
   protected static ChassisRestConfig config;
   
-  public StudyControllerRequestTest() {
+  public StudyControllerRequesterTest() {
     super();
   }
 
-  public StudyControllerRequestTest(String name) {
+  public StudyControllerRequesterTest(String name) {
     super(name);
   }
 
