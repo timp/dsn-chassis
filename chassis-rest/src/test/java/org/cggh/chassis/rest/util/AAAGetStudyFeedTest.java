@@ -15,7 +15,7 @@ import junit.framework.TestCase;
  * @author timp
  * @since 2011-11-16
  */
-public class AlphabeticallyFirstGetStudyFeed extends TestCase {
+public class AAAGetStudyFeedTest extends TestCase {
 
   protected static ChassisRestConfig config;
   
@@ -23,10 +23,10 @@ public class AlphabeticallyFirstGetStudyFeed extends TestCase {
   private static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
   private static String wwarnLivePassord;
   
-  public AlphabeticallyFirstGetStudyFeed() { 
+  public AAAGetStudyFeedTest() { 
     super();
   }
-  public AlphabeticallyFirstGetStudyFeed(String name) { 
+  public AAAGetStudyFeedTest(String name) { 
     super(name);
   }
   
