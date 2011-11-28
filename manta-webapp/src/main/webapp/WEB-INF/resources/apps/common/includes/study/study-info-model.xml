@@ -176,7 +176,9 @@
 			<activeIngredients />
 			<administrationRoute />
 			<manufacturer />
+			<manufacturerOther />
 			<tradeName />
+			<tradeNameOther/>
 			<batches />
 			<drugStorage />
 			<drugDosingDeterminant />
@@ -247,6 +249,7 @@
 	<xforms:instance id="ins-activeIngredient">
 		<activeIngredient xmlns="">
 			<activeIngredientName />
+			<activeIngredientNameOther />
 			<activeIngredientMgPerDose />
 		</activeIngredient>
 	</xforms:instance>
