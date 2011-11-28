@@ -17,11 +17,20 @@ import junit.framework.TestCase;
  */
 public class AlphabeticallyFirstGetStudyFeed extends TestCase {
 
-  protected static ChassisRestConfig config = new ChassisRestConfig();
+  protected static ChassisRestConfig config;
   
   
   private static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
-  private static final String wwarnLivePassord = config.getConfiguration().get("wwarn-live-password");
+  private static String wwarnLivePassord;
+  
+  
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    config = new ChassisRestConfig();
+    wwarnLivePassord = config.getConfiguration().get("wwarn-live-password");
+  }
+
   
   public void testGetWwarnStudyFeed() throws Exception {
     if (wwarnLivePassord != null) {
