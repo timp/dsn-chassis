@@ -22,9 +22,9 @@ ${exception}
 	<c:forEach var="error" items="${errors}">
 	<tr>
 <c:if test="${not empty entry}">
-		<td>${entry.getId()}</td>
+		<td>${entry.id}</td>
 </c:if>	
-		<td>${error.getError()}</td>
+		<td>${error.error}</td>
 	</tr>
 	</c:forEach>
 </table>
