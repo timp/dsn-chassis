@@ -173,7 +173,14 @@
 	<xforms:instance id="ins-drug">
 		<drug xmlns="">
 			<name />
-			<activeIngredients />
+			<drugNameOther />
+			<activeIngredients>
+				<activeIngredient xmlns="">
+					<activeIngredientName />
+					<activeIngredientNameOther />
+					<activeIngredientMgPerDose />
+				</activeIngredient>
+			</activeIngredients>
 			<administrationRoute />
 			<manufacturer />
 			<manufacturerOther />
@@ -245,13 +252,6 @@
 			<hour />
 			<dose />
 		</weightDosingSchedule>
-	</xforms:instance>
-	<xforms:instance id="ins-activeIngredient">
-		<activeIngredient xmlns="">
-			<activeIngredientName />
-			<activeIngredientNameOther />
-			<activeIngredientMgPerDose />
-		</activeIngredient>
 	</xforms:instance>
 
 	<xforms:instance id="ins-antibioticTreatment">

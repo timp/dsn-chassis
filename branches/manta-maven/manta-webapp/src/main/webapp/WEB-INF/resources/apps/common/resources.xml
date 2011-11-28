@@ -21,6 +21,10 @@
         </yesNo>
 		<clinical>
 			<drug>
+				<drugName>Drug Name</drugName>
+				<drugNameOther>Other Name</drugNameOther>
+				<activeIngredient>Active ingredient</activeIngredient>
+				<activeIngredientOther>Other Name</activeIngredientOther>
 				<tradeName>Trade Name</tradeName>
 				<tradeNameOther>Other Name</tradeNameOther>
 				<manufacturer>Manufacturer</manufacturer>
@@ -90,10 +94,16 @@
 					<name ref="AQ">amodiaquine</name>
 				</drugMolecule>
 				<drugMolecule>
+					<name ref="AMOX">amoxicillin</name>
+				</drugMolecule>
+				<drugMolecule>
 					<name ref="AM">artemether</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="AM-LUM">artemether-lumefantrine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="AM-NQ">artemisinin-napthoquine</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="ART">artemisinin</name>
@@ -120,7 +130,16 @@
 					<name ref="CL">clindamycine</name>
 				</drugMolecule>
 				<drugMolecule>
+					<name ref="CO">cortrimoxazole</name>
+				</drugMolecule>
+				<drugMolecule>
 					<name ref="CQ">chloroquine</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="LAP">Chlorproguanil</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="LAP-DAP">Chlorproguanil-Dapsone</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="CY">cycloguanil</name>
@@ -172,6 +191,9 @@
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="TET">tetracycline</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="Other">Other</name>
 				</drugMolecule>
 			</drugs>
 		</common>
