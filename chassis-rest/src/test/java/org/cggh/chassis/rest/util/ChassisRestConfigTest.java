@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 
 /**
  * @author timp
+ * @since 2011-11-25
  *
  */
 public class ChassisRestConfigTest extends TestCase {
@@ -16,8 +17,4 @@ public class ChassisRestConfigTest extends TestCase {
     assertEquals("Beauty", c.getConfiguration().get("truth"));
   }
 
-  public void testIt() { 
-    StringBuffer sb = new StringBuffer(); 
-    System.err.println(sb.toString());
-  }
 }
