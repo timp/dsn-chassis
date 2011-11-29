@@ -23,6 +23,30 @@
       <xs:maxLength value="1024"></xs:maxLength>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="optionalDecimal">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base='xs:decimal'/>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base='xs:string'>
+          <xs:maxLength value="0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="optionalInteger">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base='xs:integer'/>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base='xs:string'>
+          <xs:maxLength value="0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
   <xs:element name="draft" type="xs:NCName"/>
   <xs:element name="studyTitle" type="longString"/>
   <xs:element name="study">
@@ -44,7 +68,7 @@
       <xs:attribute name="profile" use="required">
         <xs:simpleType >
           <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.0"/>
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.1"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -85,7 +109,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="publication-title" type="longString"/>
-  <xs:element name="pmid" type="xs:anyURI"/>
+  <xs:element name="pmid" type="optionalInteger"/>
   <xs:element name="publication-references">
     <xs:complexType>
       <xs:sequence>
@@ -133,6 +157,13 @@
   <xs:element name="institution" type="xs:string"/>
   <xs:element name="person-is-contactable" type="xs:string"/>
   
+  <xs:element name="people">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="person" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   
   <xs:element name="institution-ack">
     <xs:complexType>
@@ -162,7 +193,7 @@
   <xs:complexType name="acks">
     <xs:choice maxOccurs="unbounded">
       <xs:element ref="institutions"/>
-      <xs:element ref="person"/>
+      <xs:element ref="people"/>
     </xs:choice>
   </xs:complexType>
   <xs:element name="acknowledgements" type="acks" />  
@@ -291,9 +322,9 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="maxAge" type="xs:string"/>
+  <xs:element name="maxAge" type="optionalDecimal"/>
   <xs:element name="maxAgeUnits" type="xs:string"/>
-  <xs:element name="minAge" type="xs:string"/>
+  <xs:element name="minAge" type="optionalDecimal"/>
   <xs:element name="minAgeUnits" type="xs:string"/>
   <xs:element name="parasitaemia">
     <xs:complexType>
@@ -303,8 +334,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="minParasitaemia" type="xs:string"/>
-  <xs:element name="maxParasitaemia" type="xs:string"/>
+  <xs:element name="minParasitaemia" type="optionalDecimal"/>
+  <xs:element name="maxParasitaemia" type="optionalDecimal"/>
   <xs:element name="includeMixedInfections" type="xs:string"/>
   <xs:element name="excludeIfPriorAntimalarials" type="xs:string"/>
   <xs:element name="priorAntimalarialsExclusion">
@@ -389,7 +420,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="duration" type="xs:string"/>
+  <!-- duration is day of follow up -->
+  <xs:element name="duration" type="optionalInteger"/>
   <xs:element name="feverMeasurement" type="xs:string"/>
   <xs:element name="haemoglobinRecording">
     <xs:complexType>
@@ -884,7 +916,7 @@
   </xs:element>
   <xs:element name="antibiotic" type="xs:NCName"/>
   <xs:element name="antibioticOther" type="xs:string"/>
-  <xs:element name="antibioticFinalConcentration" type="xs:string"/>
+  <xs:element name="antibioticFinalConcentration" type="xs:decimal"/>
   <xs:element name="susceptibility">
     <xs:complexType>
       <xs:sequence>
@@ -925,12 +957,18 @@
   <xs:element name="pharmacology">
     <xs:complexType>
       <xs:sequence>
+        <xs:element ref="studyDesign"/>
+        <xs:element ref="samplingTimes"/>
+        <xs:element ref="PKcomments"/>
         <xs:element ref="samples"/>
         <xs:element ref="analytes"/>
         <xs:element ref="assayReferences"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="studyDesign" type="xs:string"/>
+  <xs:element name="samplingTimes" type="xs:string"/>
+  <xs:element name="PKcomments" type="longString"/>
   <xs:element name="samples">
     <xs:complexType>
       <xs:sequence>
@@ -949,12 +987,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="drugMeasured"/>
+        <xs:element ref="targetDose"/>
+        <xs:element ref="unitsOfMeasure"/>
+        <xs:element ref="fatAmount"/>
         <xs:element ref="lowerLoQ"/>
         <xs:element ref="sampleMatrixType"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="drugMeasured" type="xs:string"/>
+  <xs:element name="targetDose" type="xs:string"/>
+  <xs:element name="unitsOfMeasure" type="xs:string"/>
+  <xs:element name="fatAmount" type="xs:string"/>
   <xs:element name="lowerLoQ" type="xs:string"/>
   <xs:element name="sampleMatrixType" type="xs:string"/>
   <xs:element name="assayReferences">
@@ -1023,14 +1067,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="tradeName" type="xs:string"/>
+  <xs:element name="tradeNameOther" type="xs:string"/>
   <xs:element name="drug">
     <xs:complexType>
         <xs:sequence>
           <xs:element ref="name"/>
+          <xs:element ref="drugNameOther"/>
           <xs:element ref="activeIngredients"/>
           <xs:element ref="administrationRoute"/>
           <xs:element ref="manufacturer"/>
+          <xs:element ref="manufacturerOther"/>
           <xs:element ref="tradeName" />
+          <xs:element ref="tradeNameOther" />
           <xs:element ref="batches"/>
           <xs:element ref="drugStorage"/>
           <xs:element ref="drugDosingDeterminant"/>
@@ -1057,6 +1105,7 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
+  <xs:element name="drugNameOther" type="xs:string"/>
   <xs:element name="activeIngredients">
     <xs:complexType>
       <xs:sequence>
@@ -1068,14 +1117,17 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="activeIngredientName"/>
+        <xs:element ref="activeIngredientNameOther"/>
         <xs:element ref="activeIngredientMgPerDose"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="activeIngredientName" type="xs:string"/>
-  <xs:element name="activeIngredientMgPerDose" type="xs:string"/>
+  <xs:element name="activeIngredientNameOther" type="xs:string"/>
+  <xs:element name="activeIngredientMgPerDose" type="optionalDecimal"/>
   <xs:element name="administrationRoute" type="xs:string"/>
   <xs:element name="manufacturer" type="xs:string"/>
+  <xs:element name="manufacturerOther" type="xs:string"/>
   <xs:element name="batchNumber" type="xs:string"/>
   <xs:element name="expiryDate" type="xs:string"/>
   <xs:element name="manufactureDate" type="xs:string"/>
@@ -1100,8 +1152,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ageFrom" type="xs:string"/>
-  <xs:element name="ageTo" type="xs:string"/>
+  <xs:element name="ageFrom" type="optionalDecimal"/>
+  <xs:element name="ageTo" type="optionalDecimal"/>
   <xs:element name="weightGroupDosing">
     <xs:complexType>
       <xs:sequence>
@@ -1121,8 +1173,8 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="weightGroupFrom" type="xs:string"/>
-  <xs:element name="weightGroupTo" type="xs:string"/>
+  <xs:element name="weightGroupFrom" type="optionalDecimal"/>
+  <xs:element name="weightGroupTo" type="optionalDecimal"/>
   <xs:element name="weightDosing">
     <xs:complexType>
       <xs:sequence>
@@ -1212,8 +1264,8 @@
   <xs:element name="locusType" type="xs:string"/>
   <xs:element name="locusTypeOther" type="xs:string"/>
   <xs:element name="locusName" type="xs:string"/>
-  <xs:element name="day" type="xs:string"/>
-  <xs:element name="hour" type="xs:string"/>
+  <xs:element name="day" type="optionalDecimal"/>
+  <xs:element name="hour" type="optionalDecimal"/>
   <xs:element name="dose" type="xs:string"/>
   <xs:element name="doseUnit" type="xs:string"/>
 </xs:schema>
