@@ -166,7 +166,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 			
 			let $new12 := update insert
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/comments\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/PKcomments\[(\d+)\]</label>
 				<value>PKcomment</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
