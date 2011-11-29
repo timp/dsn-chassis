@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-rest</artifactId>
   </rootModule>
-  <goals>-Dmaven.test.skip=true -Dmaven.test.failure.ignore=false clean install deploy tomcat:redeploy -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>-Dmaven.test.failure.ignore=false clean install deploy tomcat:redeploy -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <defaultGoals>install</defaultGoals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
