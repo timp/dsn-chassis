@@ -53,6 +53,13 @@
                 </xsl:template>
                 <xsl:template match="//acknowledgements">
                     <acknowledgements>
+                        <institutions>
+                            <institution-ack>
+                                <institution-name><xsl:value-of select="$metadata//Affiliation"/></institution-name>
+                                <institution-websites/>
+                            </institution-ack>
+                        </institutions>
+                        <people>
                         <!-- Only copy from pubmed if there's a valid response -->
                         <xsl:if test="count($metadata//Article/AuthorList/Author) &gt; 0">
                             <xsl:apply-templates select="$metadata//Article" />
@@ -61,12 +68,7 @@
                         <xsl:if test="count($metadata//Article/AuthorList/Author) = 0">
                             <xsl:apply-templates select="person"/>
                         </xsl:if>
-                        <institutions>
-                            <institution-ack>
-                                <institution-name><xsl:value-of select="$metadata//Affiliation"/></institution-name>
-                                <institution-websites/>
-                            </institution-ack>
-                        </institutions>
+                        </people>
                     </acknowledgements>
                 </xsl:template>
                 <xsl:template match="Article">

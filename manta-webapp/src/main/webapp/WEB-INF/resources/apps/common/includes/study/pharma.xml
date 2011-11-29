@@ -16,7 +16,7 @@
                    <xforms:label class="fourWide">Sampling Times </xforms:label>
                    <xforms:hint>e.g. Day 7</xforms:hint>
             </xforms:input><br/>
-            <xforms:textarea ref="comments">
+            <xforms:textarea ref="PKcomments">
                    <xforms:label>Comments</xforms:label>
                    <xforms:hint></xforms:hint>
             </xforms:textarea>
