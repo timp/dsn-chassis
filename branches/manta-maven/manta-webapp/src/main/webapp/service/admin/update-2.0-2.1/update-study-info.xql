@@ -641,6 +641,66 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     let $repo := update replace $odn/name/text() with 'Other'
                                     return $rep
                      return $ndn
+                      let $in := for $odn in $old//activeIngredient
+                                    let $ingredient := lower-case(normalize-space($odn/activeIngredientName/text()))
+                                    let $logi := util:log-app("debug", "activeIngredientName", $ingredient)
+                                    let $ndn := if ($ingredient = 'amodiaquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'AQ'
+                                    	return $rep
+                                    else if ($ingredient = 'artemether') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'AM'
+                                    	return $rep
+                                    else if ($ingredient = 'artesunate') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'AS'
+                                    	return $rep
+                                    else if ($ingredient = 'atovaquone') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'AV'
+                                    	return $rep
+                                    else if ($ingredient = 'chloroquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'CQ'
+                                    	return $rep
+                                    else if ($ingredient = 'dapsone') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'DAP'
+                                    	return $rep
+                                    else if ($ingredient = 'dihydroartemisinin') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'DHA'
+                                    	return $rep
+                                    else if ($ingredient = 'halofantrine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'HL'
+                                    	return $rep
+                                    else if ($ingredient = 'lumefantrine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'LUM'
+                                    	return $rep
+                                    else if ($ingredient = 'mefloquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'MQ'
+                                    	return $rep
+                                    else if ($ingredient = 'naphtoquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'NQ'
+                                    	return $rep
+                                    else if ($ingredient = 'piperaquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'PQP'
+                                    	return $rep
+                                    else if ($ingredient = 'proguanil') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'PG'
+                                    	return $rep
+                                    else if ($ingredient = 'pyrimethamine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'PYR'
+                                    	return $rep
+                                    else if ($ingredient = 'quinine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'QN'
+                                    	return $rep
+                                    else if ($ingredient = 'sulfadoxine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'SX'
+                                    	return $rep
+                                    else if ($ingredient = 'tetracyclin') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'TET'
+                                    	return $rep
+                                    else
+                                        let $old-name := $odn/activeIngredientName/text()
+                                        let $rep := update replace $odn/activeIngredientNameOther with <activeIngredientNameOther>{$old-name}</activeIngredientNameOther> 
+                                        let $repo := update replace $odn/activeIngredientName/text() with 'Other'
+                                        return $rep
+                                 return $ndn
             (: then set values as proper xml :)
             let $drugs := tokenize($prior,'\s+')
             let $dts := for $d in $drugs
