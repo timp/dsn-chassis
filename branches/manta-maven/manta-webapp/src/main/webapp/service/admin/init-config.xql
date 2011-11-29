@@ -240,28 +240,28 @@ let $values2 :=
                 <value>drugTaken$8</value>
             </fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/first-name\[(\d+)\]</label>
-				<value>ackAuthor$5Name</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/first-name\[(\d+)\]</label>
+				<value>ackAuthor$6Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/middle-name\[(\d+)\]</label>
-				<value>ackAuthor$5MiddleName</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/middle-name\[(\d+)\]</label>
+				<value>ackAuthor$6MiddleName</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/family-name\[(\d+)\]</label>
-				<value>ackAuthor$5Surname</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/family-name\[(\d+)\]</label>
+				<value>ackAuthor$6Surname</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/email-address\[(\d+)\]</label>
-				<value>ackAuthor$5Email</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/email-address\[(\d+)\]</label>
+				<value>ackAuthor$6Email</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/institution\[(\d+)\]</label>
-				<value>ackAuthor$5Institute</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/institution\[(\d+)\]</label>
+				<value>ackAuthor$6Institute</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/person\[(\d+)\]/person-is-contactable\[(\d+)\]</label>
-				<value>ackAuthor$5Contactable</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/acknowledgements\[(\d+)\]/people\[(\d+)\]/person\[(\d+)\]/person-is-contactable\[(\d+)\]</label>
+				<value>ackAuthor$6Contactable</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/curator-notes\[(\d+)\]</label>
@@ -462,8 +462,16 @@ let $values2 :=
 				<value>Reg$8Drug$10Name</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/drugNameOther\[(\d+)\]</label>
+				<value>Reg$8Drug$10OtherName</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/activeIngredients\[(\d+)\]/activeIngredient\[(\d+)\]/activeIngredientName\[(\d+)\]</label>
 				<value>Reg$8Drug$10Act$12Name</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/activeIngredients\[(\d+)\]/activeIngredient\[(\d+)\]/activeIngredientNameOther\[(\d+)\]</label>
+				<value>Reg$8Drug$10Act$12OtherName</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/activeIngredients\[(\d+)\]/activeIngredient\[(\d+)\]/activeIngredientMgPerDose\[(\d+)\]</label>
@@ -478,8 +486,16 @@ let $values2 :=
 				<value>Reg$8Drug$10Manufacturer</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/manufacturerOther\[(\d+)\]</label>
+				<value>Reg$8Drug$10OtherManufacturer</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/tradeName\[(\d+)\]</label>
 				<value>Reg$8Drug$10TradeName</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/tradeNameOther\[(\d+)\]</label>
+				<value>Reg$8Drug$10OtherTradeName</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/clinical\[(\d+)\]/treatment\[(\d+)\]/regimens\[(\d+)\]/regimen\[(\d+)\]/drugs\[(\d+)\]/drug\[(\d+)\]/batches\[(\d+)\]/drugBatch\[(\d+)\]/batchNumber\[(\d+)\]</label>
@@ -1010,6 +1026,18 @@ let $values2 :=
 				<value>batch$7_ringforming%</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/studyDesign\[(\d+)\]</label>
+				<value>studyDesign</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samplingTimes\[(\d+)\]</label>
+				<value>samplingTimes</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/comments\[(\d+)\]</label>
+				<value>PKcomment</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/anticoagulent\[(\d+)\]</label>
 				<value>Anticoagulant$7</value>
 			</fieldLabelMapping>
@@ -1032,6 +1060,18 @@ let $values2 :=
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/drugMeasured\[(\d+)\]</label>
 				<value>NameDrugMetoboliteMeasured$7</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/targetDose\[(\d+)\]</label>
+				<value>targetDose$7</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/fatAmount\[(\d+)\]</label>
+				<value>fatAmount$7</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/unitsOfMeasure\[(\d+)\]</label>
+				<value>unitsOfMeasure$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/lowerLoQ\[(\d+)\]</label>
