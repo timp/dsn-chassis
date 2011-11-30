@@ -48,7 +48,7 @@ public class StudyControllerRequesterTest extends TestCase {
     assertTrue(r.getBody(), r.getBody().contains(" is not valid"));    
     assertEquals(400, r.getStatus());
   
-    assertEquals(404,StudyControllerRequester.delete(url("/study/" + invalidStudyId)).getStatus());
+    assertEquals(404,StudyControllerRequester.delete(url("/study/" + invalidStudyId + ".html")).getStatus());
   }
 
   /**
@@ -71,6 +71,16 @@ public class StudyControllerRequesterTest extends TestCase {
   }
 
   private void testPostsFromDirectory(String directory) throws Exception { 
+    HttpResponse response = StudyControllerRequester.uncache(url("/uncache"));
+    System.out.println(response.getBody());
+    assertEquals(200, response.getStatus());
+    response = StudyControllerRequester.read(url("/studies/"));   
+    assertEquals(200, response.getStatus());
+    
+    
+    //assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
+
+    
     File studiesDir = new File(directory);
     @SuppressWarnings("unchecked")
     Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] { "xml" }, false);
@@ -114,6 +124,7 @@ public class StudyControllerRequesterTest extends TestCase {
     //System.out.println(response.getBody());
   }
 
+
   public void testAddStudies() throws Exception { 
     System.err.println(FULL_FEED_FILENAME);
     HttpResponse response = StudyControllerRequester.create(FULL_FEED_FILENAME, url("/study"));
@@ -124,7 +135,8 @@ public class StudyControllerRequesterTest extends TestCase {
     // FIXME We are not marshalling if not found
     assertEquals(url("/study/notThere.xml"),  500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
     assertEquals(url("/study/notThere.html"), 404, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
-    assertEquals(url("/study/notThere"),      404, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+    // This is due to not inferring the correct template when no extension
+    assertEquals(url("/study/notThere"),      500, StudyControllerRequester.read(url("/study/notThere")).getStatus());
   }
 
   public void testDelete() throws Exception { 
