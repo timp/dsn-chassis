@@ -63,12 +63,14 @@ public class StudyControllerRequester {
     // Accept: */*
     // httpclient does not.
     // for */* spring returns xml, for nothing it throws and error.
-    method.setRequestHeader("Accept", "application/xml");
+    method.setRequestHeader("Accept", "text/html");
     return method;
   }
 
   static HttpMethod acceptXmlHttpMethod(HttpMethod method) {
     method.setRequestHeader("Accept", "text/html");
+    // FIXME 
+    //method.setRequestHeader("Accept", "application/xml");
     return method;
   }
 
@@ -124,6 +126,9 @@ public class StudyControllerRequester {
     return executeMethod(acceptHtmlHttpMethod(new DeleteMethod(valid(restUrl))));
   }
   
+  public static HttpResponse uncache(String restUrl) throws IOException { 
+    return executeMethod(acceptHtmlHttpMethod(new PostMethod(valid(restUrl))));    
+  }
   
   private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method) 
       throws FileNotFoundException, IOException, HttpException {
