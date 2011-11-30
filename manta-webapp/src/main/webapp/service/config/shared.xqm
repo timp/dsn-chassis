@@ -164,7 +164,7 @@ declare function config:generate-identifier(
     $collection-path-info as xs:string
 ) as xs:string
 {
-    if ( $collection-path-info = "/studies" )
+    if ( $collection-path-info = "/studies" or $collection-path-info = "/link")
     
     (: this avoids confusion between numbers 0, 1 and letters i, l, o, v, w :)
     

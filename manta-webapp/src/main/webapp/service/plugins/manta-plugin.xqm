@@ -46,6 +46,7 @@ declare variable $manta-plugin:reserved :=
             <link rel="http://www.cggh.org/2010/chassis/terms/derived"/>
             <link rel="http://www.cggh.org/2010/chassis/terms/draftMedia"/>
             <link rel="http://www.cggh.org/2010/chassis/terms/groups"/>
+            <link rel="http://www.cggh.org/2010/chassis/terms/link"/>
         </atom-links>
     </reserved>
 ;
@@ -482,6 +483,10 @@ declare function manta-plugin:after-list-collection(
     else if ( matches( $request-path-info , "^/reviews/personal-data/[^/]+" ) )
     
     then manta-plugin:after-list-collection-personal-data-reviews( $request , $response )
+    
+    else if ( matches( $request-path-info , "^/link" ) )
+    
+    then manta-plugin:after-list-collection-link( $request , $response )
 
     else $response
 
@@ -926,6 +931,37 @@ declare function manta-plugin:after-list-collection-derivations(
     
 };
 
+declare function manta-plugin:after-list-collection-link(
+    $request as element(request) ,
+	$response as element(response)
+) as element(response)
+{
+    
+    let $feed := $response/body/atom:feed 
+
+    let $param-study := xutil:get-parameter( "study" , $request)
+
+    let $feed := 
+        <atom:feed>
+        {
+        
+            $feed/attribute::* ,
+            $feed/child::*[ not( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ],
+            
+            for $entry in $feed/child::*[ ( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ]
+            return 
+                if ( empty($param-study) 
+                        or $param-study = $entry/atom:content/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/linkMember"]/@href 
+                    )
+                then ( $entry )
+                else ()
+            
+        }
+        </atom:feed>
+
+    return manta-plugin:replace-response-body( $response , $feed )
+    
+};
 
 
 
@@ -1036,7 +1072,13 @@ declare function manta-plugin:groups-path-info-for-study-entry(
 };
 
 
-
+declare function manta-plugin:link-path-info-for-study-entry(
+    $entry as element(atom:entry)
+) as xs:string
+{   
+    let $path-info := concat( "/link?study=" , $entry//atom:link[@rel = 'self']/@href )
+    return $path-info
+};
 
 
 
@@ -1109,7 +1151,14 @@ declare function manta-plugin:augment-study-entry(
             rel="http://www.cggh.org/2010/chassis/terms/groups"
             href="{concat( $config:self-link-uri-base , $groups-path-info )}"
             type="application/atom+xml;type=entry"/>
-
+    
+    let $link-path-info := manta-plugin:link-path-info-for-study-entry( $entry )
+    let $link-link := 
+        <atom:link
+            rel="http://www.cggh.org/2010/chassis/terms/link"
+            href="{concat( $config:self-link-uri-base , $link-path-info )}"
+            type="application/atom+xml;type=entry"/>
+            
     let $children := (
         <manta:id>{manta-plugin:get-id($entry)}</manta:id> ,
         $submitted-media-collection-link ,
@@ -1117,7 +1166,8 @@ declare function manta-plugin:augment-study-entry(
         $derivations-collection-link ,
         $personal-data-reviews-collection-link ,
         $study-info-member-link ,
-        $groups-link
+        $groups-link,
+        $link-link
     )
         
     let $augmented-entry := xutil:append-child( $entry , $children )

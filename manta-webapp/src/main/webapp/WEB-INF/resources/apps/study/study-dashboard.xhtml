@@ -74,6 +74,7 @@
         			<study-is-not-editable/>
         			<not-curator/>
         			<not-administrator/>
+        			<link-member>false</link-member>
         		</control>
         	</xforms:instance>
         	
@@ -237,7 +238,14 @@
                			<xxforms:context name="fr:content" select="instance('ins-study-entry')"/>
     				</xforms:dispatch>
                 </xforms:action>		        
-		       
+		       	
+		       	<xforms:action ev:event="xforms-submit-done" xxforms:iterate="instance('ins-link-feed')//atom:entry">
+		       		<xxforms:variable name="link-entry" select="."/>
+		       		<xforms:insert
+						ref="instance('ins-link-entry')"
+						origin="$link-entry"/>
+					<xforms:send submission="sub-put-link" />
+		       	</xforms:action>
 		    </xforms:submission>
         	
         	
@@ -511,7 +519,73 @@
 				ev:event="xforms-model-construct-done" 
 				resource="home"
 				if="empty(xxforms:get-request-parameter('study'))"/>
-				    
+				
+			<xforms:action ev:event="xforms-model-construct-done">
+				<xforms:send submission="sub-get-link-feed" />
+				<xforms:setvalue 
+					ref="instance('ins-link-template')//atom:link/@href"
+					value="instance('ins-study-entry')//atom:link[@rel='self']/@href"/>
+			</xforms:action>
+			
+			<xforms:instance id="ins-link-template">
+				<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+					<atom:title type="text"/>
+						<atom:content>
+							<atom:link rel="http://www.cggh.org/2010/chassis/terms/linkMember" href="" />
+						</atom:content>
+				</atom:entry>	
+			</xforms:instance>
+			
+			<xforms:instance id="ins-link-entry">
+				<atom:entry/>
+			</xforms:instance>
+			<xforms:submission 
+            	id="sub-post-link" 
+            	ref="instance('ins-link-template')"
+                resource="/service/content/link"
+                method="post" 
+                replace="instance" 
+                instance="ins-link-entry"
+                relevant="false"
+                mediatype="application/atom+xml">
+                <xforms:action ev:event="xforms-submit-done">
+					<xforms:setvalue 
+					ref="instance('ins-control')//link-member"
+					value="'true'"/>
+					<xforms:send submission="sub-get-link-feed"/>
+				</xforms:action>
+            </xforms:submission>
+			
+			<xforms:submission 
+            	id="sub-put-link" 
+            	ref="instance('ins-link-entry')"
+                resource="{instance('ins-link-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-link-entry"
+                relevant="false"
+                mediatype="application/atom+xml">
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+				value="event('error-type')" />) while updating the linked studies.</xforms:message>
+            </xforms:submission>
+            
+			<xforms:instance id="ins-link-feed">
+				<atom:feed />
+			</xforms:instance>
+
+			<xforms:submission id="sub-get-link-feed"
+				resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/link']/@href}"
+				method="get" replace="instance" instance="ins-link-feed"
+				serialization="none">
+				<xforms:action ev:event="xforms-submit-done" if="count(instance('ins-link-feed')//atom:entry) > 0">
+					<xforms:setvalue ref="instance('ins-control')//link-member" value="'true'"/>
+				</xforms:action>
+		
+				<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output
+					value="event('error-type')" />) while retrieving the linked studies feed.</xforms:message>
+        
+			</xforms:submission>
+			    
         </xforms:model>
         
         <xi:include href="../common/includes/study/study-info-model.xml"/>

@@ -94,6 +94,91 @@
 								</xforms:group>
 
 								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+									<xforms:group ref="instance('ins-control')//link-member[. = 'false']">
+									<p>
+										<span id="study-group-container">
+											<xforms:input ref="instance('ins-link-template')//atom:title">
+												<xforms:label>Study Group Title:</xforms:label>
+											</xforms:input>	  
+											<xforms:trigger>
+												<xforms:label>Create new Study Group</xforms:label>
+												<xforms:action ev:event="DOMActivate">
+													<xforms:send submission="sub-post-link"/>
+												</xforms:action>
+											</xforms:trigger>
+										</span>
+									</p>
+									</xforms:group>
+									<xforms:group ref="instance('ins-control')//link-member[. = 'true']">
+										<div>Linked Studies:</div>
+										<xforms:repeat nodeset="instance('ins-link-feed')//atom:entry" id="rep-linked-study-groups">
+											<xforms:output ref="atom:title"/>
+											(<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)$', '$1' )"/>)
+										<table>
+											<xforms:repeat nodeset="atom:content/atom:link" id="rep-linked-studies">
+												<tr class="repeated-element">
+													<td>
+														<xforms:trigger ref="." class="addRemove">
+															<xforms:label>
+																<img alt="remove"
+																	src="/apps/contributor/common/remove.gif" />
+															</xforms:label>
+															<xforms:delete ev:event="DOMActivate"
+																context="." nodeset="."
+																at="index('rep-linked-studies')" />
+														</xforms:trigger>
+													</td>
+													<td>
+														<xforms:select1 ref="./@href">
+															<xforms:label></xforms:label>
+															
+															<xforms:item>
+																<xforms:label>Select...</xforms:label>
+																<xforms:value></xforms:value>
+															</xforms:item>
+															
+															<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[(empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
+																<xforms:label ref="concat(atom:content/study/studyTitle, ' (', manta:id, ')')"/>
+																<xforms:value ref="atom:link[@rel='self']/@href"/>
+															</xforms:itemset>
+														</xforms:select1>
+													</td>
+												</tr>
+											</xforms:repeat>
+											<tr>
+												<td>
+													<xforms:trigger class="addRemove">
+														<xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+														<xforms:insert 
+															ev:event="DOMActivate" 
+															context="atom:content" 
+															nodeset="atom:link" 
+															at="last()" 
+															position="after" 
+															origin="xxforms:element('atom:link', (xxforms:attribute('rel', 'http://www.cggh.org/2010/chassis/terms/linkMember'), xxforms:attribute('href','')))"/>
+													</xforms:trigger>
+												</td>
+												<td>
+													<span id="add-administrator-link-container">
+														<xforms:trigger appearance="minimal">
+															<xforms:label>Add study</xforms:label>
+															<xforms:insert 
+																ev:event="DOMActivate" 
+																context="atom:content" 
+																nodeset="atom:link" 
+																at="last()" 
+																position="after" 
+																origin="xxforms:element('atom:link',(xxforms:attribute('rel', 'http://www.cggh.org/2010/chassis/terms/linkMember'), xxforms:attribute('href','')))"/>
+														</xforms:trigger>
+													</span>
+												</td>
+											</tr>
+										</table>
+											</xforms:repeat>
+									</xforms:group>
+								</xforms:group>
+
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
 								<p>
 									<span id="title-save-changes-button-container">
 										<xforms:trigger ref="instance('ins-control')/save-study-trigger">
