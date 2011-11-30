@@ -189,6 +189,10 @@ declare function security-config:default-collection-security-descriptor(
 
     then $security-config:config-collection-security-descriptor
     
+     else if ( $request-path-info = "/link" )
+
+    then $security-config:link-collection-security-descriptor
+    
     else if ( $request-path-info = "/groups" )
 
     then $security-config:groups-collection-security-descriptor
@@ -369,6 +373,38 @@ declare variable $security-config:config-collection-security-descriptor :=
 </atombeat:security-descriptor>
 ;
 
+declare variable $security-config:link-collection-security-descriptor :=
+    <atombeat:security-descriptor>
+    
+        <atombeat:acl>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_USER</atombeat:recipient>
+                <atombeat:permission>RETRIEVE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+             <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_USER</atombeat:recipient>
+                <atombeat:permission>CREATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+            
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_USER</atombeat:recipient>
+                <atombeat:permission>LIST_COLLECTION</atombeat:permission>
+            </atombeat:ace>
+
+            <atombeat:ace>
+                <atombeat:type>ALLOW</atombeat:type>
+                <atombeat:recipient type="role">ROLE_CHASSIS_USER</atombeat:recipient>
+                <atombeat:permission>UPDATE_MEMBER</atombeat:permission>
+            </atombeat:ace>
+    </atombeat:acl>
+    
+</atombeat:security-descriptor>
+;
 
 declare variable $security-config:study-info-collection-security-descriptor :=
 
