@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
 
@@ -51,8 +53,8 @@
 				<value>org.cggh.chassis.rest.bean.UnmarshalledEntry</value>
 			</list>
 		</property>
-
 	</bean>
+
 	<bean id="errors" 
 	      class="org.springframework.web.servlet.view.xml.MarshallingView">
 		<constructor-arg ref="errorMarshaller" />
@@ -79,12 +81,17 @@
 
 	<!--bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" 		/ -->
 	
-	<bean id="studyController" class="org.cggh.chassis.rest.controller.StudyController">
-	</bean>
-	<bean
-		class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
-
+	<bean id="studyController" class="org.cggh.chassis.rest.controller.StudyController" />
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
 	<!-- Configure the persistance layer -->
+
+    <bean name="options" class="org.cggh.chassis.rest.bean.Options" > 
+      <property name="choices">
+        <props>
+          <prop key="databaseName">${database.name}</prop>
+        </props>
+      </property>
+    </bean>
 
 	<bean name="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -97,20 +104,23 @@
 			<props>
 			<!-- drop-and-create-tables -->
 				<prop key="eclipselink.ddl-generation">create-tables</prop>
-    			<prop key="eclipselink.ddl-generation.output-mode">database</prop>
+                <prop key="eclipselink.ddl-generation.output-mode">both</prop>
     			<prop key="eclipselink.target-database">${database.platform}</prop>
+                <prop key="create-ddl-jdbc-file-name">target/createChassisDb.ddl</prop>
+                <prop key="drop-ddl-jdbc-file-name">target/dropChassisDb.ddl</prop>
+                <prop key="logging.level">ALL</prop>
 			</props>
 		</property>
 		
 	</bean>
-	
+ 
 	<bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
    		<property name="databasePlatform" value="${database.platform}" />
    		<property name="showSql" value="true" />
 	</bean>
 <!-- Data source definition -->
 <!-- 
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/chassis_studies"/>
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/chassisDb"/>
 	 -->	
 	<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="${database.driverClassName}"/>
