@@ -139,4 +139,11 @@ public class StudyController {
     return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
   }
 
+  @RequestMapping(method = RequestMethod.POST, value = "/uncache")
+  public ModelAndView uncache() { 
+    studyDAO.evict();
+    return new ModelAndView("message", "message", "Done").
+            addObject("body", "No, really. <b>I think</b> the cache has been cleared; " 
+                    + "<em>pace</em> this is one of the three hard problems in computer science." );    
+  }
 }
