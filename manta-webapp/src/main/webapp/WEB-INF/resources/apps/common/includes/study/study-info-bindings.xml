@@ -148,14 +148,14 @@
                                             </xforms:bind>
                                             <xforms:bind nodeset="activeIngredientMgPerDose" />
                                         </xforms:bind>
-                                        <xforms:bind nodeset="activeIngredients/activeIngredient[1]/activeIngredientName" calculate="for $currentItemName in ../../../name return if (contains($currentItemName,'-')) then substring-before($currentItemName,'-') else $currentItemName" />
-                                        <xforms:bind nodeset="activeIngredients/activeIngredient[2]/activeIngredientName" calculate="for $currentItemName in ../../../name return if (contains($currentItemName,'-')) then substring-after($currentItemName,'-') else $currentItemName" />
+                                        <xforms:bind nodeset="activeIngredients/activeIngredient[1]/activeIngredientName[not(../../../name = 'Other')]" calculate="for $currentItemName in ../../../name return if (contains($currentItemName,'-')) then substring-before($currentItemName,'-') else $currentItemName" />
+                                        <xforms:bind nodeset="activeIngredients/activeIngredient[2]/activeIngredientName[not(../../../name = 'Other')]" calculate="for $currentItemName in ../../../name return if (contains($currentItemName,'-')) then substring-after($currentItemName,'-') else $currentItemName" />
                                         <xforms:bind nodeset="administrationRoute" />
                                         
                                         <xforms:bind nodeset="manufacturerOther" relevant="../manufacturer = 'Other'"/>
                                         
                                         
-                                        <xforms:bind nodeset="manufacturer" 
+                                        <xforms:bind nodeset="manufacturer[not(../tradeName = 'Other')]" 
                                             calculate="
                                             for $currentItemName in ../tradeName return xxforms:instance('all-resources')//manufacturer[@tradeName = $currentItemName]
                                             " />
