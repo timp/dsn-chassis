@@ -6,6 +6,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     
+    
     <bean id="propertyPlaceholderConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -15,6 +16,7 @@
     
     <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
         <sec:filter-chain-map path-type="ant">
+            <sec:filter-chain pattern="/insecure/**" filters="none" />
             <sec:filter-chain pattern="/" filters="casValidationFilter, wrappingFilter" />
             <sec:filter-chain pattern="/secure/receptor" filters="casValidationFilter" />
             <sec:filter-chain pattern="/j_spring_security_logout" filters="logoutFilter,etf,fsi" />
@@ -66,6 +68,7 @@
         <property name="decisionVoters">
             <list>
                 <ref bean="roleVoter"/>
+                <ref bean="webVoter"/>
             </list>
         </property>
     </bean>
@@ -74,35 +77,39 @@
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="accessDecisionManager" ref="httpRequestAccessDecisionManager"/>
         <property name="securityMetadataSource">
-            <sec:filter-invocation-definition-source>
+            <sec:filter-invocation-definition-source use-expressions="true">
+                <sec:intercept-url pattern="/insecure/xslt/**" access="permitAll" />
                 <!-- restrict access to libraries and administrative scripts -->
-                <sec:intercept-url pattern="/service/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/service/config/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/service/lib/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/service/plugins/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/service/reports/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/service/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/service/config/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/service/lib/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/service/plugins/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
                 
                 <!-- force authentication for all requests to service, but delegate
                     access control decisions to service -->
-                <sec:intercept-url pattern="/service/**" access="ROLE_CHASSIS_USER" />
+                <sec:intercept-url pattern="/service/reports/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/service/**" access="hasRole('ROLE_CHASSIS_USER')" />
                 
-                <sec:intercept-url pattern="/contributor/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/contributor/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
-                <sec:intercept-url pattern="/personal-data/**" access="ROLE_CHASSIS_PERSONAL_DATA_REVIEWER, ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/personal-data/**" access="hasAnyRole('ROLE_CHASSIS_PERSONAL_DATA_REVIEWER','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
-                <sec:intercept-url pattern="/curator/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/report/**" access="ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/study/**" access="ROLE_CHASSIS_CONTRIBUTOR, ROLE_CHASSIS_CURATOR, ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/curator/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/report/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
-                <sec:intercept-url pattern="/rest/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/admin/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
-                <sec:intercept-url pattern="/administration/**" access="ROLE_CHASSIS_ADMINISTRATOR" />
+                <sec:intercept-url pattern="/study/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+                
+                <sec:intercept-url pattern="/rest/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/administration/**" access="hasRole('ROLE_CHASSIS_ADMINISTRATOR')" />
+                
                 
             </sec:filter-invocation-definition-source>
         </property>
     </bean>
     
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter"/>
+    <bean id="webVoter" class="org.springframework.security.web.access.expression.WebExpressionVoter"/>
     
     <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter"/>
     

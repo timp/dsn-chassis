@@ -1,5 +1,5 @@
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
-    xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:ctype="http://www.cggh.org/chassis-types">
+    xmlns:ev="http://www.w3.org/2001/xml-events">
 <xforms:instance id="ins-lookupAddress">
         <lookupAddress xmlns="">
         </lookupAddress>
@@ -100,12 +100,6 @@
                     </xforms:bind>
                 </xforms:bind>
                 <xforms:bind nodeset="inclusionExclusionCriteria">
-                    <xforms:bind nodeset="age">
-                        <!-- FIXME type="ctype:age" type="xforms:int" -->
-                        <xforms:bind nodeset="maxAge"  />
-                        <!-- FIXME type="ctype:age" type="xforms:int" -->
-                        <xforms:bind nodeset="minAge"  />
-                    </xforms:bind>
                     <xforms:bind nodeset="parasitaemia">
                         <!--
                         <xforms:bind nodeset="minParasitaemia" type="xforms:int" />
