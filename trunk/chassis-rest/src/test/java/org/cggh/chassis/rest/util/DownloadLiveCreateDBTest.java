@@ -6,10 +6,15 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.io.FileUtils;
 import org.cggh.casutils.CasProtectedResourceDownloader;
 import org.cggh.casutils.CasProtectedResourceDownloaderFactory;
 import org.cggh.casutils.NotFoundException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
 
 
 /**
@@ -39,7 +44,11 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   public void testGetWwarnChassis() throws Exception {
     if (wwarnLivePassord != null) {
       runIt();
-      testPostsFromDirectory(DATA_STUDIES);      
+      testPostsFromDirectory(DATA_STUDIES);
+      HttpResponse response = StudyControllerRequester.read(url("/studyCount"));
+      System.err.println(response.getBody());
+      assertTrue(response.getBody().
+              indexOf("" + countEntries(LOCAL_STUDIES_FEED_FILENAME, "atom:entry")) > -1); 
     } else { 
       System.err.println("No password set in " + config.getConfiguration().getFileName());
     }
@@ -138,6 +147,23 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     StudyFeedSplitter.split(config.getConfiguration().get("FULL_FEED_FILENAME"));
     assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
     
+    
   }
 
+  private int countEntries(String xmlFile, String elementName) { 
+    File file = new File(xmlFile);
+    if (!file.exists())
+      throw new IllegalArgumentException("File (" + xmlFile + ") not found");
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+     // Create the builder and parse the file
+    Document doc;
+    try {
+      doc = factory.newDocumentBuilder().parse(xmlFile);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    NodeList nodes = doc.getElementsByTagName(elementName);
+    System.out.println("Document contains " + nodes.getLength() + " " + elementName + " elements.");
+    return nodes.getLength();
+  }
 }

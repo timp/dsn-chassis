@@ -135,6 +135,15 @@ public class StudyController {
   public ModelAndView getStudies() {
     return getStudiesModelAndView();
   }
+  
+  @RequestMapping(method = RequestMethod.GET, value = "/studyCount")
+  public ModelAndView getCount() {
+    Long count = studyDAO.count();
+    return new ModelAndView("message", "message", "Count:" + count).
+            addObject("body", count + " study entries found." );    
+  }
+  
+  
 
   private ModelAndView getStudiesModelAndView() {
     Feed list = new Feed();
