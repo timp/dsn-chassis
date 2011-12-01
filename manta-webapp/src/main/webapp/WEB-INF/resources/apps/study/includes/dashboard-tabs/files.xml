@@ -295,7 +295,7 @@
 										</thead>
 										<tbody>
 											<!-- will not try to use xxforms:sort on nodeset because it causes problems with datatable sorting by file type column -->
-											<xforms:repeat id="rep-alf-media-curator" nodeset="atom:entry">
+											<xforms:repeat   xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" id="rep-alf-media-curator" nodeset="atom:entry">
 												<tr class="repeated-element">
 													<td>
 														<xforms:output ref="manta:id"/>
