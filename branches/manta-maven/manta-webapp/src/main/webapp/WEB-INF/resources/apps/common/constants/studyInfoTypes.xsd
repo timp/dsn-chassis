@@ -57,8 +57,10 @@
 			<xs:enumeration value="AV" />
 			<xs:enumeration value="AZ" />
 			<xs:enumeration value="CL" />
+			<xs:enumeration value="CP" />
 			<xs:enumeration value="CQ" />
 			<xs:enumeration value="CY" />
+			<xs:enumeration value="DAP" />
 			<xs:enumeration value="DHA" />
 			<xs:enumeration value="DOX" />
 			<xs:enumeration value="LUM" />
@@ -73,6 +75,7 @@
 			<xs:enumeration value="QN" />
 			<xs:enumeration value="SX" />
 			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -89,7 +92,7 @@
 			<xs:enumeration value="AV" />
 			<xs:enumeration value="AV-PG" />
 			<xs:enumeration value="CQ" />
-			<xs:enumeration value="LAP-DAP" />
+			<xs:enumeration value="CP-DAP" />
 			<xs:enumeration value="DHA" />
 			<xs:enumeration value="DHA-PQP" />
 			<xs:enumeration value="HL" />

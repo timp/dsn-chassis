@@ -584,7 +584,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 	                                return $rep
 
                                 else if ($drug-name = 'chlorproguanil-dapsone') then
-	                                let $rep := update replace $odn/name/text() with 'LAP-DAP'
+	                                let $rep := update replace $odn/name/text() with 'CP-DAP'
 	                                return $rep
 
                                 else if ($drug-name = 'dihydroartemisinin') then
@@ -655,6 +655,9 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     	return $rep
                                     else if ($ingredient = 'atovaquone') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'AV'
+                                    	return $rep
+                                    else if ($ingredient = 'chlorproguanil') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'CP'
                                     	return $rep
                                     else if ($ingredient = 'chloroquine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'CQ'

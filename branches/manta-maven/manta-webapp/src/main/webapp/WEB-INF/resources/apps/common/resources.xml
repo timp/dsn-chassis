@@ -136,13 +136,16 @@
 					<name ref="CQ">chloroquine</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="LAP">Chlorproguanil</name>
+					<name ref="CP">chlorproguanil</name>
 				</drugMolecule>
 				<drugMolecule>
-					<name ref="LAP-DAP">Chlorproguanil-Dapsone</name>
+					<name ref="CP-DAP">chlorproguanil-dapsone</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="CY">cycloguanil</name>
+				</drugMolecule>
+				<drugMolecule>
+					<name ref="DAP">dapsone</name>
 				</drugMolecule>
 				<drugMolecule>
 					<name ref="DHA">dihydroartemisinin</name>
