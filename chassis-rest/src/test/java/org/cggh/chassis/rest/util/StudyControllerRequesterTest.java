@@ -1,21 +1,9 @@
 package org.cggh.chassis.rest.util;
 
-import java.io.File;
-import java.util.Iterator;
 
-import org.apache.commons.io.FileUtils;
-
-import junit.framework.TestCase;
-
-public class StudyControllerRequesterTest extends TestCase {
+public class StudyControllerRequesterTest extends AbstractUtilSpec {
 
 
-  protected String DATA_STUDIES; 
-  protected String FULL_FEED_FILENAME;
-  protected String SERVICE_PROTOCOL_HOST_PORT;
-
-  protected static ChassisRestConfig config;
-  
   public StudyControllerRequesterTest() {
     super();
   }
@@ -24,17 +12,6 @@ public class StudyControllerRequesterTest extends TestCase {
     super(name);
   }
 
-  protected void setUp() throws Exception {
-    super.setUp();
-    config =  new ChassisRestConfig();
-    DATA_STUDIES = config.getConfiguration().get("STUDIES_DIR_NAME") + "/";
-    FULL_FEED_FILENAME = config.getConfiguration().get("FULL_FEED_FILENAME");
-    SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
-  }
-
-  protected void tearDown() throws Exception {
-    super.tearDown();
-  }
 
   protected String url(String url) {
     return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
@@ -66,62 +43,14 @@ public class StudyControllerRequesterTest extends TestCase {
   
   }
 
-  public void testPostAllStudies() throws Exception {
-    testPostsFromDirectory(DATA_STUDIES);
-  }
-
-  private void testPostsFromDirectory(String directory) throws Exception { 
-    HttpResponse response = StudyControllerRequester.uncache(url("/uncache"));
-    System.out.println(response.getBody());
-    assertEquals(200, response.getStatus());
-    response = StudyControllerRequester.read(url("/studies/"));   
-    assertEquals(200, response.getStatus());
-    
-    
-    //assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
-
-    
-    File studiesDir = new File(directory);
-    @SuppressWarnings("unchecked")
-    Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] { "xml" }, false);
-    int fileCount = 0;
-    int failCount = 0;
-    while (it.hasNext()) {
-      fileCount++;
-      File f = it.next();
-      String studyFileName = directory + f.getName();
-      String entryUrl = url("/study/" + f.getName());
-      if (StudyControllerRequester.read(url("/study/" + f.getName())).getStatus() == 200) {
-        int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
-        System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
-      }
-      HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
-      //System.out.println(studyFileName);
-      //System.out.print(" - ");
-      //System.out.println(r.getBody());
-      if (r.getStatus() != 201) {
-        System.out.print(studyFileName);
-        System.out.print(" - ");
-        System.out.println(r.getBody());
-        if (r.getBody().indexOf("errors") > 0) { 
-          System.err.println(r.getBody());
-        }
-        failCount ++;
-      } else {
-        //StudyControllerRequester.delete(url(entryUrl)).getStatus();
-      }
-    }
-  
-    System.out.println("Files: " + fileCount + " fail count: " + failCount);
-    
-  }
 
   public void testRead() throws Exception {
     HttpResponse response = StudyControllerRequester.read(url("/study/"));
     assertEquals(405, response.getStatus());
+    
     response = StudyControllerRequester.read(url("/studies/"));   
-    assertEquals(200, response.getStatus());
-    //System.out.println(response.getBody());
+    assertEquals(200, response.getStatus());    
+    System.out.println(response.getBody());
   }
 
 
