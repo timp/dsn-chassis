@@ -72,5 +72,11 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
     assertEquals(deleteNonExistentHtml.getBody(), 404, deleteNonExistentHtml.getStatus());
     
   }
+  
+  public void testCount() throws Exception { 
+    HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
+    System.err.println(response.getStatus());
+    System.err.println(response.getBody());
+  }
 
 }

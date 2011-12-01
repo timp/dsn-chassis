@@ -50,6 +50,11 @@ public class StudyDAO {
     Collection<Entry> resultsList = (Collection<Entry>)query.getResultList();
     return resultsList;
   }
+  
+  public Long count() { 
+    Query query = em.createQuery("SELECT count(e) FROM Entry e");
+    return (Long)query.getSingleResult();
+  }
 
 	public void saveEntry(Entry entry) {
     if (!em.getTransaction().isActive())
