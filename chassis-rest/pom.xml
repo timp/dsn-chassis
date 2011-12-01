@@ -136,7 +136,7 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-  <!--  Note that thi sis behind the spring eclipse server which is running 3.0 -->
+  <!--  Note that this is behind the spring eclipse server which is running 3.0 -->
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
           <version>2.5</version>
@@ -226,6 +226,7 @@
           <!-- 
           Manual invocations rather than tests,
           consider moving to integration test phase later
+          Currently we deploy without tests then test as two different jenkins jobs. 
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
             <exclude>**/util/AlphabeticallyFirstGetStudyFeed.java</exclude>
            -->
