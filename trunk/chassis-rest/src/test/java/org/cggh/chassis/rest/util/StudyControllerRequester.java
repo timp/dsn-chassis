@@ -21,10 +21,7 @@ import org.apache.commons.httpclient.methods.PutMethod;
 /**
  * This is meant to be the equivalent of
  * 
- * Get yourself an entry and post it to the service like this: $ curl -X POST
- * -HContent-type:application/xml -HAccept:application/xml --data @TBYKQ.xml \
- * http://localhost:8080/chassis-rest/service/study Fetch it again by curl
- * -HAccept:application/xml
+ * Get yourself an entry and post it to the service like this: $ curl -X POST -HContent-type:application/xml -HAccept:application/xml --data @TBYKQ.xml \ http://localhost:8080/chassis-rest/service/study Fetch it again by curl -HAccept:application/xml
  * http://localhost:8080/chassis-rest/service/study/TBYKQ
  * 
  * 
@@ -38,7 +35,7 @@ public class StudyControllerRequester {
     if (args.length != 2) {
       System.err.println("Usage:");
       System.err.println("  java " + StudyControllerRequester.class.getName()
-          + " studyFileName restUrl");
+              + " studyFileName restUrl");
       System.exit(1);
     }
 
@@ -69,8 +66,8 @@ public class StudyControllerRequester {
 
   static HttpMethod acceptXmlHttpMethod(HttpMethod method) {
     method.setRequestHeader("Accept", "text/html");
-    // FIXME 
-    //method.setRequestHeader("Accept", "application/xml");
+    // FIXME
+    // method.setRequestHeader("Accept", "application/xml");
     return method;
   }
 
@@ -78,30 +75,32 @@ public class StudyControllerRequester {
     method.setRequestHeader("Accept", "text/html");
     return method;
   }
-  private static String valid(String url) throws MalformedURLException { 
+
+  private static String valid(String url) throws MalformedURLException {
     if (url == null)
       throw new NullPointerException("URL required");
     new URL(url);
     return url;
   }
 
-
   /** C */
   public static HttpResponse create(String fileName, String restUrl)
-      throws IOException {
+          throws IOException {
     return update(fileName, acceptXmlHttpMethod(new PostMethod(
-        valid(restUrl))));
+            valid(restUrl))));
   }
+
   public static HttpResponse createAcceptingHtml(String studyFileName, String restUrl)
-      throws IOException {
+          throws IOException {
     return update(studyFileName, acceptHtmlHttpMethod(new PostMethod(
-        valid(restUrl))));
+            valid(restUrl))));
   }
 
   /** R */
   public static HttpResponse read(String restUrl) throws IOException {
     return executeMethod(acceptXmlHttpMethod(new GetMethod(valid(restUrl))));
   }
+
   public static HttpResponse readAcceptingHtml(String restUrl) throws IOException {
     return executeMethod(acceptHtmlHttpMethod(new GetMethod(valid(restUrl))));
   }
@@ -110,11 +109,12 @@ public class StudyControllerRequester {
   // Beware replaces entry in study, but everything else is an insert not an
   // update
   public static HttpResponse update(String studyFileName, String restUrl)
-      throws IOException {
+          throws IOException {
     return update(studyFileName, acceptXmlHttpMethod(new PutMethod(valid(restUrl))));
   }
+
   public static HttpResponse updateAcceptingHtml(String studyFileName, String restUrl)
-      throws IOException {
+          throws IOException {
     return update(studyFileName, acceptHtmlHttpMethod(new PutMethod(valid(restUrl))));
   }
 
@@ -122,16 +122,17 @@ public class StudyControllerRequester {
   public static HttpResponse delete(String restUrl) throws IOException {
     return executeMethod(acceptXmlHttpMethod(new DeleteMethod(valid(restUrl))));
   }
+
   public static HttpResponse deleteAcceptingHtml(String restUrl) throws IOException {
     return executeMethod(acceptHtmlHttpMethod(new DeleteMethod(valid(restUrl))));
   }
-  
-  public static HttpResponse uncache(String restUrl) throws IOException { 
-    return executeMethod(acceptHtmlHttpMethod(new PostMethod(valid(restUrl))));    
+
+  public static HttpResponse uncache(String restUrl) throws IOException {
+    return executeMethod(acceptHtmlHttpMethod(new PostMethod(valid(restUrl))));
   }
-  
-  private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method) 
-      throws FileNotFoundException, IOException, HttpException {
+
+  private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method)
+          throws FileNotFoundException, IOException, HttpException {
     InputStream data = new FileInputStream(studyFileName);
     method.setRequestEntity(new InputStreamRequestEntity(data));
     method.setRequestHeader("Content-Type", "application/xml");
@@ -140,7 +141,7 @@ public class StudyControllerRequester {
   }
 
   private static HttpResponse executeMethod(final HttpMethod method)
-      throws IOException, HttpException {
+          throws IOException, HttpException {
     HttpResponse response;
     final HttpClient client = new HttpClient();
     try {
@@ -149,26 +150,33 @@ public class StudyControllerRequester {
       BufferedInputStream bis = new BufferedInputStream(is);
       StringBuffer sb = new StringBuffer();
       String s = "";
-      byte[] bytes = new byte[ 8192 ];
-      int count = bis.read( bytes );
-      while( count != -1 && count <= 8192 ) {
-       //System.out.print( "-" );
-       sb.append(new String(bytes));
-       count = bis.read( bytes );
-       s = s + new String(bytes);
+      byte[] bytes = new byte[8192];
+      int count = bis.read(bytes);
+      while (count != -1 && count <= 8192) {
+        sb.append(trimEnd(new String(bytes)));
+        count = bis.read(bytes);
       }
-      if(count != -1) {
-        sb.append(bytes);
-        s = s + bytes;
+      if (count != -1) {
+        sb.append(trimEnd(new String(bytes)));
       }
       bis.close();
-      //System.out.println( "\nDone" );
+      // System.out.println( "\nDone" );
       String body = sb.toString();
       response = new HttpResponse(method.getStatusCode(), body);
     } finally {
       method.releaseConnection();
     }
     return response;
+  }
+
+  public static String trimEnd(String in) {
+    int len = in.length();
+    int st = 0;
+    char[] val = in.toCharArray();
+    while ((st < len) && (val[len - 1] <= ' ')) {
+      len--;
+    }
+    return  (((st > 0) || (len < in.length())) ? in.substring(st, len) : in);
   }
 
 }
