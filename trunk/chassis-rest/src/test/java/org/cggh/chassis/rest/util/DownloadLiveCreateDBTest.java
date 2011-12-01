@@ -36,14 +36,13 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   }
 
   
-  public void testGetWwarnStudyFeed() throws Exception {
+  public void testGetWwarnChassis() throws Exception {
     if (wwarnLivePassord != null) {
       runIt();
       testPostsFromDirectory(DATA_STUDIES);      
     } else { 
       System.err.println("No password set in " + config.getConfiguration().getFileName());
     }
-      
   }
 
   private void testPostsFromDirectory(String directory) throws Exception { 
