@@ -17,9 +17,6 @@
    <version>0.5.5</version>
   </dependency>
 
-		<!-- Test dependencies -->
-		<!--dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
-			<version>3.8.1</version> </dependency -->
 
 		<!-- Roundtrip -->
   <dependency>
@@ -48,8 +45,6 @@
    <id>maven2-repository.dev.java.net</id>
    <url>http://download.java.net/maven/2</url>
   </repository>
-		<!-- <repository> <id>maven-repository.dev.java.net</id> <url>http://download.java.net/maven/1</url> 
-			<layout>legacy</layout> </repository> -->
   <repository>
    <id>maven2-repository.jboss.com</id>
    <url>http://repository.jboss.com/maven2</url>
