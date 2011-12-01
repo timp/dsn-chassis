@@ -128,11 +128,15 @@ public class StudyController {
     if (!studyDAO.remove(id)) {
       return notFound(id, response);
     }
-    return getStudies();
+    return getStudiesModelAndView();
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/studies")
   public ModelAndView getStudies() {
+    return getStudiesModelAndView();
+  }
+
+  private ModelAndView getStudiesModelAndView() {
     Feed list = new Feed();
     // Wouldn't it be nice it this was setEntrys or similar
     list.setEntry((List<Entry>) studyDAO.getAll());
