@@ -121,6 +121,15 @@ declare variable $config-collections:collection-spec :=
             </atom:feed>
         </collection>  
         
+        <collection path-info="/link">
+            <atom:feed
+                atombeat:enable-versioning="true"
+                atombeat:exclude-entry-content="false"
+                atombeat:recursive="false">
+                <atom:title type="text">Link</atom:title>
+            </atom:feed>        
+        </collection>  
+        
         <collection path-info="/sandbox">
             <atom:feed
                 atombeat:enable-versioning="false"
