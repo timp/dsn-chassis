@@ -74,7 +74,8 @@
         		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
         		method="get"
         		replace="instance"
-        		instance="ins-submitted-media-feed">
+        		instance="ins-submitted-media-feed"
+        		serialization="none">
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the submitted media.</xforms:message>
         	</xforms:submission>
         	
@@ -87,7 +88,8 @@
         		resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/curatedMedia']/@href}"
         		method="get"
         		replace="instance"
-        		instance="ins-curated-media-feed">
+        		instance="ins-curated-media-feed"
+        		serialization="none">
         		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the curated media.</xforms:message>
         	</xforms:submission>
         	
