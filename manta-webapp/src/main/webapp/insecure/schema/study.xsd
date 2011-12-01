@@ -1,0 +1,1452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	elementFormDefault="qualified">
+	<xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
+	<xs:simpleType name="longURI">
+		<xs:restriction base="xs:anyURI">
+			<xs:maxLength value="1600"></xs:maxLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="longString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"></xs:maxLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="optionalDecimal">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base='xs:decimal'/>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base='xs:string'>
+					<xs:maxLength value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="optionalInteger">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base='xs:integer'/>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base='xs:string'>
+					<xs:maxLength value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="administrationRoutes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="oral" />
+			<xs:enumeration value="intravenous" />
+			<xs:enumeration value="intramuscular" />
+			<xs:enumeration value="intrarectal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="drugStorage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="none" />
+			<xs:enumeration value="refrigerator" />
+			<xs:enumeration value="aircon" />
+			<xs:enumeration value="unknown" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="population">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="resident" />
+			<xs:enumeration value="traveller" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="includeExclude">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="include" />
+            <xs:enumeration value="exclude" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="yesNo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:simpleType name="drugMolecules">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="ART" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AZ" />
+			<xs:enumeration value="CL" />
+			<xs:enumeration value="CP" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="CY" />
+			<xs:enumeration value="DAP" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DOX" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="NQ" />
+			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PQ" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="PYN" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="AM-LUM" />
+			<xs:enumeration value="AM-NQ" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AS-AQ" />
+			<xs:enumeration value="AS-MQ" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AV-PG" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="CP-DAP" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DHA-PQP" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="SX-PYR" />
+			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugTradeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="Amobin" />
+			<xs:enumeration value="Amonate" />
+			<xs:enumeration value="Arco" />
+			<xs:enumeration value="Arsudar" />
+			<xs:enumeration value="Arsumax" />
+			<xs:enumeration value="Artefan" />
+			<xs:enumeration value="Artekin" />
+			<xs:enumeration value="Avloclor" />
+			<xs:enumeration value="Basoquin" />
+			<xs:enumeration value="Camoquin" />
+			<xs:enumeration value="Co-artesiane" />
+			<xs:enumeration value="Coartem" />
+			<xs:enumeration value="Cosmoquin" />
+			<xs:enumeration value="Duo-Cotecxin" />
+			<xs:enumeration value="Eloquine" />
+			<xs:enumeration value="Eurartesim" />
+			<xs:enumeration value="Falcidin" />
+			<xs:enumeration value="Fansidar" />
+			<xs:enumeration value="Farenax" />
+			<xs:enumeration value="Flavoquine" />
+			<xs:enumeration value="Halfan" />
+			<xs:enumeration value="LapDap" />
+			<xs:enumeration value="Lariam" />
+			<xs:enumeration value="Malaratab" />
+			<xs:enumeration value="Malarine" />
+			<xs:enumeration value="Malarone" />
+			<xs:enumeration value="Malmed" />
+			<xs:enumeration value="Mequin" />
+			<xs:enumeration value="Nivaquine" />
+			<xs:enumeration value="Plasmotrin" />
+			<xs:enumeration value="Resunate" />
+			<xs:enumeration value="Riamet" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugManufacturer">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="Ajanta Pharma" />
+			<xs:enumeration value="Arco" />
+			<xs:enumeration value="AstraZeneca" />
+			<xs:enumeration value="Atlantic Laboratories" />
+			<xs:enumeration value="Aventis" />
+			<xs:enumeration value="Cosmos" />
+			<xs:enumeration value="Dafra Pharma" />
+			<xs:enumeration value="Far-Manguinhos" />
+			<xs:enumeration value="Glaxo-SmithKline" />
+			<xs:enumeration value="Government Pharmaceutical Organization" />
+			<xs:enumeration value="Guilin Pharmaceutical factory" />
+			<xs:enumeration value="Hoffman-La Roche" />
+			<xs:enumeration value="Holley Pharmaceuticals" />
+			<xs:enumeration value="Holley-Cotec Pharmaceuticals" />
+			<xs:enumeration value="Holleykin Pharmaceuticals" />
+			<xs:enumeration value="International Dispensary Association" />
+			<xs:enumeration value="Ipca Laboratories Ltd" />
+			<xs:enumeration value="Kunming Pharmaceutical factory" />
+			<xs:enumeration value="Laboratories Creat" />
+			<xs:enumeration value="Maphra" />
+			<xs:enumeration value="Medinomics Healthcare" />
+			<xs:enumeration value="Medochemie" />
+			<xs:enumeration value="Mepha" />
+			<xs:enumeration value="Novartis" />
+			<xs:enumeration value="Parke-Davis" />
+			<xs:enumeration value="Pfizer" />
+			<xs:enumeration value="Pharmamed" />
+			<xs:enumeration value="Regal Pharmaceuticals" />
+			<xs:enumeration value="Rene Pharmaceutical" />
+			<xs:enumeration value="Rhone-Poulenc" />
+			<xs:enumeration value="Roche" />
+			<xs:enumeration value="Sanofi" />
+			<xs:enumeration value="Sanofi Aventis" />
+			<xs:enumeration value="Sanofi Winthrop" />
+			<xs:enumeration value="SigmaTau" />
+			<xs:enumeration value="SmithKline Beeham" />
+			<xs:enumeration value="Swipha" />
+			<xs:enumeration value="Zeneca" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="draft" type="xs:NCName"/>
+  <xs:element name="studyTitle" type="longString"/>
+  <xs:element name="study">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="studyTitle"/>
+        <xs:element minOccurs="0" ref="ui-info"/>
+        <xs:element ref="registrant-has-agreed-to-the-terms"/>
+        <xs:element ref="study-is-published"/>
+        <xs:element ref="explorer-display"/>
+        <xs:element ref="publications"/>
+        <xs:element ref="acknowledgements"/>
+        <xs:element ref="curator-notes"/>
+        <xs:element ref="study-status"/>
+        <xs:element ref="modules"/>
+        <xs:element minOccurs="0" ref="study-info"/>
+        <xs:element ref="atombeat:group"/>
+      </xs:sequence>
+      <xs:attribute name="profile" use="required">
+        <xs:simpleType >
+          <xs:restriction base="xs:anyURI">
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ui-info">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wizard-pane-to-show"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wizard-pane-to-show" type="xs:NCName"/>
+  <xs:element name="registrant-has-agreed-to-the-terms" type="xs:NCName"/>
+  <xs:element name="study-is-published" >
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="|Yes|No"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+  <xs:element name="explorer-display" type="xs:NCName"/>
+  <xs:element name="publications">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="publication"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publication">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="publication-title"/>
+        <xs:element ref="pmid"/>
+        <xs:element ref="publication-references"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publication-title" type="longString"/>
+  <xs:element name="pmid" type="optionalInteger"/>
+  <xs:element name="publication-references">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="publication-reference">
+          <xs:annotation>
+            <xs:appinfo>
+              <!--
+              <hj:basic>
+                <orm:column length="1024"/>
+              </hj:basic>
+              -->
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="publication-reference">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="longURI">
+          <xs:attribute name="type" use="required" type="xs:NCName"/>
+        </xs:extension>       
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="person">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="first-name"/>
+        <xs:element ref="middle-name"/>
+        <xs:element ref="family-name"/>
+        <xs:element ref="email-address"/>
+        <xs:element ref="institution"/>
+        <xs:element ref="person-is-contactable"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="first-name" type="xs:string"/>
+  <xs:element name="middle-name" type="xs:string"/>
+  <xs:element name="family-name" type="xs:string"/>
+  <xs:element name="email-address" type="xs:string"/>
+  <xs:element name="institution" type="xs:string"/>
+  <xs:element name="person-is-contactable" type="xs:string"/>
+  
+  <xs:element name="people">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="person" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="institution-ack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="institution-name"/>
+        <xs:element ref="institution-websites"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="institution-name" type="longString" />
+  <xs:complexType name="inst-web">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="institution-url"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="institution-websites" type="inst-web"/>  
+  <xs:element name="institution-url" type="longURI"/>
+
+  <xs:element name="institutions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="institution-ack"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="acks">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="institutions"/>
+      <xs:element ref="people"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="acknowledgements" type="acks" />  
+  
+  <xs:element name="curator-notes" type="xs:string"/>
+  <xs:element name="study-status" type="xs:NCName"/>
+  <xs:element name="modules" type="xs:string"/>
+  <xs:element name="study-info">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="studyInfoStatus"/>
+        <xs:element ref="start"/>
+        <xs:element ref="end"/>
+        <xs:element ref="sites"/>
+        <xs:element ref="pathogens"/>
+        <xs:element ref="inclusionExclusionCriteria"/>
+        <xs:element minOccurs="0" ref="clinical"/>
+        <xs:element minOccurs="0" ref="molecular"/>
+        <xs:element minOccurs="0" ref="invitro"/>
+        <xs:element minOccurs="0" ref="pharmacology"/>
+      </xs:sequence>
+      <xs:attribute name="profile" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="studyInfoStatus" type="xs:string"/>
+  <xs:element name="start" type="xs:string"/>
+  <xs:element name="end" type="xs:string"/>
+  <xs:element name="sites">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="site"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="population" type="population"/>
+  <xs:element name="site">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="country"/>
+        <xs:element ref="region"/>
+        <xs:element ref="district"/>
+        <xs:element ref="locality"/>
+        <xs:element ref="lookupAddress"/>
+        <xs:element ref="siteCode"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="testingDelay"/>
+          <xs:element ref="anticoagulant"/>
+          <xs:element ref="transportAndStorageTemperature"/>
+        </xs:sequence>
+        <xs:element ref="latitude"/>
+        <xs:element ref="longitude"/>
+        <xs:element ref="population" />
+        <xs:element ref="transmissionIntensity"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="country" type="xs:string"/>
+  <xs:element name="region" type="xs:string"/>
+  <xs:element name="district" type="xs:string"/>
+  <xs:element name="locality" type="xs:string"/>
+  <xs:element name="lookupAddress" type="xs:string"/>
+  <xs:element name="siteCode" type="xs:string"/>
+  <xs:element name="testingDelay" type="xs:string"/>
+  <xs:element name="anticoagulant" type="xs:string"/>
+  <xs:element name="transportAndStorageTemperature" type="xs:string"/>
+  <xs:element name="latitude" type="xs:string" nillable="true"/>
+  <xs:element name="longitude" type="xs:string" nillable="true"/>
+  <xs:element name="transmissionIntensity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="annualParasitologicalIncidence"/>
+        <xs:element ref="annualParasitologicalIncidenceYear"/>
+        <xs:element ref="parasitePrevalence"/>
+        <xs:element ref="parasitePrevalenceYear"/>
+        <xs:element ref="transmissionIntensityAgeFrom"/>
+        <xs:element minOccurs="0" ref="transmissionIntensityAgeFromUnits"/>
+        <xs:element ref="transmissionIntensityAgeTo"/>
+        <xs:element minOccurs="0" ref="transmissionIntensityAgeToUnits"/>
+        <xs:element ref="entomologicalInoculationRate"/>
+        <xs:element ref="entomologicalInoculationRateYear"/>
+        <xs:element ref="seasonalTransmission"/>
+        <xs:element ref="transmissionMonths"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="annualParasitologicalIncidence" type="xs:string"/>
+  <xs:element name="annualParasitologicalIncidenceYear" type="xs:string"/>
+  <xs:element name="parasitePrevalence" type="xs:string"/>
+  <xs:element name="parasitePrevalenceYear"  type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeFrom" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeFromUnits" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeTo" type="xs:string"/>
+  <xs:element name="transmissionIntensityAgeToUnits" type="xs:string"/>
+  <xs:element name="entomologicalInoculationRate" type="xs:string"/>
+  <xs:element name="entomologicalInoculationRateYear" type="xs:string"/>
+  <xs:element name="seasonalTransmission" >
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="|true|false"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="transmissionMonths" type="xs:string"/>
+  <xs:element name="pathogens" type="xs:string"/>
+  <xs:element name="inclusionExclusionCriteria">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="age"/>
+        <xs:element ref="parasitaemia"/>
+        <xs:element ref="includeMixedInfections"/>
+        <xs:element ref="excludeIfPriorAntimalarials"/>
+        <xs:element ref="priorAntimalarialsExclusion"/>
+        <xs:element ref="pregnancy"/>
+        <xs:element ref="treatmentReason"/>
+        <xs:element ref="otherCriteria"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="age">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="maxAge"/>
+        <xs:element ref="maxAgeUnits"/>
+        <xs:element ref="minAge"/>
+        <xs:element ref="minAgeUnits"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="maxAge" type="optionalDecimal"/>
+  <xs:element name="maxAgeUnits" type="xs:string"/>
+  <xs:element name="minAge" type="optionalDecimal"/>
+  <xs:element name="minAgeUnits" type="xs:string"/>
+  <xs:element name="parasitaemia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="minParasitaemia"/>
+        <xs:element ref="maxParasitaemia"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="minParasitaemia" type="optionalDecimal"/>
+  <xs:element name="maxParasitaemia" type="optionalDecimal"/>
+  <xs:element name="includeMixedInfections" type="xs:string"/>
+  <xs:element name="excludeIfPriorAntimalarials" type="xs:string"/>
+  <xs:element name="priorAntimalarialsExclusion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="priorAntimalarials"/>
+        <xs:element ref="priorAntimalarialsDetermination"/>
+        <xs:element ref="priorAntimalarialsHistoryWeeks"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="priorAntimalarials">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element  minOccurs="0" maxOccurs="unbounded" ref="drugTaken"/>
+      </xs:sequence>
+      <xs:attribute name="selected" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drugTaken" type="xs:string"/>
+  <xs:element name="priorAntimalarialsDetermination" type="xs:string"/>
+  <xs:element name="priorAntimalarialsHistoryWeeks" type="xs:string"/>
+  <xs:element name="pregnancy" type="xs:string"/>
+  <xs:element name="treatmentReason" type="xs:string"/>
+  <xs:element name="otherCriteria" type="xs:string"/>
+  <xs:element name="clinical">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="treatment"/>
+        <xs:element ref="followup"/>
+        <xs:element ref="microscopy"/>
+        <xs:element ref="geneotypingToDistinguishBetweenRecrudescenceAndReinfection"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="treatment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regimens"/>
+        <xs:element ref="regimenAllocation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="regimens">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="regimen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="regimen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regimenName"/>
+        <xs:element ref="regimenSupervision"/>
+        <xs:element ref="regimenUrl"/>
+        <xs:element ref="drugs"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="regimenName" type="xs:string"/>
+  <xs:element name="regimenSupervision" type="xs:string"/>
+  <xs:element name="regimenUrl" type="longURI"/>
+  <xs:element name="regimenAllocation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="regimenAllocationMethod"/>
+        <xs:element ref="blinding"/>
+        <xs:element ref="randomisationProportion"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="regimenAllocationMethod" type="xs:string"/>
+  <xs:element name="blinding" type="xs:string"/>
+  <xs:element name="randomisationProportion" type="xs:string"/>
+  <xs:element name="followup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="duration"/>
+        <xs:element ref="feverMeasurement"/>
+        <xs:element ref="haemoglobinRecording"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- duration is day of follow up -->
+  <xs:element name="duration" type="optionalInteger"/>
+  <xs:element name="feverMeasurement" type="xs:string"/>
+  <xs:element name="haemoglobinRecording">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="haemoglobinRecordingType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="haemoglobinRecordingType" type="xs:string"/>
+  <xs:element name="microscopy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="microscopyStain"/>
+        <xs:element ref="microscopyStainOther"/>
+        <xs:element ref="asexualParasitemia"/>
+        <xs:element ref="sexualParasitemia"/>
+        <xs:element ref="thickFilmCalculationOfParasitemia"/>
+        <xs:element ref="thinFilmCalculationOfParasitemia"/>
+        <xs:element ref="qualityControl"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="microscopyStain" type="xs:string"/>
+  <xs:element name="microscopyStainOther" type="xs:string"/>
+  <xs:element name="asexualParasitemia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="asexualParasitemiaNegativeCount"/>
+        <xs:element ref="asexualParasitemiaPositiveThickUnit"/>
+        <xs:element ref="asexualParasitemiaPositiveThickUnitOther"/>
+        <xs:element ref="asexualParasitemiaPositiveThinUnit"/>
+        <xs:element ref="asexualParasitemiaPositiveThinUnitOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="asexualParasitemiaNegativeCount" type="xs:string"/>
+  <xs:element name="asexualParasitemiaPositiveThickUnit" type="xs:string"/>
+  <xs:element name="asexualParasitemiaPositiveThickUnitOther" type="xs:string"/>
+  <xs:element name="asexualParasitemiaPositiveThinUnit" type="xs:string"/>
+  <xs:element name="asexualParasitemiaPositiveThinUnitOther" type="xs:string"/>
+  <xs:element name="sexualParasitemia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sexualParasitemiaNegativeCount"/>
+        <xs:element ref="sexualParasitemiaPositiveThickUnit"/>
+        <xs:element ref="sexualParasitemiaPositiveThickUnitOther"/>
+        <xs:element ref="sexualParasitemiaPositiveThinUnit"/>
+        <xs:element ref="sexualParasitemiaPositiveThinUnitOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sexualParasitemiaNegativeCount" type="xs:string"/>
+  <xs:element name="sexualParasitemiaPositiveThickUnit" type="xs:string"/>
+  <xs:element name="sexualParasitemiaPositiveThickUnitOther"  type="xs:string"/>
+  <xs:element name="sexualParasitemiaPositiveThinUnit" type="xs:string"/>
+  <xs:element name="sexualParasitemiaPositiveThinUnitOther" type="xs:string"/>
+  <xs:complexType name="thickFilmCalcOfParasitemia">
+    <xs:sequence>
+      <xs:element ref="thickFilmFormula"/>
+      <xs:element ref="thickFilmFormulaOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="thinFilmCalcOfParasitemia">
+    <xs:sequence>
+      <xs:element ref="thinFilmFormula"/>
+      <xs:element ref="thinFilmFormulaOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="thickFilmCalculationOfParasitemia" type="thickFilmCalcOfParasitemia"/>
+    
+  
+  <xs:element name="thickFilmFormula" type="xs:string"/>
+  <xs:element name="thickFilmFormulaOther" type="xs:string"/>
+  <xs:element name="thinFilmCalculationOfParasitemia" type="thinFilmCalcOfParasitemia"/>
+   
+  
+  <xs:element name="thinFilmFormula" type="xs:string"/>
+  <xs:element name="thinFilmFormulaOther" type="xs:string"/>
+  <xs:element name="qualityControl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="internal"/>
+        <xs:element ref="external"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="internal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="percentageRereadBySecondMicroscopist"/>
+        <xs:element ref="rereadSlideSelectionMechanism"/>
+        <xs:element ref="rereadSlideSelectionMechanismOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="external">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="percentageRereadBySecondMicroscopist"/>
+        <xs:element ref="rereadSlideSelectionMechanism"/>
+        <xs:element ref="rereadSlideSelectionMechanismOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="geneotypingToDistinguish">
+    <xs:sequence>
+      <xs:element ref="applicability"/>
+      <xs:element ref="applicable"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="geneotypingToDistinguishBetweenRecrudescenceAndReinfection" type="geneotypingToDistinguish"/>
+    
+  
+  <xs:element name="applicability" type="xs:string"/>
+  <xs:element name="applicable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="markers"/>
+        <xs:element ref="genotypingLaboratory"/>
+        <xs:element ref="markerDiscriminantOpen"/>
+        <xs:element ref="analysisProtocol"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="markers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="recrudescenceMarker"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="recrudescenceMarker">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="markerName"/>
+        <xs:element ref="markerOther"/>
+        <xs:element ref="numberOfMicroSatellites"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="markerName" type="xs:string"/>
+  <xs:element name="markerOther" type="xs:string"/>
+  <xs:element name="numberOfMicroSatellites" type="xs:string"/>
+  <xs:element name="genotypingLaboratory" type="xs:string"/>
+  <xs:element name="markerDiscriminantOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="markerDiscriminant"/>
+        <xs:element ref="markerDiscriminantOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="markerDiscriminant" type="xs:string"/>
+  <xs:element name="markerDiscriminantOther" type="xs:string"/>
+  <xs:element name="analysisProtocol">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mixedAllelesOpen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mixedAllelesOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mixedAlleles"/>
+        <xs:element ref="mixedAllelesOther"/>
+        <xs:element ref="recrudescence"/>
+        <xs:element ref="reinfection"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mixedAlleles" type="xs:string"/>
+  <xs:element name="mixedAllelesOther" type="xs:string"/>
+  <xs:element name="recrudescence" type="xs:string"/>
+  <xs:element name="reinfection" type="xs:string"/>
+  <xs:element name="molecular">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="criteria"/>
+        <xs:element ref="sample"/>
+        <xs:element ref="genotypedMarkers"/>
+        <xs:element ref="mixedResistanceAlleles"/>
+        <xs:element ref="additionalGenotypicInformation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="criteria">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sampleSourceOpen"/>
+        <xs:element ref="malariaStatus"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sampleSourceOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sampleSource"/>
+        <xs:element ref="sampleSourceOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sampleSource" type="xs:string"/>
+  <xs:element name="sampleSourceOther" type="xs:string"/>
+  <xs:element name="malariaStatus" type="xs:string"/>
+  <xs:element name="genotypedMarkers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="genotypedMarker"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="genotypedMarker">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="genotypingMethodOpen"/>
+        <xs:element ref="molecularMarkerFalciparumOpen"/>
+        <xs:element ref="molecularMarkerVivaxOpen"/>
+        <xs:element ref="molecularMarkerOvaleOpen"/>
+        <xs:element ref="molecularMarkerMalariaeOpen"/>
+        <xs:element ref="molecularMarkerKnowlesiOpen"/>
+        <xs:element ref="sampleSelectionMethodOpen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="genotypingMethodOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="genotypingMethod"/>
+        <xs:element ref="genotypingMethodOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="genotypingMethod" type="xs:string"/>
+  <xs:element name="genotypingMethodOther" type="xs:string"/>
+  <xs:element name="molecularMarkerFalciparumOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="molecularMarkerFalciparum"/>
+        <xs:element ref="molecularMarkerFalciparumOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="molecularMarkerFalciparum" type="xs:string"/>
+  <xs:element name="molecularMarkerFalciparumOther" type="xs:string"/>
+  <xs:element name="molecularMarkerVivaxOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="molecularMarkerVivax"/>
+        <xs:element ref="molecularMarkerVivaxOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="molecularMarkerVivax" type="xs:string"/>
+  <xs:element name="molecularMarkerVivaxOther" type="xs:string"/>
+  <xs:element name="molecularMarkerOvaleOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="molecularMarkerOvale"/>
+        <xs:element ref="molecularMarkerOvaleOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="molecularMarkerOvale" type="xs:string"/>
+  <xs:element name="molecularMarkerOvaleOther" type="xs:string"/>
+  <xs:element name="molecularMarkerMalariaeOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="molecularMarkerMalariae"/>
+        <xs:element ref="molecularMarkerMalariaeOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="molecularMarkerMalariae" type="xs:string"/>
+  <xs:element name="molecularMarkerMalariaeOther" type="xs:string"/>
+  <xs:element name="molecularMarkerKnowlesiOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="molecularMarkerKnowlesi"/>
+        <xs:element ref="molecularMarkerKnowlesiOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="molecularMarkerKnowlesi" type="xs:string"/>
+  <xs:element name="molecularMarkerKnowlesiOther" type="xs:string"/>
+  <xs:element name="sampleSelectionMethodOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sampleSelectionMethod"/>
+        <xs:element ref="sampleSelectionMethodOther"/>
+        <xs:element ref="sampleSelectionProportion"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sampleSelectionMethod" type="xs:string"/>
+  <xs:element name="sampleSelectionMethodOther" type="xs:string"/>
+  <xs:element name="sampleSelectionProportion" type="xs:string"/>
+  <xs:element name="mixedResistanceAlleles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="mixedResistanceAllelesInclusion"/>
+        <xs:element ref="mixedResistanceAllelesDesignation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mixedResistanceAllelesInclusion" type="xs:string"/>
+  <xs:element name="mixedResistanceAllelesDesignation" type="xs:string"/>
+  <xs:element name="additionalGenotypicInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sequencedLoci"/>
+        <xs:element ref="infectionComplexityEstimated"/>
+        <xs:element ref="infectionComplexityEstimationlociOpen"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sequencedLoci">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wholeGenomesSequenced"/>
+        <xs:element ref="resistanceLociSequenced"/>
+        <xs:element ref="resistanceLoci"/>
+        <xs:element ref="otherLociGenotyped"/>
+        <xs:element ref="otherLoci"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wholeGenomesSequenced" type="xs:string"/>
+  <xs:element name="resistanceLociSequenced" type="xs:string"/>
+  <xs:element name="resistanceLoci">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="resistanceLocus" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="resistanceLocus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="locusTypeOpen"/>
+        <xs:element ref="locusName"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="otherLociGenotyped" type="xs:string"/>
+  <xs:element name="otherLoci">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="otherLocus" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="otherLocus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="locusTypeOpen"/>
+        <xs:element ref="locusName"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="infectionComplexityEstimated" type="xs:string"/>
+  
+  <xs:complexType name="infectionCompEstLociOpen">
+    <xs:sequence>
+      <xs:element ref="infectionComplexityEstimationloci"/>
+      <xs:element ref="infectionComplexityEstimationlociOther"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="infectionComplexityEstimationlociOpen" type="infectionCompEstLociOpen"/>
+    
+  
+  <xs:element name="infectionComplexityEstimationloci" type="xs:string"/>
+  <xs:element name="infectionComplexityEstimationlociOther" type="xs:string"/>
+  <xs:element name="invitro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="analysisSite"/>
+        <xs:element ref="culture"/>
+        <xs:element ref="drugSusceptibilityMedium"/>
+        <xs:element ref="susceptibility"/>
+        <xs:element ref="invitroDrugs"/>
+        <xs:element ref="platePreparationMethod"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="platesPreparationDate"/>
+          <xs:element ref="plateBatches"/>
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="analysisSite" type="xs:string"/>
+  <xs:element name="culture">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="incubatorSystem"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="co2percentage"/>
+          <xs:element ref="co2Other"/>
+          <xs:element ref="o2percentage"/>
+          <xs:element ref="o2Other"/>
+        </xs:sequence>
+        <xs:element ref="healthyErythrocytesSource"/>
+        <xs:element ref="hematocritpercent"/>
+        <xs:element ref="bloodGroup"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="incubatorSystem" type="xs:string"/>
+  <xs:element name="co2percentage" type="xs:string"/>
+  <xs:element name="co2Other" type="xs:string"/>
+  <xs:element name="o2percentage" type="xs:string"/>
+  <xs:element name="o2Other" type="xs:string"/>
+  <xs:element name="healthyErythrocytesSource" type="xs:string"/>
+  <xs:element name="hematocritpercent" type="xs:string"/>
+  <xs:element name="bloodGroup" type="xs:string"/>
+  <xs:element name="drugSusceptibilityMedium">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="medium"/>
+        <xs:element ref="mediumOther"/>
+        <xs:element ref="preparation"/>
+        <xs:element ref="serum"/>
+        <xs:element ref="serum-finalConcentration"/>
+        <xs:element ref="NaHCO3-finalConcentration"/>
+        <xs:element ref="hypoxantine"/>
+        <xs:element ref="oroticAcid"/>
+        <xs:element ref="glucose"/>
+        <xs:element ref="antibioticTreatments"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="medium" type="xs:string"/>
+  <xs:element name="mediumOther" type="xs:string"/>
+  <xs:element name="preparation" type="xs:string"/>
+  <xs:element name="serum" type="xs:string"/>
+  <xs:element name="serum-finalConcentration" type="xs:string"/>
+  <xs:element name="NaHCO3-finalConcentration" type="xs:string"/>
+  <xs:element name="hypoxantine">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hypoxantine-added"/>
+        <xs:element ref="hypoxantine-finalConcentration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hypoxantine-added" type="xs:string"/>
+  <xs:element name="hypoxantine-finalConcentration" type="xs:string"/>
+  <xs:element name="oroticAcid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="oroticAcid-added"/>
+        <xs:element ref="oroticAcid-finalConcentration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="oroticAcid-added" type="xs:string"/>
+  <xs:element name="oroticAcid-finalConcentration" type="xs:string"/>
+  <xs:element name="glucose">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="glucose-added"/>
+        <xs:element ref="glucose-finalConcentration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="glucose-added" type="xs:string"/>
+  <xs:element name="glucose-finalConcentration" type="xs:string"/>
+  <xs:element name="antibioticTreatments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="antibioticTreatment"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="antibioticTreatment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="antibioticOpen"/>
+        <xs:element ref="antibioticFinalConcentration"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="antibioticOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="antibiotic"/>
+        <xs:element ref="antibioticOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="antibiotic" type="xs:NCName"/>
+  <xs:element name="antibioticOther" type="xs:string"/>
+  <xs:element name="antibioticFinalConcentration" type="xs:decimal"/>
+  <xs:element name="susceptibility">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="timeOfIncubation"/>
+        <xs:element ref="susceptibilityMethod"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="timeOfIncubation" type="xs:string"/>
+  <xs:element name="susceptibilityMethod" type="xs:string"/>
+  <xs:element name="platePreparationMethod" type="xs:string"/>
+  <xs:element name="platesPreparationDate" type="xs:string"/>
+  <xs:element name="plateBatches">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="batch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="batch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="clone3D7ProvidedByWwarn"/>
+        <xs:element ref="clone3D7Provider"/>
+        <xs:element ref="batchesIncludedInRawData"/>
+        <xs:element ref="preparationDate"/>
+        <xs:element ref="parasitaemia3D7percentage"/>
+        <xs:element ref="ringFormingPercentage"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="clone3D7ProvidedByWwarn" type="xs:boolean"/>
+  <xs:element name="clone3D7Provider" type="xs:string"/>
+  <xs:element name="batchesIncludedInRawData" type="xs:boolean"/>
+  <xs:element name="preparationDate" type="xs:string"/>
+  <xs:element name="parasitaemia3D7percentage" type="xs:string"/>
+  <xs:element name="ringFormingPercentage" type="xs:string"/>
+  <xs:element name="pharmacology">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="studyDesign"/>
+        <xs:element ref="samplingTimes"/>
+        <xs:element ref="PKcomments"/>
+        <xs:element ref="samples"/>
+        <xs:element ref="analytes"/>
+        <xs:element ref="assayReferences"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="studyDesign" type="xs:string"/>
+  <xs:element name="samplingTimes" type="xs:string"/>
+  <xs:element name="PKcomments" type="longString"/>
+  <xs:element name="samples">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sample"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="analytes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="analyte"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="analyte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="drugMeasured"/>
+        <xs:element ref="targetDose"/>
+        <xs:element ref="unitsOfMeasure"/>
+        <xs:element ref="fatAmount"/>
+        <xs:element ref="lowerLoQ"/>
+        <xs:element ref="sampleMatrixType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drugMeasured" type="xs:string"/>
+  <xs:element name="targetDose" type="xs:string"/>
+  <xs:element name="unitsOfMeasure" type="xs:string"/>
+  <xs:element name="fatAmount" type="xs:string"/>
+  <xs:element name="lowerLoQ" type="xs:string"/>
+  <xs:element name="sampleMatrixType" type="xs:string"/>
+  <xs:element name="assayReferences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="assayReference"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="assayReference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="referenceType"/>
+        <xs:element ref="url"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="doi"/>
+          <xs:element ref="upload"/>
+        </xs:sequence>
+        <xs:element ref="note"/>
+        <xs:element ref="assayValidated"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="referenceType" type="xs:NCName"/>
+  <xs:element name="url" type="xs:anyURI"/>
+  <xs:element name="doi" type="xs:string"/>
+  <xs:element name="upload">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="uploadedUrl"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="uploadedUrl" type="xs:string"/>
+  <xs:element name="note" type="longString"/>
+  <xs:element name="assayValidated" type="xs:string"/>
+  <xs:element name="drugs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="drug"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="invitroDrugs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="invitroDrug"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drugBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="batchNumber"/>
+        <xs:element ref="manufactureDate"/>
+        <xs:element ref="expiryDate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="batches">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="drugBatch"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tradeName" type="xs:string"/>
+  <xs:element name="tradeNameOther" type="xs:string"/>
+  <xs:element name="drug">
+    <xs:complexType>
+        <xs:sequence>
+          <xs:element ref="name"/>
+          <xs:element ref="drugNameOther"/>
+          <xs:element ref="activeIngredients"/>
+          <xs:element ref="administrationRoute"/>
+          <xs:element ref="manufacturer"/>
+          <xs:element ref="manufacturerOther"/>
+          <xs:element ref="tradeName" />
+          <xs:element ref="tradeNameOther" />
+          <xs:element ref="batches"/>
+          <xs:element ref="drugStorage"/>
+          <xs:element ref="drugDosingDeterminant"/>
+          <xs:element ref="ageDosing"/>
+          <xs:element ref="weightGroupDosing"/>
+          <xs:element ref="weightDosing"/>
+          <xs:element ref="feeding"/>
+          <xs:element ref="fatPerMeal"/>
+          <xs:element ref="feedingOther"/>
+          <xs:element ref="readministeredOnVomitting"/>
+          <xs:element ref="comments"/>
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="invitroDrug">
+    <xs:complexType>
+        <xs:sequence>
+          <xs:element ref="molecule"/>
+          <xs:element ref="solvent"/>
+          <xs:element ref="solventFinalConcentration"/>
+          <xs:element ref="providedByWwarn"/>
+          <xs:element ref="provider"/>
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="drugNameOther" type="xs:string"/>
+  <xs:element name="activeIngredients">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="activeIngredient"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="activeIngredient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="activeIngredientName"/>
+        <xs:element ref="activeIngredientNameOther"/>
+        <xs:element ref="activeIngredientMgPerDose"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="activeIngredientName" type="xs:string"/>
+  <xs:element name="activeIngredientNameOther" type="xs:string"/>
+  <xs:element name="activeIngredientMgPerDose" type="optionalDecimal"/>
+  <xs:element name="administrationRoute" type="xs:string"/>
+  <xs:element name="manufacturer" type="xs:string"/>
+  <xs:element name="manufacturerOther" type="xs:string"/>
+  <xs:element name="batchNumber" type="xs:string"/>
+  <xs:element name="expiryDate" type="xs:string"/>
+  <xs:element name="manufactureDate" type="xs:string"/>
+  <xs:element name="drugStorage" type="xs:string"/>
+  <xs:element name="drugDosingDeterminant" type="xs:string"/>
+  <xs:element name="ageDosing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ageDosingSchedule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ageDosingSchedule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="day"/>
+        <xs:element ref="hour"/>
+        <xs:element ref="ageFrom"/>
+        <xs:element ref="ageTo"/>
+        <xs:element ref="dose"/>
+        <xs:element ref="doseUnit"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ageFrom" type="optionalDecimal"/>
+  <xs:element name="ageTo" type="optionalDecimal"/>
+  <xs:element name="weightGroupDosing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="weightGroupDosingSchedule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="weightGroupDosingSchedule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="day"/>
+        <xs:element ref="hour"/>
+        <xs:element ref="weightGroupFrom"/>
+        <xs:element ref="weightGroupTo"/>
+        <xs:element ref="dose"/>
+        <xs:element ref="doseUnit"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="weightGroupFrom" type="optionalDecimal"/>
+  <xs:element name="weightGroupTo" type="optionalDecimal"/>
+  <xs:element name="weightDosing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="weightDosingSchedule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="weightDosingSchedule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="day"/>
+        <xs:element ref="hour"/>
+        <xs:element ref="dose"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="feeding" type="xs:string"/>
+  <xs:element name="fatPerMeal" type="xs:string"/>
+  <xs:element name="feedingOther" type="xs:string"/>
+  <xs:element name="readministeredOnVomitting" type="xs:string"/>
+  <xs:element name="comments" type="longString"/>
+  <xs:element name="molecule" type="xs:NCName"/>
+  <xs:element name="solvent" type="xs:string"/>
+  <xs:element name="solventFinalConcentration" type="xs:string"/>
+  <xs:element name="providedByWwarn" type="xs:boolean"/>
+  <xs:element name="provider" type="xs:string"/>
+  <xs:element name="percentageRereadBySecondMicroscopist" type="xs:string"/>
+  <xs:element name="rereadSlideSelectionMechanism" type="xs:string"/>
+  <xs:element name="rereadSlideSelectionMechanismOther" type="xs:string"/>
+  <xs:element name="sample">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="sampleTypeOpen"/>
+        <xs:sequence>
+          <xs:element ref="anticoagulent"/>
+          <xs:element ref="centrifugeTime"/>
+          <xs:element ref="storages"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sampleTypeOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="sampleType"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="sampleTypeOther"/>
+          <xs:element ref="wholeBloodSource"/>
+          <xs:element ref="dateCultureIsolated"/>
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sampleType" type="xs:string"/>
+  <xs:element name="sampleTypeOther" type="xs:string"/>
+  <xs:element name="wholeBloodSource" type="xs:string"/>
+  <xs:element name="dateCultureIsolated" type="xs:string"/>
+  <xs:element name="anticoagulent" type="xs:string"/>
+  <xs:element name="centrifugeTime" type="xs:string"/>
+  <xs:element name="storages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="storage" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="storage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="storageTemperature"/>
+        <xs:element ref="storageDuration"/>
+        <xs:element ref="storageDurationUnit"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="storageTemperature" type="xs:string"/>
+  <xs:element name="storageDuration" type="xs:string"/>
+  <xs:element name="storageDurationUnit" type="xs:string"/>
+  <xs:element name="locusTypeOpen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="locusType"/>
+        <xs:element ref="locusTypeOther"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="locusType" type="xs:string"/>
+  <xs:element name="locusTypeOther" type="xs:string"/>
+  <xs:element name="locusName" type="xs:string"/>
+  <xs:element name="day" type="optionalDecimal"/>
+  <xs:element name="hour" type="optionalDecimal"/>
+  <xs:element name="dose" type="xs:string"/>
+  <xs:element name="doseUnit" type="xs:string"/>
+</xs:schema>
+

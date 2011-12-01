@@ -27,10 +27,7 @@
     xmlns:at="http://purl.org/atompub/tombstones/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
-    xmlns:cggh="http://cggh.org/oxf/xml/form-runner"
-    xmlns:p="java:org.orbeon.oxf.processor.pipeline.PipelineFunctionLibrary"
-    xmlns:app="http://www.w3.org/2007/app"
-    xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/" xmlns:alf="http://www.alfresco.org">
+    xmlns:app="http://www.w3.org/2007/app">
     
     <head>
         <title>Study dashboard - Study <xforms:output value="instance('ins-study-entry')/manta:id"/></title>
@@ -47,7 +44,8 @@
         
         
 
-        <xforms:model id="mod-study-dashboard">
+        <xforms:model id="mod-study-dashboard" xmlns:ch="http://www.cggh.org/2011/chassis/xmlns"
+	schema="/insecure/schema/study.xsd">
         
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">

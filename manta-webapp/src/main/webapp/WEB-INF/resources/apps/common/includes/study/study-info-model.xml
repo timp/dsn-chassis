@@ -4,8 +4,7 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ctype="http://www.cggh.org/chassis-types"
-	xmlns:fn="http://www.w3.org/2005/xpath-functions" id="mod-study-info"
-	schema="../chassis-types.xsd">
+	xmlns:fn="http://www.w3.org/2005/xpath-functions" id="mod-study-info">
 
 
 	<!--
@@ -368,7 +367,7 @@
 	</xforms:instance>
 	
 	<xforms:instance id="study-info-resources" 
-		src="/apps/common/constants/studyInfoTypes.xsd"/>
+		src="../../../../../../insecure/schema/study.xsd"/>
 	<!--
 	In your XForms model, load resources.xml in an instance. 
 	Make sure to make that instance read-only and cacheable: this way the instance will only be stored once in memory 
