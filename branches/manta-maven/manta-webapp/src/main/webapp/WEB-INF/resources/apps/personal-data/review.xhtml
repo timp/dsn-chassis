@@ -159,10 +159,10 @@
 				<xforms:action ev:event="xforms-submit-error">
 					<xforms:setvalue if="event('response-status-code')=403" 
 								ref="instance('ins-message')/message-text" 
-								value="'Current user does not have required permissions. (Note that the file has been uploaded to Alfresco)'"/>
+								value="'Current user does not have required permissions. (Note that the file has been uploaded to Alfresco if the review passed)'"/>
 					<xforms:setvalue if="not(event('response-status-code')=403)"
 							ref="instance('ins-message')/message-text" 
-							value="concat('An error occurred (',event('error-type'),' response-status-code:',event('response-status-code'), ') while posting the review to Chassis. (Note that the file has been uploaded to Alfresco)', instance('ins-cmis-rest-control')//status)" />
+							value="concat('An error occurred (',event('error-type'),' response-status-code:',event('response-status-code'), ') while posting the review to Chassis. (Note that the file has been uploaded to Alfresco if the review passed)', instance('ins-cmis-rest-control')//status)" />
 						   
 	  			<xforms:message  level="modal" value="instance('ins-message')/message-text" />
 				</xforms:action>
@@ -334,7 +334,7 @@ Pass file to alfresco before posting review, so that alfresco errors are caught 
  -->
 
 
-						<xforms:action if="$is-send-alfresco">
+						<xforms:action>
 							<xxforms:variable name="study-id"
 								select="instance('ins-study-entry')//manta:id" />
 							<xxforms:variable name="media-entry"
@@ -342,7 +342,7 @@ Pass file to alfresco before posting review, so that alfresco errors are caught 
 							<xxforms:variable name="file-uri"
 								select="instance('ins-media-entry')//atom:link[@rel='self']/@href" />
 							<xforms:dispatch target="cmis-rest-model" 
-								name="cmis-rest-upload-file">
+								name="cmis-rest-upload-file" if="$is-send-alfresco and instance('ins-review-entry')//outcome='pass'">
 								<xxforms:context name="fr:media-entry" select="$media-entry"/>
 								<xxforms:context name="fr:site" select="$study-id" />
 								<xxforms:context name="fr:source" select="'Contributor'" />
@@ -351,7 +351,7 @@ Pass file to alfresco before posting review, so that alfresco errors are caught 
 								<xxforms:context name="fr:submitter" select="instance('ins-study-entry')/atom:author/atom:email/text()" />
 								<xxforms:context name="fr:der-comment" select="instance('ins-review-entry')//outcome" />
 							</xforms:dispatch>
-		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok'"
+		 	        <xforms:send ev:event="xforms-submit-done" if="xxforms:instance('ins-cmis-rest-control')//status = 'ok' or not($is-send-alfresco) or instance('ins-review-entry')//outcome='fail'"
       		      submission="sub-post-review" />
 						</xforms:action>
 					</xforms:action>
