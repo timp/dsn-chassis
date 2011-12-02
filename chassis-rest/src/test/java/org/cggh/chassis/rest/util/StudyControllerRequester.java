@@ -150,7 +150,6 @@ public class StudyControllerRequester {
       InputStream is = method.getResponseBodyAsStream();
       BufferedInputStream bis = new BufferedInputStream(is);
       StringBuffer sb = new StringBuffer();
-      String s = "";
       byte[] bytes = new byte[8192];
       int count = bis.read(bytes);
       while (count != -1 && count <= 8192) {
