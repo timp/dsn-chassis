@@ -18,6 +18,7 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
       StudyControllerRequester.delete(url);
     System.out.println("Posting " + studyFileName + " to " + url("/study"));
     HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
+    System.err.println("Create status:" + r.getStatus());
   }
 
   /**
