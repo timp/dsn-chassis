@@ -1,5 +1,6 @@
 <div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
 	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!-- TODO: ensure a file is selected before Upload is triggered -->
     <!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" 
@@ -22,7 +23,7 @@
     <!-- files are uploaded one at a time, this instance holds the data to be 
         posted -->
 
-    <xforms:instance id="ins-upload">
+    <xforms:instance id="ins-upload" xxforms:validation="skip">
         <upload xmlns=""
             scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term=""
             label="">
