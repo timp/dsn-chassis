@@ -22,7 +22,7 @@ public class ChassisRestConfig {
     // Read in from file system - scrt pzzwd
     
     // This is just a dummy run to see if file exists
-    // Not happy, at duplication but we cannot check 
+    // Not happy at duplication but we cannot check 
     // the properties file until we have set up the defaults
     c = new Configuration("chassis-rest", defaults);
     if (!c.configFileExists()) { 
