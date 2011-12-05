@@ -21,7 +21,6 @@ import org.w3c.dom.NodeList;
  */
 public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
 
-  protected static final String LOCAL_STUDIES_FEED_FILENAME = "downloaded/studies_feed.xml";
   private static String wwarnLivePassord;
   
   public DownloadLiveCreateDBTest() { 
@@ -156,10 +155,10 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     System.err.println("Elapsed:" + diff / 1000);
   }
 
-  private int countEntries(String xmlFile, String elementName) { 
+  private int countEntries(String xmlFile, String elementName) throws Exception { 
     File file = new File(xmlFile);
     if (!file.exists())
-      throw new IllegalArgumentException("File (" + xmlFile + ") not found");
+      throw new IllegalArgumentException("File (" + file.getCanonicalPath() + ") not found");
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
      // Create the builder and parse the file
     Document doc;
