@@ -112,11 +112,9 @@ declare function manta-plugin:before(
 ) as item()*
 {
 	let $request-data := $entity
-
-
 	let $message := ( "chassis-manta plugin, before: " , $operation  ) 
 	let $log := local:log4jDebug( $message )
-
+    (:let $log1 := util:log-app( "debug" , $manta-plugin:logger-name , $entity ):)
 
 	return 
 	
@@ -126,6 +124,9 @@ declare function manta-plugin:before(
         else if ( $operation = $CONSTANT:OP-UPDATE-MEMBER )
         then manta-plugin:before-update-member( $request , $request-data )
         
+        else if ( $operation = $CONSTANT:OP-CREATE-MEDIA )
+		then manta-plugin:before-create-media( $request , $entity )
+		
 	    else $request-data
 
 };
@@ -167,6 +168,23 @@ declare function manta-plugin:before-update-member(
 };
 
 
+declare function manta-plugin:before-create-media(
+	$request as element(request),
+	$request-data  as item()*
+) as item()*
+{
+   
+   let $request-path-info := manta-plugin:get-request-path-info($request)
+    let $message := ( "chassis-manta plugin, before-create-media: " , $request-path-info  ) 
+	let $log := local:log4jDebug( $message )
+	
+    return if ( matches( $request-path-info , "/media/submitted/[^/]+" ) )
+    then manta-plugin:before-create-submitted-media( $request-path-info, $request , $request-data )
+    else if ( matches( $request-path-info , "/media/curated/[^/]+" ) )
+    then manta-plugin:before-create-curated-media( $request-path-info, $request , $request-data )
+    else $request-data
+};
+
 
 
 declare function manta-plugin:before-create-member-study(
@@ -174,29 +192,82 @@ declare function manta-plugin:before-create-member-study(
 ) as item()*
 {
     let $filtered-request-data := manta-plugin:filter-study-entry( $request-data )
-    
-    (: create an associated study info entry :)
-(:    
-    let $study-info-entry := 
-        <atom:entry>
-            <atom:title type="text">Study Info</atom:title>
-        </atom:entry>
-        
-    let $study-info-entry := atomdb:create-member( "/study-info" , $study-info-entry ) 
-    let $study-info-uri := $study-info-entry/atom:link[@rel='edit']/@href
-:)    
-    (: add link from study to study-info entry :)
-(:   
-    let $augmented-request-data := 
-        <atom:entry>
-        {
-            $filtered-request-data/attribute::* ,
-            $filtered-request-data/child::*
-        }
-            <atom:link rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="{$study-info-uri}" type="{$CONSTANT:MEDIA-TYPE-ATOM};type=entry"/>
-        </atom:entry>
-:)    
     return $filtered-request-data
+};
+
+declare function manta-plugin:before-create-submitted-media(
+    $request-path-info as xs:string,
+    $request as element(request) ,
+    $request-data  as item()*
+) as item()*
+{
+    let $study-id := substring-after($request-path-info, "/media/submitted/")
+    let $ret := manta-plugin:check-media-unique-name($study-id, $request, $request-data)
+    return $ret
+};
+
+declare function manta-plugin:check-media-unique-name(
+    $study-id as xs:string,
+    $request as element(request) ,
+    $request-data  as item()*
+) as item()*
+{
+ (: check for file name to use as title :)
+	let $media-name := request:get-uploaded-file-name( "media" )
+    let $upload-name := $request//header[name = 'slug']/value
+    
+    let $file-name := if (string-length($upload-name) > 0) then
+        $upload-name
+        else
+        $media-name
+    
+    let $sm-collection := concat("/media/submitted/", $study-id)    
+    let $current-submitted-media := atomdb:retrieve-members( $sm-collection , true() )
+    let $entries := $current-submitted-media//atom:entry[atom:title/text() = $file-name]
+    let $message := concat($file-name,' already exists')
+    
+    let $sm-count := count($entries//atom:entry)
+     
+    let $same-name := if ($sm-count > 0) then
+        $sm-count
+    else 
+       let $cm-collection := concat("/media/curated/", $study-id)    
+       let $current-curated-media := atomdb:retrieve-members( $cm-collection , true() )
+       let $cm-entries := $current-curated-media//atom:entry[atom:title/text() = $file-name]
+       let $cm-count := count ($cm-entries//atom:entry)
+       return $cm-count
+       
+    let $ret := if ($same-name > 0) then
+        let $log1 := util:log-app( "info" , $manta-plugin:logger-name , concat('files of same name:',$study-id,':',$file-name,':',$same-name) )
+        let $resp :=
+     <response>
+            <status>409</status>
+            <headers>
+                <header>
+                    <name>{$CONSTANT:HEADER-CONTENT-TYPE}</name>
+                    <value>{$CONSTANT:MEDIA-TYPE-TEXT}</value>
+                </header>
+            </headers>
+            <body type="text">{$message}</body>
+        </response>
+        return $resp
+    else $request-data
+    
+    return $ret
+};
+
+
+
+
+declare function manta-plugin:before-create-curated-media(
+    $request-path-info as xs:string,
+    $request as element(request) ,
+    $request-data  as item()*
+) as item()*
+{
+    let $study-id := substring-after($request-path-info, "/media/curated/")
+    let $ret := manta-plugin:check-media-unique-name($study-id, $request, $request-data)
+    return $ret
 };
 
 declare function manta-plugin:is-draft($old-entry as element(atom:entry)) as xs:string
