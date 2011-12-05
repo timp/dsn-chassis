@@ -62,7 +62,7 @@
 
     <xforms:submission id="sub-post-upload" method="form-data-post"
         resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-        ref="instance('ins-upload')" replace="none">
+        ref="instance('ins-upload')" replace="none" >
 
         <xforms:header>
             <xforms:name>Accept</xforms:name>
@@ -81,7 +81,10 @@
         <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed" />
 
         <!-- TODO error handling -->
-        <xforms:message ev:event="xforms-submit-error" level="modal">
+        <xforms:message ev:event="xforms-submit-error" level="modal" if="event('response-status-code')=409">
+            Please do not upload two files with the same name.
+        </xforms:message>
+        <xforms:message ev:event="xforms-submit-error" level="modal" if="not(event('response-status-code')=409)">
             An error occurred (
             <xforms:output value="event('error-type')" />
             ) while posting an upload.
