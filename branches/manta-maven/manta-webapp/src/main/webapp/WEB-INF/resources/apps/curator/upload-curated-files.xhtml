@@ -160,6 +160,9 @@
         		instance="ins-uploads-results-feed">
         		<!-- TODO proper error handling -->
         		<xforms:message ev:event="xforms-submit-error" level="modal">The upload has failed. Please try again.</xforms:message>
+        		
+        		<xforms:message ev:event="xforms-submit-done" level="modal" if="event('response-status-code')=207">One or more files has the same name as an existing file and will not be uploaded.</xforms:message>
+        		
         		<xforms:action ev:event="xforms-submit-done">
         			<!--  
         			
