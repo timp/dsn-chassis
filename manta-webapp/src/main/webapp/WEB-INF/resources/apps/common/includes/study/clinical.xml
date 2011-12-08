@@ -77,6 +77,9 @@
                                                               <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
                                                               <xforms:value ref="@value"/>
                                                           </xforms:itemset>
+                                                          <xforms:action ev:event="xforms-value-changed">
+                                                                <xforms:rebuild model="mod-study-dashboard"/> 
+                                                           </xforms:action> 
                                                       </xforms:select1>
                                                       <xforms:input ref="drugNameOther">
                                                           <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/drugNameOther"/>
@@ -160,10 +163,17 @@
                                                               <xforms:label ref="@value"/>
                                                               <xforms:value ref="@value"/>
                                                           </xforms:itemset>
+                                                          <xforms:action ev:event="xforms-value-changed">
+                                                          <!-- 
+                                                            <xforms:message level="modal">Changing trade name (<xforms:output value="."/>)</xforms:message>
+                                                             -->
+                                                               <xforms:rebuild model="mod-study-dashboard"/> 
+                                                          </xforms:action>
                                                       </xforms:select1>
                                                       <xforms:input ref="tradeNameOther">
                                                           <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeNameOther"/>
                                                       </xforms:input>
+                                                     
                                                   <br/>
                                                       <xforms:select1 ref="manufacturer"
                                                           appearance="minimal">
