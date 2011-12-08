@@ -5,12 +5,18 @@
         </lookupAddress>
     </xforms:instance>
 
-<xforms:instance id="errors">
+    <xforms:instance id="errors">
         <errors xmlns="">
             <errors-count>0</errors-count>
             <valid>false</valid>
             <initialState>true</initialState>
         </errors>
+    </xforms:instance>
+    
+    <xforms:instance id="binding-control">
+        <bc xmlns="">
+            <rebuild/>
+        </bc>
     </xforms:instance>
     <xforms:bind nodeset="instance('errors')"
         relevant="instance('errors')/initialState = 'true' or instance('errors')/errors-count > 0" />
@@ -25,8 +31,7 @@
                 instance('ins-study-entry')//sites/site[index('rep-site')]/region, 
                 ' ', 
                 xxforms:instance('ins-country-items')/country[value=instance('ins-study-entry')//sites/site[index('rep-site')]/country]/label)" />
-
-
+    
     <xforms:bind nodeset="instance('ins-study-entry')/atom:content/study">
         
             <xforms:bind nodeset="study-info">

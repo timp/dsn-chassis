@@ -78,7 +78,9 @@
                                                               <xforms:value ref="@value"/>
                                                           </xforms:itemset>
                                                           <xforms:action ev:event="xforms-value-changed">
-                                                                <xforms:rebuild model="mod-study-dashboard"/> 
+                                                                <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement.... -->
+                                                                <xforms:rebuild model="mod-study-dashboard" /> 
                                                            </xforms:action> 
                                                       </xforms:select1>
                                                       <xforms:input ref="drugNameOther">
@@ -164,10 +166,12 @@
                                                               <xforms:value ref="@value"/>
                                                           </xforms:itemset>
                                                           <xforms:action ev:event="xforms-value-changed">
-                                                          <!-- 
-                                                            <xforms:message level="modal">Changing trade name (<xforms:output value="."/>)</xforms:message>
-                                                             -->
-                                                               <xforms:rebuild model="mod-study-dashboard"/> 
+                                                             
+                                                            <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement.... -->
+                                                            <xforms:rebuild model="mod-study-dashboard" />
+                                                            
+                                                                
                                                           </xforms:action>
                                                       </xforms:select1>
                                                       <xforms:input ref="tradeNameOther">
