@@ -5,7 +5,7 @@
         join cm:titled as t on f.cmis:objectid = t.cmis:objectid]]>
     </cmis:statement>
     <cmis:skipCount>0</cmis:skipCount>
-    <cmis:maxItems>5</cmis:maxItems>
+    <cmis:maxItems>-1</cmis:maxItems>
 </cmis:query>
 <!--
 Posting the query, as such:
