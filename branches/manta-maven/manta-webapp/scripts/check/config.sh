@@ -8,15 +8,15 @@ TICKETS=http://cloud1.cggh.org/sso/v1/tickets
 #HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
 #TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
 
-USERNAME=Ian
-PASSWORD=RziLNofiaR
+USERNAME=
+PASSWORD=
 HOST=https://www.wwarn.org/repository
 TICKETS=https://www.wwarn.org/sso/v1/tickets
 
 ALF_MACHINE_ADDRESS=www.wwarn.org
 ALF_HOME=https://${ALF_MACHINE_ADDRESS}/alfresco/service
-ALF_USERNAME=Ian
-ALF_PASSWORD=RziLNofiaR
+ALF_USERNAME=
+ALF_PASSWORD=
 
 COOKIES=cookie-jar
 STUDIES=studies.xml
