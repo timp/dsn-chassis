@@ -196,6 +196,9 @@
 					<name ref="TET">tetracycline</name>
 				</drugMolecule>
 				<drugMolecule>
+					<name ref="TQ">tafenoquine</name>
+				</drugMolecule>
+				<drugMolecule>
 					<name ref="Other">Other</name>
 				</drugMolecule>
 			</drugs>
