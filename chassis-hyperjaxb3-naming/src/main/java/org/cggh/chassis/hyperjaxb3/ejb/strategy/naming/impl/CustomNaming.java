@@ -10,7 +10,7 @@ import org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming;
 
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
-
+/** Do not uppercase and use a limit of 60 characters.*/
 public class CustomNaming extends DefaultNaming {
   private Map<String, String> nameKeyMap = new TreeMap<String, String>();
 
@@ -62,18 +62,6 @@ public class CustomNaming extends DefaultNaming {
       return name;
     }
 
-  }
-
-  @Override
-  public String getTableName(String qualifiedName) {
-    System.err.println("qualifiedName:" + qualifiedName);    
-    return super.getTableName(qualifiedName);
-  }
-
-  @Override
-  public String getEntityName(Outline outline, NType type) {
-    System.err.println("getEntityName:" + super.getEntityName(outline, type));    
-    return super.getEntityName(outline, type);
   }
 
   @Override
