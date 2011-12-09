@@ -18,21 +18,21 @@
   </dependency>
 
 
-		<!-- Roundtrip -->
+<!-- Roundtrip -->
   <dependency>
    <groupId>org.jvnet.hyperjaxb3</groupId>
    <artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
    <version>0.5.5</version>
   </dependency>
 
-		<!-- Hibernate Dependencies -->
+<!-- Hibernate Dependencies -->
   <dependency>
    <groupId>org.hibernate</groupId>
    <artifactId>hibernate-entitymanager</artifactId>
    <version>3.4.0.GA</version>
    <scope>test</scope>
   </dependency>
-		<!-- Database -->
+<!-- Database -->
   <dependency>
    <groupId>hsqldb</groupId>
    <artifactId>hsqldb</artifactId>
@@ -50,8 +50,14 @@
    <url>http://repository.jboss.com/maven2</url>
   </repository>
  </repositories>
-	<!-- <pluginRepositories> <pluginRepository> <id>maven2-repository.dev.java.net</id> 
-		<url>http://download.java.net/maven/2</url> </pluginRepository> </pluginRepositories> -->
+<!-- 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven2-repository.dev.java.net</id> 
+      <url>http://download.java.net/maven/2</url>
+    </pluginRepository> 
+  </pluginRepositories>
+-->
  <scm>
   <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-model</connection>
   <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-model</developerConnection>
@@ -63,7 +69,7 @@
    <plugin>
     <groupId>org.jvnet.hyperjaxb3</groupId>
     <artifactId>maven-hyperjaxb3-plugin</artifactId>
-    <version>0.5.5</version>
+    <version>0.5.7-SNAPSHOT</version>
     <executions>
      <execution>
       <phase>generate-sources</phase>
@@ -73,10 +79,29 @@
      </execution>
     </executions>
     <configuration>
+     <debug>TRUE</debug>
+     <variant>ejb</variant>
      <extension>true</extension>
      <roundtripTestClassName>RoundtripTest</roundtripTestClassName>
      <persistenceUnitName>org.cggh.chassis.study</persistenceUnitName>
+<!--     
+     <plugins>
+			<plugin>
+        <groupId>org.cggh.chassis</groupId>
+        <artifactId>chassis-hyperjaxb3-naming</artifactId>
+        <version>1.0-SNAPSHOT</version>
+			</plugin>
+     </plugins>
+-->     
     </configuration>
+    <dependencies>
+      <dependency>
+        <groupId>org.cggh.chassis</groupId>
+        <artifactId>chassis-hyperjaxb3-naming</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
    </plugin>
    <plugin>
     <inherited>true</inherited>
