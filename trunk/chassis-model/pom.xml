@@ -69,7 +69,7 @@
    <plugin>
     <groupId>org.jvnet.hyperjaxb3</groupId>
     <artifactId>maven-hyperjaxb3-plugin</artifactId>
-    <version>0.5.7-SNAPSHOT</version>
+    <version>0.5.5</version>
     <executions>
      <execution>
       <phase>generate-sources</phase>
