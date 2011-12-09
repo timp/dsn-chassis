@@ -35,7 +35,7 @@
 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="wc:fileSource"
 							displayName="File Source" queryName="wc:fileSource">
-							<cmis:value>Contributor</cmis:value>
+							<cmis:value><xsl:apply-templates mode="source" select="atom:id" /></cmis:value>
 						</cmis:propertyString>
 						<cmis:propertyString propertyDefinitionId="wc:submitter" displayName="Submitter"
  							queryName="wc:submitter">
@@ -92,7 +92,7 @@
 				<xsl:value-of select="@label"/>
 	</xsl:template>
 	
-	<xsl:template match="atom:id">
+	<xsl:template mode="source" match="atom:id">
 		<xsl:for-each select="str:tokenize(.,'/')">
 			<xsl:if test="'submitted' = .">Contributor</xsl:if>
 			<xsl:if test="'curated' = .">Curator</xsl:if>
