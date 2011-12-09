@@ -79,8 +79,9 @@
                                                           </xforms:itemset>
                                                           <xforms:action ev:event="xforms-value-changed">
                                                                 <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
-                                                            <!--  the rebuild is what should make it work however it's actually the previous statement.... -->
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement....
                                                                 <xforms:rebuild model="mod-study-dashboard" /> 
+                                                                -->
                                                            </xforms:action> 
                                                       </xforms:select1>
                                                       <xforms:input ref="drugNameOther">
@@ -168,9 +169,9 @@
                                                           <xforms:action ev:event="xforms-value-changed">
                                                              
                                                             <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
-                                                            <!--  the rebuild is what should make it work however it's actually the previous statement.... -->
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement....
                                                             <xforms:rebuild model="mod-study-dashboard" />
-                                                            
+                                                            -->
                                                                 
                                                           </xforms:action>
                                                       </xforms:select1>
