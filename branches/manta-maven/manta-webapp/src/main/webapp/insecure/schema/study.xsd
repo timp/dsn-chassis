@@ -109,6 +109,7 @@
 			<xs:enumeration value="QN" />
 			<xs:enumeration value="SX" />
 			<xs:enumeration value="TET" />
+		    <xs:enumeration value="TQ" />
 			<xs:enumeration value="Other" />
 		</xs:restriction>
 	</xs:simpleType>
@@ -139,6 +140,7 @@
 			<xs:enumeration value="SX" />
 			<xs:enumeration value="SX-PYR" />
 			<xs:enumeration value="TET" />
+		    <xs:enumeration value="TQ" />
 			<xs:enumeration value="Other" />
 		</xs:restriction>
 	</xs:simpleType>
