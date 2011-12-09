@@ -10,33 +10,32 @@ import org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming;
 
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
-/** Do not uppercase and use a limit of 60 characters.*/
-public class CustomNaming extends DefaultNaming {
-  private Map<String, String> nameKeyMap = new TreeMap<String, String>();
 
+/** Do not uppercase and use a limit of 60 characters. */
+public class CustomNaming extends DefaultNaming {
+
+  private Map<String, String> nameKeyMap = new TreeMap<String, String>();
   private Map<String, String> keyNameMap = new TreeMap<String, String>();
 
-  
   @Override
   public void afterPropertiesSet() throws Exception {
 
     final Set<Entry<Object, Object>> entries = getReservedNames()
-        .entrySet();
+            .entrySet();
     for (final Entry<Object, Object> entry : entries) {
       final Object entryKey = entry.getKey();
       if (entryKey != null) {
         final String key = entryKey.toString();
         final Object entryValue = entry.getValue();
         final String value = entryValue == null
-            || "".equals(entryValue.toString().trim()) ? key + "_"
-            : entryValue.toString();
+                || "".equals(entryValue.toString().trim()) ? key + "_"
+                : entryValue.toString();
         nameKeyMap.put(key, value);
         keyNameMap.put(value, key);
       }
     }
   }
 
-  
   @Override
   public String getName(final String draftName) {
 
@@ -48,7 +47,7 @@ public class CustomNaming extends DefaultNaming {
       for (int i = 0;; i++) {
         final String suffix = Integer.toString(i);
         final String prefix = name.substring(0,
-            getMaxIdentifierLength() - suffix.length() - 1);
+                getMaxIdentifierLength() - suffix.length() - 1);
         final String identifier = prefix + "_" + suffix;
         if (!keyNameMap.containsKey(identifier)) {
           nameKeyMap.put(name, identifier);
@@ -68,5 +67,5 @@ public class CustomNaming extends DefaultNaming {
   public int getMaxIdentifierLength() {
     return 60;
   }
-  
+
 }
