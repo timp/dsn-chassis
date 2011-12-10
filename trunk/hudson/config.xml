@@ -157,6 +157,7 @@
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
         <string>cggh-common</string>
+        <string>chassis-hyperjaxb3-naming</string>
         <string>chassis-model</string>
         <string>chassis-rest</string>
         <string>checkStudyFeedBasic</string>
