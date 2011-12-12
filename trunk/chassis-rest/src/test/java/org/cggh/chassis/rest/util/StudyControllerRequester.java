@@ -132,9 +132,9 @@ public class StudyControllerRequester {
   }
 
 
-  private static HttpResponse update(String studyFileName, final EntityEnclosingMethod method)
+  private static HttpResponse update(String xmlFileName, final EntityEnclosingMethod method)
           throws FileNotFoundException, IOException, HttpException {
-    InputStream data = new FileInputStream(studyFileName);
+    InputStream data = new FileInputStream(xmlFileName);
     method.setRequestEntity(new InputStreamRequestEntity(data));
     method.setRequestHeader("Content-Type", "application/xml");
 
