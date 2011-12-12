@@ -8,9 +8,6 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.Validate;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.impl.DefaultNaming;
 
-import com.sun.tools.xjc.model.nav.NType;
-import com.sun.tools.xjc.outline.Outline;
-
 /** Do not uppercase and use a limit of 60 characters. */
 public class CustomNaming extends DefaultNaming {
 
