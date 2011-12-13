@@ -49,7 +49,7 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
 
   public void testAddStudies() throws Exception { 
     System.err.println(FULL_FEED_FILENAME);
-    HttpResponse response = StudyControllerRequester.create(FULL_FEED_FILENAME, url("/study"));
+    HttpResponse response = StudyControllerRequester.create(FULL_FEED_FILENAME, url("/studies"));
     System.out.println(response.getBody());
   }
 
