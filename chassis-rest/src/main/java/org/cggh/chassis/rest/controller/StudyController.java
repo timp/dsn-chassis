@@ -16,7 +16,6 @@ import org.cggh.chassis.rest.bean.UnmarshalledObject;
 import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
-import org.cggh.chassis.rest.jaxb.EntryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
@@ -66,7 +65,7 @@ public class StudyController {
   @RequestMapping(method = RequestMethod.PUT, value = "/study/{id}")
   public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+    UnmarshalledEntry unmarshalledResult = UnmarshalledEntry.create(validatingMarshaller, source);
     // s = m_studyDAO.unmarshal(source);
     // s= (Entry) jaxb2Mashaller.unmarshal(source);
     if (unmarshalledResult.getErrors().isEmpty()) {
@@ -88,7 +87,7 @@ public class StudyController {
   public ModelAndView addStudy(@RequestBody String body, HttpServletResponse response)
           throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
+    UnmarshalledEntry unmarshalledResult = UnmarshalledEntry.create(validatingMarshaller, source);
 
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
