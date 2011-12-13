@@ -11,6 +11,8 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.cggh.chassis.rest.bean.UnmarshalledEntry;
+import org.cggh.chassis.rest.bean.UnmarshalledFeed;
+import org.cggh.chassis.rest.bean.UnmarshalledObject;
 import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
@@ -103,24 +105,35 @@ public class StudyController {
     }
   }
 
-  private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledEntry unmarshalledResult) {
+  private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject unmarshalledResult) {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
-    Entry entry = unmarshalledResult.getEntry();
     ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
-    String studyId = entry == null ? "dummy2" : entry.getStudyID();
-    mav.addObject("id", studyId);
+    mav.addObject("id", unmarshalledResult.getId());
 
     return mav;
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/studies")
   public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
-    // Source source = new StreamSource(new StringReader(body));
-    // FIXME not working yet
-    // UnmarshalledEntry unmarshalledResult = EntryUtil.validate(validatingMarshaller, source);
-    Feed list = new Feed();
-    list.setEntry((List<Entry>) studyDAO.getAll());
-    return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
+    Source source = new StreamSource(new StringReader(body));
+    UnmarshalledFeed unmarshalledResult = UnmarshalledFeed.create(validatingMarshaller, source);
+    if (unmarshalledResult.getErrors().isEmpty()) {
+      for (Entry entry  : unmarshalledResult.getFeed().getEntry()) {
+        try {
+          studyDAO.saveEntry(entry);
+        } catch (Exception e) {
+          ModelAndView mav = marshallingError(response, unmarshalledResult);
+          mav.addObject("exception", e.getMessage());
+          return mav;
+        }        
+      }
+      response.setStatus(HttpStatus.SC_CREATED);
+      Feed list = new Feed();
+      list.setEntry((List<Entry>) studyDAO.getAll());
+      return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
+    } else {
+      return marshallingError(response, unmarshalledResult);
+    }
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/study/{id}")
