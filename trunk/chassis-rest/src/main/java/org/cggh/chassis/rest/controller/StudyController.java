@@ -10,10 +10,10 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.httpclient.HttpStatus;
-import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
 import org.cggh.chassis.rest.jaxb.UnmarshalledObject;
+import org.cggh.chassis.rest.jaxb.ValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
@@ -55,8 +55,12 @@ public class StudyController {
 
   private ModelAndView notFound(String id, HttpServletResponse response) {
     response.setStatus(HttpStatus.SC_NOT_FOUND);
-    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", new ArrayList<ValidationError>());
+    UnmarshalledObject<Entry> unmo = new UnmarshalledObject<Entry>();
+    unmo.addError(new ValidationError("No study found with id " + id));
+    
+    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "empty", unmo);
     mav.addObject("id", id);
+    mav.addObject("errors", unmo.getErrors());
     return mav;
   }
 
