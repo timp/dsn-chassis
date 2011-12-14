@@ -54,11 +54,15 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
   }
 
   public void testReadNotFound() throws Exception { 
-    // FIXME We are not marshalling if not found
-    assertEquals(url("/study/notThere.xml"),  500, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
+    assertEquals(url("/study/notThere.xml"),  404, StudyControllerRequester.read(url("/study/notThere.xml")).getStatus());
     assertEquals(url("/study/notThere.html"), 404, StudyControllerRequester.read(url("/study/notThere.html")).getStatus());
-    // This is due to not inferring the correct template when no extension
-    assertEquals(url("/study/notThere"),      404, StudyControllerRequester.read(url("/study/notThere")).getStatus());
+
+    HttpResponse r = StudyControllerRequester.read(url("/study/notThere"));
+    assertEquals(url("/study/notThere"),      404, r.getStatus());
+    System.err.println(r.getBody());
+    
+    r = StudyControllerRequester.readAcceptingHtml(url("/study/notThere"));
+    assertEquals(url("/study/notThere"),      404, r.getStatus());
   }
 
   public void testDelete() throws Exception { 
@@ -67,17 +71,19 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
   
     // FIXME We are not marshalling if not found
     HttpResponse deleteNonExistent = StudyControllerRequester.delete(url("/study/notThere.xml"));
-    assertEquals(deleteNonExistent.getBody(), 500, deleteNonExistent.getStatus());
+    assertEquals(deleteNonExistent.getBody(), 404, deleteNonExistent.getStatus());
   
     HttpResponse deleteNonExistentHtml = StudyControllerRequester.delete(url("/study/notThere.html"));
     assertEquals(deleteNonExistentHtml.getBody(), 404, deleteNonExistentHtml.getStatus());
-    
+    assertTrue(deleteNonExistentHtml.getBody(), deleteNonExistentHtml.getBody().indexOf("No study found with id notThere") > -1);
   }
   
   public void testCount() throws Exception { 
     HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
-    System.err.println(response.getStatus());
-    System.err.println(response.getBody());
+    
+    assertEquals(url("/studyCount"), 200, response.getStatus());
+
+    //System.err.println(response.getBody());
   }
 
 }
