@@ -43,7 +43,7 @@ public class UnmarshalledObject<T> {
 
   public T getIt() {
     if (it == null)
-      unmarshall();
+      it = unmarshall();
     return it;
   }
 
@@ -51,7 +51,7 @@ public class UnmarshalledObject<T> {
     this.it = it;
   }
   @SuppressWarnings("unchecked")
-  private void unmarshall() {
+  private T unmarshall() {
     
     marshaller.setValidationEventHandler(new ValidationEventHandler() {
       public boolean handleEvent(ValidationEvent event) {
@@ -60,7 +60,7 @@ public class UnmarshalledObject<T> {
       }
     });
   
-    setIt((T) marshaller.unmarshal(source));
+    return (T) marshaller.unmarshal(source);
   }
 
   private String id;
@@ -69,10 +69,6 @@ public class UnmarshalledObject<T> {
   @XmlElementWrapper(name = "errors")
   @XmlElement(name = "error")
   private List<ValidationError> errors = new Vector<ValidationError>();
-
-  public UnmarshalledObject() {
-    super();
-  }
 
   public List<ValidationError> getErrors() {
   	return errors;
