@@ -51,7 +51,7 @@ public class StudyControllerRequester {
     // Accept: */*
     // httpclient does not.
     // for */* spring returns xml, for nothing it throws and error.
-    method.setRequestHeader("Accept", "application/xml");
+    method.setRequestHeader("Accept", "text/html");
     return method;
   }
 
@@ -59,20 +59,18 @@ public class StudyControllerRequester {
     // Note: curl adds a default of
     // Accept: */*
     // httpclient does not.
-    // for */* spring returns xml, for nothing it throws and error.
+    // for */* spring returns xml, for nothing it throws an error.
     method.setRequestHeader("Accept", "text/html");
     return method;
   }
 
   static HttpMethod acceptXmlHttpMethod(HttpMethod method) {
-    method.setRequestHeader("Accept", "text/html");
-    // FIXME
-    // method.setRequestHeader("Accept", "application/xml");
+    method.setRequestHeader("Accept", "application/xml");
     return method;
   }
 
   static EntityEnclosingMethod acceptXmlHttpMethod(EntityEnclosingMethod method) {
-    method.setRequestHeader("Accept", "text/html");
+    method.setRequestHeader("Accept", "application/xml");
     return method;
   }
 
