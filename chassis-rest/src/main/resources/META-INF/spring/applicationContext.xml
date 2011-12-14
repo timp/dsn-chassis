@@ -49,8 +49,8 @@
 	<bean id="errorMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
-				<value>org.cggh.chassis.rest.bean.ValidationError</value>
-				<value>org.cggh.chassis.rest.bean.UnmarshalledEntry</value>
+				<value>org.cggh.chassis.rest.jaxb.ValidationError</value>
+				<value>org.cggh.chassis.rest.jaxb.UnmarshalledObject</value>
 			</list>
 		</property>
 	</bean>

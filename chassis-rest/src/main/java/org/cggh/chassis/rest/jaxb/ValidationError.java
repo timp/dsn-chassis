@@ -1,4 +1,4 @@
-package org.cggh.chassis.rest.bean;
+package org.cggh.chassis.rest.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
