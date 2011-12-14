@@ -41,10 +41,11 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   public void testGetWwarnChassis() throws Exception {
       setupXmlFiles();
       testPostsFromDirectory(DATA_STUDIES);
-      HttpResponse response = StudyControllerRequester.read(url("/studyCount"));
+      HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
+      assertEquals(url("/studyCount"), 200, response.getStatus());
       System.err.println(response.getBody());
       if (response.getBody().
-              indexOf("" + countEntries(LOCAL_STUDIES_FEED_FILENAME, "atom:entry")) > -1)
+            indexOf("" + countEntries(LOCAL_STUDIES_FEED_FILENAME, "atom:entry")) > -1)
         System.err.println("Looks like there no are validation errors");
       else
         System.err.println("Looks like there are validation errors");
@@ -62,7 +63,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     assertEquals(url, 200, response.getStatus());
     
     
-    //assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
+    assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
 
     
     File studiesDir = new File(directory);
