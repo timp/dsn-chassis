@@ -52,11 +52,14 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   }
 
   private void testPostsFromDirectory(String directory) throws Exception { 
-    HttpResponse response = StudyControllerRequester.uncache(url("/uncache"));
+    String url = url("/uncache");
+    HttpResponse response = StudyControllerRequester.uncache(url);
     System.out.println(response.getBody());
-    assertEquals(200, response.getStatus());
-    response = StudyControllerRequester.read(url("/studies/"));   
-    assertEquals(200, response.getStatus());
+    assertEquals(url, 200, response.getStatus());
+    
+    url = url("/studies/");
+    response = StudyControllerRequester.read(url);   
+    assertEquals(url, 200, response.getStatus());
     
     
     //assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
