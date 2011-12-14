@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.transform.Source;
 
-import org.cggh.chassis.rest.bean.ValidationError;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 
@@ -35,6 +34,10 @@ public class UnmarshalledObject<T> {
   
   protected T it;
   
+  // FIXME remove this it is only referred to in the errorMarshaller
+  public UnmarshalledObject() {
+    super();
+  }
   public UnmarshalledObject(Jaxb2Marshaller marshaller, Source source) {
     super();
     this.marshaller = marshaller;
