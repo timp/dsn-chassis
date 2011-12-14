@@ -13,8 +13,6 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.cggh.chassis.rest.bean.ValidationError;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
-import org.cggh.chassis.rest.jaxb.UnmarshalledEntry;
-import org.cggh.chassis.rest.jaxb.UnmarshalledFeed;
 import org.cggh.chassis.rest.jaxb.UnmarshalledObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -65,19 +63,19 @@ public class StudyController {
   @RequestMapping(method = RequestMethod.PUT, value = "/study/{id}")
   public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalledEntry unmarshalledResult = UnmarshalledEntry.from(validatingMarshaller, source);
+    UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
     // s = m_studyDAO.unmarshal(source);
     // s= (Entry) jaxb2Mashaller.unmarshal(source);
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
-        studyDAO.updateEntry(id, unmarshalledResult.getEntry());
+        studyDAO.updateEntry(id, unmarshalledResult.getIt());
       } catch (Exception e) {
         ModelAndView mav = marshallingError(response, unmarshalledResult);
         mav.addObject("exception", e.getMessage());
         return mav;
       }
       response.setStatus(HttpStatus.SC_CREATED);
-      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getEntry());
+      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getIt());
     } else {
       return new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
     }
@@ -87,24 +85,24 @@ public class StudyController {
   public ModelAndView addStudy(@RequestBody String body, HttpServletResponse response)
           throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalledEntry unmarshalledResult = UnmarshalledEntry.from(validatingMarshaller, source);
+    UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
 
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
-        studyDAO.saveEntry(unmarshalledResult.getEntry());
+        studyDAO.saveEntry(unmarshalledResult.getIt());
       } catch (Exception e) {
         ModelAndView mav = marshallingError(response, unmarshalledResult);
         mav.addObject("exception", e.getMessage());
         return mav;
       }
       response.setStatus(HttpStatus.SC_CREATED);
-      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getEntry());
+      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getIt());
     } else {
       return marshallingError(response, unmarshalledResult);
     }
   }
 
-  private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject unmarshalledResult) {
+  private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject<?> unmarshalledResult) {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
     ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
     mav.addObject("id", unmarshalledResult.getId());
@@ -115,9 +113,9 @@ public class StudyController {
   @RequestMapping(method = RequestMethod.POST, value = "/studies")
   public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
-    UnmarshalledFeed unmarshalledResult = UnmarshalledFeed.from(validatingMarshaller, source);
+    UnmarshalledObject<Feed> unmarshalledResult = new UnmarshalledObject<Feed>(validatingMarshaller, source);
     if (unmarshalledResult.getErrors().isEmpty()) {
-      for (Entry entry  : unmarshalledResult.getFeed().getEntry()) {
+      for (Entry entry  : unmarshalledResult.getIt().getEntry()) {
         try {
           studyDAO.saveEntry(entry);
         } catch (Exception e) {
