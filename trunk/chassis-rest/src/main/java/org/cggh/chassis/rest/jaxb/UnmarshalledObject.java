@@ -1,4 +1,4 @@
-package org.cggh.chassis.rest.bean;
+package org.cggh.chassis.rest.jaxb;
 
 import java.util.List;
 import java.util.Vector;
@@ -9,14 +9,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.cggh.chassis.rest.bean.ValidationError;
+
 
 /**
- * A Java object is UNMARSHALLED from XML.
- * Thsi process may not be error free. 
+ * A Java object is UNMARSHALLED _from_ XML eg an atom entry or feed.
+ * This process may not be error free.
+ *  
+ *  It can be also, confusingly, be rendered as XML. 
+ *  
  * @author timp
  * @since 13 Dec 2011
  *
  */
+
 @XmlRootElement(name="results")
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class UnmarshalledObject {
@@ -57,7 +63,4 @@ public abstract class UnmarshalledObject {
   public void setException(String exceptionMessage) {
     this.exceptionMessage = exceptionMessage;
   }
-
-  public abstract void setIt(Object it); 
-  public abstract Object getIt(); 
 }
