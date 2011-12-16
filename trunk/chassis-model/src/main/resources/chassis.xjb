@@ -18,25 +18,23 @@
 		</jaxb:schemaBindings>
 
 		<jaxb:bindings node="//xs:element[@ref='internal']">
-			<jaxb:property name="internalQC"/>
-			<hj:id/>
+			<jaxb:property name="InternalQC"/>
 		</jaxb:bindings>
 		<jaxb:bindings node="//xs:element[@ref='external']">
-			<jaxb:property name="externalQC"/>
-			<hj:id/>
+			<jaxb:property name="ExternalQC"/>
 		</jaxb:bindings>
 
 		<jaxb:bindings node="xs:element[@name='internal']/xs:complexType">
-			<hj:entity name="internalQC">
-				<orm:table name="internalQC"/>
+			<hj:entity name="InternalQC">
+				<orm:table name="InternalQC"/>
 			</hj:entity>
-            <jaxb:class name="internalQC" /> 
+            <jaxb:class name="InternalQC" /> 
 		</jaxb:bindings>
 		<jaxb:bindings node="xs:element[@name='external']/xs:complexType">
-			<hj:entity name="externalQC">
-				<orm:table name="externalQC"/>
+			<hj:entity name="ExternalQC">
+				<orm:table name="ExternalQC"/>
 			</hj:entity>
-            <jaxb:class name="externalQC" /> 
+            <jaxb:class name="ExternalQC" /> 
 		</jaxb:bindings>
 
 	</jaxb:bindings>

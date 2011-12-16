@@ -15,8 +15,8 @@
 		</jaxb:schemaBindings>
 		
 		<jaxb:bindings node="xs:element[@name='group']/xs:complexType">
-			<hj:entity name="adminGroup">
-				<orm:table name="adminGroup"/>
+			<hj:entity name="AdminGroup">
+				<orm:table name="AdminGroup"/>
 			</hj:entity>
             <jaxb:class name="AdminGroup" /> 
 		</jaxb:bindings>

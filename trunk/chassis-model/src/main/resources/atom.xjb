@@ -19,12 +19,11 @@
 		</jaxb:globalBindings>
 		
 		<jaxb:bindings node="//xs:element[@ref='manta:id']">
-			<jaxb:property name="studyID"/>
+			<jaxb:property name="StudyID"/>
 			<hj:id/>
 		</jaxb:bindings>
 		<jaxb:bindings node="//xs:element[@ref='ar:comment']">
-			<jaxb:property name="gloss"/>
-			<hj:id/>
+			<jaxb:property name="Gloss"/>
 		</jaxb:bindings>
 
 
