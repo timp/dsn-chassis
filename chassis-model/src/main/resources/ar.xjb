@@ -11,8 +11,8 @@
   <jaxb:bindings schemaLocation="ar.xsd" node="/xs:schema">
    
     <jaxb:bindings node="xs:element[@name='comment']/xs:complexType">
-     <hj:entity name="gloss">
-      <orm:table name="gloss"/>
+     <hj:entity name="Gloss">
+      <orm:table name="Gloss"/>
      </hj:entity>
      <jaxb:class name="Gloss" /> 
     </jaxb:bindings>
