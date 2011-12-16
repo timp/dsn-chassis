@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
- xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
- xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
- xmlns:xs="http://www.w3.org/2001/XMLSchema"
- xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
- version="2.1">
+<jaxb:bindings 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+   xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+   version="2.1"
+   jaxb:extensionBindingPrefixes="hj orm">
 	
-	
+	<!-- see http://confluence.highsource.org/display/HJ3/Purchase+Order+Tutorial	-->
+
 	<jaxb:bindings schemaLocation="chassis.xsd" node="/xs:schema">
 		
 		<jaxb:schemaBindings>
 			<jaxb:package name="org.cggh.chassis"/>
 		</jaxb:schemaBindings>
-		
+
+		<jaxb:bindings node="//xs:element[@ref='internal']">
+			<jaxb:property name="internalQC"/>
+			<hj:id/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@ref='external']">
+			<jaxb:property name="externalQC"/>
+			<hj:id/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:element[@name='internal']/xs:complexType">
+			<hj:entity name="internalQC">
+				<orm:table name="internalQC"/>
+			</hj:entity>
+            <jaxb:class name="internalQC" /> 
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='external']/xs:complexType">
+			<hj:entity name="externalQC">
+				<orm:table name="externalQC"/>
+			</hj:entity>
+            <jaxb:class name="externalQC" /> 
+		</jaxb:bindings>
+
 	</jaxb:bindings>
 </jaxb:bindings>

@@ -6,7 +6,7 @@
    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
    xmlns:xs="http://www.w3.org/2001/XMLSchema"
    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-   version="2.1" 
+   version="2.1"
    jaxb:extensionBindingPrefixes="hj orm">
 	
 	<jaxb:bindings schemaLocation="atombeat.xsd" node="/xs:schema">
@@ -22,6 +22,5 @@
 		</jaxb:bindings>
 		
     </jaxb:bindings>
-
 </jaxb:bindings>
 

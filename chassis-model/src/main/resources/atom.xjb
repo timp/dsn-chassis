@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<jaxb:bindings 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
@@ -12,6 +13,7 @@
 
 	
 	<jaxb:bindings schemaLocation="atom.xsd" node="/xs:schema">
+
 		<jaxb:globalBindings localScoping="toplevel">
 			<jaxb:serializable/>
 		</jaxb:globalBindings>
