@@ -17,8 +17,7 @@ public class CustomNaming extends DefaultNaming {
   @Override
   public void afterPropertiesSet() throws Exception {
 
-    final Set<Entry<Object, Object>> entries = getReservedNames()
-            .entrySet();
+    final Set<Entry<Object, Object>> entries = getReservedNames().entrySet();
     for (final Entry<Object, Object> entry : entries) {
       final Object entryKey = entry.getKey();
       if (entryKey != null) {
@@ -35,11 +34,10 @@ public class CustomNaming extends DefaultNaming {
 
   @Override
   public String getName(final String draftName) {
-
     Validate.notNull(draftName, "Name must not be null.");
     final String name = draftName.replace('$', '_');
     if (nameKeyMap.containsKey(name)) {
-      return (String) nameKeyMap.get(name);
+      return nameKeyMap.get(name);
     } else if (name.length() >= getMaxIdentifierLength()) {
       for (int i = 0;; i++) {
         final String suffix = Integer.toString(i);
@@ -52,12 +50,13 @@ public class CustomNaming extends DefaultNaming {
           return identifier;
         }
       }
-    } else if (getReservedNames().contains(name)) {
+      
+      // Was contains, reported at http://java.net/jira/browse/HYPERJAXB3-153 
+    } else if (getReservedNames().containsKey(name.toUpperCase())) {
       return name + "_";
     } else {
       return name;
     }
-
   }
 
   @Override
