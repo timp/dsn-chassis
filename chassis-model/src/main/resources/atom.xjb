@@ -20,6 +20,16 @@
 			<jaxb:property name="studyID"/>
 			<hj:id/>
 		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@ref='ar:comment']">
+			<jaxb:property name="gloss"/>
+			<hj:id/>
+		</jaxb:bindings>
+
+
+
+
+
+
 		<!--
 		<jaxb:bindings node="xs:complexType[@name='PurchaseOrderType']">
 			<hj:entity>
@@ -45,5 +55,10 @@
 			</hj:basic>
 		</jaxb:bindings>
 		-->
+
+
+
+
+
 	</jaxb:bindings>
 </jaxb:bindings>
