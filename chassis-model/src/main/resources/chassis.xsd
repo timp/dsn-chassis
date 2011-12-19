@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+<xs:schema 
+  version="2.1"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified" 
+  xmlns:ar="http://purl.org/atompub/revision/1.0" 
+  xmlns:app="http://www.w3.org/2007/app" 
+  xmlns:atombeat="http://purl.org/atombeat/xmlns" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
   xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
   xmlns:ch="http://www.cggh.org/2011/chassis/xmlns"
   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-  version="2.1"
   jaxb:extensionBindingPrefixes="hj orm">
   <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
   <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings 
+   version="2.1"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_1.xsd"
    xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
    xmlns:xs="http://www.w3.org/2001/XMLSchema"
    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-   version="2.1"
    jaxb:extensionBindingPrefixes="hj orm">
 	
 	<jaxb:bindings schemaLocation="atombeat.xsd" node="/xs:schema">

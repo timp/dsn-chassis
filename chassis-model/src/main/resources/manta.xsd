@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+<xs:schema 
+  jaxb:version="2.1"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified"
   targetNamespace="http://www.cggh.org/2010/chassis/manta/xmlns"
-  xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:app="http://www.w3.org/2007/app"
-  xmlns:atombeat="http://purl.org/atombeat/xmlns" xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:ar="http://purl.org/atompub/revision/1.0" 
+  xmlns:app="http://www.w3.org/2007/app"
+  xmlns:atombeat="http://purl.org/atombeat/xmlns" 
+  xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-  jaxb:version="2.1"
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
   <xs:import schemaLocation="chassis.xsd"/>
   <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
