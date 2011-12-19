@@ -37,7 +37,7 @@
       </xs:simpleType>
       <xs:simpleType>
         <xs:restriction base='xs:string'>
-          <xs:maxLength value="0"/>
+          <xs:minLength value="0"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:union>
@@ -49,7 +49,7 @@
       </xs:simpleType>
       <xs:simpleType>
         <xs:restriction base='xs:string'>
-          <xs:maxLength value="0"/>
+          <xs:minLength value="0"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:union>
