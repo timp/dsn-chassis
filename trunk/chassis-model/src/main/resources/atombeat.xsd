@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://purl.org/atombeat/xmlns"   
-xmlns:atombeat="http://purl.org/atombeat/xmlns">
-
- 
- 
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified" 
+  targetNamespace="http://purl.org/atombeat/xmlns"   
+  xmlns:atombeat="http://purl.org/atombeat/xmlns"
+  >
   <xs:attribute name="enable-versioning" type="xs:boolean"/>
   <xs:attribute name="exclude-entry-content" type="xs:boolean"/>
   <xs:attribute name="recursive" type="xs:boolean"/>
