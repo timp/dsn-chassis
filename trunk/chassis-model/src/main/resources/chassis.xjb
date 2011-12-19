@@ -37,5 +37,13 @@
             <jaxb:class name="ExternalQC" /> 
 		</jaxb:bindings>
 
+
+		<jaxb:bindings node="xs:element[@name='storage']/xs:complexType">
+			<hj:entity name="SampleStorage">
+				<orm:table name="SampleStorage"/>
+			</hj:entity>
+            <jaxb:class name="SampleStorage" /> 
+		</jaxb:bindings>
+
 	</jaxb:bindings>
 </jaxb:bindings>
