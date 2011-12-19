@@ -49,7 +49,7 @@
 
         <xs:element ref="manta:id"/>
           
-        <xs:element maxOccurs="unbounded" ref="atom:link"/>
+        <xs:element ref="atom:link" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
