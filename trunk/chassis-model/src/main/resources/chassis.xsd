@@ -3,21 +3,16 @@
   version="2.1"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   elementFormDefault="qualified" 
-  xmlns:ar="http://purl.org/atompub/revision/1.0" 
-  xmlns:app="http://www.w3.org/2007/app" 
+ 
   xmlns:atombeat="http://purl.org/atombeat/xmlns" 
-  xmlns:atom="http://www.w3.org/2005/Atom" 
-  xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+  
   xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
   xmlns:ch="http://www.cggh.org/2011/chassis/xmlns"
   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
   jaxb:extensionBindingPrefixes="hj orm">
   <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
-  <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>
-  <xs:import namespace="http://www.cggh.org/2010/chassis/manta/xmlns" schemaLocation="manta.xsd"/>
-  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
-  <xs:import namespace="http://www.w3.org/2007/app" schemaLocation="app.xsd"/>
+  
   <xs:import namespace="http://www.cggh.org/2011/chassis/xmlns" schemaLocation="studyInfoTypes.xsd"/>
   
   <xs:simpleType name="longURI">
@@ -54,7 +49,7 @@
       </xs:simpleType>
     </xs:union>
   </xs:simpleType>
-  <xs:element name="draft" type="xs:NCName"/>
+ 
   <xs:element name="studyTitle" type="longString"/>
   <xs:element name="study">
     <xs:complexType>

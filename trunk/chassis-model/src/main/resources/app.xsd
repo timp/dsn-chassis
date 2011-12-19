@@ -2,23 +2,16 @@
 <xs:schema 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     elementFormDefault="qualified" 
-    targetNamespace="http://www.w3.org/2007/app" 
-    xmlns:ar="http://purl.org/atompub/revision/1.0" 
+    targetNamespace="http://www.w3.org/2007/app"  
     xmlns:app="http://www.w3.org/2007/app" 
-    xmlns:atombeat="http://purl.org/atombeat/xmlns" 
-    xmlns:atom="http://www.w3.org/2005/Atom" 
-    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
     >
-  <xs:import schemaLocation="chassis.xsd"/>
-  <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
-  <xs:import namespace="http://purl.org/atompub/revision/1.0" schemaLocation="ar.xsd"/>
-  <xs:import namespace="http://www.cggh.org/2010/chassis/manta/xmlns" schemaLocation="manta.xsd"/>
-  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
+  
   <xs:element name="control">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="draft"/>
+        <xs:element ref="app:draft"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+   <xs:element name="draft" type="xs:NCName"/>
 </xs:schema>

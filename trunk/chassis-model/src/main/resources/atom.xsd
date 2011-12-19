@@ -42,15 +42,8 @@
         <xs:element ref="atom:content"/>
         <xs:element ref="ar:comment"/>
 
-        <xs:element ref="manta:id">
-          <!--
-          <xs:annotation>
-            <xs:appinfo>
-              <jaxb:property name="studyID"/>
-            </xs:appinfo>
-          </xs:annotation>
-          -->
-        </xs:element>
+        <xs:element ref="manta:id"/>
+          
         <xs:element maxOccurs="unbounded" ref="atom:link"/>
       </xs:sequence>
     </xs:complexType>
