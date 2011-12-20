@@ -45,6 +45,10 @@
         </upload>
     </xforms:instance>
 
+    <xforms:instance id="ins-uploaded-file">
+        <atom:entry/>
+    </xforms:instance>
+    
     <!-- some bindings on the upload instance -->
     <xforms:bind nodeset="instance('ins-upload')">
         <xforms:bind nodeset="@term" required="true()" />
@@ -55,6 +59,21 @@
             calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')" />
     </xforms:bind>
 
+    <xforms:submission id="sub-after-upload" method="put"
+        resource="{instance('ins-uploaded-file')/atom:link[@rel='edit']/@href}"
+        ref="instance('ins-uploaded-file')"
+        replace="none"  mediatype="application/atom+xml"
+        >
+        <xforms:action ev:event="xforms-submit-done">
+            <xforms:message level="modal">
+                Your file has been submitted. Thank you.
+            </xforms:message>
+           
+            <!-- refresh submitted media -->
+            <xforms:send submission="sub-get-submitted-media-feed" />
+            
+        </xforms:action>
+    </xforms:submission>
     <!-- this is the submission that sends the file to atombeat ... it uses 
         a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat 
         support, although this is not standard Atom Protocol ... check the http traffic 
@@ -62,24 +81,22 @@
 
     <xforms:submission id="sub-post-upload" method="form-data-post"
         resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
-        ref="instance('ins-upload')" replace="none" >
+        ref="instance('ins-upload')" instance="ins-uploaded-file" replace="instance" >
 
         <xforms:header>
             <xforms:name>Accept</xforms:name>
             <xforms:value>application/atom+xml</xforms:value>
         </xforms:header>
 
-        <xforms:message ev:event="xforms-submit-done" level="modal">
-            Your file has been submitted. Thank you.
-                </xforms:message>
-
-        <!-- clear out upload -->
-        <xforms:insert ev:event="xforms-submit-done" nodeset="instance('ins-upload')"
-            origin="instance('ins-upload-empty')" />
-
-        <!-- refresh submitted media -->
-        <xforms:send ev:event="xforms-submit-done" submission="sub-get-submitted-media-feed" />
-
+        <xforms:action ev:event="xforms-submit-done">
+            <!-- causes binding errors when there's an extended character in the filename which is what it's there
+                to fix....
+            <xforms:setvalue ref="instance('ins-uploaded-file')//atom:title/text()" value="instance('ins-upload')//media/@filename"/>
+            -->
+            <xforms:send submission="sub-after-upload" />
+            
+        </xforms:action>
+                
         <!-- TODO error handling -->
         <xforms:message ev:event="xforms-submit-error" level="modal" if="event('response-status-code')=409">
             Please do not upload two files with the same name.
