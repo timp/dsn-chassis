@@ -8,7 +8,7 @@
    xmlns:xs="http://www.w3.org/2001/XMLSchema"
    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
    jaxb:extensionBindingPrefixes="hj orm">
-	
+		
 	<!-- see http://confluence.highsource.org/display/HJ3/Purchase+Order+Tutorial	-->
 
 	<jaxb:bindings schemaLocation="chassis.xsd" node="/xs:schema">
@@ -45,5 +45,27 @@
             <jaxb:class name="SampleStorage" /> 
 		</jaxb:bindings>
 
+
+		<jaxb:bindings node="//xs:element[@ref='geneotypingToDistinguishBetweenRecrudescenceAndReinfection']">
+			<jaxb:property name="GenotypingForRecrudescence"/>
+		</jaxb:bindings>
+		
+		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationloci']">
+			<jaxb:property name="InfectionCompEstLoci"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationlociOpen']">
+			<jaxb:property name="InfectionCompEstLociOpen"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='infectionComplexityEstimationlociOther']">
+			<jaxb:property name="InfectionCompEstLociOther"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:element[@name='additionalGenotypicInformation']">
+			<hj:entity name="GenotypicInfo">
+				<orm:table name="GenotypicInfo"/>
+			</hj:entity>
+            <jaxb:class name="GenotypicInfo" /> 
+			<jaxb:property name="GenotypicInfo"/>
+		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>
