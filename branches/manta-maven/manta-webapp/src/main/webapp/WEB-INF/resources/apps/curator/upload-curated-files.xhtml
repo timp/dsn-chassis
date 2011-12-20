@@ -226,6 +226,12 @@
 						<xxforms:variable name="file-uri" select="text()" />
 						<xforms:dispatch target="cmis-rest-model" name="cmis-rest-upload-file">
 							<xxforms:context name="fr:media-entry" select="$media-entry"/>
+							<xxforms:context name="fr:media-type" select="$media-entry//atom:content/@type""/>
+							<xxforms:context name="fr:media-title" select="$media-entry//atom:title"/>
+							<xxforms:context name="fr:media-summary" select="$media-entry//atom:link[@rel='self']/@href"/>
+							<xxforms:context name="fr:media-term" select="$media-entry//atom::category/@term"/>
+							<xxforms:context name="fr:media-label" select="$media-entry//atom:category/@label"/>
+							<xxforms:context name="fr:media-fileId" select="$media-entry//atom:link[@rel='self']/@href"/>
 							<xxforms:context name="fr:site" select="$study-id" />
 							<xxforms:context name="fr:source" select="'Curator'" />
 							<xxforms:context name="fr:submitter" select="xxforms:instance('ins-current-user')/name/text()" />
