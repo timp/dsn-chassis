@@ -22,5 +22,15 @@
 		</jaxb:bindings>
 		
     </jaxb:bindings>
+    
+  <!--
+  Name clashes with mysql:
+  param.name
+  param.value
+  extension-attribute.name
+  feed.recursive
+  
+  -->
+    
 </jaxb:bindings>
 
