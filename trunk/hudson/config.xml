@@ -160,6 +160,7 @@
         <string>chassis-hyperjaxb3-naming</string>
         <string>chassis-model</string>
         <string>chassis-rest</string>
+        <string>chassis-rest-deploy</string>
         <string>checkStudyFeedBasic</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
