@@ -42,9 +42,12 @@
 			<hj:entity name="SampleStorage">
 				<orm:table name="SampleStorage"/>
 			</hj:entity>
-            <jaxb:class name="SampleStorage" /> 
+            <jaxb:class name="SampleStorage"/> 
 		</jaxb:bindings>
-
+		
+		<jaxb:bindings node="xs:element[@name='drug']//xs:element[@ref='name']">
+			<jaxb:property name="DrugName"/>
+		</jaxb:bindings>
 
 		<jaxb:bindings node="//xs:element[@ref='geneotypingToDistinguishBetweenRecrudescenceAndReinfection']">
 			<jaxb:property name="GenotypingForRecrudescence"/>
@@ -70,6 +73,33 @@
             <jaxb:class name="GenotypicInfo" /> 
 			<jaxb:property name="GenotypicInfo"/>
 		</jaxb:bindings>
+		
+		<jaxb:bindings node="xs:element[@name='study-info']//xs:element[@ref='start']">
+			<jaxb:property name="StartDate"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='study-info']//xs:element[@ref='end']">
+			<jaxb:property name="StartEnd"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:element[@name='weightDosingSchedule']//xs:element[@ref='hour']">
+			<jaxb:property name="DosingHour"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='weightDosingSchedule']//xs:element[@ref='day']">
+			<jaxb:property name="DosingDay"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='publication-reference']//xs:attribute[@name='type']">
+			<jaxb:property name="publicationReferenceType"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:element[@name='publication-reference']//xs:complexType">
+			<jaxb:property name="identifier"/>
+		</jaxb:bindings>
+		
+<!--  ignore as it is always "http://www.cggh.org/2010/chassis/manta/2.0"  -->
+        <jaxb:bindings node="xs:element[@name='study']//xs:attribute[@name='profile']">
+          <hj:ignored/>
+        </jaxb:bindings>
+		
+		
 		
 	</jaxb:bindings>
 </jaxb:bindings>
