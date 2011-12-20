@@ -28,8 +28,19 @@
 
 
 
+<!--  ignore as it is always "application/vnd.chassis-manta+xml" -->
+        <jaxb:bindings node="xs:element[@name='content']//xs:attribute[@name='type']">
+          <hj:ignored/>
+        </jaxb:bindings>
 
+<!--  ignore as it is always "text" -->
+        <jaxb:bindings node="xs:element[@name='title']//xs:attribute[@name='type']">
+          <hj:ignored/>
+        </jaxb:bindings>
 
+        <jaxb:bindings node="xs:element[@name='link']//xs:attribute[@name='type']">
+          <jaxb:property name="MimeType"/>
+        </jaxb:bindings>
 
 		<!--
 		<jaxb:bindings node="xs:complexType[@name='PurchaseOrderType']">
