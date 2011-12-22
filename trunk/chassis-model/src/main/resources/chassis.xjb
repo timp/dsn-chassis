@@ -78,7 +78,7 @@
 			<jaxb:property name="StartDate"/>
 		</jaxb:bindings>
 		<jaxb:bindings node="xs:element[@name='study-info']//xs:element[@ref='end']">
-			<jaxb:property name="StartEnd"/>
+			<jaxb:property name="EndDate"/>
 		</jaxb:bindings>
 
 		<jaxb:bindings node="xs:element[@name='weightDosingSchedule']//xs:element[@ref='hour']">
