@@ -48,8 +48,8 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
 
 
   public void testAddStudies() throws Exception { 
-    System.err.println(FULL_FEED_FILENAME);
-    HttpResponse response = StudyControllerRequester.create(FULL_FEED_FILENAME, url("/studies"));
+    System.err.println(FEED_FILE_PATH);
+    HttpResponse response = StudyControllerRequester.create(FEED_FILE_PATH, url("/studies"));
     System.out.println(response.getBody());
   }
 
