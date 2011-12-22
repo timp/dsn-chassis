@@ -8,10 +8,9 @@ import junit.framework.TestCase;
  */
 public abstract class AbstractUtilSpec extends TestCase {
   public String DATA_STUDIES;
-  public String FULL_FEED_FILENAME;
+  public String FEED_FILE_PATH;
   public String SERVICE_PROTOCOL_HOST_PORT;
   protected static ChassisRestConfig config;
-  protected static String LOCAL_STUDIES_FEED_FILENAME;
   
   public AbstractUtilSpec() {
     super();
@@ -24,8 +23,7 @@ public abstract class AbstractUtilSpec extends TestCase {
     super.setUp();
     config =  new ChassisRestConfig();
     DATA_STUDIES = config.getConfiguration().get("STUDIES_DIR_NAME") + "/";
-    FULL_FEED_FILENAME = config.getConfiguration().get("FULL_FEED_FILENAME");
-    LOCAL_STUDIES_FEED_FILENAME = config.getConfiguration().get("DATA_DIR_NAME") + "/" + "studies_feed.xml";
+    FEED_FILE_PATH = config.getConfiguration().get("FEED_FILE_PATH");
 
     SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
   }

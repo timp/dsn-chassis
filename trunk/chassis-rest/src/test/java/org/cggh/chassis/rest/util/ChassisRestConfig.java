@@ -10,11 +10,11 @@ public class ChassisRestConfig {
   public ChassisRestConfig() { 
     Properties defaults = new Properties();
     defaults.put("truth", "Beauty");
-    String FEED_FILENAME = "/studies_feed.xml";
     String DATA_DIR_NAME = "downloaded";
+    String FEED_FILENAME = "/studies_feed.xml";
+    String FEED_FILE_PATH;
     String STUDY_ID = "XGQRX";
     String STUDIES_DIR_NAME;
-    String FULL_FEED_FILENAME;
     String INVALID_STUDY_ID = "TFCBZ"; // live
     
     String SERVICE_PROTOCOL_HOST_PORT = "http://localhost:8080";
@@ -30,11 +30,11 @@ public class ChassisRestConfig {
       INVALID_STUDY_ID = "AJYER";      
       System.err.println("Using dummy data");
     }    
-    FULL_FEED_FILENAME = DATA_DIR_NAME + FEED_FILENAME; 
+    FEED_FILE_PATH = DATA_DIR_NAME + FEED_FILENAME; 
     STUDIES_DIR_NAME = DATA_DIR_NAME + "/studies";
     
     defaults.put("DATA_DIR_NAME", "data");
-    defaults.put("FULL_FEED_FILENAME", FULL_FEED_FILENAME); 
+    defaults.put("FEED_FILE_PATH", FEED_FILE_PATH); 
     defaults.put("STUDY_ID", STUDY_ID);
     defaults.put("INVALID_STUDY_ID", INVALID_STUDY_ID);
     defaults.put("STUDIES_DIR_NAME", STUDIES_DIR_NAME);

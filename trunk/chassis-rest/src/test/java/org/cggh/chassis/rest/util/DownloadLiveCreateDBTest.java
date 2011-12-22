@@ -21,6 +21,7 @@ import org.w3c.dom.NodeList;
  */
 public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
 
+  private static String PRUNED_FEED_FILE_PATH;
   private static String wwarnLivePassord;
   
   public DownloadLiveCreateDBTest() { 
@@ -35,6 +36,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   protected void setUp() throws Exception {
     super.setUp();
     wwarnLivePassord = config.getConfiguration().get("wwarn-live-password");
+    PRUNED_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/chassis-rest-studies.xml";;
   }
 
   
@@ -44,8 +46,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
       HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
       assertEquals(url("/studyCount"), 200, response.getStatus());
       System.err.println(response.getBody());
-      if (response.getBody().
-            indexOf("" + countEntries(LOCAL_STUDIES_FEED_FILENAME, "atom:entry")) > -1)
+      if (response.getBody().indexOf("" + countEntries(FEED_FILE_PATH, "atom:entry")) > -1)
         System.err.println("Looks like there no are validation errors");
       else
         System.err.println("Looks like there are validation errors");
@@ -101,27 +102,31 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     
   }
   
-  
+  public void testPrune() { 
+  //  XsltTransformer.transform(FEED_FILE_PATH, "prune.xsl", PRUNED_FEED_FILE_PATH, true);    
+  }
 
   private void setupXmlFiles() throws NotFoundException, IOException {
-    if (wwarnLivePassord != null && ! (new File(LOCAL_STUDIES_FEED_FILENAME).exists()))
+    if (wwarnLivePassord != null && ! (new File(FEED_FILE_PATH).exists())) { 
+      System.err.println("Downloading feed: " + FEED_FILE_PATH);
       downloadFeed();
-
-    System.err.println(config.getConfiguration());
+    } else 
+      System.err.println("Using existing feed");
+    System.err.println("Config:" + config.getConfiguration());
     
     deleteExistingFiles();
+    
+    XsltTransformer.transform(FEED_FILE_PATH, "prune.xsl", PRUNED_FEED_FILE_PATH, true);
+    
     String studyFileName = config.getConfiguration().get("STUDIES_DIR_NAME") 
             + "/" + config.getConfiguration().get("STUDY_ID") + ".xml";
     File studyEntry = new File(studyFileName );
 
     assertFalse("Study file " + studyFileName + "created", studyEntry.exists());
-    String feedFileName = config.getConfiguration().get("FULL_FEED_FILENAME");
-    System.err.println("ff"+feedFileName);
-    StudyFeedSplitter.split(config.getConfiguration().get("FULL_FEED_FILENAME"));
-    //assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
-    
-    
+    StudyFeedSplitter.split(PRUNED_FEED_FILE_PATH);
+    assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
   }
+
   private void deleteExistingFiles() throws IOException {
     String studiesDirName = config.getConfiguration().get("STUDIES_DIR_NAME");
     File[] files = new File(studiesDirName)
@@ -143,7 +148,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
             new CasProtectedResourceDownloader("https://", "www.wwarn.org:443",
                     "timp", wwarnLivePassord, "/tmp"));
 
-    File studyOut = new File(LOCAL_STUDIES_FEED_FILENAME);
+    File studyOut = new File(FEED_FILE_PATH);
     studyOut.delete();
     String studyFeedUrl = "https://www.wwarn.org/repository/service/content/studies";
 
@@ -151,7 +156,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
             CasProtectedResourceDownloaderFactory.getCasProtectedResourceDownloader(studyFeedUrl);
 
     downloader.downloadUrlToFile(studyFeedUrl, studyOut);
-    assertTrue(new File(LOCAL_STUDIES_FEED_FILENAME).exists());
+    assertTrue(new File(FEED_FILE_PATH).exists());
 
     Date end = new Date();
     System.err.println("End:" + end);
