@@ -32,12 +32,14 @@ do
 	sed -e 's#<atom:content/>.*$##' ${METADATA} >${METADATA_FILE}
 
 #    echo -n '<content type="application/octet-stream">' >> ${METADATA_FILE}
-    echo -n '<atom:content type="'${TYPE}'">' >> ${METADATA_FILE}
+</cmisra:base64>
+    </cmisra:content>
+    echo -n '<cmisra:content><cmisra:mediatype>'${TYPE}'</cmisra:mediatype><cmisra:base64>' >> ${METADATA_FILE}
 	openssl base64 -in files/$FILE -out ${METADATA}.base64
 	
 	# delete all line ends
 	cat ${METADATA}.base64 | tr -d '\n'  >>${METADATA_FILE}
-	echo -n '</atom:content>' >> ${METADATA_FILE}
+	echo -n '</cmisra:content>' >> ${METADATA_FILE}
 	#if TYPE = text/*
 #cat $files/$FILE | sed -e 's#<?xml version="1.0" encoding="UTF-8"?>##' >> ${METADATA_FILE}	
 	sed -e 's#^.*<atom:content/>##' ${METADATA} >>${METADATA_FILE}
