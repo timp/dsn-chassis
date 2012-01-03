@@ -6,8 +6,10 @@
     <title>sample-a.doc</title>
     <summary>A sample whitepaper named Sample A</summary>
     <category scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term="" label=""/>
-    <content type="text/xml">
-    </content>
+    <cmisra:content>
+        <cmisra:mediatype></cmisra:mediatype>
+        <cmisra:base64></cmisra:base64>
+    </cmisra:content>
     <cmisra:object>
         <cmis:properties>
             <cmis:propertyId
