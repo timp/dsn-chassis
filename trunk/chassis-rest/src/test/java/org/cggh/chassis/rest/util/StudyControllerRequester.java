@@ -134,8 +134,7 @@ public class StudyControllerRequester {
           throws FileNotFoundException, IOException, HttpException {
     InputStream data = new FileInputStream(xmlFileName);
     method.setRequestEntity(new InputStreamRequestEntity(data));
-    method.setRequestHeader("Content-Type", "application/xml");
-
+    method.setRequestHeader("Content-Type", "application/xml;charset=UTF-8");
     return executeMethod(method);
   }
 
