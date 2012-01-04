@@ -1,6 +1,6 @@
 use chassisDb;
 select Entry.StudyId, Entry.PublishedItem, Study.Modules, Study.StudyTitle,
-   StudyInfo.START_, StudyInfo.END_, POPULATION,
+   StudyInfo.StartDate, StudyInfo.EndDate, Site.Population,
    TransmissionIntensity.TransmissionIntensityAgeFrom,
    TransmissionIntensity.EntomologicalInoculationRateYear,
    TransmissionIntensity.TransmissionIntensityAgeToUnits,
