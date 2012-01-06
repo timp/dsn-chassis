@@ -50,7 +50,7 @@ public class TransformServlet extends HttpServlet {
 			  
 			  if (headerAcceptsAsStringList.contains("text/csv") || headerAcceptsAsStringList.contains("*/*")) {
 			  
-				  response.setContentType("text/csv");
+				  response.setContentType("text/csv; charset=utf-8");
 
 				  
 					  
@@ -167,7 +167,11 @@ public class TransformServlet extends HttpServlet {
 			  
 	            response.setHeader("Content-Disposition", "attachment; fileName=" + filename);
 
-	            response.setContentLength(string.getBytes().length);
+	            response.setContentLength(string.getBytes().length + 3);
+	            //Include Byte Order Mark to tell Excel that it's a UTF-8 file
+	            response.getOutputStream().print((char)0xEF);
+	            response.getOutputStream().print((char)0xBB);
+	            response.getOutputStream().print((char)0xBF);
 	            
 	            int length = 0;
 	            
