@@ -257,7 +257,7 @@ ab5be61f787c62660ff3008299"
     <xforms:action ev:event="cmis-rest-update-document">
         <!-- Save the event values for later -->
         <!-- <xforms:setvalue ref="instance('ins-cmis-rest-binary-data')" value="saxon:string-to-base64Binary(saxon:serialize(event('fr:content'), 'xml'), 'UTF-8')"/> -->
-        <xforms:setvalue ref="instance('ins-cmis-rest-binary-data')" value="xxforms:instance('ins-study-entry')//study"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-binary-data')" value="xxforms:instance('ins-study-entry')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//atom:summary" value="event('fr:title')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//atom:content/@type" value="event('fr:mime-type')"/>
         <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="event('fr:mime-type')"/>
@@ -447,10 +447,10 @@ ab5be61f787c62660ff3008299"
 			</xforms:action>        
     </xforms:submission>
     <!-- Actually update the file - this is for XML content -->
-    <xforms:submission ref="xxforms:instance('ins-study-entry')//study" id="cmis-rest-update-file-content-submission" method="put"
+    <xforms:submission ref="xxforms:instance('ins-study-entry')" id="cmis-rest-update-file-content-submission" method="put"
         resource="{instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href}"
         xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
-        replace="none" instance="xxforms:instance('ins-study-entry')//study" if="$is-send-alfresco">
+        replace="none" if="$is-send-alfresco">
         <!-- Together with mediatype="text/plain" serialization="application/x-www-form-urlencoded" omit-xml-declaration="true"
             <xforms:setvalue ev:event="xforms-submit-serialize" ref="event('submission-body')" value="/myXSLValue"> -->
     </xforms:submission>
