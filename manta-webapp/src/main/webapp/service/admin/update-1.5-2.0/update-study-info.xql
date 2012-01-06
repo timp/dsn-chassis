@@ -87,12 +87,10 @@ declare variable $testdata {
                         <institution/>
                         <person-is-contactable/>
                     </person>
-                    <institutions>
-                        <institution-ack>
-                            <institution-name/>
-                            <institution-websites/>
-                        </institution-ack>
-                    </institutions>
+                    <institution-ack>
+                        <institution-name/>
+                        <institution-websites/>
+                    </institution-ack>
                 </acknowledgements>
                 <curator-notes/>
                 <study-status>wait-external</study-status>
@@ -426,13 +424,13 @@ declare function local:content($content) as item()*
     
         <html>
             <head>
-                <title>Data Migration - Study Info v2.0 to v2.1</title>
+                <title>Data Migration - Study Info v1.5.1 to v2.0</title>
             </head>
             <body>
-                <h1>Data Migration - Study v2.0 to v2.1</h1>
+                <h1>Data Migration - Study v1.5.1 to v2.0</h1>
                 <p>Total number of entries in <a href="../../content/studies">Studies</a> collection: <strong>{ count( $study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.0 profile: <strong>{ count( $old-study-infos ) }</strong></p>
-                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.1 profile: <strong>{ count( $new-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v1.5.1 profile: <strong>{ count( $old-study-infos ) }</strong></p>
+                <p>Number of entries in <a href="../../content/studies">Studies</a> collection using v2.0 profile: <strong>{ count( $new-study-infos ) }</strong></p>
                 <p>
                     <form method="post" action="">
                         Use dummy test data <input type="checkbox" name="testing" checked="checked" />
@@ -463,13 +461,13 @@ declare function local:get-content() as element( atom:entry )* {
 
 declare function local:get-new-versioned-content($study-infos) as element( atom:entry )* {
     
-    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.1']
+    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.0']
     return $ret
 };
 
 declare function local:get-old-versioned-content($study-infos) as element( atom:entry )* {
     
-    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/2.0']
+    let $ret := $study-infos[atom:content/study/@profile='http://www.cggh.org/2010/chassis/manta/1.5.1']
     return $ret
 };
 
@@ -509,35 +507,13 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
    
    let $new-study-infos := 
         for $old in $old-study-infos
-            let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.1"
-
-            (: surround existing person ack with new group <people> :)
-            let $ins := update insert <people>{$old//person}</people> into $old//acknowledgements
-            let $del := update delete $old//acknowledgements/person
-            
-            (: Move space separated list into an attribute called selected, in case it is still needed :) 
-            let $prior := $old//priorAntimalarials/@selected
-            (: Need to clear out any inserted via UI :)
-            let $del1 := update delete $old//priorAntimalarials/drugTaken
-            let $sd := update insert <studyDesign/> preceding $old//pharmacology/samples
-            let $st := update insert <samplingTimes/> preceding $old//pharmacology/samples
-            let $mo := update insert <drugNameOther/> following $old//drug/name
-            let $aino := update insert <activeIngredientNameOther/> following $old//activeIngredientName
-            let $mo := update insert <manufacturerOther/> following $old//drug/manufacturer
-            let $tno := update insert <tradeNameOther/> following $old//drug/tradeName
-            let $pkc := update insert <comments/> preceding $old//pharmacology/samples
-            let $td := update insert <targetDose/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
-            let $tdu := update insert <unitsOfMeasure/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
-            let $fa := update insert <fatAmount/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
-            let $incInf := update replace $old//includeMixedInfections[. = 'true']/text() with 'include'
-            let $exInf := update replace $old//includeMixedInfections[. = 'false']/text() with 'exclude'
-            let $incPrior := update replace $old//excludeIfPriorAntimalarials[. = 'false']/text() with 'include'
-            let $exPrior := update replace $old//excludeIfPriorAntimalarials[. = 'true']/text() with 'exclude'
-            let $yv := update replace $old//readministeredOnVomitting[. = 'true']/text() with 'yes'
-            let $nv := update replace $old//readministeredOnVomitting[. = 'false']/text() with 'no'
-            (: then set values as proper xml :)
+            let $profile := update replace $old//study/@profile with "http://www.cggh.org/2010/chassis/manta/2.0"
+            let $ins := update insert <institutions>{$old//institution-ack}</institutions> into $old//acknowledgements
+            let $del := update delete $old//acknowledgements/institution-ack
+            let $prior := $old//priorAntimalarials
+            let $pa := update insert attribute selected {$prior} into $old//priorAntimalarials
+            let $pa := update delete $old//priorAntimalarials/text()
             let $drugs := tokenize($prior,'\s+')
-            (: do at end otherwise everything in loop :)
             for $d in $drugs
                 let $dt := update insert <drugTaken>{$d}</drugTaken> into $old//priorAntimalarials
             
