@@ -321,6 +321,7 @@
                         <drugMeasured />
                         <targetDose />
                         <unitsOfMeasure />
+                        <unitsOfMeasureOther />
                         <fatAmount />
                         <lowerLoQ />
                         <sampleMatrixType />
