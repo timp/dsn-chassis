@@ -991,6 +991,7 @@
         <xs:element ref="drugMeasured"/>
         <xs:element ref="targetDose"/>
         <xs:element ref="unitsOfMeasure"/>
+        <xs:element ref="unitsOfMeasureOther"/>
         <xs:element ref="fatAmount"/>
         <xs:element ref="lowerLoQ"/>
         <xs:element ref="sampleMatrixType"/>
@@ -1000,6 +1001,7 @@
   <xs:element name="drugMeasured" type="xs:string"/>
   <xs:element name="targetDose" type="xs:string"/>
   <xs:element name="unitsOfMeasure" type="xs:string"/>
+  <xs:element name="unitsOfMeasureOther" type="xs:string"/>
   <xs:element name="fatAmount" type="xs:string"/>
   <xs:element name="lowerLoQ" type="xs:string"/>
   <xs:element name="sampleMatrixType" type="xs:string"/>
