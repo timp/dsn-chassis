@@ -158,6 +158,8 @@
                         <th/>
                         <th> Compound measured <br/> (parent or metabolite) </th>
                         <th>Target Dose</th>
+                        <th>Units of Measure</th>
+                        <th>Fat Amount</th>
                         <th>Lower LoQ</th>
                         <th>Matrix</th>
                     </tr>
@@ -176,7 +178,7 @@
                                 <xforms:select1 appearance="minimal" ref="drugMeasured">
                                     <xforms:label class="invisible">Molecule measured </xforms:label>
                                     <xforms:itemset model="mod-study-info"
-                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration">
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration[not(@value = 'Other')]">
                                          <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
                                          <xforms:value ref="@value"/>
                                     </xforms:itemset>
@@ -195,6 +197,27 @@
                                 <xforms:input ref="targetDose" class="eightWide">
                                     <xforms:label class="invisible"/>
                                     <xforms:hint>e.g. 72 mg/kg</xforms:hint>
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:select1 appearance="minimal" ref="unitsOfMeasure">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:itemset model="mod-study-info"
+                                        nodeset="instance('study-info-resources')//xs:simpleType[@name='unitsOfMeasure']/xs:restriction/xs:enumeration">
+                                        <xforms:label ref="@value"/>
+                                        <xforms:value ref="@value"/>
+                                    </xforms:itemset>
+                                     
+                                </xforms:select1>
+                                <xforms:input ref="unitsOfMeasureOther" class="fourWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>Unit of measure usually ng/ml or ug/ml</xforms:hint>
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:input ref="fatAmount" class="fourWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>Amount of fat taken with the drug</xforms:hint>
                                 </xforms:input>
                             </td>
                             <td class="form-td">

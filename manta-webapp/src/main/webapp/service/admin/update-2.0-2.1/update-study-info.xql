@@ -528,6 +528,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             let $pkc := update insert <PKcomments/> preceding $old//pharmacology/samples
             let $td := update insert <targetDose/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             let $tdu := update insert <unitsOfMeasure/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
+            let $tduo := update insert <unitsOfMeasureOther/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             let $fa := update insert <fatAmount/> preceding $old//pharmacology/analytes/analyte/lowerLoQ
             let $incInf := update replace $old//includeMixedInfections[. = 'true']/text() with 'include'
             let $exInf := update replace $old//includeMixedInfections[. = 'false']/text() with 'exclude'
