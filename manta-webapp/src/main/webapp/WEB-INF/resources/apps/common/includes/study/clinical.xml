@@ -294,17 +294,20 @@
 		                                                      <xforms:input ref="ageFrom" class="fourWide">
 		                                                          <xforms:label/>
 		                                                          <xforms:hint>years</xforms:hint>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
 		                                                      </xforms:input>
 		                                                  </td>
 		                                                  <td class="form-td">
 		                                                      <xforms:input ref="ageTo" class="fourWide">
 		                                                          <xforms:label/>
 		                                                          <xforms:hint>years</xforms:hint>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
 		                                                      </xforms:input>
 		                                                  </td>
 		                                                  <td class="form-td">
 		                                                      <xforms:input ref="dose" class="fourWide">
 		                                                          <xforms:label/>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
 		                                                      </xforms:input>
 		                                                  </td>
 		                                                  <td class="form-td">
@@ -356,59 +359,50 @@
 
                                                   <table class="repeat-table">
                                                   <tr>
-                                                  <th/>
-                                                  <th>Day</th>
-                                                  <th>Hour</th>
-                                                  <th> From <span
-                                                  style="font-size:smaller; font-weight: normal;">
-                                                  (kgs)</span>
-                                                  </th>
-                                                  <th> To <span
-                                                  style="font-size:smaller; font-weight: normal;">
-                                                  (kgs)</span>
-                                                  </th>
-                                                  <th>Dose</th>
-                                                  <th>Unit</th>
+                                                      <th/><th>Day</th><th>Hour</th>
+                                                      <th> From <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+                                                      <th> To <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+                                                      <th>Dose</th><th>Unit</th>
                                                   </tr>
-                                                  <xforms:repeat nodeset="weightGroupDosingSchedule"
-                                                  id="rep-weightGroupDosingSchedule">
-                                                  <tr>
-                                                  <td>
-                                                  <xforms:trigger appearance="minimal">
-                                                  <xforms:label>
-                                                  <img src="/apps/common/theme/remove.gif"
-                                                  alt="remove"/>
-                                                  </xforms:label>
-                                                  <xforms:delete ev:event="DOMActivate" context="."
-                                                  nodeset="."
-                                                  at="index('rep-weightGroupDosingSchedule')"/>
+                                                  <xforms:repeat nodeset="weightGroupDosingSchedule" id="rep-weightGroupDosingSchedule">
+                                                      <tr>
+                                                          <td>
+                                                              <xforms:trigger appearance="minimal">
+                                                                  <xforms:label>
+                                                                      <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                                                  </xforms:label>
+                                                                  <xforms:delete ev:event="DOMActivate" context="." nodeset="." at="index('rep-weightGroupDosingSchedule')"/>
                                                   </xforms:trigger>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="day" class="fourWide">
-                                                  <xforms:label/>
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="hour" class="fourWide">
-                                                  <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                      <xforms:label/>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
-                                                  <xforms:input ref="weightGroupFrom"
-                                                  class="fourWide">
-                                                  <xforms:label/>
-                                                  <xforms:hint>kgs</xforms:hint>
+                                                  <xforms:input ref="weightGroupFrom" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:hint>kgs</xforms:hint>
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="weightGroupTo" class="fourWide">
-                                                  <xforms:label/>
-                                                  <xforms:hint>kgs</xforms:hint>
+                                                      <xforms:label/>
+                                                      <xforms:hint>kgs</xforms:hint>
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="dose" class="fourWide">
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   <xforms:label/>
                                                   </xforms:input>
                                                   </td>
@@ -486,17 +480,20 @@
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="day" class="fourWide">
-                                                  <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                      <xforms:label/>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="hour" class="fourWide">
-                                                  <xforms:label/>
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   </xforms:input>
                                                   </td>
                                                   <td class="form-td">
                                                   <xforms:input ref="dose" class="fourWide">
-                                                  <xforms:label/>
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
                                                   </xforms:input>
                                                   </td>
                                                   </tr>
@@ -659,6 +656,7 @@
             <xforms:group ref="followup">
                 <xforms:input ref="duration" class="fourWide">
                     <xforms:label>Maximum duration of follow up</xforms:label>
+                    <xforms:alert>Must be an integer number of days</xforms:alert>
                 </xforms:input>
                 <br/>
                 <xforms:select1 ref="feverMeasurement" appearance="minimal">
