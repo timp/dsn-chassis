@@ -221,12 +221,12 @@
 						</xforms:repeat>
 					</div>
 						
-						<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/acknowledgements[empty(person)])">
+						<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/acknowledgements[empty(people)])">
 						
 							<div id="list-of-acknowledgements-container">
 						
 								<ol>
-									<xforms:repeat nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/person">
+									<xforms:repeat nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/people/person">
 										<li class="repeated-element acknowledgement-form-summary-item">
 											<span class="first-name-text-container">
 									        <xforms:output ref="first-name">
@@ -271,7 +271,7 @@
 							</div>
 							
 						</xforms:group>
-						<xforms:group ref="instance('ins-study-entry')//atom:content/study/acknowledgements[empty(person)]">
+						<xforms:group ref="instance('ins-study-entry')//atom:content/study/acknowledgements[empty(people)]">
 							<p>No personal acknowledgements.</p>
 						</xforms:group>
 					
