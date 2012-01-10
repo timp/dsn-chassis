@@ -37,9 +37,10 @@
   <xs:element name="group">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="atombeat:member"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="atombeat:member"/>
       </xs:sequence>
       <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="src" use="optional" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="member" type="xs:string"/>
