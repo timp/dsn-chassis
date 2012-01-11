@@ -21,12 +21,13 @@
 
 
             </xforms:select1>
+           
         </p>
-
+        
         <xforms:group ref="instance('ins-study-entry')/atom:content/study/publications">
 
             <div id="editable-list-of-publications-container">
-
+                
                 <table>
                     <xforms:repeat nodeset="publication" id="rep-publication">
                         <tr class="repeated-element">
@@ -46,16 +47,16 @@
                                     <xforms:input ref="pmid">
                                         <xforms:label>PubMedID:</xforms:label>
                                         <xforms:alert>Please provide a PubMed
-                                            IDentifier.</xforms:alert>
+                                        IDentifier.</xforms:alert>
                                     </xforms:input>
                                 </span>
 
                                 <br/>
-                                <span class="pmid-textbox-container">
-                                    <xforms:input ref="publication-title">
+                                <span class="pubtitle-textbox-container">
+                                    <xforms:textarea ref="publication-title">
                                         <xforms:label>Title/Citation:</xforms:label>
                                         <xforms:alert>Please provide a title or citation.</xforms:alert>
-                                    </xforms:input>
+                                    </xforms:textarea>
                                 </span>
                                 
                                 <br/>
@@ -177,7 +178,15 @@
             </div>
 
         </xforms:group>
-
+        <div>
+            <xforms:trigger style="width: 300px">
+                <xforms:label>Look up citations by PUBMED id</xforms:label>
+                <xforms:action ev:event="DOMActivate">
+                    <xforms:send submission="sub-query-pubmed-citation"/>
+                </xforms:action>
+            </xforms:trigger>
+            
+        </div>
     </xforms:group>
 
     <!-- If the user has GET access to the study entry, but not PUT access. -->
