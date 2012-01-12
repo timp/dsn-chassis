@@ -95,7 +95,7 @@
                 <sec:intercept-url pattern="/personal-data/**" access="hasAnyRole('ROLE_CHASSIS_PERSONAL_DATA_REVIEWER','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
                 <sec:intercept-url pattern="/curator/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
-                <sec:intercept-url pattern="/report/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
+                <sec:intercept-url pattern="/report/**" access="hasAnyRole('ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_REPORTER','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
                 <sec:intercept-url pattern="/study/**" access="hasAnyRole('ROLE_CHASSIS_CONTRIBUTOR','ROLE_CHASSIS_CURATOR','ROLE_CHASSIS_ADMINISTRATOR')" />
                 
