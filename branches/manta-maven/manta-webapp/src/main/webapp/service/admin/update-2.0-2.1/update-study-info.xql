@@ -631,7 +631,9 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                 else if ($drug-name = 'sulfadoxine-pyrimethamine') then
 	                                let $rep := update replace $odn/name/text() with 'SX-PYR'
 	                                return $rep
-
+                                else if ($drug-name = 'tafenoquine') then
+	                                let $rep := update replace $odn/name/text() with 'TQ'
+	                                return $rep
                                 else if ($drug-name = 'tetracyclin') then
 	                                let $rep := update replace $odn/name/text() with 'TET'
 	                                return $rep
@@ -651,11 +653,20 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     else if ($ingredient = 'artemether') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'AM'
                                     	return $rep
+                                    else if ($ingredient = 'artemisinin') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'ART'
+                                    	return $rep
                                     else if ($ingredient = 'artesunate') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'AS'
                                     	return $rep
                                     else if ($ingredient = 'atovaquone') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'AV'
+                                    	return $rep
+                                    else if ($ingredient = 'azithromycin') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'AZ'
+                                    	return $rep
+                                    else if ($ingredient = 'clindamycine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'CL'
                                     	return $rep
                                     else if ($ingredient = 'chlorproguanil') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'CP'
@@ -663,11 +674,17 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     else if ($ingredient = 'chloroquine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'CQ'
                                     	return $rep
+                                    else if ($ingredient = 'cycloguanil') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'CY'
+                                    	return $rep
                                     else if ($ingredient = 'dapsone') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'DAP'
                                     	return $rep
                                     else if ($ingredient = 'dihydroartemisinin') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'DHA'
+                                    	return $rep
+                                    else if ($ingredient = 'doxycycline') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'DOX'
                                     	return $rep
                                     else if ($ingredient = 'halofantrine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'HL'
@@ -684,11 +701,17 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     else if ($ingredient = 'piperaquine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'PQP'
                                     	return $rep
+                                    else if ($ingredient = 'primaquine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'PQ'
+                                    	return $rep
                                     else if ($ingredient = 'proguanil') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'PG'
                                     	return $rep
                                     else if ($ingredient = 'pyrimethamine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'PYR'
+                                    	return $rep
+                                    else if ($ingredient = 'pyronaridine') then
+                                    	let $rep := update replace $odn/activeIngredientName/text() with 'PYN'
                                     	return $rep
                                     else if ($ingredient = 'quinine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'QN'
@@ -696,6 +719,9 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                     else if ($ingredient = 'sulfadoxine') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'SX'
                                     	return $rep
+                                    else if ($ingredient = 'tafenoquine') then
+	                                    let $rep := update replace $odn/activeIngredientName/text() with 'TQ'
+	                                    return $rep
                                     else if ($ingredient = 'tetracyclin') then
                                     	let $rep := update replace $odn/activeIngredientName/text() with 'TET'
                                     	return $rep
