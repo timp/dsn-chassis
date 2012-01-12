@@ -86,14 +86,19 @@
                         <xsl:value-of select="Journal/Title" />
                     </xsl:if>
                     <xsl:text> </xsl:text>
-                    <xsl:value-of select="Journal/JournalIssue/PubDate/Year" />
-                    <xsl:if test="string-length(Journal/JournalIssue/PubDate/Month) > 0">
-                        <xsl:text> </xsl:text>
-                        <xsl:value-of select="Journal/JournalIssue/PubDate/Month" />
+                    <xsl:if test="string-length(Journal/JournalIssue/PubDate/MedlineDate) > 0">
+                        <xsl:value-of select="Journal/JournalIssue/PubDate/MedlineDate" />
                     </xsl:if>
-                    <xsl:if test="string-length(Journal/JournalIssue/PubDate/Day) > 0">
-                        <xsl:text> </xsl:text>
-                        <xsl:value-of select="Journal/JournalIssue/PubDate/Day" />
+                    <xsl:if test="string-length(Journal/JournalIssue/PubDate/MedlineDate) = 0">
+                        <xsl:value-of select="Journal/JournalIssue/PubDate/Year" />
+                        <xsl:if test="string-length(Journal/JournalIssue/PubDate/Month) > 0">
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="Journal/JournalIssue/PubDate/Month" />
+                        </xsl:if>
+                        <xsl:if test="string-length(Journal/JournalIssue/PubDate/Day) > 0">
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="Journal/JournalIssue/PubDate/Day" />
+                        </xsl:if>
                     </xsl:if>
                     <xsl:text>;</xsl:text>
                     <xsl:value-of select="Journal/JournalIssue/Volume" />
