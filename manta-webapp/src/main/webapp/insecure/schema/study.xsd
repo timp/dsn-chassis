@@ -108,8 +108,8 @@
 			<xs:enumeration value="PYN" />
 			<xs:enumeration value="QN" />
 			<xs:enumeration value="SX" />
+			<xs:enumeration value="TQ" />
 			<xs:enumeration value="TET" />
-		    <xs:enumeration value="TQ" />
 			<xs:enumeration value="Other" />
 		</xs:restriction>
 	</xs:simpleType>
@@ -128,19 +128,21 @@
 			<xs:enumeration value="AV-PG" />
 			<xs:enumeration value="CQ" />
 			<xs:enumeration value="CP-DAP" />
+			<xs:enumeration value="DAP" />
 			<xs:enumeration value="DHA" />
 			<xs:enumeration value="DHA-PQP" />
 			<xs:enumeration value="HL" />
 			<xs:enumeration value="LUM" />
 			<xs:enumeration value="MQ" />
 			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PQ" />
 			<xs:enumeration value="PG" />
 			<xs:enumeration value="PYR" />
 			<xs:enumeration value="QN" />
 			<xs:enumeration value="SX" />
 			<xs:enumeration value="SX-PYR" />
+			<xs:enumeration value="TQ" />
 			<xs:enumeration value="TET" />
-		    <xs:enumeration value="TQ" />
 			<xs:enumeration value="Other" />
 		</xs:restriction>
 	</xs:simpleType>
@@ -188,24 +190,22 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="" />
 			<xs:enumeration value="Ajanta Pharma" />
-			<xs:enumeration value="Arco" />
+			<xs:enumeration value="Aspen Healthcare" />
 			<xs:enumeration value="AstraZeneca" />
 			<xs:enumeration value="Atlantic Laboratories" />
-			<xs:enumeration value="Aventis" />
+			<xs:enumeration value="Bailly-Creat Laboratory" />
+			<xs:enumeration value="Boucher and Muir" />
 			<xs:enumeration value="Cosmos" />
 			<xs:enumeration value="Dafra Pharma" />
 			<xs:enumeration value="Far-Manguinhos" />
 			<xs:enumeration value="Glaxo-SmithKline" />
-			<xs:enumeration value="Government Pharmaceutical Organization" />
-			<xs:enumeration value="Guilin Pharmaceutical factory" />
+			<xs:enumeration value="Guilin Pharma" />
 			<xs:enumeration value="Hoffman-La Roche" />
 			<xs:enumeration value="Holley Pharmaceuticals" />
 			<xs:enumeration value="Holley-Cotec Pharmaceuticals" />
 			<xs:enumeration value="Holleykin Pharmaceuticals" />
-			<xs:enumeration value="International Dispensary Association" />
 			<xs:enumeration value="Ipca Laboratories Ltd" />
-			<xs:enumeration value="Kunming Pharmaceutical factory" />
-			<xs:enumeration value="Laboratories Creat" />
+			<xs:enumeration value="Kunming Pharmaceutical Corporation" />
 			<xs:enumeration value="Maphra" />
 			<xs:enumeration value="Medinomics Healthcare" />
 			<xs:enumeration value="Medochemie" />
@@ -215,15 +215,14 @@
 			<xs:enumeration value="Pfizer" />
 			<xs:enumeration value="Pharmamed" />
 			<xs:enumeration value="Regal Pharmaceuticals" />
-			<xs:enumeration value="Rene Pharmaceutical" />
+			<xs:enumeration value="Rene Pharmaceuticals" />
 			<xs:enumeration value="Rhone-Poulenc" />
 			<xs:enumeration value="Roche" />
 			<xs:enumeration value="Sanofi" />
 			<xs:enumeration value="Sanofi Aventis" />
-			<xs:enumeration value="Sanofi Winthrop" />
 			<xs:enumeration value="SigmaTau" />
-			<xs:enumeration value="SmithKline Beeham" />
-			<xs:enumeration value="Swipha" />
+			<xs:enumeration value="SmithKline Beecham" />
+			<xs:enumeration value="Swiss Pharma Nigeria Limited" />
 			<xs:enumeration value="Zeneca" />
 			<xs:enumeration value="Other" />
 		</xs:restriction>
