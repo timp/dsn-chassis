@@ -537,8 +537,44 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             let $yv := update replace $old//readministeredOnVomitting[. = 'true']/text() with 'yes'
             let $nv := update replace $old//readministeredOnVomitting[. = 'false']/text() with 'no'
             let $dn := for $odn in $old//drug
+                let $tn := normalize-space($odn/tradeName/text())
+                let $trade-name := concat(upper-case(substring($tn,1,1)),substring($tn,2))
+                let $tnc := if ($trade-name = '' || $trade-name = 'Amobin' || $trade-name = 'Amonate' || $trade-name = 'Arco' || $trade-name = 'Arsudar' 
+                                || $trade-name = 'Arsumax' || $trade-name = 'Artefan' || $trade-name = 'Artekin' || $trade-name = 'Avloclor' 
+                                || $trade-name = 'Basoquin' || $trade-name = 'Camoquin' || $trade-name = 'Co-artesiane' || $trade-name = 'Coartem' 
+                                || $trade-name = 'Cosmoquin' || $trade-name = 'Duo-Cotecxin' || $trade-name = 'Eloquine' || $trade-name = 'Eurartesim' 
+                                || $trade-name = 'Falcidin' || $trade-name = 'Fansidar' || $trade-name = 'Farenax' || $trade-name = 'Flavoquine' 
+                                || $trade-name = 'Halfan' || $trade-name = 'LapDap' || $trade-name = 'Lariam' || $trade-name = 'Malaratab' 
+                                || $trade-name = 'Malarine' || $trade-name = 'Malarone' || $trade-name = 'Malmed' || $trade-name = 'Mequin' 
+                                || $trade-name = 'Nivaquine' || $trade-name = 'Plasmotrin' || $trade-name = 'Resunate' || $trade-name = 'Riamet') then
+                                let $repo := update replace $odn/tradeName/text() with $trade-name
+                                return $trade-name
+                            else
+                                 let $old-name := $odn/tradeName/text()
+                                 let $rep := update replace $odn/tradeNameOther with <tradeNameOther>{$old-name}</tradeNameOther> 
+                                 let $repo := update replace $odn/tradeName/text() with 'Other'
+                                 return $rep
+                let $manu-name := normalize-space($odn/manufacturer/text())
+                let $manc := if ($manu-name = 'Ajanta Pharma' || $manu-name = 'Aspen Healthcare' || $manu-name = 'AstraZeneca' 
+                                || $manu-name = 'Atlantic Laboratories' || $manu-name = 'Bailly-Creat Laboratory' 
+                                || $manu-name = 'Boucher and Muir' || $manu-name = 'Cosmos' || $manu-name = 'Dafra Pharma' 
+                                || $manu-name = 'Far-Manguinhos' || $manu-name = 'Glaxo-SmithKline' || $manu-name = 'Guilin Pharma' 
+                                || $manu-name = 'Hoffman-La Roche' || $manu-name = 'Holley Pharmaceuticals' 
+                                || $manu-name = 'Holley-Cotec Pharmaceuticals' || $manu-name = 'Holleykin Pharmaceuticals' 
+                                || $manu-name = 'Ipca Laboratories Ltd' || $manu-name = 'Kunming Pharmaceutical Corporation' 
+                                || $manu-name = 'Maphra' || $manu-name = 'Medinomics Healthcare' || $manu-name = 'Medochemie' 
+                                || $manu-name = 'Mepha' || $manu-name = 'Novartis' || $manu-name = 'Parke-Davis' || $manu-name = 'Pfizer' 
+                                || $manu-name = 'Pharmamed' || $manu-name = 'Regal Pharmaceuticals' || $manu-name = 'Rene Pharmaceuticals' 
+                                || $manu-name = 'Rhone-Poulenc' || $manu-name = 'Roche' || $manu-name = 'Sanofi' || $manu-name = 'Sanofi Aventis' 
+                                || $manu-name = 'SigmaTau' || $manu-name = 'SmithKline Beecham' || $manu-name = 'Swiss Pharma Nigeria Limited' 
+                                || $manu-name = 'Zeneca') then    
+                                return $manu-name
+                            else
+                                 let $old-name := $odn/manufacturer/text()
+                                 let $rep := update replace $odn/manufacturerOther with <manufacturerOther>{$old-name}</manufacturerOther> 
+                                 let $repo := update replace $odn/manufacturer/text() with 'Other'
+                                 return $rep
                 let $drug-name := lower-case(normalize-space($odn/name/text()))
-                let $logi := util:log-app("debug", "drug name", $drug-name)
                 let $ndn := if ($drug-name = 'artesunate-amodiaquine') then
                                 let $rep := update replace $odn/name/text() with 'AS-AQ'
                                 return $rep
