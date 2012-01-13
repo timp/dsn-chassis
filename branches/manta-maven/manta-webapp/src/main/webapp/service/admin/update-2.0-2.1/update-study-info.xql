@@ -539,14 +539,14 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
             let $dn := for $odn in $old//drug
                 let $tn := normalize-space($odn/tradeName/text())
                 let $trade-name := concat(upper-case(substring($tn,1,1)),substring($tn,2))
-                let $tnc := if ($trade-name = '' || $trade-name = 'Amobin' || $trade-name = 'Amonate' || $trade-name = 'Arco' || $trade-name = 'Arsudar' 
-                                || $trade-name = 'Arsumax' || $trade-name = 'Artefan' || $trade-name = 'Artekin' || $trade-name = 'Avloclor' 
-                                || $trade-name = 'Basoquin' || $trade-name = 'Camoquin' || $trade-name = 'Co-artesiane' || $trade-name = 'Coartem' 
-                                || $trade-name = 'Cosmoquin' || $trade-name = 'Duo-Cotecxin' || $trade-name = 'Eloquine' || $trade-name = 'Eurartesim' 
-                                || $trade-name = 'Falcidin' || $trade-name = 'Fansidar' || $trade-name = 'Farenax' || $trade-name = 'Flavoquine' 
-                                || $trade-name = 'Halfan' || $trade-name = 'LapDap' || $trade-name = 'Lariam' || $trade-name = 'Malaratab' 
-                                || $trade-name = 'Malarine' || $trade-name = 'Malarone' || $trade-name = 'Malmed' || $trade-name = 'Mequin' 
-                                || $trade-name = 'Nivaquine' || $trade-name = 'Plasmotrin' || $trade-name = 'Resunate' || $trade-name = 'Riamet') then
+                let $tnc := if ($trade-name = '' or $trade-name = 'Amobin' or $trade-name = 'Amonate' or $trade-name = 'Arco' or $trade-name = 'Arsudar' 
+                                or $trade-name = 'Arsumax' or $trade-name = 'Artefan' or $trade-name = 'Artekin' or $trade-name = 'Avloclor' 
+                                or $trade-name = 'Basoquin' or $trade-name = 'Camoquin' or $trade-name = 'Co-artesiane' or $trade-name = 'Coartem' 
+                                or $trade-name = 'Cosmoquin' or $trade-name = 'Duo-Cotecxin' or $trade-name = 'Eloquine' or $trade-name = 'Eurartesim' 
+                                or $trade-name = 'Falcidin' or $trade-name = 'Fansidar' or $trade-name = 'Farenax' or $trade-name = 'Flavoquine' 
+                                or $trade-name = 'Halfan' or $trade-name = 'LapDap' or $trade-name = 'Lariam' or $trade-name = 'Malaratab' 
+                                or $trade-name = 'Malarine' or $trade-name = 'Malarone' or $trade-name = 'Malmed' or $trade-name = 'Mequin' 
+                                or $trade-name = 'Nivaquine' or $trade-name = 'Plasmotrin' or $trade-name = 'Resunate' or $trade-name = 'Riamet') then
                                 let $repo := update replace $odn/tradeName/text() with $trade-name
                                 return $trade-name
                             else
@@ -555,20 +555,32 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                  let $repo := update replace $odn/tradeName/text() with 'Other'
                                  return $rep
                 let $manu-name := normalize-space($odn/manufacturer/text())
-                let $manc := if ($manu-name = 'Ajanta Pharma' || $manu-name = 'Aspen Healthcare' || $manu-name = 'AstraZeneca' 
-                                || $manu-name = 'Atlantic Laboratories' || $manu-name = 'Bailly-Creat Laboratory' 
-                                || $manu-name = 'Boucher and Muir' || $manu-name = 'Cosmos' || $manu-name = 'Dafra Pharma' 
-                                || $manu-name = 'Far-Manguinhos' || $manu-name = 'Glaxo-SmithKline' || $manu-name = 'Guilin Pharma' 
-                                || $manu-name = 'Hoffman-La Roche' || $manu-name = 'Holley Pharmaceuticals' 
-                                || $manu-name = 'Holley-Cotec Pharmaceuticals' || $manu-name = 'Holleykin Pharmaceuticals' 
-                                || $manu-name = 'Ipca Laboratories Ltd' || $manu-name = 'Kunming Pharmaceutical Corporation' 
-                                || $manu-name = 'Maphra' || $manu-name = 'Medinomics Healthcare' || $manu-name = 'Medochemie' 
-                                || $manu-name = 'Mepha' || $manu-name = 'Novartis' || $manu-name = 'Parke-Davis' || $manu-name = 'Pfizer' 
-                                || $manu-name = 'Pharmamed' || $manu-name = 'Regal Pharmaceuticals' || $manu-name = 'Rene Pharmaceuticals' 
-                                || $manu-name = 'Rhone-Poulenc' || $manu-name = 'Roche' || $manu-name = 'Sanofi' || $manu-name = 'Sanofi Aventis' 
-                                || $manu-name = 'SigmaTau' || $manu-name = 'SmithKline Beecham' || $manu-name = 'Swiss Pharma Nigeria Limited' 
-                                || $manu-name = 'Zeneca') then    
-                                return $manu-name
+                let $manc := if ($manu-name = 'Ajanta Pharma' or $manu-name = 'Aspen Healthcare' or $manu-name = 'AstraZeneca' 
+                                or $manu-name = 'Atlantic Laboratories' or $manu-name = 'Bailly-Creat Laboratory' 
+                                or $manu-name = 'Boucher and Muir' or $manu-name = 'Cosmos' or $manu-name = 'Dafra Pharma' 
+                                or $manu-name = 'Far-Manguinhos' or $manu-name = 'Glaxo-SmithKline' or $manu-name = 'Guilin Pharma' 
+                                or $manu-name = 'Hoffman-La Roche' or $manu-name = 'Holley Pharmaceuticals' 
+                                or $manu-name = 'Holley-Cotec Pharmaceuticals' or $manu-name = 'Holleykin Pharmaceuticals' 
+                                or $manu-name = 'Ipca Laboratories Ltd' or $manu-name = 'Kunming Pharmaceutical Corporation' 
+                                or $manu-name = 'Maphra' or $manu-name = 'Medinomics Healthcare' or $manu-name = 'Medochemie' 
+                                or $manu-name = 'Mepha' or $manu-name = 'Novartis' or $manu-name = 'Parke-Davis' or $manu-name = 'Pfizer' 
+                                or $manu-name = 'Pharmamed' or $manu-name = 'Regal Pharmaceuticals' or $manu-name = 'Rene Pharmaceuticals' 
+                                or $manu-name = 'Rhone-Poulenc' or $manu-name = 'Roche' or $manu-name = 'Sanofi' or $manu-name = 'Sanofi Aventis' 
+                                or $manu-name = 'SigmaTau' or $manu-name = 'SmithKline Beecham' or $manu-name = 'Swiss Pharma Nigeria Limited' 
+                                or $manu-name = 'Zeneca') then    
+                                 $manu-name
+                            else if ($manu-name = 'Sanofi-Aventis') then
+                                let $repo := update replace $odn/manufacturer/text() with 'Sanofi Aventis'
+                                return $repo
+                            else if ($manu-name = 'Sigma-Tau') then
+                                let $repo := update replace $odn/manufacturer/text() with 'SigmaTau'
+                                return $repo
+                            else if ($manu-name = 'Glaxo-SmithKline' or $manu-name = 'GSK') then
+                                let $repo := update replace $odn/manufacturer/text() with 'Glaxo-SmithKline'
+                                return $repo
+                            else if ($manu-name = 'Guilin Pharmaceutical factory') then
+                                let $repo := update replace $odn/manufacturer/text() with 'Guilin Pharma'
+                                return $repo
                             else
                                  let $old-name := $odn/manufacturer/text()
                                  let $rep := update replace $odn/manufacturerOther with <manufacturerOther>{$old-name}</manufacturerOther> 
