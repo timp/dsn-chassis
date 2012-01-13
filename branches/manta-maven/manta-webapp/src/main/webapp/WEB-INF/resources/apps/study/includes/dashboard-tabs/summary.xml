@@ -115,7 +115,7 @@
 												<xforms:output ref="atom:title"/>
 												(<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)$', '$1' )"/>)
 											 <table>
-												<xforms:repeat nodeset="atom:content/atom:link" id="rep-linked-studies">
+											 	<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/linkMember']" id="rep-linked-studies">
 													<tr class="repeated-element">
 														<td>
 														 <xforms:trigger ref="." class="addRemove">
@@ -151,7 +151,7 @@
 														   <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
 														   <xforms:insert 
 															 ev:event="DOMActivate" 
-															 context="atom:content" 
+															 context="." 
 															 nodeset="atom:link" 
 															 at="last()" 
 															 position="after" 
@@ -164,7 +164,7 @@
 																<xforms:label>Add study</xforms:label>
 																<xforms:insert 
 																	ev:event="DOMActivate" 
-																	context="atom:content" 
+																	context="." 
 																	nodeset="atom:link" 
 																	at="last()" 
 																	position="after" 

@@ -1022,7 +1022,7 @@ declare function manta-plugin:after-list-collection-link(
             for $entry in $feed/child::*[ ( . instance of element(atom:entry) or . instance of element(at:deleted-entry) ) ]
             return 
                 if ( empty($param-study) 
-                        or $param-study = $entry/atom:content/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/linkMember"]/@href 
+                        or $param-study = $entry/atom:link[@rel="http://www.cggh.org/2010/chassis/terms/linkMember"]/@href 
                     )
                 then ( $entry )
                 else ()
