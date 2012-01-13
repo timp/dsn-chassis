@@ -568,7 +568,8 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                 or $manu-name = 'Rhone-Poulenc' or $manu-name = 'Roche' or $manu-name = 'Sanofi' or $manu-name = 'Sanofi Aventis' 
                                 or $manu-name = 'SigmaTau' or $manu-name = 'SmithKline Beecham' or $manu-name = 'Swiss Pharma Nigeria Limited' 
                                 or $manu-name = 'Zeneca') then    
-                                 $manu-name
+                                  let $repo := update replace $odn/manufacturer/text() with $manu-name
+                                return $repo
                             else if ($manu-name = 'Sanofi-Aventis') then
                                 let $repo := update replace $odn/manufacturer/text() with 'Sanofi Aventis'
                                 return $repo
