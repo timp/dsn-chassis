@@ -556,18 +556,20 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                  return $rep
                 let $manu-name := normalize-space($odn/manufacturer/text())
                 let $manc := if ($manu-name = 'Ajanta Pharma' or $manu-name = 'Aspen Healthcare' or $manu-name = 'AstraZeneca' 
-                                or $manu-name = 'Atlantic Laboratories' or $manu-name = 'Bailly-Creat Laboratory' 
+                                or $manu-name = 'Atlantic Laboratories' or $manu-name = 'Aventis'
+                                or $manu-name = 'Bailly-Creat Laboratory' 
                                 or $manu-name = 'Boucher and Muir' or $manu-name = 'Cosmos' or $manu-name = 'Dafra Pharma' 
                                 or $manu-name = 'Far-Manguinhos' or $manu-name = 'Glaxo-SmithKline' or $manu-name = 'Guilin Pharma' 
-                                or $manu-name = 'Hoffman-La Roche' or $manu-name = 'Holley Pharmaceuticals' 
+                                or $manu-name = 'Hoffmann-La Roche' or $manu-name = 'Holley Pharmaceuticals' 
                                 or $manu-name = 'Holley-Cotec Pharmaceuticals' or $manu-name = 'Holleykin Pharmaceuticals' 
-                                or $manu-name = 'Ipca Laboratories Ltd' or $manu-name = 'Kunming Pharmaceutical Corporation' 
+                                or $manu-name = 'Ipca Laboratories Ltd' or $manu-name = 'Kunming Pharmaceutical Corporation'
+                                or $manu-name = 'LIC Pharma' 
                                 or $manu-name = 'Maphra' or $manu-name = 'Medinomics Healthcare' or $manu-name = 'Medochemie' 
                                 or $manu-name = 'Mepha' or $manu-name = 'Novartis' or $manu-name = 'Parke-Davis' or $manu-name = 'Pfizer' 
                                 or $manu-name = 'Pharmamed' or $manu-name = 'Regal Pharmaceuticals' or $manu-name = 'Rene Pharmaceuticals' 
                                 or $manu-name = 'Rhone-Poulenc' or $manu-name = 'Roche' or $manu-name = 'Sanofi' or $manu-name = 'Sanofi Aventis' 
-                                or $manu-name = 'SigmaTau' or $manu-name = 'SmithKline Beecham' or $manu-name = 'Swiss Pharma Nigeria Limited' 
-                                or $manu-name = 'Zeneca') then    
+                                or $manu-name = 'SigmaTau' or $manu-name = 'SmithKline Beecham' or $manu-name = 'Sterling Winthrop' 
+                                or $manu-name = 'Swiss Pharma Nigeria Limited' or $manu-name = 'Zeneca') then    
                                   let $repo := update replace $odn/manufacturer/text() with $manu-name
                                 return $repo
                             else if ($manu-name = 'Sanofi-Aventis') then
@@ -581,6 +583,9 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                                 return $repo
                             else if ($manu-name = 'Guilin Pharmaceutical factory') then
                                 let $repo := update replace $odn/manufacturer/text() with 'Guilin Pharma'
+                                return $repo
+                            else if ($manu-name = 'Hoffman-La Roche') then
+                                let $repo := update replace $odn/manufacturer/text() with 'Hoffmann-La Roche'
                                 return $repo
                             else
                                  let $old-name := $odn/manufacturer/text()
