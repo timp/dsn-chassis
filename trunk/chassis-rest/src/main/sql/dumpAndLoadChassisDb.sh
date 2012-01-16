@@ -12,7 +12,7 @@ export passwd=$1
 
 export out=`date "+%Y%m%d"`
 
-export file=chassiDb_$out.sql
+export file=chassisDb_$out.sql
 
 mysqldump chassisDb  --user=timp --complete-insert --skip-opt --add-drop-table  > $file
 
@@ -84,7 +84,7 @@ rm -f molecularStudySitesPublications.csv
 curl -O --remote-header-name "http://localhost:8080/posql/selection/?db=chassisDb&query=select+%0D%0A+++s.StudyId%2C+%0D%0A+++s.PublishedItem+as+DateReceived%2C+%0D%0A+++s.Modules%2C+%0D%0A+++Site.LookupAddress+as+Site%2C%0D%0A+++Site.Population%2C%0D%0A+++Site.Latitude%2C%0D%0A+++Site.Longitude%2C%0D%0A+++s.StudyTitle%2C%0D%0A+++Publication.PublicationTitle%0D%0A+from+%0D%0A%28+select+%0D%0A+++Entry.StudyId%2C+%0D%0A+++Entry.PublishedItem%2C+%0D%0A+++Study.Modules%2C+%0D%0A+++StudyInfo.StartDate%2C+%0D%0A+++StudyInfo.EndDate%2C%0D%0A+++Study.StudyTitle%2C%0D%0A+++StudyInfo.Sites_StudyInfo_Hjid%2C%0D%0A+++Study.Publications_Study_Hjid%0D%0Afrom+%0D%0AEntry%2C+Content%2C+Study%2C+StudyInfo%0D%0Awhere%0D%0A+Entry.Content_Entry_Hjid+%3D+Content.Hjid+and%0D%0A+Content.Study_Content_Hjid+%3D+Study.Hjid+and%0D%0A+Study.StudyInfo_Study_Hjid+%3D+StudyInfo.Hjid+%0D%0Aand+Study.Modules+like+%22%25molecular%25%22%0D%0A%29+s%0D%0Aleft+join+Sites+on+s.Sites_StudyInfo_Hjid+%3D+Sites.Hjid+%0D%0Aleft+join+Site+on+Sites.Hjid+%3D+Site.Site_Sites_Hjid+%0D%0Aleft+join+Publications+on++s.Publications_Study_Hjid+%3D+Publications.Hjid+%0D%0Aleft+join+Publication+on+Publication.Publication_Publications_Hjid+%3D+Publications.Hjid+%0D%0AORDER+BY+s.StudyId%0D%0A&filename=molecularStudySitesPublications.csv&Run=Run&csv=on"
 curl --upload-file molecularStudySitesPublications.csv   --user timp:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/619fdd20-f1a6-4095-b184-f9ff8ae1b1be/content.csv
 
-rm -r pharmacologyStudySitesPublications.csv 
+rm -f pharmacologyStudySitesPublications.csv 
 curl -O --remote-header-name "http://localhost:8080/posql/selection/?db=chassisDb&query=select+%0D%0A+++s.StudyId%2C+%0D%0A+++s.PublishedItem+as+DateReceived%2C+%0D%0A+++s.Modules%2C+%0D%0A+++Site.LookupAddress+as+Site%2C%0D%0A+++Site.Population%2C%0D%0A+++Site.Latitude%2C%0D%0A+++Site.Longitude%2C%0D%0A+++s.StudyTitle%2C%0D%0A+++Publication.PublicationTitle%0D%0A+from+%0D%0A%28+select+%0D%0A+++Entry.StudyId%2C+%0D%0A+++Entry.PublishedItem%2C+%0D%0A+++Study.Modules%2C+%0D%0A+++StudyInfo.StartDate%2C+%0D%0A+++StudyInfo.EndDate%2C%0D%0A+++Study.StudyTitle%2C%0D%0A+++StudyInfo.Sites_StudyInfo_Hjid%2C%0D%0A+++Study.Publications_Study_Hjid%0D%0Afrom+%0D%0AEntry%2C+Content%2C+Study%2C+StudyInfo%0D%0Awhere%0D%0A+Entry.Content_Entry_Hjid+%3D+Content.Hjid+and%0D%0A+Content.Study_Content_Hjid+%3D+Study.Hjid+and%0D%0A+Study.StudyInfo_Study_Hjid+%3D+StudyInfo.Hjid+%0D%0Aand+Study.Modules+like+%22%25pharmacology%25%22%0D%0A%29+s%0D%0Aleft+join+Sites+on+s.Sites_StudyInfo_Hjid+%3D+Sites.Hjid+%0D%0Aleft+join+Site+on+Sites.Hjid+%3D+Site.Site_Sites_Hjid+%0D%0Aleft+join+Publications+on++s.Publications_Study_Hjid+%3D+Publications.Hjid+%0D%0Aleft+join+Publication+on+Publication.Publication_Publications_Hjid+%3D+Publications.Hjid+%0D%0AORDER+BY+s.StudyId%0D%0A&filename=pharmacologyStudySitesPublications.csv&Run=Run&csv=on"
 curl --upload-file pharmacologyStudySitesPublications.csv   --user timp:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/e7cc4428-71dc-4e56-9bb2-dbcffd29a8e5/content.csv
 
