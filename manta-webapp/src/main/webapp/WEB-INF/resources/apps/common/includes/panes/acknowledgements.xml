@@ -35,7 +35,7 @@
             
             <span id="editable-list-of-acknowledgements-container">
             
-                <table>
+                <table class="wide-table">
                 <xforms:repeat nodeset="institutions/institution-ack" id="rep-inst">
                     <tr class="repeated-element">
                             
@@ -51,14 +51,14 @@
                             <td class="acknowledgement-form-cell">
                                 <span class="institution-textbox-container">
                         
-                <xforms:input ref="institution-name">
-                    <xforms:label>Institution:</xforms:label>
-                </xforms:input>
-             </span>
+                                    <xforms:input ref="institution-name">
+                                        <xforms:label>Institution:</xforms:label>
+                                    </xforms:input>
+                                 </span>
                             </td>
                         </tr>
                         <tr><td colspan="2">
-                <table>
+                            <table class="wide-table">
                     
                     <xforms:repeat nodeset="institution-websites/institution-url" id="rep-url">
                         
