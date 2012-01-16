@@ -56,7 +56,9 @@
                         <institutions>
                             <institution-ack>
                                 <institution-name><xsl:value-of select="$metadata//Affiliation"/></institution-name>
-                                <institution-websites/>
+                                <institution-websites>
+                                    <institution-url/>
+                                </institution-websites>
                             </institution-ack>
                         </institutions>
                         <people>
