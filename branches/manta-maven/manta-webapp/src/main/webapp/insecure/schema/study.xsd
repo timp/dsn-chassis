@@ -157,10 +157,13 @@
 			<xs:enumeration value="Arsumax" />
 			<xs:enumeration value="Artefan" />
 			<xs:enumeration value="Artekin" />
+			<xs:enumeration value="Artequin" />
+			<xs:enumeration value="Artrin" />
 			<xs:enumeration value="Avloclor" />
 			<xs:enumeration value="Basoquin" />
 			<xs:enumeration value="Camoquin" />
 			<xs:enumeration value="Co-artesiane" />
+			<xs:enumeration value="Coarsucam" />
 			<xs:enumeration value="Coartem" />
 			<xs:enumeration value="Cosmoquin" />
 			<xs:enumeration value="Duo-Cotecxin" />
@@ -180,6 +183,7 @@
 			<xs:enumeration value="Mequin" />
 			<xs:enumeration value="Nivaquine" />
 			<xs:enumeration value="Plasmotrin" />
+			<xs:enumeration value="Primacin" />
 			<xs:enumeration value="Resunate" />
 			<xs:enumeration value="Riamet" />
 			<xs:enumeration value="Other" />

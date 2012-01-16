@@ -540,13 +540,15 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
                 let $tn := normalize-space($odn/tradeName/text())
                 let $trade-name := concat(upper-case(substring($tn,1,1)),substring($tn,2))
                 let $tnc := if ($trade-name = '' or $trade-name = 'Amobin' or $trade-name = 'Amonate' or $trade-name = 'Arco' or $trade-name = 'Arsudar' 
-                                or $trade-name = 'Arsumax' or $trade-name = 'Artefan' or $trade-name = 'Artekin' or $trade-name = 'Avloclor' 
-                                or $trade-name = 'Basoquin' or $trade-name = 'Camoquin' or $trade-name = 'Co-artesiane' or $trade-name = 'Coartem' 
+                                or $trade-name = 'Arsumax' or $trade-name = 'Artefan' or $trade-name = 'Artekin' or $trade-name = 'Avloclor'
+                                or $trade-name = 'Artequin' or $trade-name = 'Artrin' 
+                                or $trade-name = 'Basoquin' or $trade-name = 'Camoquin' or $trade-name = 'Co-artesiane' or $trade-name = 'Coartem'
+                                or $trade-name = 'Coarsucam' 
                                 or $trade-name = 'Cosmoquin' or $trade-name = 'Duo-Cotecxin' or $trade-name = 'Eloquine' or $trade-name = 'Eurartesim' 
                                 or $trade-name = 'Falcidin' or $trade-name = 'Fansidar' or $trade-name = 'Farenax' or $trade-name = 'Flavoquine' 
                                 or $trade-name = 'Halfan' or $trade-name = 'LapDap' or $trade-name = 'Lariam' or $trade-name = 'Malaratab' 
                                 or $trade-name = 'Malarine' or $trade-name = 'Malarone' or $trade-name = 'Malmed' or $trade-name = 'Mequin' 
-                                or $trade-name = 'Nivaquine' or $trade-name = 'Plasmotrin' or $trade-name = 'Resunate' or $trade-name = 'Riamet') then
+                                or $trade-name = 'Nivaquine' or $trade-name = 'Plasmotrin' or $trade-name = 'Resunate' or $trade-name = 'Primacin' or $trade-name = 'Riamet') then
                                 let $repo := update replace $odn/tradeName/text() with $trade-name
                                 return $trade-name
                             else

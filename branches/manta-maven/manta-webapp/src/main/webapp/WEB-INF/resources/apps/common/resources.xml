@@ -55,6 +55,8 @@
 					<manufacturer tradeName="Arsumax">Sanofi</manufacturer>
 					<manufacturer tradeName="Artefan">Ajanta Pharma</manufacturer>
 					<manufacturer tradeName="Artekin">Holleykin Pharmaceuticals</manufacturer>
+					<manufacturer tradeName="Artequin">Mepha</manufacturer>
+					<manufacturer tradeName="Artrin">LIC Pharma</manufacturer>
 					<manufacturer tradeName="Avloclor">AstraZeneca</manufacturer>
 					<manufacturer tradeName="Basoquin">Pfizer</manufacturer>
 					<manufacturer tradeName="Camoquin">Pfizer</manufacturer>
@@ -79,6 +81,7 @@
 					<manufacturer tradeName="Mequin">Atlantic Laboratories</manufacturer>
 					<manufacturer tradeName="Nivaquine">Aventis</manufacturer>
 					<manufacturer tradeName="Plasmotrin">Mepha</manufacturer>
+					<manufacturer tradeName="Primacin">Boucher and Muir</manufacturer>
 					<manufacturer tradeName="Resunate">Regal Pharmaceuticals</manufacturer>
 					<manufacturer tradeName="Riamet">Novartis</manufacturer>
 					<manufacturer tradeName="Other">Other</manufacturer>
