@@ -205,78 +205,10 @@
 						</xforms:trigger>
 					</p>
 						<h3>(5) Acknowledgements</h3>
-						
-					<div class="institution-textbox-container">
-					   <xforms:repeat nodeset="instance('ins-study-entry')//acknowledgements/institutions/institution-ack">
-						<p>
-							<xforms:output ref="institution-name">
-								<xforms:label>Institution:</xforms:label>
-							</xforms:output>
-							<br/>
-							<xforms:repeat nodeset="institution-websites/institution-url">
-								<br/>
-								<xforms:output ref=".">
-									<xforms:label>URL:</xforms:label>
-								</xforms:output>
-								
-							</xforms:repeat>
-						</p>
-						</xforms:repeat>
-					</div>
-						
-						<xforms:group ref="not(instance('ins-study-entry')//atom:content/study/acknowledgements[empty(people)])">
-						
-							<div id="list-of-acknowledgements-container">
-						
-								<ol>
-									<xforms:repeat nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/people/person">
-										<li class="repeated-element acknowledgement-form-summary-item">
-											<span class="first-name-text-container">
-									        <xforms:output ref="first-name">
-									            <xforms:label>First name:</xforms:label>
-									        </xforms:output>
-											</span>
-									       <br/>
-											<span class="middle-name-text-container">
-									        <xforms:output ref="middle-name">
-									            <xforms:label>Middle name:</xforms:label>
-									        </xforms:output>
-												</span>
-									       <br/>
-												<span class="family-name-text-container">
-									        <xforms:output ref="family-name">
-									            <xforms:label>Family name:</xforms:label>
-									        </xforms:output>
-												</span>
-									        <br/>
-													<span class="email-address-text-container">
-									        <xforms:output ref="email-address">
-									            <xforms:label>Email address:</xforms:label>
-									        </xforms:output>
-													</span>
-									        <br/>
-														<span class="institution-text-container">
-									        <xforms:output ref="institution">
-									            <xforms:label>Institution:</xforms:label>
-									        </xforms:output>
-														</span>
-											
-											<br/>
-											<xforms:output ref="person-is-contactable">
-												<xforms:label>Contactable?</xforms:label>
-											</xforms:output>
-								        </li>
-									</xforms:repeat>
-										
-									
-								</ol>
-								
-							</div>
-							
-						</xforms:group>
-						<xforms:group ref="instance('ins-study-entry')//atom:content/study/acknowledgements[empty(people)]">
-							<p>No personal acknowledgements.</p>
-						</xforms:group>
+					<xforms:group ref="instance('ins-study-entry')//acknowledgements">
+						<xi:include href="../../../common/includes/panes/acknowledgementView.xml"/>
+					</xforms:group>
+					
 					
 						<p>
 							<xforms:trigger appearance="minimal">

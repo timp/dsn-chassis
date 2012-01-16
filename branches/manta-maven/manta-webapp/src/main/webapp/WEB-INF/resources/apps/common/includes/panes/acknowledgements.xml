@@ -286,62 +286,9 @@
         ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
         <xforms:group
             ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
-            <div class="institution-textbox-container">
-                <xforms:repeat nodeset="instance('ins-study-entry')//acknowledgements/institutions/institution-ack">
-                <p>
-                <xforms:output ref="institution-name">
-                    <xforms:label>Institution:</xforms:label>
-                </xforms:output>
-                <br/>
-                <xforms:repeat nodeset="institution-websites/institution-url" id="rep-instit-url">
-                    <br/>
-                    <xforms:output ref=".">
-                        <xforms:label>URL:</xforms:label>
-                    </xforms:output>
-                   
-                </xforms:repeat>
-                </p>
-                </xforms:repeat>
-            </div>
             
-            <xforms:group
-                ref="instance('ins-study-entry')/atom:content/study/acknowledgements[empty(person)]">
-                <p>There are no personal acknowledgements.</p>
-            </xforms:group>
-
-            <xforms:group
-                ref="instance('ins-study-entry')/atom:content/study/acknowledgements[exists(person)]">
-                <ol>
-                    <xforms:repeat nodeset="person" id="rep-person-curator">
-                        <li class="acknowledgement-form-summary-item">
-                            <xforms:output ref="first-name">
-                                <xforms:label>First name:</xforms:label>
-                            </xforms:output>
-                            <br/>
-                            <xforms:output ref="middle-name">
-                                <xforms:label>Middle name:</xforms:label>
-                            </xforms:output>
-                            <br/>
-                            <xforms:output ref="family-name">
-                                <xforms:label>Family name:</xforms:label>
-                            </xforms:output>
-                            <br/>
-                            <xforms:output ref="email-address">
-                                <xforms:label>Email address:</xforms:label>
-                            </xforms:output>
-                            <br/>
-                            <xforms:output ref="person-is-contactable">
-                                <xforms:label>Contactable:</xforms:label>
-                            </xforms:output>
-                            <br/>
-                            <xforms:output ref="institution">
-                                <xforms:label>Institution:</xforms:label>
-                            </xforms:output>
-                        </li>
-                    </xforms:repeat>
-                </ol>
-            </xforms:group>
-
+            <xi:include href="acknowledgementView.xml"/>
+       
         </xforms:group>
     </xforms:group>
 
