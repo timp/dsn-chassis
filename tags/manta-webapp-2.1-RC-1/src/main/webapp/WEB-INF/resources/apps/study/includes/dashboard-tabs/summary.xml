@@ -1,0 +1,207 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<div id="bd" class="clearfix">
+		
+		<div class="no-bg">
+			
+			<!-- Help boxes. Comment out if not needed. -->
+			<div class="help">
+				<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/summary.xml"/>				
+			</div>
+			
+			
+			<div class="main twoCol">
+				
+				<div id="content" class="study-dashboard">
+					
+					<h1>Study dashboard - <xforms:output value="instance('ins-study-entry')//studyTitle"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
+					
+					
+						<div class="yui-navset yui-navset-top">
+							
+							<xi:include href="../dashboard-tabs-menu.xml"/>
+							
+							
+							<div class="yui-content">
+							
+								<xforms:group ref="instance('ins-study-entry')">
+								
+									<!-- If the user has GET access to the study entry, but not PUT access. -->
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+										<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+											
+									<p>
+										<xforms:output ref="instance('ins-study-entry')//studyTitle">
+											<xforms:label>Title:</xforms:label>
+										</xforms:output>	    					
+									</p>	
+										</xforms:group>
+									</xforms:group>
+									
+									<!-- If the user has GET access to the study entry, and PUT access. -->
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+										<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+											
+											<p>
+												<xforms:input ref="instance('ins-study-entry')//studyTitle">
+													<xforms:label>Title:</xforms:label>
+												</xforms:input>	    					
+											</p>
+											<h3>Study type (WWARN modules)</h3>
+											
+											<p>Please select the WWARN Modules for which this study has data. If submitting data for parasite clearance rate estimation, select “Clinical”.</p>
+											
+											<p>
+												<xforms:select ref="instance('ins-study-entry')/atom:content/study/modules" appearance="full">
+													<xforms:label>WWARN modules:</xforms:label>
+													<xforms:itemset
+														nodeset="instance('ins-module-items')/module" class="repeated-element">
+														<xforms:label ref="label" />
+														<xforms:value ref="value" />
+													</xforms:itemset>
+													<xforms:alert>Appropriate questions are displayed only when a
+														module is selected</xforms:alert>
+												</xforms:select>
+											</p>
+											
+										</xforms:group>
+									</xforms:group>
+										
+									<p>
+										<xforms:output ref="manta:id">
+											<xforms:label>ID:</xforms:label>
+										</xforms:output>	    					
+									</p>	
+									
+									<p>
+										<xforms:output ref="atom:author/atom:email">
+											<xforms:label>Creator:</xforms:label>
+										</xforms:output>	    					
+									</p>	
+									
+									<p>
+										<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')">
+											<xforms:label>Terms of Submission accepted:</xforms:label>
+										</xforms:output>	    					
+									</p>
+									
+								</xforms:group>
+								<xforms:group ref="instance('ins-control')/curator-controls">
+									<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+										<xforms:group ref="instance('ins-control')//link-member[. = 'false']">
+										 <p>
+											<span id="study-group-container">
+												<xforms:input ref="instance('ins-link-template')//atom:title">
+													<xforms:label>Study Group Title:</xforms:label>
+												</xforms:input>	  
+												<xforms:trigger>
+													<xforms:label>Create new Study Group</xforms:label>
+													<xforms:action ev:event="DOMActivate">
+														<xforms:send submission="sub-post-link"/>
+													</xforms:action>
+												</xforms:trigger>
+											</span>
+										 </p>
+										</xforms:group>
+										<xforms:group ref="instance('ins-control')//link-member[. = 'true']">
+											<div>Linked Studies:</div>
+											<xforms:repeat nodeset="instance('ins-link-feed')//atom:entry" id="rep-linked-study-groups">
+												<xforms:output ref="atom:title"/>
+												(<xforms:output ref="replace( atom:id/text() , '^.*/([^/^.]+)$', '$1' )"/>)
+											 <table>
+											 	<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/linkMember']" id="rep-linked-studies">
+													<tr class="repeated-element">
+														<td>
+														 <xforms:trigger ref="." class="addRemove">
+															<xforms:label>
+																<img alt="remove"
+																	src="/apps/contributor/common/remove.gif" />
+															</xforms:label>
+															<xforms:delete ev:event="DOMActivate"
+																context="." nodeset="."
+																at="index('rep-linked-studies')" />
+														 </xforms:trigger>
+														</td>
+														<td>
+														 <xforms:select1 ref="./@href">
+															<xforms:label></xforms:label>
+															
+															<xforms:item>
+																<xforms:label>Select...</xforms:label>
+																<xforms:value></xforms:value>
+															</xforms:item>
+															
+															<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[(empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
+																<xforms:label ref="concat(atom:content/study/studyTitle, ' (', manta:id, ')')"/>
+																<xforms:value ref="atom:link[@rel='self']/@href"/>
+															</xforms:itemset>
+														 </xforms:select1>
+														</td>
+													</tr>
+												</xforms:repeat>
+												<tr>
+													<td>
+														 <xforms:trigger class="addRemove">
+														   <xforms:label><img alt="add" src="/apps/contributor/common/add.gif"/></xforms:label>
+														   <xforms:insert 
+															 ev:event="DOMActivate" 
+															 context="." 
+															 nodeset="atom:link" 
+															 at="last()" 
+															 position="after" 
+															 origin="xxforms:element('atom:link', (xxforms:attribute('rel', 'http://www.cggh.org/2010/chassis/terms/linkMember'), xxforms:attribute('href','')))"/>
+														 </xforms:trigger>
+													</td>
+													<td>
+														<span id="add-administrator-link-container">
+															 <xforms:trigger appearance="minimal">
+																<xforms:label>Add study</xforms:label>
+																<xforms:insert 
+																	ev:event="DOMActivate" 
+																	context="." 
+																	nodeset="atom:link" 
+																	at="last()" 
+																	position="after" 
+																	origin="xxforms:element('atom:link',(xxforms:attribute('rel', 'http://www.cggh.org/2010/chassis/terms/linkMember'), xxforms:attribute('href','')))"/>
+															 </xforms:trigger>
+														</span>
+													</td>
+												</tr>
+											  </table>
+											</xforms:repeat>
+										</xforms:group>
+									</xforms:group>
+								</xforms:group>
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit' and (contains(@atombeat:allow, 'PUT'))]">
+								<p>
+									<span id="title-save-changes-button-container">
+										<xforms:trigger ref="instance('ins-control')/save-study-trigger">
+											<xforms:label>Save changes</xforms:label>
+											<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
+												<xforms:send submission="sub-put-study-entry"/>
+											</xforms:action>
+											<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
+												<xforms:message>Please complete all required fields.</xforms:message>
+											</xforms:action>
+										</xforms:trigger>
+									</span>
+								</p>
+								</xforms:group>
+							
+							</div>
+							
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>		

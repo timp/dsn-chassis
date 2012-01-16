@@ -1,0 +1,24 @@
+<!--  Closed list of metabolites of anti-malarial drugs  -->
+<!--  used in pharamcology and in vitro -->
+<metaboliteMolecules xmlns="">
+  <metaboliteMolecule>
+    <label>carboxy-primaquine</label>
+    <value>CPQ</value>
+  </metaboliteMolecule>
+  <metaboliteMolecule>
+    <label>desbutyl-lumefantrine</label>
+    <value>DLUM</value>
+  </metaboliteMolecule>
+  <metaboliteMolecule>
+    <label>desethyl-chloroquine</label>
+    <value>DCQ</value>
+  </metaboliteMolecule>
+  <metaboliteMolecule>
+    <label>monodesethylamodiaquine</label>
+    <value>MDA</value>
+  </metaboliteMolecule>
+  <metaboliteMolecule>
+    <label>3-hydroxyquinine</label>
+    <value>3HQ</value>
+  </metaboliteMolecule>  
+</metaboliteMolecules>

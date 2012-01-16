@@ -1,0 +1,936 @@
+Index: src/main/filtered/WEB-INF/resources/config/theme-manta.xsl
+===================================================================
+--- src/main/filtered/WEB-INF/resources/config/theme-manta.xsl	(revision 3624)
++++ src/main/filtered/WEB-INF/resources/config/theme-manta.xsl	(working copy)
+@@ -27,88 +27,104 @@
+     <xsl:variable name="orbeon-forms-version" select="version:getVersion()" as="xs:string"/>
+ 
+     <!-- - - - - - - Themed page template - - - - - - -->
+-    <xsl:template match="/*">
+-        <xsl:copy>
+-            <xsl:apply-templates select="@*"/>
+-            <xhtml:head>
+-            
+-                <!-- Add meta as early as possible -->
+-                <xsl:apply-templates select="/xhtml:html/xhtml:head/xhtml:meta"/>
+-                
+-                <!-- Handle head elements except scripts (handled at the bottom) -->
+-                <xsl:apply-templates select="/xhtml:html/xhtml:head/(xhtml:link | xhtml:style)"/>
+-                
+-                <!-- Title -->
+-                <xhtml:title>
+-                    <xsl:apply-templates select="/xhtml:html/xhtml:head/xhtml:title/@*"/>
+-                    <xsl:choose>
+-                        <xsl:when test="/xhtml:html/xhtml:head/xhtml:title != ''">
+-                            <xsl:value-of select="/xhtml:html/xhtml:head/xhtml:title"/>
+-                        </xsl:when>
+-                        <xsl:otherwise>
+-                            <xsl:value-of select="(/xhtml:html/xhtml:body/xhtml:h1)[1]"/>
+-                        </xsl:otherwise>
+-                    </xsl:choose>
+-                </xhtml:title>
++	<xsl:template match="/*">
++		<xsl:copy>
++			<xsl:apply-templates select="@*" />
++			<xhtml:head>
++
++				<!-- Add meta as early as possible -->
++				<xsl:apply-templates select="/xhtml:html/xhtml:head/xhtml:meta" />
++
++				<!-- Handle head elements except scripts (handled at the bottom) -->
++				<xsl:apply-templates
++					select="/xhtml:html/xhtml:head/(xhtml:link | xhtml:style)" />
++
++				<!-- Title -->
++				<xhtml:title>
++					<xsl:apply-templates select="/xhtml:html/xhtml:head/xhtml:title/@*" />
++					<xsl:choose>
++						<xsl:when test="/xhtml:html/xhtml:head/xhtml:title != ''">
++							<xsl:value-of select="/xhtml:html/xhtml:head/xhtml:title" />
++						</xsl:when>
++						<xsl:otherwise>
++							<xsl:value-of select="(/xhtml:html/xhtml:body/xhtml:h1)[1]" />
++						</xsl:otherwise>
++					</xsl:choose>
++				</xhtml:title>
++
++				<!-- NOTE: The XForms engine may place additional scripts and stylesheets 
++					here as needed -->
++				<xhtml:link rel="stylesheet" href="/config/theme/orbeon.css"
++					type="text/css" media="all" />
++				<xhtml:link rel="stylesheet" href="/apps/common/theme/manta.css"
++					type="text/css" media="all" />
++				<xhtml:link rel="stylesheet" href="/apps/common/theme/wwarn.css"
++					type="text/css" media="all" />
++
++				<!-- Orbeon Forms version -->
++				<xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}" />
++
++				<!-- Favicon -->
++				<xhtml:link rel="shortcut icon"
++					href="http://www.wwarn.org/sites/default/files/wwarn_favicon.ico"
++					type="image/x-icon" />
+ 
+-                <!-- NOTE: The XForms engine may place additional scripts and stylesheets here as needed -->
+-                <xhtml:link rel="stylesheet" href="/config/theme/orbeon.css" type="text/css" media="all"/>
+-                <xhtml:link rel="stylesheet" href="/apps/common/theme/manta.css" type="text/css" media="all"/>
+-                <xhtml:link rel="stylesheet" href="/apps/common/theme/wwarn.css" type="text/css" media="all"/>
+-			    
+-                <!-- Orbeon Forms version -->
+-                <xhtml:meta name="generator" content="Orbeon Forms {$orbeon-forms-version}"/>
+-                
+-                <!-- Favicon -->
+-                <xhtml:link rel="shortcut icon" href="http://www.wwarn.org/sites/default/files/wwarn_favicon.ico" type="image/x-icon" />
+-                
+-            </xhtml:head>
+-            
+-            <xhtml:body>
+-                <!-- Copy body attributes -->
+-                <xsl:apply-templates select="/xhtml:html/xhtml:body/@*"/>
++			</xhtml:head>
+ 
+-				<xsl:apply-templates select="/xhtml:html/xhtml:body/node()"/>
++			<xhtml:body>
+ 
+-               	<xhtml:div id="ft">
++				<!-- Body -->
++				<xsl:apply-templates select="/xhtml:html/xhtml:body" />
++				<xhtml:div id="ft">
+ 
+-               		<xhtml:div id="footer-inner">
+-					    <xhtml:div class="block">
+-					        <xhtml:ul class="menu">
+-					        	<xhtml:li><xhtml:a title="" href="/contact" target="_blank" f:url-norewrite="true">Feedback</xhtml:a></xhtml:li>
+-					            <xhtml:li><xhtml:a title="" href="/contact" target="_blank" f:url-norewrite="true">Contact Us</xhtml:a></xhtml:li>
+-					            <xhtml:li><xhtml:a title="" href="/terms-use" target="_blank" f:url-norewrite="true">Terms &#38; Conditions</xhtml:a></xhtml:li>
+-					        </xhtml:ul>
+-					    </xhtml:div>
+-					    <xhtml:div class="block">
+-					        <xhtml:p><xhtml:a href="/terms-use" target="_blank" f:url-norewrite="true">Copyright &#169; 2011 WorldWide Antimalarial Resistance Network (WWARN)</xhtml:a></xhtml:p>
+-					    </xhtml:div>
++					<xhtml:div id="footer-inner">
++						<xhtml:div class="block">
++							<xhtml:ul class="menu">
++								<xhtml:li>
++									<xhtml:a title="" href="/contact" target="_blank"
++										f:url-norewrite="true">Feedback</xhtml:a>
++								</xhtml:li>
++								<xhtml:li>
++									<xhtml:a title="" href="/contact" target="_blank"
++										f:url-norewrite="true">Contact Us</xhtml:a>
++								</xhtml:li>
++								<xhtml:li>
++									<xhtml:a title="" href="/terms-use" target="_blank"
++										f:url-norewrite="true">Terms &#38; Conditions</xhtml:a>
++								</xhtml:li>
++							</xhtml:ul>
++						</xhtml:div>
++						<xhtml:div class="block">
++							<xhtml:p>
++								<xhtml:a href="/terms-use" target="_blank"
++									f:url-norewrite="true">Copyright &#169; 2011 WorldWide Antimalarial
++									Resistance Network (WWARN)</xhtml:a>
++							</xhtml:p>
++						</xhtml:div>
+ 					</xhtml:div>
+ 
+-               	</xhtml:div>
+-               	
++				</xhtml:div>
++
+ 				<xhtml:script type="text/javascript">
+-				var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+-				document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
++					var gaJsHost = (("https:" == document.location.protocol) ?
++					"https://ssl." : "http://www.");
++					document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'
++					type='text/javascript'%3E%3C/script%3E"));
+ 				</xhtml:script>
+ 				<xhtml:script type="text/javascript">
+-				try{ 
+-				var pageTracker = _gat._getTracker("${google-analytics-web-property-id}");
+-				pageTracker._trackPageview();
+-				} catch(err) {} 
++					try{
++					var pageTracker =
++					_gat._getTracker("${google-analytics-web-property-id}");
++					pageTracker._trackPageview();
++					} catch(err) {} 
+ 				</xhtml:script>
+-               	
+-            </xhtml:body>
+-            
+-            <!-- Scripts at the bottom of the page. This is not valid HTML, but it is a recommended practice for
+-                 performance as of early 2008. See http://developer.yahoo.com/performance/rules.html#js_bottom -->
+-            <xsl:for-each select="/xhtml:html/xhtml:head/xhtml:script">
+-                <xsl:element name="xhtml:{local-name()}" namespace="{namespace-uri()}">
+-                    <xsl:apply-templates select="@*|node()"/>
+-                </xsl:element>
+-            </xsl:for-each>
+-        </xsl:copy>
+-    </xsl:template>
++
++			</xhtml:body>
++			<!-- Handle post-body scripts if present. They can be placed here by oxf:resources-aggregator -->
++			<xsl:apply-templates select="/xhtml:html/xhtml:script" />
++
++		</xsl:copy>
++	</xsl:template>
+ 
+     <!-- Simply copy everything that's not matched -->
+     <xsl:template match="@*|node()" priority="-2">
+Index: src/main/java/org/cggh/chassis/manta/processor/SecureEmailProcessor.java
+===================================================================
+--- src/main/java/org/cggh/chassis/manta/processor/SecureEmailProcessor.java	(revision 3624)
++++ src/main/java/org/cggh/chassis/manta/processor/SecureEmailProcessor.java	(working copy)
+@@ -55,9 +55,7 @@
+ import javax.mail.internet.MimeUtility;
+ import javax.naming.NamingException;
+ import javax.xml.transform.OutputKeys;
+-import javax.xml.transform.Transformer;
+ import javax.xml.transform.TransformerException;
+-import javax.xml.transform.sax.SAXResult;
+ import javax.xml.transform.sax.SAXSource;
+ import javax.xml.transform.sax.TransformerHandler;
+ import javax.xml.transform.stream.StreamResult;
+@@ -76,7 +74,7 @@
+ import org.orbeon.oxf.processor.ProcessorImpl;
+ import org.orbeon.oxf.processor.ProcessorInputOutputInfo;
+ import org.orbeon.oxf.processor.generator.URLGenerator;
+-import org.orbeon.oxf.processor.serializer.BinaryTextContentHandler;
++import org.orbeon.oxf.processor.serializer.BinaryTextXMLReceiver;
+ import org.orbeon.oxf.properties.PropertySet;
+ import org.orbeon.oxf.resources.URLFactory;
+ import org.orbeon.oxf.util.LoggerFactory;
+@@ -89,7 +87,6 @@
+ import org.orbeon.oxf.xml.dom4j.LocationData;
+ import org.orbeon.oxf.xml.dom4j.LocationSAXWriter;
+ import org.orbeon.oxf.xml.dom4j.NonLazyUserDataDocument;
+-import org.xml.sax.ContentHandler;
+ import org.xml.sax.InputSource;
+ import org.xml.sax.SAXException;
+ import org.xml.sax.XMLReader;
+@@ -561,14 +558,11 @@
+ 	// NOTE: Method is public for unit tests
+ 	public static FileItem handleStreamedPartContent(
+ 			PipelineContext pipelineContext, SAXSource source)
+-			throws IOException, TransformerException {
++	throws IOException, TransformerException {
+ 
+-		final FileItem fileItem = NetUtils.prepareFileItem(pipelineContext,
+-				NetUtils.REQUEST_SCOPE);
+-		final ContentHandler ch = new BinaryTextContentHandler(
+-				fileItem.getOutputStream());
+-		final Transformer identity = TransformerUtils.getIdentityTransformer();
+-		identity.transform(source, new SAXResult(ch));
++		final FileItem fileItem = NetUtils.prepareFileItem(pipelineContext, NetUtils.REQUEST_SCOPE);
++		TransformerUtils.sourceToSAX(source, new BinaryTextXMLReceiver(fileItem.getOutputStream()));
++
+ 		return fileItem;
+ 	}
+ 
+Index: src/main/java/org/cggh/chassis/manta/http/servlet/DOILookup.java
+===================================================================
+--- src/main/java/org/cggh/chassis/manta/http/servlet/DOILookup.java	(revision 3595)
++++ src/main/java/org/cggh/chassis/manta/http/servlet/DOILookup.java	(working copy)
+@@ -1,15 +1,23 @@
+ package org.cggh.chassis.manta.http.servlet;
+ 
++import java.io.BufferedReader;
+ import java.io.IOException;
++import java.io.InputStream;
++import java.io.InputStreamReader;
++import java.io.Reader;
++import java.io.StringWriter;
++import java.io.Writer;
+ 
+ import javax.servlet.ServletException;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ 
+-import org.apache.commons.httpclient.HttpClient;
+-import org.apache.commons.httpclient.HttpMethod;
+-import org.apache.commons.httpclient.methods.GetMethod;
++import org.apache.http.HttpResponse;
++import org.apache.http.HttpStatus;
++import org.apache.http.client.HttpClient;
++import org.apache.http.client.methods.HttpGet;
++import org.apache.http.impl.client.DefaultHttpClient;
+ 
+ /**
+  * A class to wrap dx.doi.org and return testable statuses.
+@@ -21,31 +29,57 @@
+ 
+ 	private static final long serialVersionUID = -5048380360952603272L;
+ 
+-	public static final HttpClient client = new HttpClient();
++	public static final HttpClient client = new DefaultHttpClient();
+ 
+ 	@Override
+ 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+ 		String doi = getCleanDOI(req);
+ 		if (doi != null) {
+ 			String url = "http://dx.doi.org/" + doi;
+-			HttpMethod get = new GetMethod(url);
+-			client.executeMethod(get);
+-			if (new String(get.getResponseBody()).contains("Not Found")) {
+-				resp.setStatus(404);
++			HttpClient client = null;
++			try {
++				client = new DefaultHttpClient();
++				HttpGet method = new HttpGet(url);
++				HttpResponse httpResponse = client.execute(method);
++				int statusCode = httpResponse.getStatusLine().getStatusCode();
++				if (statusCode == HttpStatus.SC_OK) {
++					InputStream is = httpResponse.getEntity().getContent(); 
++					Writer writer = new StringWriter();
+ 
+-				printHeader(resp, "Resource not found");
++					char[] buffer = new char[1024];
++					try {
++						Reader reader = new BufferedReader(
++								new InputStreamReader(is, "UTF-8"));
++						int n;
++						while ((n = reader.read(buffer)) != -1) {
++							writer.write(buffer, 0, n);
++						}
++					} finally {
++						is.close();
++					}
++					String content = writer.toString();
++					if (content.contains("cannot be found in the Handle System")) {
++						resp.setStatus(404);
+ 
+-				resp.getWriter().println("<p>" + doi + " could not be dereferenced at <a href=\"" + url + "\">" + url + "</a>.</p>");
++						printHeader(resp, "Resource not found");
+ 
+-				printFooter(resp);
+-			} else {
+-				resp.setStatus(200);
++						resp.getWriter().println("<p>" + doi + " could not be dereferenced at <a href=\"" + url + "\">" + url + "</a>.</p>");
+ 
+-				printHeader(resp, "Resource found");
++						printFooter(resp);
++					} else {
++						resp.setStatus(200);
+ 
+-				resp.getWriter().println("<p>Found " + doi + " at <a href=\"" + url + "\">" + url + "</a>.</p>");
++						printHeader(resp, "Resource found");
+ 
+-				printFooter(resp);
++						resp.getWriter().println("<p>Found " + doi + " at <a href=\"" + url + "\">" + url + "</a>.</p>");
++
++						printFooter(resp);
++					}
++				}
++			} finally {
++				if (client != null) {
++					client.getConnectionManager().shutdown();
++				}
+ 			}
+ 		} else {
+ 			resp.setStatus(200);
+@@ -66,13 +100,20 @@
+ 		}
+ 	}
+ 
+-	private void printHeader(HttpServletResponse resp, String title) throws IOException {
++	private void printHeader(HttpServletResponse resp, String title)
++	throws IOException {
+ 		resp.setContentType("text/html; charset=utf-8");
+-		resp.getWriter().println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
+-		resp.getWriter().println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+-		resp.getWriter().println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
++		resp.getWriter().println(
++		"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
++		resp.getWriter().println(
++		"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
++		resp.getWriter()
++		.println(
++				"<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
+ 		resp.getWriter().println(" <head>");
+-		resp.getWriter().println("  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
++		resp.getWriter()
++		.println(
++				"  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
+ 
+ 		resp.getWriter().println("  <title>");
+ 		resp.getWriter().println(title);
+Index: src/main/java/org/cggh/chassis/manta/util/GetFiles.java
+===================================================================
+--- src/main/java/org/cggh/chassis/manta/util/GetFiles.java	(revision 3718)
++++ src/main/java/org/cggh/chassis/manta/util/GetFiles.java	(working copy)
+@@ -15,27 +15,30 @@
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ 
+-import org.apache.commons.httpclient.HttpClient;
+-import org.apache.commons.httpclient.HttpException;
+-import org.apache.commons.httpclient.HttpStatus;
+-import org.apache.commons.httpclient.methods.GetMethod;
+-import org.apache.xerces.parsers.DOMParser;
++import org.apache.http.HttpException;
++import org.apache.http.HttpResponse;
++import org.apache.http.HttpStatus;
++import org.apache.http.client.HttpClient;
++import org.apache.http.client.methods.HttpGet;
++import org.apache.http.impl.client.DefaultHttpClient;
+ import org.w3c.dom.Document;
+ import org.w3c.dom.Element;
+ import org.w3c.dom.NodeList;
+ import org.xml.sax.InputSource;
+ import org.xml.sax.SAXException;
+ 
++import com.sun.org.apache.xerces.internal.parsers.DOMParser;
++
+ /**
+- * Return a CSV file listing all files of a type. 
++ * Return a CSV file listing all files of a type.
+  */
+ public class GetFiles extends HttpServlet {
+ 	private static final long serialVersionUID = 1L;
+-	
++
+ 	private final boolean DEBUG = false;
+-	
+-	PrintWriter out; // also used for debug logging 
+-	
++
++	PrintWriter out; // also used for debug logging
++
+ 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+ 
+ 	public GetFiles() {
+@@ -48,109 +51,122 @@
+ 	protected void doGet(HttpServletRequest request,
+ 			HttpServletResponse response) throws ServletException, IOException {
+ 		/*
+-		for (Enumeration headers=request.getHeaderNames(); headers.hasMoreElements();) {
+-		    String headerName = (String)headers.nextElement();
+-		    System.out.println("Name = " + headerName);
+-		    System.out.println("Value = " + request.getHeader(headerName));
+-		}
+-		HttpSession session = request.getSession();
++		 * for (Enumeration headers=request.getHeaderNames();
++		 * headers.hasMoreElements();) { String headerName =
++		 * (String)headers.nextElement(); System.out.println("Name = " +
++		 * headerName); System.out.println("Value = " +
++		 * request.getHeader(headerName)); } HttpSession session =
++		 * request.getSession();
+ 		 */
+-		HttpClient client = new HttpClient();
++		HttpClient client = new DefaultHttpClient();
+ 		String collectionUrl = "http://localhost:8080/repository/service/content/media/curated";
+ 		ArrayList<AtomEntry> curatedMediaEntries;
+ 		ArrayList<AtomEntry> explorerFileEntries = new ArrayList<AtomEntry>();
+ 		try {
+ 
++			response.setHeader("Content-Type", "text/csv");
++			response.setHeader("Content-Disposition",
++					"attachment; filename=explorerfiles.csv");
+ 
+-      response.setHeader("Content-Type", "text/csv");
+-      response.setHeader("Content-Disposition", "attachment; filename=explorerfiles.csv");
+-
+-		  
+-		  
+-		  // get all the file entries
+-			curatedMediaEntries = getEntries(request, client, collectionUrl, null);
++			// get all the file entries
++			curatedMediaEntries = getEntries(request, client, collectionUrl,
++					null);
+ 
+ 			out = new PrintWriter(response.getOutputStream(), true);
+ 
+-			//Augment each curated file entry with its origin study field
+-			for(AtomEntry entry : curatedMediaEntries) {
+-				
+-				if (entry.getCategory().equals("http://www.cggh.org/2010/chassis/terms/Explorer")) {
+-				  //Can ignore the return
++			// Augment each curated file entry with its origin study field
++			for (AtomEntry entry : curatedMediaEntries) {
++
++				if (entry.getCategory().equals(
++						"http://www.cggh.org/2010/chassis/terms/Explorer")) {
++					// Can ignore the return
+ 					getEntries(request, client, entry.getOrigin(), entry);
+ 					explorerFileEntries.add(entry);
+-					debugLog("Adding explorer file entry " + entry.getOriginStudy().getId());
+-				} else debugLog("filtering out " + entry.getCategory());
+-		  }
+-      Hashtable<String, AtomEntry> latest = new Hashtable<String, AtomEntry>();
+-      for (AtomEntry explorerFileAtomEntry : explorerFileEntries) { 
+-        String key = explorerFileAtomEntry.getOriginStudy().getId() + ":" + explorerFileAtomEntry.getTitle();
+-        AtomEntry currentEntry = latest.get(key);
+-        if (currentEntry != null){
+-          Date cDate = null;
+-          try {
+-            cDate = dateFormat.parse(currentEntry.getPublished());
+-          } catch (ParseException e) {
+-            throw new RuntimeException(e);
+-          }
+-          Date tDate = null;
+-          try {
+-            tDate = dateFormat.parse(explorerFileAtomEntry.getPublished());
+-          } catch (ParseException e) {
+-            throw new RuntimeException(e);
+-          }
+-          if (tDate.after(cDate)) {
+-            latest.put(key, explorerFileAtomEntry);
+-            debugLog("Putting earlier into latest:"+key + " " + tDate + ">" + cDate);
+-          } else
+-            debugLog("Excluding later from latest:"+key + " " + tDate + "<" + cDate);
+-            
+-        } else {
+-          latest.put(key, explorerFileAtomEntry);
+-          debugLog("Putting unknown into latest:"+key);          
+-        }
+-      }
+-			
++					debugLog("Adding explorer file entry "
++							+ entry.getOriginStudy().getId());
++				} else
++					debugLog("filtering out " + entry.getCategory());
++			}
++			Hashtable<String, AtomEntry> latest = new Hashtable<String, AtomEntry>();
++			for (AtomEntry explorerFileAtomEntry : explorerFileEntries) {
++				String key = explorerFileAtomEntry.getOriginStudy().getId()
++						+ ":" + explorerFileAtomEntry.getTitle();
++				AtomEntry currentEntry = latest.get(key);
++				if (currentEntry != null) {
++					Date cDate = null;
++					try {
++						cDate = dateFormat.parse(currentEntry.getPublished());
++					} catch (ParseException e) {
++						throw new RuntimeException(e);
++					}
++					Date tDate = null;
++					try {
++						tDate = dateFormat.parse(explorerFileAtomEntry
++								.getPublished());
++					} catch (ParseException e) {
++						throw new RuntimeException(e);
++					}
++					if (tDate.after(cDate)) {
++						latest.put(key, explorerFileAtomEntry);
++						debugLog("Putting earlier into latest:" + key + " "
++								+ tDate + ">" + cDate);
++					} else
++						debugLog("Excluding later from latest:" + key + " "
++								+ tDate + "<" + cDate);
++
++				} else {
++					latest.put(key, explorerFileAtomEntry);
++					debugLog("Putting unknown into latest:" + key);
++				}
++			}
++
+ 			out.println("chassisId,title, publish, uploadDate, modules, url");
+ 
+-			for(AtomEntry entry : explorerFileEntries) {
+-        String key = entry.getOriginStudy().getId() + ":" + entry.getTitle();
+-        if (entry.equals(latest.get(key))) {
+-  				AtomEntry origin = entry.getOriginStudy();
++			for (AtomEntry entry : explorerFileEntries) {
++				String key = entry.getOriginStudy().getId() + ":"
++						+ entry.getTitle();
++				if (entry.equals(latest.get(key))) {
++					AtomEntry origin = entry.getOriginStudy();
+ 
+-	  			out.print(origin.getId());
+-	  			out.print(",");
+-          out.print(entry.getTitle());
+-          out.print(",");
+-	  			out.print(origin.getDisplay());
+-		  		out.print(",");
+-			  	out.print(entry.getPublished());
+-		  		out.print(",");
+-	  			out.print(origin.getModules());
+-	  			out.print(",");
+-		  		out.print(entry.getSelf());
+-		  		out.println();
+-        } else {
+-          debugLog("Ignoring "+key);
+-        }
++					out.print(origin.getId());
++					out.print(",");
++					out.print(entry.getTitle());
++					out.print(",");
++					out.print(origin.getDisplay());
++					out.print(",");
++					out.print(entry.getPublished());
++					out.print(",");
++					out.print(origin.getModules());
++					out.print(",");
++					out.print(entry.getSelf());
++					out.println();
++				} else {
++					debugLog("Ignoring " + key);
++				}
+ 			}
+ 
+ 			out.close();
+ 		} catch (SAXException e) {
+ 			e.printStackTrace(System.err);
+-			// if there's a parse error it's probably because the user isn't authenticated 
++			// if there's a parse error it's probably because the user isn't
++			// authenticated
+ 			// and the login page isn't valid XML
+ 			response.setStatus(HttpStatus.SC_FORBIDDEN);
+-		} catch (RuntimeException e) { 
+-      response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);		  
++		} catch (RuntimeException e) {
++			response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
++		} catch (HttpException e) {
++			// TODO Auto-generated catch block
++			e.printStackTrace();
++		} finally {
++			client.getConnectionManager().shutdown();
+ 		}
+ 	}
+ 
+-	private void debugLog(String message) { 
+-	  if (DEBUG)
+-  	  out.println(message);
++	private void debugLog(String message) {
++		if (DEBUG)
++			out.println(message);
+ 	}
+-	
++
+ 	/**
+ 	 * 
+ 	 * If studyEntry is not null then augment it.
+@@ -158,42 +174,51 @@
+ 	 * @param request
+ 	 * @param client
+ 	 * @param url
+-	 * @param mediaEntry may be null
+-	 * @return a list with all AtomEntries from the Curated Media collection or a specific Study AtomEntry
++	 * @param mediaEntry
++	 *            may be null
++	 * @return a list with all AtomEntries from the Curated Media collection or
++	 *         a specific Study AtomEntry
+ 	 */
+-	private ArrayList<AtomEntry> getEntries(HttpServletRequest request, HttpClient client,
+-			String url, AtomEntry mediaEntry) throws IOException, HttpException, SAXException {
++	private ArrayList<AtomEntry> getEntries(HttpServletRequest request,
++			HttpClient client, String url, AtomEntry mediaEntry)
++			throws IOException, HttpException, SAXException {
+ 		ArrayList<AtomEntry> ret = new ArrayList<AtomEntry>();
+-		GetMethod method = new GetMethod(url);
+-		method.setRequestHeader("cookie", request.getHeader("cookie"));
+ 
+-		int statusCode = client.executeMethod(method);
++		HttpGet method = new HttpGet(url);
++		method.setHeader("cookie", request.getHeader("cookie"));
++		HttpResponse httpResponse = client.execute(method);
++		int statusCode = httpResponse.getStatusLine().getStatusCode();
+ 		if (statusCode == HttpStatus.SC_OK) {
+-			InputStream is = method.getResponseBodyAsStream();
++			InputStream is = httpResponse.getEntity().getContent();
++
+ 			InputSource inputSource = new InputSource(is);
+ 			DOMParser parser = new DOMParser();
+ 
+ 			parser.parse(inputSource);
+ 
+ 			Document doc = parser.getDocument();
+-			
+-			
+-      // atom:entry is the outermost enclosing tag of an AtomEntry but repeated for an AtomFeed
+-			
+-			NodeList entries = doc.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "entry");
++
++			// atom:entry is the outermost enclosing tag of an AtomEntry but
++			// repeated for an AtomFeed
++
++			NodeList entries = doc.getElementsByTagNameNS(
++					"http://www.w3.org/2005/Atom", "entry");
+ 			Element entryElement;
+ 			int i = 0;
+-			while ((entryElement = (Element)entries.item(i++)) != null ) {
++			while ((entryElement = (Element) entries.item(i++)) != null) {
+ 				AtomEntry atomEntry = new AtomEntry();
+ 				parseEntry(entryElement, atomEntry);
+ 				if (mediaEntry != null) { // we are augmenting
+-					mediaEntry.setOriginStudy(atomEntry); //atomEntry will be a Study here
++					mediaEntry.setOriginStudy(atomEntry); // atomEntry will be a
++															// Study here
+ 				}
+ 				ret.add(atomEntry);
+ 			}
+ 			is.close();
+-		} else throw new RuntimeException("Http status code other than " + HttpStatus.SC_OK + " returned: " + statusCode);
+-		method.releaseConnection();
++		} else
++			throw new RuntimeException("Http status code other than "
++					+ HttpStatus.SC_OK + " returned: " + statusCode);
++
+ 		return ret;
+ 	}
+ 
+@@ -202,29 +227,34 @@
+ 	 * Some specifics for either a study or a media entry.
+ 	 */
+ 	private void parseEntry(Element entry, AtomEntry article) {
+-    NodeList categories = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","category");
+-    if (categories.getLength() > 0) {
+-      Element objEl = (Element) categories.item(0);
++		NodeList categories = entry.getElementsByTagNameNS(
++				"http://www.w3.org/2005/Atom", "category");
++		if (categories.getLength() > 0) {
++			Element objEl = (Element) categories.item(0);
+ 
+-      String term = objEl.getAttribute("term");
+-      article.setCategory(term);
+-    }
++			String term = objEl.getAttribute("term");
++			article.setCategory(term);
++		}
+ 
+-		NodeList ids = entry.getElementsByTagNameNS("http://www.cggh.org/2010/chassis/manta/xmlns","id");
++		NodeList ids = entry.getElementsByTagNameNS(
++				"http://www.cggh.org/2010/chassis/manta/xmlns", "id");
+ 		if (ids.getLength() > 0) {
+ 			Element objEl = (Element) ids.item(0);
+ 
+ 			String id = objEl.getFirstChild().getNodeValue();
+ 			article.setId(id);
+ 		}
+-		
+-    Element titleEl = (Element) entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","title").item(0);
+-    article.setTitle(titleEl.getFirstChild().getNodeValue());
+-    
+-    Element pubEl = (Element) entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","published").item(0);
+-    article.setPublished(pubEl.getFirstChild().getNodeValue());
+-    
+-		NodeList linksEl = entry.getElementsByTagNameNS("http://www.w3.org/2005/Atom","link");
++
++		Element titleEl = (Element) entry.getElementsByTagNameNS(
++				"http://www.w3.org/2005/Atom", "title").item(0);
++		article.setTitle(titleEl.getFirstChild().getNodeValue());
++
++		Element pubEl = (Element) entry.getElementsByTagNameNS(
++				"http://www.w3.org/2005/Atom", "published").item(0);
++		article.setPublished(pubEl.getFirstChild().getNodeValue());
++
++		NodeList linksEl = entry.getElementsByTagNameNS(
++				"http://www.w3.org/2005/Atom", "link");
+ 		Element link;
+ 		int j = 0;
+ 		while ((link = (Element) linksEl.item(j++)) != null) {
+@@ -232,7 +262,8 @@
+ 			String href = link.getAttribute("href");
+ 			if (rel.equals("self")) {
+ 				article.setSelf(href);
+-			} else if (rel.equals("http://www.cggh.org/2010/chassis/terms/originStudy")) {
++			} else if (rel
++					.equals("http://www.cggh.org/2010/chassis/terms/originStudy")) {
+ 				article.setOrigin(href);
+ 			}
+ 		}
+Index: src/main/java/org/cggh/chassis/manta/util/ChangeContentType.java
+===================================================================
+--- src/main/java/org/cggh/chassis/manta/util/ChangeContentType.java	(revision 3718)
++++ src/main/java/org/cggh/chassis/manta/util/ChangeContentType.java	(working copy)
+@@ -11,10 +11,12 @@
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+ 
+-import org.apache.commons.httpclient.Header;
+-import org.apache.commons.httpclient.HttpClient;
+-import org.apache.commons.httpclient.HttpStatus;
+-import org.apache.commons.httpclient.methods.GetMethod;
++import org.apache.http.Header;
++import org.apache.http.HttpResponse;
++import org.apache.http.HttpStatus;
++import org.apache.http.client.HttpClient;
++import org.apache.http.client.methods.HttpGet;
++import org.apache.http.impl.client.DefaultHttpClient;
+ 
+ /**
+  * Servlet implementation class ChangeContentType
+@@ -35,44 +37,50 @@
+ 	 */
+ 	protected void doGet(HttpServletRequest request,
+ 			HttpServletResponse response) throws ServletException, IOException {
+-		HttpClient client = new HttpClient();
++		
+ 		String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="
+ 				+ request.getParameter("id");
+-		GetMethod method = new GetMethod(url);
+-		int statusCode = client.executeMethod(method);
+-		if (statusCode == HttpStatus.SC_OK) {
+-			InputStream is = method.getResponseBodyAsStream();
+-			// do something with the input stream
+-			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+-			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+-			// Copy the headers
+-			Header headers[] = method.getResponseHeaders();
+-			for (int i = 0; i < headers.length; i++) {
+-				Header head = headers[i];
+-				response.setHeader(head.getName(), head.getValue());
++		
++		HttpClient client = null;
++		try {
++			client = new DefaultHttpClient();
++			HttpGet method = new HttpGet(url);
++			HttpResponse httpResponse = client.execute(method);
++			int statusCode = httpResponse.getStatusLine().getStatusCode();
++			if (statusCode == HttpStatus.SC_OK) {
++				InputStream is = httpResponse.getEntity().getContent(); 
++			
++				// do something with the input stream
++				BufferedReader in = new BufferedReader(new InputStreamReader(is));
++				PrintWriter out = new PrintWriter(response.getOutputStream(), true);
++				// Copy the headers
++				
++				
++				Header headers[] = method.getAllHeaders();
++				for (int i = 0; i < headers.length; i++) {
++					Header head = headers[i];
++					response.setHeader(head.getName(), head.getValue());
++				}
++				
++				// Replace the content-type header
++				response.setHeader("Content-Type", "text/xml");
++				// Copy the content
++				String line;
++				while ((line = in.readLine()) != null) {
++					out.print(line);
++				}
++				in.close();
++				out.close();
+ 			}
+-			// Replace the content-type header
+-			response.setHeader("Content-Type", "text/xml");
+-			// Copy the content
+-			String line;
+-			while ((line = in.readLine()) != null) {
+-				out.print(line);
++		} finally {
++			if (client != null) {
++				client.getConnectionManager().shutdown();
+ 			}
+-			in.close();
+-			out.close();
+ 		}
+-		method.releaseConnection();
+-
+ 		/*
+ 		 * HttpClient 4.0:
+-		 * 
+-		 * HttpClient client = new DefaultHttpClient(); HttpGet method = new
+-		 * HttpGet(url); HttpResponse httpResponse = client.execute(method); int
+-		 * statusCode = httpResponse.getStatusLine().getStatusCode(); if
+-		 * (statusCode == HttpStatus.SC_OK) { InputStream is =
+-		 * httpResponse.getEntity().getContent(); // do something with the input
+-		 * stream }
+ 		 */
++		
+ 
+ 	}
+ }
+\ No newline at end of file
+Index: src/test/java/org/cggh/chassis/manta/http/servlet/DOILookupTest.java
+===================================================================
+--- src/test/java/org/cggh/chassis/manta/http/servlet/DOILookupTest.java	(revision 3718)
++++ src/test/java/org/cggh/chassis/manta/http/servlet/DOILookupTest.java	(working copy)
+@@ -1,39 +1,78 @@
+ package org.cggh.chassis.manta.http.servlet;
+ 
++import java.io.BufferedReader;
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.InputStreamReader;
++import java.io.Reader;
++import java.io.StringWriter;
++import java.io.UnsupportedEncodingException;
++import java.io.Writer;
++
+ import junit.framework.TestCase;
+ 
+-import org.apache.commons.httpclient.HttpClient;
+-import org.apache.commons.httpclient.HttpMethod;
+-import org.apache.commons.httpclient.methods.GetMethod;
++import org.apache.http.HttpResponse;
++import org.apache.http.HttpStatus;
++import org.apache.http.client.HttpClient;
++import org.apache.http.client.methods.HttpGet;
++import org.apache.http.impl.client.DefaultHttpClient;
++import org.springframework.http.HttpMethod;
+ /**
+  * Not so much a test as documentation.
+  */
+ public class DOILookupTest extends TestCase {
+ 
+-	public static final HttpClient client = new HttpClient();
++	public static final HttpClient client = new DefaultHttpClient();
+ 
++	private String getResponseBody(HttpResponse httpResponse) throws IOException {
++		InputStream is = httpResponse.getEntity().getContent(); 
++		Writer writer = new StringWriter();
++
++		char[] buffer = new char[1024];
++		try {
++			Reader reader = new BufferedReader(
++					new InputStreamReader(is, "UTF-8"));
++			int n;
++			while ((n = reader.read(buffer)) != -1) {
++				writer.write(buffer, 0, n);
++			}
++		} finally {
++			is.close();
++		}
++		return writer.toString();
++	}
+ 	public void testGoodGet() throws Exception {
+ 		String doi ="10.1371/journal.pgen.1000508";
+-		HttpMethod get = new GetMethod("http://dx.doi.org/" + doi);
+-		client.executeMethod(get);
+-		assertEquals(200,get.getStatusCode());
+-		assertFalse(new String(get.getResponseBody()).contains("Not Found"));
++		String url = "http://dx.doi.org/" + doi;
++		
++		HttpGet method = new HttpGet(url);
++		HttpResponse httpResponse = client.execute(method);
++		int statusCode = httpResponse.getStatusLine().getStatusCode();
++		
++		assertEquals(200,statusCode);
++		assertFalse(getResponseBody(httpResponse).contains("Not Found"));
+ 	}
+ 
+ 	public void testBadNamingAuthorityGet() throws Exception {
+ 		
+-		HttpMethod get = new GetMethod("http://dx.doi.org/bad");
+-		client.executeMethod(get);
+-		assertEquals(200,get.getStatusCode());
+-		assertTrue(new String(get.getResponseBody()).contains("DOI Naming Authority"));
+-		assertTrue(new String(get.getResponseBody()).contains("Not Found"));
++		String url = "http://dx.doi.org/bad";
++		HttpGet method = new HttpGet(url);
++		HttpResponse httpResponse = client.execute(method);
++		int statusCode = httpResponse.getStatusLine().getStatusCode();
++		assertEquals(200,statusCode);
++		String response = getResponseBody(httpResponse);
++		assertTrue(response.contains("DOI Naming Authority"));
++		assertTrue(response.contains("Not Found"));
+ 	}
+ 	public void testGoodNamingAuthorityBadDOIGet() throws Exception {
+ 		
+-		HttpMethod get = new GetMethod("http://dx.doi.org/10.1186/1471-2105-8-487bad");
+-		client.executeMethod(get);
+-		assertEquals(200,get.getStatusCode());
+-		assertTrue(new String(get.getResponseBody()).contains("Not Found"));
++		String url = "http://dx.doi.org/10.1186/1471-2105-8-487bad";
++		HttpGet method = new HttpGet(url);
++		HttpResponse httpResponse = client.execute(method);
++		int statusCode = httpResponse.getStatusLine().getStatusCode();
++		assertEquals(200,statusCode);
++		String response = getResponseBody(httpResponse);
++		assertTrue(response.contains("Not Found"));
+ 			
+ 	}
+ 	
