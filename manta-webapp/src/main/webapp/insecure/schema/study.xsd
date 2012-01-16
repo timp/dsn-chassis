@@ -193,6 +193,7 @@
 			<xs:enumeration value="Aspen Healthcare" />
 			<xs:enumeration value="AstraZeneca" />
 			<xs:enumeration value="Atlantic Laboratories" />
+			<xs:enumeration value="Aventis" />
 			<xs:enumeration value="Bailly-Creat Laboratory" />
 			<xs:enumeration value="Boucher and Muir" />
 			<xs:enumeration value="Cosmos" />
@@ -200,12 +201,13 @@
 			<xs:enumeration value="Far-Manguinhos" />
 			<xs:enumeration value="Glaxo-SmithKline" />
 			<xs:enumeration value="Guilin Pharma" />
-			<xs:enumeration value="Hoffman-La Roche" />
+			<xs:enumeration value="Hoffmann-La Roche" />
 			<xs:enumeration value="Holley Pharmaceuticals" />
 			<xs:enumeration value="Holley-Cotec Pharmaceuticals" />
 			<xs:enumeration value="Holleykin Pharmaceuticals" />
 			<xs:enumeration value="Ipca Laboratories Ltd" />
 			<xs:enumeration value="Kunming Pharmaceutical Corporation" />
+			<xs:enumeration value="LIC Pharma" />
 			<xs:enumeration value="Maphra" />
 			<xs:enumeration value="Medinomics Healthcare" />
 			<xs:enumeration value="Medochemie" />
@@ -222,6 +224,7 @@
 			<xs:enumeration value="Sanofi Aventis" />
 			<xs:enumeration value="SigmaTau" />
 			<xs:enumeration value="SmithKline Beecham" />
+			<xs:enumeration value="Sterling Winthrop" />
 			<xs:enumeration value="Swiss Pharma Nigeria Limited" />
 			<xs:enumeration value="Zeneca" />
 			<xs:enumeration value="Other" />
