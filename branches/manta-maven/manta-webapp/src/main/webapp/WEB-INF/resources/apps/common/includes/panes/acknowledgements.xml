@@ -210,7 +210,7 @@
                                     </xforms:input>
                                 </span>
                                 <br/>
-                                <span class="institution-textbox-container">
+                                <span class="personal-institution-textbox-container">
                                     <xforms:input ref="institution">
                                         <xforms:label>Institution:</xforms:label>
                                     </xforms:input>
