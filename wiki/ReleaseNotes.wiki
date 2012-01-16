@@ -7,6 +7,18 @@ Add your content here.
 
 = Details =
 
+===2.1===
+
+  * Clinical SSQ changes
+  * PK SSQ changes
+  * Study groups
+  * Look up citation button
+  * Don't allow multiple files with the same name within a study
+  * Fix upload of files containing extended characters in their name
+  * New role for viewing reports
+  * Fixes to Alfresco interface
+  * Change XML structure of acknowledgements
+
 ===1.5===
   * Performance improvements
   * Improve error handling for uploaded files
