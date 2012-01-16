@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-webapp</artifactId>
-	<version>2.1-RC-1</version>
+	<version>1.5.0-alpha-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-webapp</name>
-  <description>Chassis Manta Web Application, see http://code.google.com/p/dsn-chassis/wiki/BuildRelease</description>
+	<description>Chassis Manta Web Application</description>
 
 	<repositories>
 		<repository>
@@ -20,11 +21,12 @@
 			<url>http://maven.springframework.org/milestone</url>
 		</repository>
 		<repository>
-			<id>repository.springframework.maven.snapshot</id>
-			<name>Spring Framework Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
+			<id>atombeat</id>
+			<name>AtomBeat Non-Maven Dependencies Repository</name>
+			<url>http://atombeat.googlecode.com/svn/repository</url>
 		</repository>
-		<repository> 
+
+		<repository>
 			<id>cggh</id>
 			<name>CGGH Maven Repository</name>
 			<url>http://cloud1.cggh.org/maven2/</url>
@@ -42,12 +44,55 @@
 	</distributionManagement>
 	<dependencies>
 
-		<!-- overlay atombeat war -->
+		<!-- the core AtomBeat Java library -->
 		<dependency>
 			<groupId>org.atombeat</groupId>
-			<artifactId>atombeat-orbeon-minimal</artifactId>
+			<artifactId>atombeat-xquery-functions</artifactId>
 			<version>${org.atombeat.version}</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- the eXist versioning module -->
+		<dependency>
+			<groupId>org.exist-db</groupId>
+			<artifactId>exist-versioning-module</artifactId>
+			<version>1.4.0</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.exist-db</groupId>
+					<artifactId>exist</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- overlay Orbeon -->
+		<dependency>
+			<groupId>com.orbeon</groupId>
+			<artifactId>orbeon-war</artifactId>
+			<version>${com.orbeon.version}</version>
 			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- overlay a few parts of eXist -->
+		<dependency>
+			<groupId>org.exist-db</groupId>
+			<artifactId>exist-webapp</artifactId>
+			<version>${org.exist-db.version}</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- overlay an AtomBeat service -->
+		<dependency>
+			<groupId>org.atombeat</groupId>
+			<artifactId>atombeat-service</artifactId>
+			<version>${org.atombeat.version}</version>
+			<type>zip</type>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Normal java compile-time depenencies -->
@@ -59,31 +104,29 @@
 		</dependency>
 
 		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.8.1</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1</version>
 		</dependency>
-
 		<dependency>
-			<groupId>orbeon</groupId>
-			<artifactId>orbeon</artifactId>
-			<version>3.8.0.201010131704</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+		<!-- <dependency> <groupId>xerces</groupId> <artifactId>xercesImpl</artifactId> 
+			<version>2.8.1</version> </dependency> -->
+		<dependency>
+			<groupId>com.orbeon</groupId>
+			<artifactId>orbeon-jar</artifactId>
+			<version>${com.orbeon.version}</version>
 		</dependency>
 
 
 		<!-- Used for unit tests -->
-		<dependency>
-			<groupId>org.apache.abdera</groupId>
-			<artifactId>abdera-client</artifactId>
-			<version>1.0</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jaxen</artifactId>
-					<groupId>jaxen</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
+		<!-- <dependency> <groupId>org.apache.abdera</groupId> <artifactId>abdera-client</artifactId> 
+			<version>1.1.2</version> <scope>compile</scope> <exclusions> <exclusion> 
+			<artifactId>jaxen</artifactId> <groupId>jaxen</groupId> </exclusion> </exclusions> 
+			</dependency> -->
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -95,11 +138,13 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>
 			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springsecurity.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -110,20 +155,13 @@
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.3</version>
 		</dependency>
-    <dependency>
-		<!--  Explicitly defined, otherwise we are at mercy of transitive dependencies. 
-		      We need getTextContent() introduced after 1.0b1  -->
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-      <version>1.3.03</version>
-    </dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -155,33 +193,116 @@
 			<artifactId>atombeat-servlet-filters</artifactId>
 			<version>${org.atombeat.version}</version>
 			<type>jar</type>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>manta-xquery-functions</artifactId>
-      <version>0.1-beta-2</version>
+			<version>0.1-beta-1</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>manta-config</artifactId>
 			<version>0.2-alpha-4</version>
+			<scope>test</scope>
 		</dependency>
+		<!-- exist jars -->
+		<!-- Have to use the orbeon versions <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-expath-20100109</artifactId> <version>${org.exist-db.version}</version> 
+			<scope> runtime </scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-lucene-module</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-modules</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-ngram-module</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-optional</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-versioning</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-webdav-milton</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist-xqdoc</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.exist-db</groupId> 
+			<artifactId>exist</artifactId> <version>${org.exist-db.version}</version> 
+			<scope>runtime</scope> </dependency> -->
+		<!-- end of exist jars -->
+		<!-- exist dependencies -->
+		<!-- 
+		<dependency>
+			<groupId>xmldb</groupId>
+			<artifactId>xmldb</artifactId>
+			<version>20021118</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlrpc</groupId>
+			<artifactId>xmlrpc-common</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlrpc</groupId>
+			<artifactId>xmlrpc-client</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-regex</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jgroups</groupId>
+			<artifactId>jgroups-all</artifactId>
+			<version>2.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>xml-resolver</groupId>
+			<artifactId>xml-resolver</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		-->
+		<!-- end of exist dependencies -->
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-2.1-RC-1</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-webapp-2.1-RC-1</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-webapp-2.1-RC-1</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp</url>
 	</scm>
 	<build>
-  <extensions>
-    <extension>
-      <groupId>org.apache.maven.wagon</groupId>
-      <artifactId>wagon-ssh</artifactId>
-      <version>1.0-beta-6</version>
-    </extension>
-  </extensions>  
-  <finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+		<finalName>${project.artifactId}-${project.version}-${profileId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -223,10 +344,8 @@
 						<nonFilteredFileExtension>jpg,jpeg,gif,png,pdf,xls</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 					<webResources>
-						<!--
-							counter-intuitive ordering - filtered overwrites normal, only
-							normal used in eclipse
-						-->
+						<!-- counter-intuitive ordering - filtered overwrites normal, only 
+							normal used in eclipse -->
 						<resource>
 							<directory>src/main/filtered/</directory>
 							<filtering>true</filtering>
@@ -238,14 +357,28 @@
 					</webResources>
 					<overlays>
 						<!-- configure overlay of atombeat -->
+						<!-- overlay an AtomBeat service -->
 						<overlay>
 							<groupId>org.atombeat</groupId>
-							<artifactId>atombeat-orbeon-minimal</artifactId>
+							<artifactId>atombeat-service</artifactId>
+							<type>zip</type>
+							<targetPath>service</targetPath>
+						</overlay>
+
+						<overlay>
+							<groupId>com.orbeon</groupId>
+							<artifactId>orbeon-war</artifactId>
+							<includes>
+								<include>xforms-jsp/guess-the-number/**</include>
+								<include>WEB-INF/exist-data/**</include>
+								<include>WEB-INF/lib/**</include>
+								<include>WEB-INF/resources/page-flow.xml</include>
+								<include>WEB-INF/resources/config/**</include>
+								<include>WEB-INF/resources/apps/xforms-hello/**</include>
+							</includes>
 							<excludes>
-								<!--
-									Comments are a form of documentation to indicate that the jar
-									is required
-								-->
+								<!-- Comments are a form of documentation to indicate that the jar 
+									is required -->
 								<exclude>index.html</exclude>
 								<exclude>xforms-jsp/**</exclude>
 								<exclude>WEB-INF/resources/apps/**</exclude>
@@ -254,24 +387,47 @@
 								<exclude>WEB-INF/lib/commons-httpclient-3_1.jar</exclude>
 								<exclude>WEB-INF/lib/xmlgraphics-commons-1_1.jar</exclude>
 								<exclude>WEB-INF/lib/pdfbox-0_7_1.jar</exclude>
-								<!--  <exclude>WEB-INF/lib/batik-all-1_6.jar</exclude> -->
+								<!-- <exclude>WEB-INF/lib/batik-all-1_6.jar</exclude> -->
 								<exclude>WEB-INF/lib/fop-0_93.jar</exclude>
 								<exclude>WEB-INF/lib/hsqldb-1_8_0_7.jar</exclude>
 								<exclude>WEB-INF/lib/ant-1_6_5.jar</exclude>
 								<exclude>WEB-INF/lib/antlr-2_7_4_orbeon.jar</exclude>
 								<exclude>WEB-INF/lib/orbeon-form-builder.jar</exclude>
 								<exclude>WEB-INF/lib/orbeon-form-runner.jar</exclude>
-								<!--  <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
-								<!--  <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
+								<!-- <exclude>WEB-INF/lib/exist-antlr-2_7_7.jar</exclude> -->
+								<!-- <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3.jar</exclude> -->
 								<!-- Moved these to dependencies -->
-								<exclude>WEB-INF/lib/commons-fileupload-1.2.1.jar</exclude>
+								<exclude>WEB-INF/lib/commons-fileupload-1.2.2.jar</exclude>
 								<exclude>WEB-INF/lib/commons-lang-2_3.jar</exclude>
 								<exclude>WEB-INF/lib/mail-1_3_2.jar</exclude>
 								<exclude>WEB-INF/lib/dom4j-1_6_1.jar</exclude>
 								<exclude>WEB-INF/lib/log4j-1_2_15.jar</exclude>
 								<exclude>WEB-INF/lib/orbeon.jar</exclude>
+								<!-- Could possibly be done as deps - see commented out about
+								<exclude>exist-dependency-antlr-2.7.7.jar</exclude>
+								<exclude>exist-dependency-jgroups-all-2.2.6.jar</exclude>
+								<exclude>exist-dependency-jta-1.1.jar</exclude>
+								<exclude>exist-dependency-lucene-core-2.9.2.jar</exclude>
+								<exclude>exist-dependency-lucene-regex-2.9.2.jar</exclude>
+								<exclude>exist-dependency-quartz-1.6.6.jar</exclude>
+								<exclude>exist-dependency-resolver-1.2.jar</exclude>
+								<exclude>exist-dependency-stax-api-1.0.1.jar</exclude>
+								<exclude>exist-dependency-ws-commons-util-1.0.2.jar</exclude>
+								<exclude>exist-dependency-xmldb.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-client-3.1.2.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-common-3.1.2.jar</exclude>
+								<exclude>exist-dependency-xmlrpc-server-3.1.2.jar</exclude>
+								-->
 							</excludes>
 						</overlay>
+						<overlay>
+							<groupId>org.exist-db</groupId>
+							<artifactId>exist-webapp</artifactId>
+							<includes>
+								<include>admin/**</include>
+							</includes>
+						</overlay>
+
 					</overlays>
 				</configuration>
 			</plugin>
@@ -283,18 +439,12 @@
 					<classifier>${profileId}</classifier>
 				</configuration>
 			</plugin>
-			<!--
-				Conflicts with M2 eclipse <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId> <version>2.8</version>
-				<configuration>
-				<projectNameTemplate>[${project.artifactId}]-[${project.version}]</projectNameTemplate>
-				<wtpmanifest>true</wtpmanifest>
-				<wtpapplicationxml>true</wtpapplicationxml>
-				<wtpversion>2.0</wtpversion>
-				<manifest>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifest>
-				</configuration> </plugin>
-			-->
+			<!-- Conflicts with M2 eclipse <plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-eclipse-plugin</artifactId> <version>2.8</version> <configuration> 
+				<projectNameTemplate>[${project.artifactId}]-[${project.version}]</projectNameTemplate> 
+				<wtpmanifest>true</wtpmanifest> <wtpapplicationxml>true</wtpapplicationxml> 
+				<wtpversion>2.0</wtpversion> <manifest>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifest> 
+				</configuration> </plugin> -->
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.1</version>
@@ -317,13 +467,13 @@
 		</plugins>
 	</build>
 
-	<!--
-		Default properties, override with command line profile ie -P
-		production or -D property=value
-	-->
+	<!-- Default properties, override with command line profile ie -P production 
+		or -D property=value -->
 	<properties>
-		<org.springsecurity.version>3.1.0.RC1</org.springsecurity.version>
+		<org.springsecurity.version>3.1.0.RC2</org.springsecurity.version>
 		<org.atombeat.version>0.2-alpha-10</org.atombeat.version>
+		<com.orbeon.version>orbeon-3.9.0.201105152046-CE</com.orbeon.version>
+		<org.exist-db.version>1.4.1dev-rev14669</org.exist-db.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />
@@ -351,13 +501,14 @@
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
 		<test-email />
 		<bing-maps-key>AkThinf82zQztpVxwyFn6q_vVMbo5EuYnWBQf2T6-_b1Zs9903MBf8a10Dn1OiJb</bing-maps-key>
-		
+
 		<!-- Referenced in WEB-INF/resources/config/theme-manta.xsl -->
 		<!-- This is one of the web-property-ids for google.analytics.tests@wwarn.org. -->
-		<!-- It is linked to the profile named test.wwarn.org, but can be triggered from any host. -->
+		<!-- It is linked to the profile named test.wwarn.org, but can be triggered 
+			from any host. -->
 		<google-analytics-web-property-id>UA-21401758-1</google-analytics-web-property-id>
 		<use-alfresco>false</use-alfresco>
-		<alfresco-uri>https://alfresco/alfresco/</alfresco-uri>
+		<alfresco-uri />
 		<alfresco-username />
 		<alfresco-password />
 	</properties>
@@ -374,11 +525,10 @@
 				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
 				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>https://www.cggh.org/sso</cas.url>
+				<cas.url>https://cloud1.cggh.org/sso</cas.url>
 				<chassis.url>https://cloud1.cggh.org</chassis.url>
 				<test-email>ian.wright@wwarn.org</test-email>
 				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
-				<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
 		<profile>
@@ -425,12 +575,11 @@
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
-				<alfresco-uri>https://www.wwarn.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
 		<profile>
 			<id>tomcatNotRunning</id>
-			<!--  Ensure that something is listening on 8080 for tests -->
+			<!-- Ensure that something is listening on 8080 for tests -->
 			<activation>
 				<file>
 					<exists>!/var/run/tomcat6.pid</exists>

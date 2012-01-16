@@ -1,0 +1,393 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<xforms:model xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:f="http://orbeon.org/oxf/xml/formatting" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ctype="http://www.cggh.org/chassis-types"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions" id="mod-study-info">
+
+
+	<!--
+		Note xxforms:readonly-appearance="static" needed in the controls
+		themselves <xforms:bind nodeset="instance('ins-sq-study-info-entry')"
+		readonly="true()" />
+	-->
+
+	
+	
+	<xforms:instance id="ins-study-info-status">
+		<statusTypes xmlns="">
+			<statusType>
+				<label>newly created study</label>
+				<value>new</value>
+			</statusType>
+			<statusType>
+				<label>in progress</label>
+				<value>wip</value>
+			</statusType>
+			<statusType>
+				<label>complete</label>
+				<value>complete</value>
+			</statusType>
+		</statusTypes>
+	</xforms:instance>
+	
+	<xforms:instance id="ins-site-template"
+		src="/apps/common/templates/study/study-entry-template.xml" />
+
+	<xforms:instance id="ins-boolean-items"
+		src="/apps/common/constants/booleans.xml" />
+
+	<xforms:instance id="ins-pathogen-items"
+		src="/apps/common/constants/pathogens.xml" />
+	<xforms:instance id="ins-month-items" src="/apps/common/constants/months.xml" />
+	<xforms:instance id="ins-country-items"
+		src="/apps/common/constants/countries.xml" />
+
+	<xforms:instance id="ins-priorAntimalarialsDetermination-items"
+		src="/apps/common/constants/priorAntimalarialsDeterminations.xml" />
+	
+	<xforms:instance id="ins-supervisionType-items"
+		src="/apps/common/constants/supervisionTypes.xml" />
+	<xforms:instance id="ins-regimenAllocationMethod-items"
+		src="/apps/common/constants/regimenAllocationMethods.xml" />
+	<xforms:instance id="ins-blinding-items"
+		src="/apps/common/constants/blindings.xml" />
+	
+	<xforms:instance id="ins-drugDosingDeterminant-items"
+		src="/apps/common/constants/drugDosingDeterminants.xml" />
+	<xforms:instance id="ins-feeding-items"
+		src="/apps/common/constants/feedings.xml" />
+	<xforms:instance id="ins-feverMeasurementMethod-items"
+		src="/apps/common/constants/feverMeasurementMethods.xml" />
+	<xforms:instance id="ins-haemoglobinRecordingType-items"
+		src="/apps/common/constants/haemoglobinRecordingTypes.xml" />
+	<xforms:instance id="ins-haemoglobinRecordingHbType-items"
+		src="/apps/common/constants/haemoglobinRecordingHbTypes.xml" />
+	<xforms:instance id="ins-microscopyStain-items"
+		src="/apps/common/constants/microscopyStains.xml" />
+	<xforms:instance id="ins-whiteBloodCellCount-items"
+		src="/apps/common/constants/whiteBloodCellCounts.xml" />
+	<xforms:instance id="ins-redBloodCellCount-items"
+		src="/apps/common/constants/redBloodCellCounts.xml" />
+	<xforms:instance id="ins-whiteBloodCellCountSource-items"
+		src="/apps/common/constants/whiteBloodCellCountSources.xml" />
+	<xforms:instance id="ins-HtcSource-items"
+		src="/apps/common/constants/HtcSources.xml" />
+	<xforms:instance id="ins-recrudescenceMarker-items"
+		src="/apps/common/constants/recrudescenceMarkers.xml" />
+	<xforms:instance id="ins-markerDiscriminant-items"
+		src="/apps/common/constants/markerDiscriminants.xml" />
+
+
+	<xforms:instance id="ins-incubatorSystem-items"
+		src="/apps/common/constants/incubatorSystems.xml" />
+	<xforms:instance id="ins-incubatorSystemGasPercentage-items"
+		src="/apps/common/constants/incubatorSystemGasPercentages.xml" />
+	
+	<xforms:instance id="ins-healthyErythrocytesSource-items"
+		src="/apps/common/constants/healthyErythrocytesSources.xml" />
+	<xforms:instance id="ins-bloodGroup-items"
+		src="/apps/common/constants/bloodGroups.xml" />
+	<xforms:instance id="ins-medium-items"
+		src="/apps/common/constants/mediums.xml" />
+	<xforms:instance id="ins-mediumPreparation-items"
+		src="/apps/common/constants/mediumPreparations.xml" />
+	<xforms:instance id="ins-serum-items" src="/apps/common/constants/serums.xml" />
+	<xforms:instance id="ins-testingDelay-items"
+		src="/apps/common/constants/testingDelays.xml" />
+	<xforms:instance id="ins-anticoagulant-items"
+		src="/apps/common/constants/anticoagulants.xml" />
+	<xforms:instance id="ins-transportAndStorageTemperature-items"
+		src="/apps/common/constants/transportAndStorageTemperatures.xml" />
+	<xforms:instance id="ins-incubationTime-items"
+		src="/apps/common/constants/incubationTimes.xml" />
+	<xforms:instance id="ins-susceptibilityMethod-items"
+		src="/apps/common/constants/susceptibilityMethods.xml" />
+	
+	<xforms:instance id="ins-metaboliteMolecule-items"
+		src="/apps/common/constants/metaboliteMolecules.xml" />
+	<xforms:instance id="ins-drugSolvent-items"
+		src="/apps/common/constants/drugSolvents.xml" />
+
+	<xforms:instance id="ins-molecularMarkerFalciparum-items"
+		src="/apps/common/constants/molecularMarkersFalciparum.xml" />
+	<xforms:instance id="ins-molecularMarkerVivax-items"
+		src="/apps/common/constants/molecularMarkersVivax.xml" />
+	<xforms:instance id="ins-molecularMarkerOvale-items"
+		src="/apps/common/constants/molecularMarkersOvale.xml" />
+	<xforms:instance id="ins-molecularMarkerMalariae-items"
+		src="/apps/common/constants/molecularMarkersMalariae.xml" />
+	<xforms:instance id="ins-molecularMarkerKnowlesi-items"
+		src="/apps/common/constants/molecularMarkersKnowlesi.xml" />
+
+	<xforms:instance id="ins-sampleMatrixType-items"
+		src="/apps/common/constants/sampleMatrixTypes.xml" />
+	<xforms:instance id="ins-treatmentReason-items"
+		src="/apps/common/constants/treatmentReasons.xml" />
+
+	<xforms:instance id="ins-storageDurationUnit-items"
+		src="/apps/common/constants/storageDurationUnits.xml" />
+
+	<xforms:instance id="ins-platePreparationMethod-items"
+		src="/apps/common/constants/platePreparationMethods.xml" />
+
+	<xforms:instance id="ins-age-unit-items">
+		<ageUnits xmlns="">
+			<ageUnit>
+				<label>years</label>
+				<value>years</value>
+			</ageUnit>
+			<ageUnit>
+				<label>months</label>
+				<value>months</value>
+			</ageUnit>
+		</ageUnits>
+	</xforms:instance>
+
+	<xforms:instance id="ins-regimen">
+		<regimen xmlns="">
+			<regimenName />
+			<regimenSupervision />
+			<regimenUrl />
+			<drugs />
+		</regimen>
+	</xforms:instance>
+
+	<xforms:instance id="ins-recrudescenceMarker">
+		<recrudescenceMarker xmlns="">
+			<markerName />
+			<markerOther />
+			<numberOfMicroSatellites />
+		</recrudescenceMarker>
+	</xforms:instance>
+
+	<xforms:instance id="ins-drug-batch">
+		<drugBatch xmlns="">
+			<batchNumber/>
+			<manufactureDate/>
+			<expiryDate/>
+		</drugBatch>
+	</xforms:instance>
+	<xforms:instance id="ins-drug">
+		<drug xmlns="">
+			<name />
+			<drugNameOther />
+			<activeIngredients>
+				<activeIngredient xmlns="">
+					<activeIngredientName />
+					<activeIngredientNameOther />
+					<activeIngredientMgPerDose />
+				</activeIngredient>
+			</activeIngredients>
+			<administrationRoute />
+			<manufacturer />
+			<manufacturerOther />
+			<tradeName />
+			<tradeNameOther/>
+			<batches />
+			<drugStorage />
+			<drugDosingDeterminant />
+			<ageDosing>
+				<ageDosingSchedule>
+					<day />
+					<hour />
+					<ageFrom />
+					<ageTo />
+					<dose />
+					<doseUnit />
+				</ageDosingSchedule>
+			</ageDosing>
+			<weightGroupDosing>
+				<weightGroupDosingSchedule>
+					<day />
+					<hour />
+					<weightGroupFrom />
+					<weightGroupTo />
+					<dose />
+					<doseUnit />
+				</weightGroupDosingSchedule>
+			</weightGroupDosing>
+			<weightDosing>
+				<weightDosingSchedule>
+					<day />
+					<hour />
+					<dose />
+				</weightDosingSchedule>
+			</weightDosing>
+			<feeding />
+			<fatPerMeal />
+			<feedingOther />
+			<readministeredOnVomitting />
+			<comments />
+		</drug>
+	</xforms:instance>
+
+	<xforms:instance id="ins-ageDosingSchedule">
+		<ageDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<ageFrom />
+			<ageTo />
+			<dose />
+			<doseUnit />
+		</ageDosingSchedule>
+	</xforms:instance>
+
+	<xforms:instance id="ins-weightGroupDosingSchedule">
+		<weightGroupDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<weightGroupFrom />
+			<weightGroupTo />
+			<dose />
+			<doseUnit />
+		</weightGroupDosingSchedule>
+	</xforms:instance>
+
+	<xforms:instance id="ins-weightDosingSchedule">
+		<weightDosingSchedule xmlns="">
+			<day />
+			<hour />
+			<dose />
+		</weightDosingSchedule>
+	</xforms:instance>
+
+	<xforms:instance id="ins-antibioticTreatment">
+		<antibioticTreatment xmlns="">
+			<antibioticOpen>
+				<antibiotic />
+				<antibioticOther />
+			</antibioticOpen>
+			<antibioticFinalConcentration />
+		</antibioticTreatment>
+	</xforms:instance>
+	<xforms:instance id="ins-antibiotic-items"
+		src="/apps/common/constants/antibiotics.xml" />
+	
+
+	<xforms:instance id="ins-genotypingMethod-items"
+		src="/apps/common/constants/genotypingMethods.xml" />
+	<xforms:instance id="ins-mixedResistanceAllelesInclusion-items"
+		src="/apps/common/constants/mixedResistanceAllelesInclusions.xml" />
+	<xforms:instance id="ins-mixedResistanceAllelesDesignation-items"
+		src="/apps/common/constants/mixedResistanceAllelesDesignations.xml" />
+	<xforms:instance id="ins-sampleSource-items"
+		src="/apps/common/constants/sampleSources.xml" />
+	<xforms:instance id="ins-malariaStatus-items"
+		src="/apps/common/constants/malariaStatuses.xml" />
+	<xforms:instance id="ins-sampleSelectionMethod-items"
+		src="/apps/common/constants/sampleSelectionMethods.xml" />
+
+	<xforms:instance id="ins-sampleType-items"
+		src="/apps/common/constants/sampleTypes.xml" />
+	<xforms:instance id="ins-wholeBloodSource-items"
+		src="/apps/common/constants/wholeBloodSources.xml" />
+
+	<xforms:instance id="ins-resistanceLocus-items"
+		src="/apps/common/constants/resistanceLoci.xml" />
+	<xforms:instance id="ins-locusType-items"
+		src="/apps/common/constants/locusTypes.xml" />
+	<xforms:instance id="ins-referenceType-items"
+		src="/apps/common/constants/referenceTypes.xml" />
+
+	<xforms:instance id="ins-resistanceLocus">
+		<resistanceLocus xmlns="">
+			<locusTypeOpen>
+				<locusType />
+				<locusTypeOther />
+			</locusTypeOpen>
+			<locusName />
+		</resistanceLocus>
+	</xforms:instance>
+
+	<xforms:instance id="ins-otherLocus">
+		<otherLocus xmlns="">
+			<locusTypeOpen>
+				<locusType></locusType>
+				<locusTypeOther></locusTypeOther>
+			</locusTypeOpen>
+			<locusName></locusName>
+		</otherLocus>		
+	</xforms:instance>
+	
+	<xforms:instance id="ins-genotypedMarker">
+		<genotypedMarker xmlns="">
+			<genotypingMethodOpen>
+				<genotypingMethod />
+				<genotypingMethodOther />
+			</genotypingMethodOpen>
+			<molecularMarkerFalciparumOpen>
+				<molecularMarkerFalciparum />
+				<molecularMarkerFalciparumOther />
+			</molecularMarkerFalciparumOpen>
+			<molecularMarkerVivaxOpen>
+				<molecularMarkerVivax />
+				<molecularMarkerVivaxOther />
+			</molecularMarkerVivaxOpen>
+			<molecularMarkerOvaleOpen>
+				<molecularMarkerOvale />
+				<molecularMarkerOvaleOther />
+			</molecularMarkerOvaleOpen>
+			<molecularMarkerMalariaeOpen>
+				<molecularMarkerMalariae />
+				<molecularMarkerMalariaeOther />
+			</molecularMarkerMalariaeOpen>
+			<molecularMarkerKnowlesiOpen>
+				<molecularMarkerKnowlesi />
+				<molecularMarkerKnowlesiOther />
+			</molecularMarkerKnowlesiOpen>
+			<sampleSelectionMethodOpen>
+				<sampleSelectionMethod />
+				<sampleSelectionMethodOther />
+				<sampleSelectionProportion />
+			</sampleSelectionMethodOpen>
+		</genotypedMarker>
+	</xforms:instance>
+
+
+	<xforms:instance id="ins-invitro-drug-template">
+		<invitroDrug xmlns="">
+			<molecule />
+			<solvent />
+			<solventFinalConcentration />
+			<providedByWwarn />
+			<provider />
+		</invitroDrug>
+	</xforms:instance>
+	<xforms:instance id="ins-invitro-batch-template">
+		<batch xmlns="">
+			<clone3D7ProvidedByWwarn />
+			<clone3D7Provider />
+			<batchesIncludedInRawData />
+			<preparationDate />
+			<parasitaemia3D7percentage />
+			<ringFormingPercentage />
+		</batch>
+	</xforms:instance>
+	
+	<xforms:instance id="study-info-resources" 
+		src="../../../../../../insecure/schema/study.xsd"/>
+	<!--
+	In your XForms model, load resources.xml in an instance. 
+	Make sure to make that instance read-only and cacheable: this way the instance will only be stored once in memory 
+	(it will be shared by all the users) and using a more efficient (because read-only) representation in memory.
+	
+	xxforms:readonly="true" xxforms:cache="true"
+	-->
+	<xforms:instance id="all-resources"
+		src="/apps/common/resources.xml"/>
+	<!--
+	NOTE: Here we point to a local file with the oxf: protocol. This is usually yields more performance than using http:, because oxf: will reach a local file on disk. However, in the online version, we use the http:, because we want to load the resource from an online server!
+	
+	Define an instance used to store the current language, e.g. en or fr.
+	-->
+	<xforms:instance id="language"><language>en</language></xforms:instance>
+	<xforms:instance id="iterator"><key></key></xforms:instance>
+	<!--
+	Define a variable ($resources), which points to <resources> for the current language. You will use this variable as a shortcut in your view to point to specific resources.
+		-->
+	<xxforms:variable name="resources" select="instance('all-resources')/resources[@xml:lang = instance('language')]"/>
+	
+
+</xforms:model>
