@@ -474,3 +474,14 @@ table.drafts th {
     width: 100%;
     height: 100px;
 }
+
+.institution-textbox-container span {
+    width: 100%;
+}
+.institution-textbox-container .xforms-input-input {
+    width: 100%;
+}
+
+.wide-table {
+    width: 100%;
+}
