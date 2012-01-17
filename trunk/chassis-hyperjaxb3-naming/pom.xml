@@ -3,7 +3,7 @@
   <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-hyperjaxb3-naming</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.0-SNAPSHOT</version>
   <name>Chassis hyperjaxb3 naming policy</name>
   <url>http://code.google.com/p/dsn-chassis/</url>
   <scm>
@@ -19,8 +19,8 @@
       <url>http://cloud1.cggh.org/maven2/</url>
    </repository>
    <snapshotRepository>
-      <id>cggh</id>
-      <name>CGGH Maven Repository</name>
+      <id>cgghs</id>
+      <name>CGGH Snapshot Maven Repository</name>
       <url>http://cloud1.cggh.org/maven2/</url>
    </snapshotRepository>
   </distributionManagement>
