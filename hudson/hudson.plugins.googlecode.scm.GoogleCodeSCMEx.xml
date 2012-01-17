@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<hudson.plugins.googlecode.scm.GoogleCodeSCMEx_-DescriptorImpl>
-  <generation>13</generation>
-  <credentials class="hashtable"/>
-  <workspaceFormat>8</workspaceFormat>
-  <validateRemoteUpToVar>false</validateRemoteUpToVar>
-</hudson.plugins.googlecode.scm.GoogleCodeSCMEx_-DescriptorImpl>
