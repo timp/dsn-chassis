@@ -5,6 +5,7 @@
  <version>0.0.5-SNAPSHOT</version>
  <packaging>jar</packaging>
  <name>chassis-model</name>
+  
  <dependencies>
   <dependency>
    <groupId>com.sun.xml.bind</groupId>
@@ -40,21 +41,31 @@
    <scope>test</scope>
   </dependency>
  </dependencies>
- <repositories>
-  <repository>
-   <id>maven2-repository.dev.java.net</id>
-   <url>http://download.java.net/maven/2</url>
-  </repository>
-  <repository>
-   <id>maven2-repository.jboss.com</id>
-   <url>http://repository.jboss.com/maven2</url>
-  </repository>
-  <repository> 
-   <id>cggh</id>
-   <name>CGGH Maven Repository</name>
-   <url>http://cloud1.cggh.org/maven2/</url>
-  </repository>
- </repositories>
+  <repositories>
+    <repository> 
+      <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository> 
+      <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </pluginRepository>
+  </pluginRepositories>
 <!-- 
   <pluginRepositories>
     <pluginRepository>
