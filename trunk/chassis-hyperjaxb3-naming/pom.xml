@@ -3,13 +3,13 @@
   <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-hyperjaxb3-naming</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>Chassis hyperjaxb3 naming policy</name>
   <url>http://code.google.com/p/dsn-chassis/</url>
   <scm>
-    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassis-hyperjaxb3-naming-1.0</connection>
-    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassis-hyperjaxb3-naming-1.0</developerConnection>
-    <url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassis-hyperjaxb3-naming-1.0</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-hyperjaxb3-naming</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-hyperjaxb3-naming</developerConnection>
+    <url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-hyperjaxb3-naming</url>
   </scm>
   <dependencies>
     <dependency>
