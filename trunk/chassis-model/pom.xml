@@ -49,6 +49,11 @@
    <id>maven2-repository.jboss.com</id>
    <url>http://repository.jboss.com/maven2</url>
   </repository>
+  <repository> 
+   <id>cggh</id>
+   <name>CGGH Maven Repository</name>
+   <url>http://cloud1.cggh.org/maven2/</url>
+  </repository>
  </repositories>
 <!-- 
   <pluginRepositories>
