@@ -65,7 +65,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'anonymous user'),(2,'authenticated user'),(5,'Group Creators'),(10,'ROLE_CHASSIS_ADMINISTRATOR'),(7,'ROLE_CHASSIS_CONTRIBUTOR'),(8,'ROLE_CHASSIS_CURATOR'),(9,'ROLE_CHASSIS_PERSONAL_DATA_REVIEWER'),(6,'ROLE_CHASSIS_USER'),(3,'Site Administrators'),(4,'Site Moderators');
+INSERT INTO `role` VALUES (1,'anonymous user'),(2,'authenticated user'),(5,'Group Creators'),(10,'ROLE_CHASSIS_ADMINISTRATOR'),(7,'ROLE_CHASSIS_CONTRIBUTOR'),(8,'ROLE_CHASSIS_CURATOR'),(9,'ROLE_CHASSIS_PERSONAL_DATA_REVIEWER'),(6,'ROLE_CHASSIS_USER'),(3,'Site Administrators'),(4,'Site Moderators'),(11,'ROLE_CHASSIS_REPORTER');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'adam@example.org','37b51d194a7513e45b56f6524f2d51f2','adam@example.org',1),(2,'colin@example.org','37b51d194a7513e45b56f6524f2d51f2','colin@example.org',1),(3,'cora@example.org','37b51d194a7513e45b56f6524f2d51f2','cora@example.org',1),(4,'curtis@example.org','37b51d194a7513e45b56f6524f2d51f2','curtis@example.org',1),(5,'muriel@example.org','37b51d194a7513e45b56f6524f2d51f2','muriel@example.org',1),(6,'murray@example.org','37b51d194a7513e45b56f6524f2d51f2','murray@example.org',1),(7,'murphy@example.org','37b51d194a7513e45b56f6524f2d51f2','murphy@example.org',1),(8,'suki@example.org','37b51d194a7513e45b56f6524f2d51f2','suki@example.org',1),(9,'sunil@example.org','37b51d194a7513e45b56f6524f2d51f2','sunil@example.org',1),(10,'pete@example.org','37b51d194a7513e45b56f6524f2d51f2','pete@example.org',1),(11,'ursula@example.org','37b51d194a7513e45b56f6524f2d51f2','ursula@example.org',1);
+INSERT INTO `users` VALUES (1,'admin','37b51d194a7513e45b56f6524f2d51f2','admin',1),(2,'colin@example.org','37b51d194a7513e45b56f6524f2d51f2','colin@example.org',1),(3,'cora@example.org','37b51d194a7513e45b56f6524f2d51f2','cora@example.org',1),(4,'curtis@example.org','37b51d194a7513e45b56f6524f2d51f2','curtis@example.org',1),(5,'muriel@example.org','37b51d194a7513e45b56f6524f2d51f2','muriel@example.org',1),(6,'murray@example.org','37b51d194a7513e45b56f6524f2d51f2','murray@example.org',1),(7,'murphy@example.org','37b51d194a7513e45b56f6524f2d51f2','murphy@example.org',1),(8,'suki@example.org','37b51d194a7513e45b56f6524f2d51f2','suki@example.org',1),(9,'sunil@example.org','37b51d194a7513e45b56f6524f2d51f2','sunil@example.org',1),(10,'pete@example.org','37b51d194a7513e45b56f6524f2d51f2','pete@example.org',1),(11,'ursula@example.org','37b51d194a7513e45b56f6524f2d51f2','ursula@example.org',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,5 +106,29 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+DROP TABLE IF EXISTS `profile_values`;
+CREATE TABLE `profile_values` (
+  `fid` int(10) unsigned NOT NULL DEFAULT '0',
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `value` text,
+  PRIMARY KEY (`fid`,`uid`),
+  KEY `fk_pv` (`uid`),
+  CONSTRAINT `fk_pv` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `wwarn_drupal`.`profile_values`
+(`fid`,
+`uid`,
+`value`)
+VALUES
+(1,1,'Admin FN'),(2,1,'Admin LN'),(3,1,'Admin Inst'),
+(1,2,'Colin'),(2,2,'Example'),(3,2,'Contrib Inst'),
+(1,3,'Cora'),(2,3,'Example'),(3,3,'Contrib Inst'),
+(1,4,'Curtis'),(2,4,'Example'),(3,4,'Curator Inst')
+);
+
+
+
 
 -- Dump completed on 2011-01-10 10:11:23
