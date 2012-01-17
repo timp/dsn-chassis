@@ -91,11 +91,11 @@
      <persistenceUnitName>org.cggh.chassis.study</persistenceUnitName>
 <!--     
      <plugins>
-			<plugin>
+      <plugin>
         <groupId>org.cggh.chassis</groupId>
         <artifactId>chassis-hyperjaxb3-naming</artifactId>
         <version>1.0-SNAPSHOT</version>
-			</plugin>
+      </plugin>
      </plugins>
 -->     
     </configuration>
@@ -149,4 +149,8 @@
    </plugins>
   </pluginManagement>
  </build>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
 </project>
