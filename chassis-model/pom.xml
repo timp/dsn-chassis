@@ -103,7 +103,7 @@
       <dependency>
         <groupId>org.cggh.chassis</groupId>
         <artifactId>chassis-hyperjaxb3-naming</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
         <scope>runtime</scope>
       </dependency>
     </dependencies>
