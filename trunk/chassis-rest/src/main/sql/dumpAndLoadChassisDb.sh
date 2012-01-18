@@ -14,7 +14,10 @@ export out=`date "+%Y%m%d"`
 
 export file=chassisDb_$out.sql
 
+mysql chassisDb --user=timp < views.sql
 mysqldump chassisDb  --user=timp --complete-insert --skip-opt --add-drop-table  > $file
+
+scp $file uploader@reporting.wwarn.org:/home/uploader/
 
 cp $file chassisDb.sql 
 curl --upload-file chassisDb.sql   --user timp:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/b4fc79d3-3160-4f88-a7ea-82fcb6f3017e/content.sql
