@@ -21,8 +21,11 @@ Get the chassis-rest project
 This is a Spring app. 
 You will need to add the Spring class loader to tomcat: 
 
-As root: 
+As root (locally): 
 cp  /home/timp/.m2/repository/org/springframework/spring-instrument-tomcat/3.0.5.RELEASE/spring-instrument-tomcat-3.0.5.RELEASE.jar /usr/share/tomcat6/lib/
+(or on charlie) 
+cp /home/timp/spring-instrument-tomcat-3.0.5.RELEASE.jar /opt/apache-tomcat-latest/lib/
+
 
 /etc/init.d/tomcat6 restart
 
