@@ -22,7 +22,8 @@ import org.w3c.dom.NodeList;
 public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
 
   private static String PRUNED_FEED_FILE_PATH;
-  private static String wwarnLivePassord;
+  private static String wwarnLivePassword;
+  private static String wwarnLiveUser;
   
   public DownloadLiveCreateDBTest() { 
     super();
@@ -35,7 +36,8 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    wwarnLivePassord = config.getConfiguration().get("wwarn-live-password");
+    wwarnLivePassword = config.getConfiguration().get("wwarn-live-password");
+    wwarnLiveUser = config.getConfiguration().get("wwarn-live-user");
     PRUNED_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/chassis-rest-studies.xml";;
   }
 
@@ -107,7 +109,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   }
 
   private void setupXmlFiles() throws NotFoundException, IOException {
-    if (wwarnLivePassord != null && ! (new File(FEED_FILE_PATH).exists())) { 
+    if (wwarnLivePassword != null && ! (new File(FEED_FILE_PATH).exists())) { 
       System.err.println("Downloading feed: " + FEED_FILE_PATH);
       downloadFeed();
     } else 
@@ -146,7 +148,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     CasProtectedResourceDownloaderFactory.downloaders.put(
             CasProtectedResourceDownloaderFactory.keyFromUrl("https://www.wwarn.org/"),
             new CasProtectedResourceDownloader("https://", "www.wwarn.org:443",
-                    "timp", wwarnLivePassord, "/tmp"));
+                    wwarnLiveUser, wwarnLivePassword, System.getProperty("java.io.tmpdir")));
 
     File studyOut = new File(FEED_FILE_PATH);
     studyOut.delete();
