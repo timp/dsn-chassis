@@ -26,7 +26,7 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
    */
   public void testPostStringString() throws Exception {
     String studyId = config.getConfiguration().get("STUDY_ID");
-    String studyFileName = DATA_STUDIES + "/" + studyId + ".xml";
+    String studyFileName = DATA_STUDIES + studyId + ".xml";
     System.err.println("Posting " + studyFileName + " to " + url("/study"));
     // It may have been created already
     HttpResponse delResponse = StudyControllerRequester.delete(url("/study/" + studyId));
