@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.transform.Source;
 
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -29,9 +30,13 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @XmlRootElement(name="results")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UnmarshalledObject<T> {
+  // we do not want to serialise these
+  @XmlTransient
   Jaxb2Marshaller marshaller;
+  @XmlTransient
   Source source;
   
+  @XmlTransient
   protected T it;
   
   // FIXME remove this it is only referred to in the errorMarshaller
@@ -58,7 +63,9 @@ public class UnmarshalledObject<T> {
     
     marshaller.setValidationEventHandler(new ValidationEventHandler() {
       public boolean handleEvent(ValidationEvent event) {
-        addError(new ValidationError(event.getMessage()));
+        // Hmm, this pretty much ignores most errors
+        //if (event.getMessage().indexOf("cvc-complex-type.2.4.") == -1)
+          addError(new ValidationError(event.getMessage()));
         return true; // Keep going
       }
     });
