@@ -14,6 +14,9 @@
   <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
   
   <xs:import namespace="http://www.cggh.org/2011/chassis/xmlns" schemaLocation="studyInfoTypes.xsd"/>
+
+  <!--  See app.xsd  -->
+  <xs:element name="draft" type="xs:NCName"/>
   
   <xs:simpleType name="longURI">
     <xs:restriction base="xs:anyURI">
