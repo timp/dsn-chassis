@@ -67,11 +67,10 @@ public class StudyController {
   public ModelAndView updateStudy(@RequestBody String body, @PathVariable String id, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
     UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
-    // s = m_studyDAO.unmarshal(source);
-    // s= (Entry) jaxb2Mashaller.unmarshal(source);
+    Entry entry = unmarshalledResult.getIt();
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
-        studyDAO.updateEntry(id, unmarshalledResult.getIt());
+        studyDAO.updateEntry(id, entry);
       } catch (Exception e) {
         ModelAndView mav = marshallingError(response, unmarshalledResult);
         mav.addObject("exception", e.getMessage());
@@ -90,9 +89,10 @@ public class StudyController {
     Source source = new StreamSource(new StringReader(body));
     UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
 
+    Entry entry = unmarshalledResult.getIt();
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
-        studyDAO.saveEntry(unmarshalledResult.getIt());
+        studyDAO.saveEntry(entry);
       } catch (Exception e) {
         ModelAndView mav = marshallingError(response, unmarshalledResult);
         mav.addObject("exception", e.getMessage());
@@ -108,7 +108,7 @@ public class StudyController {
   private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject<?> unmarshalledResult) {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
     ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
-    mav.addObject("id", unmarshalledResult.getId());
+   // mav.addObject("id", unmarshalledResult.getId());
 
     return mav;
   }
@@ -117,8 +117,9 @@ public class StudyController {
   public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
     UnmarshalledObject<Feed> unmarshalledResult = new UnmarshalledObject<Feed>(validatingMarshaller, source);
+    Feed feed = unmarshalledResult.getIt();
     if (unmarshalledResult.getErrors().isEmpty()) {
-      for (Entry entry  : unmarshalledResult.getIt().getEntry()) {
+      for (Entry entry  : feed.getEntry()) {
         try {
           studyDAO.saveEntry(entry);
         } catch (Exception e) {
