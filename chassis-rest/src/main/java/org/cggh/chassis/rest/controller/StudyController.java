@@ -108,7 +108,7 @@ public class StudyController {
   private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject<?> unmarshalledResult) {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
     ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
-   // mav.addObject("id", unmarshalledResult.getId());
+    mav.addObject("id", unmarshalledResult.getId());
 
     return mav;
   }
