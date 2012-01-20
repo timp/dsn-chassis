@@ -68,6 +68,8 @@ public class StudyController {
     Source source = new StreamSource(new StringReader(body));
     UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
     Entry entry = unmarshalledResult.getIt();
+    if (entry != null)
+      unmarshalledResult.setId(entry.getId());
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
         studyDAO.updateEntry(id, entry);
@@ -90,6 +92,8 @@ public class StudyController {
     UnmarshalledObject<Entry> unmarshalledResult = new UnmarshalledObject<Entry>(validatingMarshaller, source);
 
     Entry entry = unmarshalledResult.getIt();
+    if (entry != null)
+      unmarshalledResult.setId(entry.getId());
     if (unmarshalledResult.getErrors().isEmpty()) {
       try {
         studyDAO.saveEntry(entry);
@@ -99,7 +103,8 @@ public class StudyController {
         return mav;
       }
       response.setStatus(HttpStatus.SC_CREATED);
-      return new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", unmarshalledResult.getIt());
+      ModelAndView mav = new ModelAndView(STUDY_OBJECT_VIEW_NAME, "entry", entry);
+      return mav.addObject("id", entry.getId());
     } else {
       return marshallingError(response, unmarshalledResult);
     }
@@ -107,8 +112,13 @@ public class StudyController {
 
   private ModelAndView marshallingError(HttpServletResponse response, UnmarshalledObject<?> unmarshalledResult) {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
-    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult.getErrors());
-    mav.addObject("id", unmarshalledResult.getId());
+    ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult);
+    String id;
+    if (unmarshalledResult.getIt() != null && unmarshalledResult.getId() != null)
+      id = unmarshalledResult.getId();
+    else
+      id = "error";     
+    mav.addObject("id", id);
 
     return mav;
   }
@@ -118,6 +128,8 @@ public class StudyController {
     Source source = new StreamSource(new StringReader(body));
     UnmarshalledObject<Feed> unmarshalledResult = new UnmarshalledObject<Feed>(validatingMarshaller, source);
     Feed feed = unmarshalledResult.getIt();
+    if (feed != null)
+      unmarshalledResult.setId(feed.getId());
     if (unmarshalledResult.getErrors().isEmpty()) {
       for (Entry entry  : feed.getEntry()) {
         try {
