@@ -118,14 +118,15 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
     
     deleteExistingFiles();
     
-    XsltTransformer.transform(FEED_FILE_PATH, "prune.xsl", PRUNED_FEED_FILE_PATH, true);
+    //XsltTransformer.transform(FEED_FILE_PATH, "prune.xsl", PRUNED_FEED_FILE_PATH, true);
     
     String studyFileName = config.getConfiguration().get("STUDIES_DIR_NAME") 
             + "/" + config.getConfiguration().get("STUDY_ID") + ".xml";
     File studyEntry = new File(studyFileName );
 
     assertFalse("Study file " + studyFileName + "created", studyEntry.exists());
-    StudyFeedSplitter.split(PRUNED_FEED_FILE_PATH);
+    // StudyFeedSplitter.split(PRUNED_FEED_FILE_PATH);
+    StudyFeedSplitter.split(FEED_FILE_PATH);
     assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
   }
 
