@@ -5,13 +5,13 @@
     targetNamespace="http://www.w3.org/2007/app"  
     xmlns:app="http://www.w3.org/2007/app" 
     >
+  <xs:import schemaLocation="chassis.xsd"/>
   
   <xs:element name="control">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="app:draft"/>
+        <xs:element ref="draft"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-   <xs:element name="draft" type="xs:NCName"/>
-</xs:schema>
+</xs:schema> 
