@@ -26,6 +26,7 @@ import org.w3._2005.atom.Entry;
 import org.w3._2005.atom.Feed;
 import org.xml.sax.SAXException;
 
+
 @Controller
 public class StudyController {
 
@@ -41,6 +42,12 @@ public class StudyController {
   private static final String STUDY_OBJECT_VIEW_NAME = "study";
   private static final String STUDY_COLLECTION_VIEW_NAME = "studies";
   private static final String ERROR_LIST_VIEW_NAME = "errors";
+  
+  
+
+  public StudyController() {
+    super();
+  }
 
   @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
   public ModelAndView getStudy(@PathVariable String id, HttpServletResponse response) {
@@ -123,6 +130,34 @@ public class StudyController {
     return mav;
   }
 
+  @RequestMapping(method = RequestMethod.POST, value = "/links")
+  public ModelAndView addLinks(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
+    Source source = new StreamSource(new StringReader(body));
+    UnmarshalledObject<Feed> unmarshalledResult = new UnmarshalledObject<Feed>(validatingMarshaller, source);
+    Feed feed = unmarshalledResult.getIt();
+    if (feed != null)
+      unmarshalledResult.setId(feed.getId());
+    if (unmarshalledResult.getErrors().isEmpty()) {
+      for (Entry entry  : feed.getEntry()) {
+        try {
+          studyDAO.saveEntry(entry);
+        } catch (Exception e) {
+          ModelAndView mav = marshallingError(response, unmarshalledResult);
+          mav.addObject("exception", e.getMessage());
+          return mav;
+        }        
+      }
+      response.setStatus(HttpStatus.SC_CREATED);
+      Feed list = new Feed();
+      list.setEntry((List<Entry>) studyDAO.getEntries());
+      return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
+    } else {
+      return marshallingError(response, unmarshalledResult);
+    }
+  }
+
+  
+  
   @RequestMapping(method = RequestMethod.POST, value = "/studies")
   public ModelAndView addStudies(@RequestBody String body, HttpServletResponse response) throws JAXBException, SAXException {
     Source source = new StreamSource(new StringReader(body));
@@ -142,7 +177,7 @@ public class StudyController {
       }
       response.setStatus(HttpStatus.SC_CREATED);
       Feed list = new Feed();
-      list.setEntry((List<Entry>) studyDAO.getAll());
+      list.setEntry((List<Entry>) studyDAO.getEntries());
       return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
     } else {
       return marshallingError(response, unmarshalledResult);
@@ -151,7 +186,7 @@ public class StudyController {
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/study/{id}")
   public ModelAndView removeStudy(@PathVariable String id, HttpServletResponse response) throws NotFoundException {
-    if (!studyDAO.remove(id)) {
+    if (!studyDAO.removeEntry(id)) {
       return notFound(id, response);
     }
     return getStudiesModelAndView();
@@ -164,7 +199,7 @@ public class StudyController {
   
   @RequestMapping(method = RequestMethod.GET, value = "/studyCount")
   public ModelAndView getCount() {
-    Long count = studyDAO.count();
+    Long count = studyDAO.entryCount();
     return new ModelAndView("message", "message", "Count:" + count).
             addObject("body", count + " study entries found." );    
   }
@@ -174,7 +209,7 @@ public class StudyController {
   private ModelAndView getStudiesModelAndView() {
     Feed list = new Feed();
     // Wouldn't it be nice it this was setEntrys or similar
-    list.setEntry((List<Entry>) studyDAO.getAll());
+    list.setEntry((List<Entry>) studyDAO.getEntries());
     return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
   }
 
