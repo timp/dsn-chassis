@@ -47,7 +47,7 @@ public class StudyDAO {
   }
 
   @SuppressWarnings("unchecked")
-  public Collection<Entry> getAll() {
+  public Collection<Entry> getEntries() {
     EntityManager em = emf.createEntityManager();
     try {
       Query query = em.createQuery("SELECT e FROM Entry e");
@@ -58,7 +58,7 @@ public class StudyDAO {
     }
   }
 
-  public Long count() {
+  public Long entryCount() {
     EntityManager em = emf.createEntityManager();
     try {
       Query query = em.createQuery("SELECT count(e) FROM Entry e");
@@ -69,6 +69,8 @@ public class StudyDAO {
   }
 
   public void saveEntry(final Entry entry) {
+    if (entry.getStudyID() == null)
+      entry.setStudyID(entry.getId().substring("https://www.wwarn.org/repository/service/content/".length()));
     new EntityManagerAction(emf) {
       @Override
       public void action() {
@@ -86,7 +88,7 @@ public class StudyDAO {
     }.doIt();
   }
 
-  public boolean remove(String id) {
+  public boolean removeEntry(String id) {
     EntityManager em = emf.createEntityManager();
     Entry entry = em.find(Entry.class, id);
     boolean found = false;
@@ -100,6 +102,7 @@ public class StudyDAO {
       } catch (RuntimeException e) {
         if (em.isOpen() && em.getTransaction().isActive())
           em.getTransaction().rollback();
+        e.printStackTrace(); //FIXME turn log swallowing off!?
         throw e;
       }
     }
@@ -120,6 +123,7 @@ public class StudyDAO {
       s.execute("drop database " + databaseName);
       s.execute("create database " + databaseName);
     } catch (SQLException e) {
+      e.printStackTrace(); //FIXME turn log swallowing off!?
       throw new RuntimeException(e);
     }
     em.close();
