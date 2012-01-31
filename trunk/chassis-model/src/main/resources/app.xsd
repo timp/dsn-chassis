@@ -4,14 +4,25 @@
     elementFormDefault="qualified" 
     targetNamespace="http://www.w3.org/2007/app"  
     xmlns:app="http://www.w3.org/2007/app" 
+    xmlns:atom="http://www.w3.org/2005/Atom" 
     >
   <xs:import schemaLocation="chassis.xsd"/>
+  <xs:import namespace="http://www.w3.org/2005/Atom" schemaLocation="atom.xsd"/>
   
   <xs:element name="control">
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="draft"/>
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="collection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="atom:title"/>
+      </xs:sequence>
+      <xs:attribute name="href" use="required" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
 </xs:schema> 
