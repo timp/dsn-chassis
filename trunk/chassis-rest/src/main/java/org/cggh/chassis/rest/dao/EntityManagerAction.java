@@ -29,6 +29,7 @@ public abstract class EntityManagerAction {
     } catch (RuntimeException e) {
       if (em.isOpen() && em.getTransaction().isActive())
         em.getTransaction().rollback();
+      e.printStackTrace();
       throw e;
     } finally {
       em.close();
