@@ -26,6 +26,7 @@
         <xs:element ref="atom:updated"/>
         <xs:element ref="atom:author"/>
         <xs:element ref="atom:title"/>
+        <xs:element ref="app:collection" minOccurs="0" />
         <xs:element ref="atombeat:config-link-extensions" minOccurs="0" />
         <xs:element maxOccurs="unbounded" ref="atom:link"/>
         <xs:element maxOccurs="unbounded" ref="atom:entry"/>
@@ -75,7 +76,7 @@
   <xs:element name="email" type="xs:string"/>
   <xs:element name="title">
     <xs:complexType mixed="true">
-      <xs:attribute name="type" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" type="xs:NCName"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="link">
