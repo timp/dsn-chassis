@@ -43,14 +43,12 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
     
     response = StudyControllerRequester.read(url("/studies/"));   
     assertEquals(200, response.getStatus());    
-    System.out.println(response.getBody());
   }
 
 
   public void testAddStudies() throws Exception { 
-    System.err.println(FEED_FILE_PATH);
-    HttpResponse response = StudyControllerRequester.create(FEED_FILE_PATH, url("/studies"));
-    System.out.println(response.getBody());
+    System.err.println(STUDY_FEED_FILE_PATH);
+    HttpResponse response = StudyControllerRequester.create(STUDY_FEED_FILE_PATH, url("/studies"));
   }
 
   public void testReadNotFound() throws Exception { 
@@ -59,7 +57,7 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
 
     HttpResponse r = StudyControllerRequester.read(url("/study/notThere"));
     assertEquals(url("/study/notThere"),      404, r.getStatus());
-    System.err.println(r.getBody());
+    System.err.println(r.getPrettyBody());
     
     r = StudyControllerRequester.readAcceptingHtml(url("/study/notThere"));
     assertEquals(url("/study/notThere"),      404, r.getStatus());
