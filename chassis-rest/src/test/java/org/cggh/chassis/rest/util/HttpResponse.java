@@ -22,4 +22,7 @@ public class HttpResponse {
   public String getBody() {
     return body;
   }
+  public String getPrettyBody() { 
+    return body.replace("><", ">\n<");
+  }
 }
