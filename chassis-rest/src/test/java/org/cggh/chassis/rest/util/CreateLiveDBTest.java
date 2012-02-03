@@ -38,7 +38,7 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
   
   public void testGetWwarnChassis() throws Exception {
       setupXmlFiles();
-      testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
+      testPostsFromDirectory(studiesDirName);
       //postFeeds();
       HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
       assertEquals(url("/studyCount"), 200, response.getStatus());
