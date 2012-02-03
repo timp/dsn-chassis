@@ -11,16 +11,16 @@ import org.apache.commons.io.FileUtils;
  * @author timp
  * @since 2011-11-16
  */
-public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
+public class CreateLiveDBTest extends AbstractUtilSpec {
 
   // private static String PRUNED_STUDY_FEED_FILE_PATH;
   static String wwarnLivePassword;
   static String wwarnLiveUser;
   
-  public DownloadLiveCreateDBTest() { 
+  public CreateLiveDBTest() { 
     super();
   }
-  public DownloadLiveCreateDBTest(String name) { 
+  public CreateLiveDBTest(String name) { 
     super(name);
   }
   
