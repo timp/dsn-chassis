@@ -56,7 +56,7 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
     
     //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
     
-    String studyFileName = studiesDirName + config.getConfiguration().get("STUDY_ID") + ".xml";
+    String studyFileName = studiesDirName + "/" +  config.getConfiguration().get("STUDY_ID") + ".xml";
     File studyEntry = new File(studyFileName );
 
     assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
