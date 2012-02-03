@@ -134,16 +134,16 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
 
 
   private void deleteExistingFiles() throws IOException {
-    System.err.println(studiesDirName);
     File[] files = new File(studiesDirName)
         .listFiles(new FilenameFilter(){
       public boolean accept(File dir, String name) {
         return name.indexOf(".xml") > 0 ;
       } 
     });
-    for (File child : files) {
-      if (!child.delete()) 
-        throw new RuntimeException("Could not delete " + child.getCanonicalPath());
-    }
+    if (files != null)
+      for (File child : files) {
+        if (!child.delete()) 
+          throw new RuntimeException("Could not delete " + child.getCanonicalPath());
+      }
   }
 }
