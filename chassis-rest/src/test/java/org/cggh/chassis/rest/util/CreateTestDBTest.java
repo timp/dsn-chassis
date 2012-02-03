@@ -11,27 +11,23 @@ import org.apache.commons.io.FileUtils;
  * @author timp
  * @since 2011-11-16
  */
-public class CreateLiveDBTest extends AbstractUtilSpec {
-
-  private String studiesDirName;
-
+public class CreateTestDBTest extends AbstractUtilSpec {
 
   // private static String PRUNED_STUDY_FEED_FILE_PATH;
+  static String wwarnLivePassword;
+  static String wwarnLiveUser;
   
-  public CreateLiveDBTest() { 
+  public CreateTestDBTest() { 
     super();
   }
-  public CreateLiveDBTest(String name) { 
-    super(name);    
+  public CreateTestDBTest(String name) { 
+    super(name);
   }
   
   
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    String downloadedDir = config.getConfiguration().get("DATA_DIR_NAME") + "/www.wwarn.org/";
-    STUDY_FEED_FILE_PATH = downloadedDir + "studies.xml";
-    studiesDirName = downloadedDir + "studies";
     //PRUNED_STUDY_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/chassis-rest-studies.xml";;
   }
 
@@ -50,23 +46,6 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
         
   }
   
-  private void setupXmlFiles() throws IOException {
-    
-    deleteExistingFiles();
-    
-    //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
-    
-    String studyFileName = config.getConfiguration().get("DATA_DIR_NAME") 
-            + "/www.wwarn.org/studies/" + config.getConfiguration().get("STUDY_ID") + ".xml";
-    File studyEntry = new File(studyFileName );
-
-    assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
-    // StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
-    System.err.println(STUDY_FEED_FILE_PATH);
-    StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
-    assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
-  }
-
   private void testPostsFromDirectory(String directory) throws Exception { 
     String url = url("/uncache");
     HttpResponse response = StudyControllerRequester.uncache(url);
@@ -132,8 +111,24 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
   //  XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);    
   }
 
+  private void setupXmlFiles() throws IOException {
+    
+    deleteExistingFiles();
+    
+    //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
+    
+    String studyFileName = config.getConfiguration().get("STUDIES_DIR_NAME") 
+            + "/" + config.getConfiguration().get("STUDY_ID") + ".xml";
+    File studyEntry = new File(studyFileName );
+
+    assertFalse("Study file " + studyFileName + "created", studyEntry.exists());
+    // StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
+    StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
+    assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
+  }
 
   private void deleteExistingFiles() throws IOException {
+    String studiesDirName = config.getConfiguration().get("STUDIES_DIR_NAME");
     File[] files = new File(studiesDirName)
         .listFiles(new FilenameFilter(){
       public boolean accept(File dir, String name) {

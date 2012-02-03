@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  * @since 2011-12-01
  */
 public abstract class AbstractUtilSpec extends TestCase {
-  public String DATA_STUDIES;
+  public String STUDY_ENTRY_DIR_NAME;
   public String STUDY_FEED_FILE_PATH;
   public String SERVICE_PROTOCOL_HOST_PORT;
   public String LINK_FEED_FILE_PATH;
@@ -30,8 +30,7 @@ public abstract class AbstractUtilSpec extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
     config =  new ChassisRestConfig();
-    DATA_STUDIES = config.getConfiguration().get("STUDIES_DIR_NAME") + "/";
-    STUDY_FEED_FILE_PATH = config.getConfiguration().get("STUDY_FEED_FILE_PATH");
+    STUDY_ENTRY_DIR_NAME = config.getConfiguration().get("STUDY_ENTRY_DIR_NAME") + "/";
     LINK_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/link_feed.xml";
 
     SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
