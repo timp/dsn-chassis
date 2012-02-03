@@ -14,12 +14,6 @@
       <version>0.0.5-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.cggh</groupId>
-      <artifactId>casutils</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
