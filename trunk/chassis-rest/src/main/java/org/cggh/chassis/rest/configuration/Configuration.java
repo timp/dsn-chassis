@@ -81,8 +81,7 @@ public class Configuration {
     try{
       them.load(data);
     } catch (IOException e) {
-      throw new RuntimeException("Corrupt properties file `" + existingFile + "': " +
-          e.getMessage());
+      throw new RuntimeException("Corrupt properties file `" + existingFile, e);
     }
 
     return them;
