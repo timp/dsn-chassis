@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
-import org.cggh.casutils.NotFoundException;
 
 /**
  * @author timp
@@ -14,8 +13,6 @@ import org.cggh.casutils.NotFoundException;
  */
 public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
 
-  private static final String STUDY_FEED_URL = "https://www.wwarn.org/repository/service/content/studies";
-  private static final String LINK_FEED_URL = "https://www.wwarn.org/repository/service/content/link";
   // private static String PRUNED_STUDY_FEED_FILE_PATH;
   static String wwarnLivePassword;
   static String wwarnLiveUser;
@@ -31,11 +28,6 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    wwarnLiveUser = config.getConfiguration().get("wwarn-live-user");
-    if (wwarnLiveUser == null)
-      throw new NullPointerException("wwarn-live-user not set in configuration file.");
-    wwarnLivePassword = config.getConfiguration().get("wwarn-live-password");
-    
     //PRUNED_STUDY_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/chassis-rest-studies.xml";;
   }
 
@@ -119,21 +111,7 @@ public class DownloadLiveCreateDBTest extends AbstractUtilSpec {
   //  XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);    
   }
 
-  private void setupXmlFiles() throws NotFoundException, IOException {
-    if (wwarnLivePassword != null) {
-      if (! (new File(STUDY_FEED_FILE_PATH).exists())) { 
-        System.err.println("Downloading feed: " + STUDY_FEED_URL + " to " + STUDY_FEED_FILE_PATH);
-        downloadFeed(STUDY_FEED_FILE_PATH, STUDY_FEED_URL, wwarnLiveUser, wwarnLivePassword);
-      }
-    } else 
-      System.err.println("Using existing feed");
-    System.err.println("Config:" + config.getConfiguration());
-    if (! (new File(LINK_FEED_FILE_PATH).exists())) { 
-      System.err.println("Downloading feed: " + LINK_FEED_URL + " to " + LINK_FEED_FILE_PATH);
-      downloadFeed(LINK_FEED_FILE_PATH, LINK_FEED_URL, wwarnLiveUser, wwarnLivePassword);
-    } else 
-      System.err.println("Using existing link feed");
-    System.err.println(LINK_FEED_FILE_PATH + " to " + url("/links"));
+  private void setupXmlFiles() throws IOException {
     
     deleteExistingFiles();
     

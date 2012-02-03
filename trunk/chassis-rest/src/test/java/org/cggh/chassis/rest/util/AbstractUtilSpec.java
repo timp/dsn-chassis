@@ -1,14 +1,9 @@
 package org.cggh.chassis.rest.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.cggh.casutils.CasProtectedResourceDownloader;
-import org.cggh.casutils.CasProtectedResourceDownloaderFactory;
-import org.cggh.casutils.NotFoundException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -47,28 +42,6 @@ public abstract class AbstractUtilSpec extends TestCase {
 
   protected String url(String url) {
     return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
-  }
-  protected void downloadFeed(String outputFileName, String feedUrl, String user, String password) throws NotFoundException, IOException {
-    Date start = new Date();
-    System.err.println("Start:" + start);
-    CasProtectedResourceDownloaderFactory.downloaders.put(
-            CasProtectedResourceDownloaderFactory.keyFromUrl("https://www.wwarn.org/"),
-            new CasProtectedResourceDownloader("https://", "www.wwarn.org:443",
-                    user, password, System.getProperty("java.io.tmpdir")));
-  
-    File fileOut = new File(outputFileName);
-    fileOut.delete();
-  
-    CasProtectedResourceDownloader downloader =
-            CasProtectedResourceDownloaderFactory.getCasProtectedResourceDownloader(feedUrl);
-  
-    downloader.downloadUrlToFile(feedUrl, fileOut);
-    assertTrue(new File(outputFileName).exists());
-  
-    Date end = new Date();
-    System.err.println("End:" + end);
-    long diff = end.getTime() - start.getTime();
-    System.err.println("Elapsed:" + diff / 1000);
   }
   
   public static int countEntries(String xmlFile, String elementName) throws Exception { 
