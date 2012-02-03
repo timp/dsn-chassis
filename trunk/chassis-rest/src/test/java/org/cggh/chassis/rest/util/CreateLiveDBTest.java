@@ -52,12 +52,11 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
   
   private void setupXmlFiles() throws IOException {
     
-    deleteExistingFiles();
+    deleteExistingFiles(studiesDirName);
     
     //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
     
-    String studyFileName = config.getConfiguration().get("DATA_DIR_NAME") 
-            + "/www.wwarn.org/studies/" + config.getConfiguration().get("STUDY_ID") + ".xml";
+    String studyFileName = studiesDirName + config.getConfiguration().get("STUDY_ID") + ".xml";
     File studyEntry = new File(studyFileName );
 
     assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
@@ -133,8 +132,8 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
   }
 
 
-  private void deleteExistingFiles() throws IOException {
-    File[] files = new File(studiesDirName)
+  private void deleteExistingFiles(String directoryName) throws IOException {
+    File[] files = new File(directoryName)
         .listFiles(new FilenameFilter(){
       public boolean accept(File dir, String name) {
         return name.indexOf(".xml") > 0 ;
