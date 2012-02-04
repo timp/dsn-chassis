@@ -87,7 +87,7 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
     while (it.hasNext()) {
       fileCount++;
       File f = it.next();
-      String studyFileName = directory + f.getName();
+      String studyFileName = directory + "/" + f.getName();
       String entryUrl = url("/study/" + f.getName());
       if (StudyControllerRequester.read(url("/study/" + f.getName())).getStatus() == 200) {
         int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
