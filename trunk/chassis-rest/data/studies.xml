@@ -21,7 +21,7 @@
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
         <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">https://www.wwarn.org/repository/service/content/studies/AJYER</atom:id>
         <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-06-17T06:03:28.74+01:00</atom:published>
-        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-09-12T16:08:53.448+01:00</atom:updated>
+        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2012-01-31T14:02:06.645Z</atom:updated>
         <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <atom:email>contributor@example.org</atom:email>
         </atom:author>
@@ -30,41 +30,101 @@
             <draft>no</draft>
         </app:control>
         <atom:content xmlns:atombeat="http://purl.org/atombeat/xmlns" type="application/vnd.chassis-manta+xml">
-            <study profile="http://www.cggh.org/2010/chassis/manta/2.0">
-                <studyTitle>Factors contributing to Problems</studyTitle>
+            <study profile="http://www.cggh.org/2010/chassis/manta/2.1">
+                <studyTitle>1990-1995-Thailand-Mae-Sot-SMRU</studyTitle>
                 <ui-info>
                     <wizard-pane-to-show>confirmation</wizard-pane-to-show>
                 </ui-info>
                 <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
-                <study-is-published>Yesterday</study-is-published>
+                <study-is-published>Yes</study-is-published>
                 <explorer-display>full</explorer-display>
                 <publications>
                     <publication>
-                        <publication-title>Not sych a long title</publication-title>
+                        <publication-title>Price RN, Simpson JA, Nosten F, Luxemburger C, Hkirjaroen L, ter Kuile F, Chongsuphajaisiddhi T, White NJ. Factors contributing to anemia after uncomplicated falciparum malaria. Am J Trop Med Hyg. 2001 Nov;65(5):614-22</publication-title>
                         <pmid>11716124</pmid>
-                        <publication-references/>
+                        <publication-references>
+                            <publication-reference type="url">http://www.ncbi.nlm.nih.gov/pubmed/11716124</publication-reference>
+                        </publication-references>
                     </publication>
                 </publications>
                 <acknowledgements>
-                    <person>
-                        <first-name>Tim</first-name>
-                        <middle-name/>
-                        <family-name>Franken</family-name>
-                        <email-address>tim@Franken.net</email-address>
-                        <institution>A Malaria Research Unit </institution>
-                        <person-is-contactable>Yes</person-is-contactable>
-                    </person>
                     <institutions>
                     <institution-ack>
-                        <institution-name>A Malaria Research Unit </institution-name>
+                            <institution-name>Shoklo Malaria Research Unit</institution-name>
                         <institution-websites>
-                            <institution-url>http://www.WWARN.org/</institution-url>
+                                <institution-url>http://www.shoklo-unit.com/</institution-url>
                         </institution-websites>
                     </institution-ack>
                     </institutions>
+                    <people>
+                        <person>
+                            <first-name>R N</first-name>
+                            <middle-name/>
+                            <family-name>Price</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>J A</first-name>
+                            <middle-name/>
+                            <family-name>Simpson</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Francois</first-name>
+                            <middle-name/>
+                            <family-name>Nosten</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable>Yes</person-is-contactable>
+                        </person>
+                        <person>
+                            <first-name>C</first-name>
+                            <middle-name/>
+                            <family-name>Luxemburger</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>L</first-name>
+                            <middle-name/>
+                            <family-name>Hkirjaroen</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>F</first-name>
+                            <middle-name/>
+                            <family-name>ter Kuile</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>T</first-name>
+                            <middle-name/>
+                            <family-name>Chongsuphajaisiddhi</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>N J</first-name>
+                            <middle-name/>
+                            <family-name>White</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                    </people>
                 </acknowledgements>
                 <curator-notes/>
-                <study-status>in</study-status>
+                <study-status>exp</study-status>
                 <modules>clinical</modules>
                 <study-info>
                     <studyInfoStatus>complete</studyInfoStatus>
@@ -73,22 +133,22 @@
                     <sites>
                         <site>
                             <country>TH</country>
-                            <region>Thai-Burmese Border</region>
-                            <district>Tak</district>
-                            <locality>Mae Sot</locality>
-                            <lookupAddress>Mae Sot Tak Thai-Burmese Border THAILAND</lookupAddress>
+                            <region>Tak</region>
+                            <district>Mae-Sot</district>
+                            <locality/>
+                            <lookupAddress> Mae-Sot Tak THAILAND</lookupAddress>
                             <siteCode/>
                             <testingDelay/>
                             <anticoagulant/>
                             <transportAndStorageTemperature/>
-                            <latitude>16.77708231608073</latitude>
-                            <longitude>98.537646484375</longitude>
+                            <latitude>16.71491050720215</latitude>
+                            <longitude>98.56881713867188</longitude>
                             <population/>
                             <transmissionIntensity>
-                                <annualParasitologicalIncidence/>
-                                <annualParasitologicalIncidenceYear/>
-                                <parasitePrevalence/>
-                                <parasitePrevalenceYear/>
+                                <annualParasitologicalIncidence>1.97</annualParasitologicalIncidence>
+                                <annualParasitologicalIncidenceYear>2000</annualParasitologicalIncidenceYear>
+                                <parasitePrevalence>1.86</parasitePrevalence>
+                                <parasitePrevalenceYear>2000</parasitePrevalenceYear>
                                 <transmissionIntensityAgeFrom/>
                                 <transmissionIntensityAgeFromUnits/>
                                 <transmissionIntensityAgeTo/>
@@ -112,10 +172,10 @@
                             <minParasitaemia/>
                             <maxParasitaemia/>
                         </parasitaemia>
-                        <includeMixedInfections>not a bool</includeMixedInfections>
+                        <includeMixedInfections>include</includeMixedInfections>
                         <excludeIfPriorAntimalarials/>
                         <priorAntimalarialsExclusion>
-                            <priorAntimalarials/>
+                            <priorAntimalarials selected=""/>
                             <priorAntimalarialsDetermination/>
                             <priorAntimalarialsHistoryWeeks/>
                         </priorAntimalarialsExclusion>
@@ -132,16 +192,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Artesunate</name>
+                                            <name>AS</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Artesunate</activeIngredientName>
+                                                    <activeIngredientName>AS</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>50</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute>oral</administrationRoute>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -167,7 +231,9 @@
                                                     <doseUnit/>
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
-                                            <weightDosing/>
+                                            <weightDosing>
+				
+			</weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
@@ -182,16 +248,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Artesunate</name>
+                                            <name>AS</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Artesunate</activeIngredientName>
+                                                    <activeIngredientName>AS</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>50</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute>oral</administrationRoute>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -227,11 +297,14 @@
                                             <comments>Patients received Artesunate 12 mg/kg over 7 days.</comments>
                                         </drug>
                                         <drug>
-                                            <name>Tetracyclin</name>
+                                            <name>TET</name>
+                                            <drugNameOther/>
                                             <activeIngredients/>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -274,16 +347,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Quinine</name>
+                                            <name>QN</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Quinine</activeIngredientName>
+                                                    <activeIngredientName>QN</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose/>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                                 <drugBatch>
                                                     <batchNumber/>
@@ -314,7 +391,41 @@
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
                                             <weightDosing>
-				
+                                                <weightDosingSchedule>
+                                                    <day>0</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>1</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>2</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>3</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>4</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>5</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>6</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
 			</weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
@@ -323,16 +434,20 @@
                                             <comments>Patients received Quinine 30 mg/kg for 7 days.</comments>
                                         </drug>
                                         <drug>
-                                            <name>Tetracyclin</name>
+                                            <name>TET</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Tetracyclin</activeIngredientName>
+                                                    <activeIngredientName>TET</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose/>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -601,20 +716,20 @@
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/AJYER" type="application/atom+xml;type=entry"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/AJYER" type="application/atom+xml;type=entry"/>
     </atom:entry>
-    <atom:entry>
-        <atom:id>https://www.wwarn.org/repository/service/content/studies/XGQRX</atom:id>
-        <atom:published>2011-04-04T16:51:16.977+01:00</atom:published>
-        <atom:updated>2011-09-15T14:15:44.995+01:00</atom:updated>
-        <atom:author>
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">https://www.wwarn.org/repository/service/content/studies/XGQRX</atom:id>
+        <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-04-04T16:51:16.977+01:00</atom:published>
+        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2012-01-16T15:00:07.286Z</atom:updated>
+        <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <atom:email>curator@example.org</atom:email>
         </atom:author>
-        <atom:title type="text">XGQRX</atom:title>
-        <app:control xmlns:app="http://www.w3.org/2007/app">
+        <atom:title xmlns:atombeat="http://purl.org/atombeat/xmlns" type="text">XGQRX</atom:title>
+        <app:control xmlns:app="http://www.w3.org/2007/app" xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <draft>no</draft>
         </app:control>
-        <atom:content type="application/vnd.chassis-manta+xml">
-            <study profile="http://www.cggh.org/2010/chassis/manta/2.0">
-                <studyTitle>Uganda-StudyArea-2003</studyTitle>
+        <atom:content xmlns:atombeat="http://purl.org/atombeat/xmlns" type="application/vnd.chassis-manta+xml">
+            <study profile="http://www.cggh.org/2010/chassis/manta/2.1">
+                <studyTitle>2003-Uganda-Kyenjojo-G.Dorsey</studyTitle>
                 <ui-info>
                     <wizard-pane-to-show>confirmation</wizard-pane-to-show>
                 </ui-info>
@@ -623,42 +738,149 @@
                 <explorer-display>full</explorer-display>
                 <publications>
                     <publication>
-                        <publication-title>
-                        Bakyaita N, Dorsey G, Yeka A, Banek K, Staedke SG, Kamya MR, Talisuna A, Kironde F, Nsobya S, Kilian A, Reingold A, Rosenthal PJ, Wabwire-Mangen F. Sulfadoxine-pyrimethamine plus chloroquine or amodiaquine for uncomplicated falciparum malaria: a randomized, multisite trial to guide national policy in Uganda. Am J Trop Med Hyg. 2005 May;72(5):573-80
-                        </publication-title>
+                        <publication-title>Bakyaita N, Dorsey G, Yeka A, Banek K, Staedke SG, Kamya MR, Talisuna A, Kironde F, Nsobya S, Kilian A, Reingold A, Rosenthal PJ, Wabwire-Mangen F. Sulfadoxine-pyrimethamine plus chloroquine or amodiaquine for uncomplicated falciparum malaria: a randomized, multisite trial to guide national policy in Uganda. Am J Trop Med Hyg. 2005 May;72(5):573-80</publication-title>
                         <pmid>15891132 </pmid>
-                        <publication-references/>
+                        <publication-references>
+                            <publication-reference type="url">http://www.ncbi.nlm.nih.gov/pubmed/15891132 </publication-reference>
+                        </publication-references>
                     </publication>
                 </publications>
                 <acknowledgements>
-                    <person>
-                        <first-name>Hiro</first-name>
-                        <middle-name/>
-                        <family-name>Protagonist</family-name>
-                        <email-address/>
-                        <institution/>
-                        <person-is-contactable/>
-                    </person>
-                    <person>
-                        <first-name>Fred</first-name>
-                        <middle-name/>
-                        <family-name>Flintstone</family-name>
-                        <email-address/>
-                        <institution/>
-                        <person-is-contactable/>
-                    </person>
                     <institutions>
-                    <institution-ack>
-                        <institution-name>Ministry of Health</institution-name>
-                        <institution-websites>
-                            <institution-url>http://www.cggh.org//</institution-url>
-                            <institution-url>http://www.wwarn.org/</institution-url>
-                        </institution-websites>
-                    </institution-ack>
+                        <institution-ack>
+                            <institution-name>Ministry of Health, Kampala, Uganda</institution-name>
+                            <institution-websites>
+                                <institution-url>http://health.go.ug/mohweb/</institution-url>
+                            </institution-websites>
+                        </institution-ack>
+                        <institution-ack>
+                            <institution-name>Division of Epidemiology, School of Public Health, University of California, USA</institution-name>
+                            <institution-websites>
+                                <institution-url>http://epi.berkeley.edu</institution-url>
+                            </institution-websites>
+                        </institution-ack>
+                        <institution-ack>
+                            <institution-name>Makerere University School of Health Sciences, Uganda</institution-name>
+                            <institution-websites>
+                                <institution-url>http://med.mak.ac.ug/</institution-url>
+                            </institution-websites>
+                        </institution-ack>
+                        <institution-ack>
+                            <institution-name>Department of Medicine, University of California, USA</institution-name>
+                            <institution-websites>
+                                <institution-url>http://medicine.ucsf.edu/</institution-url>
+                            </institution-websites>
+                        </institution-ack>
                     </institutions>
+                    <people>
+                        <person>
+                            <first-name>Nathan</first-name>
+                            <middle-name/>
+                            <family-name>Bakyaita</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Grant</first-name>
+                            <middle-name/>
+                            <family-name>Dorsey</family-name>
+                            <email-address/>
+                            <institution>Department of Medicine, San Francisco General Hospital, University of California, USA. </institution>
+                            <person-is-contactable>Yes</person-is-contactable>
+                        </person>
+                        <person>
+                            <first-name>Adoke</first-name>
+                            <middle-name/>
+                            <family-name>Yeka</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Kristin</first-name>
+                            <middle-name/>
+                            <family-name>Banek</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Sarah G</first-name>
+                            <middle-name/>
+                            <family-name>Staedke</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Moses R</first-name>
+                            <middle-name/>
+                            <family-name>Kamya</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Ambrose</first-name>
+                            <middle-name/>
+                            <family-name>Talisuna</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Fred</first-name>
+                            <middle-name/>
+                            <family-name>Kironde</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Sam</first-name>
+                            <middle-name/>
+                            <family-name>Nsobya</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Albert</first-name>
+                            <middle-name/>
+                            <family-name>Kilian</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Arthur</first-name>
+                            <middle-name/>
+                            <family-name>Reingold</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Philip J</first-name>
+                            <middle-name/>
+                            <family-name>Rosenthal</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Fred</first-name>
+                            <middle-name/>
+                            <family-name>Wabwire-Mangen</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                    </people>
                 </acknowledgements>
                 <curator-notes/>
-                <study-status>in</study-status>
+                <study-status>complete</study-status>
                 <modules>clinical</modules>
                 <study-info>
                     <studyInfoStatus>complete</studyInfoStatus>
@@ -666,18 +888,18 @@
                     <end>2004-05-31</end>
                     <sites>
                         <site>
-                            <country>UK</country>
-                            <region>Oxford</region>
+                            <country>UG</country>
+                            <region>Kyenjojo</region>
                             <district/>
                             <locality/>
-                            <lookupAddress/>
+                            <lookupAddress>  Kyenjojo UGANDA</lookupAddress>
                             <siteCode/>
                             <testingDelay/>
                             <anticoagulant/>
                             <transportAndStorageTemperature/>
                             <latitude>0.6327780336141586</latitude>
                             <longitude>30.62138892710209</longitude>
-                            <population/>
+                            <population>resident</population>
                             <transmissionIntensity>
                                 <annualParasitologicalIncidence/>
                                 <annualParasitologicalIncidenceYear/>
@@ -706,17 +928,18 @@
                             <minParasitaemia>2000</minParasitaemia>
                             <maxParasitaemia>200000</maxParasitaemia>
                         </parasitaemia>
-                        <includeMixedInfections>false</includeMixedInfections>
-                        <excludeIfPriorAntimalarials>true</excludeIfPriorAntimalarials>
+                        <includeMixedInfections>exclude</includeMixedInfections>
+                        <excludeIfPriorAntimalarials>exclude</excludeIfPriorAntimalarials>
                         <priorAntimalarialsExclusion>
                             <priorAntimalarials selected="any AQ">
-                              <drugTaken>any AQ</drugTaken>
+                                <drugTaken>any</drugTaken>
+                                <drugTaken>AQ</drugTaken>
                             </priorAntimalarials>
                             <priorAntimalarialsDetermination>history</priorAntimalarialsDetermination>
                             <priorAntimalarialsHistoryWeeks>1</priorAntimalarialsHistoryWeeks>
                         </priorAntimalarialsExclusion>
                         <pregnancy>exclude</pregnancy>
-                        <treatmentReason/>
+                        <treatmentReason>malaria</treatmentReason>
                         <otherCriteria/>
                     </inclusionExclusionCriteria>
                     <clinical>
@@ -728,16 +951,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Chloroquine</name>
+                                            <name>CQ</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Chloroquine</activeIngredientName>
+                                                    <activeIngredientName>CQ</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>250</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -783,24 +1010,29 @@
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
-                                            <readministeredOnVomitting>true</readministeredOnVomitting>
+                                            <readministeredOnVomitting>yes</readministeredOnVomitting>
                                             <comments/>
                                         </drug>
                                         <drug>
-                                            <name>Sulfadoxine-pyrimethamine</name>
+                                            <name>SX-PYR</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Sulfadoxine</activeIngredientName>
+                                                    <activeIngredientName>SX</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>500</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Pyrimethamine</activeIngredientName>
+                                                    <activeIngredientName>PYR</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>25</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -899,16 +1131,12 @@
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
                                             <weightDosing>
-                                                <weightDosingSchedule>
-                                                    <day>0</day>
-                                                    <hour>0</hour>
-                                                    <dose>25</dose>
-                                                </weightDosingSchedule>
-                                            </weightDosing>
+                                            
+                                        </weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
-                                            <readministeredOnVomitting>true</readministeredOnVomitting>
+                                            <readministeredOnVomitting>yes</readministeredOnVomitting>
                                             <comments/>
                                         </drug>
                                     </drugs>
@@ -919,16 +1147,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Amodiaquine</name>
+                                            <name>AQ</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Amodiaquine</activeIngredientName>
+                                                    <activeIngredientName>AQ</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>200</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
-                                            <manufacturer/>
-                                            <tradeName/>
+                                            <manufacturer>Parke-Davis</manufacturer>
+                                            <manufacturerOther/>
+                                            <tradeName>Camoquin</tradeName>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -978,20 +1210,25 @@
                                             <comments/>
                                         </drug>
                                         <drug>
-                                            <name>Sulfadoxine-pyrimethamine</name>
+                                            <name>SX-PYR</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Sulfadoxine</activeIngredientName>
+                                                    <activeIngredientName>SX</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>500</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Pyrimethamine</activeIngredientName>
+                                                    <activeIngredientName>PYR</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>25</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
-                                            <manufacturer/>
-                                            <tradeName/>
+                                            <manufacturer>Roche</manufacturer>
+                                            <manufacturerOther/>
+                                            <tradeName>Fansidar</tradeName>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -1099,7 +1336,7 @@
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
-                                            <readministeredOnVomitting>true</readministeredOnVomitting>
+                                            <readministeredOnVomitting>yes</readministeredOnVomitting>
                                             <comments/>
                                         </drug>
                                     </drugs>
@@ -1110,16 +1347,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Amodiaquine</name>
+                                            <name>AQ</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Amodiaquine</activeIngredientName>
+                                                    <activeIngredientName>AQ</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>200</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
-                                            <manufacturer/>
-                                            <tradeName/>
+                                            <manufacturer>Parke-Davis</manufacturer>
+                                            <manufacturerOther/>
+                                            <tradeName>Camoquin</tradeName>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -1621,7 +1862,7 @@
                                                     <hour>0</hour>
                                                     <weightGroupFrom>50</weightGroupFrom>
                                                     <weightGroupTo>59</weightGroupTo>
-                                                    <dose>2..5</dose>
+                                                    <dose>2.5</dose>
                                                     <doseUnit>tablets</doseUnit>
                                                 </weightGroupDosingSchedule>
                                                 <weightGroupDosingSchedule>
@@ -1666,29 +1907,29 @@
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
                                             <weightDosing>
-                                                <weightDosingSchedule>
-                                                    <day>2</day>
-                                                    <hour>0</hour>
-                                                    <dose>4</dose>
-                                                </weightDosingSchedule>
-                                            </weightDosing>
+                                            
+                                        </weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
-                                            <readministeredOnVomitting>true</readministeredOnVomitting>
+                                            <readministeredOnVomitting>yes</readministeredOnVomitting>
                                             <comments/>
                                         </drug>
                                         <drug>
-                                            <name>Artesunate</name>
+                                            <name>AS</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Artesunate</activeIngredientName>
+                                                    <activeIngredientName>AS</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>50</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
-                                            <manufacturer/>
-                                            <tradeName/>
+                                            <manufacturer>Sanofi</manufacturer>
+                                            <manufacturerOther/>
+                                            <tradeName>Arsumax</tradeName>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -2091,26 +2332,14 @@
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
                                             <weightDosing>
-                                                <weightDosingSchedule>
-                                                    <day>0</day>
-                                                    <hour>0</hour>
-                                                    <dose>4</dose>
-                                                </weightDosingSchedule>
-                                                <weightDosingSchedule>
-                                                    <day>1</day>
-                                                    <hour>0</hour>
-                                                    <dose>4</dose>
-                                                </weightDosingSchedule>
-                                                <weightDosingSchedule>
-                                                    <day>2</day>
-                                                    <hour>0</hour>
-                                                    <dose>4</dose>
-                                                </weightDosingSchedule>
-                                            </weightDosing>
+                                            
+                                            
+                                            
+                                        </weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
-                                            <readministeredOnVomitting>true</readministeredOnVomitting>
+                                            <readministeredOnVomitting>yes</readministeredOnVomitting>
                                             <comments/>
                                         </drug>
                                     </drugs>
@@ -2288,6 +2517,9 @@
                         <plateBatches/>
                     </invitro>
                     <pharmacology>
+                        <studyDesign/>
+                        <samplingTimes/>
+                        <PKcomments/>
                         <samples>
                             <sample>
                                 <anticoagulent/>
@@ -2304,6 +2536,10 @@
                         <analytes>
                             <analyte>
                                 <drugMeasured/>
+                                <targetDose/>
+                                <unitsOfMeasure/>
+                                <unitsOfMeasureOther/>
+                                <fatAmount/>
                                 <lowerLoQ/>
                                 <sampleMatrixType/>
                             </analyte>
@@ -2323,31 +2559,31 @@
                     </pharmacology>
                 </study-info>
                 <atombeat:group id="GROUP_ADMINISTRATORS">
-                    <atombeat:member>curator@example.org</atombeat:member>
+                    <atombeat:member>contributor@wwarn.org</atombeat:member>
                 </atombeat:group>
             </study>
         </atom:content>
-        <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0">
+        <ar:comment xmlns:ar="http://purl.org/atompub/revision/1.0" xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <atom:author>
                 <atom:email>curator@example.org</atom:email>
             </atom:author>
-            <atom:updated>2011-09-15T14:15:44.995+01:00</atom:updated>
+            <atom:updated>2012-01-16T15:00:07.286Z</atom:updated>
             <atom:summary/>
         </ar:comment>
-        <manta:id xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">XGQRX</manta:id>
-        <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
-        <atom:link atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
-        <atom:link rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
-        <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/XGQRX" type="application/atom+xml;type=entry"/>
-        <atom:link rel="history" href="https://www.wwarn.org/repository/service/history/studies/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/XGQRX" type="application/atom+xml;type=entry"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/XGQRX" type="application/atom+xml;type=entry"/>
-    </atom:entry>
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+        <manta:id xmlns:atombeat="http://purl.org/atombeat/xmlns">XGQRX</manta:id>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="history" href="https://www.wwarn.org/repository/service/history/studies/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/link" href="https://www.wwarn.org/repository/service/content/link?study=https://www.wwarn.org/repository/service/content/studies/XGQRX" type="application/atom+xml;type=entry"/>
+    </atom:entry><atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
     <atom:id>http://localhost:8080/repository/service/content/studies/TBYKQ</atom:id>
     <atom:published>2011-10-12T13:54:29.894+01:00</atom:published>
     <atom:updated>2011-10-12T13:55:24.484+01:00</atom:updated>
