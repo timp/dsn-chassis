@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
         <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">https://www.wwarn.org/repository/service/content/studies/AJYER</atom:id>
         <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-06-17T06:03:28.74+01:00</atom:published>
-        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-09-12T16:08:53.448+01:00</atom:updated>
+        <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2012-01-31T14:02:06.645Z</atom:updated>
         <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
             <atom:email>contributor@example.org</atom:email>
         </atom:author>
@@ -10,41 +10,101 @@
             <draft>no</draft>
         </app:control>
         <atom:content xmlns:atombeat="http://purl.org/atombeat/xmlns" type="application/vnd.chassis-manta+xml">
-            <study profile="http://www.cggh.org/2010/chassis/manta/2.0">
-                <studyTitle>Factors contributing to Problems</studyTitle>
+            <study profile="http://www.cggh.org/2010/chassis/manta/2.1">
+                <studyTitle>1990-1995-Thailand-Mae-Sot-SMRU</studyTitle>
                 <ui-info>
                     <wizard-pane-to-show>confirmation</wizard-pane-to-show>
                 </ui-info>
                 <registrant-has-agreed-to-the-terms>yes</registrant-has-agreed-to-the-terms>
-                <study-is-published>Yesterday</study-is-published>
+                <study-is-published>Yes</study-is-published>
                 <explorer-display>full</explorer-display>
                 <publications>
                     <publication>
-                        <publication-title>Not sych a long title</publication-title>
+                        <publication-title>Price RN, Simpson JA, Nosten F, Luxemburger C, Hkirjaroen L, ter Kuile F, Chongsuphajaisiddhi T, White NJ. Factors contributing to anemia after uncomplicated falciparum malaria. Am J Trop Med Hyg. 2001 Nov;65(5):614-22</publication-title>
                         <pmid>11716124</pmid>
-                        <publication-references/>
+                        <publication-references>
+                            <publication-reference type="url">http://www.ncbi.nlm.nih.gov/pubmed/11716124</publication-reference>
+                        </publication-references>
                     </publication>
                 </publications>
                 <acknowledgements>
-                    <person>
-                        <first-name>Tim</first-name>
-                        <middle-name/>
-                        <family-name>Franken</family-name>
-                        <email-address>tim@Franken.net</email-address>
-                        <institution>A Malaria Research Unit </institution>
-                        <person-is-contactable>Yes</person-is-contactable>
-                    </person>
                     <institutions>
                     <institution-ack>
-                        <institution-name>A Malaria Research Unit </institution-name>
+                            <institution-name>Shoklo Malaria Research Unit</institution-name>
                         <institution-websites>
-                            <institution-url>http://www.WWARN.org/</institution-url>
+                                <institution-url>http://www.shoklo-unit.com/</institution-url>
                         </institution-websites>
                     </institution-ack>
                     </institutions>
+                    <people>
+                        <person>
+                            <first-name>R N</first-name>
+                            <middle-name/>
+                            <family-name>Price</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>J A</first-name>
+                            <middle-name/>
+                            <family-name>Simpson</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>Francois</first-name>
+                            <middle-name/>
+                            <family-name>Nosten</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable>Yes</person-is-contactable>
+                        </person>
+                        <person>
+                            <first-name>C</first-name>
+                            <middle-name/>
+                            <family-name>Luxemburger</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>L</first-name>
+                            <middle-name/>
+                            <family-name>Hkirjaroen</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>F</first-name>
+                            <middle-name/>
+                            <family-name>ter Kuile</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>T</first-name>
+                            <middle-name/>
+                            <family-name>Chongsuphajaisiddhi</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                        <person>
+                            <first-name>N J</first-name>
+                            <middle-name/>
+                            <family-name>White</family-name>
+                            <email-address/>
+                            <institution/>
+                            <person-is-contactable/>
+                        </person>
+                    </people>
                 </acknowledgements>
                 <curator-notes/>
-                <study-status>in</study-status>
+                <study-status>exp</study-status>
                 <modules>clinical</modules>
                 <study-info>
                     <studyInfoStatus>complete</studyInfoStatus>
@@ -53,22 +113,22 @@
                     <sites>
                         <site>
                             <country>TH</country>
-                            <region>Thai-Burmese Border</region>
-                            <district>Tak</district>
-                            <locality>Mae Sot</locality>
-                            <lookupAddress>Mae Sot Tak Thai-Burmese Border THAILAND</lookupAddress>
+                            <region>Tak</region>
+                            <district>Mae-Sot</district>
+                            <locality/>
+                            <lookupAddress> Mae-Sot Tak THAILAND</lookupAddress>
                             <siteCode/>
                             <testingDelay/>
                             <anticoagulant/>
                             <transportAndStorageTemperature/>
-                            <latitude>16.77708231608073</latitude>
-                            <longitude>98.537646484375</longitude>
+                            <latitude>16.71491050720215</latitude>
+                            <longitude>98.56881713867188</longitude>
                             <population/>
                             <transmissionIntensity>
-                                <annualParasitologicalIncidence/>
-                                <annualParasitologicalIncidenceYear/>
-                                <parasitePrevalence/>
-                                <parasitePrevalenceYear/>
+                                <annualParasitologicalIncidence>1.97</annualParasitologicalIncidence>
+                                <annualParasitologicalIncidenceYear>2000</annualParasitologicalIncidenceYear>
+                                <parasitePrevalence>1.86</parasitePrevalence>
+                                <parasitePrevalenceYear>2000</parasitePrevalenceYear>
                                 <transmissionIntensityAgeFrom/>
                                 <transmissionIntensityAgeFromUnits/>
                                 <transmissionIntensityAgeTo/>
@@ -92,10 +152,10 @@
                             <minParasitaemia/>
                             <maxParasitaemia/>
                         </parasitaemia>
-                        <includeMixedInfections>not a bool</includeMixedInfections>
+                        <includeMixedInfections>include</includeMixedInfections>
                         <excludeIfPriorAntimalarials/>
                         <priorAntimalarialsExclusion>
-                            <priorAntimalarials/>
+                            <priorAntimalarials selected=""/>
                             <priorAntimalarialsDetermination/>
                             <priorAntimalarialsHistoryWeeks/>
                         </priorAntimalarialsExclusion>
@@ -112,16 +172,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Artesunate</name>
+                                            <name>AS</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Artesunate</activeIngredientName>
+                                                    <activeIngredientName>AS</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>50</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute>oral</administrationRoute>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -147,7 +211,9 @@
                                                     <doseUnit/>
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
-                                            <weightDosing/>
+                                            <weightDosing>
+				
+			</weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
                                             <feedingOther/>
@@ -162,16 +228,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Artesunate</name>
+                                            <name>AS</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Artesunate</activeIngredientName>
+                                                    <activeIngredientName>AS</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose>50</activeIngredientMgPerDose>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute>oral</administrationRoute>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -207,11 +277,14 @@
                                             <comments>Patients received Artesunate 12 mg/kg over 7 days.</comments>
                                         </drug>
                                         <drug>
-                                            <name>Tetracyclin</name>
+                                            <name>TET</name>
+                                            <drugNameOther/>
                                             <activeIngredients/>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
@@ -254,16 +327,20 @@
                                     <regimenUrl/>
                                     <drugs>
                                         <drug>
-                                            <name>Quinine</name>
+                                            <name>QN</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Quinine</activeIngredientName>
+                                                    <activeIngredientName>QN</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose/>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                                 <drugBatch>
                                                     <batchNumber/>
@@ -294,7 +371,41 @@
                                                 </weightGroupDosingSchedule>
                                             </weightGroupDosing>
                                             <weightDosing>
-				
+                                                <weightDosingSchedule>
+                                                    <day>0</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>1</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>2</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>3</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>4</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>5</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
+                                                <weightDosingSchedule>
+                                                    <day>6</day>
+                                                    <hour>0</hour>
+                                                    <dose>30</dose>
+                                                </weightDosingSchedule>
 			</weightDosing>
                                             <feeding/>
                                             <fatPerMeal/>
@@ -303,16 +414,20 @@
                                             <comments>Patients received Quinine 30 mg/kg for 7 days.</comments>
                                         </drug>
                                         <drug>
-                                            <name>Tetracyclin</name>
+                                            <name>TET</name>
+                                            <drugNameOther/>
                                             <activeIngredients>
                                                 <activeIngredient>
-                                                    <activeIngredientName>Tetracyclin</activeIngredientName>
+                                                    <activeIngredientName>TET</activeIngredientName>
+                                                    <activeIngredientNameOther/>
                                                     <activeIngredientMgPerDose/>
                                                 </activeIngredient>
                                             </activeIngredients>
                                             <administrationRoute/>
                                             <manufacturer/>
+                                            <manufacturerOther/>
                                             <tradeName/>
+                                            <tradeNameOther/>
                                             <batches>
                                             
                                         </batches>
