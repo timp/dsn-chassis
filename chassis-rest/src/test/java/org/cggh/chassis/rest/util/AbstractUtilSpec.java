@@ -1,6 +1,11 @@
 package org.cggh.chassis.rest.util;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.commons.io.FileUtils;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -19,6 +24,7 @@ public abstract class AbstractUtilSpec extends TestCase {
   public String SERVICE_PROTOCOL_HOST_PORT;
   public String LINK_FEED_FILE_PATH;
   protected static ChassisRestConfig config;
+  protected String studiesDirName;
   
   public AbstractUtilSpec() {
     super();
@@ -30,8 +36,6 @@ public abstract class AbstractUtilSpec extends TestCase {
   protected void setUp() throws Exception {
     super.setUp();
     config =  new ChassisRestConfig();
-    STUDY_ENTRY_DIR_NAME = config.getConfiguration().get("STUDY_ENTRY_DIR_NAME") + "/";
-    LINK_FEED_FILE_PATH = config.getConfiguration().get("DATA_DIR_NAME") + "/link_feed.xml";
 
     SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
   }
@@ -57,6 +61,116 @@ public abstract class AbstractUtilSpec extends TestCase {
     }
     NodeList nodes = doc.getElementsByTagName(elementName);
     return nodes.getLength();
+  }
+
+  protected void setupXmlFiles(String dirName) throws IOException {
+    
+    deleteExistingFiles(dirName);
+    
+    //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
+    
+    String studyFileName = dirName 
+            + "/" + config.getConfiguration().get("STUDY_ID") + ".xml";
+    File studyEntry = new File(studyFileName );
+    System.err.println(studyFileName);
+
+    assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
+    // StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
+    System.err.println(STUDY_FEED_FILE_PATH);
+    StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
+    assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
+  }
+
+  protected void testPostsFromDirectory(String directory) throws Exception { 
+    String url = url("/uncache");
+    HttpResponse response = StudyControllerRequester.uncache(url);
+    assertEquals(url, 200, response.getStatus());
+    
+    url = url("/studies/");
+    response = StudyControllerRequester.read(url);   
+    assertEquals(url, 200, response.getStatus());
+    
+    
+    assertTrue(response.getBody(), response.getBody().indexOf('\n') == -1); // empty feed
+
+    
+    File studiesDir = new File(directory);
+    @SuppressWarnings("unchecked")
+    Iterator<File> it = FileUtils.iterateFiles(studiesDir, new String[] { "xml" }, false);
+    int fileCount = 0;
+    int failCount = 0;
+    while (it.hasNext()) {
+      fileCount++;
+      File f = it.next();
+      String studyFileName = directory + "/" + f.getName();
+      String entryUrl = url("/study/" + f.getName());
+      if (StudyControllerRequester.read(url("/study/" + f.getName())).getStatus() == 200) {
+        int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
+        System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
+      }
+      HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
+      //System.out.println(studyFileName);
+      //System.out.print(" - ");
+      //System.out.println(r.getBody());
+      if (r.getStatus() != 201) {
+        System.out.println(studyFileName);
+        System.out.print(" - ");
+        if (r.getBody().indexOf("errors") > 0) { 
+          System.err.println(r.getPrettyBody());
+        }
+        failCount ++;
+      } else {
+        StudyControllerRequester.delete(url(entryUrl)).getStatus();
+      }
+    }
+  
+    System.out.println("Files: " + fileCount + " fail count: " + failCount);
+
+    
+  }
+  private void postFeeds() throws Exception { 
+    String url = url("/uncache");
+    HttpResponse response = StudyControllerRequester.uncache(url);
+    assertEquals(url, 200, response.getStatus());
+    url = url("/studies");
+    response = StudyControllerRequester.create(STUDY_FEED_FILE_PATH, url );
+    // We know there are currently failing entries
+    assertEquals(response.getBody(), 400, response.getStatus());
+    url = url("/links");
+    response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url("/links"));
+    assertEquals(url, 201, response.getStatus());
+  }
+
+  
+  public void testPrune() { 
+  //  XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);    
+  }
+
+
+  protected void deleteExistingFiles(String directoryName) throws IOException {
+    File[] files = new File(directoryName)
+        .listFiles(new FilenameFilter(){
+      public boolean accept(File dir, String name) {
+        return name.indexOf(".xml") > 0 ;
+      } 
+    });
+    if (files != null)
+      for (File child : files) {
+        if (!child.delete()) 
+          throw new RuntimeException("Could not delete " + child.getCanonicalPath());
+      }
+  }
+  public void testGetWwarnChassis() throws Exception {
+    setupXmlFiles(STUDY_ENTRY_DIR_NAME);
+    testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
+    //postFeeds();
+    HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
+    assertEquals(url("/studyCount"), 200, response.getStatus());
+    if (response.getBody().indexOf("" + (countEntries(STUDY_FEED_FILE_PATH, "atom:entry") 
+              + countEntries(STUDY_FEED_FILE_PATH, "atom:entry"))) > -1)
+      System.out.println("Looks like there no are validation errors");
+    else
+      System.out.println("Looks like there are validation errors");
   }
   
 }

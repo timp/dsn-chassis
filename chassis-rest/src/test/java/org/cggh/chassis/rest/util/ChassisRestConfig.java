@@ -15,7 +15,8 @@ public class ChassisRestConfig {
     String STUDY_FEED_FILE_PATH;
     String STUDY_ID = "XGQRX";
     String STUDIES_DIR_NAME;
-    String INVALID_STUDY_ID = "TFCBZ"; // live
+    // String INVALID_STUDY_ID = "TFCBZ"; // live
+    String INVALID_STUDY_ID = "AJYER"; // test
     
     String SERVICE_PROTOCOL_HOST_PORT = "http://localhost:8080";
     
