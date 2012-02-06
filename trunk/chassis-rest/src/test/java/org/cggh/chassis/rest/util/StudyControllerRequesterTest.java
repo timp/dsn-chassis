@@ -71,6 +71,8 @@ public class StudyControllerRequesterTest extends TestCase {
   public void testAddStudies() throws Exception { 
     System.err.println(STUDY_FEED_FILE_PATH);
     HttpResponse response = StudyControllerRequester.create(STUDY_FEED_FILE_PATH, url("/studies"));
+    // Currently both live and test contain validation errors 
+    assertEquals(response.getBody(), 400, response.getStatus());
   }
 
   public void testReadNotFound() throws Exception { 
