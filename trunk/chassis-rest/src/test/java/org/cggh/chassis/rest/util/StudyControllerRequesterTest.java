@@ -1,7 +1,14 @@
 package org.cggh.chassis.rest.util;
 
+import junit.framework.TestCase;
 
-public class StudyControllerRequesterTest extends AbstractUtilSpec {
+
+public class StudyControllerRequesterTest extends TestCase {
+
+  private String STUDY_ENTRY_DIR_NAME;
+  protected static ChassisRestConfig config;
+  public String SERVICE_PROTOCOL_HOST_PORT;
+  private String STUDY_FEED_FILE_PATH;
 
   public StudyControllerRequesterTest() {
     super();
@@ -10,6 +17,21 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
     super(name);
   }
 
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    STUDY_ENTRY_DIR_NAME = "data/studies";
+    config =  new ChassisRestConfig();
+    SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
+    String downloadedDir =  "data/";
+    STUDY_FEED_FILE_PATH = downloadedDir + "studies.xml";
+  }
+  
+  protected String url(String url) {
+    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
+  }
+
+  
   public void testValidate() throws Exception {
     String invalidStudyId = config.getConfiguration().get("INVALID_STUDY_ID");
     String studyFileName = STUDY_ENTRY_DIR_NAME + "/" + invalidStudyId + ".xml";
@@ -26,7 +48,7 @@ public class StudyControllerRequesterTest extends AbstractUtilSpec {
    */
   public void testPostStringString() throws Exception {
     String studyId = config.getConfiguration().get("STUDY_ID");
-    String studyFileName = STUDY_ENTRY_DIR_NAME + studyId + ".xml";
+    String studyFileName = STUDY_ENTRY_DIR_NAME + "/" + studyId + ".xml";
     System.err.println("Posting " + studyFileName + " to " + url("/study"));
     // It may have been created already
     HttpResponse delResponse = StudyControllerRequester.delete(url("/study/" + studyId));
