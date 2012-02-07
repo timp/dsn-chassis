@@ -1,5 +1,6 @@
 package org.cggh.chassis.rest.configuration;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,9 +15,21 @@ import java.util.Properties;
  * A configuration object which expects to find a properties file 
  * either in $APP_HOME/conf or /etc/$APP_NAME.
  * 
+ * The main use case is so as not to put passwords in the SCM.
+ * 
+ * <code>
+ *
+ *     Configuration config = new Configuration("posql", dbName);
+ *     String dbBaseUrl = config.getSetProperty("dbBaseUrl"); // "jdbc:mysql://localhost:3306/";
+ *     String driver = config.getSetProperty("driver"); // "com.mysql.jdbc.Driver";
+ *     String user = config.getSetProperty("user"); // "root";
+ *     String password = config.get("password"); // optional
+ * </code>
+ * 
  */
 public class Configuration {
 
+  private String appName;
   private String homeVariableName;  
   private String configurationDirectoryName; 
   private String propertiesFileName;
@@ -24,10 +37,14 @@ public class Configuration {
   private Properties defaults;
   
   public Configuration(String appName) {
-    this(appName, null);
+    this(appName, appName);
   }
-  public Configuration(String appName, Properties defaults) {
+  public Configuration(String appName, String objectName) {
+    this(appName, objectName, null);
+  }
+  public Configuration(String appName, String objectName, Properties defaults) {
     super();
+    this.appName = appName;
     this.defaults = defaults;
     this.homeVariableName = appName.toUpperCase() + "_HOME";
     String envHome = System.getenv(this.homeVariableName);
@@ -35,17 +52,27 @@ public class Configuration {
       this.configurationDirectoryName = "/etc/" + appName;
     else 
       this.configurationDirectoryName = envHome + "/conf";
-    this.propertiesFileName = this.configurationDirectoryName + "/" + appName + ".properties";
+    this.propertiesFileName = this.configurationDirectoryName + "/" + objectName + ".properties";
     File propertiesfile = new File(this.propertiesFileName);
     if (propertiesfile.exists())
       this.properties = fromFile(propertiesfile, defaults);
-    else
-      this.properties = new Properties(defaults);
+    else 
+      if (defaults != null)
+        this.properties = new Properties(defaults);
+      else
+        throw new RuntimeException(new FileNotFoundException("File " + propertiesFileName + " not found"));
   }
-
+  
+  public String getSetProperty(String key) {
+    String s = get(key);
+    if (s == null) 
+      throw new NullPointerException("Property " + key + " is not set in configuration for " + appName);
+    return s;
+  }
+ 
   public String get(String key) {
-    return properties.getProperty(key);
-  }
+    return properties.getProperty(key).trim();
+  }  
   public String put(String key, String value) {
     return (String) properties.put(key, value);
   }
@@ -81,7 +108,7 @@ public class Configuration {
     try{
       them.load(data);
     } catch (IOException e) {
-      throw new RuntimeException("Corrupt properties file `" + existingFile, e);
+      throw new RuntimeException("Corrupt properties file `" + existingFile + "'", e);
     }
 
     return them;
