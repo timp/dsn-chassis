@@ -24,6 +24,8 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
     String downloadedDir = config.getConfiguration().get("DATA_DIR_NAME") + "/www.wwarn.org/";
     STUDY_FEED_FILE_PATH = downloadedDir + "studies.xml";
     STUDY_ENTRY_DIR_NAME = downloadedDir + "studies";
+    LINK_FEED_FILE_PATH = downloadedDir + "links.xml";
+
     //PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "/www.wwarn.org/chassis-rest-studies.xml";
   }
 

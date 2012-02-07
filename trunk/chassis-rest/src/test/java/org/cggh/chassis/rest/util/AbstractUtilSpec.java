@@ -21,8 +21,8 @@ import junit.framework.TestCase;
 public abstract class AbstractUtilSpec extends TestCase {
   public String STUDY_ENTRY_DIR_NAME;
   public String STUDY_FEED_FILE_PATH;
-  public String SERVICE_PROTOCOL_HOST_PORT;
   public String LINK_FEED_FILE_PATH;
+  public String SERVICE_PROTOCOL_HOST_PORT;
   protected static ChassisRestConfig config;
   protected String studiesDirName;
   
@@ -136,9 +136,11 @@ public abstract class AbstractUtilSpec extends TestCase {
     response = StudyControllerRequester.create(STUDY_FEED_FILE_PATH, url );
     // We know there are currently failing entries
     assertEquals(response.getBody(), 400, response.getStatus());
-    url = url("/links");
-    response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url("/links"));
-    assertEquals(url, 201, response.getStatus());
+  }
+  public void testGetLinkedStudies() throws Exception { 
+    String url = url("/links");
+    HttpResponse response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url);
+    assertEquals(LINK_FEED_FILE_PATH + "=>" + url, 201, response.getStatus());    
   }
 
   
