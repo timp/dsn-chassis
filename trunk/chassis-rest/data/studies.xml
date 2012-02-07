@@ -1,5 +1,5 @@
 <atom:feed xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:enable-versioning="true" atombeat:exclude-entry-content="false" atombeat:recursive="false">
-    <atom:id>https://www.wwarn.org/repository/service/content/studies</atom:id>
+    <atom:id>http://localhost:8080/repository/service/content/studies</atom:id>
     <atom:updated>2011-09-15T14:15:44.995+01:00</atom:updated>
     <atom:author>
         <atom:email>chassis.admin@wwarn.org</atom:email>
@@ -15,11 +15,11 @@
             </atombeat:config>
         </atombeat:extension-attribute>
     </atombeat:config-link-extensions>
-    <atom:link rel="self" href="https://www.wwarn.org/repository/service/content/studies" type="application/atom+xml;type=feed"/>
-    <atom:link rel="edit" href="https://www.wwarn.org/repository/service/content/studies" type="application/atom+xml;type=feed"/>
+    <atom:link rel="self" href="http://localhost:8080/repository/service/content/studies" type="application/atom+xml;type=feed"/>
+    <atom:link rel="edit" href="http://localhost:8080/repository/service/content/studies" type="application/atom+xml;type=feed"/>
     <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies" type="application/atom+xml;type=entry"/>
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
-        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">https://www.wwarn.org/repository/service/content/studies/AJYER</atom:id>
+        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">http://localhost:8080/repository/service/content/studies/AJYER</atom:id>
         <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-06-17T06:03:28.74+01:00</atom:published>
         <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2012-01-31T14:02:06.645Z</atom:updated>
         <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
@@ -704,20 +704,20 @@
             <atom:summary/>
         </ar:comment>
         <manta:id xmlns:atombeat="http://purl.org/atombeat/xmlns">AJYER</manta:id>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/AJYER"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/AJYER"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/studies/AJYER"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/studies/AJYER"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/AJYER" type="application/atom+xml;type=entry"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="history" href="https://www.wwarn.org/repository/service/history/studies/AJYER" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/AJYER" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/AJYER" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/AJYER" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/AJYER" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/AJYER" type="application/atom+xml;type=entry"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/AJYER" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="http://localhost:8080/repository/service/content/media/submitted/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="http://localhost:8080/repository/service/content/media/curated/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/derivations" href="http://localhost:8080/repository/service/content/derivations/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="http://localhost:8080/repository/service/content/reviews/personal-data/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="http://localhost:8080/repository/service/content/study-info/AJYER" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="http://localhost:8080/repository/service/content/groups/AJYER" type="application/atom+xml;type=entry"/>
     </atom:entry>
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
-        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">https://www.wwarn.org/repository/service/content/studies/XGQRX</atom:id>
+        <atom:id xmlns:atombeat="http://purl.org/atombeat/xmlns">http://localhost:8080/repository/service/content/studies/XGQRX</atom:id>
         <atom:published xmlns:atombeat="http://purl.org/atombeat/xmlns">2011-04-04T16:51:16.977+01:00</atom:published>
         <atom:updated xmlns:atombeat="http://purl.org/atombeat/xmlns">2012-01-16T15:00:07.286Z</atom:updated>
         <atom:author xmlns:atombeat="http://purl.org/atombeat/xmlns">
@@ -2571,18 +2571,18 @@
             <atom:summary/>
         </ar:comment>
         <manta:id xmlns:atombeat="http://purl.org/atombeat/xmlns">XGQRX</manta:id>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/XGQRX"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/studies/XGQRX"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/studies/XGQRX"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/XGQRX" type="application/atom+xml;type=entry"/>
         <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="history" href="https://www.wwarn.org/repository/service/history/studies/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/XGQRX" type="application/atom+xml;type=feed"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/XGQRX" type="application/atom+xml;type=entry"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/XGQRX" type="application/atom+xml;type=entry"/>
-        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/link" href="https://www.wwarn.org/repository/service/content/link?study=https://www.wwarn.org/repository/service/content/studies/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="http://localhost:8080/repository/service/content/media/submitted/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="http://localhost:8080/repository/service/content/media/curated/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/derivations" href="http://localhost:8080/repository/service/content/derivations/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="http://localhost:8080/repository/service/content/reviews/personal-data/XGQRX" type="application/atom+xml;type=feed"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="http://localhost:8080/repository/service/content/study-info/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/groups" href="http://localhost:8080/repository/service/content/groups/XGQRX" type="application/atom+xml;type=entry"/>
+        <atom:link xmlns:atombeat="http://purl.org/atombeat/xmlns" rel="http://www.cggh.org/2010/chassis/terms/link" href="http://localhost:8080/repository/service/content/link?study=http://localhost:8080/repository/service/content/studies/XGQRX" type="application/atom+xml;type=entry"/>
     </atom:entry><atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
     <atom:id>http://localhost:8080/repository/service/content/studies/TBYKQ</atom:id>
     <atom:published>2011-10-12T13:54:29.894+01:00</atom:published>
