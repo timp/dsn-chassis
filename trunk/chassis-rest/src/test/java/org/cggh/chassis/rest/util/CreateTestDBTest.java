@@ -6,7 +6,6 @@ package org.cggh.chassis.rest.util;
  */
 public class CreateTestDBTest extends AbstractUtilSpec {
 
-  // private static String PRUNED_STUDY_FEED_FILE_PATH;
   
   public CreateTestDBTest() { 
     super();
@@ -22,7 +21,8 @@ public class CreateTestDBTest extends AbstractUtilSpec {
     String downloadedDir =  "data/";
     STUDY_FEED_FILE_PATH = downloadedDir + "studies.xml";
     STUDY_ENTRY_DIR_NAME = downloadedDir + "studies";
-    //PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "/www.wwarn.org/chassis-rest-studies.xml";
+    LINK_FEED_FILE_PATH = downloadedDir + "links.xml";
+    PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "pruned-studies.xml";
   }
 
   
