@@ -7,8 +7,6 @@ package org.cggh.chassis.rest.util;
  */
 public class CreateLiveDBTest extends AbstractUtilSpec {
 
-
-  // private static String PRUNED_STUDY_FEED_FILE_PATH;
   
   public CreateLiveDBTest() { 
     super();
@@ -26,7 +24,7 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
     STUDY_ENTRY_DIR_NAME = downloadedDir + "studies";
     LINK_FEED_FILE_PATH = downloadedDir + "links.xml";
 
-    //PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "/www.wwarn.org/chassis-rest-studies.xml";
+    PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "pruned-studies.xml";
   }
 
   

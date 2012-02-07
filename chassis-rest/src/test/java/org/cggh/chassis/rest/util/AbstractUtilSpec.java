@@ -22,6 +22,7 @@ public abstract class AbstractUtilSpec extends TestCase {
   public String STUDY_ENTRY_DIR_NAME;
   public String STUDY_FEED_FILE_PATH;
   public String LINK_FEED_FILE_PATH;
+  public String PRUNED_STUDY_FEED_FILE_PATH;
   public String SERVICE_PROTOCOL_HOST_PORT;
   protected static ChassisRestConfig config;
   protected String studiesDirName;
@@ -128,16 +129,20 @@ public abstract class AbstractUtilSpec extends TestCase {
 
     
   }
-  private void postFeeds() throws Exception { 
-    String url = url("/uncache");
-    HttpResponse response = StudyControllerRequester.uncache(url);
-    assertEquals(url, 200, response.getStatus());
-    url = url("/studies");
-    response = StudyControllerRequester.create(STUDY_FEED_FILE_PATH, url );
-    // We know there are currently failing entries
-    assertEquals(response.getBody(), 400, response.getStatus());
+  
+  public void testPostStudies() throws Exception {
+    setupXmlFiles(STUDY_ENTRY_DIR_NAME);
+    testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
+    HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
+    assertEquals(url("/studyCount"), 200, response.getStatus());
+    if (response.getBody().indexOf("" + (countEntries(STUDY_FEED_FILE_PATH, "atom:entry") 
+              + countEntries(STUDY_FEED_FILE_PATH, "atom:entry"))) > -1)
+      System.out.println("Looks like there no are validation errors");
+    else
+      System.out.println("Looks like there are validation errors");
   }
-  public void testGetLinkedStudies() throws Exception { 
+  
+  public void testPostLinkedStudies() throws Exception { 
     String url = url("/links");
     HttpResponse response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url);
     assertEquals(LINK_FEED_FILE_PATH + "=>" + url, 201, response.getStatus());    
@@ -145,7 +150,7 @@ public abstract class AbstractUtilSpec extends TestCase {
 
   
   public void testPrune() { 
-  //  XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);    
+    XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);    
   }
 
 
@@ -161,18 +166,6 @@ public abstract class AbstractUtilSpec extends TestCase {
         if (!child.delete()) 
           throw new RuntimeException("Could not delete " + child.getCanonicalPath());
       }
-  }
-  public void testGetWwarnChassis() throws Exception {
-    setupXmlFiles(STUDY_ENTRY_DIR_NAME);
-    testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
-    //postFeeds();
-    HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
-    assertEquals(url("/studyCount"), 200, response.getStatus());
-    if (response.getBody().indexOf("" + (countEntries(STUDY_FEED_FILE_PATH, "atom:entry") 
-              + countEntries(STUDY_FEED_FILE_PATH, "atom:entry"))) > -1)
-      System.out.println("Looks like there no are validation errors");
-    else
-      System.out.println("Looks like there are validation errors");
   }
   
 }
