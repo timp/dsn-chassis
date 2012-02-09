@@ -55,9 +55,12 @@ public class StudyControllerRequesterTest extends TestCase {
     System.err.println("Del reponse=" + delResponse.getStatus());
     HttpResponse postResponse = StudyControllerRequester.create(studyFileName, url("/study"));
     assertEquals(postResponse.getBody() , 201, postResponse.getStatus());
-  
+    assertTrue(postResponse.getBody().trim().endsWith("entry>"));
+    HttpResponse putResponse = StudyControllerRequester.update(studyFileName, url("/study/" + studyId));
+    assertEquals(putResponse.getBody(), 201, putResponse.getStatus());
+    assertTrue(putResponse.getBody().trim().endsWith("entry>"));
+    //System.err.println(putResponse.getPrettyBody());
   }
-
 
   public void testRead() throws Exception {
     HttpResponse response = StudyControllerRequester.read(url("/study/"));
