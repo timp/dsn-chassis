@@ -2,7 +2,7 @@
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.cggh.chassis</groupId>
  <artifactId>chassis-model</artifactId>
- <version>0.0.5</version>
+ <version>0.0.6-SNAPSHOT</version>
  <packaging>jar</packaging>
  <name>chassis-model</name>
   
@@ -75,9 +75,9 @@
   </pluginRepositories>
 -->
  <scm>
-  <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassis-model-0.0.5</connection>
-  <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassis-model-0.0.5</developerConnection>
-  <url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassis-model-0.0.5</url>
+  <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-model</connection>
+  <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-model</developerConnection>
+  <url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-model</url>
  </scm>
  <build>
   <defaultGoal>install</defaultGoal>
