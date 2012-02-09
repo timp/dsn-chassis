@@ -49,13 +49,6 @@ $ curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @
 Fetch it again by
 curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
 
-If you're using MySQL this will fail - you need to stop the app - 
-and run the script chassis-model/src/main/resources/fix-db.sql 
-Then restart (The short answer as to why this is necessary is because of 
-having element names longer than 31 characters...)
-After you've done that it should work fine 
-(although I do expect other database mapping errors to crop up to start with...)
-
 Remember, Spring caches, so you will need to restart tomcat sometimes. 
 
 
