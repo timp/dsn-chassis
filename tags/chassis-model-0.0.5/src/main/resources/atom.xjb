@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings 
+ version="2.1"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_1.xsd"
+ xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+ xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+ jaxb:extensionBindingPrefixes="hj orm">
+	
+	<!-- see http://confluence.highsource.org/display/HJ3/Purchase+Order+Tutorial	-->
+
+	
+	<jaxb:bindings schemaLocation="atom.xsd" node="/xs:schema">
+
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable/>
+		</jaxb:globalBindings>
+		
+		<jaxb:bindings node="//xs:element[@ref='manta:id']">
+			<jaxb:property name="StudyID"/>
+			<hj:id/>
+		</jaxb:bindings>
+		<jaxb:bindings node="//xs:element[@ref='ar:comment']">
+			<jaxb:property name="Gloss"/>
+		</jaxb:bindings>
+
+
+
+<!--  ignore as it is always "application/vnd.chassis-manta+xml" -->
+        <jaxb:bindings node="xs:element[@name='content']//xs:attribute[@name='type']">
+          <hj:ignored/>
+        </jaxb:bindings>
+
+<!--  ignore as it is always "text" -->
+        <jaxb:bindings node="xs:element[@name='title']//xs:attribute[@name='type']">
+          <hj:ignored/>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="xs:element[@name='link']//xs:attribute[@name='type']">
+          <jaxb:property name="MimeType"/>
+        </jaxb:bindings>
+
+		<!--
+		<jaxb:bindings node="xs:complexType[@name='PurchaseOrderType']">
+			<hj:entity>
+				<orm:table name="po"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='USAddress']">
+			<hj:entity>
+				<orm:table name="address"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:complexType">
+			<hj:entity>
+				<orm:table name="item"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:attribute[@name='partNum']">
+			<hj:id merge="false"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:element[@name='USPrice']">
+			<hj:basic>
+				<orm:column name="Price"/>
+			</hj:basic>
+		</jaxb:bindings>
+		-->
+
+
+
+
+
+	</jaxb:bindings>
+</jaxb:bindings>
