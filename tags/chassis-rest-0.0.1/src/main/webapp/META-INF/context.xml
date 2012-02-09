@@ -1,0 +1,8 @@
+<!-- 
+  Make sure you add org.springframework.instrument.tomcat.jar from 
+  Spring's dist/weaver directory into Tomcat's lib directory. 
+  cp ~/.m2/repository/org/springframework/spring-instrument-tomcat/3.0.5.RELEASE/spring-instrument-tomcat-3.0.5.RELEASE.jar /var/lob/tomcat6/lib/
+-->
+<Context path="chassis-rest">
+    <Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader"/>
+</Context>
