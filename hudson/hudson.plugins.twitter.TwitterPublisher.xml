@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<hudson.plugins.twitter.TwitterPublisher_-DescriptorImpl>
-  <token></token>
-  <tokenSecret></tokenSecret>
-  <hudsonUrl>http://hudson.cggh.org/</hudsonUrl>
-  <onlyOnFailureOrRecovery>true</onlyOnFailureOrRecovery>
-  <includeUrl>true</includeUrl>
-</hudson.plugins.twitter.TwitterPublisher_-DescriptorImpl>
