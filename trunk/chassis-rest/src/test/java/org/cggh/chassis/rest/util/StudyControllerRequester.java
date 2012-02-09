@@ -1,6 +1,6 @@
 package org.cggh.chassis.rest.util;
 
-import java.io.BufferedInputStream;
+//import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -144,6 +144,12 @@ public class StudyControllerRequester {
     final HttpClient client = new HttpClient();
     try {
       client.executeMethod(method);
+      
+      /*
+       * This approach, adopted as it is recommended by warnings in the log
+       * Fails by truncating the end of the response. 
+       * Debug if you want to go this way.
+       * 
       InputStream is = method.getResponseBodyAsStream();
       BufferedInputStream bis = new BufferedInputStream(is);
       StringBuffer sb = new StringBuffer();
@@ -160,6 +166,8 @@ public class StudyControllerRequester {
       // System.out.println( "\nDone" );
       String body = sb.toString();
       response = new HttpResponse(method.getStatusCode(), body);
+      */
+      response = new HttpResponse(method.getStatusCode(), method.getResponseBodyAsString());
     } finally {
       method.releaseConnection();
     }
