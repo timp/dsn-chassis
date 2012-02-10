@@ -129,17 +129,18 @@ public abstract class AbstractUtilSpec extends TestCase {
 
     
   }
+
   
-  public void testPostStudies() throws Exception {
+  public boolean postStudies() throws Exception {
     setupXmlFiles(STUDY_ENTRY_DIR_NAME);
     testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
     HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
     assertEquals(url("/studyCount"), 200, response.getStatus());
-    if (response.getBody().indexOf("" + (countEntries(STUDY_FEED_FILE_PATH, "atom:entry") 
-              + countEntries(STUDY_FEED_FILE_PATH, "atom:entry"))) > -1)
-      System.out.println("Looks like there no are validation errors");
+    int entriesCount = countEntries(STUDY_FEED_FILE_PATH, "atom:entry"); 
+    if (response.getBody().indexOf("" + entriesCount) > -1)
+      return true;
     else
-      System.out.println("Looks like there are validation errors");
+      return false;
   }
   
   public void testPostLinkedStudies() throws Exception { 
