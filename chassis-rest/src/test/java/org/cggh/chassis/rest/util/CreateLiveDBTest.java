@@ -27,6 +27,9 @@ public class CreateLiveDBTest extends AbstractUtilSpec {
     PRUNED_STUDY_FEED_FILE_PATH = downloadedDir + "pruned-studies.xml";
   }
 
-  
+  public void testPostStudies() throws Exception { 
+    if(!postStudies())
+      fail("There are validation errors");
+  }
   
 }
