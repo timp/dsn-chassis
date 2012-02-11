@@ -1,90 +1,109 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.430</version>
+  <version>1.450</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
     <permission>hudson.model.Computer.Configure:IanW</permission>
     <permission>hudson.model.Computer.Configure:aliman</permission>
+    <permission>hudson.model.Computer.Configure:kristofk</permission>
     <permission>hudson.model.Computer.Configure:leeh</permission>
     <permission>hudson.model.Computer.Configure:rwh</permission>
     <permission>hudson.model.Computer.Configure:timp</permission>
     <permission>hudson.model.Computer.Delete:IanW</permission>
     <permission>hudson.model.Computer.Delete:aliman</permission>
+    <permission>hudson.model.Computer.Delete:kristofk</permission>
     <permission>hudson.model.Computer.Delete:leeh</permission>
     <permission>hudson.model.Computer.Delete:rwh</permission>
     <permission>hudson.model.Computer.Delete:timp</permission>
     <permission>hudson.model.Hudson.Administer:IanW</permission>
     <permission>hudson.model.Hudson.Administer:aliman</permission>
+    <permission>hudson.model.Hudson.Administer:kristofk</permission>
     <permission>hudson.model.Hudson.Administer:leeh</permission>
     <permission>hudson.model.Hudson.Administer:rwh</permission>
     <permission>hudson.model.Hudson.Administer:timp</permission>
     <permission>hudson.model.Hudson.Read:IanW</permission>
     <permission>hudson.model.Hudson.Read:aliman</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Hudson.Read:kristofk</permission>
     <permission>hudson.model.Hudson.Read:leeh</permission>
     <permission>hudson.model.Hudson.Read:rwh</permission>
     <permission>hudson.model.Hudson.Read:timp</permission>
+    <permission>hudson.model.Hudson.RunScripts:IanW</permission>
+    <permission>hudson.model.Hudson.RunScripts:kristofk</permission>
+    <permission>hudson.model.Hudson.RunScripts:timp</permission>
     <permission>hudson.model.Item.Build:IanW</permission>
     <permission>hudson.model.Item.Build:aliman</permission>
+    <permission>hudson.model.Item.Build:kristofk</permission>
     <permission>hudson.model.Item.Build:leeh</permission>
     <permission>hudson.model.Item.Build:rwh</permission>
     <permission>hudson.model.Item.Build:timp</permission>
     <permission>hudson.model.Item.Configure:IanW</permission>
     <permission>hudson.model.Item.Configure:aliman</permission>
+    <permission>hudson.model.Item.Configure:kristofk</permission>
     <permission>hudson.model.Item.Configure:leeh</permission>
     <permission>hudson.model.Item.Configure:rwh</permission>
     <permission>hudson.model.Item.Configure:timp</permission>
     <permission>hudson.model.Item.Create:IanW</permission>
     <permission>hudson.model.Item.Create:aliman</permission>
+    <permission>hudson.model.Item.Create:kristofk</permission>
     <permission>hudson.model.Item.Create:leeh</permission>
     <permission>hudson.model.Item.Create:rwh</permission>
     <permission>hudson.model.Item.Create:timp</permission>
     <permission>hudson.model.Item.Delete:IanW</permission>
     <permission>hudson.model.Item.Delete:aliman</permission>
+    <permission>hudson.model.Item.Delete:kristofk</permission>
     <permission>hudson.model.Item.Delete:leeh</permission>
     <permission>hudson.model.Item.Delete:rwh</permission>
     <permission>hudson.model.Item.Delete:timp</permission>
     <permission>hudson.model.Item.Read:IanW</permission>
     <permission>hudson.model.Item.Read:aliman</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.Read:kristofk</permission>
     <permission>hudson.model.Item.Read:leeh</permission>
     <permission>hudson.model.Item.Read:rwh</permission>
     <permission>hudson.model.Item.Read:timp</permission>
     <permission>hudson.model.Item.Workspace:IanW</permission>
     <permission>hudson.model.Item.Workspace:aliman</permission>
+    <permission>hudson.model.Item.Workspace:kristofk</permission>
     <permission>hudson.model.Item.Workspace:leeh</permission>
     <permission>hudson.model.Item.Workspace:rwh</permission>
     <permission>hudson.model.Item.Workspace:timp</permission>
     <permission>hudson.model.Run.Delete:IanW</permission>
     <permission>hudson.model.Run.Delete:aliman</permission>
+    <permission>hudson.model.Run.Delete:kristofk</permission>
     <permission>hudson.model.Run.Delete:leeh</permission>
     <permission>hudson.model.Run.Delete:rwh</permission>
     <permission>hudson.model.Run.Delete:timp</permission>
     <permission>hudson.model.Run.Update:IanW</permission>
     <permission>hudson.model.Run.Update:aliman</permission>
+    <permission>hudson.model.Run.Update:kristofk</permission>
     <permission>hudson.model.Run.Update:leeh</permission>
     <permission>hudson.model.Run.Update:rwh</permission>
     <permission>hudson.model.Run.Update:timp</permission>
     <permission>hudson.model.View.Configure:IanW</permission>
     <permission>hudson.model.View.Configure:aliman</permission>
+    <permission>hudson.model.View.Configure:kristofk</permission>
     <permission>hudson.model.View.Configure:leeh</permission>
     <permission>hudson.model.View.Configure:rwh</permission>
     <permission>hudson.model.View.Configure:timp</permission>
     <permission>hudson.model.View.Create:IanW</permission>
     <permission>hudson.model.View.Create:aliman</permission>
+    <permission>hudson.model.View.Create:kristofk</permission>
     <permission>hudson.model.View.Create:leeh</permission>
     <permission>hudson.model.View.Create:rwh</permission>
     <permission>hudson.model.View.Create:timp</permission>
     <permission>hudson.model.View.Delete:IanW</permission>
     <permission>hudson.model.View.Delete:aliman</permission>
+    <permission>hudson.model.View.Delete:kristofk</permission>
     <permission>hudson.model.View.Delete:leeh</permission>
     <permission>hudson.model.View.Delete:rwh</permission>
     <permission>hudson.model.View.Delete:timp</permission>
     <permission>hudson.scm.SCM.Tag:IanW</permission>
     <permission>hudson.scm.SCM.Tag:aliman</permission>
+    <permission>hudson.scm.SCM.Tag:kristofk</permission>
     <permission>hudson.scm.SCM.Tag:leeh</permission>
     <permission>hudson.scm.SCM.Tag:rwh</permission>
     <permission>hudson.scm.SCM.Tag:timp</permission>
@@ -113,8 +132,8 @@
   </markupFormatter>
   <jdks>
     <jdk>
-      <name>Sun java 6 (ubuntu packaged)</name>
-      <home>/usr/lib/jvm/java-6-sun/</home>
+      <name>openjdk6</name>
+      <home>/usr/lib/jvm/java-6-openjdk/</home>
       <properties/>
     </jdk>
   </jdks>
@@ -161,7 +180,6 @@
         <string>chassis-hyperjaxb3-naming</string>
         <string>chassis-model</string>
         <string>chassis-rest</string>
-        <string>checkStudyFeedBasic</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
         <string>manta-maven</string>

@@ -20,8 +20,8 @@
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
-    <hudson.plugins.ircbot.IrcUserProperty>
-      <nick>lee</nick>
-    </hudson.plugins.ircbot.IrcUserProperty>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>jncdBKn5+AyRVjcMeYa+6ZplCg+TXUgttLl0sB6LKH9J/44+xxsUJGnLxBGgXWnk</apiToken>
+    </jenkins.security.ApiTokenProperty>
   </properties>
 </user>
