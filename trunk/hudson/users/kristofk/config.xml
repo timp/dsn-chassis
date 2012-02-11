@@ -1,26 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <user>
-  <fullName>Lee Hart</fullName>
+  <fullName>Krzysztof Kluczynski</fullName>
   <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>/hFkX+eZ0IR6py/Dnuiw8vVhesym11+OoGqoNU45/ChJ/44+xxsUJGnLxBGgXWnk</apiToken>
+    </jenkins.security.ApiTokenProperty>
     <hudson.model.MyViewsProperty>
-      <primaryViewName>All</primaryViewName>
       <views>
         <hudson.model.AllView>
           <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
           <name>All</name>
           <filterExecutors>false</filterExecutors>
           <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
         </hudson.model.AllView>
       </views>
     </hudson.model.MyViewsProperty>
     <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <passwordHash>mjDhcv:3e336433a2e584edb16d94f529f42d1bf3cd428eb95f3cdc844b930641e0cac3</passwordHash>
+      <passwordHash>JktHPa:58cf063a06e4cc11a9006df31c9ccc81768ce334482a3ef4193c5416531ff2bb</passwordHash>
     </hudson.security.HudsonPrivateSecurityRealm_-Details>
     <hudson.tasks.Mailer_-UserProperty>
-      <emailAddress>l33h4r7@gmail.com</emailAddress>
+      <emailAddress>kristofk@well.ox.ac.uk</emailAddress>
     </hudson.tasks.Mailer_-UserProperty>
-    <jenkins.security.ApiTokenProperty>
-      <apiToken>Q2AqiCYi/o9yGQKksXO3qOfXkI9Ak/MTBBeF/3N63EJJ/44+xxsUJGnLxBGgXWnk</apiToken>
-    </jenkins.security.ApiTokenProperty>
   </properties>
 </user>
