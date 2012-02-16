@@ -6,6 +6,15 @@
   <packaging>war</packaging>
   <name>chassis-rest</name>
 
+  <properties>
+    <spring.version>3.0.5.RELEASE</spring.version>
+    <hibernate.version>3.4.0.GA</hibernate.version>
+    <openjpa.version>2.0.1</openjpa.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <mysqlDriverVersion>5.1.18</mysqlDriverVersion>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.cggh.chassis</groupId>
@@ -152,8 +161,14 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.18</version>
+      <version>${mysqlDriverVersion}</version>
     </dependency>
+    <dependency>
+     <groupId>junit</groupId>
+     <artifactId>junit</artifactId>
+     <version>3.8.1</version>
+     <scope>test</scope>
+   </dependency>
   </dependencies>
   <scm>
     <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-rest</connection>
@@ -264,13 +279,6 @@
     -->
   </repositories>
 
-  <properties>
-    <spring.version>3.0.5.RELEASE</spring.version>
-    <hibernate.version>3.4.0.GA</hibernate.version>
-    <openjpa.version>2.0.1</openjpa.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
   <profiles>
   <!-- No profile will give defaults of redeploying locally with username admin and no password -->
     <profile>
@@ -290,6 +298,98 @@
         </plugins>
       </build>
     </profile>
+    
+    <profile>
+      <id>maven-3</id>
+      <activation>
+        <file>
+          <!--  This employs that the basedir expression is only recognized by Maven 3.x (see MNG-2363) -->
+          <exists>${basedir}</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.0-beta-3</version>
+            <configuration>
+              <reportPlugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+                  <version>2.2</version>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-report-plugin</artifactId>
+                  <version>2.6</version>
+                </plugin>
+                <!--
+                
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>cobertura-maven-plugin</artifactId>
+                  <version>2.4</version>
+                  <configuration>
+                    <maxmem>128m</maxmem>
+                    <formats>
+                      <format>xml</format>
+                      <format>html</format>
+                    </formats>
+                  </configuration>
+                </plugin>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-pmd-plugin</artifactId>
+                  <version>2.5</version>
+                  <configuration>
+                    <targetJdk>1.5</targetJdk>
+                    <failonerror>true</failonerror>
+                    <includes>
+                      <include>com/wakaleo/**/*.java</include>
+                    </includes>
+                  </configuration>
+                </plugin>
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>findbugs-maven-plugin</artifactId>
+                  <version>2.3.1</version>
+                  <configuration>
+                    <threshold>Normal</threshold>
+                    <xmlOutput>true</xmlOutput>
+                  </configuration>
+                </plugin>
+                -->
+                <plugin>
+                <groupId>com.wakaleo.schemaspy</groupId>
+                <artifactId>maven-schemaspy-plugin</artifactId>
+                 <version>5.0.4-SNAPSHOT</version>
+                 <configuration>
+                   <databaseType>mysql</databaseType>
+                   <database>chassisDb</database>
+                   <host>${chassisDb_host}</host>
+                   <user>${chassisDb_user}</user>
+                   <password>${chassisDb_password}</password>
+                   <!-- set in settings.xml eg 
+                   <localRepository>/var/lib/jenkins/.m2/repository</localRepository>
+                   -->
+                   <pathToDrivers>${settings.localRepository}/mysql/mysql-connector-java/${mysqlDriverVersion}/mysql-connector-java-${mysqlDriverVersion}.jar</pathToDrivers>            
+                  </configuration>
+                </plugin> 
+              </reportPlugins>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+      <properties>
+       <chassisDb_host>localhost</chassisDb_host>
+       <chassisDb_user>root</chassisDb_user>
+       <chassisDb_password></chassisDb_password>
+      </properties>
+    </profile>
+    
+    
   </profiles>
 
 </project>
