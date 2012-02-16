@@ -267,17 +267,14 @@
       <name>CGGH Maven Repository</name>
       <url>http://cloud1.cggh.org/maven2/</url>
     </repository>
-    <!-- duff
-    <repository>
-      <id>EclipseLink Repo</id>
-      <url>http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/rt/eclipselink/maven.repo/</url>
-      use this for javax.persistence 
-      <snapshots>
-        <enabled>true</enabled> 
-      </snapshots> 
-    </repository>
-    -->
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+     <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <profiles>
   <!-- No profile will give defaults of redeploying locally with username admin and no password -->
