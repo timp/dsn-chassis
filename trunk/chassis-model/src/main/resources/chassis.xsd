@@ -1143,7 +1143,7 @@
   <xs:element name="ageDosing">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="ageDosingSchedule"/>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="ageDosingSchedule"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
