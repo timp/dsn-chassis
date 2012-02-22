@@ -1,4 +1,4 @@
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugs` AS 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS 
   SELECT `e`.`StudyID` AS `StudyID`
       ,`Drug`.`Hjid` AS `Hjid`
       ,`Drug`.`DTYPE` AS `DTYPE`
@@ -23,6 +23,96 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugs` AS
       ,`Drug`.`WeightDosing_Drug_Hjid` AS `WeightDosing_Drug_Hjid`
       ,`Drug`.`Drug_Drugs_Hjid` AS `Drug_Drugs_Hjid` 
       ,`r`.`Hjid` AS `Regimen_Hjid`
+from `Drug` 
+     LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
+     LEFT JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
+     LEFT JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
+     LEFT JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
+     LEFT JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
+     LEFT JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
+     LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+WHERE 
+ s.Modules LIKE "%clinical%"
+;
+
+
+
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalRegimen` AS
+SELECT  cd1.studyId,
+    cd1.regimen_Hjid, 
+    regimenName, 
+    cd1.drugName as drug1Name,
+    cd1.Hjid as drug1_Hjid,
+           ai1.ActiveIngredientName as drug1ai1Name,
+           ai1.Hjid as drug1ai1_Hjid,
+           ai2.ActiveIngredientName as drug1ai2Name,
+           ai2.Hjid as drug1ai2_Hjid,
+           ai3.ActiveIngredientName as drug1ai3Name,
+           ai3.Hjid as drug1ai3_Hjid,
+    cd2.drugName as drug2Name,
+    cd2.Hjid as drug2_Hjid,
+           d2ai1.ActiveIngredientName as drug2ai1Name,
+           d2ai1.Hjid as drug2ai1_Hjid,
+           d2ai2.ActiveIngredientName as drug2ai2Name,
+           d2ai2.Hjid as drug2ai2_Hjid,
+           d2ai3.ActiveIngredientName as drug2ai3Name,
+           d2ai3.Hjid as drug2ai3_Hjid,
+    cd3.drugName as drug3Name,
+    cd3.Hjid as drug3_Hjid,
+          d3ai1.ActiveIngredientName as drug3ai1Name,
+           d3ai1.Hjid as drug3ai1_Hjid,
+           d3ai2.ActiveIngredientName as drug3ai2Name,
+           d3ai2.Hjid as drug3ai2_Hjid,
+           d3ai3.ActiveIngredientName as drug3ai3Name,
+           d3ai3.Hjid as drug3ai3_Hjid
+FROM `Regimen` r
+  LEFT JOIN v_ClinicalDrugs cd1 on cd1.Regimen_Hjid = r.Hjid
+  LEFT JOIN ActiveIngredient ai1 on ai1.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid
+  LEFT JOIN ActiveIngredient ai2 on (ai2.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid and ai2.hjid <> ai1.Hjid)
+  LEFT JOIN ActiveIngredient ai3 on (ai3.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid and ai3.hjid <> ai2.Hjid and ai3.Hjid <> ai1.Hjid)
+  LEFT JOIN v_ClinicalDrugs cd2 on (cd2.Regimen_Hjid = r.Hjid and cd2.drugName <> cd1.drugName)
+  LEFT JOIN ActiveIngredient d2ai1 on d2ai1.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid
+  LEFT JOIN ActiveIngredient d2ai2 on (d2ai2.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid and d2ai2.hjid <> d2ai1.Hjid)
+  LEFT JOIN ActiveIngredient d2ai3 on (d2ai3.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid and d2ai3.hjid <> d2ai2.Hjid and d2ai3.Hjid <> d2ai1.Hjid)
+  LEFT JOIN v_ClinicalDrugs cd3 on (cd3.Regimen_Hjid = r.Hjid and (cd3.drugName <> cd1.drugName and cd3.drugName <> cd2.drugName))
+  LEFT JOIN ActiveIngredient d3ai1 on d3ai1.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid
+  LEFT JOIN ActiveIngredient d3ai2 on (d3ai2.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai2.hjid <> d3ai1.Hjid)
+  LEFT JOIN ActiveIngredient d3ai3 on (d3ai3.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai3.hjid <> d3ai2.Hjid and d3ai3.Hjid <> d3ai1.Hjid) 
+;
+
+-- 
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalArms` AS 
+  SELECT 
+      `e`.`StudyID` AS `StudyID`
+      ,`s`.`Modules` AS `Modules` 
+      ,`r`.`Hjid` AS `Regimen_Hjid`
+      ,`r`.`RegimenName` AS `RegimenName`
+      ,`Drug`.`Hjid` AS `Hjid`
+      ,`Drug`.`DTYPE` AS `DTYPE`
+      ,`Drug`.`FeedingOther` AS `FeedingOther`
+      ,`Drug`.`DrugName` AS `DrugName`
+      ,`Drug`.`Feeding` AS `Feeding`
+      ,`Drug`.`TradeName` AS `TradeName`
+      ,`Drug`.`DrugDosingDeterminant` AS `DrugDosingDeterminant`
+      ,`Drug`.`ManufacturerOther` AS `ManufacturerOther`
+      ,`Drug`.`TradeNameOther` AS `TradeNameOther`
+      ,`Drug`.`Manufacturer` AS `Manufacturer`
+      ,`Drug`.`FatPerMeal` AS `FatPerMeal`
+      ,`Drug`.`DrugStorage` AS `DrugStorage`
+      ,`Drug`.`DrugNameOther` AS `DrugNameOther`
+      ,`Drug`.`Comments` AS `Comments`
+      ,`Drug`.`AdministrationRoute` AS `AdministrationRoute`
+      ,`Drug`.`ReadministeredOnVomitting` AS `ReadministeredOnVomitting`
+      ,`Drug`.`ActiveIngredients_Drug_Hjid` AS `ActiveIngredients_Drug_Hjid`
+      ,`Drug`.`WeightGroupDosing_Drug_Hjid` AS `WeightGroupDosing_Drug_Hjid`
+      ,`Drug`.`AgeDosing_Drug_Hjid` AS `AgeDosing_Drug_Hjid`
+      ,`Drug`.`Batches_Drug_Hjid` AS `Batches_Drug_Hjid`
+      ,`Drug`.`WeightDosing_Drug_Hjid` AS `WeightDosing_Drug_Hjid`
+      ,`Drug`.`Drug_Drugs_Hjid` AS `Drug_Drugs_Hjid` 
 from `Drug` LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
@@ -31,79 +121,55 @@ from `Drug` LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
      LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
      LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+WHERE 
+ s.Modules LIKE "%clinical%"
 ;
 
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudies` AS 
+  SELECT 
+   e.StudyId, 
+   e.PublishedItem as DateReceived,
+   s.Modules, 
+   si.StartDate, 
+   si.EndDate,
+   s.StudyTitle
+  FROM `Entry` `e` 
+     LEFT JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid` 
+     LEFT JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     LEFT JOIN `StudyInfo` `si` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+  WHERE
+   s.Modules LIKE "%clinical%"
+  ORDER BY e.StudyId
+;
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalRegimen` AS
-SELECT  cd1.studyId,
-		cd1.regimen_Hjid, 
-		regimenName, 
-		cd1.drugName as drug1Name,
-		cd1.Hjid as drug1_Hjid,
-           ai1.ActiveIngredientName as drug1ai1Name,
-           ai1.Hjid as drug1ai1_Hjid,
-           ai2.ActiveIngredientName as drug1ai2Name,
-           ai2.Hjid as drug1ai2_Hjid,
-           ai3.ActiveIngredientName as drug1ai3Name,
-           ai3.Hjid as drug1ai3_Hjid,
-		cd2.drugName as drug2Name,
-		cd2.Hjid as drug2_Hjid,
-           d2ai1.ActiveIngredientName as drug2ai1Name,
-           d2ai1.Hjid as drug2ai1_Hjid,
-           d2ai2.ActiveIngredientName as drug2ai2Name,
-           d2ai2.Hjid as drug2ai2_Hjid,
-           d2ai3.ActiveIngredientName as drug2ai3Name,
-           d2ai3.Hjid as drug2ai3_Hjid,
-		cd3.drugName as drug3Name,
-		cd3.Hjid as drug3_Hjid,
-          d3ai1.ActiveIngredientName as drug3ai1Name,
-           d3ai1.Hjid as drug3ai1_Hjid,
-           d3ai2.ActiveIngredientName as drug3ai2Name,
-           d3ai2.Hjid as drug3ai2_Hjid,
-           d3ai3.ActiveIngredientName as drug3ai3Name,
-           d3ai3.Hjid as drug3ai3_Hjid
-		FROM `Regimen` r
-	LEFT JOIN ClinicalDrugs cd1 on cd1.Regimen_Hjid = r.Hjid
-    LEFT JOIN ActiveIngredient ai1 on ai1.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid
-    LEFT JOIN ActiveIngredient ai2 on (ai2.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid and ai2.hjid <> ai1.Hjid)
-    LEFT JOIN ActiveIngredient ai3 on (ai3.ActiveIngredient_ActiveIngredients_Hjid = cd1.ActiveIngredients_Drug_Hjid and ai3.hjid <> ai2.Hjid and ai3.Hjid <> ai1.Hjid)
-	LEFT JOIN ClinicalDrugs cd2 on 
-		(cd2.Regimen_Hjid = r.Hjid and cd2.drugName <> cd1.drugName)
-    LEFT JOIN ActiveIngredient d2ai1 on d2ai1.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid
-    LEFT JOIN ActiveIngredient d2ai2 on (d2ai2.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid and d2ai2.hjid <> d2ai1.Hjid)
-    LEFT JOIN ActiveIngredient d2ai3 on (d2ai3.ActiveIngredient_ActiveIngredients_Hjid = cd2.ActiveIngredients_Drug_Hjid and d2ai3.hjid <> d2ai2.Hjid and d2ai3.Hjid <> d2ai1.Hjid)
-	LEFT JOIN ClinicalDrugs cd3 on 
-		(cd3.Regimen_Hjid = r.Hjid and 
-			(cd3.drugName <> cd1.drugName and cd3.drugName <> cd2.drugName))
-     LEFT JOIN ActiveIngredient d3ai1 on d3ai1.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid
-     LEFT JOIN ActiveIngredient d3ai2 on (d3ai2.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai2.hjid <> d3ai1.Hjid)
-     LEFT JOIN ActiveIngredient d3ai3 on (d3ai3.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai3.hjid <> d3ai2.Hjid and d3ai3.Hjid <> d3ai1.Hjid);
 
+--
 
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugIngredient` AS 
-	SELECT ai.ActiveIngredientName,
-		ai.ActiveIngredientMgPerDose,
-		ai.ActiveIngredientNameOther,
-		StudyId
-		FROM `ActiveIngredient` ai
-left join ClinicalDrugs cd on ai.ActiveIngredient_ActiveIngredients_Hjid = cd.ActiveIngredients_Drug_Hjid;
+  SELECT
+    ai.ActiveIngredientName,
+    ai.ActiveIngredientMgPerDose,
+    ai.ActiveIngredientNameOther,
+    StudyId
+  FROM `ActiveIngredient` ai
+    LEFT JOIN v_ClinicalDrugs cd ON ai.ActiveIngredient_ActiveIngredients_Hjid = cd.ActiveIngredients_Drug_Hjid;
 
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugWeightDosing` AS 
-	SELECT `wds`.`Hjid`,
-		`DosingDay`,`DosingHour`,
-		`Dose`,
-		`cd`.`StudyId`,
-		`cd`. `Hjid` AS `DrugId` 
-	FROM `WeightDosingSchedule` wds
-		LEFT JOIN `WeightDosing` wd on `wd`.`Hjid` = `wds`.`WeightDosingSchedule_WeightDosing_Hjid`
-		LEFT JOIN `ClinicalDrugs` cd on `cd`.`WeightDosing_Drug_Hjid` = `wd`.`Hjid`
-	WHERE `cd`. `DrugDosingDeterminant`= 'weight';
+  SELECT `wds`.`Hjid`,
+    `DosingDay`,`DosingHour`,
+    `Dose`,
+    `cd`.`StudyId`,
+    `cd`. `Hjid` AS `DrugId` 
+  FROM `WeightDosingSchedule` wds
+    LEFT JOIN `WeightDosing` wd on `wd`.`Hjid` = `wds`.`WeightDosingSchedule_WeightDosing_Hjid`
+    LEFT JOIN `v_ClinicalDrugs` cd on `cd`.`WeightDosing_Drug_Hjid` = `wd`.`Hjid`
+  WHERE `cd`. `DrugDosingDeterminant`= 'weight';
 ;
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `Studies` AS 
@@ -147,8 +213,7 @@ from `Site` LEFT JOIN `Sites` ON `Sites`.`Hjid` = `Site`.`Site_Sites_Hjid`
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkAnalytes` AS
-
-SELECT `e`.`StudyID` AS `StudyID`
+  SELECT `e`.`StudyID` AS `StudyID`
      , `a`.`Hjid` AS `Hjid`
      , `a`.`DTYPE` AS `DTYPE`
      , `a`.`LowerLoQ` AS `LowerLoQ`
@@ -158,14 +223,14 @@ SELECT `e`.`StudyID` AS `StudyID`
      , `a`.`SampleMatrixType` AS `SampleMatrixType`
      , `a`.`UnitsOfMeasure` AS `UnitsOfMeasure`
      , `a`.`Analyte_Analytes_Hjid` AS `Analyte_Analytes_Hjid`
-FROM
-  `Analyte` `a`
-LEFT JOIN `Analytes`  ON `a`.`Analyte_Analytes_Hjid` = Analytes.`Hjid`
-LEFT JOIN `Pharmacology` `p` ON `p`.`Analytes_Pharmacology_Hjid` = Analytes.`Hjid`
-LEFT JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
-LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+  FROM `Analyte` `a`
+    LEFT JOIN `Analytes`  ON `a`.`Analyte_Analytes_Hjid` = Analytes.`Hjid`
+    LEFT JOIN `Pharmacology` `p` ON `p`.`Analytes_Pharmacology_Hjid` = Analytes.`Hjid`
+    LEFT JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+    LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+    LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+    LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+;
 
 
 
