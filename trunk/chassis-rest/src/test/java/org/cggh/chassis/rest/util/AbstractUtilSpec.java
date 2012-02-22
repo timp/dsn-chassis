@@ -86,8 +86,8 @@ public abstract class AbstractUtilSpec extends TestCase {
     System.err.println(studyFileName);
 
     assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
-    // StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
-    System.err.println(STUDY_FEED_FILE_PATH);
+    //StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
+    //System.err.println(STUDY_FEED_FILE_PATH);
     StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
     assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
   }
@@ -97,10 +97,10 @@ public abstract class AbstractUtilSpec extends TestCase {
     HttpResponse response = StudyControllerRequester.uncache(url);
     assertEquals(url, 200, response.getStatus());
     
-    System.err.println("Creating views");
+    System.err.println("\nCreating views");
     executeEach(getConnection("chassisDb"), slurpFile("src/main/sql/views.sql"));
     
-    System.err.println("Checking studies empty");
+    System.err.println("Checking that /studies is empty");
     url = url("/studies/");
     response = StudyControllerRequester.read(url);   
     assertEquals(url, 200, response.getStatus());    
