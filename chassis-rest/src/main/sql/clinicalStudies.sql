@@ -1,14 +1,6 @@
 select 
-   s.StudyId, 
-   s.PublishedItem as DateReceived, 
-   s.Modules, 
-   s.StartDate, 
-   s.EndDate, 
-   s.StudyTitle
- from 
-( select 
    Entry.StudyId, 
-   Entry.PublishedItem, 
+   Entry.PublishedItem as DateReceived,
    Study.Modules, 
    StudyInfo.StartDate, 
    StudyInfo.EndDate,
@@ -21,5 +13,5 @@ where
  Content.Study_Content_Hjid = Study.Hjid and
  Study.StudyInfo_Study_Hjid = StudyInfo.Hjid 
 and Study.Modules like "%clinical%"
-) s
 ORDER BY s.StudyId
+;
