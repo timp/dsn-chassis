@@ -108,7 +108,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="publication-title" minOccurs="0"/>
-        <xs:element ref="pmid" />
+        <xs:element minOccurs="0" ref="pmid" />
         <xs:element ref="publication-references" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
@@ -173,8 +173,8 @@
   <xs:element name="institution-ack">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="institution-name"/>
-        <xs:element ref="institution-websites" minOccurs="0"/>
+        <xs:element minOccurs="0" ref="institution-name"/>
+        <xs:element minOccurs="0" ref="institution-websites"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -213,8 +213,8 @@
         <xs:element minOccurs="0" ref="start"/>
         <xs:element minOccurs="0" ref="end"/>
         <xs:element minOccurs="0" ref="sites"/>
-        <xs:element ref="pathogens"/>
-        <xs:element ref="inclusionExclusionCriteria"/>
+        <xs:element minOccurs="0" ref="pathogens"/>
+        <xs:element minOccurs="0" ref="inclusionExclusionCriteria"/>
         <xs:element minOccurs="0" ref="clinical"/>
         <xs:element minOccurs="0" ref="molecular"/>
         <xs:element minOccurs="0" ref="invitro"/>
@@ -248,8 +248,9 @@
           <xs:element ref="anticoagulant"/>
           <xs:element ref="transportAndStorageTemperature"/>
         </xs:sequence>
-        <xs:element ref="latitude"/>
-        <xs:element ref="longitude"/>
+        <!--  FIX JASFZ  -->
+        <xs:element minOccurs="0" ref="latitude"/> 
+        <xs:element minOccurs="0" ref="longitude"/>
         <xs:element ref="population" minOccurs="0"/>
         <xs:element ref="transmissionIntensity" minOccurs="0"/>
       </xs:sequence>
@@ -346,7 +347,7 @@
   <xs:element name="priorAntimalarialsExclusion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="priorAntimalarials"/>
+        <xs:element minOccurs="0" ref="priorAntimalarials"/>
         <xs:element minOccurs="0" ref="priorAntimalarialsDetermination"/>
         <xs:element minOccurs="0" ref="priorAntimalarialsHistoryWeeks"/>
       </xs:sequence>
@@ -369,8 +370,8 @@
   <xs:element name="clinical">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="treatment"/>
-        <xs:element ref="followup"/>
+        <xs:element minOccurs="0" ref="treatment"/>
+        <xs:element minOccurs="0" ref="followup"/>
         <xs:element minOccurs="0" ref="microscopy"/>
         
         <!-- TPP  think that this should not be nullable  -->
@@ -397,9 +398,9 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="regimenName"/>
-        <xs:element ref="regimenSupervision" minOccurs="0"/>
-        <xs:element ref="regimenUrl" minOccurs="0"/>
-        <xs:element ref="drugs"/>
+        <xs:element minOccurs="0" ref="regimenSupervision"/>
+        <xs:element minOccurs="0" ref="regimenUrl"/>
+        <xs:element minOccurs="0" ref="drugs"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -611,9 +612,9 @@
       <xs:sequence>
         <xs:element ref="criteria"/>
         <xs:element ref="sample"/>
-        <xs:element ref="genotypedMarkers"/>
-        <xs:element ref="mixedResistanceAlleles"/>
-        <xs:element ref="additionalGenotypicInformation"/>
+        <xs:element minOccurs="0" ref="genotypedMarkers"/>
+        <xs:element minOccurs="0" ref="mixedResistanceAlleles"/>
+        <xs:element minOccurs="0" ref="additionalGenotypicInformation"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -646,15 +647,15 @@
   <xs:element name="genotypedMarker">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="genotypingMethodOpen"/>
+        <xs:element minOccurs="0" ref="genotypingMethodOpen"/>
         <!--  FIXME at least one of the following markers would be good -->
-        <xs:element ref="molecularMarkerFalciparumOpen" minOccurs="0" />
-        <xs:element ref="molecularMarkerVivaxOpen"  minOccurs="0" />
-        <xs:element ref="molecularMarkerOvaleOpen"  minOccurs="0" />
-        <xs:element ref="molecularMarkerMalariaeOpen"  minOccurs="0" />
-        <xs:element ref="molecularMarkerKnowlesiOpen"  minOccurs="0" />
+        <xs:element minOccurs="0" ref="molecularMarkerFalciparumOpen" />
+        <xs:element minOccurs="0" ref="molecularMarkerVivaxOpen" />
+        <xs:element minOccurs="0" ref="molecularMarkerOvaleOpen" />
+        <xs:element minOccurs="0" ref="molecularMarkerMalariaeOpen" />
+        <xs:element minOccurs="0" ref="molecularMarkerKnowlesiOpen" />
         
-        <xs:element ref="sampleSelectionMethodOpen" />
+        <xs:element minOccurs="0" ref="sampleSelectionMethodOpen" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -753,10 +754,10 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="wholeGenomesSequenced"/>
-        <xs:element ref="resistanceLociSequenced" />
-        <xs:element ref="resistanceLoci" minOccurs="0"/>
-        <xs:element ref="otherLociGenotyped" minOccurs="0"/>
-        <xs:element ref="otherLoci" minOccurs="0"/>
+        <xs:element minOccurs="0" ref="resistanceLociSequenced" />
+        <xs:element minOccurs="0" ref="resistanceLoci"/>
+        <xs:element minOccurs="0" ref="otherLociGenotyped"/>
+        <xs:element minOccurs="0" ref="otherLoci"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -811,11 +812,11 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="analysisSite"/>
-        <xs:element ref="culture"/>
+        <xs:element minOccurs="0" ref="culture"/>
         <xs:element ref="drugSusceptibilityMedium"/>
-        <xs:element ref="susceptibility"/>
-        <xs:element ref="invitroDrugs"/>
-        <xs:element ref="platePreparationMethod"/>
+        <xs:element minOccurs="0" ref="susceptibility"/>
+        <xs:element minOccurs="0" ref="invitroDrugs"/>
+        <xs:element minOccurs="0" ref="platePreparationMethod"/>
         <xs:sequence minOccurs="0">
           <xs:element minOccurs="0" ref="platesPreparationDate"/>
           <xs:element minOccurs="0" ref="plateBatches"/>
@@ -835,7 +836,7 @@
           <xs:element ref="o2Other" minOccurs="0"/>
         </xs:sequence>
         <xs:element ref="healthyErythrocytesSource"/>
-        <xs:element ref="hematocritpercent"/>
+        <xs:element minOccurs="0" ref="hematocritpercent"/>
         <xs:element ref="bloodGroup"/>
       </xs:sequence>
     </xs:complexType>
@@ -999,11 +1000,11 @@
       <xs:sequence>
         <xs:element ref="drugMeasured"/>
         <xs:element minOccurs="0" ref="targetDose"/>
-        <xs:element ref="unitsOfMeasure"/>
-        <xs:element ref="unitsOfMeasureOther" minOccurs="0"/>
-        <xs:element ref="fatAmount"/>
-        <xs:element ref="lowerLoQ"/>
-        <xs:element ref="sampleMatrixType"/>
+        <xs:element minOccurs="0" ref="unitsOfMeasure"/>
+        <xs:element minOccurs="0" ref="unitsOfMeasureOther"/>
+        <xs:element minOccurs="0" ref="fatAmount"/>
+        <xs:element minOccurs="0" ref="lowerLoQ"/>
+        <xs:element minOccurs="0" ref="sampleMatrixType"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1117,7 +1118,7 @@
           <xs:element minOccurs="0" ref="solvent"/>
           <xs:element ref="solventFinalConcentration"/>
           <xs:element ref="providedByWwarn"/>
-          <xs:element ref="provider"/>
+          <xs:element minOccurs="0" ref="provider"/>
         </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1165,7 +1166,7 @@
         <xs:element ref="ageFrom"/>
         <xs:element ref="ageTo"/>
         <xs:element ref="dose"/>
-        <xs:element ref="doseUnit"/>
+        <xs:element minOccurs="0" ref="doseUnit"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1182,12 +1183,12 @@
     <xs:complexType>
       <xs:sequence>
         <!--  defaulting day and hour to '0' gives problems when pruning -->
-        <xs:element ref="day"/>
+        <xs:element minOccurs="0" ref="day"/>
         <xs:element minOccurs="0" ref="hour"/>
-        <xs:element ref="weightGroupFrom" minOccurs="0"/>
-        <xs:element ref="weightGroupTo" minOccurs="0"/>
-        <xs:element ref="dose" minOccurs="0" />
-        <xs:element ref="doseUnit" minOccurs="0" />
+        <xs:element minOccurs="0" ref="weightGroupFrom"/>
+        <xs:element minOccurs="0" ref="weightGroupTo"/>
+        <xs:element minOccurs="0" ref="dose"/>
+        <xs:element minOccurs="0" ref="doseUnit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1225,10 +1226,10 @@
   <xs:element name="sample">
     <xs:complexType>
       <xs:choice>
-        <xs:element ref="sampleTypeOpen"/>
+        <xs:element minOccurs="0" ref="sampleTypeOpen"/>
         <xs:sequence>
-          <xs:element ref="anticoagulent"/>
-          <xs:element ref="centrifugeTime"/>
+          <xs:element minOccurs="0" ref="anticoagulent"/>
+          <xs:element minOccurs="0" ref="centrifugeTime"/>
           <xs:element ref="storages"/>
         </xs:sequence>
       </xs:choice>
@@ -1239,9 +1240,9 @@
       <xs:sequence>
         <xs:element ref="sampleType"/>
         <xs:sequence minOccurs="0">
-          <xs:element ref="sampleTypeOther"  minOccurs="0"/>
-          <xs:element ref="wholeBloodSource"/>
-          <xs:element ref="dateCultureIsolated"/>
+          <xs:element minOccurs="0" ref="sampleTypeOther"/>
+          <xs:element minOccurs="0" ref="wholeBloodSource"/>
+          <xs:element minOccurs="0" ref="dateCultureIsolated"/>
         </xs:sequence>
       </xs:sequence>
     </xs:complexType>
