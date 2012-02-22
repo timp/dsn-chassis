@@ -240,7 +240,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames class="tree-set">
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
-        <string>Package dataMerger</string>
+        <string>DataMerger</string>
       </jobNames>
       <jobFilters/>
       <columns>
