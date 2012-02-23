@@ -1,0 +1,194 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.cggh.chassis</groupId>
+  <artifactId>chassis-pruned</artifactId>
+  <version>0.0.6-SNAPSHOT</version>
+  <name>chassis-model-pruned</name>
+  <description>Derived from chassis-model</description>
+  <dependencies>
+   <dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-impl</artifactId>
+    <version>2.1.13</version>
+   </dependency>
+   <dependency>
+    <groupId>org.jvnet.hyperjaxb3</groupId>
+    <artifactId>hyperjaxb3-ejb-runtime</artifactId>
+    <version>0.5.5</version>
+   </dependency>
+
+<!-- Roundtrip -->
+  <dependency>
+   <groupId>org.jvnet.hyperjaxb3</groupId>
+   <artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+   <version>0.5.5</version>
+  </dependency>
+
+<!-- Hibernate Dependencies -->
+  <dependency>
+   <groupId>org.hibernate</groupId>
+   <artifactId>hibernate-entitymanager</artifactId>
+   <version>3.4.0.GA</version>
+   <scope>test</scope>
+  </dependency>
+<!-- Database -->
+  <dependency>
+   <groupId>hsqldb</groupId>
+   <artifactId>hsqldb</artifactId>
+   <version>1.8.0.7</version>
+   <scope>test</scope>
+  </dependency>
+ </dependencies>
+  <repositories>
+    <repository> 
+      <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository> 
+      <id>cggh</id>
+      <name>CGGH Maven Repository</name>
+      <url>http://cloud1.cggh.org/maven2/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <scm>
+   <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-pruned</connection>
+   <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-pruned</developerConnection>
+   <url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-pruned</url>
+  </scm>
+  <build>
+  <defaultGoal>install</defaultGoal>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>2.4</version>
+      <executions>
+       <execution>
+         <id>unzip-resources</id>
+         <phase>initialize</phase>
+         <goals>
+           <goal>unpack</goal>
+         </goals>
+         <configuration>
+           <artifactItems>
+             <artifactItem>
+               <groupId>org.cggh.chassis</groupId>
+               <artifactId>chassis-model</artifactId>
+               <version>0.0.6-SNAPSHOT</version>
+               <classifier>sources</classifier>
+             </artifactItem>
+           </artifactItems>
+           <outputDirectory>${basedir}/src/main/resources</outputDirectory>
+           <excludes>chassis.xsd</excludes>
+         </configuration>
+       </execution>
+     </executions>
+    </plugin>
+    
+      
+    
+   <plugin>
+    <groupId>org.jvnet.hyperjaxb3</groupId>
+    <artifactId>maven-hyperjaxb3-plugin</artifactId>
+    <version>0.5.5</version>
+    <executions>
+     <execution>
+      <id>gen</id>
+      <phase>generate-sources</phase>
+      <goals>
+       <goal>generate</goal>
+      </goals>
+     </execution>
+    </executions>
+    <configuration>
+     <debug>TRUE</debug>
+     <variant>ejb</variant>
+     <extension>true</extension>
+     <roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+     <persistenceUnitName>org.cggh.chassis.study</persistenceUnitName>
+    </configuration>
+    <dependencies>
+      <dependency>
+        <groupId>org.cggh.chassis</groupId>
+        <artifactId>chassis-hyperjaxb3-naming</artifactId>
+        <version>1.0</version>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
+   </plugin>
+
+
+   <plugin>
+    <inherited>true</inherited>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>2.3.2</version>
+    <configuration>
+     <source>1.6</source>
+     <target>1.6</target>
+    </configuration>
+   </plugin>
+  </plugins>
+  <pluginManagement>
+   <plugins>
+    <plugin>
+     <groupId>org.eclipse.m2e</groupId>
+     <artifactId>lifecycle-mapping</artifactId>
+     <version>1.0.0</version>
+     <configuration>
+      <lifecycleMappingMetadata>
+       <pluginExecutions>
+        <pluginExecution>
+         <pluginExecutionFilter>
+          <groupId>org.jvnet.hyperjaxb3</groupId>
+          <artifactId>maven-hyperjaxb3-plugin</artifactId>
+          <versionRange>[0.0.0,)</versionRange>
+          <goals>
+           <goal>generate</goal>
+          </goals>
+         </pluginExecutionFilter>
+         <action>
+          <execute>
+           <runOnIncremental>true</runOnIncremental>
+          </execute>
+         </action>
+        </pluginExecution>
+
+        <pluginExecution>
+         <pluginExecutionFilter>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <versionRange>[0.0.0,)</versionRange>
+          <goals>
+           <goal>unpack</goal>
+          </goals>
+         </pluginExecutionFilter>
+         <action>
+          <ignore />
+         </action>
+        </pluginExecution>
+       </pluginExecutions>
+      </lifecycleMappingMetadata>
+     </configuration>
+    </plugin>
+   </plugins>
+  </pluginManagement>
+ </build>
+ <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+ </properties>
+</project>
