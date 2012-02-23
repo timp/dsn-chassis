@@ -29,7 +29,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
     <hudson.triggers.TimerTrigger>
-      <spec>12 23 23 * *</spec>
+      <spec>12 23 * * *</spec>
     </hudson.triggers.TimerTrigger>
     <hudson.triggers.SCMTrigger>
       <spec>*/19 * * * *</spec>
@@ -43,7 +43,6 @@
   <goals>-Dmaven.test.failure.ignore=false clean install deploy -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/-Dmaven.test.failure.ignore=false clean install deploy tomcat:redeploy  -Djetty.skip=true -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
-  <usePrivateRepository>false</usePrivateRepository>
   <perModuleEmail>true</perModuleEmail>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>
   <archivingDisabled>false</archivingDisabled>
