@@ -148,7 +148,8 @@ public abstract class AbstractUtilSpec extends TestCase {
     HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
     assertEquals(url("/studyCount"), 200, response.getStatus());
     int entriesCount = countEntries(STUDY_FEED_FILE_PATH, "atom:entry"); 
-    if (response.getBody().indexOf("" + entriesCount) > -1)
+
+    if (response.getBody().indexOf("Count:" + entriesCount) > -1)
       return true;
     else
       return false;
