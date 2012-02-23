@@ -78,7 +78,7 @@ public abstract class AbstractUtilSpec extends TestCase {
     
     deleteExistingFiles(dirName);
     
-    XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
+    //XsltTransformer.transform(STUDY_FEED_FILE_PATH, "prune.xsl", PRUNED_STUDY_FEED_FILE_PATH, true);
     
     String studyFileName = dirName 
             + "/" + config.getConfiguration().get("STUDY_ID") + ".xml";
@@ -86,8 +86,8 @@ public abstract class AbstractUtilSpec extends TestCase {
     System.err.println(studyFileName);
 
     assertFalse("Study file " + studyFileName + " created", studyEntry.exists());
-    StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
-    //StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
+    //StudyFeedSplitter.split(PRUNED_STUDY_FEED_FILE_PATH);
+    StudyFeedSplitter.split(STUDY_FEED_FILE_PATH);
     assertTrue("Study file " + studyFileName + " not created", studyEntry.exists());
   }
 
