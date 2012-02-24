@@ -24,7 +24,8 @@ scp $file uploader@reporting.wwarn.org:/home/uploader/
 
 curl --upload-file chassisDb.sql   --user $user:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/b4fc79d3-3160-4f88-a7ea-82fcb6f3017e/content.sql
 
-
+rm chassisDb.sql
+rm $file
 
 curl --upload-file README.txt   --user $user:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/e7ee0c7c-bb2a-4633-b82c-50a9700dd7a0/contentsREADME.txt
 
@@ -94,4 +95,5 @@ curl -O --remote-header-name "http://localhost:8080/posql/selection/?db=chassisD
 curl --upload-file pharmacologyStudySitesPublications.csv   --user $user:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/e7cc4428-71dc-4e56-9bb2-dbcffd29a8e5/content.csv
 
 
+rm *.csv
 
