@@ -179,6 +179,7 @@
         <string>chassis-download</string>
         <string>chassis-hyperjaxb3-naming</string>
         <string>chassis-model</string>
+        <string>chassis-pruned</string>
         <string>chassis-rest</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
