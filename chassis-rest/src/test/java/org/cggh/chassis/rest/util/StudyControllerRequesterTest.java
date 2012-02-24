@@ -34,7 +34,7 @@ public class StudyControllerRequesterTest extends TestCase {
   
   public void testValidate() throws Exception {
     String invalidStudyId = config.getConfiguration().get("INVALID_STUDY_ID");
-    String studyFileName = STUDY_ENTRY_DIR_NAME + "/" + invalidStudyId + ".xml";
+    String studyFileName = STUDY_ENTRY_DIR_NAME + "/bad_" + invalidStudyId + ".xml";
     String url = url("/study/" + invalidStudyId + ".html");
     if (StudyControllerRequester.read(url).getStatus() == 200) 
       StudyControllerRequester.delete(url);
@@ -48,7 +48,7 @@ public class StudyControllerRequesterTest extends TestCase {
    */
   public void testPostStringString() throws Exception {
     String studyId = config.getConfiguration().get("STUDY_ID");
-    String studyFileName = STUDY_ENTRY_DIR_NAME + "/" + studyId + ".xml";
+    String studyFileName = STUDY_ENTRY_DIR_NAME + "/good_" + studyId + ".xml";
     System.err.println("Posting " + studyFileName + " to " + url("/study"));
     // It may have been created already
     HttpResponse delResponse = StudyControllerRequester.delete(url("/study/" + studyId));
