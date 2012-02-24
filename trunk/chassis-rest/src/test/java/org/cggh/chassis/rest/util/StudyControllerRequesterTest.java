@@ -23,8 +23,8 @@ public class StudyControllerRequesterTest extends TestCase {
     STUDY_ENTRY_DIR_NAME = "data/studies";
     config =  new ChassisRestConfig();
     SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
-    String downloadedDir =  "data/";
-    STUDY_FEED_FILE_PATH = downloadedDir + "studies.xml";
+    String dataDir =  "data/";
+    STUDY_FEED_FILE_PATH = dataDir + "studies.xml";
   }
   
   protected String url(String url) {
@@ -34,7 +34,7 @@ public class StudyControllerRequesterTest extends TestCase {
   
   public void testValidate() throws Exception {
     String invalidStudyId = config.getConfiguration().get("INVALID_STUDY_ID");
-    String studyFileName = STUDY_ENTRY_DIR_NAME + "/bad_" + invalidStudyId + ".xml";
+    String studyFileName = "data/bad_" + invalidStudyId + ".xml";
     String url = url("/study/" + invalidStudyId + ".html");
     if (StudyControllerRequester.read(url).getStatus() == 200) 
       StudyControllerRequester.delete(url);
@@ -48,7 +48,7 @@ public class StudyControllerRequesterTest extends TestCase {
    */
   public void testPostStringString() throws Exception {
     String studyId = config.getConfiguration().get("STUDY_ID");
-    String studyFileName = STUDY_ENTRY_DIR_NAME + "/good_" + studyId + ".xml";
+    String studyFileName = "data/good_" + studyId + ".xml";
     System.err.println("Posting " + studyFileName + " to " + url("/study"));
     // It may have been created already
     HttpResponse delResponse = StudyControllerRequester.delete(url("/study/" + studyId));
