@@ -372,13 +372,13 @@
         <atom:link rel="http://www.cggh.org/2010/chassis/terms/link" href="https://www.wwarn.org/repository/service/content/link?study=https://www.wwarn.org/repository/service/content/studies/XGQRX" type="application/atom+xml;type=entry"/>
     </atom:entry>
     <atom:entry>
-        <atom:id>https://www.wwarn.org/repository/service/content/studies/JASFZ</atom:id>
+        <atom:id>https://www.wwarn.org/repository/service/content/studies/AJYER</atom:id>
         <atom:published>2011-06-06T15:33:04.474+01:00</atom:published>
         <atom:updated>2011-09-30T11:25:46.384+01:00</atom:updated>
         <atom:author>
             <atom:email>carole.mackosso@wwarn.org</atom:email>
         </atom:author>
-        <atom:title type="text">JASFZ</atom:title>
+        <atom:title type="text">AJYER</atom:title>
         <app:control xmlns:app="http://www.w3.org/2007/app">
             <draft>no</draft>
         </app:control>
@@ -768,18 +768,18 @@
             <atom:updated>2011-09-30T11:25:46.384+01:00</atom:updated>
             <atom:summary/>
         </ar:comment>
-        <manta:id xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">JASFZ</manta:id>
-        <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/JASFZ"/>
-        <atom:link atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/JASFZ"/>
+        <manta:id xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">AJYER</manta:id>
+        <atom:link rel="self" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/AJYER"/>
+        <atom:link atombeat:allow="GET,PUT,DELETE" rel="edit" type="application/atom+xml;type=entry" href="https://www.wwarn.org/repository/service/content/studies/AJYER"/>
         <atom:link rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
-        <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/JASFZ" type="application/atom+xml;type=entry"/>
-        <atom:link rel="history" href="https://www.wwarn.org/repository/service/history/studies/JASFZ" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/JASFZ" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/JASFZ" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/JASFZ" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/JASFZ" type="application/atom+xml;type=feed"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/JASFZ" type="application/atom+xml;type=entry"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/JASFZ" type="application/atom+xml;type=entry"/>
-        <atom:link rel="http://www.cggh.org/2010/chassis/terms/link" href="https://www.wwarn.org/repository/service/content/link?study=https://www.wwarn.org/repository/service/content/studies/JASFZ" type="application/atom+xml;type=entry"/>
+        <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/studies/AJYER" type="application/atom+xml;type=entry"/>
+        <atom:link rel="history" href="https://www.wwarn.org/repository/service/history/studies/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/submittedMedia" href="https://www.wwarn.org/repository/service/content/media/submitted/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/curatedMedia" href="https://www.wwarn.org/repository/service/content/media/curated/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivations" href="https://www.wwarn.org/repository/service/content/derivations/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="https://www.wwarn.org/repository/service/content/reviews/personal-data/AJYER" type="application/atom+xml;type=feed"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/studyInfo" href="https://www.wwarn.org/repository/service/content/study-info/AJYER" type="application/atom+xml;type=entry"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/groups" href="https://www.wwarn.org/repository/service/content/groups/AJYER" type="application/atom+xml;type=entry"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/link" href="https://www.wwarn.org/repository/service/content/link?study=https://www.wwarn.org/repository/service/content/studies/AJYER" type="application/atom+xml;type=entry"/>
     </atom:entry>
 </atom:feed>
