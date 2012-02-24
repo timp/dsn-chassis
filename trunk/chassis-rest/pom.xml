@@ -229,6 +229,8 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.10</version>
         <configuration>
+          <!-- Default is filesystem, which seems to get a bit random -->
+          <runOrder>alphabetical</runOrder>
           <excludes>
           <!-- 
           Manual invocations rather than tests,
