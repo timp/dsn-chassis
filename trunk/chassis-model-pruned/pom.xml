@@ -4,7 +4,7 @@
   <artifactId>chassis-pruned</artifactId>
   <version>0.0.6-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>chassis-pruned</name>
+  <name>chassis-model-pruned</name>
   <description>Derived from chassis-model</description>
   <dependencies>
    <dependency>
