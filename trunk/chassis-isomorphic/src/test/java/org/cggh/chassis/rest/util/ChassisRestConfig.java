@@ -25,7 +25,7 @@ public class ChassisRestConfig {
     // This is just a dummy run to see if file exists
     // Not happy at duplication but we cannot check 
     // the properties file until we have set up the defaults
-    configuraton = new Configuration("chassis-rest", "chassis-rest", defaults);
+    configuraton = new Configuration("chassis-isomorphic", "chassis-isomorphic", defaults);
     if (!configuraton.configFileExists()) { 
       CHASSIS_DOWNLOAD_DIR = "data";
       INVALID_STUDY_ID = "AJYER";      
@@ -42,7 +42,7 @@ public class ChassisRestConfig {
     defaults.put("SERVICE_PROTOCOL_HOST_PORT", SERVICE_PROTOCOL_HOST_PORT);
     
     // Create it again with new defaults
-    configuraton = new Configuration("chassis-rest", "chassis-rest", defaults);
+    configuraton = new Configuration("chassis-isomorphic", "chassis-isomorphic", defaults);
   }
 
   public Configuration getConfiguration() { 

@@ -28,7 +28,7 @@ public class StudyControllerRequesterTest extends TestCase {
   }
   
   protected String url(String url) {
-    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
+    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-isomorphic/service" + url;
   }
 
   

@@ -6,19 +6,19 @@
 </title>
 </head>
 <body>
-<h2>Chassis REST</h2>
+<h2>Chassis Isomorphic</h2>
 <p>
 Get yourself an entry, from <a href="/repository/service/content/studies/">studies</a> 
 for example, and post it to the service like this:
 </p>
 <pre>
-$ curl -X POST -HContent-type:application/xml  --data @TBYKQ.xml http://localhost:8080/chassis-rest/service/study
+$ curl -X POST -HContent-type:application/xml  --data @TBYKQ.xml http://localhost:8080/chassis-isomorphic/service/study
 </pre>
 <p>
 Fetch it again by
 </p>
 <pre>
-curl -HAccept:application/xml http://localhost:8080/chassis-rest/service/study/TBYKQ
+curl -HAccept:application/xml http://localhost:8080/chassis-isomorphic/service/study/TBYKQ
 </pre>
 <p>
 or by clicking <a href="service/studies">here</a>.
