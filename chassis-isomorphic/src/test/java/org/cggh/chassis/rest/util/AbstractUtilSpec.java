@@ -55,7 +55,7 @@ public abstract class AbstractUtilSpec extends TestCase {
   }
 
   protected String url(String url) {
-    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-rest/service" + url;
+    return SERVICE_PROTOCOL_HOST_PORT + "/chassis-isomorphic/service" + url;
   }
   
   public static int countEntries(String xmlFile, String elementName) throws Exception { 
@@ -231,7 +231,7 @@ public abstract class AbstractUtilSpec extends TestCase {
   }
 
   public static Connection getConnection(String dbName) {
-    Configuration config = new Configuration("chassis-rest", dbName);
+    Configuration config = new Configuration("chassis-isomorphic", dbName);
     String dbBaseUrl = config.getSetProperty("dbBaseUrl"); // "jdbc:mysql://charlie.well.ox.ac.uk:3306/"
     String user = config.getSetProperty("user"); // "root";
     String password = config.get("password"); // optional

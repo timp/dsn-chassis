@@ -21,8 +21,8 @@ import org.apache.commons.httpclient.methods.PutMethod;
 /**
  * This is meant to be the equivalent of
  * 
- * Get yourself an entry and post it to the service like this: $ curl -X POST -HContent-type:application/xml -HAccept:application/xml --data @TBYKQ.xml \ http://localhost:8080/chassis-rest/service/study Fetch it again by curl -HAccept:application/xml
- * http://localhost:8080/chassis-rest/service/study/TBYKQ
+ * Get yourself an entry and post it to the service like this: $ curl -X POST -HContent-type:application/xml -HAccept:application/xml --data @TBYKQ.xml \ http://localhost:8080/chassis-isomorphic/service/study Fetch it again by curl -HAccept:application/xml
+ * http://localhost:8080/chassis-isomorphic/service/study/TBYKQ
  * 
  * 
  * @author timp
