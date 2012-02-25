@@ -178,7 +178,9 @@
         <string>cggh-common</string>
         <string>chassis-download</string>
         <string>chassis-hyperjaxb3-naming</string>
+        <string>chassis-isomorphic</string>
         <string>chassis-model</string>
+        <string>chassis-model-pruned</string>
         <string>chassis-pruned</string>
         <string>chassis-rest</string>
         <string>hudson-trigger</string>
