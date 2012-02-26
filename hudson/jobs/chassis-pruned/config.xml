@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-pruned</artifactId>
   </rootModule>
-  <goals>clean install deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <defaultGoals>install</defaultGoals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
@@ -63,7 +63,13 @@
   </reporters>
   <publishers/>
   <buildWrappers/>
-  <prebuilders/>
+  <prebuilders>
+    <hudson.tasks.Maven>
+      <targets>-Dmaven.test.skip=true clean install tomcat:redeploy</targets>
+      <mavenName>(Default)</mavenName>
+      <usePrivateRepository>false</usePrivateRepository>
+    </hudson.tasks.Maven>
+  </prebuilders>
   <postbuilders/>
   <runPostStepsIfResult>
     <name>FAILURE</name>

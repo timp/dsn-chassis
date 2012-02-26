@@ -38,7 +38,7 @@
   <concurrentBuild>false</concurrentBuild>
   <rootModule>
     <groupId>org.cggh.chassis</groupId>
-    <artifactId>chassis-pruned</artifactId>
+    <artifactId>chassis-model-pruned</artifactId>
   </rootModule>
   <goals>clean install deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <defaultGoals>install</defaultGoals>
