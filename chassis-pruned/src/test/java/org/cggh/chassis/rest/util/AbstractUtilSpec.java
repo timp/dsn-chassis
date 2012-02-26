@@ -120,6 +120,7 @@ public abstract class AbstractUtilSpec extends TestCase {
         int deleteStatus = StudyControllerRequester.delete(entryUrl).getStatus();
         System.err.println("Deleted existing " + entryUrl + " : " + deleteStatus);
       }
+      System.err.println("Creating from " +studyFileName + " to " + url("/study"));
       HttpResponse r = StudyControllerRequester.create(studyFileName, url("/study"));
       //System.out.println(studyFileName);
       //System.out.print(" - ");
