@@ -5,13 +5,13 @@ package org.cggh.chassis.rest.util;
  * @author timp
  * @since 2011-11-16
  */
-public class CreateLiveDBTest extends AbstractUtilSpec {
+public class CreatePrunedDBTest extends AbstractUtilSpec {
 
   
-  public CreateLiveDBTest() { 
+  public CreatePrunedDBTest() { 
     super();
   }
-  public CreateLiveDBTest(String name) { 
+  public CreatePrunedDBTest(String name) { 
     super(name);    
   }
   
