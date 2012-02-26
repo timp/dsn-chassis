@@ -25,6 +25,12 @@
       <groupId>org.cggh.chassis</groupId>
       <artifactId>chassis-rest</artifactId>
       <version>0.0.2-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+         <groupId>org.cggh.chassis</groupId>
+         <artifactId>chassis-model</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
