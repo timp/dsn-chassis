@@ -388,7 +388,7 @@
       </build>
       <properties>
        <chassisDb_host>localhost</chassisDb_host>
-       <chassisDb_user>chassisDb</chassisDb_user>
+       <chassisDb_user>root</chassisDb_user>
        <chassisDb_password></chassisDb_password>
       </properties>
     </profile>
