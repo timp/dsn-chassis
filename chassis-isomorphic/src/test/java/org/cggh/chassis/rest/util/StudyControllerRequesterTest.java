@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 
 public class StudyControllerRequesterTest extends TestCase {
 
-  private String STUDY_ENTRY_DIR_NAME;
   protected static ChassisRestConfig config;
   public String SERVICE_PROTOCOL_HOST_PORT;
   private String STUDY_FEED_FILE_PATH;
@@ -20,7 +19,6 @@ public class StudyControllerRequesterTest extends TestCase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    STUDY_ENTRY_DIR_NAME = "data/studies";
     config =  new ChassisRestConfig();
     SERVICE_PROTOCOL_HOST_PORT = config.getConfiguration().get("SERVICE_PROTOCOL_HOST_PORT");
     String dataDir =  "data/";
