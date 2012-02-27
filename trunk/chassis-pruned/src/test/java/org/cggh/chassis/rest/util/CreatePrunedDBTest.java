@@ -30,6 +30,11 @@ public class CreatePrunedDBTest extends AbstractUtilSpec {
   public void testPostStudies() throws Exception { 
     if(!postStudies())
       fail("There are validation errors");
+    
+    String url = url("/links");
+    HttpResponse response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url);
+    assertEquals(LINK_FEED_FILE_PATH + "=>" + url, 201, response.getStatus());    
+
   }
   
 }

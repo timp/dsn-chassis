@@ -133,6 +133,7 @@ public abstract class AbstractUtilSpec extends TestCase {
         }
         failCount ++;
       } else {
+        System.err.println("Deleting " + url(entryUrl));
         StudyControllerRequester.delete(url(entryUrl)).getStatus();
       }
     }
@@ -156,11 +157,6 @@ public abstract class AbstractUtilSpec extends TestCase {
       return false;
   }
   
-  public void testPostLinkedStudies() throws Exception { 
-    String url = url("/links");
-    HttpResponse response = StudyControllerRequester.create(LINK_FEED_FILE_PATH, url);
-    assertEquals(LINK_FEED_FILE_PATH + "=>" + url, 201, response.getStatus());    
-  }
 
   
   protected void deleteExistingFiles(String directoryName) throws IOException {
