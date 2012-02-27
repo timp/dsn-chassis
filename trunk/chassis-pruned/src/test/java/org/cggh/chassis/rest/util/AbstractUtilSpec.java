@@ -131,8 +131,8 @@ public abstract class AbstractUtilSpec extends TestCase {
         }
         failCount ++;
       } else {
-        System.err.println("Deleting " + url(entryUrl));
-        StudyControllerRequester.delete(url(entryUrl)).getStatus();
+     //   System.err.println("Deleting " + entryUrl +
+     //   StudyControllerRequester.delete(entryUrl).getStatus() );
       }
     }
   
