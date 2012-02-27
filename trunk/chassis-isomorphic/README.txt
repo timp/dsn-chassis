@@ -10,3 +10,6 @@ project should detect that.
 The access control for the database is in src/main/resources/META-INF/database.properties
 A named user, who does not have a password, is manually configured on the database server. 
 
+curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @/var/chassis-download/www.wwarn.org/studies/TETAJ.xml http://localhost:8080/chassis-pruned/service/study
+
+
