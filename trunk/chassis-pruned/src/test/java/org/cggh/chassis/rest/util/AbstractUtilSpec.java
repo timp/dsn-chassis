@@ -96,8 +96,6 @@ public abstract class AbstractUtilSpec extends TestCase {
     HttpResponse response = StudyControllerRequester.uncache(url);
     assertEquals(url, 200, response.getStatus());
     
-    System.err.println("\nCreating views");
-    executeEach(getConnection("chassisPruned"), slurpFile("src/main/sql/views.sql"));
     
     System.err.println("Checking that /studies is empty");
     url = url("/studies/");
@@ -139,8 +137,9 @@ public abstract class AbstractUtilSpec extends TestCase {
     }
   
     System.out.println("Files: " + fileCount + " fail count: " + failCount);
-
     
+    System.err.println("\nCreating views");
+    executeEach(getConnection("chassisPruned"), slurpFile("src/main/sql/views.sql"));
   }
 
   
