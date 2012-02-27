@@ -1,21 +1,11 @@
 package org.cggh.chassis.rest.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
-import org.cggh.chassis.rest.configuration.Configuration;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -95,9 +85,6 @@ public abstract class AbstractUtilSpec extends TestCase {
     String url = url("/uncache");
     HttpResponse response = StudyControllerRequester.uncache(url);
     assertEquals(url, 200, response.getStatus());
-    
-    System.err.println("\nCreating views");
-    executeEach(getConnection("chassisDb"), slurpFile("src/main/sql/views.sql"));
     
     System.err.println("Checking that /studies is empty");
     url = url("/studies/");
@@ -181,74 +168,7 @@ public abstract class AbstractUtilSpec extends TestCase {
       }
   }
   
-  public static String slurpFile(String path) throws IOException {
-    FileInputStream stream = new FileInputStream(new File(path));
-    try {
-      FileChannel fc = stream.getChannel();
-      MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-      /* Instead of using default, pass in a decoder. */
-      return Charset.defaultCharset().decode(bb).toString();
-    }
-    finally {
-      stream.close();
-    }
-  }  
 
-  public static  int[] executeEach(Connection conn, String statements) throws SQLException{ 
-    String[] statementArray = statements.split(";"); 
-    ArrayList<Integer> r = new ArrayList<Integer>();
-    for (String sql : statementArray){
-      sql = sql.trim();
-      if(!sql.equals("")){
-        sql=sql+";";
-        r.add(new Integer(execute(conn,sql)));
-      }
-    }
-    int[] result = new int[r.size()];
-    for (int i = 0; i < result.length; i++) {
-      Integer   b = r.get(i);
-      result[i] = (b == null ? 0 : b.intValue());
-    }
-
-    return result;
-  }
-  public static int execute(Connection conn, String statement) throws SQLException  { 
-    
-    Statement s = conn.createStatement();
-    boolean returnSwitch; 
-    try { 
-      returnSwitch = s.execute(statement);
-    } catch (SQLException e) { 
-      throw new RuntimeException ("Error in SQL: \n" + statement, e);
-    }
-    int result;
-    if (returnSwitch)
-      result = 0;
-    else 
-      result = s.getUpdateCount();
-    s.close();
-    return result;
-  }
-
-  public static Connection getConnection(String dbName) {
-    Configuration config = new Configuration("chassis-isomorphic", dbName);
-    String dbBaseUrl = config.getSetProperty("dbBaseUrl"); // "jdbc:mysql://charlie.well.ox.ac.uk:3306/"
-    String user = config.getSetProperty("user"); // "root";
-    String password = config.get("password"); // optional
-    Connection conn = null;
-    String driver = "com.mysql.jdbc.Driver";
-    try {
-      Class.forName(driver).newInstance();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-    try {
-      conn = DriverManager.getConnection(dbBaseUrl + dbName, user, password);
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-    return conn;
-  }
 }
 
 
