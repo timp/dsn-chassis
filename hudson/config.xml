@@ -176,16 +176,11 @@
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
         <string>cggh-common</string>
-        <string>chassis-download</string>
-        <string>chassis-hyperjaxb3-naming</string>
-        <string>chassis-isomorphic</string>
-        <string>chassis-model</string>
-        <string>chassis-model-pruned</string>
-        <string>chassis-pruned</string>
-        <string>chassis-rest</string>
+        <string>EnsureMantaData</string>
         <string>hudson-trigger</string>
         <string>manta-config</string>
         <string>manta-maven</string>
+        <string>manta-selenium</string>
         <string>manta-xquery-functions</string>
         <string>quac</string>
         <string>show maven version</string>
@@ -237,13 +232,66 @@
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>dataMerger</name>
+      <name>DataMerger</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames class="tree-set">
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>DataMerger</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>ChassisDb</name>
+      <description>Extracting information from XML</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames class="tree-set">
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>casutils</string>
+        <string>chassis-download</string>
+        <string>chassis-hyperjaxb3-naming</string>
+        <string>chassis-isomorphic</string>
+        <string>chassis-model</string>
+        <string>chassis-model-pruned</string>
+        <string>chassis-pruned</string>
+        <string>chassis-rest</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>JenkinsUtilities</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames class="tree-set">
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
+        <string>backupHudsonConfig</string>
+        <string>Deploy Jar to Repository</string>
+        <string>hudson-trigger</string>
+        <string>show maven version</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -267,7 +315,7 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView[4]/jobNames/comparator"/>
           </default>
           <int>1</int>
           <string>MAVEN_OPTS</string>

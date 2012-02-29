@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <maven2-moduleset>
   <actions/>
-  <description>Chassis model</description>
+  <description>Chassis model, the isomorphic one.</description>
   <logRotator>
     <daysToKeep>12</daysToKeep>
     <numToKeep>6</numToKeep>
@@ -57,13 +57,13 @@
     <hudson.maven.reporters.MavenMailer>
       <recipients>timp@well.ox.ac.uk  ian.wright@well.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>true</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>true</sendToIndividuals>
+      <sendToIndividuals>false</sendToIndividuals>
       <perModuleEmail>true</perModuleEmail>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>chassis-pruned</childProjects>
+      <childProjects>chassis-isomorphic</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>

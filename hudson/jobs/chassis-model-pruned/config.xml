@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <maven2-moduleset>
   <actions/>
-  <description>Chassis model, pruned</description>
+  <description>Chassis model, pruned.</description>
   <logRotator>
     <daysToKeep>12</daysToKeep>
     <numToKeep>6</numToKeep>
@@ -61,7 +61,16 @@
       <perModuleEmail>true</perModuleEmail>
     </hudson.maven.reporters.MavenMailer>
   </reporters>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>chassis-pruned</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+  </publishers>
   <buildWrappers/>
   <prebuilders/>
   <postbuilders/>
