@@ -2,13 +2,14 @@
 
 # TPP 2012-02-28
 # This script is intended to be run after chassisPruned has been rebuilt.
-# It assumes that the databse will be on this machine, so does nto play nice onsaturn/charlie. 
+# It assumes that the database will be on this machine, so does not play nice on saturn/charlie. 
 
+# Note that it relies upon the ssh keys for jenkins being already installed on reporting.wwarn.org
 
 set -o errexit
 
 if [ ! $1 ]; then 
-  echo "Specify a user and password"
+  echo "Specify a user and password fro wwarn.org"
   exit 1
 fi
 
@@ -25,7 +26,11 @@ cp $file chassisPruned.sql
 
 scp $file uploader@reporting.wwarn.org:/home/uploader/
 
-curl --upload-file chassisPruned.sql   --user $user:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/b4fc79d3-3160-4f88-a7ea-82fcb6f3017e/content.sql
+#curl --upload-file chassisDb.sql --user $user:$passwd -s -S \
+# https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/b4fc79d3-3160-4f88-a7ea-82fcb6f3017e/content.sql
+
+curl --upload-file chassisPruned.sql   --user $user:$passwd -s -S \
+  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/08a2d557-d32f-4c67-8672-bbdfea76ac9b/content.sql
 
 rm chassisPruned.sql
 rm $file
