@@ -85,17 +85,16 @@ FROM `Regimen` r
 
 -- 
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalArms` AS 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudyRegimens` AS 
   SELECT 
       `e`.`StudyID` AS `StudyID`
       ,`s`.`Modules` AS `Modules` 
-      ,`r`.`Hjid` AS `Regimen_Hjid`
+      , `s`.`StudyStatus`
+      , `si`.`StudyInfoStatus`
+      ,`r`.`RegimenSupervision` AS `Supervision`
       ,`r`.`RegimenName` AS `RegimenName`
-      ,`Drug`.`Hjid` AS `Hjid`
-      ,`Drug`.`DTYPE` AS `DTYPE`
-      ,`Drug`.`FeedingOther` AS `FeedingOther`
       ,`Drug`.`DrugName` AS `DrugName`
-      ,`Drug`.`Feeding` AS `Feeding`
+      ,otherValue(`Drug`.`FeedingOther`,`Drug`.`Feeding`) AS `Feeding`
       ,`Drug`.`TradeName` AS `TradeName`
       ,`Drug`.`DrugDosingDeterminant` AS `DrugDosingDeterminant`
       ,`Drug`.`ManufacturerOther` AS `ManufacturerOther`
@@ -107,12 +106,6 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalArms` AS
       ,`Drug`.`Comments` AS `Comments`
       ,`Drug`.`AdministrationRoute` AS `AdministrationRoute`
       ,`Drug`.`ReadministeredOnVomitting` AS `ReadministeredOnVomitting`
-      ,`Drug`.`ActiveIngredients_Drug_Hjid` AS `ActiveIngredients_Drug_Hjid`
-      ,`Drug`.`WeightGroupDosing_Drug_Hjid` AS `WeightGroupDosing_Drug_Hjid`
-      ,`Drug`.`AgeDosing_Drug_Hjid` AS `AgeDosing_Drug_Hjid`
-      ,`Drug`.`Batches_Drug_Hjid` AS `Batches_Drug_Hjid`
-      ,`Drug`.`WeightDosing_Drug_Hjid` AS `WeightDosing_Drug_Hjid`
-      ,`Drug`.`Drug_Drugs_Hjid` AS `Drug_Drugs_Hjid` 
 from `Drug` LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
@@ -123,8 +116,15 @@ from `Drug` LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
      LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
      LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
 WHERE 
- s.Modules LIKE "%clinical%"
+ s.Modules LIKE "%clinical%" 
 ;
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalCompleteStudyRegimens` AS 
+  SELECT * FROM `v_ClinicalStudyRegimens` 
+WHERE 
+ StudyStatus = 'complete' and
+ StudyInfoStatus = 'complete'
+;
+
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudies` AS 
@@ -134,7 +134,9 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudies` AS
    s.Modules, 
    si.StartDate, 
    si.EndDate,
-   s.StudyTitle
+   s.StudyTitle,
+   s.StudyStatus,
+   si.StudyInfoStatus
   FROM `Entry` `e` 
      LEFT JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid` 
      LEFT JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
@@ -143,6 +145,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudies` AS
    s.Modules LIKE "%clinical%"
   ORDER BY e.StudyId
 ;
+
 
 
 --
