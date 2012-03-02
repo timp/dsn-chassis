@@ -177,13 +177,11 @@
         <string>backupHudsonConfig</string>
         <string>cggh-common</string>
         <string>EnsureMantaData</string>
-        <string>hudson-trigger</string>
         <string>manta-config</string>
         <string>manta-maven</string>
         <string>manta-selenium</string>
         <string>manta-xquery-functions</string>
         <string>quac</string>
-        <string>show maven version</string>
         <string>wwarn-cas-Spring-3</string>
       </jobNames>
       <jobFilters/>
