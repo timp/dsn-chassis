@@ -138,6 +138,10 @@ public abstract class AbstractUtilSpec extends TestCase {
   
     System.out.println("Files: " + fileCount + " fail count: " + failCount);
     
+  }
+  public void setupPopulatedDatabase() throws SQLException, IOException {
+    System.err.println("\nCreating functions");
+    executeEach(getConnection("chassisPruned"), slurpFile("src/main/sql/function_OtherValue.sql"));
     System.err.println("\nCreating views");
     executeEach(getConnection("chassisPruned"), slurpFile("src/main/sql/views.sql"));
   }
@@ -149,6 +153,8 @@ public abstract class AbstractUtilSpec extends TestCase {
     HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
     assertEquals(url("/studyCount"), 200, response.getStatus());
     int entriesCount = countEntries(STUDY_FEED_FILE_PATH, "atom:entry"); 
+
+    setupPopulatedDatabase();
 
     if (response.getBody().indexOf("Count:" + entriesCount) > -1)
       return true;
