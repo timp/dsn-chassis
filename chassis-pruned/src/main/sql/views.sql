@@ -88,7 +88,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
 			,`s`.`Modules` AS `modules` 
             , a.email
             ,PublishedItem
-            FROM `entry` `e` 
+            FROM `Entry` `e` 
         left join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
         left join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
         LEFT JOIN `Author` a ON a.Hjid = e.Author_Entry_Hjid;
