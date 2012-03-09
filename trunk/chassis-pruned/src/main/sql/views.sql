@@ -17,7 +17,7 @@ SELECT StudyID,SampleSource,SampleSourceOther,MalariaStatus, SampleType,SampleTy
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Followup` AS
 SELECT StudyID,Duration,FeverMeasurement FROM `Followup` f
-left join `Clinical` c on c.`Followup_Clinical_Hjid` = `f`.`Hjid`
+left join `Clinical` clin on clin.`Followup_Clinical_Hjid` = `f`.`Hjid`
 		 left join `StudyInfo` `si` on `si`.`Clinical_StudyInfo_Hjid` = c.`Hjid`
 		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
 		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
