@@ -1,3 +1,101 @@
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Molecular` AS
+SELECT StudyID,SampleSource,SampleSourceOther,MalariaStatus, SampleType,SampleTypeOther,WholeBloodSource,DateCultureIsolated,InfectionComplexityEstimated,OtherLociGenotyped,WholeGenomesSequenced,ResistanceLociSequenced FROM `Molecular` m 
+    LEFT JOIN `Criteria` crit ON m.Criteria_Molecular_Hjid = crit.Hjid
+    LEFT JOIN `Sample` sam ON m.Sample_Molecular_Hjid = sam.Hjid
+    left join `SampleTypeOpen` st on`sam`.`SampleTypeOpen_Sample_Hjid` = `st`.`Hjid`
+    left join `SampleSourceOpen` sso on`crit`.`SampleSourceOpen_Criteria_Hjid` = `sso`.`Hjid`
+    LEFT JOIN GenotypicInfo gi ON m.GenotypicInfo_Molecular_Hjid = gi.Hjid
+    LEFT JOIN GenotypedMarkers gm ON m.GenotypedMarkers_Molecular_Hjid = gi.Hjid
+    LEFT JOIN `SequencedLoci` sl ON gi.SequencedLoci_GenotypicInfo_Hjid = sl.Hjid
+		 left join `StudyInfo` `si` on`si`.`Molecular_StudyInfo_Hjid` = `m`.`Hjid`
+		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 left join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+         WHERE Modules LIKE '%molecular%';
+;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Followup` AS
+SELECT StudyID,Duration,FeverMeasurement FROM `Followup` f
+left join `Clinical` c on c.`Followup_Clinical_Hjid` = `f`.`Hjid`
+		 left join `StudyInfo` `si` on `si`.`Clinical_StudyInfo_Hjid` = c.`Hjid`
+		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 left join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+         WHERE Modules LIKE '%clinical%';
+;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_InclusionCriteria` AS
+SELECT StudyId,
+    MinAge,
+    MinAgeUnits,
+    MaxAge,
+    MaxAgeUnits,
+    MinParasitaemia,
+    MaxParasitaemia,
+    ExcludeIfPriorAntimalarials,
+    PriorAntimalarialsDetermination,
+    PriorAntimalarialsHistoryWeeks,
+    Pregnancy 
+FROM `InclusionExclusionCriteria` iec
+LEFT JOIN PriorAntimalarialsExclusion pae ON pae.Hjid = iec.PriorAntimalarialsExclusion_InclusionExclusionCriteria_Hjid
+LEFT JOIN Parasitaemia pe ON pe.Hjid = iec.Parasitaemia_InclusionExclusionCriteria_Hjid
+LEFT JOIN Age ae ON ae.Hjid = iec.Age_InclusionExclusionCriteria_Hjid
+LEFT join `StudyInfo` `si` on`si`.`InclusionExclusionCriteria_StudyInfo_Hjid` = `iec`.`Hjid`
+LEFT join `Study` `s` on `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+LEFT  join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+LEFT  join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_PublicationReferences` AS
+SELECT StudyId, PublicationReferenceType,Identifier,p.Hjid as publicationId FROM PublicationReference pr
+	LEFT JOIN PublicationReferences prs ON pr.PublicationReference_PublicationReferences_Hjid = prs.Hjid
+	LEFT JOIN `Publication` p ON p.PublicationReferences_Publication_Hjid = prs.Hjid
+	LEFT JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
+    LEFT join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
+	LEFT join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+	LEFT join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+		 ;
+		 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Publications` AS
+SELECT StudyId,Pmid,PublicationTitle,p.Hjid as publicationId FROM `Publication` p
+	LEFT JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
+    LEFT join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
+	LEFT join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+	LEFT join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+;
+
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyInfo` AS
+select `e`.`StudyID` AS `StudyID`,
+			StartDate,
+            EndDate,
+            StudyInfoStatus,
+            Pathogens
+            FROM `StudyInfo` `si` 
+		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 left join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+		 ;
+	
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS 
+
+	select `e`.`StudyID` AS `StudyID`
+			,`s`.`StudyTitle` AS `studyTitle`
+			,`s`.`StudyStatus` AS `studyStatus`
+			,`s`.`CuratorNotes` AS `curatorNotes`
+			,`s`.`StudyIsPublished` AS `studyIsPublished`
+			,`s`.`ExplorerDisplay` AS `explorerDisplay`
+			,`s`.`Modules` AS `modules` 
+            , a.email
+            ,PublishedItem
+            FROM `entry` `e` 
+        left join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+        left join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+        LEFT JOIN `Author` a ON a.Hjid = e.Author_Entry_Hjid;
+;
+
+
+
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS 
   SELECT `e`.`StudyID` AS `StudyID`
       ,`Drug`.`Hjid` AS `Hjid`
