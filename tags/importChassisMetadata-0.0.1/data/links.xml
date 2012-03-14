@@ -1,0 +1,30 @@
+<atom:feed xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns" atombeat:enable-versioning="true" atombeat:exclude-entry-content="false" atombeat:recursive="false">
+    <atom:id>http://localhost:8080/repository/service/content/link</atom:id>
+    <atom:updated>2012-01-31T14:05:47.644Z</atom:updated>
+    <atom:author>
+        <atom:email>ian.wright@wwarn.org</atom:email>
+    </atom:author>
+    <atom:title type="text">Link</atom:title>
+    <app:collection xmlns:app="http://www.w3.org/2007/app" href="http://localhost:8080/repository/service/content/link">
+        <atom:title type="text">Link</atom:title>
+    </app:collection>
+    <atom:link rel="self" href="http://localhost:8080/repository/service/content/link" type="application/atom+xml;type=feed"/>
+    <atom:link rel="edit" href="http://localhost:8080/repository/service/content/link" type="application/atom+xml;type=feed"/>
+    <atom:link rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
+    <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/link" type="application/atom+xml;type=entry"/>
+    <atom:entry>
+        <atom:id>http://localhost:8080/repository/service/content/link/AJYER</atom:id>
+        <atom:published>2012-01-20T10:34:51.658Z</atom:published>
+        <atom:updated>2012-01-31T14:05:47.644Z</atom:updated>
+        <atom:author>
+            <atom:email>clarissa.moreira@wwarn.org</atom:email>
+        </atom:author>
+        <atom:title type="text">Artemether-Lumefantrine Clinical Trial- Sudan</atom:title>
+        <atom:content/>
+        <atom:link rel="self" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/link/AJYER"/>
+        <atom:link rel="edit" type="application/atom+xml;type=entry" href="http://localhost:8080/repository/service/content/link/AJYER"/>
+        <atom:link rel="service" type="application/atomsvc+xml" href="https://www.wwarn.org/repository/service/"/>
+        <atom:link rel="http://www.cggh.org/2010/chassis/terms/linkMember" href="http://localhost:8080/repository/service/content/studies/XGQRX"/>
+        <atom:link rel="http://purl.org/atombeat/rel/security-descriptor" href="https://www.wwarn.org/repository/service/security/link/AJYER" type="application/atom+xml;type=entry"/>
+    </atom:entry>
+</atom:feed>
