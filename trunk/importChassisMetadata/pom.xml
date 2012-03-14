@@ -184,9 +184,9 @@
    </dependency>
   </dependencies>
   <scm>
-    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-isomorphic</connection>
-    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassis-isomorphic</developerConnection>
-    <url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-isomorphic</url>
+    <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</connection>
+    <developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</developerConnection>
+    <url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</url>
   </scm>
   <build>
     <defaultGoal>install</defaultGoal>
