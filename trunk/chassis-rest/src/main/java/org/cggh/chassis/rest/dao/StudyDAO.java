@@ -1,6 +1,5 @@
 package org.cggh.chassis.rest.dao;
 
-import java.lang.IllegalArgumentException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,21 +9,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 
+import org.cggh.chassis.rest.bean.Options;
+import org.eclipse.persistence.jpa.JpaEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.w3._2005.atom.Entry;
-import org.apache.commons.dbcp.BasicDataSource;
-import org.cggh.chassis.rest.bean.Options;
-import org.eclipse.persistence.jpa.JpaEntityManager;
 
 public class StudyDAO {
   // http://static.springsource.org/spring/docs/3.0.5.RELEASE/reference/orm.html#orm-jpa
 
   private EntityManagerFactory emf;
 
-  @Autowired
-  BasicDataSource dataSource;
+  DataSource dataSource;
+  
   @Autowired
   Options options;
   private String databaseName;
@@ -68,24 +67,26 @@ public class StudyDAO {
     }
   }
 
-  public void saveEntry(final Entry entry) {
+  public Entry saveEntry(Entry entry) {
     if (entry.getStudyID() == null)
       entry.setStudyID(entry.getId().substring("https://www.wwarn.org/repository/service/content/".length()));
-    new EntityManagerAction(emf) {
+    return new EntityManagerAction(emf) {
       @Override
-      public void action() {
+      public Entry action(Entry entry) {
         em.persist(entry);
+        return (entry);
       }
-    }.doIt();
+    }.runAsTransaction(entry);
   }
 
-  public void updateEntry(String id, final Entry entry) {
-    new EntityManagerAction(emf) {
+  public Entry updateEntry(final Entry entry) {
+    return new EntityManagerAction(emf) {
       @Override
-      public void action() {
-        em.merge(entry);
+      public Entry action(Entry entry) {
+        //Due to the behaviour of merge it is necessary to return this here
+        return (em.merge(entry));
       }
-    }.doIt();
+    }.runAsTransaction(entry);
   }
 
   public boolean removeEntry(String id) {
@@ -135,5 +136,21 @@ public class StudyDAO {
     emf = emfBean.getObject();
     em = emf.createEntityManager();
     ((JpaEntityManager) em.getDelegate()).getServerSession().getIdentityMapAccessor().initializeAllIdentityMaps();
+  }
+  
+  public EntityManagerFactory getEmf() {
+    return emf;
+  }
+
+  public void setEmf(EntityManagerFactory emf) {
+    this.emf = emf;
+  }
+
+  public DataSource getDataSource() {
+    return dataSource;
+  }
+
+  public void setDataSource(DataSource dataSource) {
+    this.dataSource = dataSource;
   }
 }
