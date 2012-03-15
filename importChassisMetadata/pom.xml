@@ -17,12 +17,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<mysqlDriverVersion>5.1.18</mysqlDriverVersion>
-		<database.chassisdb.url>jdbc:mysql://localhost:3306/chassisDb?storage_engine=InnoDB</database.chassisdb.url>
-		<database.chassisdb.username>root</database.chassisdb.username>
-		<database.chassisdb.password />
 		<database.chassisPruned.url>jdbc:mysql://localhost:3306/chassisPruned?storage_engine=InnoDB</database.chassisPruned.url>
 		<database.chassisPruned.username>root</database.chassisPruned.username>
 		<database.chassisPruned.password />
+		<database.chassisPruned.dbName>chassisPruned</database.chassisPruned.dbName>
 	</properties>
 
 	<dependencies>
