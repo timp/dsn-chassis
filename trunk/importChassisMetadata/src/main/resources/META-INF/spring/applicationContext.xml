@@ -143,8 +143,6 @@
 		<property name="showSql" value="true" />
 	</bean>
 	<!-- Data source definition -->
-
-	<jee:jndi-lookup id="isoDS" jndi-name="jdbc/chassisDb" />
 	<jee:jndi-lookup id="prunedDS" jndi-name="jdbc/chassisPruned" />
 
 	<bean name="org.springframework.transaction.PlatformTransactionManager"
