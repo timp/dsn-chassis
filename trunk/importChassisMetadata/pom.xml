@@ -276,7 +276,7 @@
 						<additionalClasspathElement>target/test-classes</additionalClasspathElement>
 					</additionalClasspathElements>
 					<includes>
-						<include>**/*Testx.java</include>
+						<include>**/*Test.java</include>
 					</includes>
 				</configuration>
 				<!-- <executions> <execution> <id>surefire-itest</id> <phase>integration-test</phase> 
