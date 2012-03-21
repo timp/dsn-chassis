@@ -99,7 +99,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS 
-  SELECT `s`.`StudyID` AS `StudyID`
+  SELECT `e`.`StudyID` AS `StudyID`
       ,`Drug`.`Hjid` AS `Hjid`
       ,`Drug`.`DTYPE` AS `DTYPE`
       ,`Drug`.`FeedingOther` AS `FeedingOther`
@@ -130,7 +130,11 @@ from `Drug`
      LEFT JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
      LEFT JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
      LEFT JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
-     JOIN v_Clinical `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`;
+     LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+WHERE 
+ s.Modules LIKE "%clinical%";
      
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalRegimen` AS
@@ -270,7 +274,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `Studies` AS
 
 
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `StudySites` AS 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_Sites` AS 
   SELECT `e`.`StudyID` AS `StudyID`
       ,`Site`.`Hjid` AS `Hjid`
       ,`Site`.`DTYPE` AS `DTYPE`
@@ -350,3 +354,31 @@ LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
 LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
 LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ackPeople` AS
+SELECT e.StudyId, p.Hjid as studyContactId, FirstName, MiddleName, FamilyName, EmailAddress, PersonIsContactable, Institution FROM Person p
+JOIN People ps ON ps.Hjid = p.Person_People_Hjid
+JOIN AcksInstitutionsOrPeopleItem aiop on aiop.ItemPeople_AcksInstitutionsOrPeopleItem_Hjid = ps.Hjid
+JOIN Acks acks on acks.Hjid = aiop.InstitutionsOrPeopleItems_Acks_Hjid
+JOIN Study s on s.Acknowledgements_Study_Hjid = acks.Hjid
+JOIN `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ackInstitutions` AS
+SELECT e.StudyId, inst.Hjid as studyInstitutionId,  InstitutionName FROM InstitutionAck inst
+JOIN Institutions insts ON insts.Hjid = inst.InstitutionAck_Institutions_Hjid
+JOIN AcksInstitutionsOrPeopleItem aiop on aiop.ItemInstitutions_AcksInstitutionsOrPeopleItem_Hjid = insts.Hjid
+JOIN Acks acks on acks.Hjid = aiop.InstitutionsOrPeopleItems_Acks_Hjid
+JOIN Study s on s.Acknowledgements_Study_Hjid = acks.Hjid
+JOIN `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ackInstitutionURLs` AS
+SELECT e.StudyId, inst.Hjid as studyInstitutionId,  InstitutionName, Item as url FROM InstWebInstitutionUrlItem insturl
+JOIN InstWeb iw on insturl.InstitutionUrlItems_InstWeb_Hjid = iw.Hjid
+JOIN InstitutionAck inst on inst.InstitutionWebsites_InstitutionAck_Hjid = iw.Hjid
+JOIN Institutions insts ON insts.Hjid = inst.InstitutionAck_Institutions_Hjid
+JOIN AcksInstitutionsOrPeopleItem aiop on aiop.ItemInstitutions_AcksInstitutionsOrPeopleItem_Hjid = insts.Hjid
+JOIN Acks acks on acks.Hjid = aiop.InstitutionsOrPeopleItems_Acks_Hjid
+JOIN Study s on s.Acknowledgements_Study_Hjid = acks.Hjid
+JOIN `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
