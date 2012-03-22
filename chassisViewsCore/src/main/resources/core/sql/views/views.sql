@@ -1,31 +1,69 @@
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_MolecularMarkers` AS
+SELECT e.StudyID,GenotypingMethod,GenotypingMethodOther,SampleSelectionProportion,SampleSelectionMethod,SampleSelectionMethodOther,
+MolecularMarkerVivax, MolecularMarkerVivaxOther,
+MolecularMarkerOvale, MolecularMarkerOvaleOther,
+MolecularMarkerKnowlesi, MolecularMarkerKnowlesiOther,
+MolecularMarkerMalariae, MolecularMarkerMalariaeOther,
+MolecularMarkerFalciparum, MolecularMarkerFalciparumOther
+FROM `GenotypedMarker` gm
+ LEFT JOIN GenotypingMethodOpen gmo ON gmo.Hjid = gm.GenotypingMethodOpen_GenotypedMarker_Hjid
+ LEFT JOIN SampleSelectionMethodOpen sso ON sso.Hjid = gm.SampleSelectionMethodOpen_GenotypedMarker_Hjid
+ LEFT JOIN MolecularMarkerVivaxOpen vo ON vo.Hjid = gm.MolecularMarkerVivaxOpen_GenotypedMarker_Hjid
+ LEFT JOIN MolecularMarkerOvaleOpen oo ON oo.Hjid = gm.MolecularMarkerOvaleOpen_GenotypedMarker_Hjid
+ LEFT JOIN MolecularMarkerKnowlesiOpen ko ON ko.Hjid = gm.MolecularMarkerKnowlesiOpen_GenotypedMarker_Hjid
+ LEFT JOIN MolecularMarkerMalariaeOpen mo ON mo.Hjid = gm.MolecularMarkerMalariaeOpen_GenotypedMarker_Hjid
+ LEFT JOIN MolecularMarkerFalciparumOpen fo ON fo.Hjid = gm.MolecularMarkerFalciparumOpen_GenotypedMarker_Hjid
+ LEFT JOIN GenotypedMarkers gms ON gms.Hjid = gm.GenotypedMarker_GenotypedMarkers_Hjid
+ JOIN Molecular m on m.GenotypedMarkers_Molecular_Hjid = gms.Hjid
+  join `StudyInfo` `si` on`si`.`Molecular_StudyInfo_Hjid` = `m`.`Hjid`
+		 join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+         WHERE Modules LIKE '%molecular%' and GenotypingMethod <> '';
+
+
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_ClinicalMarkers` AS
+SELECT e.StudyID, MarkerName, MarkerOther, NumberOfMicroSatellites FROM `RecrudescenceMarker` rm
+JOIN Markers m on rm.RecrudescenceMarker_Markers_Hjid = m.Hjid
+JOIN Applicable a on a.Markers_Applicable_Hjid = m.Hjid
+JOIN GenotypingToDistinguish gtd on Applicable_GenotypingToDistinguish_Hjid = a.Hjid
+JOIN Clinical c ON c.GenotypingForRecrudescence_Clinical_Hjid = gtd.Hjid
+ JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `c`.`Hjid`
+     JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     JOIN `Content` `cont` ON `cont`.`Study_Content_Hjid` = `s`.`Hjid`
+     JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `cont`.`Hjid`
+WHERE gtd.Applicability = 'true' and
+ s.Modules LIKE "%clinical%" and NOT (MarkerName = '' and MarkerOther = '');
+
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Clinical` AS
 SELECT e.StudyId, s.StudyInfo_Study_Hjid,   e.PublishedItem as DateReceived,   s.Modules ,s.StudyStatus
 	FROM  `Study` `s` 
-     LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+     JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
 	WHERE s.Modules LIKE "%clinical%" 
 ;
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Molecular` AS
 SELECT StudyID,SampleSource,SampleSourceOther,MalariaStatus, SampleType,SampleTypeOther,WholeBloodSource,DateCultureIsolated,InfectionComplexityEstimated,OtherLociGenotyped,WholeGenomesSequenced,ResistanceLociSequenced FROM `Molecular` m 
-    LEFT JOIN `Criteria` crit ON m.Criteria_Molecular_Hjid = crit.Hjid
-    LEFT JOIN `Sample` sam ON m.Sample_Molecular_Hjid = sam.Hjid
-    left join `SampleTypeOpen` st on`sam`.`SampleTypeOpen_Sample_Hjid` = `st`.`Hjid`
-    left join `SampleSourceOpen` sso on`crit`.`SampleSourceOpen_Criteria_Hjid` = `sso`.`Hjid`
+   JOIN `Criteria` crit ON m.Criteria_Molecular_Hjid = crit.Hjid
+   LEFT JOIN `Sample` sam ON m.Sample_Molecular_Hjid = sam.Hjid
+    join `SampleTypeOpen` st on`sam`.`SampleTypeOpen_Sample_Hjid` = `st`.`Hjid`
+    join `SampleSourceOpen` sso on`crit`.`SampleSourceOpen_Criteria_Hjid` = `sso`.`Hjid`
     LEFT JOIN GenotypicInfo gi ON m.GenotypicInfo_Molecular_Hjid = gi.Hjid
     LEFT JOIN GenotypedMarkers gm ON m.GenotypedMarkers_Molecular_Hjid = gi.Hjid
     LEFT JOIN `SequencedLoci` sl ON gi.SequencedLoci_GenotypicInfo_Hjid = sl.Hjid
-		 left join `StudyInfo` `si` on`si`.`Molecular_StudyInfo_Hjid` = `m`.`Hjid`
-		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
-		 left join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+		 join `StudyInfo` `si` on`si`.`Molecular_StudyInfo_Hjid` = `m`.`Hjid`
+		 join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
          WHERE Modules LIKE '%molecular%';
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Followup` AS
 SELECT StudyID,Duration,FeverMeasurement FROM `Followup` f
-left join `Clinical` clin on clin.`Followup_Clinical_Hjid` = `f`.`Hjid`
-		 left join `StudyInfo` `si` on `si`.`Clinical_StudyInfo_Hjid` = clin.`Hjid`
+join `Clinical` clin on clin.`Followup_Clinical_Hjid` = `f`.`Hjid`
+		 join `StudyInfo` `si` on `si`.`Clinical_StudyInfo_Hjid` = clin.`Hjid`
 		 join v_Clinical `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`;
 
 
@@ -42,30 +80,30 @@ SELECT StudyId,
     PriorAntimalarialsHistoryWeeks,
     Pregnancy 
 FROM `InclusionExclusionCriteria` iec
-LEFT JOIN PriorAntimalarialsExclusion pae ON pae.Hjid = iec.PriorAntimalarialsExclusion_InclusionExclusionCriteria_Hjid
-LEFT JOIN Parasitaemia pe ON pe.Hjid = iec.Parasitaemia_InclusionExclusionCriteria_Hjid
-LEFT JOIN Age ae ON ae.Hjid = iec.Age_InclusionExclusionCriteria_Hjid
-LEFT join `StudyInfo` `si` on`si`.`InclusionExclusionCriteria_StudyInfo_Hjid` = `iec`.`Hjid`
-LEFT join `Study` `s` on `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-LEFT  join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
-LEFT  join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+JOIN PriorAntimalarialsExclusion pae ON pae.Hjid = iec.PriorAntimalarialsExclusion_InclusionExclusionCriteria_Hjid
+JOIN Parasitaemia pe ON pe.Hjid = iec.Parasitaemia_InclusionExclusionCriteria_Hjid
+JOIN Age ae ON ae.Hjid = iec.Age_InclusionExclusionCriteria_Hjid
+join `StudyInfo` `si` on`si`.`InclusionExclusionCriteria_StudyInfo_Hjid` = `iec`.`Hjid`
+join `Study` `s` on `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+ join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+ join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_PublicationReferences` AS
 SELECT StudyId, PublicationReferenceType,Identifier,p.Hjid as publicationId FROM PublicationReference pr
-	LEFT JOIN PublicationReferences prs ON pr.PublicationReference_PublicationReferences_Hjid = prs.Hjid
-	LEFT JOIN `Publication` p ON p.PublicationReferences_Publication_Hjid = prs.Hjid
-	LEFT JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
-    LEFT join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
-	LEFT join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
-	LEFT join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+	JOIN PublicationReferences prs ON pr.PublicationReference_PublicationReferences_Hjid = prs.Hjid
+	JOIN `Publication` p ON p.PublicationReferences_Publication_Hjid = prs.Hjid
+	JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
+    join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
+	join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+	join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 		 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_Publications` AS
 SELECT StudyId,Pmid,PublicationTitle,p.Hjid as publicationId FROM `Publication` p
-	LEFT JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
-    LEFT join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
-	LEFT join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
-	LEFT join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+	JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
+    join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
+	join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+	join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 
 
@@ -76,9 +114,9 @@ select `e`.`StudyID` AS `StudyID`,
             StudyInfoStatus,
             Pathogens
             FROM `StudyInfo` `si` 
-		 left join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-		 left join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
-		 left join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+		 join `Study` `s` on`s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+		 join `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		 join `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 	
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS 
@@ -93,9 +131,9 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
             , a.email
             ,PublishedItem
             FROM `Entry` `e` 
-        left join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
-        left join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
-        LEFT JOIN `Author` a ON a.Hjid = e.Author_Entry_Hjid;
+        join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
+        join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+        JOIN `Author` a ON a.Hjid = e.Author_Entry_Hjid;
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS 
@@ -124,15 +162,15 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS
       ,`Drug`.`Drug_Drugs_Hjid` AS `Drug_Drugs_Hjid` 
       ,`r`.`Hjid` AS `Regimen_Hjid`
 from `Drug` 
-     LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
-     LEFT JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
-     LEFT JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
-     LEFT JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
-     LEFT JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
-     LEFT JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
-     LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-     LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+     JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
+     JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
+     JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
+     JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
+     JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
+     JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
+     JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
 WHERE 
  s.Modules LIKE "%clinical%";
      
@@ -201,12 +239,12 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudyRegimens` AS
       ,`Drug`.`Comments` AS `Comments`
       ,`Drug`.`AdministrationRoute` AS `AdministrationRoute`
       ,`Drug`.`ReadministeredOnVomitting` AS `ReadministeredOnVomitting`
-from `Drug` LEFT JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
-     LEFT JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
-     LEFT JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
-     LEFT JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
-     LEFT JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
-     LEFT JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
+from `Drug` JOIN `Drugs` ON `Drug`.`Drug_Drugs_Hjid` = `Drugs`.`Hjid`
+     JOIN `Regimen` `r` ON `r`.`Drugs_Regimen_Hjid` = `Drugs`.`Hjid`
+     JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
+     JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
+     JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
+     JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
           JOIN v_Clinical `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`;
      
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalCompleteStudyRegimens` AS 
@@ -229,9 +267,9 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudies` AS
    s.StudyStatus,
    si.StudyInfoStatus
   FROM `Entry` `e` 
-     LEFT JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid` 
-     LEFT JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-     LEFT JOIN `StudyInfo` `si` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid` 
+     JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     JOIN `StudyInfo` `si` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
   WHERE
    s.Modules LIKE "%clinical%"
   ORDER BY e.StudyId
@@ -245,7 +283,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugIngredient` AS
     ai.ActiveIngredientNameOther,
     StudyId
   FROM `ActiveIngredient` ai
-    LEFT JOIN v_ClinicalDrugs cd ON ai.ActiveIngredient_ActiveIngredients_Hjid = cd.ActiveIngredients_Drug_Hjid;
+    JOIN v_ClinicalDrugs cd ON ai.ActiveIngredient_ActiveIngredients_Hjid = cd.ActiveIngredients_Drug_Hjid;
 
 
 
@@ -256,8 +294,8 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `ClinicalDrugWeightDosing` AS
     `cd`.`StudyId`,
     `cd`. `Hjid` AS `DrugId` 
   FROM `WeightDosingSchedule` wds
-    LEFT JOIN `WeightDosing` wd on `wd`.`Hjid` = `wds`.`WeightDosingSchedule_WeightDosing_Hjid`
-    LEFT JOIN `v_ClinicalDrugs` cd on `cd`.`WeightDosing_Drug_Hjid` = `wd`.`Hjid`
+    JOIN `WeightDosing` wd on `wd`.`Hjid` = `wds`.`WeightDosingSchedule_WeightDosing_Hjid`
+    JOIN `v_ClinicalDrugs` cd on `cd`.`WeightDosing_Drug_Hjid` = `wd`.`Hjid`
   WHERE `cd`. `DrugDosingDeterminant`= 'weight';
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `Studies` AS 
@@ -269,8 +307,8 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `Studies` AS
       ,`s`.`ExplorerDisplay` AS `explorerDisplay`
       ,`s`.`Modules` AS `modules` 
         FROM `Entry` `e` 
-    LEFT JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
-    LEFT JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`;
+    JOIN `Content` `c` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+    JOIN `Study` `s` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`;
 
 
 
@@ -292,11 +330,11 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_Sites` AS
       ,`Site`.`Population` AS `Population`
       ,`Site`.`TransmissionIntensity_Site_Hjid` AS `TransmissionIntensity_Site_Hjid`
       ,`Site`.`Site_Sites_Hjid` AS `Site_Sites_Hjid` 
-from `Site` LEFT JOIN `Sites` ON `Sites`.`Hjid` = `Site`.`Site_Sites_Hjid`
-     LEFT JOIN `StudyInfo` `si` ON `si`.`Sites_StudyInfo_Hjid` = `Sites`.`Hjid`
-     LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-     LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-     LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+from `Site` JOIN `Sites` ON `Sites`.`Hjid` = `Site`.`Site_Sites_Hjid`
+     JOIN `StudyInfo` `si` ON `si`.`Sites_StudyInfo_Hjid` = `Sites`.`Hjid`
+     JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+     JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+     JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkAnalytes` AS
@@ -311,12 +349,12 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkAnalytes` AS
      , `a`.`UnitsOfMeasure` AS `UnitsOfMeasure`
      , `a`.`Analyte_Analytes_Hjid` AS `Analyte_Analytes_Hjid`
   FROM `Analyte` `a`
-    LEFT JOIN `Analytes`  ON `a`.`Analyte_Analytes_Hjid` = Analytes.`Hjid`
-    LEFT JOIN `Pharmacology` `p` ON `p`.`Analytes_Pharmacology_Hjid` = Analytes.`Hjid`
-    LEFT JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
-    LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-    LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-    LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+    JOIN `Analytes`  ON `a`.`Analyte_Analytes_Hjid` = Analytes.`Hjid`
+    JOIN `Pharmacology` `p` ON `p`.`Analytes_Pharmacology_Hjid` = Analytes.`Hjid`
+    JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+    JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+    JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+    JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
 ;
 
 
@@ -327,12 +365,12 @@ SELECT `e`.`StudyID` AS `StudyID`
      ,Sample.*
 FROM
   `Sample` 
-LEFT JOIN `Samples`  ON `Sample`.`Sample_Samples_Hjid` = `Samples`.`Hjid`
-LEFT JOIN `Pharmacology` `p` ON `p`.`Samples_Pharmacology_Hjid` = `Samples`.`Hjid`
-LEFT JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
-LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+JOIN `Samples`  ON `Sample`.`Sample_Samples_Hjid` = `Samples`.`Hjid`
+JOIN `Pharmacology` `p` ON `p`.`Samples_Pharmacology_Hjid` = `Samples`.`Hjid`
+JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 
 
@@ -349,10 +387,10 @@ SELECT `e`.`StudyID` AS `StudyID`
      , `p`.`AssayReferences_Pharmacology_Hjid` AS `AssayReferences_Pharmacology_Hjid`
 FROM
   `Pharmacology` `p`
-LEFT JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
-LEFT JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
-LEFT JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
-LEFT JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ackPeople` AS
 SELECT e.StudyId, p.Hjid as studyContactId, FirstName, MiddleName, FamilyName, EmailAddress, PersonIsContactable, Institution FROM Person p
