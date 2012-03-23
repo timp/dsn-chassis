@@ -11,11 +11,11 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
-import org.cggh.chassis.rest.bean.Options;
 import org.eclipse.persistence.jpa.JpaEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.w3._2005.atom.Entry;
+import org.w3._2005.atom.Feed;
 
 public class StudyDAO {
   // http://static.springsource.org/spring/docs/3.0.5.RELEASE/reference/orm.html#orm-jpa
@@ -25,7 +25,6 @@ public class StudyDAO {
   DataSource dataSource;
   
   @Autowired
-  Options options;
   private String databaseName;
   @Autowired
   LocalContainerEntityManagerFactoryBean emfBean;
@@ -79,6 +78,16 @@ public class StudyDAO {
     }.runAsTransaction(entry);
   }
 
+  public Feed updateFeed(final Feed feed) {
+    return new FeedManagerAction(emf) {
+      @Override
+      public Feed action(Feed feed) {
+        //Due to the behaviour of merge it is necessary to return this here
+        return (em.merge(feed));
+      }
+    }.runAsTransaction(feed);
+  }
+  
   public Entry updateEntry(final Entry entry) {
     return new EntityManagerAction(emf) {
       @Override
@@ -114,9 +123,6 @@ public class StudyDAO {
     EntityManager em = emf.createEntityManager();
     ((JpaEntityManager) em.getDelegate()).getServerSession().getIdentityMapAccessor().invalidateAll();
     try {
-      if (options.get("databaseName") == null)
-        throw new IllegalArgumentException("Option databaseName not set");
-      databaseName = options.get("databaseName");
       Connection c = dataSource.getConnection();
       System.err.println("Db name: " + databaseName);
       System.err.println("Connection: " + c);
