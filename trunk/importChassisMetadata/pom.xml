@@ -249,7 +249,7 @@
 						<resource>
 							<directory>src/main/webapp/</directory>
 							<filtering>false</filtering>
-						</resource>						
+						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
@@ -301,6 +301,22 @@
 	</pluginRepositories>
 
 	<profiles>
+		<profile>
+			<id>wwarn-app3</id>
+			<properties>
+				<profileId>wwarn-app3</profileId>
+				<skipTests>true</skipTests>
+
+
+				<log4j-priority>info</log4j-priority>
+				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+				<importLogs>/srv/chassis-data/logs/importChassisMetadata.log</importLogs>
+
+				<database.chassisPruned.url>jdbc:mysql://localhost:3306/chassisPruned?storage_engine=InnoDB</database.chassisPruned.url>
+				<database.chassisPruned.username>service_user</database.chassisPruned.username>
+				<database.chassisPruned.dbName>chassisPruned</database.chassisPruned.dbName>
+			</properties>
+		</profile>
 		<!-- No profile will give defaults of redeploying locally with username 
 			admin and no password -->
 		<profile>
