@@ -15,4 +15,8 @@
 		type="javax.sql.DataSource" url="${database.chassisPruned.url}"
 		username="${database.chassisPruned.username}" password="${database.chassisPruned.password}"
 		validationInterval="30000" validationQuery="SELECT 1" />
+	<Environment name="databaseName" type="java.lang.String" value="${database.chassisPruned.dbName}"/>
+	<Environment name="chassisService" type="java.lang.String" value="${chassis.root}"/>
+    <Environment name="chassisUser" type="java.lang.String" value="${chassis.user}"/>
+    <Environment name="chassisPassword" type="java.lang.String" value="${chassis.password}"/>
 </Context>

@@ -39,7 +39,7 @@
 		</property>
 		<property name="schema" value="classpath:atom-pruned.xsd" />
 	</bean>
-	
+
 	<bean id="nonValidatingMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 		<property name="classesToBeBound">
 			<list>
@@ -48,7 +48,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="studies"
 		class="org.springframework.web.servlet.view.xml.MarshallingView">
 		<constructor-arg ref="nonValidatingMarshaller" />
@@ -103,15 +103,11 @@
 	</bean>
 	<bean
 		class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
+	<jee:jndi-lookup id="chassisService" jndi-name="chassisService" />
+	<jee:jndi-lookup id="chassisUser" jndi-name="chassisUser" />
+	<jee:jndi-lookup id="chassisPassword" jndi-name="chassisPassword" />
+	<jee:jndi-lookup id="databaseName" jndi-name="databaseName" />
 	<!-- Configure the persistance layer -->
-
-	<bean name="options" class="org.cggh.chassis.rest.bean.Options">
-		<property name="choices">
-			<props>
-				<prop key="databaseName">${database.name}</prop>
-			</props>
-		</property>
-	</bean>
 
 	<bean name="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -128,7 +124,7 @@
 				<!-- both tries to write to web app install directory -->
 				<prop key="eclipselink.ddl-generation.output-mode">database</prop>
 
-				<prop key="eclipselink.target-database">${database.platform}</prop>
+				<prop key="eclipselink.target-database">org.eclipse.persistence.platform.database.MySQLPlatform</prop>
 				<prop key="create-ddl-jdbc-file-name">target/createChassisDb.ddl</prop>
 				<prop key="drop-ddl-jdbc-file-name">target/dropChassisDb.ddl</prop>
 				<prop key="logging.level">ALL</prop>
@@ -139,7 +135,7 @@
 
 	<bean id="jpaAdapter"
 		class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
-		<property name="databasePlatform" value="${database.platform}" />
+		<property name="databasePlatform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />
 		<property name="showSql" value="true" />
 	</bean>
 	<!-- Data source definition -->
@@ -149,9 +145,13 @@
 		class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="emf" />
 	</bean>
-	
-	<bean id="studyDAO" class="org.cggh.chassis.rest.dao.StudyDAO" >
-		<property name="dataSource" ref="prunedDS"/>
+
+
+
+	<bean id="chassisDAO" class="org.cggh.chassis.rest.dao.ChassisDAO" />
+
+	<bean id="studyDAO" class="org.cggh.chassis.rest.dao.StudyDAO">
+		<property name="dataSource" ref="prunedDS" />
 	</bean>
 	<!-- bean post-processor for JPA annotations -->
 	<bean

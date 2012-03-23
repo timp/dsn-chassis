@@ -21,6 +21,10 @@
 		<database.chassisPruned.username>root</database.chassisPruned.username>
 		<database.chassisPruned.password />
 		<database.chassisPruned.dbName>chassisPruned</database.chassisPruned.dbName>
+		
+		<chassis.root>https://www.wwarn.org/</chassis.root>
+		<chassis.user></chassis.user>
+		<chassis.password></chassis.password>
 	</properties>
 
 	<dependencies>
@@ -33,7 +37,7 @@
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>chassis-rest</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.5-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
