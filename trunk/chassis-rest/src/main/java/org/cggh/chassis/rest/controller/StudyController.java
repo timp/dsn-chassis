@@ -1,5 +1,6 @@
 package org.cggh.chassis.rest.controller;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.httpclient.HttpStatus;
+import org.cggh.chassis.rest.dao.ChassisDAO;
 import org.cggh.chassis.rest.dao.NotFoundException;
 import org.cggh.chassis.rest.dao.StudyDAO;
 import org.cggh.chassis.rest.jaxb.UnmarshalledObject;
@@ -49,6 +51,9 @@ public class StudyController {
 
   @Autowired
   StudyDAO studyDAO;
+
+  @Autowired
+  ChassisDAO chassisDAO;
 
   private Transformer transformer;
 
@@ -188,7 +193,7 @@ public class StudyController {
     response.setStatus(HttpStatus.SC_BAD_REQUEST);
     ModelAndView mav = new ModelAndView(ERROR_LIST_VIEW_NAME, "errors", unmarshalledResult);
     String id;
-    if (unmarshalledResult.previousResult() != null && unmarshalledResult.getId() != null)
+    if (unmarshalledResult != null && unmarshalledResult.previousResult() != null && unmarshalledResult.getId() != null)
       id = unmarshalledResult.getId();
     else
       id = "error";
@@ -253,6 +258,54 @@ public class StudyController {
     }
   }
 
+  /**
+   * Imports studies
+   * 
+   * @param body
+   * @param validate
+   * @param prune
+   * @param response
+   * @return
+   * @throws JAXBException
+   * @throws SAXException
+   */
+  @RequestMapping(method = RequestMethod.GET, value = "/import")
+  public ModelAndView importStudies(@RequestParam(value = "validate", defaultValue = "true", required = false) boolean validate, @RequestParam(value = "prune", defaultValue = "true", required = false) boolean prune, HttpServletResponse response)
+          throws JAXBException, SAXException {
+    File studies = null;
+    Feed feed = null;
+    UnmarshalledObject<Feed> unmarshalledResult = null;
+    try {
+      studies = chassisDAO.getStudies();
+
+      Source source = new StreamSource(studies);
+      unmarshalledResult = new UnmarshalledObject<Feed>(getStudyMarshaller(validate, prune));
+      feed = unmarshalledResult.unmarshall(source, prune, transformer, validate);
+      if (feed != null) {
+        unmarshalledResult.setId(feed.getId());
+      }
+      if (unmarshalledResult.getErrors().isEmpty()) {
+        studyDAO.updateFeed(feed);
+
+        response.setStatus(HttpStatus.SC_CREATED);
+        Feed list = new Feed();
+        list.setEntry((List<Entry>) studyDAO.getEntries());
+        return new ModelAndView(STUDY_COLLECTION_VIEW_NAME, "studies", list);
+      } else {
+        return marshallingError(response, unmarshalledResult);
+      }
+    } catch (Exception e) {
+      ModelAndView mav = marshallingError(response, unmarshalledResult);
+      mav.addObject("exception", e.getMessage());
+      return mav;
+    } finally {
+      if (studies != null) {
+        studies.delete();
+      }
+    }
+
+  }
+
   @RequestMapping(method = RequestMethod.POST, value = "/validateStudies")
   public ModelAndView validateStudies(@RequestBody String body, @RequestParam(value = "validate", defaultValue = "true", required = false) boolean validate, @RequestParam(value = "prune", defaultValue = "false", required = false) boolean prune, HttpServletResponse response)
           throws JAXBException, SAXException {
@@ -270,7 +323,7 @@ public class StudyController {
       return marshallingError(response, unmarshalledResult);
     }
   }
-  
+
   @RequestMapping(method = RequestMethod.DELETE, value = "/study/{id}")
   public ModelAndView removeStudy(@PathVariable String id, HttpServletResponse response) throws NotFoundException {
     if (!studyDAO.removeEntry(id)) {
