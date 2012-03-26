@@ -288,7 +288,7 @@ public class StudyController {
         //Do as individual entries because run into problems with ids if doing as a feed
         for (Entry entry : feed.getEntry()) {
           try {
-            studyDAO.saveEntry(entry);
+            studyDAO.updateEntry(entry);
           } catch (Exception e) {
             ModelAndView mav = marshallingError(response, unmarshalledResult);
             mav.addObject("exception", e.getMessage());
