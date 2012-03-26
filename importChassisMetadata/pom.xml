@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>importChassisMetadata</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>war</packaging>
 	<name>importChassisMetadata</name>
 
@@ -23,8 +22,8 @@
 		<database.chassisPruned.dbName>chassisPruned</database.chassisPruned.dbName>
 		
 		<chassis.root>https://www.wwarn.org/</chassis.root>
-		<chassis.user></chassis.user>
-		<chassis.password></chassis.password>
+		<chassis.user />
+		<chassis.password />
 	</properties>
 
 	<dependencies>
@@ -191,9 +190,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.3</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.3</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.3</url>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -429,7 +428,7 @@
 				</os>
 			</activation>
 			<properties>
-				<logsDrive></logsDrive>
+				<logsDrive />
 			</properties>
 		</profile>
 
