@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>importChassisMetadata</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>importChassisMetadata</name>
 
@@ -190,9 +190,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.4</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.4</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/importChassisMetadata-0.0.4</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/importChassisMetadata</url>
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
