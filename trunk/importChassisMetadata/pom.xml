@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>chassis-rest</artifactId>
-			<version>0.0.5-SNAPSHOT</version>
+			<version>0.0.5</version>
 		</dependency>
 
 		<dependency>
@@ -288,6 +288,13 @@
 					</excludes> <includes> </includes> </configuration> </execution> </executions> -->
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 	</build>
 	<repositories>
 		<repository>
