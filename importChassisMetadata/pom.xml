@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>importChassisMetadata</artifactId>
@@ -22,8 +23,8 @@
 		<database.chassisPruned.dbName>chassisPruned</database.chassisPruned.dbName>
 		
 		<chassis.root>https://www.wwarn.org/</chassis.root>
-		<chassis.user />
-		<chassis.password />
+		<chassis.user></chassis.user>
+		<chassis.password></chassis.password>
 	</properties>
 
 	<dependencies>
@@ -302,6 +303,14 @@
 			<url>http://cloud1.cggh.org/maven2/</url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>scp://cloud1.cggh.org/var/www/maven2</url>
+		</repository>
+	</distributionManagement>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>cggh</id>
@@ -428,7 +437,7 @@
 				</os>
 			</activation>
 			<properties>
-				<logsDrive />
+				<logsDrive></logsDrive>
 			</properties>
 		</profile>
 
