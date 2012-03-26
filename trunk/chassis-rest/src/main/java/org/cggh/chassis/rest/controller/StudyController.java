@@ -285,7 +285,16 @@ public class StudyController {
         unmarshalledResult.setId(feed.getId());
       }
       if (unmarshalledResult.getErrors().isEmpty()) {
-        studyDAO.updateFeed(feed);
+        //Do as individual entries because run into problems with ids if doing as a feed
+        for (Entry entry : feed.getEntry()) {
+          try {
+            studyDAO.saveEntry(entry);
+          } catch (Exception e) {
+            ModelAndView mav = marshallingError(response, unmarshalledResult);
+            mav.addObject("exception", e.getMessage());
+            return mav;
+          }
+        }
 
         response.setStatus(HttpStatus.SC_CREATED);
         Feed list = new Feed();
