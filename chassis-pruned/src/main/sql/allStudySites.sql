@@ -4,6 +4,7 @@ select
    s.Modules, 
    s.StartDate, 
    s.EndDate, 
+   Site.Country,
    Site.LookupAddress as Site,
    Site.Population,
    Site.Latitude,
