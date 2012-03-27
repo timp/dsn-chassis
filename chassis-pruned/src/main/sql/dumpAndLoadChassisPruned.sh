@@ -9,7 +9,7 @@
 set -o errexit
 
 if [ ! $1 ]; then 
-  echo "Specify a user and password fro wwarn.org"
+  echo "Specify a user and password for wwarn.org"
   exit 1
 fi
 
@@ -103,5 +103,4 @@ curl -O --remote-header-name "http://localhost:8080/posql/selection/?db=chassisP
 curl --upload-file pharmacologyStudySitesPublications.csv   --user $user:$passwd -s -S  https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/e7cc4428-71dc-4e56-9bb2-dbcffd29a8e5/content.csv
 
 
-rm *.csv
 
