@@ -99,7 +99,6 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalDrugs` AS 
   SELECT `e`.`StudyID` AS `StudyID`
       ,`Drug`.`Hjid` AS `Hjid`
-      ,`Drug`.`DTYPE` AS `DTYPE`
       ,`Drug`.`FeedingOther` AS `FeedingOther`
       ,`Drug`.`DrugName` AS `DrugName`
       ,`Drug`.`Feeding` AS `Feeding`
