@@ -273,11 +273,13 @@ public class StudyController {
   public ModelAndView importStudies(@RequestParam(value = "validate", defaultValue = "true", required = false) boolean validate, @RequestParam(value = "prune", defaultValue = "true", required = false) boolean prune, HttpServletResponse response)
           throws JAXBException, SAXException {
     File studies = null;
+    File links = null;
     Feed feed = null;
     UnmarshalledObject<Feed> unmarshalledResult = null;
     try {
       studies = chassisDAO.getStudies();
-
+      links = chassisDAO.getLinks();
+      
       Source source = new StreamSource(studies);
       unmarshalledResult = new UnmarshalledObject<Feed>(getStudyMarshaller(validate, prune));
       feed = unmarshalledResult.unmarshall(source, prune, transformer, validate);
@@ -296,6 +298,33 @@ public class StudyController {
           }
         }
 
+        //Now do the links
+
+        source = new StreamSource(links);
+        UnmarshalledObject<Feed> linksResult = new UnmarshalledObject<Feed>(getStudyMarshaller(validate, prune));
+        //Never prune links feed or it becomes invalid - not necessary anyway
+        feed = linksResult.unmarshall(source, false, transformer, validate);
+        if (feed != null) {
+          linksResult.setId(feed.getId());
+        }
+        if (linksResult.getErrors().isEmpty()) {
+          //Do as individual entries because run into problems with ids if doing as a feed
+          for (Entry entry : feed.getEntry()) {
+            try {
+              String linkId = entry.getId();
+              String studyId = "l-" + linkId.substring(linkId.length()-5);
+              entry.setStudyID(studyId);
+              studyDAO.updateEntry(entry);
+            } catch (Exception e) {
+              ModelAndView mav = marshallingError(response, linksResult);
+              mav.addObject("exception", e.getMessage());
+              return mav;
+            }
+          }
+        } else {
+          return marshallingError(response, linksResult);
+        }   
+        
         response.setStatus(HttpStatus.SC_CREATED);
         Feed list = new Feed();
         list.setEntry((List<Entry>) studyDAO.getEntries());
@@ -310,6 +339,9 @@ public class StudyController {
     } finally {
       if (studies != null) {
         studies.delete();
+      }
+      if (links != null) {
+        links.delete();
       }
     }
 
