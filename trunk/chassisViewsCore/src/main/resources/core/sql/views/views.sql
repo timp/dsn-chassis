@@ -1,4 +1,15 @@
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_LinkedStudyGroupMembers` AS
+	SELECT Link_Entry_StudyID,e.StudyID FROM `Link` l
+		JOIN Entry e ON l.Href = e.Id
+	WHERE Rel = 'http://www.cggh.org/2010/chassis/terms/linkMember';
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_LinkedStudyGroups` AS
+	SELECT StudyID, t.Content FROM `Entry` e
+		JOIN Title t ON e.Title_Entry_Hjid = t.Hjid
+	WHERE Id LIKE '%link%';
+
+
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_MolecularMarkers` AS
 SELECT e.StudyID,GenotypingMethod,GenotypingMethodOther,SampleSelectionProportion,SampleSelectionMethod,SampleSelectionMethodOther,
 MolecularMarkerVivax, MolecularMarkerVivaxOther,
