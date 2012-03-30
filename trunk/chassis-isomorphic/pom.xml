@@ -15,6 +15,9 @@
     <mysqlDriverVersion>5.1.18</mysqlDriverVersion>
     <tomcat.username>admin</tomcat.username>
     <tomcat.password></tomcat.password>
+    <chassisDb_host>localhost</chassisDb_host>
+    <chassisDb_user>root</chassisDb_user>
+    <chassisDb_password></chassisDb_password>
   </properties>
 
   <dependencies>
@@ -387,11 +390,6 @@
           </plugin>
         </plugins>
       </build>
-      <properties>
-       <chassisDb_host>localhost</chassisDb_host>
-       <chassisDb_user>chassisDb</chassisDb_user>
-       <chassisDb_password></chassisDb_password>
-      </properties>
     </profile>
     
     
