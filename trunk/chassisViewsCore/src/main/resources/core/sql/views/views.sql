@@ -2,7 +2,7 @@
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_LinkedStudyGroupMembers` AS
 	SELECT Link_Entry_StudyID,e.StudyID FROM `Link` l
 		JOIN Entry e ON l.Href = e.Id
-	WHERE Rel = 'http://www.cggh.org/2010/chassis/terms/linkMember';
+	WHERE Rel = 'http://www.cggh.org/2010/chassis/terms/linkMember' AND Link_Entry_StudyID IS NOT NULL;
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_LinkedStudyGroups` AS
 	SELECT StudyID, t.Content FROM `Entry` e
