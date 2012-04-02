@@ -378,7 +378,8 @@
                    <database>chassisDb</database>
                    <host>${chassisDb_host}</host>
                    <user>${chassisDb_user}</user>
-                   <password>${chassisDb_password}</password>
+                   <!-- sets password -->
+                   <connprops>/etc/chassis-isomorphic/chassisDb.properties</connprops>
                    <!-- set in settings.xml eg 
                    <localRepository>/var/lib/jenkins/.m2/repository</localRepository>
                    -->
