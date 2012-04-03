@@ -17,7 +17,6 @@
     <tomcat.password></tomcat.password>
     <chassisDb_host>localhost</chassisDb_host>
     <chassisDb_user>root</chassisDb_user>
-    <chassisDb_password></chassisDb_password>
   </properties>
 
   <dependencies>
@@ -377,7 +376,6 @@
                    <databaseType>mysql</databaseType>
                    <database>chassisDb</database>
                    <host>${chassisDb_host}</host>
-                   <user>${chassisDb_user}</user>
                    <!-- sets password -->
                    <connprops>/etc/chassis-isomorphic/chassisDb.properties</connprops>
                    <!-- set in settings.xml eg 
