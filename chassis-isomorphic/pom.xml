@@ -376,6 +376,7 @@
                    <databaseType>mysql</databaseType>
                    <database>chassisDb</database>
                    <host>${chassisDb_host}</host>
+                   <user>${chassisDb_user}</user>
                    <!-- sets password -->
                    <connprops>/etc/chassis-isomorphic/chassisDb.properties</connprops>
                    <!-- set in settings.xml eg 
