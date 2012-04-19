@@ -88,6 +88,70 @@
 				</manufacturers>
 			</drug>
 		</clinical>
+		<invitro>
+			<concentrations>
+				<nahco>Final concentration of NaHCO<sub>3</sub> (mM)</nahco>
+				<serum>Serum final concentration (%)</serum>
+				<hypo>Final Hypoxanthine concentration (mg/L)</hypo>
+				<orotic>Final orotic acid concentration (mg/L)</orotic>
+			</concentrations>
+			<additions>
+				<hypoAdd>Do you add Hypoxanthine?</hypoAdd>
+			</additions>
+			<labels>
+				<hypoLabel>Hypoxanthine</hypoLabel>
+				<oroticLabel>Orotic Acid</oroticLabel>
+				<glucoseLabel>Glucose</glucoseLabel>
+				<cloneProviderLabel>Was 3D7 provided by WWARN? </cloneProviderLabel>
+				<drugProviderLabel>Were drug substances provided by the WWARN QA/QC programme? </drugProviderLabel>
+				<incubationTimeLabel>Time of incubation</incubationTimeLabel>
+				<drugSolventLabel>Solvent of stock solution</drugSolventLabel>
+				<referenceCloneLabel>Did you use a reference clone?</referenceCloneLabel>
+				<precursorTimeLabel>When was the radiolabeled precursor added to the in vitro test?</precursorTimeLabel>
+			</labels>
+			<incubationTimes>
+				<incubationTime ref=""></incubationTime>
+				<incubationTime ref="24h">24 hours</incubationTime>
+				<incubationTime ref="42h">42 hours</incubationTime>
+				<incubationTime ref="48h">48 hours</incubationTime>
+				<incubationTime ref="72h">72 hours</incubationTime>
+				<incubationTime ref="other">Other</incubationTime>
+			</incubationTimes>
+			<metaboliteMolecules>
+				<metaboliteMolecule ref="CPQ">carboxy-primaquine</metaboliteMolecule>
+				<metaboliteMolecule ref="DLUM">desbutyl-lumefantrine</metaboliteMolecule>
+				<metaboliteMolecule ref="DCQ">desethyl-chloroquine</metaboliteMolecule>
+				<metaboliteMolecule ref="MDA">monodesethylamodiaquine</metaboliteMolecule>
+				<metaboliteMolecule ref="3HQ">3-hydroxyquinine</metaboliteMolecule>
+			</metaboliteMolecules>
+			<referenceClones>
+				<referenceClone ref="">please select</referenceClone>
+				<referenceClone ref="3D7">yes, 3D7</referenceClone>
+				<referenceClone ref="W2">yes, W2</referenceClone>
+				<referenceClone ref="other">yes, other</referenceClone>
+				<referenceClone ref="none">no</referenceClone>
+			</referenceClones>
+			<cloneProviders>
+				<cloneProvider ref="">please select</cloneProvider>
+				<cloneProvider ref="false">no</cloneProvider>
+				<cloneProvider ref="wwarn-validated">no, but genetically validated by WWARN</cloneProvider>
+				<cloneProvider ref="true">yes</cloneProvider>
+			</cloneProviders>
+			<drugSolvents>
+				<drugSolvent ref="">please select</drugSolvent>
+				<drugSolvent ref="methanol">methanol</drugSolvent>
+				<drugSolvent ref="RPMI">RPMI</drugSolvent>
+				<drugSolvent ref="distilled water">distilled water</drugSolvent>
+				<drugSolvent ref="DMSO">DMSO</drugSolvent>
+				<drugSolvent ref="ethanol">ethanol</drugSolvent>
+			</drugSolvents>
+			<precursorTimes>
+				<precursorTime ref=""></precursorTime>
+				<precursorTime ref="0">0h</precursorTime>
+				<precursorTime ref="24">24h</precursorTime>
+				<precursorTime ref="other">other</precursorTime>
+			</precursorTimes>
+		</invitro>
 		<common>
 			<drugs>
 			    <drugMolecule>

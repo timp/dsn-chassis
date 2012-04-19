@@ -205,7 +205,7 @@
 
                 <p>
                     <xforms:input ref="serum-finalConcentration" class="fourWide">
-                        <xforms:label>Serum final concentration (g/L) </xforms:label>
+                    	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/concentrations/serum"/>
                         <xforms:alert>
                             <xforms:output
                                 value="concat('Enter an integer value for the ', name(), ' field ')"
@@ -215,6 +215,7 @@
                 </p>
                 <p>
                     <xforms:input ref="NaHCO3-finalConcentration" class="fourWide">
+                    	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/concentrations/nahco"/>
                         <xforms:label> Final concentration of NaHCO<sub>3</sub> (g/L) </xforms:label>
                         <xforms:alert>
                             <xforms:output
@@ -225,10 +226,10 @@
                 </p>
 
                 <xforms:group ref="hypoxantine">
-                    <h5>Hypoxantine</h5>
+                    <xforms:label class="subtitle" model="mod-study-info" ref="$resources/invitro/labels/hypoLabel"/>
                     <p>
                         <xforms:select1 ref="hypoxantine-added" appearance="minimal">
-                            <xforms:label>Do you add Hypoxantine?</xforms:label>
+                        	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/additions/hypoAdd"/>
                             <xforms:item>
                                             <xforms:label><!-- Nullable -->
                                             </xforms:label>
@@ -243,7 +244,7 @@
                     </p>
                     <p>
                         <xforms:input ref="hypoxantine-finalConcentration" class="fourWide">
-                            <xforms:label>Final Hypoxantine concentration (g/L) </xforms:label>
+                        	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/concentrations/hypo"/>
                             <xforms:alert>
                                 <xforms:output
                                     value="concat('Enter an integer value for the ', name(), ' field ')"
@@ -255,7 +256,7 @@
 
 
                 <xforms:group ref="oroticAcid">
-                    <h5>Orotic Acid</h5>
+                	<xforms:label class="subtitle" model="mod-study-info" ref="$resources/invitro/labels/oroticLabel"/>
                     <p>
                         <xforms:select1 ref="oroticAcid-added" appearance="minimal">
                             <xforms:label>Do you add orotic acid?</xforms:label>
@@ -273,7 +274,7 @@
                     </p>
                     <p>
                         <xforms:input ref="oroticAcid-finalConcentration" class="fourWide">
-                            <xforms:label>Final orotic acid concentration (g/L) </xforms:label>
+                        	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/concentrations/orotic"/>
                             <xforms:alert>
                                 <xforms:output
                                     value="concat('Enter an integer value for the ', name(), ' field ')"
@@ -284,7 +285,7 @@
                 </xforms:group>
 
                 <xforms:group ref="glucose">
-                    <h5>Glucose</h5>
+                    <xforms:label class="subtitle" model="mod-study-info" ref="$resources/invitro/labels/glucoseLabel"/>
                     <p>
                         <xforms:select1 ref="glucose-added" appearance="minimal">
                             <xforms:label>Do you add glucose?</xforms:label>
@@ -409,18 +410,16 @@
                         raw data. </em>
                 </p>
                 <xforms:select1 appearance="minimal" ref="timeOfIncubation">
-                    <xforms:label class="fixed-width">Time of incubation </xforms:label>
-                    <xforms:item>
-                        <xforms:label><!-- Nullable -->
-                        </xforms:label>
-                        <xforms:value/>
-                    </xforms:item>
+                	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/labels/incubationTimeLabel"/>
                     <xforms:itemset model="mod-study-info"
-                        nodeset="instance('ins-incubationTime-items')/incubationTime">
-                        <xforms:label ref="label"/>
-                        <xforms:value ref="value"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='incubationTimes']/xs:restriction/xs:enumeration">
+                    	<xforms:label ref="for $currentItemName in @value return $resources/invitro/incubationTimes/incubationTime[@ref = $currentItemName]"/>
+                        <xforms:value ref="@value"/>
                     </xforms:itemset>
                 </xforms:select1>
+                <xforms:input ref="timeOfIncubationOther">
+                                <xforms:label/>
+                </xforms:input>
                 <br/>
                 <p>
                     <em> If this information is different for each sample, please include it in your
@@ -439,6 +438,20 @@
                         <xforms:value ref="value"/>
                     </xforms:itemset>
                 </xforms:select1>
+                <br/>
+               <xforms:select1 appearance="minimal" ref="precursorAdded">
+                	<xforms:label model="mod-study-info" ref="$resources/invitro/labels/precursorTimeLabel"/>
+                    <xforms:itemset model="mod-study-info"
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='precursorTimes']/xs:restriction/xs:enumeration">
+                    	<xforms:label ref="for $currentItemName in @value return $resources/invitro/precursorTimes/precursorTime[@ref = $currentItemName]"/>
+                        <xforms:value ref="@value"/>
+                    </xforms:itemset>
+                    <xforms:alert>Please select a value</xforms:alert>
+                </xforms:select1>
+                <xforms:input ref="precursorAddedOther">
+	                <xforms:label class="fixed-width"/>
+                </xforms:input>
+            <br/>
             </xforms:group>
 
             <!--
@@ -473,28 +486,24 @@
                                 <xforms:select1 appearance="minimal" ref="molecule">
                                     <xforms:label class="fixed-width">Molecule</xforms:label>
                                     <xforms:itemset model="mod-study-info"
-                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration">
-                                         <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration[not(@value = 'Other')]">
+                                         <xforms:label ref="for $currentItemName in @value return concat($resources/common/drugs/drugMolecule/name[@ref = $currentItemName],' (',$currentItemName,')')"/>
                                          <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-metaboliteMolecule-items')/metaboliteMolecule">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='metaboliteMolecules']/xs:restriction/xs:enumeration">
+                                         <xforms:label ref="for $currentItemName in @value return concat($resources/invitro/metaboliteMolecules/metaboliteMolecule[@ref = $currentItemName],' (',$currentItemName,')')"/>
+                                         <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:alert>Select a molecule</xforms:alert>
                                 </xforms:select1>
                                 <br/>
                                 <xforms:select1 appearance="minimal" ref="solvent">
-                                    <xforms:label class="fixed-width">Solvent of stock solution </xforms:label>
-                                    <xforms:item>
-                                        <xforms:label>please select</xforms:label>
-                                        <xforms:value/>
-                                    </xforms:item>
+                                	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/labels/drugSolventLabel"/>
                                     <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-drugSolvent-items')/drugSolvent">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugSolvents']/xs:restriction/xs:enumeration">
+                                         <xforms:label ref="for $currentItemName in @value return $resources/invitro/drugSolvents/drugSolvent[@ref = $currentItemName]"/>
+                                         <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:alert>Please select a value</xforms:alert>
                                 </xforms:select1>
@@ -509,7 +518,7 @@
                                 </xforms:input>
                                 <br/>
                                 <xforms:select1 appearance="minimal" ref="providedByWwarn">
-                                    <xforms:label>Were drug substances provided by WWARN? </xforms:label>
+                                	<xforms:label model="mod-study-info" ref="$resources/invitro/labels/drugProviderLabel"/>
                                     <xforms:item>
                                         <xforms:label>please select</xforms:label>
                                         <xforms:value/>
@@ -575,6 +584,20 @@
                     <xforms:value ref="value"/>
                 </xforms:itemset>
             </xforms:select1>
+            <br/>
+               <xforms:select1 appearance="minimal" ref="referenceClone">
+                	<xforms:label model="mod-study-info" ref="$resources/invitro/labels/referenceCloneLabel"/>
+                    <xforms:itemset model="mod-study-info"
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='referenceClones']/xs:restriction/xs:enumeration">
+                    	<xforms:label ref="for $currentItemName in @value return $resources/invitro/referenceClones/referenceClone[@ref = $currentItemName]"/>
+                        <xforms:value ref="@value"/>
+                    </xforms:itemset>
+                    <xforms:alert>Please select a value</xforms:alert>
+                </xforms:select1>
+                <xforms:input ref="referenceCloneOther">
+	                <xforms:label class="fixed-width"/>
+                </xforms:input>
+            <br/>
             <xforms:input ref="platesPreparationDate">
                 <xforms:label>Preparation Date</xforms:label>
             </xforms:input>
@@ -594,16 +617,12 @@
                             </td>
                             <td>
                                 <xforms:select1 appearance="minimal" ref="clone3D7ProvidedByWwarn">
-                                    <xforms:label class="fixed-width">Were 3D7 provided by WWARN? </xforms:label>
-                                    <xforms:item>
-                                        <xforms:label>please select</xforms:label>
-                                        <xforms:value/>
-                                    </xforms:item>
+                                	<xforms:label class="fixed-width" model="mod-study-info" ref="$resources/invitro/labels/cloneProviderLabel"/>
                                     <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-boolean-items')/boolean">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
-                                    </xforms:itemset>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='cloneProviders']/xs:restriction/xs:enumeration">
+                    					<xforms:label ref="for $currentItemName in @value return $resources/invitro/cloneProviders/cloneProvider[@ref = $currentItemName]"/>
+                        				<xforms:value ref="@value"/>
+                    				</xforms:itemset>
                                     <xforms:alert>Please select a value</xforms:alert>
                                 </xforms:select1>
                                 <br/>

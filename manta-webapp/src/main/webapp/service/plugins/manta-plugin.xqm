@@ -272,7 +272,7 @@ declare function manta-plugin:before-create-curated-media(
 
 declare function manta-plugin:is-draft($old-entry as element(atom:entry)) as xs:string
 {
-    if ($old-entry/app:control/draft/text() = 'yes') then
+    if ($old-entry/app:control/app:draft/text() = 'yes') then
       'yes'
     else 
       'no'

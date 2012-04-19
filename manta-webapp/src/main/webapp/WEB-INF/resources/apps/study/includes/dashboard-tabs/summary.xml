@@ -4,7 +4,8 @@
 	xmlns:xforms="http://www.w3.org/2002/xforms"
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:ev="http://www.w3.org/2001/xml-events"
-	xmlns:xi="http://www.w3.org/2001/XInclude">
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
 
 	<div id="bd" class="clearfix">
 		
@@ -53,6 +54,13 @@
 													<xforms:label>Title:</xforms:label>
 												</xforms:input>	    					
 											</p>
+											<xforms:group ref="instance('ins-control')/curator-controls">
+												<p>
+													<xforms:input ref="instance('ins-study-entry')//studyLabel">
+														<xforms:label>Label:</xforms:label>
+													</xforms:input>
+												</p>
+											</xforms:group>
 											<h3>Study type (WWARN modules)</h3>
 											
 											<p>Please select the WWARN Modules for which this study has data. If submitting data for parasite clearance rate estimation, select “Clinical”.</p>
@@ -98,10 +106,10 @@
 										 <p>
 											<span id="study-group-container">
 												<xforms:input ref="instance('ins-link-template')//atom:title">
-													<xforms:label>Study Group Title:</xforms:label>
+													<xforms:label>Linked Studies Collection Title:</xforms:label>
 												</xforms:input>	  
 												<xforms:trigger>
-													<xforms:label>Create new Study Group</xforms:label>
+													<xforms:label>Create new Linked Studies Collection</xforms:label>
 													<xforms:action ev:event="DOMActivate">
 														<xforms:send submission="sub-post-link"/>
 													</xforms:action>
@@ -137,8 +145,8 @@
 																<xforms:value></xforms:value>
 															</xforms:item>
 															
-															<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[(empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
-																<xforms:label ref="concat(atom:content/study/studyTitle, ' (', manta:id, ')')"/>
+															<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[(empty(app:control) or app:control/app:draft != 'yes')], atom:published, 'text', 'ascending')">
+																<xforms:label ref="concat(manta:id,' ',atom:content/study/studyTitle)"/>
 																<xforms:value ref="atom:link[@rel='self']/@href"/>
 															</xforms:itemset>
 														 </xforms:select1>

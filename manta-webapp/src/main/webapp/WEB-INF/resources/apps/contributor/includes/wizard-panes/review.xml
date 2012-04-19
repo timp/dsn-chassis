@@ -250,7 +250,7 @@
 													ref="instance('ins-study-entry')/atom:content/study/ui-info/wizard-pane-to-show"
 													value="'confirmation'" />
 												<xforms:setvalue
-													ref="instance('ins-study-entry')//app:control/draft"
+													ref="instance('ins-study-entry')//app:control/app:draft"
 													value="'no'" />
 												<xforms:send submission="sub-explicit-put-finished-entry" />
 											</xforms:action>

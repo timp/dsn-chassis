@@ -1,9 +1,10 @@
 <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
 	<atom:title type="text"/>
-	<app:control xmlns:app="http://www.w3.org/2007/app"><draft>yes</draft></app:control>
+	<app:control xmlns:app="http://www.w3.org/2007/app"><app:draft>yes</app:draft></app:control>
 	<atom:content type="application/vnd.chassis-manta+xml">
 		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/2.1">
 		    <studyTitle/>
+		    <studyLabel/>
 			<ui-info>
 				<wizard-pane-to-show>study-terms</wizard-pane-to-show>
 			</ui-info>
@@ -55,6 +56,7 @@
                         <annualParasitologicalIncidenceYear />
                         <parasitePrevalence />
                         <parasitePrevalenceYear />
+                        <transmissionIntensityLevel />
                         <transmissionIntensityAgeFrom />
                         <transmissionIntensityAgeFromUnits />
                         <transmissionIntensityAgeTo />
@@ -289,12 +291,18 @@
                 </drugSusceptibilityMedium>
                 <susceptibility>
                     <timeOfIncubation />
+                    <timeOfIncubationOther />
                     <susceptibilityMethod />
+                    <precursorAdded/>
+                    <precursorAddedOther/>
                 </susceptibility>
+                
                 <invitroDrugs />
                 <platePreparationMethod />
                 <platesPreparationDate />
                 <plateBatches />
+                <referenceClone/>
+                <referenceCloneOther/>
             </invitro>
 
             
