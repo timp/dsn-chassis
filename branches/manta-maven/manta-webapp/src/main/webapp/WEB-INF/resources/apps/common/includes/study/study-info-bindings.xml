@@ -497,10 +497,13 @@
                                     required="true()" /> -->
                             </xforms:bind>
                         </xforms:bind>
-                        <xforms:bind nodeset="susceptibility">
+                    </xforms:bind>
+                    <xforms:bind nodeset="susceptibility">
                             <xforms:bind nodeset="timeOfIncubation" />
+                            <xforms:bind nodeset="timeOfIncubationOther" relevant="contains(../timeOfIncubation,'other')" />
                             <xforms:bind nodeset="susceptibilityMethod" />
-                        </xforms:bind>
+                            <xforms:bind nodeset="precursorAdded" relevant="contains(../susceptibilityMethod,'isotopic')"/>
+                            <xforms:bind nodeset="precursorAddedOther" relevant="contains(../precursorAdded,'other') and contains(../susceptibilityMethod,'isotopic')"/>
                     </xforms:bind>
                     <xforms:bind nodeset="invitroDrugs">
                         <xforms:bind nodeset="invitroDrug">
@@ -537,6 +540,7 @@
                             <xforms:bind nodeset="ringFormingPercentage" />
                         </xforms:bind>
                     </xforms:bind>
+                    <xforms:bind nodeset="referenceCloneOther" relevant="contains(../referenceClone,'other')"/>
                 </xforms:bind>
 
 

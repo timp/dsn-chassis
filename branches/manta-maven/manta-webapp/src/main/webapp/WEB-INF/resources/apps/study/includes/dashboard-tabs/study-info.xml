@@ -54,7 +54,7 @@
 										    <xforms:value></xforms:value>
 										</xforms:item>
 									
-							           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/draft != 'yes')], atom:published, 'text', 'ascending')">
+							           	<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/app:draft != 'yes')], atom:published, 'text', 'ascending')">
 							           		<xforms:label ref="concat(atom:content/study/studyTitle, ' (', manta:id, ')')"/>
 							           		<xforms:value ref="atom:link[@rel='self']/@href"/>
 							           	</xforms:itemset>

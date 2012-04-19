@@ -100,16 +100,10 @@
 		src="/apps/common/constants/anticoagulants.xml" />
 	<xforms:instance id="ins-transportAndStorageTemperature-items"
 		src="/apps/common/constants/transportAndStorageTemperatures.xml" />
-	<xforms:instance id="ins-incubationTime-items"
-		src="/apps/common/constants/incubationTimes.xml" />
+	
 	<xforms:instance id="ins-susceptibilityMethod-items"
 		src="/apps/common/constants/susceptibilityMethods.xml" />
 	
-	<xforms:instance id="ins-metaboliteMolecule-items"
-		src="/apps/common/constants/metaboliteMolecules.xml" />
-	<xforms:instance id="ins-drugSolvent-items"
-		src="/apps/common/constants/drugSolvents.xml" />
-
 	<xforms:instance id="ins-molecularMarkerFalciparum-items"
 		src="/apps/common/constants/molecularMarkersFalciparum.xml" />
 	<xforms:instance id="ins-molecularMarkerVivax-items"

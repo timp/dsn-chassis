@@ -9,12 +9,12 @@
     <p>Studies awaiting completion, only accessible by you or a nominated administrator.
     </p>
     
-    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[app:control/draft/text() = 'yes'])]">
+    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[app:control/app:draft/text() = 'yes'])]">
         
         <!-- When no drafts. -->
     </xforms:group>
     
-    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[app:control/draft/text() = 'yes'])]">
+    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[app:control/app:draft/text() = 'yes'])]">
         
         <span id="list-of-studies-container">
             
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/draft/text() = 'yes'], atom:published, 'text', 'descending')">
+                    <xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[app:control/app:draft/text() = 'yes'], atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
                                 <a href="register-study-wizard?draft={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>

@@ -6,14 +6,14 @@
     <h2 class="clear">Submitted studies</h2>
     <p>Any study which you have permission to access will be listed here.  Contact WWARN to make further changes. 
     </p>
-    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[not(app:control/draft/text() = 'yes')])]">
+    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[not(app:control/app:draft/text() = 'yes')])]">
         
        
         
         
     </xforms:group>
     
-    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[not(app:control/draft/text() = 'yes')])]">
+    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[not(app:control/app:draft/text() = 'yes')])]">
         
         <span id="list-of-studies-container">
             
@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/draft/text() = 'yes')], atom:published, 'text', 'descending')">
+                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/app:draft/text() = 'yes')], atom:published, 'text', 'descending')">
                         <tr class="repeated-element">
                             <td>
                                 <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>

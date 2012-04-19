@@ -138,7 +138,7 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/draft/text() = 'yes')], atom:published, 'text', 'descending')">
+	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/app:draft/text() = 'yes')], atom:published, 'text', 'descending')">
 
 	    				<tr class="repeated-element">
 	    					<td>

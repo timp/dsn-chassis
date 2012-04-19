@@ -221,6 +221,16 @@ ul {
 .fixed-width {
     width: 12em;
 }
+
+.subtitle {
+	text-tranform: none;
+	font-size: .83em; 
+	font-weight: bold;
+	margin: 0.5em 0;
+	color: black;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
 .invisible {
 
 	display:none;

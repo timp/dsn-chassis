@@ -37,7 +37,7 @@
 
 
 	<xforms:bind nodeset="instance('ins-control')/copy-answers-control"
-		relevant="instance('ins-study-feed')[count(atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/draft != 'yes')])>1]" />
+		relevant="instance('ins-study-feed')[count(atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/app:draft != 'yes')])>1]" />
 	
 	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger"
 		readonly="../href-to-copy-study-info-from = ''" />

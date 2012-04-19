@@ -81,6 +81,17 @@
         </xs:restriction>
     </xs:simpleType>
     
+    <xs:simpleType name="incubationTimes">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="24h" />
+            <xs:enumeration value="42h" />
+            <xs:enumeration value="48h" />
+            <xs:enumeration value="72h" />
+            <xs:enumeration value="other" />
+        </xs:restriction>
+    </xs:simpleType>
+    
 	<xs:simpleType name="drugMolecules">
 		<xs:restriction base="xs:string">
             <xs:enumeration value="" />
@@ -147,6 +158,53 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="metaboliteMolecules">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CPQ" />
+			<xs:enumeration value="DLUM" />
+			<xs:enumeration value="DCQ" />
+			<xs:enumeration value="MDA" />
+			<xs:enumeration value="3HQ" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugSolvents">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="methanol" />
+			<xs:enumeration value="RPMI" />
+			<xs:enumeration value="distilled water" />
+			<xs:enumeration value="DMSO" />
+			<xs:enumeration value="ethanol" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="cloneProviders">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""></xs:enumeration>
+			<xs:enumeration value="false"></xs:enumeration>
+			<xs:enumeration value="wwarn-validated"></xs:enumeration>
+			<xs:enumeration value="true"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="precursorTimes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""></xs:enumeration>
+			<xs:enumeration value="0"></xs:enumeration>
+			<xs:enumeration value="24"></xs:enumeration>
+			<xs:enumeration value="other"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="referenceClones">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+			<xs:enumeration value="3D7"/>
+			<xs:enumeration value="W2"/>
+			<xs:enumeration value="other"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="drugTradeName">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="" />
@@ -264,5 +322,13 @@
   <xs:element name="day" type="optionalDecimal"/>
   <xs:element name="hour" type="optionalDecimal"/>
   <xs:element name="dose" type="optionalDecimal"/>
+  
+  <xs:element name="glucose-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="hematocritpercent" type="optionalDecimal"/>
+  <xs:element name="serum-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="hypoxantine-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="oroticAcid-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="NaHCO3-finalConcentration" type="optionalDecimal"/>
+  
 </xs:schema>
 
