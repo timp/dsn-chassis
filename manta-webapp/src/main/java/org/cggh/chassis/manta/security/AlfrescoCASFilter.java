@@ -3,39 +3,45 @@ package org.cggh.chassis.manta.security;
 import java.io.IOException;
 
 import javax.naming.NamingException;
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.atombeat.http.HttpFilter;
+import org.apache.http.HttpException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.cggh.chassis.manta.util.CasAlfrescoProxy;
 
 /**
  * @author iwright
  * 
  */
-public class AlfrescoCASFilter extends HttpFilter {
+public class AlfrescoCASFilter implements Filter {
 
-	private Log log = LogFactory.getLog(this.getClass());
+	private Log log = LogFactory.getLog(AlfrescoCASFilter.class);
 
 	public static final String ALFRESCO_TICKET = "alf_ticket";
 
 	@Override
-	public void doHttpFilter(HttpServletRequest request,
-			HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+	
 		log.debug("request inbound");
 
-		HttpClient client = new HttpClient();
+		HttpClient client = new DefaultHttpClient();
 		String ticket = null;
 		try {
-			ticket = CasAlfrescoProxy.getAlfrescoTicket(request, client);
+			ticket = CasAlfrescoProxy.getAlfrescoTicket((HttpServletRequest) request, client);
 		} catch (NamingException e) {
 			log.error("Need to set JNDI variable alfrescoApp if using Alfresco", e);
+		} catch (HttpException e) {
+			log.error("Failed to fetch alfresco ticket", e);
 		}
 		if (ticket != null) {
 			request.setAttribute(ALFRESCO_TICKET, ticket);
@@ -44,6 +50,19 @@ public class AlfrescoCASFilter extends HttpFilter {
 		chain.doFilter(request, response);
 
 		log.debug("response outbound");
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

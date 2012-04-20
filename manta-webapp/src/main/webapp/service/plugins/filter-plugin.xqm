@@ -7,6 +7,7 @@ declare namespace atombeat = "http://purl.org/atombeat/xmlns" ;
 declare namespace at = "http://purl.org/atompub/tombstones/1.0";
 (: see http://tools.ietf.org/html/draft-mehta-atom-inline-01 :)
 declare namespace ae = "http://purl.org/atom/ext/" ;
+declare namespace app = "http://www.w3.org/2007/app" ;
 declare namespace filter = "http://www.cggh.org/2010/chassis/filter/xmlns" ;
 declare namespace manta = "http://www.cggh.org/2010/chassis/manta/xmlns" ;
 
@@ -130,7 +131,7 @@ declare function filter-plugin:do-filter-pdr(
      let $ret := 
          if (not(exists($pdr//atom:content//outcome)) or $pdr//atom:content//outcome = "fail" ) then
              let $study := atomdb:retrieve-member($study-path)
-             return if ($study//draft = "no") then
+             return if ($study//app:draft = "no") then
                      let $new-entry := if (exists($pdr//atom:content)) then
                                          let $augmented := filter-plugin:get-pdr-augmentation($pdr//atom:content/review/outcome)
                                          let $new-entry := filter-plugin:augment-atom-entry($entry, $augmented)

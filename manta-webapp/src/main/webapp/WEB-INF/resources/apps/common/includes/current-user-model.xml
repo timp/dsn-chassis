@@ -21,7 +21,7 @@
     
     <xforms:action 
         ev:event="xforms-model-construct-done">
-        <xforms:setvalue ref="instance('ins-current-user')/name" value="xxforms:get-remote-user()"/>
+        <xforms:setvalue ref="instance('ins-current-user')/name/text()" value="xxforms:get-remote-user()"/>
     </xforms:action>
     
     <xforms:action 

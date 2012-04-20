@@ -55,9 +55,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 import javax.naming.NamingException;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
@@ -76,7 +74,7 @@ import org.orbeon.oxf.processor.Processor;
 import org.orbeon.oxf.processor.ProcessorImpl;
 import org.orbeon.oxf.processor.ProcessorInputOutputInfo;
 import org.orbeon.oxf.processor.generator.URLGenerator;
-import org.orbeon.oxf.processor.serializer.BinaryTextContentHandler;
+import org.orbeon.oxf.processor.serializer.BinaryTextXMLReceiver;
 import org.orbeon.oxf.properties.PropertySet;
 import org.orbeon.oxf.resources.URLFactory;
 import org.orbeon.oxf.util.LoggerFactory;
@@ -89,7 +87,6 @@ import org.orbeon.oxf.xml.dom4j.Dom4jUtils;
 import org.orbeon.oxf.xml.dom4j.LocationData;
 import org.orbeon.oxf.xml.dom4j.LocationSAXWriter;
 import org.orbeon.oxf.xml.dom4j.NonLazyUserDataDocument;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -561,14 +558,11 @@ public class SecureEmailProcessor extends ProcessorImpl {
 	// NOTE: Method is public for unit tests
 	public static FileItem handleStreamedPartContent(
 			PipelineContext pipelineContext, SAXSource source)
-			throws IOException, TransformerException {
+	throws IOException, TransformerException {
 
-		final FileItem fileItem = NetUtils.prepareFileItem(pipelineContext,
-				NetUtils.REQUEST_SCOPE);
-		final ContentHandler ch = new BinaryTextContentHandler(
-				fileItem.getOutputStream());
-		final Transformer identity = TransformerUtils.getIdentityTransformer();
-		identity.transform(source, new SAXResult(ch));
+		final FileItem fileItem = NetUtils.prepareFileItem(pipelineContext, NetUtils.REQUEST_SCOPE);
+		TransformerUtils.sourceToSAX(source, new BinaryTextXMLReceiver(fileItem.getOutputStream()));
+
 		return fileItem;
 	}
 
