@@ -117,13 +117,6 @@
 				<incubationTime ref="72h">72 hours</incubationTime>
 				<incubationTime ref="other">Other</incubationTime>
 			</incubationTimes>
-			<metaboliteMolecules>
-				<metaboliteMolecule ref="CPQ">carboxy-primaquine</metaboliteMolecule>
-				<metaboliteMolecule ref="DLUM">desbutyl-lumefantrine</metaboliteMolecule>
-				<metaboliteMolecule ref="DCQ">desethyl-chloroquine</metaboliteMolecule>
-				<metaboliteMolecule ref="MDA">monodesethylamodiaquine</metaboliteMolecule>
-				<metaboliteMolecule ref="3HQ">3-hydroxyquinine</metaboliteMolecule>
-			</metaboliteMolecules>
 			<referenceClones>
 				<referenceClone ref="">please select</referenceClone>
 				<referenceClone ref="3D7">yes, 3D7</referenceClone>
@@ -269,6 +262,13 @@
 					<name ref="Other">Other</name>
 				</drugMolecule>
 			</drugs>
+			<metaboliteMolecules>
+				<metaboliteMolecule ref="CPQ">carboxy-primaquine</metaboliteMolecule>
+				<metaboliteMolecule ref="DLUM">desbutyl-lumefantrine</metaboliteMolecule>
+				<metaboliteMolecule ref="DCQ">desethyl-chloroquine</metaboliteMolecule>
+				<metaboliteMolecule ref="MDA">monodesethylamodiaquine</metaboliteMolecule>
+				<metaboliteMolecule ref="3HQ">3-hydroxyquinine</metaboliteMolecule>
+			</metaboliteMolecules>
 		</common>
 	</resources>
 </resources>

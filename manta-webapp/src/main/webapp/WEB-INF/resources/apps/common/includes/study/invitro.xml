@@ -492,7 +492,7 @@
                                     </xforms:itemset>
                                     <xforms:itemset model="mod-study-info"
                                          nodeset="instance('study-info-resources')//xs:simpleType[@name='metaboliteMolecules']/xs:restriction/xs:enumeration">
-                                         <xforms:label ref="for $currentItemName in @value return concat($resources/invitro/metaboliteMolecules/metaboliteMolecule[@ref = $currentItemName],' (',$currentItemName,')')"/>
+                                         <xforms:label ref="for $currentItemName in @value return concat($resources/common/metaboliteMolecules/metaboliteMolecule[@ref = $currentItemName],' (',$currentItemName,')')"/>
                                          <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:alert>Select a molecule</xforms:alert>
