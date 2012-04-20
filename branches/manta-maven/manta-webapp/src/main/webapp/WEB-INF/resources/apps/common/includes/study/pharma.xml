@@ -183,9 +183,9 @@
                                          <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-metaboliteMolecule-items')/metaboliteMolecule">
-                                        <xforms:label ref="label"/>
-                                        <xforms:value ref="value"/>
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='metaboliteMolecules']/xs:restriction/xs:enumeration">
+                                         <xforms:label ref="for $currentItemName in @value return $resources/common/metaboliteMolecules/metaboliteMolecule[@ref = $currentItemName]"/>
+                                         <xforms:value ref="@value"/>
                                     </xforms:itemset>
                                     <xforms:alert>Please select a molecule</xforms:alert>
                                     <xforms:hint>Name of drug given or metabolite
