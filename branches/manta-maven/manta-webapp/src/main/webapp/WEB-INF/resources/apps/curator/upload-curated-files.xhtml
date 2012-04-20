@@ -35,6 +35,12 @@
 
 			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
 			
+			<xforms:instance id="ins-request">
+				<request/>
+			</xforms:instance>
+			
+			
+			
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
@@ -96,6 +102,9 @@
         	
         	
 			<xforms:action ev:event="xforms-model-construct-done">
+				<xforms:insert 
+            context="instance('ins-request')"
+            origin="xxforms:element('study-url',xxforms:get-request-parameter('study'))"/>
 				<xforms:send submission="sub-get-study-entry"/>
 			</xforms:action>
 			
@@ -349,7 +358,7 @@
     		</h1>  
     		
     		<p>
-    			<a href="../study/dashboard?tab=files&amp;study={xxforms:get-request-parameter('study')}">&lt;&lt; Study Dashboard</a>
+    			<a href="../study/dashboard?tab=files&amp;study={instance('ins-request')//study-url}">&lt;&lt; Study Dashboard</a>
     		</p>
 
     		<h2>(1) Upload</h2>

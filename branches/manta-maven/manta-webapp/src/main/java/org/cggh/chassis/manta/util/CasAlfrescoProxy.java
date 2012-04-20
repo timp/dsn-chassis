@@ -15,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.Header;
+import org.apache.http.HttpException;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.jasig.cas.client.util.AbstractCasFilter;
@@ -51,67 +54,64 @@ public class CasAlfrescoProxy extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		HttpClient client = new HttpClient();
-		
-		GetMethod method;
+		HttpClient client = new DefaultHttpClient();
+
+		HttpGet method;
 		int statusCode;
 		String ticketXML = null;
 		try {
 			ticketXML = CasAlfrescoProxy.getAlfrescoTicket(req, client);
 		} catch (NamingException e) {
-			logger.error("Need to set JNDI variable alfrescoApp if using Alfresco", e);
+			logger.error(
+					"Need to set JNDI variable alfrescoApp if using Alfresco",
+					e);
+		} catch (HttpException e) {
+			logger.error(
+					"Http exception thrown",
+					e);
 		}
-		
+
 		if (ticketXML == null) {
 			return;
 		}
 		String ticket = CasAlfrescoProxy.extractTicket(ticketXML);
 
-		//Should really check if there are any existing parameters - this assumes that there are none
+		// Should really check if there are any existing parameters - this
+		// assumes that there are none
 		String service = req.getParameter("url") + "?alf_ticket=" + ticket;
 
-		method = new GetMethod(service);
-		statusCode = client.executeMethod(method);
+		method = new HttpGet(service);
+		HttpResponse httpResponse = client.execute(method);
+		statusCode = httpResponse.getStatusLine().getStatusCode();
 
-		InputStream is = method.getResponseBodyAsStream();
-		// do something with the input stream
-		BufferedReader in = new BufferedReader(new InputStreamReader(is));
-		PrintWriter out = new PrintWriter(resp.getOutputStream(), true);
-		// Copy the headers
-		Header headers[] = method.getResponseHeaders();
-		for (int i = 0; i < headers.length; i++) {
-			Header head = headers[i];
-			resp.setHeader(head.getName(), head.getValue());
+		if (statusCode == HttpStatus.SC_OK) {
+			InputStream is = httpResponse.getEntity().getContent();
+			// do something with the input stream
+			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			PrintWriter out = new PrintWriter(resp.getOutputStream(), true);
+			// Copy the headers
+			Header[] headers = httpResponse.getAllHeaders();
+			for (int i = 0; i < headers.length; i++) {
+				Header head = headers[i];
+				resp.setHeader(head.getName(), head.getValue());
+			}
+			// Copy the content
+			String line;
+			while ((line = in.readLine()) != null) {
+				out.print(line);
+			}
+			in.close();
+			out.close();
 		}
-		// Copy the content
-		String line;
-		while ((line = in.readLine()) != null) {
-			out.print(line);
-		}
-		in.close();
-		out.close();
 		resp.setStatus(statusCode);
-		method.releaseConnection();
-
-		/*
-		 * HttpClient 4.0:
-		 * 
-		 * HttpClient client = new DefaultHttpClient(); HttpGet method = new
-		 * HttpGet(url); HttpResponse httpResponse = client.execute(method); int
-		 * statusCode = httpResponse.getStatusLine().getStatusCode(); if
-		 * (statusCode == HttpStatus.SC_OK) { InputStream is =
-		 * httpResponse.getEntity().getContent(); // do something with the input
-		 * stream }
-		 */
-
 	}
 
-	public static String getAlfrescoTicket(HttpServletRequest req, HttpClient client)
-			throws UnsupportedEncodingException, IOException, HttpException,
-			ServletException, NamingException {
-		
+	public static String getAlfrescoTicket(HttpServletRequest req,
+			HttpClient client) throws UnsupportedEncodingException,
+			IOException, HttpException, ServletException, NamingException {
+
 		HttpSession httpSess = req.getSession(true);
-		
+
 		// Get CAS information
 		Assertion assertion = (Assertion) httpSess
 				.getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
@@ -121,7 +121,8 @@ public class CasAlfrescoProxy extends HttpServlet {
 		String username = assertion.getPrincipal().getName();
 		// Read out the ticket id
 		String ticket = null;
-		String alfrescoWebAppURL = LookupJNDI.<String> getEnvEntry(ALFRESCO_WEBAPP_URL_CONFIG);
+		String alfrescoWebAppURL = LookupJNDI
+				.<String> getEnvEntry(ALFRESCO_WEBAPP_URL_CONFIG);
 		if (alfrescoWebAppURL == null) {
 			return (null);
 		}
@@ -135,13 +136,12 @@ public class CasAlfrescoProxy extends HttpServlet {
 				+ URLEncoder.encode(username, "UTF-8") + "&t="
 				+ URLEncoder.encode(proxyticket, "UTF-8");
 
-		
-		GetMethod method = new GetMethod(casLoginUrl);
-		method.setRequestHeader("cookie", req.getHeader("cookie"));
-		int statusCode = client.executeMethod(method);
+		HttpGet method = new HttpGet(casLoginUrl);
+		method.setHeader("cookie", req.getHeader("cookie"));
+		HttpResponse resp = client.execute(method);
 		// Read back the ticket
-		if (statusCode == 200) {
-			InputStream is = method.getResponseBodyAsStream();
+		if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			InputStream is = resp.getEntity().getContent();
 			// do something with the input stream
 			BufferedReader in = new BufferedReader(new InputStreamReader(is));
 			String line;
@@ -151,14 +151,14 @@ public class CasAlfrescoProxy extends HttpServlet {
 			}
 			in.close();
 			ticket = responseText;
-			
+
 		} else {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Authentication failed, received response code: "
-						+ statusCode);
+						+ resp.getStatusLine().getStatusCode());
 			}
 		}
-		method.releaseConnection();
+		
 		return ticket;
 	}
 
@@ -166,8 +166,8 @@ public class CasAlfrescoProxy extends HttpServlet {
 			throws ServletException {
 		String ticket = null;
 		try {
-			ticket = DocumentHelper.parseText(responseText)
-					.getRootElement().getTextTrim();
+			ticket = DocumentHelper.parseText(responseText).getRootElement()
+					.getTextTrim();
 		} catch (DocumentException de) {
 			// The ticket that came back was unparseable or invalid
 			// This will cause the entire handshake to fail

@@ -84,7 +84,7 @@
 <tr>
 	<td>type</td>
 	<td>xpath=//input[@type='file']</td>
-	<td>~/workspace/manta-webapp/selenium-ide/pdr</td>
+	<td>/data/testdata/uploadFiles/replacement</td>
 </tr>
 <tr>
 	<td>type</td>

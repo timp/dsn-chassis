@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Servlet implementation class ChangeContentType
@@ -35,44 +37,50 @@ public class ChangeContentType extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		HttpClient client = new HttpClient();
+		
 		String url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id="
 				+ request.getParameter("id");
-		GetMethod method = new GetMethod(url);
-		int statusCode = client.executeMethod(method);
-		if (statusCode == HttpStatus.SC_OK) {
-			InputStream is = method.getResponseBodyAsStream();
-			// do something with the input stream
-			BufferedReader in = new BufferedReader(new InputStreamReader(is));
-			PrintWriter out = new PrintWriter(response.getOutputStream(), true);
-			// Copy the headers
-			Header headers[] = method.getResponseHeaders();
-			for (int i = 0; i < headers.length; i++) {
-				Header head = headers[i];
-				response.setHeader(head.getName(), head.getValue());
+		
+		HttpClient client = null;
+		try {
+			client = new DefaultHttpClient();
+			HttpGet method = new HttpGet(url);
+			HttpResponse httpResponse = client.execute(method);
+			int statusCode = httpResponse.getStatusLine().getStatusCode();
+			if (statusCode == HttpStatus.SC_OK) {
+				InputStream is = httpResponse.getEntity().getContent(); 
+			
+				// do something with the input stream
+				BufferedReader in = new BufferedReader(new InputStreamReader(is));
+				PrintWriter out = new PrintWriter(response.getOutputStream(), true);
+				// Copy the headers
+				
+				
+				Header headers[] = method.getAllHeaders();
+				for (int i = 0; i < headers.length; i++) {
+					Header head = headers[i];
+					response.setHeader(head.getName(), head.getValue());
+				}
+				
+				// Replace the content-type header
+				response.setHeader("Content-Type", "text/xml");
+				// Copy the content
+				String line;
+				while ((line = in.readLine()) != null) {
+					out.print(line);
+				}
+				in.close();
+				out.close();
 			}
-			// Replace the content-type header
-			response.setHeader("Content-Type", "text/xml");
-			// Copy the content
-			String line;
-			while ((line = in.readLine()) != null) {
-				out.print(line);
+		} finally {
+			if (client != null) {
+				client.getConnectionManager().shutdown();
 			}
-			in.close();
-			out.close();
 		}
-		method.releaseConnection();
-
 		/*
 		 * HttpClient 4.0:
-		 * 
-		 * HttpClient client = new DefaultHttpClient(); HttpGet method = new
-		 * HttpGet(url); HttpResponse httpResponse = client.execute(method); int
-		 * statusCode = httpResponse.getStatusLine().getStatusCode(); if
-		 * (statusCode == HttpStatus.SC_OK) { InputStream is =
-		 * httpResponse.getEntity().getContent(); // do something with the input
-		 * stream }
 		 */
+		
 
 	}
 }

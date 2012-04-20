@@ -1,15 +1,23 @@
 package org.cggh.chassis.manta.http.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * A class to wrap dx.doi.org and return testable statuses.
@@ -21,31 +29,57 @@ public class DOILookup extends HttpServlet {
 
 	private static final long serialVersionUID = -5048380360952603272L;
 
-	public static final HttpClient client = new HttpClient();
+	public static final HttpClient client = new DefaultHttpClient();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String doi = getCleanDOI(req);
 		if (doi != null) {
 			String url = "http://dx.doi.org/" + doi;
-			HttpMethod get = new GetMethod(url);
-			client.executeMethod(get);
-			if (new String(get.getResponseBody()).contains("Not Found")) {
-				resp.setStatus(404);
+			HttpClient client = null;
+			try {
+				client = new DefaultHttpClient();
+				HttpGet method = new HttpGet(url);
+				HttpResponse httpResponse = client.execute(method);
+				int statusCode = httpResponse.getStatusLine().getStatusCode();
+				if (statusCode == HttpStatus.SC_OK) {
+					InputStream is = httpResponse.getEntity().getContent(); 
+					Writer writer = new StringWriter();
 
-				printHeader(resp, "Resource not found");
+					char[] buffer = new char[1024];
+					try {
+						Reader reader = new BufferedReader(
+								new InputStreamReader(is, "UTF-8"));
+						int n;
+						while ((n = reader.read(buffer)) != -1) {
+							writer.write(buffer, 0, n);
+						}
+					} finally {
+						is.close();
+					}
+					String content = writer.toString();
+					if (content.contains("cannot be found in the Handle System")) {
+						resp.setStatus(404);
 
-				resp.getWriter().println("<p>" + doi + " could not be dereferenced at <a href=\"" + url + "\">" + url + "</a>.</p>");
+						printHeader(resp, "Resource not found");
 
-				printFooter(resp);
-			} else {
-				resp.setStatus(200);
+						resp.getWriter().println("<p>" + doi + " could not be dereferenced at <a href=\"" + url + "\">" + url + "</a>.</p>");
 
-				printHeader(resp, "Resource found");
+						printFooter(resp);
+					} else {
+						resp.setStatus(200);
 
-				resp.getWriter().println("<p>Found " + doi + " at <a href=\"" + url + "\">" + url + "</a>.</p>");
+						printHeader(resp, "Resource found");
 
-				printFooter(resp);
+						resp.getWriter().println("<p>Found " + doi + " at <a href=\"" + url + "\">" + url + "</a>.</p>");
+
+						printFooter(resp);
+					}
+				}
+			} finally {
+				if (client != null) {
+					client.getConnectionManager().shutdown();
+				}
 			}
 		} else {
 			resp.setStatus(200);
@@ -66,13 +100,20 @@ public class DOILookup extends HttpServlet {
 		}
 	}
 
-	private void printHeader(HttpServletResponse resp, String title) throws IOException {
+	private void printHeader(HttpServletResponse resp, String title)
+	throws IOException {
 		resp.setContentType("text/html; charset=utf-8");
-		resp.getWriter().println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
-		resp.getWriter().println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
-		resp.getWriter().println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
+		resp.getWriter().println(
+		"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" ");
+		resp.getWriter().println(
+		"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+		resp.getWriter()
+		.println(
+				"<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
 		resp.getWriter().println(" <head>");
-		resp.getWriter().println("  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
+		resp.getWriter()
+		.println(
+				"  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
 
 		resp.getWriter().println("  <title>");
 		resp.getWriter().println(title);
