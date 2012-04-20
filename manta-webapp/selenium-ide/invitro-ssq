@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label,'Hypoxantine')]</td>
+	<td>xpath=//select[contains(../label,'Hypoxanthine')]</td>
 	<td>label=yes</td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[2],'Method used')])[2]</td>
+	<td>xpath=(//select[contains(../label[3],'Method used')])[2]</td>
 	<td>label=HRP2 ELISA</td>
 </tr>
 <tr>
@@ -151,7 +151,7 @@
 <tr>
 	<td>select</td>
 	<td>xpath=//select[contains(../label,'Molecule')]</td>
-	<td>label=atovaquone</td>
+	<td>label=atovaquone (AV)</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains((../label)[4],'provided by WWARN')])[3]</td>
+	<td>xpath=(//select[contains((../label)[4],'provided by the WWARN')])[3]</td>
 	<td>label=no</td>
 </tr>
 <tr>
@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../../label[3],'Preparation Date')])[2]</td>
+	<td>xpath=(//input[contains(../../label[5],'Preparation Date')])[3]</td>
 	<td>25.3.2011</td>
 </tr>
 <tr>
@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>xpath=(//input[contains(../../label[3],'Preparation Date')])[2]</td>
+	<td>xpath=(//input[contains(../../label[5],'Preparation Date')])[3]</td>
 	<td>25.3.2011</td>
 </tr>
 <tr>

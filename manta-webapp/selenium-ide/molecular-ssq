@@ -38,32 +38,32 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>xpath=//input[../label = 'P. falciparum']</td>
+	<td>xpath=//label[. = 'P. falciparum']/input</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//input[../label='pfcrt 72']</td>
+	<td>xpath=//label[ . ='pfcrt 72']/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>xpath=//input[../label = 'P. vivax']</td>
+	<td>xpath=//label[. = 'P. vivax']/input</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//input[../label='pvmdr1 976']</td>
+	<td>xpath=//label[. ='pvmdr1 976']/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>xpath=//input[../label = 'P. ovale']</td>
+	<td>xpath=//label[. = 'P. ovale']/input</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//input[../label='other' and contains(../../../label,'Ovale')]</td>
+	<td>xpath=//label[. ='other' and contains(../../../label,'Ovale')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,12 +93,12 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=//input[contains(../label,'mixed')]</td>
+	<td>xpath=//label[contains(.,'mixed')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//input[contains(../label,'mixed')]</td>
+	<td>xpath=//label[contains(.,'mixed')]/input</td>
 	<td></td>
 </tr>
 <tr>
