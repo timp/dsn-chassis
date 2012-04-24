@@ -348,7 +348,7 @@ from `Site` JOIN `Sites` ON `Sites`.`Hjid` = `Site`.`Site_Sites_Hjid`
      JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkAnalytes` AS
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkAnalytes` AS
   SELECT `e`.`StudyID` AS `StudyID`
      , `a`.`Hjid` AS `Hjid`
      , `a`.`DTYPE` AS `DTYPE`
@@ -369,11 +369,29 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkAnalytes` AS
 ;
 
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkSampleStorage` AS
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkSamples` AS
+SELECT Sample.Hjid AS Sample_Hjid, StorageTemperature,StorageDuration,StorageDurationUnit
+FROM
+  `SampleStorage` 
+JOIN Storages ON Storages.Hjid = SampleStorage.Storage__Storages_Hjid
+JOIN Sample ON Sample.Storages_Sample_Hjid = Storages.Hjid
+JOIN `Samples`  ON `Sample`.`Sample_Samples_Hjid` = `Samples`.`Hjid`
+JOIN `Pharmacology` `p` ON `p`.`Samples_Pharmacology_Hjid` = `Samples`.`Hjid`
+JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+WHERE NOT(StorageTemperature = '' AND StorageDuration = '' AND StorageDurationUnit = '');
 
-SELECT `e`.`StudyID` AS `StudyID`
-     ,Sample.*
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkSamples` AS
+
+SELECT `e`.`StudyID` AS `StudyID`,
+	`Sample`.`Hjid` AS Sample_Hjid,
+	`Sample`.`CentrifugeTime` AS `CentrifugeTime`,
+	`Sample`.`Anticoagulent` AS `Anticoagulent`,
+	`Sample`.`SampleTypeOpen_Sample_Hjid` AS `SampleTypeOpen_Sample_Hjid`,
+	`Sample`.`Storages_Sample_Hjid` AS `Storages_Sample_Hjid`
 FROM
   `Sample` 
 JOIN `Samples`  ON `Sample`.`Sample_Samples_Hjid` = `Samples`.`Hjid`
@@ -385,7 +403,7 @@ JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 
 
-CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `pkdetails` AS
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkdetails` AS
 
 SELECT `e`.`StudyID` AS `StudyID`
      , `p`.`Hjid` AS `Hjid`
@@ -402,6 +420,18 @@ JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
 JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
 JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
 JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkAssayReferences` AS
+SELECT e.StudyID,AssayValidated,ReferenceType,Url,Doi,Note,u.UploadedUrl FROM chassisPruned.AssayReference ar
+    JOIN AssayReferences ars ON ar.AssayReference_AssayReferences_Hjid = ars.Hjid
+    LEFT JOIN Upload u ON Upload_AssayReference_Hjid = u.Hjid
+    JOIN `Pharmacology` `p` ON `p`.`AssayReferences_Pharmacology_Hjid` = ars.`Hjid`
+    JOIN `StudyInfo` `si` ON `si`.`Pharmacology_StudyInfo_Hjid` = `p`.`Hjid`
+    JOIN `Study` `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`
+    JOIN `Content` `c` ON `c`.`Study_Content_Hjid` = `s`.`Hjid`
+    JOIN `Entry` `e` ON `e`.`Content_Entry_Hjid` = `c`.`Hjid`
+    WHERE NOT ((Doi IS NULL OR Doi = '') AND (Note IS NULL OR Note = '') AND (Url IS NULL OR Url = ''));
+
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ackPeople` AS
 SELECT e.StudyId, p.Hjid as studyContactId, FirstName, MiddleName, FamilyName, EmailAddress, PersonIsContactable, Institution FROM Person p
