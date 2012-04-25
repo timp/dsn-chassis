@@ -145,7 +145,14 @@ SELECT StudyId,Pmid,PublicationTitle,p.Hjid as publicationId FROM `Publication` 
 	join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
 	join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
-
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_PublicationRefs` AS
+  SELECT StudyID, PublicationReferenceType,Identifier FROM PublicationReference pr
+    JOIN PublicationReferences prs ON pr.PublicationReference_PublicationReferences_Hjid = prs.Hjid
+    JOIN `Publication` p ON p.PublicationReferences_Publication_Hjid = prs.Hjid
+	JOIN `Publications` ps on p.Publication_Publications_Hjid = ps.Hjid
+    join `Study` `s` on `s`.`Publications_Study_Hjid` = `ps`.`Hjid`
+	join `Content` `c` on `c`.`Study_Content_Hjid` = `s`.`Hjid`
+	join `Entry` `e` on `e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyInfo` AS
 select `e`.`StudyID` AS `StudyID`,
