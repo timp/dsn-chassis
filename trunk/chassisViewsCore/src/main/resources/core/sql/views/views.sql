@@ -1,4 +1,13 @@
 
+CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_PeopleAcks` AS
+	SELECT StudyID, FirstName, MiddleName, FamilyName, EmailAddress, PersonIsContactable FROM Person
+        JOIN People p ON Person_People_Hjid = p.Hjid
+        JOIN AcksInstitutionsOrPeopleItem ai ON ai.ItemPeople_AcksInstitutionsOrPeopleItem_Hjid = p.Hjid
+        JOIN Acks a ON ai.InstitutionsOrPeopleItems_Acks_Hjid = a.Hjid
+        JOIN `Study` `s` on`s`.`Acknowledgements_Study_Hjid` = `a`.`Hjid`
+		JOIN `Content` `c` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+		JOIN `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
+		
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_InstitutionURL` AS
 	SELECT StudyID,ia.Hjid AS InstitutionId,Item AS URL FROM InstWebInstitutionUrlItem url
         JOIN InstWeb iw ON url.InstitutionUrlItems_InstWeb_Hjid = iw.Hjid
