@@ -1,6 +1,6 @@
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_InstitutionURL` AS
-	SELECT StudyID,i.Hjid AS InstitutionId,Item AS URL FROM InstWebInstitutionUrlItem url
+	SELECT StudyID,ia.Hjid AS InstitutionId,Item AS URL FROM InstWebInstitutionUrlItem url
         JOIN InstWeb iw ON url.InstitutionUrlItems_InstWeb_Hjid = iw.Hjid
         JOIN InstitutionAck ia ON ia.InstitutionWebsites_InstitutionAck_Hjid = iw.Hjid
         JOIN Institutions i ON ia.InstitutionAck_Institutions_Hjid = i.Hjid
@@ -11,7 +11,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_InstitutionURL` AS
 		JOIN `Entry` `e` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`;
 		
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyInstitutions` AS
-	SELECT StudyID,InstitutionName,i.Hjid AS InstitutionId FROM InstitutionAck ia
+	SELECT StudyID,InstitutionName,ia.Hjid AS InstitutionId FROM InstitutionAck ia
         JOIN Institutions i ON ia.InstitutionAck_Institutions_Hjid = i.Hjid
         JOIN AcksInstitutionsOrPeopleItem ai ON ai.ItemInstitutions_AcksInstitutionsOrPeopleItem_Hjid = i.Hjid
         JOIN Acks a ON ai.InstitutionsOrPeopleItems_Acks_Hjid = a.Hjid
