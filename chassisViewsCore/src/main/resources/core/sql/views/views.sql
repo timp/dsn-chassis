@@ -165,12 +165,14 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
 			,`s`.`CuratorNotes` AS `curatorNotes`
 			,`s`.`StudyIsPublished` AS `studyIsPublished`
 			,`s`.`ExplorerDisplay` AS `explorerDisplay`
-			,`s`.`Modules` AS `modules` 
+			,`s`.`Modules` AS `modules`
+			,Control.Draft
             , a.email
             ,PublishedItem
             FROM `Entry` `e` 
         join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
         join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
+        join Control on e.Control_Entry_Hjid = Control.Hjid
         JOIN `Author` a ON a.Hjid = e.Author_Entry_Hjid;
 
 
