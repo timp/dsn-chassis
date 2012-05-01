@@ -9,6 +9,7 @@ select
    Site.Latitude,
    Site.Longitude,
    s.StudyTitle,
+   Publication.Pmid,
    Publication.PublicationTitle
  from 
 ( select 
