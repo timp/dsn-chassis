@@ -8,7 +8,8 @@ select
    Publication.Pmid,
    PublicationReference.PublicationReferenceType as Type,
    PublicationReference.Identifier,
-   Publication.PublicationTitle
+   Publication.PublicationTitle, 
+   StudyTitle
  from 
 ( select 
    Entry.StudyId, 
