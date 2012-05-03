@@ -40,7 +40,7 @@
     <groupId>org.atombeat</groupId>
     <artifactId>atombeat-orbeon-minimal</artifactId>
   </rootModule>
-  <goals>-D maven.test.skip=true clean install deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>-D maven.test.skip=true clean install  -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <mavenOpts>-Xmx1024M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>

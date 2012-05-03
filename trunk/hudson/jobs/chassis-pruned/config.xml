@@ -40,7 +40,7 @@
     <groupId>org.cggh.chassis</groupId>
     <artifactId>chassis-pruned</artifactId>
   </rootModule>
-  <goals>deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/ -DchassisDb_user=chassisDb</goals>
+  <goals>deploy -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/ -DchassisDb_user=chassisDb site</goals>
   <defaultGoals>install</defaultGoals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
