@@ -21,10 +21,10 @@ export out=`date "+%Y%m%d"`
 export file=chassisPruned_$out.sql
 
 mysqldump -u root chassisPruned  --complete-insert --skip-opt --add-drop-table  > $file
-
 cp $file chassisPruned.sql 
 
-scp $file uploader@reporting.wwarn.org:/home/uploader/
+# No longer
+#scp $file uploader@reporting.wwarn.org:/home/uploader/
 
 #curl --upload-file chassisDb.sql --user $user:$passwd -s -S \
 # https://www.wwarn.org/alfresco/service/cmis/s/workspace:SpacesStore/i/b4fc79d3-3160-4f88-a7ea-82fcb6f3017e/content.sql
