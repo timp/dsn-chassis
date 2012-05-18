@@ -39,7 +39,7 @@ CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled"
 
 
 Deploy to your webserver then run tests. 
-The databse definitions are in src/main/resources/spring/database.properties 
+The database definitions are in src/main/resources/spring/database.properties 
 
 The applicationContext.xml file in the same directory controls table creation: 
 <prop key="eclipselink.ddl-generation">create-tables</prop>
