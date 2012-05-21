@@ -169,6 +169,7 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW `v_StudyDetails` AS
 			,Control.Draft
             , a.email
             ,PublishedItem
+            ,UpdatedItem
             FROM `Entry` `e` 
         join `Content` `c` on`e`.`Content_Entry_Hjid` = `c`.`Hjid`
         join `Study` `s` on`c`.`Study_Content_Hjid` = `s`.`Hjid`
