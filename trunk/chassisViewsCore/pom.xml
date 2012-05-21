@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>chassisViewsCore</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 
 	<repositories>
 		<repository>
@@ -39,9 +39,9 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.3</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.3</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.3</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassisViewsCore</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/chassisViewsCore</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassisViewsCore</url>
 	</scm>
 
 
