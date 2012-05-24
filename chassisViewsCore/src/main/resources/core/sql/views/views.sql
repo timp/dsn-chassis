@@ -219,7 +219,9 @@ WHERE
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalRegimen` AS
 SELECT  cd1.studyId,
     cd1.regimen_Hjid, 
-    regimenName, 
+    RegimenName, 
+    RegimenUrl,
+    RegimenSupervision,
     cd1.drugName as drug1Name,
     cd1.Hjid as drug1_Hjid,
            ai1.ActiveIngredientName as drug1ai1Name,
