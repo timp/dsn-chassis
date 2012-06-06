@@ -217,7 +217,7 @@ WHERE
      
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalRegimen` AS
-SELECT  cd1.studyId,
+SELECT  s.studyId,
     cd1.regimen_Hjid, 
     RegimenName, 
     RegimenUrl,
