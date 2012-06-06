@@ -218,7 +218,7 @@ WHERE
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalRegimen` AS
 SELECT  s.studyId,
-    cd1.regimen_Hjid, 
+     r.Hjid as regimen_Hjid, 
     RegimenName, 
     RegimenUrl,
     RegimenSupervision,
@@ -258,8 +258,13 @@ FROM `Regimen` r
   LEFT JOIN v_ClinicalDrugs cd3 on (cd3.Regimen_Hjid = r.Hjid and (cd3.drugName <> cd1.drugName and cd3.drugName <> cd2.drugName))
   LEFT JOIN ActiveIngredient d3ai1 on d3ai1.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid
   LEFT JOIN ActiveIngredient d3ai2 on (d3ai2.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai2.hjid <> d3ai1.Hjid)
-  LEFT JOIN ActiveIngredient d3ai3 on (d3ai3.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai3.hjid <> d3ai2.Hjid and d3ai3.Hjid <> d3ai1.Hjid) 
-;
+  LEFT JOIN ActiveIngredient d3ai3 on (d3ai3.ActiveIngredient_ActiveIngredients_Hjid = cd3.ActiveIngredients_Drug_Hjid and d3ai3.hjid <> d3ai2.Hjid and d3ai3.Hjid <> d3ai1.Hjid)
+  JOIN `Regimens` `rs` ON `r`.`Regimen_Regimens_Hjid` = `rs`.`Hjid`
+     JOIN `Treatment` `t` ON `t`.`Regimens_Treatment_Hjid` = `rs`.`Hjid`
+     JOIN `Clinical` ON `Clinical`.`Treatment_Clinical_Hjid` = `t`.`Hjid`
+     JOIN `StudyInfo` `si` ON `si`.`Clinical_StudyInfo_Hjid` = `Clinical`.`Hjid`
+          JOIN v_Clinical `s` ON `s`.`StudyInfo_Study_Hjid` = `si`.`Hjid`;
+
 
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_ClinicalStudyRegimens` AS 
   SELECT 
