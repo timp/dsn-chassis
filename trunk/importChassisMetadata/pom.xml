@@ -233,7 +233,6 @@
 				<configuration>
 					<containerConfigXML>src/main/resources/META-INF/context.xml</containerConfigXML>
 					<archive>
-						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
