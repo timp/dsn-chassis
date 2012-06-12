@@ -1,4 +1,5 @@
 #summary How to set up the standard development environment for working with the Chassis source code
+#labels Deprecated
 
 = Introduction =
 
