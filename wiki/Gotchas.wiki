@@ -1,0 +1,6 @@
+#summary Things you need to know
+
+= Introduction =
+
+The current chassis application (2012-06-12) is on a branch: 
+https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp
