@@ -1,4 +1,8 @@
 #summary Tricks and gotchas during developer setup
+
+The current chassis application (2012-06-12) is on a branch: 
+https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp
+
 = Introduction =
 
 Whilst you can setup your system as per MantaConfiguration  
