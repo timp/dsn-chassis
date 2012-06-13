@@ -1,4 +1,5 @@
 #summary protocol/API specifications for the Chassis/* submission metadata services
+#labels Deprecated
 
 = Chassis/`*` Submission Metadata Persistence Service API =
 
