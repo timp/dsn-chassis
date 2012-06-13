@@ -12,7 +12,7 @@ A detailed introduction to using the REST interface can be found as part of the 
 
 = A script to authenticate against CAS =
 
-There are a collection of scripts in `manta-webapp/scripts`
+There are a collection of scripts in `manta-webapp/scripts`, similar to the example below:
 
 {{{
 USERNAME=
