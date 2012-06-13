@@ -1,7 +1,0 @@
-<!--  An open (extensible) list of values for invitro-medium-medium, including the magic value Other. -->
-<mediums xmlns="">
-    <medium>
-        <label>RPMI 1640</label>
-        <value>RPMI1640</value>
-    </medium>
-</mediums>
