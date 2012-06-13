@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.cggh.chassis</groupId>
+	<artifactId>chassisViewsCore</artifactId>
+	<version>0.0.4</version>
+
+	<repositories>
+		<repository>
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>http://cloud1.cggh.org/maven2/</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>scp://cloud1.cggh.org/var/www/maven2</url>
+		</repository>
+	</distributionManagement>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>Maven Plugin Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>cggh</id>
+			<name>CGGH Maven Repository</name>
+			<url>http://cloud1.cggh.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<scm>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.4</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.4</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/chassisViewsCore-0.0.4</url>
+	</scm>
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-ssh</artifactId>
+						<version>2.2</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
