@@ -30,8 +30,10 @@
     <head>
     
         <title>Curator home</title>
+
+		<xi:include href="../common/includes/current-user-model.xml"/>
         
-        <xforms:model>
+        <xforms:model id="mod-curator-home">
 
         	<!-- non-persistent model for application state -->
         	<xforms:instance id="ins-control">
@@ -92,12 +94,12 @@
 
         </xforms:model>
 
-       	<xi:include href="../common/includes/current-user-model.xml"/>
 
     </head>
     <body>
 
 	<!-- Body header -->
+	<xforms:group model="mod-curator-home">
                 <div id="header" class="header">
 					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
 					
@@ -169,7 +171,7 @@
 	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:content/study/studyTitle"/></a>
 	    					</td>
 	    					<td nowrap="nowrap">
-	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(., '[Y0001]-[M01]-[D01]')"/>
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
 	    					</td>
 	    					<!--
 	    						<td>
@@ -266,7 +268,7 @@
 	          </xforms:trigger>
 	          
 		</xxforms:dialog>
-    	
+    </xforms:group>
     </body>
 </html>
 
