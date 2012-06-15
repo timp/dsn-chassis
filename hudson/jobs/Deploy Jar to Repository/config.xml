@@ -21,8 +21,15 @@
 #  -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
 
 
-mvn deploy:deploy-file -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization \
-  -Dversion=1.1.2  -Dpackaging=jar -Dfile=/home/timp/gwt-visualization-1.1.2.jar  \
+#mvn deploy:deploy-file -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization \
+#  -Dversion=1.1.2  -Dpackaging=jar -Dfile=/home/timp/gwt-visualization-1.1.2.jar  \
+#  -Durl=file:///var/www/maven2 \
+#  -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
+
+
+
+mvn deploy:deploy-file -DgroupId=org.exist-db -DartifactId=exist-webapp \
+  -Dversion=1.4.2-rev16251 -Dpackaging=war -Dfile=/home/timp/exist-1.4.2-rev16251.war  \
   -Durl=file:///var/www/maven2 \
   -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
 </command>
