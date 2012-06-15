@@ -174,7 +174,26 @@
         </param-value>
     </context-param>
     
-    
+     <context-param>
+                <param-name>log4jConfigLocation</param-name>
+                <param-value>WEB-INF/resources/config/log4j.xml</param-value>
+        </context-param>
+        
+        <context-param>
+                <param-name>log4jExposeWebAppRoot</param-name>
+                <param-value>false</param-value>
+        </context-param>
+        
+        <context-param>
+                <param-name>webAppRootKey</param-name>
+                <param-value>repository</param-value>
+        </context-param>
+        
+        <listener>
+                <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+        </listener>
+        
+        
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
