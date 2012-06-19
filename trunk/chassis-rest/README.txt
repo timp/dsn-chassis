@@ -32,8 +32,8 @@ cp /home/timp/spring-instrument-tomcat-3.0.5.RELEASE.jar /opt/apache-tomcat-late
 
 
 /etc/init.d/tomcat6 restart
-(Npote Tomcat will need to have its defaults modified 
-(in /etc/defalts/tomcat6 in ubuntu) to something like:
+(Note Tomcat will need to have its defaults modified 
+(in /etc/defaults/tomcat6 in ubuntu) to something like:
 JAVA_OPTS="-Djava.awt.headless=true -Xms256M -Xmx768M -XX:MaxPermSize=256m -XX:+
 CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled"
 
