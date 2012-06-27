@@ -37,10 +37,10 @@
 			    <ul id="primary" class="clearfix" style="padding-left: 17px; padding-right: 17px">
 			        <li class="current"><a href="http://www.wwarn.org/">Home</a></li>
 			        <li><a href="http://www.wwarn.org/about-us">About Us</a></li>
-			        <li><a href="http://www.wwarn.org/research">Supporting Research TEST</a></li>
-			        <li><a href="http://www.wwarn.org/data">Contributing Data</a></li>
-			        <li><a href="http://www.wwarn.org/resistance">Tracking Resistance</a></li>
-			        <li><a href="http://www.wwarn.org/community">Community</a></li>
+			        <li><a href="http://www.wwarn.org/partnerships">Platform for Partnership</a></li>
+			        <li><a href="http://www.wwarn.org/research">Tools &amp; Services</a></li>
+			        <li><a href="http://www.wwarn.org/learning">Learning Centre</a></li>
+			        <li><a href="http://www.wwarn.org/malaria/resistance">Tracking Resistance</a></li>
 			        <li><a href="http://www.wwarn.org/press">News &amp; Media</a></li>
 			    </ul>
 		    </div>
