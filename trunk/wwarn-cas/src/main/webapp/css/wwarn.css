@@ -354,14 +354,14 @@ h1.logo a, h2.logo a {
 #block-menu-primary-links li:first-child {
 }
 #block-menu-primary-links li {
-	font-size:17px;
+	font-size:16px;
 	float:left;
 	display:inline;
 	margin:0 3px;
 }
 #block-menu-primary-links li a {
 	display:block;
-	padding:3px 10px;
+	padding:3px 8px;
 	text-shadow:0 -1px 1px rgba(255,255,255,0.48);
 	color:#3f3f3f;
 }
