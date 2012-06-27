@@ -1,17 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <jsp:directive.include file="includes/top.jsp" />
-<div id="bd" class="clearfix">
-	<div class="help">
-		<h3>Don't have a <strong>WWARN Account</strong>?</h3>
-		<p><strong><a href="/user/register">Create an account</a></strong></p>
-		<h3>Forgotten your password?</h3>
-		<p><strong><a href="/user/password">Request a new password</a></strong></p>
-	</div>
-	<div class="no-bg">
-		<div class="main twoCol">
-            <h1 class="title"><spring:message code="screen.welcome.instructions" /></h1>
+						<div id="content-header">	
+                        <div id="content-header-container"><div><h1 class="title"><spring:message code="screen.welcome.instructions" /></h1></div></div>
+                        </div>
+							<div id="content-area" class="entry">
 			<form:form method="post" id="fm1" cssClass="fm-v clearfix" commandName="${commandName}" htmlEscape="true">
-			    <form:errors path="*" cssClass="errors" id="status" element="div" />
+			    <form:errors path="*" cssClass="errors" id="status" element="div" />   
                 <div class="box" id="login" style="margin-top: 30px;">
                 <!-- <spring:message code="screen.welcome.welcome" /> -->
                     <div class="row">
@@ -43,13 +37,9 @@
                         <input class="btn-submit" style="margin-left: 0; float:none;" name="submit" accesskey="l" value="<spring:message code="screen.welcome.button.login" />" tabindex="4" type="submit" />
                     </div>
                 </div>
-               
-	            <div id="sidebar" style="clear:both; margin-top: 20px;">
+	            <div style="clear:both; margin-top: 20px;">
 	                <p><spring:message code="screen.welcome.security" /></p>
 	            </div>
-	            
         	</form:form>
-        </div>
-    </div>
-</div>
+                            </div> 
 <jsp:directive.include file="includes/bottom.jsp" />
