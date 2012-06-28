@@ -72,7 +72,7 @@ dropShadows: false});
 	</div>
 	<div class="secondary-wrap"> <div id="block-menu-secondary-links" class="block block-menu region-odd odd region-count-1 count-1">
 	    <ul class="menu">
-<li class="leaf first Register" id=" menu-item-custom-id-9"><a href="http://wwww.wwarn.org/user/register" title="create a WWARN Account"><span class="tab">Register</span></a></li>
+<li class="leaf first Register" id=" menu-item-custom-id-9"><a href="http://www.wwarn.org/user/register" title="create a WWARN Account"><span class="tab">Register</span></a></li>
 <li class="leaf" id=" menu-item-custom-id-101"><a href="http://www.wwarn.org/" title="Home">Home</a></li>
 <li class="leaf last Contact" id=" menu-item-custom-id-10"><a href="http://www.wwarn.org/contact" title="Contact">Contact</a></li>
 </ul>  
