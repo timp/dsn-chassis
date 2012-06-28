@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <%@ page session="true" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -7,6 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <link rel="shortcut icon" href="http://test.wwarn.org/sites/default/files/wwarn_favicon.ico" type="image/x-icon">
 <meta name="description" content="Interactive, certificated training for conducting clinical research">
 <link type="text/css" rel="stylesheet" media="all" href="./css/superfish.css">
@@ -72,7 +72,7 @@ dropShadows: false});
 	</div>
 	<div class="secondary-wrap"> <div id="block-menu-secondary-links" class="block block-menu region-odd odd region-count-1 count-1">
 	    <ul class="menu">
-<li class="leaf first Register" id=" menu-item-custom-id-9"><a href="http://www.wwarn.org/user/register" title="create a WWARN Account"><span class="tab">Register</span></a></li>
+<li class="leaf first Register" id=" menu-item-custom-id-9"><a href="https://www.wwarn.org/user/register" title="Create a WWARN Account"><span class="tab">Register</span></a></li>
 <li class="leaf" id=" menu-item-custom-id-101"><a href="http://www.wwarn.org/" title="Home">Home</a></li>
 <li class="leaf last Contact" id=" menu-item-custom-id-10"><a href="http://www.wwarn.org/contact" title="Contact">Contact</a></li>
 </ul>  
