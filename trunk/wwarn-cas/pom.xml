@@ -3,7 +3,7 @@
 	<groupId>org.wwarn.cas</groupId>
 	<artifactId>wwarn-cas</artifactId>
 	<packaging>war</packaging>
-	<version>1.2.0-RC-2-SNAPSHOT</version>
+	<version>1.2.0-RC-3</version>
 	<name>wwarn-cas</name>
 	
 	<distributionManagement>
@@ -108,9 +108,9 @@
 		</profile>
 	</profiles>
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/wwarn-cas</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/wwarn-cas</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/wwarn-cas</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/wwarn-cas-1.2.0-RC-3</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/wwarn-cas-1.2.0-RC-3</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/wwarn-cas-1.2.0-RC-3</url>
 	</scm>
 	<build>
 		<finalName>wwarn-cas</finalName>
