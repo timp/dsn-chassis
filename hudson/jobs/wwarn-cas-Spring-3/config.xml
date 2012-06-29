@@ -40,7 +40,7 @@
     <groupId>org.wwarn.cas</groupId>
     <artifactId>wwarn-cas</artifactId>
   </rootModule>
-  <goals>clean tomcat:redeploy -P cloud1 install  -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
+  <goals>clean install  tomcat:redeploy -P cloud1   -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <perModuleEmail>true</perModuleEmail>
