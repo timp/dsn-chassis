@@ -1,0 +1,74 @@
+/* GLOBAL RESET FOR [x] WEB SITE
+Created by Author Name
+http://kmp.co.uk
+Version Number: 1.0
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        vertical-align: baseline;
+        background: transparent;
+}
+body {
+        line-height: 1;
+}
+blockquote, q {
+        quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+        content: '';
+        content: none;
+}
+/* remember to highlight inserts somehow! */
+ins {
+        text-decoration: none;
+}
+del {
+        text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+        border-collapse: collapse;
+        border-spacing: 0;
+}
+hr {
+    display: block;
+    height: 1px;
+    border-top: 1px solid #cccccc;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-bottom: 0 none;
+    margin: 1em 0;
+    padding: 0;
+}
+input {
+        vertical-align:middle;
+}
+
+.nav ul {
+        list-style:none;
+}
+.clearfix:after,
+#block-menu-primary-links ul.menu:after,
+.item-list ul:after,
+.tab-nav ul:after,
+.node-type-page .view-content .item-list li:after,
+.views-row:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    }
