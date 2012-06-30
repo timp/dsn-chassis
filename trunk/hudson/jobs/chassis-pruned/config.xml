@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <maven2-moduleset>
   <actions/>
-  <description>Chassis model</description>
+  <description>NO LONGER IN USE&lt;br /&gt;&#xd;
+&#xd;
+Create the chassiPruned Database.</description>
   <logRotator>
     <daysToKeep>12</daysToKeep>
     <numToKeep>6</numToKeep>
@@ -24,7 +26,7 @@
     <workspaceUpdater class="hudson.scm.subversion.CheckoutUpdater"/>
   </scm>
   <canRoam>true</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector">
