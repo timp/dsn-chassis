@@ -7,6 +7,8 @@
 
 It's a good idea (although not strictly necessary) to start by changing the XML schema held in the chassis-model project. The advantage of starting here is that it will help ensure that your change fits nicely within the schema e.g. not reusing a previously used element name. You'll need to do this later anyway.
 
+Don't forget to change the version number in the profile attribute.
+
 == Start with an empty database ==
 
 Delete the contents of your exist data directory - the files will be recreated when you restart the application.
@@ -30,3 +32,21 @@ For a drop down the values are also held as enumerations in the schema - the lab
 Field labels are sometimes text strings, sometimes in resources.xml - they should be in resources.xml but haven't yet all been moved.
 
 More complex things such as displaying the other text input field when the other drop option is selected are controlled via the bindings in src/main/webapp/WEB-INF/resources/apps/common/templates/includes/study/study-info-bindings.xml
+
+== Test the change ==
+
+Fire it up, create a new study and test that it works as expected.
+
+Now is a good time to change the selenium test script - load up the Selenium IDE in firefox and choose either create-study-suite or ssq-suite from the selenium-ide directory (you'll need to run these as slow as possible)
+
+You can, of course, create your new test study using the first suite and then test the ssq with the second.
+
+== Migration ==
+
+Once you know that the change works for new studies then you can look at migration of the existing data.
+
+First load up a copy of the current db - this can be done using scripts/restore-chassis-exist.sh (set up for cygwin under Windows) - note that this has to be done with Spring authentication not CAS authentication enabled and you will need to set passwords etc in the script.
+
+Once this has been done you will need to reindex the database by calling service/admin/reindex.xql in the browser.
+
+When you've done this it's quite a good idea to stop the server and take a copy of the exist directory - it's easier to restore by copying this back instead of rerunning the restore script.
