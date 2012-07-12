@@ -73,7 +73,7 @@ The mappings are held in the config collection and need to be updated in two pla
 
 == Changing the database ==
 
-Make your changes to the XML Schema in chassis-model, if you haven't already done so.
+Make your changes to the XML Schema in chassis-model, if you haven't already done so. (You need to change the main schema and the pruned schema but the chassis-model-pruned project is obsolete)
 
 It's a good idea to download the studies feed of your database and validate it with the revised schema - download via repository/service/content/studies
 
@@ -85,4 +85,5 @@ Change the versions in importChassisMetadata and test that.
 
 You may then need to update, and release, the database views held in chassisViewsCore
 
-Y
+== One more thing ==
+You also need to update the chassis-isomorphic project which is used to validate the integrity of the database using Jenkins - (this could almost certainly be done with the importChassisMetadata app instead)
