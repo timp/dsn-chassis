@@ -27,7 +27,7 @@ Copy an example of a similar field
 
 If you need validation e.g. number only field then you'll need to change the schema in src/main/webapp/insecure/schema
 
-For a drop down the values are also held as enumerations in the schema - the labels are in src/main/webapp/WEB-INF/resources/apps/common/resources.xml - you can read the wiki page on how this works or just copy an example.
+For a drop down the values are held as enumerations in the schema - the labels are in src/main/webapp/WEB-INF/resources/apps/common/resources.xml - you can read the wiki page on how this works or just copy an example.
 
 Field labels are sometimes text strings, sometimes in resources.xml - they should be in resources.xml but haven't yet all been moved.
 
@@ -70,3 +70,19 @@ Use the selenium scripts on the migrated data
 
 At the moment it is necessary to map the XPath for elements to short names for the flattener.
 The mappings are held in the config collection and need to be updated in two places service/admin/init-config.xql and with an update script in your migration directory update-field-mappings.xql
+
+== Changing the database ==
+
+Make your changes to the XML Schema in chassis-model, if you haven't already done so.
+
+It's a good idea to download the studies feed of your database and validate it with the revised schema - download via repository/service/content/studies
+
+Once you are happy with this then release a new version of the jar.
+
+Change the version of the jar in chassis-rest and release a new version.
+
+Change the versions in importChassisMetadata and test that.
+
+You may then need to update, and release, the database views held in chassisViewsCore
+
+Y
