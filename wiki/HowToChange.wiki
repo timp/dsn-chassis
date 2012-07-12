@@ -1,0 +1,32 @@
+#summary A description of how to make changes to the Chassis data model
+
+
+= Details =
+
+== Define the XML change you want to make ==
+
+It's a good idea (although not strictly necessary) to start by changing the XML schema held in the chassis-model project. The advantage of starting here is that it will help ensure that your change fits nicely within the schema e.g. not reusing a previously used element name. You'll need to do this later anyway.
+
+== Start with an empty database ==
+
+Delete the contents of your exist data directory - the files will be recreated when you restart the application.
+
+Don't forget to recreate the collections via the developer home page and repopulate the config collection from the admin page.
+
+== Change the new study template ==
+
+In src/main/webapp/WEB-INF/resources/apps/common/templates/study add your new element(s)
+
+== Change the input form ==
+
+This will probably be in src/main/webapp/WEB-INF/resources/apps/common/templates/includes/study
+
+Copy an example of a similar field
+
+If you need validation e.g. number only field then you'll need to change the schema in src/main/webapp/insecure/schema
+
+For a drop down the values are also held as enumerations in the schema - the labels are in src/main/webapp/WEB-INF/resources/apps/common/resources.xml - you can read the wiki page on how this works or just copy an example.
+
+Field labels are sometimes text strings, sometimes in resources.xml - they should be in resources.xml but haven't yet all been moved.
+
+More complex things such as displaying the other text input field when the other drop option is selected are controlled via the bindings in src/main/webapp/WEB-INF/resources/apps/common/templates/includes/study/study-info-bindings.xml
