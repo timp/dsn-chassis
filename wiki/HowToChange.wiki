@@ -50,3 +50,23 @@ First load up a copy of the current db - this can be done using scripts/restore-
 Once this has been done you will need to reindex the database by calling service/admin/reindex.xql in the browser.
 
 When you've done this it's quite a good idea to stop the server and take a copy of the exist directory - it's easier to restore by copying this back instead of rerunning the restore script.
+
+Now create a new directory under webapp/service/admin with an index.xhtml file and link to it from WEB-INF/resources/app/administration/home.xhtml
+
+Take a copy of an earlier migration script (be careful with SVN here - in particular don't just copy an earlier directory) you will probably need update-study-info.xql.
+
+You need to change the old and new version numbers.
+The work is done in modify-nodes
+
+Testing is done in check-changes - you will first need to update the test study at the top of the script to ensure that it matches a current study
+(Testing is done by inserting the test study into a test collection and then running the changes on that collection)
+
+Once you have completed this then you can run the script via the Administration page off developers home (logged in as an admin)
+
+== Test again ==
+Use the selenium scripts on the migrated data
+
+== Flattener == 
+
+At the moment it is necessary to map the XPath for elements to short names for the flattener.
+The mappings are held in the config collection and need to be updated in two places service/admin/init-config.xql and with an update script in your migration directory update-field-mappings.xql
