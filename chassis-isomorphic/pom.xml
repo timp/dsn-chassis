@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.cggh.chassis</groupId>
   <artifactId>chassis-isomorphic</artifactId>
@@ -15,6 +16,10 @@
     <mysqlDriverVersion>5.1.18</mysqlDriverVersion>
     <tomcat.username>admin</tomcat.username>
     <tomcat.password></tomcat.password>
+    <tomcat.username>admin</tomcat.username>
+    <tomcat.password></tomcat.password>
+    <!-- tomcat7 needs /text appended -->
+    <tomcat.url>http://localhost:8080/manager</tomcat.url>
     <chassisDb_host>localhost</chassisDb_host>
     <chassisDb_user>root</chassisDb_user>
   </properties>
@@ -173,11 +178,11 @@
       <version>${mysqlDriverVersion}</version>
     </dependency>
     <dependency>
-     <groupId>junit</groupId>
-     <artifactId>junit</artifactId>
-     <version>3.8.1</version>
-     <scope>test</scope>
-   </dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <scm>
     <connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/chassis-isomorphic</connection>
@@ -223,14 +228,15 @@
       </plugin>
 
       <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat6-maven-plugin</artifactId>
-            <version>2.0-beta-1</version>
-            <configuration>
-              <url>http://localhost:8080/manager</url>
-              <username>${tomcat.username}</username>
-              <password>${tomcat.password}</password>
-            </configuration>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat6-maven-plugin</artifactId>
+        <version>2.0-beta-1</version>
+        <configuration>
+          <path>/${project.artifactId}</path>
+          <url>${tomcat.url}</url>
+          <username>${tomcat.username}</username>
+          <password>${tomcat.password}</password>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -247,7 +253,7 @@
           http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
             <exclude>**/util/AlphabeticallyFirstGetStudyFeed.java</exclude>
            -->
-            
+
           </excludes>
         </configuration>
         <!-- 
@@ -272,7 +278,7 @@
     </plugins>
   </build>
   <repositories>
-    <repository> 
+    <repository>
       <id>cggh</id>
       <name>CGGH Maven Repository</name>
       <url>http://cloud1.cggh.org/maven2/</url>
@@ -280,7 +286,7 @@
   </repositories>
   <pluginRepositories>
     <pluginRepository>
-     <id>cggh</id>
+      <id>cggh</id>
       <name>CGGH Maven Repository</name>
       <url>http://cloud1.cggh.org/maven2/</url>
     </pluginRepository>
@@ -305,7 +311,7 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
       <id>maven-3</id>
       <activation>
@@ -369,30 +375,30 @@
                 </plugin>
                 -->
                 <plugin>
-                <groupId>com.wakaleo.schemaspy</groupId>
-                <artifactId>maven-schemaspy-plugin</artifactId>
-                 <version>5.0.4-SNAPSHOT</version>
-                 <configuration>
-                   <databaseType>mysql</databaseType>
-                   <database>chassisDb</database>
-                   <host>${chassisDb_host}</host>
-                   <user>${chassisDb_user}</user>
+                  <groupId>com.wakaleo.schemaspy</groupId>
+                  <artifactId>maven-schemaspy-plugin</artifactId>
+                  <version>5.0.4-SNAPSHOT</version>
+                  <configuration>
+                    <databaseType>mysql</databaseType>
+                    <database>chassisDb</database>
+                    <host>${chassisDb_host}</host>
+                    <user>${chassisDb_user}</user>
                    <!-- sets password -->
-                   <connprops>/etc/chassis-isomorphic/chassisDb.properties</connprops>
+                    <connprops>/etc/chassis-isomorphic/chassisDb.properties</connprops>
                    <!-- set in settings.xml eg 
                    <localRepository>/var/lib/jenkins/.m2/repository</localRepository>
                    -->
-                   <pathToDrivers>${settings.localRepository}/mysql/mysql-connector-java/${mysqlDriverVersion}/mysql-connector-java-${mysqlDriverVersion}.jar</pathToDrivers>            
+                    <pathToDrivers>${settings.localRepository}/mysql/mysql-connector-java/${mysqlDriverVersion}/mysql-connector-java-${mysqlDriverVersion}.jar</pathToDrivers>
                   </configuration>
-                </plugin> 
+                </plugin>
               </reportPlugins>
             </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
-    
-    
+
+
   </profiles>
 
 </project>
