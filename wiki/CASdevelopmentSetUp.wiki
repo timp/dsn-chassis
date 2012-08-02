@@ -7,7 +7,8 @@
 
   * Checkout wwarn-cas
   * Create the database using the script in resources/min-db.sql
-  * Follow the instructions for configuring tomcat datasources
+  * Follow the instructions for configuring tomcat datasources in ChassisCASDatabaseSetup
+
   * Configure Apache
 
 == Apache Configuration ==
@@ -19,7 +20,7 @@ a2ensite default-ssl
 a2enmod ssl
 }}}
 
-2. Modify the default-ssl file and add the the following lines to the end of the file, inside the VirtualHost section:
+2. Modify the /etc/apache2/sites-enabled/default-ssl file and add the the following lines to the end of the file, inside the VirtualHost section:
 
 {{{
         ProxyRequests Off
@@ -42,42 +43,18 @@ a2enmod ssl
         SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 }}}
 
-Note that we need to set up the host for proper usage of SSL. We need to include the IP address in /etc/hosts like so:
-
-{{{
-127.0.0.1 localhost
-10.204.241.226 cloud1.cggh.org cloud1 # real IP
-174.129.200.39 cloud1.cggh.org cloud1 # elastic IP
-}}}
-
-add the correct host name to the /etc/hostname file:
-
-{{{
-cloud1
-}}}
-
-Restart the machine to make sure these changes are applied.
-
-4. Add a NameVirtualHost and change the VirtualHost record to reflect the physical IP of the machine in /etc/apache2/sites-enabled/default-ssl:
-
-{{{
-#<VirtualHost _default_:443>
-NameVirtualHost 10.204.241.226:443
-<VirtualHost 10.204.241.226:443>
-}}}
-
-5. Replace the self-signed SSL certificate to reflect the hostname changes:
+4. Replace the self-signed SSL certificate to reflect the hostname changes:
 
 {{{
 make-ssl-cert generate-default-snakeoil --force-overwrite
 }}}
 
-6. Import this into the java cacerts file.
+5. Import this into the java cacerts file.
 
 {{{
 cd /etc/ssl/certs/java
 cp cacerts cacerts.orig
-keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -keystore ./cacerts
+keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -alias apache -keystore ./cacerts
 }}}
 
 Enter keystore password:  changeit
