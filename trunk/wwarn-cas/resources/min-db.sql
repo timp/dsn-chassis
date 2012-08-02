@@ -126,7 +126,7 @@ VALUES
 (1,2,'Colin'),(2,2,'Example'),(3,2,'Contrib Inst'),
 (1,3,'Cora'),(2,3,'Example'),(3,3,'Contrib Inst'),
 (1,4,'Curtis'),(2,4,'Example'),(3,4,'Curator Inst')
-);
+;
 
 
 
