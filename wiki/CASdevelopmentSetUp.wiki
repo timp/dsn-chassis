@@ -18,6 +18,7 @@
 {{{
 a2ensite default-ssl
 a2enmod ssl
+a2enmod proxy_http
 }}}
 
 2. Modify the /etc/apache2/sites-enabled/default-ssl file and add the the following lines to the end of the file, inside the VirtualHost section:
