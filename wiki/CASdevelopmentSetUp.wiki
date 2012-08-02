@@ -27,11 +27,13 @@ a2enmod ssl
                 Order deny,allow
                 Allow from all
         </Proxy>
-}}} 
+
         ProxyPass /sso http://localhost:8080/sso
         ProxyPassReverse /sso http://localhost:8080/sso
         ProxyPass /repository http://localhost:8080/repository
         ProxyPassReverse /repository http://localhost:8080/repository
+
+}}}
 
 3. Import the self-signed ssl certificate into the cacerts file for the jvm on the local machine. This will tell java that the local machine is a valid ssl cert issuing authority as far a java is concerned. The ubuntu package for apache2 generates the self-signed certificate when you install it. We can find the one that is being used by apache by looking in the /etc/apache2/sites-enabled/default-ssl configuration file:
 
