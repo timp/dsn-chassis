@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+       xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <xforms:group ref="pharmacology">
+
+        <div id="pharmacology-questions-container">
+
+            <h2>Pharmacology questions</h2>
+
+            <xforms:textarea ref="studyDesign">
+                   <xforms:label>Study Design</xforms:label>
+                   <xforms:hint>e.g. Clinical study with additional data on drug concentrations</xforms:hint>
+            </xforms:textarea>
+            <xforms:input ref="samplingTimes">
+                   <xforms:label class="fourWide">Sampling Times </xforms:label>
+                   <xforms:hint>e.g. Day 7</xforms:hint>
+            </xforms:input><br/>
+            <xforms:textarea ref="PKcomments">
+                   <xforms:label>Comments</xforms:label>
+                   <xforms:hint></xforms:hint>
+            </xforms:textarea>
+            <xforms:group ref="samples">
+                <h3>Sample</h3>
+                <table class="repeat-table">
+                    <xforms:repeat nodeset="sample" id="sample-rep">
+                        <tr>
+                            <td class="action-td">
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label>
+                                        <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                    </xforms:label>
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('sample-rep')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td>
+                                <xforms:input ref="anticoagulent">
+                                    <xforms:label class="fixed-width">Anticoagulent </xforms:label>
+                                </xforms:input>
+                                <br/>
+                                <xforms:input ref="centrifugeTime">
+                                    <xforms:label class="fixed-width">Time to centrifuge (mins) </xforms:label>
+                                    <xforms:hint>eg. &lt; 15 minutes</xforms:hint>
+                                </xforms:input>
+
+                                <xforms:group ref="storages">
+                                    <h4>Temperature and time to storage</h4>
+
+                                    <table class="repeat-table">
+                                        <xforms:repeat nodeset="storage" id="storage-rep">
+                                            <tr>
+                                                <td class="action-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/remove.gif"
+                                                  alt="remove"/>
+                                                  </xforms:label>
+                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                  nodeset="." at="index('storage-rep')"/>
+                                                  </xforms:trigger>
+                                                </td>
+                                                <td>
+                                                  <xforms:input ref="storageTemperature"
+                                                  class="fourWide">
+                                                  <xforms:label>Temperature</xforms:label>
+                                                  <xforms:hint>Eg room temperature</xforms:hint>
+                                                  </xforms:input>
+                                                  <br/>
+                                                  <div>
+                                                  <xforms:input ref="storageDuration"
+                                                  class="fourWide">
+                                                  <xforms:label>Duration</xforms:label>
+                                                  </xforms:input>
+                                                  <xforms:select1 appearance="minimal"
+                                                  ref="storageDurationUnit">
+                                                  <xforms:label class="invisible">Duration unit </xforms:label>
+                                                  <xforms:item>
+                                                  <xforms:label>please select</xforms:label>
+                                                  <xforms:value/>
+                                                  </xforms:item>
+                                                  <xforms:itemset model="mod-study-info"
+                                                  nodeset="instance('ins-storageDurationUnit-items')/storageDurationUnit">
+                                                  <xforms:label ref="label"/>
+                                                  <xforms:value ref="value"/>
+                                                  </xforms:itemset>
+                                                  <xforms:alert>
+                                                  <xforms:output
+                                                  value="concat('Enter a value for the ', name(), ' field')"
+                                                  />
+                                                  </xforms:alert>
+                                                  </xforms:select1>
+                                                  </div>
+                                                </td>
+                                            </tr>
+                                        </xforms:repeat>
+                                        <tr>
+                                            <td class="action-td">
+                                                <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="storage" at="last()"
+                                                  position="after"
+                                                  origin="instance('ins-study-template')//pharmacology/samples/sample/storages/storage"
+                                                  />
+                                                </xforms:trigger>
+                                            </td>
+                                            <td class="add-td">
+                                                <xforms:trigger appearance="minimal">
+                                                  <xforms:label>Add a storage
+                                                  condition</xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="sample" at="last()"
+                                                  position="after"
+                                                  origin="instance('ins-study-template')//pharmacology/samples/sample/storages/storage"
+                                                  />
+                                                </xforms:trigger>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </xforms:group>
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    <tr>
+                        <td class="action-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>
+                                    <img src="/apps/common/theme/add.gif" alt="add"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="sample"
+                                    at="last()" position="after"
+                                    origin="instance('ins-study-template')//pharmacology/samples/sample"/>
+                            </xforms:trigger>
+                        </td>
+                        <td class="add-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>Add a sample</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="sample"
+                                    at="last()" position="after"
+                                    origin="instance('ins-study-template')//pharmacology/samples/sample"/>
+                            </xforms:trigger>
+                        </td>
+                    </tr>
+                </table>
+            </xforms:group>
+
+
+
+            <xforms:group ref="analytes">
+                <h4> Drug/metabolites measured <span style="font-size:smaller; font-weight:normal;"
+                        >please list all</span>
+                </h4>
+                <table class="repeat-table">
+                    <tr>
+                        <th/>
+                        <th> Compound measured <br/> (parent or metabolite) </th>
+                        <th>Target Dose</th>
+                        <th>Units of Measure</th>
+                        <th>Fat Amount</th>
+                        <th>Lower LoQ</th>
+                        <th>Matrix</th>
+                    </tr>
+                    <xforms:repeat nodeset="analyte" id="analyte-rep">
+                        <tr>
+                            <td class="action-td">
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label>
+                                        <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                    </xforms:label>
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('analyte-rep')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td class="form-td">
+                                <xforms:select1 appearance="minimal" ref="drugMeasured">
+                                    <xforms:label class="invisible">Molecule measured </xforms:label>
+                                    <xforms:itemset model="mod-study-info"
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration[not(@value = 'Other')]">
+                                         <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                                         <xforms:value ref="@value"/>
+                                    </xforms:itemset>
+                                    <xforms:itemset model="mod-study-info"
+                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='metaboliteMolecules']/xs:restriction/xs:enumeration">
+                                         <xforms:label ref="for $currentItemName in @value return $resources/common/metaboliteMolecules/metaboliteMolecule[@ref = $currentItemName]"/>
+                                         <xforms:value ref="@value"/>
+                                    </xforms:itemset>
+                                    <xforms:alert>Please select a molecule</xforms:alert>
+                                    <xforms:hint>Name of drug given or metabolite
+                                        measured</xforms:hint>
+                                </xforms:select1>
+
+                            </td>
+                            <td class="form-td">
+                                <xforms:input ref="targetDose" class="eightWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>e.g. 72 mg/kg</xforms:hint>
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:select1 appearance="minimal" ref="unitsOfMeasure">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:itemset model="mod-study-info"
+                                        nodeset="instance('study-info-resources')//xs:simpleType[@name='unitsOfMeasure']/xs:restriction/xs:enumeration">
+                                        <xforms:label ref="@value"/>
+                                        <xforms:value ref="@value"/>
+                                    </xforms:itemset>
+                                     
+                                </xforms:select1>
+                                <xforms:input ref="unitsOfMeasureOther" class="fourWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>Unit of measure usually ng/ml or ug/ml</xforms:hint>
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:input ref="fatAmount" class="fourWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>Amount of fat taken with the drug</xforms:hint>
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:input ref="lowerLoQ" class="fourWide">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:hint>Lower limit of quantification</xforms:hint>
+                                </xforms:input>
+                            </td>
+
+                            <td class="form-td">
+                                <xforms:select ref="sampleMatrixType" appearance="full"
+                                    class="scrollableCheckboxes">
+                                    <xforms:label class="invisible"/>
+                                    <xforms:itemset model="mod-study-info"
+                                        nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
+                                        <xforms:label ref="label"> </xforms:label>
+                                        <xforms:value ref="value"/>
+                                    </xforms:itemset>
+                                    <xforms:alert>Please select a matrix</xforms:alert>
+                                    <xforms:hint>The matrix</xforms:hint>
+                                </xforms:select>
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    <tr>
+                        <td class="action-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>
+                                    <img src="/apps/common/theme/add.gif" alt="add"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="analyte"
+                                    at="last()" position="after"
+                                    origin="instance('ins-study-template')//pharmacology/analytes/analyte"/>
+                            </xforms:trigger>
+                        </td>
+                        <td class="add-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>Add an analyte</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="." nodeset="analyte"
+                                    at="last()" position="after"
+                                    origin="instance('ins-study-template')//pharmacology/analytes/analyte"/>
+                            </xforms:trigger>
+                        </td>
+                    </tr>
+                </table>
+            </xforms:group>
+
+
+            <xforms:group ref="assayReferences">
+                <h4>Drug assay method reference</h4>
+                <table class="repeat-table">
+                    <tr>
+                        <th/>
+                        <th> Type </th>
+                        <th> Reference </th>
+                        <th> Validated </th>
+                    </tr>
+                    <xforms:repeat nodeset="assayReference" id="assayReference-rep">
+                        <tr>
+                            <td class="action-td">
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label>
+                                        <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                    </xforms:label>
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('assayReference-rep')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td class="form-td">
+
+                                <xforms:select1 appearance="minimal" ref="referenceType">
+                                    <xforms:label class="invisible">Reference type </xforms:label>
+                                    <xforms:itemset model="mod-study-info"
+                                        nodeset="instance('ins-referenceType-items')/referenceType">
+                                        <xforms:label ref="label"/>
+                                        <xforms:value ref="value"/>
+                                    </xforms:itemset>
+                                    <xforms:alert>Please select a reference type </xforms:alert>
+                                </xforms:select1>
+                            </td>
+                            <td class="form-td">
+
+                                <xforms:input ref="url">
+                                    <xforms:label class="invisible">Reference URL</xforms:label>
+                                    <xforms:alert>Enter a valid URL</xforms:alert>
+                                    <xforms:send ev:event="xforms-value-changed"
+                                        submission="sub-check-assayReference-url"/>
+                                </xforms:input>
+                                <xforms:input ref="doi">
+                                    <xforms:label class="invisible">DOI</xforms:label>
+                                    <xforms:hint>Without a DOI: prefix</xforms:hint>
+                                    <xforms:alert>Enter a valid DOI</xforms:alert>
+                                    <xforms:send ev:event="xforms-value-changed"
+                                        submission="sub-check-assayReference-doi"/>
+                                </xforms:input>
+                                <xforms:group ref="upload">
+                                    <xforms:group
+                                        ref="instance('ins-submitted-media-feed')[empty(atom:entry)]">
+
+                                        <p>You have not uploaded any documents.</p>
+
+                                    </xforms:group>
+
+                                    <xforms:select1 appearance="minimal" ref="uploadedUrl">
+                                        <xforms:label class="invisible">Uploaded document </xforms:label>
+                                        <xforms:item>
+                                            <xforms:label>please select</xforms:label>
+                                            <xforms:value/>
+                                        </xforms:item>
+                                        <xforms:itemset 
+                                            nodeset="xxforms:sort(instance('ins-submitted-media-feed')/atom:entry, atom:published, 'text', 'ascending')">
+                                            <xforms:label>
+                                                <xforms:output
+                                                  value="concat(manta:id, ' - ', //studyTitle)"/>
+                                            </xforms:label>
+                                            <xforms:value ref="atom:link[@rel='edit']/@href"/>
+                                        </xforms:itemset>
+                                        <xforms:alert>Please select an uploaded
+                                            document</xforms:alert>
+                                        <xforms:hint>An uploaded document</xforms:hint>
+                                    </xforms:select1>
+
+                                </xforms:group>
+                            </td>
+                            <td class="form-td">
+                                <xforms:select1 ref="assayValidated" appearance="minimal">
+                                    <xforms:label class="invisible">Assay validated </xforms:label>
+                                    <xforms:itemset model="mod-study-info"
+                                        nodeset="instance('ins-boolean-items')/boolean">
+                                        <xforms:label ref="label"/>
+                                        <xforms:value ref="value"/>
+                                    </xforms:itemset>
+                                </xforms:select1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td/>
+                            <td colspan="3" class="form-td">
+                                <xforms:textarea ref="note">
+                                    <xforms:label>Notes</xforms:label>
+                                    <xforms:hint>Any notes on the assay method.</xforms:hint>
+                                </xforms:textarea>
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    <tr>
+                        <td class="action-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>
+                                    <img src="/apps/common/theme/add.gif" alt="add"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="."
+                                    nodeset="assayReference" at="last()"
+                                    position="after" origin="instance('ins-study-template')//pharmacology/assayReferences/assayReference"/>
+                            </xforms:trigger>
+                        </td>
+                        <td class="add-td">
+                            <xforms:trigger appearance="minimal">
+                                <xforms:label>Add a reference</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="."
+                                    nodeset="assayReference" at="last()"
+                                    position="after" origin="instance('ins-study-template')//pharmacology/assayReferences/assayReference"/>
+                            </xforms:trigger>
+                        </td>
+                    </tr>
+                </table>
+            </xforms:group>
+
+        </div>
+
+    </xforms:group>
+</div>

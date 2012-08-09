@@ -1,0 +1,78 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:app="http://www.w3.org/2007/app"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns"
+     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    
+    <h2 class="clear">Submitted studies</h2>
+    <p>Any study which you have permission to access will be listed here.  Contact WWARN to make further changes. 
+    </p>
+    <xforms:group ref="instance('ins-study-feed')[empty(atom:entry[not(app:control/app:draft/text() = 'yes')])]">
+        
+       
+        
+        
+    </xforms:group>
+    
+    <xforms:group ref="instance('ins-study-feed')[exists(atom:entry[not(app:control/app:draft/text() = 'yes')])]">
+        
+        <span id="list-of-studies-container">
+            
+            <fr:datatable width="100%">
+                <thead>
+                    <tr>
+                        <th fr:sortable="true" fr:resizeable="true">ID</th>
+                        <th fr:sortable="true" fr:resizeable="true">Title</th>
+                        <th fr:sortable="true" fr:resizeable="true">Created</th>
+                        <!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+                        <th fr:sortable="false" fr:resizeable="true">Administrators</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <xforms:repeat nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/app:draft/text() = 'yes')], atom:published, 'text', 'descending')">
+                        <tr class="repeated-element">
+                            <td>
+                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+                            </td>
+                            <td>
+                                <a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:content/study/studyTitle"/></a>
+                            </td>
+                            <td>
+                                <xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+                            </td>
+                            <!--
+                                <td>
+                                <xforms:output value="atom:author/atom:email"/>
+                                </td>
+                            -->
+                            <td>
+                                <xforms:repeat nodeset="atom:content/study/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member">
+                                    <div>
+                                        <xforms:output ref="."/>			
+                                    </div>
+                                </xforms:repeat>
+                                <!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+                            </td>
+                            <td><span class="view-study-link-container">
+                                <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+                                    <a class="btn" href="../study/dashboard?study={@href}">Edit</a>
+                                </xforms:group>
+                                <xforms:group ref="atom:link[@rel='edit' and contains(@atombeat:allow, 'GET') and not(contains(@atombeat:allow, 'PUT'))]">
+                                    <a class="btn" href="../study/dashboard?study={@href}">View</a>
+                                </xforms:group>
+                            
+                            </span></td>
+                        </tr>
+                    </xforms:repeat>
+                </tbody>
+            </fr:datatable>
+            
+        </span>
+        
+    </xforms:group>
+    
+</div>

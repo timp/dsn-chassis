@@ -1,0 +1,9 @@
+HTTP/1.1 302 Moved Temporarily
+Date: Thu, 14 Jun 2012 11:55:56 GMT
+Server: Apache-Coyote/1.1
+Location: https://www.wwarn.org/repository/service/content/studies
+Content-Length: 0
+Set-Cookie: JSESSIONID=4C0DB3F739D9570F6647972BED2B05B1; Path=/repository
+Via: 1.1 www.wwarn.org
+Content-Type: text/plain
+
