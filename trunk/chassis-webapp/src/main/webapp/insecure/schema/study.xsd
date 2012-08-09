@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	elementFormDefault="qualified">
+	<xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
+	<xs:simpleType name="longURI">
+		<xs:restriction base="xs:anyURI">
+			<xs:maxLength value="1600"></xs:maxLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="longString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"></xs:maxLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="optionalDecimal">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base='xs:decimal'/>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base='xs:string'>
+					<xs:maxLength value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="optionalInteger">
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base='xs:integer'/>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base='xs:string'>
+					<xs:maxLength value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:simpleType name="administrationRoutes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="oral" />
+			<xs:enumeration value="intravenous" />
+			<xs:enumeration value="intramuscular" />
+			<xs:enumeration value="intrarectal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="drugStorage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="none" />
+			<xs:enumeration value="refrigerator" />
+			<xs:enumeration value="aircon" />
+			<xs:enumeration value="unknown" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="population">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="resident" />
+			<xs:enumeration value="traveller" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="includeExclude">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="include" />
+            <xs:enumeration value="exclude" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="yesNo">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="incubationTimes">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+            <xs:enumeration value="24h" />
+            <xs:enumeration value="42h" />
+            <xs:enumeration value="48h" />
+            <xs:enumeration value="72h" />
+            <xs:enumeration value="other" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:simpleType name="drugMolecules">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="ART" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AZ" />
+			<xs:enumeration value="CL" />
+			<xs:enumeration value="CP" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="CY" />
+			<xs:enumeration value="DAP" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DOX" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="NQ" />
+			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PQ" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="PYN" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="TQ" />
+			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="AQ" />
+			<xs:enumeration value="AM" />
+			<xs:enumeration value="AM-LUM" />
+			<xs:enumeration value="AM-NQ" />
+			<xs:enumeration value="AS" />
+			<xs:enumeration value="AS-AQ" />
+			<xs:enumeration value="AS-MQ" />
+			<xs:enumeration value="AV" />
+			<xs:enumeration value="AV-PG" />
+			<xs:enumeration value="CQ" />
+			<xs:enumeration value="CP-DAP" />
+			<xs:enumeration value="DAP" />
+			<xs:enumeration value="DHA" />
+			<xs:enumeration value="DHA-PQP" />
+			<xs:enumeration value="HL" />
+			<xs:enumeration value="LUM" />
+			<xs:enumeration value="MQ" />
+			<xs:enumeration value="PQP" />
+			<xs:enumeration value="PQ" />
+			<xs:enumeration value="PG" />
+			<xs:enumeration value="PYR" />
+			<xs:enumeration value="QN" />
+			<xs:enumeration value="SX" />
+			<xs:enumeration value="SX-PYR" />
+			<xs:enumeration value="TQ" />
+			<xs:enumeration value="TET" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="metaboliteMolecules">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CPQ" />
+			<xs:enumeration value="DLUM" />
+			<xs:enumeration value="DCQ" />
+			<xs:enumeration value="MDA" />
+			<xs:enumeration value="3HQ" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugSolvents">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="methanol" />
+			<xs:enumeration value="RPMI" />
+			<xs:enumeration value="distilled water" />
+			<xs:enumeration value="DMSO" />
+			<xs:enumeration value="ethanol" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="cloneProviders">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""></xs:enumeration>
+			<xs:enumeration value="false"></xs:enumeration>
+			<xs:enumeration value="wwarn-validated"></xs:enumeration>
+			<xs:enumeration value="true"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="precursorTimes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""></xs:enumeration>
+			<xs:enumeration value="0"></xs:enumeration>
+			<xs:enumeration value="24"></xs:enumeration>
+			<xs:enumeration value="other"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="referenceClones">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+			<xs:enumeration value="3D7"/>
+			<xs:enumeration value="W2"/>
+			<xs:enumeration value="other"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="drugTradeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="Amobin" />
+			<xs:enumeration value="Amonate" />
+			<xs:enumeration value="Arco" />
+			<xs:enumeration value="Arsudar" />
+			<xs:enumeration value="Arsumax" />
+			<xs:enumeration value="Artefan" />
+			<xs:enumeration value="Artekin" />
+			<xs:enumeration value="Artequin" />
+			<xs:enumeration value="Artrin" />
+			<xs:enumeration value="Avloclor" />
+			<xs:enumeration value="Basoquin" />
+			<xs:enumeration value="Camoquin" />
+			<xs:enumeration value="Co-artesiane" />
+			<xs:enumeration value="Coarsucam" />
+			<xs:enumeration value="Coartem" />
+			<xs:enumeration value="Cosmoquin" />
+			<xs:enumeration value="Duo-Cotecxin" />
+			<xs:enumeration value="Eloquine" />
+			<xs:enumeration value="Eurartesim" />
+			<xs:enumeration value="Falcidin" />
+			<xs:enumeration value="Fansidar" />
+			<xs:enumeration value="Farenax" />
+			<xs:enumeration value="Flavoquine" />
+			<xs:enumeration value="Halfan" />
+			<xs:enumeration value="LapDap" />
+			<xs:enumeration value="Lariam" />
+			<xs:enumeration value="Malaratab" />
+			<xs:enumeration value="Malarine" />
+			<xs:enumeration value="Malarone" />
+			<xs:enumeration value="Malmed" />
+			<xs:enumeration value="Mequin" />
+			<xs:enumeration value="Nivaquine" />
+			<xs:enumeration value="Plasmotrin" />
+			<xs:enumeration value="Primacin" />
+			<xs:enumeration value="Resunate" />
+			<xs:enumeration value="Riamet" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="drugManufacturer">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
+			<xs:enumeration value="Ajanta Pharma" />
+			<xs:enumeration value="Aspen Healthcare" />
+			<xs:enumeration value="AstraZeneca" />
+			<xs:enumeration value="Atlantic Laboratories" />
+			<xs:enumeration value="Aventis" />
+			<xs:enumeration value="Bailly-Creat Laboratory" />
+			<xs:enumeration value="Boucher and Muir" />
+			<xs:enumeration value="Cosmos" />
+			<xs:enumeration value="Dafra Pharma" />
+			<xs:enumeration value="Far-Manguinhos" />
+			<xs:enumeration value="Glaxo-SmithKline" />
+			<xs:enumeration value="Guilin Pharma" />
+			<xs:enumeration value="Hoffmann-La Roche" />
+			<xs:enumeration value="Holley Pharmaceuticals" />
+			<xs:enumeration value="Holley-Cotec Pharmaceuticals" />
+			<xs:enumeration value="Holleykin Pharmaceuticals" />
+			<xs:enumeration value="Ipca Laboratories Ltd" />
+			<xs:enumeration value="Kunming Pharmaceutical Corporation" />
+			<xs:enumeration value="LIC Pharma" />
+			<xs:enumeration value="Maphra" />
+			<xs:enumeration value="Medinomics Healthcare" />
+			<xs:enumeration value="Medochemie" />
+			<xs:enumeration value="Mepha" />
+			<xs:enumeration value="Novartis" />
+			<xs:enumeration value="Parke-Davis" />
+			<xs:enumeration value="Pfizer" />
+			<xs:enumeration value="Pharmamed" />
+			<xs:enumeration value="Regal Pharmaceuticals" />
+			<xs:enumeration value="Rene Pharmaceuticals" />
+			<xs:enumeration value="Rhone-Poulenc" />
+			<xs:enumeration value="Roche" />
+			<xs:enumeration value="Sanofi" />
+			<xs:enumeration value="Sanofi Aventis" />
+			<xs:enumeration value="SigmaTau" />
+			<xs:enumeration value="SmithKline Beecham" />
+			<xs:enumeration value="Sterling Winthrop" />
+			<xs:enumeration value="Swiss Pharma Nigeria Limited" />
+			<xs:enumeration value="Zeneca" />
+			<xs:enumeration value="Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="unitsOfMeasure">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+			<xs:enumeration value="ng/ml"/>
+			<xs:enumeration value="ug/ml"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+  <xs:element name="pmid" type="optionalInteger"/>
+  
+  <xs:element name="maxAge" type="optionalDecimal"/>
+  <xs:element name="minAge" type="optionalDecimal"/>
+  
+  <xs:element name="minParasitaemia" type="optionalDecimal"/>
+  <xs:element name="maxParasitaemia" type="optionalDecimal"/>
+  
+  <!-- duration is day of follow up -->
+  <xs:element name="duration" type="optionalInteger"/>
+  
+  
+  <xs:element name="ageFrom" type="optionalDecimal"/>
+  <xs:element name="ageTo" type="optionalDecimal"/>
+  
+  <xs:element name="weightGroupFrom" type="optionalDecimal"/>
+  <xs:element name="weightGroupTo" type="optionalDecimal"/>
+  
+  <xs:element name="day" type="optionalDecimal"/>
+  <xs:element name="hour" type="optionalDecimal"/>
+  <xs:element name="dose" type="optionalDecimal"/>
+  
+  <xs:element name="glucose-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="hematocritpercent" type="optionalDecimal"/>
+  <xs:element name="serum-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="hypoxantine-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="oroticAcid-finalConcentration" type="optionalDecimal"/>
+  <xs:element name="NaHCO3-finalConcentration" type="optionalDecimal"/>
+  
+</xs:schema>
+

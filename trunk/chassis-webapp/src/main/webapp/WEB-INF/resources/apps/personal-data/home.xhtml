@@ -1,0 +1,239 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:app="http://www.w3.org/2007/app">
+    
+    <head>
+    
+        <title>Personal data home</title>
+
+        
+        <xforms:model id="mod-main">
+
+			<xforms:submission 
+				id="sub-get-all-submitted-media-feed"
+				resource="/service/content/media/submitted?filter=pdr"
+				method="get"
+				replace="instance"
+				instance="ins-submitted-media-feed" 
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving submitted media.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:action ev:event="xforms-model-construct-done">
+	        	<xforms:send submission="sub-get-all-submitted-media-feed"/>
+			</xforms:action>
+			
+			<xforms:instance id="ins-submitted-media-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+					 
+				    <div id="block-menu-primary-links">
+					    <ul id="primary" class="clearfix">
+					    	<li class="active-trail"><a href="home">Personal Data Home</a></li>
+					    	<li><a href="/" target="_blank" f:url-norewrite="true">WWARN Website</a></li>
+					    </ul>
+				    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix no-help-box">
+				                <div class="no-bg">
+				                	<div class="main oneCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+		
+		<div id="content" class="home">
+    	
+		<h1>Personal data home</h1>
+
+    	<h2>Files to review</h2>
+    	
+			<xxforms:variable name="media-to-review" select="instance('ins-submitted-media-feed')/atom:entry[not(exists(manta:review))]"/>
+
+			<xforms:group ref="instance('ins-submitted-media-feed')[empty($media-to-review)]">
+				<p>There are no files to review.</p>
+			</xforms:group>
+			
+			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-to-review)]">
+
+    			<p>The following files have not been checked for personal data. Once a file is marked as not containing personal data, it will proceed to curation and be made available for download to the original contributor(s).
+    			</p>
+			
+				<div id="list-of-files-to-review-container">
+			
+				<fr:datatable width="100%">
+		    		<thead>
+		    			<tr>
+		    				<th fr:sortable="true" fr:resizeable="true">Study ID</th>
+		    				<th fr:sortable="false" fr:resizeable="true">File ID</th>
+		    				<th fr:sortable="false" fr:resizeable="true">Original file name</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+		    				<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+		    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    			<xforms:repeat nodeset="instance('ins-submitted-media-feed')/atom:entry[not(exists(manta:review))]
+			    			">
+		    			
+		    				<tr class="repeated-element">
+								<td>
+		    						<xforms:output value="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@manta:idref"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="manta:id"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="atom:title"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output value="atom:author/atom:email"/>
+		    					</td>
+		    					<td>
+		    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+		    					</td>
+		    					<td>
+		    						<span class="review-file-link-container"><a href="review?media-link={atom:link[@rel='edit']/@href}">Review</a></span>
+		    					</td>
+		    				</tr>
+		    			</xforms:repeat>
+		    		</tbody>
+				</fr:datatable>
+				
+				</div>
+				
+			</xforms:group>
+		    	
+    	<h2>Files with personal data</h2>
+			
+		<xxforms:variable
+			name="media-with-personal-data-not-replaced"
+			select="instance('ins-submitted-media-feed')/atom:entry[manta:review/outcome = 'fail']"/>
+    	
+			<xforms:group ref="instance('ins-submitted-media-feed')[empty($media-with-personal-data-not-replaced)]">
+				<p>There are no files with personal data that need to be replaced.</p>
+			</xforms:group>
+
+			<xforms:group ref="instance('ins-submitted-media-feed')[exists($media-with-personal-data-not-replaced)]">
+			
+				<p>The following files contain personal data and need to be replaced with anonymized files before curation can begin.
+				</p>
+			
+				<div id="list-of-files-with-personal-data-container">
+			
+				<fr:datatable width="100%">
+					<thead>
+						<tr>
+							<th fr:sortable="true" fr:resizeable="true">Study ID</th>
+							<th fr:sortable="false" fr:resizeable="true">File ID</th>
+							<th fr:sortable="true" fr:resizeable="true">Original file name</th>
+							<th fr:sortable="true" fr:resizeable="true">Contributor</th>
+							<th fr:sortable="true" fr:resizeable="true">Submitted</th>
+							<th fr:sortable="false" fr:resizeable="true">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<xforms:repeat 
+							id="rep-submitted-media"
+							nodeset="instance('ins-submitted-media-feed')/atom:entry[manta:review/outcome = 'fail']">
+							
+							<tr class="repeated-element">
+								<td>
+		    						<xforms:output value="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@manta:idref"/>
+		    					</td>
+								<td>
+									<xforms:output value="manta:id"/>
+								</td>
+								<td>
+									<xforms:output value="atom:title"/>
+								</td>
+								<td>
+									<xforms:output value="atom:author/atom:email"/>
+								</td>
+								<td>
+									<xforms:output 
+										ref="atom:published" 
+										xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+								</td>
+								<td>
+									<!-- action only available to curators -->
+									<xforms:group model="mod-current-user" ref="instance('ins-current-user')[roles/role='ROLE_CHASSIS_CURATOR']">
+										<span class="replace-file-link-container"><a href="replace?media-link={xxforms:context('rep-submitted-media')/atom:link[@rel='edit']/@href}">Replace</a></span><br/>
+									</xforms:group>
+								</td>
+							</tr>
+						</xforms:repeat>
+					</tbody>
+				</fr:datatable>
+				
+				</div>
+				
+			</xforms:group>
+
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+		    			    	
+    </body>
+</html>
+

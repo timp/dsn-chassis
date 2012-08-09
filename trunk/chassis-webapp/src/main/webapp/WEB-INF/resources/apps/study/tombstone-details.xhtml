@@ -1,0 +1,408 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:at="http://purl.org/atompub/tombstones/1.0">
+    
+    <head>
+    
+    	<title>File details - File <xforms:output ref="instance('ins-media-link-entry')/manta:id"/></title>
+        
+        <xforms:model>
+
+			<xforms:instance id="ins-media-link-entry">
+				<at:deleted-entries/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-get-media-link-entry"
+				resource="{xxforms:get-request-parameter('media-link')}"
+				method="get"
+				replace="instance"
+				instance="ins-media-link-entry"
+				serialization="none">
+				
+				<!-- handle submission errors -->
+				   
+				<xforms:message ev:event="xforms-submit-error" level="modal" if="event('response-status-code')!=410">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the media-link entry.</xforms:message>
+				             
+				<xforms:action ev:event="xforms-submit-error" if="event('response-status-code')=410">
+					<xforms:insert 
+						context="instance('ins-media-link-entry')"
+						nodeset="at:deleted-entries"
+						at="0" 
+						position="before"
+						origin="event('response-body')/at:deleted-entry"/>
+					<xforms:send submission="sub-get-derivation-feed"/>
+					<xforms:send submission="sub-get-derived-feed"/>
+				</xforms:action>
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:send submission="sub-get-derivation-feed"/>
+					<xforms:send submission="sub-get-derived-feed"/>
+				</xforms:action>
+				
+			</xforms:submission>
+
+			<xforms:action ev:event="xforms-model-construct-done">
+				<xforms:send submission="sub-get-media-link-entry"/>
+			</xforms:action>
+        	
+        	<xforms:instance id="ins-derivation-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:instance id="ins-derived-feed">
+        		<atom:feed/>
+        	</xforms:instance>
+        	
+        	<xforms:submission 
+        		id="sub-get-derivation-feed"
+        		resource="{instance('ins-media-link-entry')/at:deleted-entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivation']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-derivation-feed"
+        		serialization="none">
+        		
+        		<!-- handle submission errors -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the derivation feed.</xforms:message>
+        		
+        	</xforms:submission>
+        	
+        	<xforms:submission 
+        		id="sub-get-derived-feed"
+        		resource="{instance('ins-media-link-entry')/at:deleted-entry/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derived']/@href}"
+        		method="get"
+        		replace="instance"
+        		instance="ins-derived-feed"
+        		serialization="none">
+        		
+        		<!-- handle submission errors -->
+        		<xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the derived feed.</xforms:message>
+        		
+        	</xforms:submission>
+        	
+        	<!-- This gets the list of different file types for the upload-files tab. -->
+        	<xforms:instance id="ins-file-terms" src="/apps/common/constants/file-terms.xml"/>    
+        	
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix">
+				                <div class="no-bg">
+				                	<div class="main twoCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+    	
+    	<div id="content">
+    	
+    		<h1>File Details - <xforms:output ref="at:deleted-entry/at:comment"/></h1>
+    		
+    		<xforms:group ref="instance('ins-media-link-entry')">
+    			
+
+
+    			<p>
+    				<a href="../study/dashboard?tab=files&amp;study={//atom:link[@rel='http://www.cggh.org/2010/chassis/terms/originStudy']/@href}">&lt;&lt; Study Dashboard</a>
+    			</p>
+    			<p>
+    				<xforms:output ref="at:deleted-entry/manta:id"><xforms:label>Code: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/atombeat:ghost/atom:title"><xforms:label>File Name: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="at:deleted-entry/at:by/atom:email"><xforms:label>Deleted By: </xforms:label></xforms:output><br/>
+    				<xforms:output ref="@when" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"><xforms:label>Deleted On: </xforms:label></xforms:output><br/>
+    			</p>
+    		</xforms:group>
+   			
+   			<p><xforms:output ref="//at:deleted-entry/at:comment"/></p> 		
+    		
+    		<hr/>
+    		
+			<h2>Derivation</h2>
+
+    		<xforms:group ref="instance('ins-derivation-feed')[not(exists(atom:entry) or exists(at:deleted-entry/at:deleted-entry))]">
+    			<p>This file is an original submission.</p>
+    		</xforms:group>			
+
+    		<xforms:group ref="instance('ins-derivation-feed')[count(atom:entry) gt 1]/atom:entry">
+				<p>The derivation of this file is ambiguous (more than one derivation found).</p>
+			</xforms:group>
+
+    		<xforms:group ref="instance('ins-derivation-feed')[count(atom:entry)=1]/atom:entry">
+    			
+    			<h3>Comments</h3>
+    			
+    			<blockquote>
+    				<xforms:output ref="atom:summary"/>
+    			</blockquote>
+
+    			<h3>All Inputs</h3>
+    			
+    			<fr:datatable paginated="false">
+    				<thead>
+    					<tr>
+    						<th fr:sortable="true" fr:resizeable="true">Code</th>
+    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
+    						<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+    						<th fr:sortable="true" fr:resizeable="true">Uploaded By</th>
+    						<th fr:sortable="true" fr:resizeable="true">Type</th>
+    						<th>Actions</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//atom:entry">
+    						<tr>
+    							<td>
+    								<xforms:output ref="manta:id"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:title"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:author/atom:email"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="
+    									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+    									return
+    									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+    									then $cat/@label
+    									else instance('ins-file-terms')/term[value=$cat/@term]/label
+    									"/>
+    							</td>
+    							<td>
+    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    									<a href="{atom:content/@src}">Download</a><br/>
+    								</xforms:group>
+    								<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+    							</td>
+    						</tr>
+    					</xforms:repeat>
+    				</tbody>
+    				
+    			</fr:datatable>
+
+				<fr:datatable paginated="false">
+    				<thead>
+    					<tr>
+    						<th fr:sortable="true" fr:resizeable="true">Code</th>
+    						<th fr:sortable="true" fr:resizeable="true">Comments</th>
+    						<th fr:sortable="true" fr:resizeable="true">Deleted On</th>
+    						<th fr:sortable="true" fr:resizeable="true">Deleted By</th>
+    						<th fr:sortable="true" fr:resizeable="true">Deleted By email</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationInput']//at:deleted-entry">
+    						<tr>
+    							<td>
+    								
+    							</td>
+    							<td>
+    								<xforms:output ref="at:comment"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="@when" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="at:by/at:name"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="at:by/at:email"/>
+    							</td>
+    						</tr>
+    					</xforms:repeat>
+    				</tbody>
+    				
+    			</fr:datatable>
+    			<h3>Other Outputs</h3>
+    			
+    			<xforms:group ref=".[empty(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
+    				<p>This file was the only output.</p>
+    			</xforms:group>
+
+    			<xforms:group ref=".[exists(atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id])]">
+    				<fr:datatable paginated="false">
+	    				<thead>
+	    					<tr>
+	    						<th fr:sortable="true" fr:resizeable="true">Code</th>
+	    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
+	    						<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+	    						<th fr:sortable="true" fr:resizeable="true">Uploaded By</th>
+	    						<th fr:sortable="true" fr:resizeable="true">Type</th>
+	    						<th>Actions</th>
+	    					</tr>
+	    				</thead>
+	    				<tbody>
+	    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry[atom:id != instance('ins-media-link-entry')/atom:id]">
+	    						<tr>
+	    							<td>
+	    								<xforms:output ref="manta:id"/>
+	    							</td>
+	    							<td>
+	    								<xforms:output ref="atom:title"/>
+	    							</td>
+	    							<td>
+	    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+	    							</td>
+	    							<td>
+	    								<xforms:output ref="atom:author/atom:email"/>
+	    							</td>
+	    							<td>
+	    								<xforms:output ref="
+	    									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+	    									return
+	    									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+	    									then $cat/@label
+	    									else instance('ins-file-terms')/term[value=$cat/@term]/label
+	    									"/>
+	    							</td>
+	    							<td>
+	    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+	    									<a href="{atom:content/@src}">Download</a><br/>
+	    								</xforms:group>
+	    								<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+	    							</td>
+	    						</tr>
+	    					</xforms:repeat>
+	    				</tbody>
+    				</fr:datatable>
+				</xforms:group>    			
+
+    		</xforms:group>		
+    		
+    		<hr/>
+    		
+    		<h2>Derived</h2>
+
+    		<xforms:group ref="instance('ins-derived-feed')[empty(atom:entry)]">
+    			<p>No files have been derived from this file.</p>
+    		</xforms:group>			
+    		
+    		<xforms:group ref="instance('ins-derived-feed')[exists(atom:entry)]/atom:entry">
+    			
+    			<p>The files below are derived from this file.</p>
+				
+    			<fr:datatable paginated="false">
+    				<thead>
+    					<tr>
+    						<th fr:sortable="true" fr:resizeable="true">Code</th>
+    						<th fr:sortable="true" fr:resizeable="true">File Name</th>
+    						<th fr:sortable="true" fr:resizeable="true">Uploaded On</th>
+    						<th fr:sortable="true" fr:resizeable="true">Uploaded By</th>
+    						<th fr:sortable="true" fr:resizeable="true">Type</th>
+    						<th>Actions</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    					<xforms:repeat nodeset="atom:link[@rel='http://www.cggh.org/2010/chassis/terms/derivationOutput']//atom:entry">
+    						<tr>
+    							<td>
+    								<xforms:output ref="manta:id"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:title"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="atom:author/atom:email"/>
+    							</td>
+    							<td>
+    								<xforms:output ref="
+    									for $cat in (./atom:category[@scheme='http://www.cggh.org/2010/chassis/scheme/FileTypes'])
+    									return
+    									if ( $cat/@term = 'http://www.cggh.org/2010/chassis/terms/Other' )
+    									then $cat/@label
+    									else instance('ins-file-terms')/term[value=$cat/@term]/label
+    									"/>
+    							</td>
+    							<td>
+    								<xforms:group ref=".[contains( ./atom:link[@rel='edit-media']/@atombeat:allow , 'GET' )]">
+    									<a href="{atom:content/@src}">Download</a><br/>
+    								</xforms:group>
+    								<a href="file-details?media-link={atom:link[@rel='edit']/@href}">Details</a>
+    							</td>
+    						</tr>
+    					</xforms:repeat>
+    				</tbody>
+    			</fr:datatable>
+    		</xforms:group>
+    		
+    		
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->   
+    		<!-- 
+    	 <fr:xforms-inspector xmlns:fr="http://orbeon.org/oxf/xml/form-runner"/>		
+      -->
+    </body>
+</html>
+
