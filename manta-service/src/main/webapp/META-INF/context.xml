@@ -1,0 +1,4 @@
+<Context path="/repo">
+	<ResourceLink global="jdbc/wwarn_drupal" name="jdbc/wwarn_drupal" type="javax.sql.DataSource"/>
+	<ResourceLink global="bean/existConfigFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig"/>
+</Context>
