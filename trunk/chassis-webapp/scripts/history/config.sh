@@ -8,8 +8,8 @@ TICKETS=http://cloud1.cggh.org/sso/v1/tickets
 #HOST=https://wwarn-app3.nsms.ox.ac.uk/repository
 #TICKETS=https://wwarn-app3.nsms.ox.ac.uk/sso/v1/tickets
 
-USERNAME=Ian
-PASSWORD=1x1m1RM4
+USERNAME=
+PASSWORD=
 HOST=https://www.wwarn.org/repository
 TICKETS=https://www.wwarn.org/sso/v1/tickets
 
