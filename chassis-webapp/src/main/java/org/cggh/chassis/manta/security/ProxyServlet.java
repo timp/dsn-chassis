@@ -29,17 +29,10 @@ public class ProxyServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -6740547993430324899L;
-	private Logger logger = Logger.getLogger(ProxyServlet.class);
+	private static Logger logger = Logger.getLogger(ProxyServlet.class);
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-	//	super.doGet(req, resp);
-		doProxiedMethod(req, resp, HttpMethod.GET);
-	}
-
-	private void doProxiedMethod(HttpServletRequest req,
-			HttpServletResponse resp, HttpMethod methodType)
+	public static <E> E doProxiedMethod(HttpServletRequest req,
+			HttpServletResponse resp, HttpMethod methodType, InputStream is, Class responseClass)
 			throws ServletException, IOException {
 		String target = req.getRequestURL().toString();
 		String dest = target.replaceFirst("repository", "repo");
@@ -58,21 +51,23 @@ public class ProxyServlet extends HttpServlet {
 			Enumeration<String> hvalues = req.getHeaders(hName);
 			while (hvalues.hasMoreElements()) {
 				String hvalue = hvalues.nextElement();
-				requestHeaders.set(hName,hvalue);
-//				if (logger.isDebugEnabled()) {
-//					logger.debug("Setting request header " + hName
-//							+ " to:" + hvalue);
-//				}
+				if (!hName.equalsIgnoreCase("cookie")) {
+					requestHeaders.set(hName, hvalue);
+					if (logger.isDebugEnabled()) {
+						logger.debug("Setting request header " + hName + " to:"
+								+ hvalue);
+					}
+				}
 			}
 		}
-	//	requestHeaders.set("Content-type:", req.getHeader("Content-type"));
-	//	requestHeaders.set("Accept:", req.getHeader("Accept"));
-		
+		// requestHeaders.set("Content-type:", req.getHeader("Content-type"));
+		// requestHeaders.set("Accept:", req.getHeader("Accept"));
+
 		String in;
 		if (methodType == HttpMethod.GET) {
 			in = "";
 		} else {
-			InputStream is = req.getInputStream();
+			
 			in = new Scanner(is).useDelimiter("\\A").next();
 		}
 		/* If you want to validate the ticket */
@@ -89,15 +84,15 @@ public class ProxyServlet extends HttpServlet {
 
 		HttpEntity<String> requestEntity = new HttpEntity<String>(in,
 				requestHeaders);
-		HttpEntity<String> response = null;
+		HttpEntity<E> response = null;
 		try {
 			long start = System.currentTimeMillis();
 			if (proxyticket == null) {
 				response = restClient.exchange(dest, methodType, requestEntity,
-						String.class);
+						responseClass);
 			} else {
 				response = restClient.exchange(dest, methodType, requestEntity,
-						String.class, proxyticket);
+						responseClass, proxyticket);
 			}
 			long end = System.currentTimeMillis();
 			if (logger.isDebugEnabled()) {
@@ -117,11 +112,11 @@ public class ProxyServlet extends HttpServlet {
 				// sr.close();
 			}
 			logger.debug(e.getResponseBodyAsString());
-			
+
 			resp.setStatus(e.getStatusCode().value());
-			resp.sendError(e.getStatusCode().value(),e.getStatusText());
-//			throw new ServletException(msg, e);
-			return;
+			resp.sendError(e.getStatusCode().value(), e.getStatusText());
+			// throw new ServletException(msg, e);
+			return null;
 		}
 		HttpHeaders respHeaders = response.getHeaders();
 
@@ -129,41 +124,51 @@ public class ProxyServlet extends HttpServlet {
 				.iterator();
 		while (iter.hasNext()) {
 			Entry<String, List<String>> head = iter.next();
-			if (!(head.getKey().contains("Cookie") || head.getKey().equals(
+			String headName = head.getKey();
+			if (!(headName.equalsIgnoreCase("Set-Cookie") || headName.equalsIgnoreCase(
 					"Transfer-Encoding"))) {
 				Iterator<String> values = head.getValue().iterator();
 				while (values.hasNext()) {
 					String value = values.next();
-					resp.setHeader(head.getKey(), value);
-//					if (logger.isDebugEnabled()) {
-//						logger.debug("Setting response header " + head.getKey()
-//								+ " to:" + value);
-//					}
+					resp.setHeader(headName, value);
+					if (logger.isDebugEnabled()) {
+						logger.debug("Setting response header " + headName
+								+ " to:" + value);
+					}
 				}
 			}
 		}
-		resp.getWriter().print(response.getBody());
+		restClient.
+		return (response.getBody());
 	}
 
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// super.doGet(req, resp);
+		String response = ProxyServlet.<String>doProxiedMethod(req, resp, HttpMethod.GET, req.getInputStream(), String.class);
+		resp.getWriter().print(response);
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-	//	super.doPost(req, resp);
-		doProxiedMethod(req, resp, HttpMethod.POST);
+		// super.doPost(req, resp);
+		resp.getWriter().print(ProxyServlet.<String>doProxiedMethod(req, resp, HttpMethod.POST, req.getInputStream(), String.class));
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-	//	super.doPut(req, resp);
-		doProxiedMethod(req, resp, HttpMethod.PUT);
+		// super.doPut(req, resp);
+		resp.getWriter().print(ProxyServlet.<String>doProxiedMethod(req, resp, HttpMethod.PUT, req.getInputStream(), String.class));
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-	//	super.doDelete(req, resp);
-		doProxiedMethod(req, resp, HttpMethod.DELETE);
+		// super.doDelete(req, resp);
+		resp.getWriter().print(ProxyServlet.<String>doProxiedMethod(req, resp, HttpMethod.DELETE, req.getInputStream(), String.class));
 	}
 
 }
