@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-service</artifactId>
-	<version>2.2.0-alpha-1-SNAPSHOT</version>
+	<version>3.0-alpha-1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-service</name>
 	<description>Chassis Manta Web Atombeat Service</description>
@@ -172,6 +172,11 @@
 			<version>1.6</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
@@ -284,6 +289,11 @@
 			<version>3.1.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.xmlrpc</groupId>
+			<artifactId>xmlrpc-server</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
 			<version>2.9.2</version>
@@ -328,7 +338,7 @@
 			<artifactId>ehcache-core</artifactId>
 			<version>2.5.3</version>
 		</dependency>
-		
+
 		<!-- end of exist dependencies -->
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
@@ -336,7 +346,7 @@
 			<version>0.0.6</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<scm>
