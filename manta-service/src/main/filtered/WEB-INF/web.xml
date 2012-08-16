@@ -256,42 +256,5 @@
         <filter-name>XQueryURLRewrite</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
-    
-    
-    <!--+
-        |
-        | Custom servlets
-        | ***************
-        +-->
-    
-   
-    
-    <servlet>
-        <servlet-name>StoreUploadsServlet</servlet-name>
-        <servlet-class>org.cggh.chassis.manta.http.servlet.StoreUploadsServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>StoreUploadsServlet</servlet-name>
-        <url-pattern>/util/store-uploads</url-pattern>
-    </servlet-mapping>
-    
-    
-    <!--+
-        |
-        | Custom error pages
-        | ******************
-        +-->
-    
-    <error-page>
-        <error-code>403</error-code>
-        <location>/common/forbidden</location>
-    </error-page> 
-    
-    <error-page>
-        <error-code>404</error-code>
-        <location>/common/not-found</location>
-    </error-page> 
-    
-    
+       
 </web-app>
