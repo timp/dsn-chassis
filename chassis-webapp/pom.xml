@@ -12,11 +12,14 @@
 	<!-- Default properties, override with command line profile ie -P production 
 		or -D property=value -->
 	<properties>
-		<org.springsecurity.version>3.1.0.RELEASE</org.springsecurity.version>
+		<org.springsecurity.version>3.1.1.RELEASE</org.springsecurity.version>
+		<org.spring.version>3.1.2.RELEASE</org.spring.version>
+
 		<org.atombeat.version>0.2-alpha-11-SNAPSHOT</org.atombeat.version>
 
-		<com.orbeon.version>orbeon-4.0.0.m9.201208080300-CE</com.orbeon.version>
+		<com.orbeon.version>orbeon-4.0.0.m5.201207030346-CE</com.orbeon.version>
 
+		<chassis.model.version>0.0.7-SNAPSHOT</chassis.model.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />
@@ -34,9 +37,6 @@
 		<!-- Referenced in WEB-INF/security-cas-drupal.properties -->
 		<cas.url>http://localhost:8080/sso</cas.url>
 		<chassis.url>http://localhost:8080</chassis.url>
-
-		<!-- Referenced in WEB-INF/exist-conf.xml -->
-		<exist-data>${cDrive}/data/atombeat/exist</exist-data>
 
 		<!-- Referenced in /WEB-INF/resources/config/log4j.xml -->
 		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
@@ -173,6 +173,11 @@
 			<version>${org.springsecurity.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.spring.version}</version>
+		</dependency>
 		<!-- AtomBeat servlet filters to enable security -->
 		<dependency>
 			<groupId>org.atombeat</groupId>
@@ -184,7 +189,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
+			<version>5.1.21</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -220,6 +225,22 @@
 					<groupId>javax.jms</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.cggh.chassis</groupId>
+			<artifactId>chassis-model</artifactId>
+			<version>${chassis.model.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.1.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${org.spring.version}</version>
 		</dependency>
 	</dependencies>
 
