@@ -90,10 +90,10 @@
         </xforms:header>
 
         <xforms:action ev:event="xforms-submit-done">
-            <!-- causes binding errors when there's an extended character in the filename which is what it's there
-                to fix....
-            <xforms:setvalue ref="instance('ins-uploaded-file')//atom:title/text()" value="instance('ins-upload')//media/@filename"/>
-            -->
+            <!-- Fix filename when there are an extended characters in the filename 
+            RFC only allows ASCII in headers so filename won't be right otherwise -->
+            <xforms:setvalue ref="instance('ins-uploaded-file')//atom:title" value="instance('ins-upload')//media/@filename"/>
+            
             <xforms:send submission="sub-after-upload" />
             
         </xforms:action>
