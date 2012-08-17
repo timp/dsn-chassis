@@ -14,9 +14,6 @@
   <xs:import namespace="http://purl.org/atombeat/xmlns" schemaLocation="atombeat.xsd"/>
   
   <xs:import namespace="http://www.cggh.org/2011/chassis/xmlns" schemaLocation="studyInfoTypes.xsd"/>
-
-  <!--  See app.xsd  -->
-  <xs:element name="draft" type="xs:NCName"/>
   
   <xs:simpleType name="longURI">
     <xs:restriction base="xs:anyURI">
@@ -54,10 +51,13 @@
   </xs:simpleType>
  
   <xs:element name="studyTitle" type="longString"/>
+  <xs:element name="studyLabel" type="longString"/>
+  
   <xs:element name="study">
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="studyTitle"/>
+        <xs:element ref="studyLabel"/>
         <xs:element minOccurs="0" ref="ui-info"/>
         <xs:element ref="registrant-has-agreed-to-the-terms"/>
         <xs:element ref="study-is-published"/>
@@ -73,7 +73,7 @@
       <xs:attribute name="profile" use="required">
         <xs:simpleType >
           <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.1"/>
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.2"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -273,6 +273,7 @@
         <xs:element ref="annualParasitologicalIncidenceYear"/>
         <xs:element ref="parasitePrevalence"/>
         <xs:element ref="parasitePrevalenceYear"/>
+        <xs:element ref="transmissionIntensityLevel"/>
         <xs:element ref="transmissionIntensityAgeFrom"/>
         <xs:element minOccurs="0" ref="transmissionIntensityAgeFromUnits"/>
         <xs:element ref="transmissionIntensityAgeTo"/>
@@ -288,6 +289,7 @@
   <xs:element name="annualParasitologicalIncidenceYear" type="xs:string"/>
   <xs:element name="parasitePrevalence" type="xs:string"/>
   <xs:element name="parasitePrevalenceYear"  type="xs:string"/>
+  <xs:element name="transmissionIntensityLevel"  type="xs:string"/>
   <xs:element name="transmissionIntensityAgeFrom" type="xs:string"/>
   <xs:element name="transmissionIntensityAgeFromUnits" type="xs:string"/>
   <xs:element name="transmissionIntensityAgeTo" type="xs:string"/>
@@ -815,10 +817,14 @@
         <xs:sequence minOccurs="0">
           <xs:element ref="platesPreparationDate"/>
           <xs:element ref="plateBatches"/>
+          <xs:element ref="referenceClone"/>
+          <xs:element ref="referenceCloneOther"/>
         </xs:sequence>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="referenceClone" type="xs:string"/>
+  <xs:element name="referenceCloneOther" type="xs:string"/>
   <xs:element name="analysisSite" type="xs:string"/>
   <xs:element name="culture">
     <xs:complexType>
@@ -926,12 +932,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="timeOfIncubation"/>
+        <xs:element ref="timeOfIncubationOther"/>        
         <xs:element ref="susceptibilityMethod"/>
+        <xs:element ref="precursorAdded"/>
+        <xs:element ref="precursorAddedOther"/>       
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="timeOfIncubation" type="xs:string"/>
+  <xs:element name="timeOfIncubationOther" type="xs:string"/>
   <xs:element name="susceptibilityMethod" type="xs:string"/>
+  <xs:element name="precursorAdded" type="xs:string"/>
+  <xs:element name="precursorAddedOther" type="xs:string"/>
   <xs:element name="platePreparationMethod" type="xs:string"/>
   <xs:element name="platesPreparationDate" type="xs:string"/>
   <xs:element name="plateBatches">
