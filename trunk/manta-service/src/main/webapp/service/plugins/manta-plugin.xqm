@@ -1409,8 +1409,8 @@ declare function manta-plugin:augment-media-atom-entry(
         <atom:entry>
         {
             $entry/attribute::* , (: attributes must come first! :)
-            <manta:id>{$id}</manta:id> ,
             $entry/child::* ,
+            <manta:id>{$id}</manta:id> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivation" href="{$derivation-uri}" type="application/atom+xml;type=feed"/> ,
@@ -1451,8 +1451,8 @@ declare function manta-plugin:augment-media-entry-tombstone(
         <at:deleted-entry>
         {
             $entry/attribute::* , (: attributes must come first! :)
-            <manta:id>{$id}</manta:id> ,
             $entry/child::* ,
+            <manta:id>{$id}</manta:id> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/originStudy" href="{$origin-study-uri}" type="application/atom+xml;type=entry" manta:idref="{$study-id}"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/personalDataReviews" href="{$personal-data-reviews-uri}" type="application/atom+xml;type=feed"/> ,
             <atom:link rel="http://www.cggh.org/2010/chassis/terms/derivation" href="{$derivation-uri}" type="application/atom+xml;type=feed"/> ,
