@@ -36,7 +36,8 @@
 	</xs:element>
 	<xs:element name="entry">
 		<xs:complexType>
-			<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+			
 				<xs:element ref="atom:id" />
 				<xs:element ref="atom:published" />
 				<xs:element ref="atom:updated" />
@@ -51,7 +52,7 @@
 
 				<xs:element ref="atom:link" maxOccurs="unbounded" />
 				<xs:element ref="atom:category" minOccurs="0" />
-			</xs:sequence>
+			</xs:choice>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="published" type="xs:dateTime" />
@@ -92,6 +93,9 @@
 			<xs:attribute name="rel" use="required" type="xs:anyURI" />
 			<xs:attribute name="type" />
 			<xs:attribute ref="atombeat:allow" />
+			<xs:attribute name="length" use="optional" />
+			<xs:attribute name="hash" use="optional" />
+			<xs:attribute ref="manta:idref" use="optional" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="category">
