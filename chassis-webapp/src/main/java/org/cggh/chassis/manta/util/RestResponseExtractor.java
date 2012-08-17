@@ -10,12 +10,14 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.ResponseExtractor;
 
-public class RestResponseExtractor<T> extends HttpMessageConverterExtractor<T> implements ResponseExtractor<T> {
+public class RestResponseExtractor<T> extends HttpMessageConverterExtractor<T>
+		implements ResponseExtractor<T> {
 
 	private HttpHeaders headers;
 	private HttpStatus statusCode;
 
-	public RestResponseExtractor(Class<T> responseType, List<HttpMessageConverter<?>> messageConverters) {
+	public RestResponseExtractor(Class<T> responseType,
+			List<HttpMessageConverter<?>> messageConverters) {
 		super(responseType, messageConverters);
 	}
 
@@ -23,7 +25,11 @@ public class RestResponseExtractor<T> extends HttpMessageConverterExtractor<T> i
 	public T extractData(ClientHttpResponse arg0) throws IOException {
 		headers = arg0.getHeaders();
 		statusCode = arg0.getStatusCode();
-		return super.extractData(arg0);
+		T ret = null;
+		if (statusCode != HttpStatus.NO_CONTENT) {
+			ret = super.extractData(arg0);
+		}
+		return ret;
 	}
 
 	public HttpHeaders getHeaders() {
