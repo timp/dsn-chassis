@@ -15,8 +15,8 @@ import org.w3._2005.atom.Entry;
  * @since 2011-12-13
  */
 public abstract class EntityManagerAction {
-  private static EntityManagerFactory emf;
-  protected static EntityManager em;  
+  private EntityManagerFactory emf;
+  protected EntityManager em;  
   
   public EntityManagerAction(EntityManagerFactory emfIn) { 
     emf = emfIn;
@@ -24,7 +24,7 @@ public abstract class EntityManagerAction {
   }
   protected Entry runAsTransaction(Entry entry) { 
     Entry ret = null;
-    if (!EntityManagerAction.em.getTransaction().isActive())
+    if (!em.getTransaction().isActive())
       em.getTransaction().begin();
     try {
       ret = action(entry);      
