@@ -1,12 +1,8 @@
-/**
- * 
- */
 package org.cggh.chassis.rest.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import org.w3._2005.atom.Entry;
 import org.w3._2005.atom.Feed;
 
 /**
@@ -16,8 +12,8 @@ import org.w3._2005.atom.Feed;
  * @since 2011-12-13
  */
 public abstract class FeedManagerAction {
-  private static EntityManagerFactory emf;
-  protected static EntityManager em;  
+  private EntityManagerFactory emf;
+  protected EntityManager em;  
   
   public FeedManagerAction(EntityManagerFactory emfIn) { 
     emf = emfIn;
@@ -25,7 +21,7 @@ public abstract class FeedManagerAction {
   }
   protected Feed runAsTransaction(Feed entry) { 
     Feed ret = null;
-    if (!FeedManagerAction.em.getTransaction().isActive())
+    if (!em.getTransaction().isActive())
       em.getTransaction().begin();
     try {
       ret = action(entry);      
