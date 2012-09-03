@@ -133,6 +133,9 @@ public class ProxyServlet extends HttpServlet {
 			}
 		}
 		resp.setStatus(responseHandler.getStatusCode().value());
+		if (logger.isDebugEnabled()) {
+			logger.debug("Setting response code:" + responseHandler.getStatusCode());
+		}
 		return (response);
 	}
 
