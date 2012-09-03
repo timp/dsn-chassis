@@ -451,6 +451,17 @@
                                                   origin="xxforms:instance('ins-weightGroupDosingSchedule')"
                                                   />
                                                   </xforms:trigger>
+                                                  
+                                                  
+                                                  <!-- Not sure why ref="../tradeName = 'Coartem'" doesn't work -->
+                                                  <xforms:trigger appearance="minimal">
+                                            	  	<xforms:label><br/>Add standard Coartem dosing</xforms:label>
+                                            	  	<xforms:delete ev:event="DOMActivate" context="." nodeset="weightGroupDosingSchedule"/>
+                                            	  	 <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="weightGroupDosingSchedule"
+	                                                                  origin="xxforms:instance('ins-coartem-dose')//weightGroupDosing/*"/>
+                                            	  </xforms:trigger>
+                                            	  
                                                   </td>
                                                   </tr>
                                                   </table>
