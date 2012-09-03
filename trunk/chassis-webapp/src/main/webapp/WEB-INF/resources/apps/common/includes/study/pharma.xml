@@ -159,12 +159,12 @@
                 <table class="repeat-table">
                     <tr>
                         <th/>
-                        <th> Compound measured <br/> (parent or metabolite) </th>
-                        <th>Target Dose</th>
+                        <th>Concentration name <br/> (parent or metabolite) </th>
+                        <th>Target Dose (Total mg/kg)</th>
                         <th>Units of Measure</th>
                         <th>Fat Amount</th>
                         <th>Lower LoQ</th>
-                        <th>Matrix</th>
+                        <th>Assay Matrix</th>
                     </tr>
                     <xforms:repeat nodeset="analyte" id="analyte-rep">
                         <tr>
@@ -240,7 +240,6 @@
                                         <xforms:value ref="value"/>
                                     </xforms:itemset>
                                     <xforms:alert>Please select a matrix</xforms:alert>
-                                    <xforms:hint>The matrix</xforms:hint>
                                 </xforms:select>
                             </td>
                         </tr>
