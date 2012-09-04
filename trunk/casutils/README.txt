@@ -7,7 +7,7 @@
  
  Cloud1 has a self signed certificate: beware.
  
- Installing certifiacte
+ Installing certificate
  ======================
  
  Note that this fails, without error:
