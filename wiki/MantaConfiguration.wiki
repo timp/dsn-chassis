@@ -59,15 +59,15 @@ ssh into vm as non-privileged user
 ssh chassis
 mkdir workspace
 cd workspace
-svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-service --username Tim.pizey@gmail.com
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-service 
 cd manta-webapp
 mvn install 
 cd ..
-svn checkout https://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp --username Tim.pizey@gmail.com
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp 
 cd manta-webapp
 mvn install 
 cd ..
-svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-config --username Tim.pizey@gmail.com
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-config
 cd manta-config
 mvn install
 
