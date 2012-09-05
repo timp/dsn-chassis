@@ -112,7 +112,8 @@ sudo /etc/init.d/tomcat7 restart
 cd ~/workspace/manta-service/
 mvn tomcat:deploy
 cd ~/workspace/chassis-webapp/
-mvn tomcat:deploy
+mvn tomcat:deploy  -Dcas.url=https://chassis/sso -Dchassis.url=https://chassis
+
 
 }}}
 Point browser at https://chassis/repository/home/ and have a cuppa!
