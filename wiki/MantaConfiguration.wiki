@@ -52,7 +52,11 @@ ssh into vm as non-privileged user
 ssh chassis
 mkdir workspace
 cd workspace
-svn checkout https://dsn-chassis.googlecode.com/svn/branches/manta-maven/manta-webapp --username Tim.pizey@gmail.com
+svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-service --username Tim.pizey@gmail.com
+cd manta-webapp
+mvn install 
+cd ..
+svn checkout https://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp --username Tim.pizey@gmail.com
 cd manta-webapp
 mvn install 
 cd ..
@@ -60,34 +64,24 @@ svn checkout https://dsn-chassis.googlecode.com/svn/trunk/manta-config --usernam
 cd manta-config
 mvn install
 
-sudo mkdir /usr/share/tomcat6/endorsed
-sudo cp target/manta-config-0.2-alpha-5-SNAPSHOT.jar /usr/share/tomcat6/endorsed/
+sudo mkdir /usr/share/tomcat7/endorsed
+sudo cp target/manta-config-0.2-alpha-4.jar /usr/share/tomcat7/endorsed/
 # Not really needed yet
-sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar /usr/share/tomcat6/endorsed/
+sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.21.jar /usr/share/tomcat7/endorsed/
 
-sudo emacs /etc/tomcat6/server.xml
+sudo emacs /etc/tomcat7/server.xml
 }}}
 To GlobalNamingResources add
 {{{
  <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
        serviceBaseURL="http://localhost:8080/repository/service"/>
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)" jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password="" removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000" type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1"/>
 }}}
 
 
-Create file /srv/chassis-manta/context/repository.xml with the following contents: 
+
 {{{
-<?xml version="1.0" encoding="UTF-8"?>
-<Context path="/repository" reloadable="true">
-   <ResourceLink global="bean/existConfigFactory" name="bean/existConfigFactory"
-        type="org.cggh.chassis.manta.util.config.ExistConfig"/>
-    <Environment name="smtp-user" type="java.lang.String" value="curation@wwarn.org"/>
-    <Environment name="smtp-password" type="java.lang.String" value="ma1ar1a"/>
-    <Environment name="smtp-from-email" type="java.lang.String" value="curation@wwarn.org"/>
-    <Environment name="smtp-from-name" type="java.lang.String" value="Curator (timp_chassis_vm)"/>
-</Context>
-}}}
-{{{
-sudo chown tomcat6:tomcat6
+
 
 sudo emacs /etc/tomcat6/tomcat-users.xml 
 add 
@@ -98,9 +92,12 @@ add
 {{{
 sudo mkdir /data
 sudo mkdir /data/atombeat
-sudo chown tomcat6:tomcat6
-sudo /etc/init.d/tomcat6 restart
-cd ~/workspace/manta-webapp/
+sudo chown tomcat7:tomcat7
+sudo /etc/init.d/tomcat7 restart
+cd ~/workspace/manta-service/
 mvn tomcat:deploy
+cd ~/workspace/chassis-webapp/
+mvn tomcat:deploy
+
 }}}
 Point browser at http://chassis:8080/repository/home/ and have a cuppa!
