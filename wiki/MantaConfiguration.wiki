@@ -95,7 +95,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2048m"
 {{{
 
 
-sudo emacs /etc/tomcat6/tomcat-users.xml 
+sudo emacs /etc/tomcat7/tomcat-users.xml 
 add 
 }}}
 {{{
