@@ -32,14 +32,14 @@
 		<oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
 
 		<!-- Referenced in WEB-INF/web.xml -->
-		<contextConfigLocation>WEB-INF/applicationContext-security-example.xml</contextConfigLocation>
+		<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 
 		<!-- Referenced in WEB-INF/security-cas-drupal.properties -->
 		<cas.url>http://localhost:8080/sso</cas.url>
 		<chassis.url>http://localhost:8080</chassis.url>
 
 		<!-- Referenced in /WEB-INF/resources/config/log4j.xml -->
-		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
+		<orbeonLogs>/data/atombeat/logs/chassis-webapp.log</orbeonLogs>
 		<log4j-priority>debug</log4j-priority>
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
 		<test-email />
@@ -55,7 +55,10 @@
 		<alfresco-username />
 		<alfresco-password />
 
-		<spring.integration.version>2.1.0.RELEASE</spring.integration.version>
+		<tomcat.username>admin</tomcat.username>
+		<tomcat.password />
+		<tomcat.url>http://localhost:8080/manager/html</tomcat.url>
+		
 	</properties>
 
 	<repositories>
@@ -393,13 +396,21 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
 				<configuration>
 					<path>/repository</path>
-					<contextFile>/srv/chassis-manta/context/repository.xml</contextFile>
-					<mode>both</mode>
+					<url>${tomcat.url}</url>
+					<username>${tomcat.username}</username>
+					<password>${tomcat.password}</password>
+					<!-- No longer used <contextFile>/srv/chassis-manta/context/repository.xml</contextFile> 
+						<mode>both</mode> -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -421,7 +432,7 @@
 				<cas.url>https://www.cggh.org/sso</cas.url>
 				<chassis.url>https://cloud1.cggh.org</chassis.url>
 				<test-email>ian.wright@wwarn.org</test-email>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+				<orbeonLogs>/var/log/tomcat7/chassis-webapp.log</orbeonLogs>
 				<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
@@ -437,23 +448,7 @@
 				<chassis.url>http://localhost:8080</chassis.url>
 			</properties>
 		</profile>
-		<profile>
-			<id>wwarn-app3</id>
-			<properties>
-				<profileId>wwarn-app3</profileId>
-				<skipTests>true</skipTests>
-				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
-				<bing-maps-key>AuOCY3s1rvqxHcDurxIKubBo-z6ZGkvgCARq2OOnbeijZOovs2EtQx7j0fe5y0eB</bing-maps-key>
-				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
-				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
-				<chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
-				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
-				<log4j-priority>info</log4j-priority>
-				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
-			</properties>
-		</profile>
+		
 		<profile>
 			<id>production</id>
 			<properties>
@@ -464,8 +459,7 @@
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://www.wwarn.org/sso</cas.url>
 				<chassis.url>https://www.wwarn.org</chassis.url>
-				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+				<orbeonLogs>/var/log/tomcat7/chassis-webapp.log</orbeonLogs>
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
