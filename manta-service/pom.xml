@@ -241,8 +241,7 @@
 		</dependency>
 		<!-- <dependency> <groupId>org.exist-db</groupId> <artifactId>exist-webdav-milton</artifactId> 
 			<version>${org.exist-db.version}</version> <scope>runtime</scope> </dependency> -->
-		<!-- xqdoc required for admin console 
-		See http://xqdoc.org/qs_exist.html -->
+		<!-- xqdoc required for admin console See http://xqdoc.org/qs_exist.html -->
 		<dependency>
 			<groupId>org.exist-db</groupId>
 			<artifactId>exist-xqdoc</artifactId>
@@ -455,13 +454,21 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
 				<configuration>
-					<path>/repository</path>
-					<contextFile>/srv/chassis-manta/context/repository.xml</contextFile>
-					<mode>both</mode>
+					<path>/repo</path>
+					<url>${tomcat.url}</url>
+					<username>${tomcat.username}</username>
+					<password>${tomcat.password}</password>
+					<!-- No longer used <contextFile>/srv/chassis-manta/context/repository.xml</contextFile> 
+						<mode>both</mode> -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -480,14 +487,11 @@
 		<cDrive />
 
 		<!-- Name of servlet zone -->
-		<servletZone>repository</servletZone>
+		<servletZone>repo</servletZone>
 
-		<!-- Referenced in WEB-INF/resources/config/properties-local.xml -->
-		<google-api-key />
-		<oxf.epilogue.xforms.inspector>true</oxf.epilogue.xforms.inspector>
-
+		
 		<!-- Referenced in WEB-INF/web.xml -->
-		<contextConfigLocation>WEB-INF/applicationContext-security-example.xml</contextConfigLocation>
+		<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 
 		<!-- Referenced in WEB-INF/security-cas-drupal.properties -->
 		<cas.url>http://localhost:8080/sso</cas.url>
@@ -497,21 +501,14 @@
 		<exist-data>${cDrive}/data/atombeat/exist</exist-data>
 
 		<!-- Referenced in /WEB-INF/resources/config/log4j.xml -->
-		<orbeonLogs>/data/atombeat/logs/chassis.log</orbeonLogs>
+		<orbeonLogs>/data/atombeat/logs/manta-service.log</orbeonLogs>
 		<log4j-priority>debug</log4j-priority>
 		<log4j-appender-ref>ConsoleAppender</log4j-appender-ref>
-		<test-email />
-		<bing-maps-key>AkThinf82zQztpVxwyFn6q_vVMbo5EuYnWBQf2T6-_b1Zs9903MBf8a10Dn1OiJb</bing-maps-key>
+		
+		<tomcat.username>admin</tomcat.username>
+		<tomcat.password />
+		<tomcat.url>http://localhost:8080/manager/html</tomcat.url>
 
-		<!-- Referenced in WEB-INF/resources/config/theme-manta.xsl -->
-		<!-- This is one of the web-property-ids for google.analytics.tests@wwarn.org. -->
-		<!-- It is linked to the profile named test.wwarn.org, but can be triggered 
-			from any host. -->
-		<google-analytics-web-property-id>UA-21401758-1</google-analytics-web-property-id>
-		<use-alfresco>false</use-alfresco>
-		<alfresco-uri />
-		<alfresco-username />
-		<alfresco-password />
 	</properties>
 
 
@@ -521,59 +518,32 @@
 			<id>cloud1</id>
 			<properties>
 				<profileId>cloud1</profileId>
-				<!-- TPP's account -->
-				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
-				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
-				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://www.cggh.org/sso</cas.url>
 				<chassis.url>https://cloud1.cggh.org</chassis.url>
-				<test-email>ian.wright@wwarn.org</test-email>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
-				<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
+				<orbeonLogs>/var/log/tomcat7/manta-service.log</orbeonLogs>
 			</properties>
 		</profile>
 		<profile>
 			<id>localcas</id>
 			<properties>
 				<profileId>localcas</profileId>
-				<!-- TPP's account -->
-				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
-				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>http://localhost:8080/sso</cas.url>
 				<chassis.url>http://localhost:8080</chassis.url>
 			</properties>
 		</profile>
-		<profile>
-			<id>wwarn-app3</id>
-			<properties>
-				<profileId>wwarn-app3</profileId>
-				<skipTests>true</skipTests>
-				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxRqeKNJVUEFbN2Lzdvvt4uqQX8qsxSlxQAHMeJVCDO1vri3c1m36PYxnA</google-api-key>
-				<bing-maps-key>AuOCY3s1rvqxHcDurxIKubBo-z6ZGkvgCARq2OOnbeijZOovs2EtQx7j0fe5y0eB</bing-maps-key>
-				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
-				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
-				<cas.url>https://wwarn-app3.nsms.ox.ac.uk/sso</cas.url>
-				<chassis.url>https://wwarn-app3.nsms.ox.ac.uk</chassis.url>
-				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
-				<log4j-priority>info</log4j-priority>
-				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
-			</properties>
-		</profile>
+		
 		<profile>
 			<id>production</id>
 			<properties>
 				<profileId>production</profileId>
-				<google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxSlb90VRGuJIkqh0iHprgnoFbPqfRT6op4Km2XwtyBOI0RrlbrWQC48tA</google-api-key>
-				<bing-maps-key>AtBtTjuJsT4fHpnP4yzRA1T_Wqr6MAaTKWYU4X1Zi0Eqn5gaUM6qqMx4pYsNpK9U</bing-maps-key>
-				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+		
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://www.wwarn.org/sso</cas.url>
 				<chassis.url>https://www.wwarn.org</chassis.url>
 				<exist-data>/srv/chassis-data/exist</exist-data>
-				<orbeonLogs>/var/log/tomcat6/chassis.log</orbeonLogs>
+				<orbeonLogs>/var/log/tomcat7/manta-service.log</orbeonLogs>
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
@@ -585,7 +555,7 @@
 			<!-- Ensure that something is listening on 8080 for tests -->
 			<activation>
 				<file>
-					<exists>!/var/run/tomcat6.pid</exists>
+					<exists>!/var/run/tomcat7.pid</exists>
 				</file>
 			</activation>
 			<build>
@@ -613,7 +583,7 @@
 									<webAppSourceDirectory>${basedir}/target/manta-service</webAppSourceDirectory>
 									<jettyEnvXml>${basedir}/src/test/resources/jetty-env.xml</jettyEnvXml>
 									<webAppConfig>
-										<contextPath>/repository</contextPath>
+										<contextPath>/repo</contextPath>
 									</webAppConfig>
 								</configuration>
 							</execution>
