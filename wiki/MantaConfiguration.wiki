@@ -31,14 +31,21 @@ You should now be able to see 'It works!' on http://chassis/
 sudo a2enmod proxy
 sudo a2enmod proxy_httpd
 }}}
-Update /etc /apache2/available-sites/default 
+Update /etc /apache2/sites-available/default-ssl 
 {{{
-ProxyPass /repository http://localhost:8080/repository
-ProxyPassReverse /repository http://localhost:8080/repository
-<Proxy http://localhost:8080/repository*>
-Order deny,allow
-Allow from all
-</Proxy>
+ProxyRequests Off
+        <Proxy *>
+                Order deny,allow
+                Allow from all
+        </Proxy>
+
+        ProxyPass /sso http://chassis:8080/sso
+        ProxyPassReverse /sso http://chassis:8080/sso
+        ProxyPass /repository http://chassis:8080/repository
+        ProxyPassReverse /repository http://chassis:8080/repository
+        ProxyPass /repo http://chassis:8080/repo
+        ProxyPassReverse /repo http://chassis:8080/repo
+
 }}}
 {{{
 sudo /etc/init.d/apache2 restart
@@ -78,7 +85,12 @@ To GlobalNamingResources add
 <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)" jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password="" removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000" type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1"/>
 }}}
 
+Make sure you have enough memory for tomcat - you can get away with less if you only upload small files
 
+e.g. in /usr/share/tomcat7/bin/catalina.sh
+{{{
+CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2048m"
+}}}
 
 {{{
 
@@ -89,6 +101,9 @@ add
 {{{
 <user username="admin" password="" roles="manager,admin" />
 }}}
+
+Import the apache self-signed certificate into the java cacerts file
+
 {{{
 sudo mkdir /data
 sudo mkdir /data/atombeat
@@ -100,4 +115,4 @@ cd ~/workspace/chassis-webapp/
 mvn tomcat:deploy
 
 }}}
-Point browser at http://chassis:8080/repository/home/ and have a cuppa!
+Point browser at https://chassis/repository/home/ and have a cuppa!
