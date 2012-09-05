@@ -75,6 +75,9 @@
 		<servletZone>sso</servletZone>
 		<database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
 		<logDirectory>/data/atombeat/logs/</logDirectory>
+		<tomcat.username>admin</tomcat.username>
+		<tomcat.password />
+		<tomcat.url>http://localhost:8080/manager/html</tomcat.url>
 	</properties>
 	<profiles>
 		<profile>
@@ -85,25 +88,17 @@
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
         <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
         <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
-        		<logDirectory>/var/log/tomcat6/</logDirectory>
+        		<logDirectory>/var/log/tomcat7/</logDirectory>
 			</properties>
 		</profile>
-		<profile>
-			<id>wwarn-app3</id>
-			<properties>
-				<profileId>wwarn-app3</profileId>
-				<host.name>wwarn-app3.nsms.ox.ac.uk</host.name>
-				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
-				<logDirectory>/var/log/tomcat6/</logDirectory>
-			</properties>
-		</profile>
+		
 		<profile>
 			<id>production</id>
 			<properties>
 				<profileId>production</profileId>
 				<host.name>www.wwarn.org</host.name>
 				<cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
-				<logDirectory>/var/log/tomcat6/</logDirectory>
+				<logDirectory>/var/log/tomcat7/</logDirectory>
 			</properties>
 		</profile>
 	</profiles>
@@ -125,13 +120,23 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
 				<configuration>
 					<path>/sso</path>
+					<url>${tomcat.url}</url>
+					<username>${tomcat.username}</username>
+					<password>${tomcat.password}</password>
+					<!-- No longer used 
 					<contextFile>/srv/chassis-manta/context/sso.xml</contextFile>
 					<mode>both</mode>
+					 -->
 				</configuration>
 			</plugin>
 			<plugin>
