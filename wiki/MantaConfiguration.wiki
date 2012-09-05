@@ -31,7 +31,7 @@ You should now be able to see 'It works!' on http://chassis/
 sudo a2enmod proxy
 sudo a2enmod proxy_httpd
 }}}
-Update /etc /apache2/sites-available/default-ssl 
+Update /etc/apache2/sites-available/default-ssl 
 {{{
 ProxyRequests Off
         <Proxy *>
@@ -74,7 +74,7 @@ mvn install
 sudo mkdir /usr/share/tomcat7/endorsed
 sudo cp target/manta-config-0.2-alpha-4.jar /usr/share/tomcat7/endorsed/
 # Not really needed yet
-sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.21.jar /usr/share/tomcat7/endorsed/
+sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar /usr/share/tomcat7/endorsed/
 
 sudo emacs /etc/tomcat7/server.xml
 }}}
