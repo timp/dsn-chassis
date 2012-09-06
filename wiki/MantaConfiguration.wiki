@@ -155,7 +155,7 @@ keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -keystore ./cacerts
 }}}
 
 
-
+== Set up directories and install the applications ==
 
 
 {{{
@@ -173,7 +173,13 @@ cd ~/workspace/wwarn-cas
 mvn tomcat:deploy
 
 }}}
+
+== Configure Chassis ==
+
 Point browser at https://chassis/repository/home/ 
+
 Login in as admin
+
 Install fresh data
+
 Initialize the config collection (from the Administrator page)
