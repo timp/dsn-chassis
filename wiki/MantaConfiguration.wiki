@@ -71,8 +71,8 @@ svn checkout http://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp
 cd chassis-webapp
 mvn install 
 cd ..
-svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-config
-cd manta-config
+svn checkout http://dsn-chassis.googlecode.com/svn/tags/manta-config-0.2-alpha-4
+cd manta-config-0.2-alpha-4
 mvn install
 
 sudo mkdir /usr/share/tomcat7/endorsed
