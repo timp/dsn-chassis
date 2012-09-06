@@ -3,7 +3,7 @@
 
 Setup a VirtualBox VM using Ubuntu 
   attach a second, host only adapter 
-  Install - select Tomcat and Lamp
+  Install - select Lamp
   
 
 Add to /etc/hosts on host machine
@@ -52,6 +52,7 @@ ProxyRequests Off
 }}}
 {{{
 sudo /etc/init.d/apache2 restart
+sudo apt-get install tomcat7
 sudo apt-get install maven2
 sudo apt-get install subversion
 sudo apt-get install openjdk-6-jdk
@@ -63,11 +64,11 @@ ssh chassis
 mkdir workspace
 cd workspace
 svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-service 
-cd manta-webapp
+cd manta-service
 mvn install 
 cd ..
 svn checkout http://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp 
-cd manta-webapp
+cd chassis-webapp
 mvn install 
 cd ..
 svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-config
