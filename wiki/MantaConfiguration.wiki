@@ -28,8 +28,11 @@ You should now be able to ssh into the VM, no need to use the VirtualBox window.
 
 You should now be able to see 'It works!' on http://chassis/
 {{{
+sudo a2enmod ssl
+sudo a2enmod rewrite
 sudo a2enmod proxy
 sudo a2enmod proxy_httpd
+sudo a2ensite default-ssl
 }}}
 Update /etc/apache2/sites-available/default-ssl 
 {{{
