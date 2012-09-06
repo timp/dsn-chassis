@@ -6,7 +6,7 @@ Setup a VirtualBox VM using Ubuntu
   Install - select Lamp
   
 
-Add to /etc/hosts on host machine
+Add to /etc/hosts or C:\Windows\system32\drivers\etc\hosts on host machine
 {{{
 192.168.56.20	chassis
 }}}
