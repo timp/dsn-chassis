@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <maven2-moduleset>
   <actions/>
-  <description></description>
+  <description>Used in the testing of CasUtils, deployed to &lt;a href=&quot;http://cloud1.cggh.org/httpstatus/http&quot;&gt;http://cloud1.cggh.org/httpstatus/http&lt;/a&gt;</description>
   <logRotator>
     <daysToKeep>-1</daysToKeep>
     <numToKeep>8</numToKeep>
@@ -61,7 +61,7 @@
     <groupId>net.pizey.generator</groupId>
     <artifactId>httpstatus</artifactId>
   </rootModule>
-  <goals>-Dmaven.test.skip=true clean install tomcat:deploy</goals>
+  <goals>-Dmaven.test.skip=true clean install tomcat:redeploy</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <perModuleEmail>true</perModuleEmail>
