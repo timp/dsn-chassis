@@ -140,12 +140,12 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[3],'Method used')])[2]</td>
+	<td>xpath=(//select[contains(../label,'Method used')])</td>
 	<td>label=HRP2 ELISA</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=//a[. = 'Add a drug' and ../../../../../h4[. = 'Drugs stock solutions']]</td>
+	<td>xpath=//a[. = 'Add a drug' and ../../../../../../h4[. = 'Drugs stock solutions']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,47 +155,47 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains((../label)[2],'Solvent of stock')])[2]</td>
+	<td>xpath=(//select[contains((../label),'Solvent of stock')])</td>
 	<td>label=methanol</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains((../label)[3],'Final concentration')])</td>
+	<td>xpath=(//input[contains((../label),'Final concentration (g/l)')])</td>
 	<td>10</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains((../label)[4],'provided by the WWARN')])[3]</td>
+	<td>xpath=(//select[contains((../label),'provided by the WWARN')])</td>
 	<td>label=no</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains((../label)[5],'provided')])[2]</td>
+	<td>xpath=(//input[contains((../label),'provided')])</td>
 	<td>somebody</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label[2],'batches')]</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
 	<td>label=extemporaneous</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../label[5],'Preparation Date')])[3]</td>
+	<td>xpath=(//input[contains(../label,'Preparation Date')])</td>
 	<td>25.3.2011</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>xpath=//select[contains(../label[2],'batches')]</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
 	<td>extemporaneous</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>xpath=(//input[contains(../label[5],'Preparation Date')])[3]</td>
+	<td>xpath=(//input[contains(../label,'Preparation Date')])</td>
 	<td>25.3.2011</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[contains(../label[2],'batches')]</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
 	<td>label=batches</td>
 </tr>
 <tr>
@@ -210,22 +210,22 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=(//select[contains(../label[3],'3D7 information')])[2]</td>
+	<td>xpath=(//select[contains(../label,'3D7 information')])</td>
 	<td>label=no</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../label[4],'Preparation date')])[2]</td>
+	<td>xpath=(//input[contains(../label,'Preparation date')])</td>
 	<td>26.3.2011</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../label[5],'3D7 para')])[3]</td>
+	<td>xpath=(//input[contains(../label,'3D7 para')])</td>
 	<td>99</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../label[6],'Ring forms')])[4]</td>
+	<td>xpath=(//input[contains(../label,'Ring forms')])</td>
 	<td>23</td>
 </tr>
 </tbody></table>

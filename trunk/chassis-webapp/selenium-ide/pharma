@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[contains(../label[2], 'centrifuge')])[2]</td>
+	<td>xpath=(//input[contains(../label, 'centrifuge')])</td>
 	<td>5</td>
 </tr>
 <tr>
@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>select</td>
-	<td>xpath=//select[../label = 'Duration']</td>
+	<td>xpath=//select[../label = 'Duration unit ']</td>
 	<td>label=minutes</td>
 </tr>
 <tr>
@@ -78,12 +78,12 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>xpath=(//input[../label[2]='DOI'])[2]</td>
+	<td>xpath=(//input[../label='DOI'])</td>
 	<td>true</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[../label[2]='DOI'])[2]</td>
+	<td>xpath=(//input[../label='DOI'])</td>
 	<td>10.1128/AAC.48.10.3940-3943.2004</td>
 </tr>
 <tr>

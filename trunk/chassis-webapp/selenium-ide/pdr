@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/repository/j_spring_security_logout</td>
+	<td>/sso/logout</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,12 +23,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>j_username</td>
+	<td>username</td>
 	<td>muriel@example.org</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>j_password</td>
+	<td>password</td>
 	<td>bar</td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Logout muriel@example.org</td>
+	<td>xpath=//a[span/span = 'muriel@example.org']</td>
 	<td></td>
 </tr>
 </tbody></table>
