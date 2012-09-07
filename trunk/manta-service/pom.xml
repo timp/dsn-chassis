@@ -479,7 +479,7 @@
 	<properties>
 		<org.springsecurity.version>3.1.0.RELEASE</org.springsecurity.version>
 		<!-- 0.2-alpha-10 -->
-		<org.atombeat.version>0.2-alpha-11-SNAPSHOT</org.atombeat.version>
+		<org.atombeat.version>0.2-alpha-12</org.atombeat.version>
 		<com.orbeon.version>orbeon-4.0.0.m5.201207030346-CE</com.orbeon.version>
 		<org.exist-db.version>1.4.2-rev16251</org.exist-db.version>
 		<profileId>local</profileId>
