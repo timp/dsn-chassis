@@ -43,63 +43,7 @@
         </layout>
     </appender>
 
-    <!-- Legacy Orbeon Forms Studio monitor to keep around as long as people are using it -->
-    <appender name="OPSMonitor" class="org.apache.log4j.net.SocketHubAppender">
-        <param name="Port" value="4446"/>
-        <param name="LocationInfo" value="true"/>
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="debug" />
-        </filter>
-    </appender>
-
-    <!-- XForms engine activity, see http://wiki.orbeon.com/forms/doc/developer-guide/xforms-logging -->
-    <category name="org.orbeon.oxf.xforms.processor.XFormsServer">
-        <priority value="warn"/>
-    </category>
-
-    <!-- To enable logging for any of the sub-systems below, copy that section outside of the comment block -->
-    <!--
-    <category name="org.orbeon.oxf.properties.Properties">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.pipeline.TeeProcessor">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.pipeline.choose.ConcreteChooseProcessor">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.generator.URLGenerator">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.xmldb.XMLDBProcessor">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.sql.SQLProcessor">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.PageFlowControllerProcessor">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.processor.generator.RequestGenerator">
-        <priority value="debug"/>
-    </category>
-
-    <category name="org.orbeon.oxf.webapp.OPSSessionListener">
-        <priority value="info"/>
-    </category>
-
-    <category name="org.orbeon.oxf.webapp.OPSServletContextListener">
-        <priority value="info"/>
-    </category>
-    -->
-
+   
     <category name="org">
         <priority value="warn"/>
     </category>
