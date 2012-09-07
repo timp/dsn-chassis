@@ -214,9 +214,24 @@
 	<td>label=Other</td>
 </tr>
 <tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[contains(../label,'Drug Name')]</td>
+	<td>Other</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>xpath=//a[. = 'Add an active ingredient ']</td>
 	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//select[contains(../label,'Active ingredient')])[3]</td>
+	<td>label=Other</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=(//select[contains(../label,'Active ingredient')])[3]</td>
+	<td>Other</td>
 </tr>
 <tr>
 	<td>type</td>

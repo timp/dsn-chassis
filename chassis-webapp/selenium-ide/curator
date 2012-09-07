@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/repository/j_spring_security_logout</td>
+	<td>/sso/logout</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,12 +23,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>j_username</td>
+	<td>username</td>
 	<td>curtis@example.org</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>j_password</td>
+	<td>password</td>
 	<td>bar</td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=//a[not(contains(../../@class,'xforms-disabled')) and em[contains(.,'Permissions')]]</td>
+	<td>xpath=//a[not(contains(../@class,'xforms-disabled')) and em[contains(.,'Permissions')]]</td>
 	<td></td>
 </tr>
 <tr>
