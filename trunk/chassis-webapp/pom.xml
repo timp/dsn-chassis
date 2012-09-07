@@ -19,7 +19,7 @@
 
 		<com.orbeon.version>orbeon-4.0.0.m5.201207030346-CE</com.orbeon.version>
 
-		<chassis.model.version>0.0.7-SNAPSHOT</chassis.model.version>
+		<chassis.model.version>3.0-SNAPSHOT</chassis.model.version>
 		<profileId>local</profileId>
 		<skipTests>true</skipTests>
 		<cDrive />
