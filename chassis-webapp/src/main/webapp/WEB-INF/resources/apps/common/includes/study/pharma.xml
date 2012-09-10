@@ -164,7 +164,7 @@
                         <th>Units of Measure</th>
                         <th>Fat Amount</th>
                         <th>Lower LoQ</th>
-                        <th>Assay Matrix</th>
+                        <th></th>
                     </tr>
                     <xforms:repeat nodeset="analyte" id="analyte-rep">
                         <tr>
@@ -231,16 +231,7 @@
                             </td>
 
                             <td class="form-td">
-                                <xforms:select ref="sampleMatrixType" appearance="full"
-                                    class="scrollableCheckboxes">
-                                    <xforms:label class="invisible"/>
-                                    <xforms:itemset model="mod-study-info"
-                                        nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
-                                        <xforms:label ref="label"> </xforms:label>
-                                        <xforms:value ref="value"/>
-                                    </xforms:itemset>
-                                    <xforms:alert>Please select a matrix</xforms:alert>
-                                </xforms:select>
+                               
                             </td>
                         </tr>
                     </xforms:repeat>
@@ -267,7 +258,19 @@
                 </table>
             </xforms:group>
 
-
+			<div id="pkAssayMatrix">
+ 			<xforms:select ref="sampleMatrixType" appearance="full"
+                                    class="scrollableCheckboxes">
+                   <xforms:label class="scrollableCheckboxesLabel">Assay Matrix</xforms:label>
+                   <xforms:itemset model="mod-study-info"
+                        nodeset="instance('ins-sampleMatrixType-items')/sampleMatrixType">
+                       <xforms:label ref="label"> </xforms:label>
+                       <xforms:value ref="value"/>
+                   </xforms:itemset>
+                   <xforms:alert>Please select a matrix</xforms:alert>
+            </xforms:select>
+			</div>
+			
             <xforms:group ref="assayReferences">
                 <h4>Drug assay method reference</h4>
                 <table class="repeat-table">

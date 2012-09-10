@@ -332,9 +332,9 @@
                         <unitsOfMeasureOther />
                         <fatAmount />
                         <lowerLoQ />
-                        <sampleMatrixType />
                     </analyte>
                 </analytes>
+                <sampleMatrixType />
                 <assayReferences>
                     <assayReference>
                         <referenceType>url</referenceType>
