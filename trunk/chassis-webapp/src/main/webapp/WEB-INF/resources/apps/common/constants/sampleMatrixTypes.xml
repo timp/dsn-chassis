@@ -21,7 +21,7 @@
 		<value>serum</value>
 	</sampleMatrixType>
 	<sampleMatrixType>
-		<label>free fraction plasma</label>
-		<value>freeFractionPlasma</value>
+		<label>capillary blood on filter paper</label>
+		<value>filterPaperCapillaryBlood</value>
 	</sampleMatrixType>
 </sampleMatrixTypes>
