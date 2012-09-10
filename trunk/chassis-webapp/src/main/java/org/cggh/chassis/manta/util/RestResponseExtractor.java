@@ -30,7 +30,7 @@ public class RestResponseExtractor<T> extends HttpMessageConverterExtractor<T>
 		headers = arg0.getHeaders();
 		statusCode = arg0.getStatusCode();
 		T ret = null;
-		if (!(statusCode == HttpStatus.NO_CONTENT || statusCode == HttpStatus.NOT_MODIFIED)) {
+		if (!(statusCode == HttpStatus.NO_CONTENT || statusCode == HttpStatus.NOT_MODIFIED || statusCode == HttpStatus.FOUND)) {
 			ret = super.extractData(arg0);
 		}
 		return ret;

@@ -177,9 +177,7 @@ public class StoreUploadsServlet extends HttpServlet {
 			DOMException, IOException, SAXException, ServletException {
 
 		UploadResponse uploadResponse = new UploadResponse();
-		org.w3c.dom.Document returnDocument = null;
-
-		MockHttpServletRequest mockReq = new MockHttpServletRequest();
+		
 		MockHttpServletResponse mockResp = new MockHttpServletResponse();
 
 		String fileName = ue.getAttribute("filename");
@@ -190,19 +188,15 @@ public class StoreUploadsServlet extends HttpServlet {
 
 		URL tempFileUrl = new URL(ue.getTextContent());
 		InputStream uploadInputStream = tempFileUrl.openStream();
+		MockHttpServletRequest mockReq = new MockHttpServletRequest();
+		
+		setRequestURL(targetCollectionUri, mockReq);
+
+		mockReq.setSession(req.getSession());
+		
 		mockReq.addHeader("Slug", fileName);
 		mockReq.addHeader("Content-Length", size);
 		mockReq.addHeader("Content-Type", mediaType);
-		URL targ = new URL(targetCollectionUri);
-		String serverName = targ.getHost();
-		int port = targ.getPort();
-		String proto = targ.getProtocol();
-		mockReq.setServerName(serverName);
-		mockReq.setServerPort(port);
-		mockReq.setRequestURI(targ.getPath());
-		mockReq.setProtocol(proto);
-
-		mockReq.setSession(req.getSession());
 		org.w3._2005.atom.Entry savedEntry = null;
 
 		savedEntry = ProxyServlet.doProxiedMethod(mockReq, mockResp,
@@ -273,15 +267,32 @@ public class StoreUploadsServlet extends HttpServlet {
 		return uploadResponse;
 	}
 
+	private void setRequestURL(String targetCollectionUri,
+			MockHttpServletRequest mockReq) throws MalformedURLException {
+		URL targ = new URL(targetCollectionUri);
+		String serverName = targ.getHost();
+		int port = targ.getPort();
+		String proto = targ.getProtocol();
+		mockReq.setServerName(serverName);
+		if (port > 0) {
+			mockReq.setServerPort(port);
+		} else {
+			mockReq.setServerPort(8080);
+		}
+		mockReq.setRequestURI(targ.getPath());
+		mockReq.setProtocol(proto);
+		//mockReq.setScheme(proto);
+		String url = mockReq.getRequestURI();
+		String uri = mockReq.getRequestURL().toString();
+	}
+
 	private org.w3._2005.atom.Entry updateEntry(
 			org.w3._2005.atom.Entry savedEntry, HttpSession session)
 			throws MalformedURLException, IOException, ServletException {
 		org.w3._2005.atom.Entry response = null;
 		MockHttpServletRequest mockReq;
 		MockHttpServletResponse mockResp;
-		String serverName;
-		int port;
-		String proto;
+		
 		String editLocation = null;
 		Iterator<org.w3._2005.atom.Link> iter = savedEntry.getLink().iterator();
 		while (iter.hasNext()) {
@@ -294,14 +305,9 @@ public class StoreUploadsServlet extends HttpServlet {
 		mockResp = new MockHttpServletResponse();
 		mockReq.setSession(session);
 		mockReq.addHeader("Content-Type", "application/atom+xml;type=entry");
-		URL edit = new URL(editLocation);
-		serverName = edit.getHost();
-		port = edit.getPort();
-		proto = edit.getProtocol();
-		mockReq.setServerName(serverName);
-		mockReq.setServerPort(port);
-		mockReq.setRequestURI(edit.getPath());
-		mockReq.setProtocol(proto);
+		
+		setRequestURL(editLocation, mockReq);
+		
 		Jaxb2Marshaller jaxb = new Jaxb2Marshaller();
 		jaxb.setClassesToBeBound(org.w3._2005.atom.Entry.class);
 
@@ -313,7 +319,7 @@ public class StoreUploadsServlet extends HttpServlet {
 		mapping.put("http://www.cggh.org/2010/chassis/manta/xmlns", "manta");
 		ConfigurableNamespacePrefixMapperImpl mapper = new ConfigurableNamespacePrefixMapperImpl();
 		mapper.setMapping(mapping);
-		Map jaxbMarshallerProperties = new HashMap();
+		HashMap<String, Object> jaxbMarshallerProperties = new HashMap<String, Object>();
 		// jaxbMarshallerProperties.put(javax.xml.bind.Marshaller.JAXB_FRAGMENT,Boolean.TRUE);
 		jaxbMarshallerProperties.put(
 				javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

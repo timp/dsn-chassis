@@ -2,12 +2,10 @@ package org.cggh.chassis.manta.security;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,15 +16,10 @@ import org.apache.log4j.Logger;
 import org.cggh.chassis.manta.util.CASUtil;
 import org.cggh.chassis.manta.util.RestRequestHandler;
 import org.cggh.chassis.manta.util.RestResponseExtractor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpMessageConverterExtractor;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 public class ProxyServlet extends HttpServlet {
