@@ -495,3 +495,8 @@ table.drafts th {
 .wide-table {
     width: 100%;
 }
+
+#pkAssayMatrix span span {
+	max-height: 250px;
+	overflow: hidden;
+}
