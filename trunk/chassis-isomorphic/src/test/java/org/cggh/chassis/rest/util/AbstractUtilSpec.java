@@ -131,7 +131,9 @@ public abstract class AbstractUtilSpec extends TestCase {
 
   
   public boolean postStudies() throws Exception {
+    System.err.println("setupXmlFiles " + STUDY_ENTRY_DIR_NAME);
     setupXmlFiles(STUDY_ENTRY_DIR_NAME);
+    System.err.println("testPostsFromDirectory " + STUDY_ENTRY_DIR_NAME);
     testPostsFromDirectory(STUDY_ENTRY_DIR_NAME);
     HttpResponse response = StudyControllerRequester.readAcceptingHtml(url("/studyCount"));
     assertEquals(url("/studyCount"), 200, response.getStatus());
