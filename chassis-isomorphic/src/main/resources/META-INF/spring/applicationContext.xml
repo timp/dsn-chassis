@@ -81,9 +81,8 @@
 
 	<!--bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" 		/ -->
 
-<!-- 	
 	<bean id="studyController" class="org.cggh.chassis.rest.controller.StudyController" />
- -->
+
 	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
 	<!-- Configure the persistance layer -->
 
