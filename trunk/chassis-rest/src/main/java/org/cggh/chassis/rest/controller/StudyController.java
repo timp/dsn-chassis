@@ -64,6 +64,10 @@ public class StudyController {
   private static final String STUDY_COLLECTION_VIEW_NAME = "studies";
   private static final String ERROR_LIST_VIEW_NAME = "errors";
 
+  public StudyController() throws TransformerConfigurationException {
+    super();
+  }
+
   public StudyController(InputStream pruner) throws TransformerConfigurationException {
     super();
     if (pruner != null) {
@@ -75,8 +79,6 @@ public class StudyController {
     }
   }
 
-  // Chicken waiving
-  public void init( ) {};
     
   @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
   public ModelAndView getStudy(@PathVariable String id, HttpServletResponse response) {
