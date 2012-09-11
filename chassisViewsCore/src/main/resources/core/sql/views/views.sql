@@ -362,7 +362,6 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `Studies` AS
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_Sites` AS 
   SELECT `e`.`StudyID` AS `StudyID`
       ,`Site`.`Hjid` AS `Hjid`
-      ,`Site`.`DTYPE` AS `DTYPE`
       ,`Site`.`Region` AS `Region`
       ,`Site`.`LookupAddress` AS `LookupAddress`
       ,`Site`.`TestingDelay` AS `TestingDelay`
@@ -387,7 +386,6 @@ from `Site` JOIN `Sites` ON `Sites`.`Hjid` = `Site`.`Site_Sites_Hjid`
 CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkAnalytes` AS
   SELECT `e`.`StudyID` AS `StudyID`
      , `a`.`Hjid` AS `Hjid`
-     , `a`.`DTYPE` AS `DTYPE`
      , `a`.`LowerLoQ` AS `LowerLoQ`
      , `a`.`TargetDose` AS `TargetDose`
      , `a`.`FatAmount` AS `FatAmount`
@@ -443,7 +441,6 @@ CREATE OR REPLACE SQL SECURITY INVOKER VIEW  `v_pkdetails` AS
 
 SELECT `e`.`StudyID` AS `StudyID`
      , `p`.`Hjid` AS `Hjid`
-     , `p`.`DTYPE` AS `DTYPE`
      , `p`.`PKcomments` AS `PKcomments`
      , `p`.`SamplingTimes` AS `SamplingTimes`
      , `p`.`StudyDesign` AS `StudyDesign`
