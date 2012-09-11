@@ -75,6 +75,9 @@ public class StudyController {
     }
   }
 
+  // Chicken waiving
+  public void init( ) {};
+    
   @RequestMapping(method = RequestMethod.GET, value = "/study/{id}")
   public ModelAndView getStudy(@PathVariable String id, HttpServletResponse response) {
     Entry entry = studyDAO.getEntry(id);
