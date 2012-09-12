@@ -525,6 +525,17 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>app-dev</id>
+			<properties>
+				<profileId>app-dev</profileId>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>https://app-dev.wwarn.org/sso</cas.url>
+				<chassis.url>https://app-dev.wwarn.org</chassis.url>
+				<orbeonLogs>/var/log/tomcat6/manta-service.log</orbeonLogs>
+				<tomcat.url>http://localhost:8080/manager</tomcat.url>
+			</properties>
+		</profile>
+		<profile>
 			<id>localcas</id>
 			<properties>
 				<profileId>localcas</profileId>
