@@ -146,6 +146,11 @@ cp /usr/share/ssl-cert/ssleay.cnf .
 make-ssl-cert ssleay.cnf generate-default-snakeoil --force-overwrite
 }}}
 
+Check this has worked by checking the date of the file - if not you can use
+{{{
+openssl req -new -x509 -days 3650 -nodes -out /etc/ssl/certs/ssl-cert-snakeoil.pem -keyout /etc/ssl/private/ssl-cert-snakeoil.key
+}}}
+
 == Import the certificates to the JVM ==
 Default password is changeit
 
