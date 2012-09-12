@@ -437,6 +437,23 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>app-dev</id>
+			<properties>
+				<profileId>app-dev</profileId>
+				<!-- TPP's account -->
+				<google-api-key>ABQIAAAAOimsAXNq3_aRjfeNjoNKiRSa-bbzrR8LA0uUuc_9V-299x0KDRT4O_4TUe6_6nxTQjnUjB3IoJ_Z1g</google-api-key>
+				<bing-maps-key>Ak6dulMrEMWkyxsvMUXIFBNjYsFjQwLzB5YCoeyltkG1ZHGHAvZX91pklhKWxc8R</bing-maps-key>
+				<oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+				<cas.url>https://app-dev.wwarn.org/sso</cas.url>
+				<chassis.url>https://app-dev.wwarn.org</chassis.url>
+				<test-email>ian.wright@wwarn.org</test-email>
+				<orbeonLogs>/var/log/tomcat6/chassis-webapp.log</orbeonLogs>
+				<use-alfresco>false</use-alfresco>
+				<tomcat.url>http://localhost:8080/manager</tomcat.url>
+			</properties>
+		</profile>
+		<profile>
 			<id>localcas</id>
 			<properties>
 				<profileId>localcas</profileId>
