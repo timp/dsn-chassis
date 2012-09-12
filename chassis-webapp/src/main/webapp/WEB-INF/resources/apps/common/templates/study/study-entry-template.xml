@@ -2,7 +2,7 @@
 	<atom:title type="text"/>
 	<app:control xmlns:app="http://www.w3.org/2007/app"><app:draft>yes</app:draft></app:control>
 	<atom:content type="application/vnd.chassis-manta+xml">
-		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/2.1">
+		<study xmlns="" profile="http://www.cggh.org/2010/chassis/manta/3.0">
 		    <studyTitle/>
 		    <studyLabel/>
 			<ui-info>
