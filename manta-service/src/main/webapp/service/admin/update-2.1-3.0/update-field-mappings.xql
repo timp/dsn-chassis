@@ -33,7 +33,7 @@ declare function local:content($content) as item()*
                 <title>Data Migration - Change field mappings</title>
             </head>
             <body>
-                <h1>Data Migration - Study field mappings v2.1 to v2.2</h1>
+                <h1>Data Migration - Study field mappings v2.1 to v3.0</h1>
                 
                 <p>
                     <form method="post" action="">
@@ -98,6 +98,44 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 				<value>Site$6IntensityLevel</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
+			let $rm1 := update delete $old//fieldLabelMapping[/value = 'SampleMatrix$7']
+			let $new3 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/sampleMatrixType\[(\d+)\]</label>
+				<value>SampleMatrix$5</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new4 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/precursorAdded\[(\d+)\]</label>
+				<value>precursorAdded</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new5 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/precursorAddedOther\[(\d+)\]</label>
+				<value>precursorOther</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new6 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/referenceClone\[(\d+)\]</label>
+				<value>refClone</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new7 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/referenceCloneOther\[(\d+)\]</label>
+				<value>refCloneOther</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			let $new8 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/timeOfIncubationOther\[(\d+)\]</label>
+				<value>incTimeOther</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			
         return $old
 
     
