@@ -979,6 +979,7 @@
         <xs:element ref="PKcomments"/>
         <xs:element ref="samples"/>
         <xs:element ref="analytes"/>
+        <xs:element ref="sampleMatrixType"/>
         <xs:element ref="assayReferences"/>
       </xs:sequence>
     </xs:complexType>
@@ -1009,7 +1010,6 @@
         <xs:element ref="unitsOfMeasureOther"/>
         <xs:element ref="fatAmount"/>
         <xs:element ref="lowerLoQ"/>
-        <xs:element ref="sampleMatrixType"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
