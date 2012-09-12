@@ -970,8 +970,20 @@ let $values2 :=
 				<value>incubation_time</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/timeOfIncubationOther\[(\d+)\]</label>
+				<value>incTimeOther</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/susceptibilityMethod\[(\d+)\]</label>
 				<value>drugsus_method</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/precursorAdded\[(\d+)\]</label>
+				<value>precursorAdded</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/susceptibility\[(\d+)\]/precursorAddedOther\[(\d+)\]</label>
+				<value>precursorOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/invitroDrugs\[(\d+)\]/invitroDrug\[(\d+)\]/molecule\[(\d+)\]</label>
@@ -1000,6 +1012,14 @@ let $values2 :=
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/platesPreparationDate\[(\d+)\]</label>
 				<value>plateprepa_date</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/referenceClone\[(\d+)\]</label>
+				<value>refClone</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/referenceCloneOther\[(\d+)\]</label>
+				<value>refCloneOther</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/invitro\[(\d+)\]/plateBatches\[(\d+)\]/batch\[(\d+)\]/clone3D7ProvidedByWwarn\[(\d+)\]</label>
@@ -1078,8 +1098,8 @@ let $values2 :=
 				<value>LLOQ$7</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
-				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/sampleMatrixType\[(\d+)\]</label>
-				<value>SampleMatrix$7</value>
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/sampleMatrixType\[(\d+)\]</label>
+				<value>SampleMatrix$5</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/assayReferences\[(\d+)\]/assayReference\[(\d+)\]/referenceType\[(\d+)\]</label>
