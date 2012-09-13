@@ -119,7 +119,7 @@
 		<property name="jpaProperties">
 			<props>
 				<!-- drop-and-create-tables -->
-				<prop key="eclipselink.ddl-generation">create-tables</prop>
+				<prop key="eclipselink.ddl-generation">drop-and-create-tables</prop>
 
 				<!-- both tries to write to web app install directory -->
 				<prop key="eclipselink.ddl-generation.output-mode">database</prop>
