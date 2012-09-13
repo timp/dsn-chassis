@@ -178,6 +178,8 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>${mysqlDriverVersion}</version>
+      <!-- Ensure there is a copy in /usr/share/tomcat7/lib -->
+      <scope>provided</scope>
     </dependency>
     <dependency>
      <groupId>junit</groupId>
