@@ -21,7 +21,7 @@ In src/main/webapp/WEB-INF/resources/apps/common/templates/study add your new el
 
 == Change the input form ==
 
-This will probably be in src/main/webapp/WEB-INF/resources/apps/common/templates/includes/study
+This will probably be in src/main/webapp/WEB-INF/resources/apps/common/includes/study
 
 Copy an example of a similar field
 
