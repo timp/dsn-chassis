@@ -177,6 +177,7 @@
         <string>atombeat-xquery-functions</string>
         <string>backupHudsonConfig</string>
         <string>cggh-common</string>
+        <string>DeployJarToRepository</string>
         <string>EnsureMantaData</string>
         <string>httpstatus</string>
         <string>manta-config</string>
@@ -184,6 +185,7 @@
         <string>manta-selenium</string>
         <string>manta-xquery-functions</string>
         <string>quac</string>
+        <string>showMavenVersion</string>
         <string>wwarn-cas-Spring-3</string>
       </jobNames>
       <jobFilters/>
@@ -290,9 +292,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[4]/jobNames/comparator"/>
         <string>backupHudsonConfig</string>
         <string>deleteSNAPSHOTs</string>
-        <string>Deploy Jar to Repository</string>
         <string>hudson-trigger</string>
-        <string>show maven version</string>
       </jobNames>
       <jobFilters/>
       <columns>
