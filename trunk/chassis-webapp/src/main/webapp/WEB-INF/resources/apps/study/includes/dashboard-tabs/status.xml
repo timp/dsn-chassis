@@ -65,7 +65,7 @@
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'UPDATE_MEMBER']"/>
 												 <xforms:delete nodeset="instance('ins-submitted-media-permissions-entry')//atombeat:ace[atombeat:type = 'ALLOW' and atombeat:recipient/@type='group' and atombeat:recipient = 'GROUP_ADMINISTRATORS' and atombeat:permission = 'MULTI_CREATE']"/>
 												
-												<xxforms:show dialog="send-email-option-dialog" />
+												<xforms:send submission="sub-put-all-permissions"/>
 												
 								     			
 								     		</xforms:action>
@@ -180,7 +180,7 @@
 											<xforms:trigger ref="instance('ins-control')/save-study-trigger">
 												<xforms:label>Save changes - all changes complete</xforms:label>
 												<xforms:action ev:event="DOMActivate" if="../study-entry-is-valid = 'true'">
-													<xforms:send submission="sub-notify-put-study-entry-complete"/>
+													<xforms:send submission="sub-put-study-entry"/>
 												</xforms:action>
 												<xforms:action ev:event="DOMActivate" if="not(../study-entry-is-valid = 'true')">
 													<xforms:message>Please complete all required fields.</xforms:message>
