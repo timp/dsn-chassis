@@ -7,6 +7,8 @@
 
 It's a good idea (although not strictly necessary) to start by changing the XML schema held in the chassis-model project. The advantage of starting here is that it will help ensure that your change fits nicely within the schema e.g. not reusing a previously used element name. You'll need to do this later anyway.
 
+This means: resources/chassis.xsd and making the same modifications to schema/chassis-pruned.xsd (with the addition of minOccurs=0)
+
 Don't forget to change the version number in the profile attribute.
 
 == Start with an empty database ==
