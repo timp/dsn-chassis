@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#mvn install:install-file -DgroupId=org.exist -DartifactId=exist-versioning -Dversion=1.4.0 -Dclassifier=orbeon_20100330 -Dpackaging=jar -#Dfile=/var/lib/hudson/jobs/manta/workspace/manta/war/WEB-INF/lib/exist-versioning-1_4_0_orbeon_20100330.jar
+
+#mvn deploy:deploy-file -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-maps \
+#  -Dversion=1.1.1  -Dpackaging=jar -Dfile=/home/timp/gwt-maps-1.1.1.jar  \
+#  -Durl=file:///var/www/maven2 \
+#  -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
+
+
+#mvn deploy:deploy-file -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization \
+#  -Dversion=1.1.2  -Dpackaging=jar -Dfile=/home/timp/gwt-visualization-1.1.2.jar  \
+#  -Durl=file:///var/www/maven2 \
+#  -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
+
+
+
+mvn deploy:deploy-file -DgroupId=org.exist-db -DartifactId=exist-webapp \
+  -Dversion=1.4.2-rev16251 -Dpackaging=war -Dfile=/home/timp/exist-1.4.2-rev16251.war  \
+  -Durl=file:///var/www/maven2 \
+  -DrepositoryId=cggh -DaltDeploymentRepository=cloud1::default::file:/var/www/maven2/
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
