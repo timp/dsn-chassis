@@ -1138,11 +1138,11 @@ let $values2 :=
 				<value>AssayMethodsReference$7valid</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
-				<label>/atom:entry[1]/atom:content[1]/study[1]/atombeat:group[1]/@id</label>
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/atombeat:group\[1\]/@id</label>
 				<value>GroupID</value>
 			</fieldLabelMapping>
-			<fieldLabelMapping deprecated="n" filter="ignore">
-				<label>/atom:entry[1]/atom:content[1]/study[1]/@profile</label>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/@profile</label>
 				<value>SSQVersion</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
