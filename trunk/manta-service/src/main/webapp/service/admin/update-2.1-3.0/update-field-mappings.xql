@@ -165,7 +165,22 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 				<value>ProxyName</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
-	
+			
+			let $rm2 := update delete $old//fieldLabelMapping[/value = 'GroupID']
+			let $new18 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/atombeat:group\[1\]/@id</label>
+				<value>GroupID</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			
+			let $rm3 := update delete $old//fieldLabelMapping[/value = 'SSQVersion']
+			let $new19 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[1\]/atom:content\[1\]/study\[1\]/@profile</label>
+				<value>SSQVersion</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
 			
         return $old
 
