@@ -45,13 +45,13 @@
 				<xs:element ref="atom:title" />
 				<xs:element ref="atom:summary" minOccurs="0"/>
 				<xs:element ref="app:control" minOccurs="0" />
+				<xs:element ref="atom:category" minOccurs="0" />
 				<xs:element ref="atom:content" />
 				<xs:element ref="ar:comment" minOccurs="0" />
 
 				<xs:element ref="manta:id" />
 
 				<xs:element ref="atom:link" maxOccurs="unbounded" />
-				<xs:element ref="atom:category" minOccurs="0" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
