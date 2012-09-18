@@ -124,7 +124,14 @@
 
 			<!-- Used to show an Unspecified message for read-only instances of the study-is-published field. -->
 			<xforms:bind nodeset="instance('ins-control')/study-is-published-is-empty" relevant="instance('ins-study-entry')/atom:content/study/study-is-published=''" />
-			        	
+			
+			<!-- show right boxes for terms -->   
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study">
+				
+				<xforms:bind nodeset="proxy-for-name" relevant="../registrant-has-agreed-to-the-terms = 'proxy'" />
+				<xforms:bind nodeset="proxy-for-institution" relevant="../registrant-has-agreed-to-the-terms = 'proxy'" />
+				<xforms:bind nodeset="derived-study-id" relevant="../registrant-has-agreed-to-the-terms = 'derived'" />
+			</xforms:bind>     	
 			<xforms:instance id="ins-study-entry">
 				<atom:entry/>
 			</xforms:instance>
