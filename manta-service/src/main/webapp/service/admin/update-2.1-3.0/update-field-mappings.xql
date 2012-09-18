@@ -135,6 +135,37 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 				<value>incTimeOther</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
+	
+			
+			let $new14 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/app:control\[(\d+)\]/app:draft\[(\d+)\]</label>
+				<value>DraftStatus</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			
+			
+			let $new15 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/derived-study-id\[(\d+)\]</label>
+				<value>DerivedFrom</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			
+			let $new16 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/proxy-for-institution\[(\d+)\]</label>
+				<value>ProxyInst</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+			
+			let $new17 := update insert
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/proxy-for-name\[(\d+)\]</label>
+				<value>ProxyName</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+	
 			
         return $old
 

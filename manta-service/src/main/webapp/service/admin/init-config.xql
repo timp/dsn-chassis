@@ -154,7 +154,7 @@ let $values2 :=
 				<value>AtomID</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
-				<label>/atom:entry\[(\d+)\]/app:control\[(\d+)\]/draft\[(\d+)\]</label>
+				<label>/atom:entry\[(\d+)\]/app:control\[(\d+)\]/app:draft\[(\d+)\]</label>
 				<value>DraftStatus</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n" filter="ignore">
@@ -206,6 +206,18 @@ let $values2 :=
 			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/registrant-has-agreed-to-the-terms\[(\d+)\]</label>
 				<value>TermsOfSubmission</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/derived-study-id\[(\d+)\]</label>
+				<value>DerivedFrom</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/proxy-for-institution\[(\d+)\]</label>
+				<value>ProxyInst</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/proxy-for-name\[(\d+)\]</label>
+				<value>ProxyName</value>
 			</fieldLabelMapping>
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-is-published\[(\d+)\]</label>
