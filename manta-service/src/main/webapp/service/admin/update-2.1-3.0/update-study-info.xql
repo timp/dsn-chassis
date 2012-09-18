@@ -848,6 +848,11 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 			
 			let $matIn := update insert $matrix following $old//pharmacology/analytes
 			let $matOut := update delete $old//pharmacology/analytes/analyte/sampleMatrixType
+			
+			let $dsi := update insert <derived-study-id/> following $old//registrant-has-agreed-to-the-terms
+			let $pi := update insert <proxy-for-institution/> following $old//registrant-has-agreed-to-the-terms
+			let $pn := update insert <proxy-for-name/> following $old//registrant-has-agreed-to-the-terms
+			
         return $profile
 
      
@@ -869,70 +874,92 @@ declare function local:check-changes() as item() *{
           else
              let $msg := "Changed serum-finalConcentration"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//NaHCO3-finalConcentration[. = '10 mM']) > 0 or count($m//NaHCO3-finalConcentration[. = '10']) = 0) then 
              let $msg := "Failed to change NaHCO3-finalConcentration"
              return $msg
           else
              let $msg := "Changed NaHCO3-finalConcentration"
              return $msg
-          let $summary := concat($new,$out,'&#xD;')
+          let $summary := concat($summary1,$out,'&#xD;')
           let $out := if (count($m//hypoxantine-finalConcentration[. = '0.0005']) > 0 or count($m//hypoxantine-finalConcentration[. = '0.5']) = 0) then 
              let $msg := "Failed to change hypoxantine-finalConcentration"
              return $msg
           else
              let $msg := "Changed hypoxantine-finalConcentration"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//precursorAddedOther) = 0) then 
              let $msg := "Failed to add precursorAddedOther"
              return $msg
           else
              let $msg := "Added precursorAddedOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//precursorAdded) = 0 ) then 
              let $msg := "Failed to add precursorAdded"
              return $msg
           else
              let $msg := "Added precursorAdded"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//referenceCloneOther) = 0) then 
              let $msg := "Failed to add referenceCloneOther"
              return $msg
           else
              let $msg := "Added referenceCloneOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//referenceClone) = 0 ) then 
              let $msg := "Failed to add referenceClone"
              return $msg
           else
              let $msg := "Added referenceClone"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//timeOfIncubationOther) = 0) then 
              let $msg := "Failed to add timeOfIncubationOther"
              return $msg
           else
              let $msg := "Added timeOfIncubationOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//transmissionIntensityLevel) = 0 ) then 
              let $msg := "Failed to add transmissionIntensityLevel"
              return $msg
           else
              let $msg := "Added transmissionIntensityLevel"
              return $msg
-         let $new := concat($summary,$out,'&#xD;')
+         let $summary1 := concat($summary,$out,'&#xD;')
          let $out := if (count($m//pharmacology/sampleMatrixType) != 1 or count($m//pharmacology/analytes/analyte/sampleMatrixType) > 0) then 
              let $msg := "Failed to move sampleMatrixType"
              return $msg
           else
              let $msg := "Moved sampleMatrixType"
              return $msg
-         let $output := concat($new,$out,'&#xD;')
+          let $summary := concat($summary1,$out,'&#xD;')
+          let $out := if (count($m//proxy-for-name) = 0) then 
+             let $msg := "Failed to add proxy-for-name"
+             return $msg
+          else
+             let $msg := "Added proxy-for-name"
+             return $msg
+         let $summary1 := concat($summary,$out,'&#xD;')
+         let $out := if (count($m//proxy-for-institution) = 0 ) then 
+             let $msg := "Failed to add proxy-for-institution"
+             return $msg
+          else
+             let $msg := "Added proxy-for-institution"
+             return $msg
+         let $summary := concat($summary1,$out,'&#xD;')
+        let $out := if (count($m//derived-study-id) = 0 ) then 
+             let $msg := "Failed to add derived-study-id"
+             return $msg
+          else
+             let $msg := "Added derived-study-id"
+             return $msg
+         
+         let $output := concat($summary,$out,'&#xD;')
          return $output
     return $ret
 };
