@@ -60,6 +60,9 @@
         <xs:element ref="studyTitle"/>
         <xs:element minOccurs="0" ref="ui-info"/>
         <xs:element minOccurs="0" ref="registrant-has-agreed-to-the-terms"/>
+        <xs:element minOccurs="0" ref="proxy-for-name"/>
+        <xs:element minOccurs="0" ref="proxy-for-institution"/>
+        <xs:element minOccurs="0" ref="derived-study-id"/>
         <xs:element minOccurs="0" ref="study-is-published"/>
         <xs:element minOccurs="0" ref="explorer-display"/>
         <xs:element minOccurs="0" ref="publications"/>
@@ -88,6 +91,9 @@
   </xs:element>
   <xs:element name="wizard-pane-to-show" type="xs:NCName"/>
   <xs:element name="registrant-has-agreed-to-the-terms" type="xs:NCName"/>
+  <xs:element type="xs:string" name="proxy-for-name"/>
+  <xs:element type="xs:string" name="proxy-for-institution"/>
+  <xs:element type="xs:string" name="derived-study-id"/>
   <xs:element name="study-is-published" >
     <xs:simpleType>
       <xs:restriction base="xs:string">
