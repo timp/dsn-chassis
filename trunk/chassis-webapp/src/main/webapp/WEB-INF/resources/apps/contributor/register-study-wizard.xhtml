@@ -58,6 +58,7 @@
         			<copy-answers-trigger/>
         			<study-is-published-is-empty/>
         			<contributor-controls/>
+        			<contributor-only-controls/>
         			<curator-controls/>
         			<administrator-controls/>
                 </control>
@@ -67,7 +68,8 @@
 			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
 			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
-
+			<xforms:bind nodeset="instance('ins-control')/contributor-only-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR' and not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')"/>
+			
 			<xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>            
             <xforms:setvalue
 				ev:event="xforms-model-construct-done" 
@@ -288,17 +290,20 @@
                                 
             </xforms:submission>
 
-
-
-        
-    	
-        
-
         	<!-- bindings for the study-terms pane -->
+			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study">
+				
+				<xforms:bind nodeset="proxy-for-name" relevant="../registrant-has-agreed-to-the-terms = 'proxy'" />
+				<xforms:bind nodeset="proxy-for-institution" relevant="../registrant-has-agreed-to-the-terms = 'proxy'" />
+				<xforms:bind nodeset="derived-study-id" relevant="../registrant-has-agreed-to-the-terms = 'derived'" />
+			</xforms:bind>
 			<xforms:bind nodeset="instance('ins-study-entry')/atom:content/study/registrant-has-agreed-to-the-terms" required="true()"/>
 
-
-
+			<!-- if curator load the study feed for list of derived studies on creation page  -->
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-study-feed" 
+				if="instance('ins-control')/curator-controls"/>
 				
             <xforms:submission 
             	id="sub-post-contribution" 
