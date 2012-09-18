@@ -9,6 +9,9 @@
 				<wizard-pane-to-show>study-terms</wizard-pane-to-show>
 			</ui-info>
 			<registrant-has-agreed-to-the-terms/>
+			<proxy-for-name/>
+			<proxy-for-institution/>
+			<derived-study-id/>
 			<study-is-published/>
 			<explorer-display>notset</explorer-display>
 			<publications/>

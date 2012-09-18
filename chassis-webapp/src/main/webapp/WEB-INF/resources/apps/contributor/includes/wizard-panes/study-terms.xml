@@ -6,7 +6,8 @@
 	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	 xmlns:atom="http://www.w3.org/2005/Atom">
+	 xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
 
 	<div id="bd" class="clearfix">
 		<div class="steps clearfix">
@@ -62,11 +63,55 @@
 						
 						<p>
 							
-							<span>I accept the Terms of Submission:</span>
-							
-							
 							<span id="agree-to-terms-checkbox-container">
 							
+							  <xforms:group ref="instance('ins-control')/curator-controls">
+							   <xforms:group ref="instance('ins-study-entry')//study">
+								<xforms:select1 ref="registrant-has-agreed-to-the-terms" appearance="full">
+									
+									<xforms:item>
+										<xforms:label>I accept the Terms of Submission<br/></xforms:label>
+										<xforms:value>yes</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>I am submitting on behalf of somebody<br/></xforms:label>
+										<xforms:value>proxy</xforms:value>
+									</xforms:item>
+									<xforms:item>
+										<xforms:label>This is derived data from a previously uploaded study<br/></xforms:label>
+										<xforms:value>derived</xforms:value>
+									</xforms:item>
+									
+									<xforms:alert>Agreement to the Terms of Submission is required.</xforms:alert>
+								
+								</xforms:select1>
+								<xforms:input ref="proxy-for-name">
+									<xforms:label>Name:</xforms:label>
+								  </xforms:input>
+								 <br/>
+								  <xforms:input ref="proxy-for-institution">
+									<xforms:label>Institution:</xforms:label>
+								  </xforms:input>
+								  
+								  
+							      <xforms:select1 ref="derived-study-id">
+									<xforms:label></xforms:label>
+															
+									<xforms:item>
+										<xforms:label>Select...</xforms:label>
+										<xforms:value></xforms:value>
+									</xforms:item>
+															
+									<xforms:itemset nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[(empty(app:control) or app:control/app:draft != 'yes')], atom:published, 'text', 'ascending')">
+										<xforms:label ref="concat(manta:id,' ',atom:content/study/studyTitle)"/>
+										<xforms:value ref="manta:id"/>
+									</xforms:itemset>
+								  </xforms:select1>
+								</xforms:group>
+					 		  </xforms:group>
+					 		  <xforms:group ref="instance('ins-control')/contributor-only-controls">
+   					 		   <span>I accept the Terms of Submission:</span>
+					 		   <xforms:group ref="instance('ins-study-entry')//study">
 								<xforms:select ref="registrant-has-agreed-to-the-terms" appearance="full">
 									<xforms:label class="invisible"/>
 									<xforms:item>
@@ -74,10 +119,13 @@
 										<xforms:value>yes</xforms:value>
 									</xforms:item>
 									
+									
 									<xforms:alert>Agreement to the Terms of Submission is required.</xforms:alert>
 								
 								</xforms:select>
-								
+								</xforms:group>
+					 		  </xforms:group>
+			                    
 							</span>
 							
 						</p>
@@ -111,8 +159,8 @@
 					
 					
 					
-							<xforms:group ref="atom:link[@rel='edit']">
-					
+							<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='edit']">
+								<div>
 										<xforms:trigger
 											ref="instance('ins-control')/save-draft-trigger" class="alignCenter">
 											<xforms:label>Save as draft</xforms:label>
@@ -140,6 +188,7 @@
 										</xforms:action>
 									</xforms:trigger>
 								</span>
+								</div>
 							</xforms:group>
 					
 							<span class="skip-links"><xforms:group ref="instance('ins-control')/pre-create-draft-back-home-link">
