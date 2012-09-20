@@ -880,63 +880,63 @@ declare function local:check-changes() as item() *{
           else
              let $msg := "Changed serum-finalConcentration"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//NaHCO3-finalConcentration[. = '10 mM']) > 0 or count($m//NaHCO3-finalConcentration[. = '10']) = 0) then 
              let $msg := "Failed to change NaHCO3-finalConcentration"
              return $msg
           else
              let $msg := "Changed NaHCO3-finalConcentration"
              return $msg
-          let $summary := concat($new,$out,'&#xD;')
+          let $summary := concat($summary1,$out,'&#xD;')
           let $out := if (count($m//hypoxantine-finalConcentration[. = '0.0005']) > 0 or count($m//hypoxantine-finalConcentration[. = '0.5']) = 0) then 
              let $msg := "Failed to change hypoxantine-finalConcentration"
              return $msg
           else
              let $msg := "Changed hypoxantine-finalConcentration"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//precursorAddedOther) = 0) then 
              let $msg := "Failed to add precursorAddedOther"
              return $msg
           else
              let $msg := "Added precursorAddedOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//precursorAdded) = 0 ) then 
              let $msg := "Failed to add precursorAdded"
              return $msg
           else
              let $msg := "Added precursorAdded"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//referenceCloneOther) = 0) then 
              let $msg := "Failed to add referenceCloneOther"
              return $msg
           else
              let $msg := "Added referenceCloneOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//referenceClone) = 0 ) then 
              let $msg := "Failed to add referenceClone"
              return $msg
           else
              let $msg := "Added referenceClone"
              return $msg
-          let $new := concat($summary,$out,'&#xD;')
+          let $summary1 := concat($summary,$out,'&#xD;')
           let $out := if (count($m//timeOfIncubationOther) = 0) then 
              let $msg := "Failed to add timeOfIncubationOther"
              return $msg
           else
              let $msg := "Added timeOfIncubationOther"
              return $msg
-         let $summary := concat($new,$out,'&#xD;')
+         let $summary := concat($summary1,$out,'&#xD;')
          let $out := if (count($m//transmissionIntensityLevel) = 0 ) then 
              let $msg := "Failed to add transmissionIntensityLevel"
              return $msg
           else
              let $msg := "Added transmissionIntensityLevel"
              return $msg
-         let $new := concat($summary,$out,'&#xD;')
+         let $summary1 := concat($summary,$out,'&#xD;')
          let $out := if (count($m//pharmacology/sampleMatrixType) != 1 or count($m//pharmacology/analytes/analyte/sampleMatrixType) > 0) then 
              let $msg := "Failed to move sampleMatrixType"
              return $msg
@@ -1002,7 +1002,7 @@ declare function local:check-changes() as item() *{
              return $msg
 
                             
-         let $output := concat($new,$out,'&#xD;')
+         let $output := concat($summary,$out,'&#xD;')
          return $output
     return $ret
 };
