@@ -983,6 +983,7 @@
         <xs:element ref="studyDesign"/>
         <xs:element ref="samplingTimes"/>
         <xs:element ref="PKcomments"/>
+        <xs:element ref="PKInclusionCriteria"/>
         <xs:element ref="samples"/>
         <xs:element ref="analytes"/>
         <xs:element ref="sampleMatrixType"/>
@@ -1016,6 +1017,9 @@
         <xs:element ref="unitsOfMeasureOther"/>
         <xs:element ref="fatAmount"/>
         <xs:element ref="lowerLoQ"/>
+        <xs:element ref="PKtitle"/>
+        <xs:element ref="PKnumOfSamples"/>
+        <xs:element ref="PKregimen"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1293,4 +1297,8 @@
   <xs:element name="hour" type="optionalDecimal"/>
   <xs:element name="dose" type="xs:string"/>
   <xs:element name="doseUnit" type="xs:string"/>
+  <xs:element name="PKtitle" type="xs:string"/>
+  <xs:element name="PKnumOfSamples" type="optionalInteger"/>
+  <xs:element name="PKregimen" type="xs:string"/>
+  <xs:element name="PKInclusionCriteria" type="longString"/>
 </xs:schema>
