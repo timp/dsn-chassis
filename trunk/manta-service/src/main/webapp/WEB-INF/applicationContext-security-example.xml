@@ -17,16 +17,6 @@
         -->
     </global-method-security>
     
-    <beans:bean id="myLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <beans:constructor-arg value="/home/" />
-        <beans:constructor-arg>
-            <beans:list>
-                <beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
-                <beans:ref bean="myLogoutHandler"/>
-                
-            </beans:list>
-        </beans:constructor-arg>
-    </beans:bean>
     
     <!-- don't apply security to eXist XML-RPC endpoint, rely on eXist authentication -->
     <http pattern="/xmlrpc" security="none"/>
@@ -69,17 +59,12 @@
         -->
         <!-- Uncomment to limit the number of sessions a user can have -->
         
-        <custom-filter position="LOGOUT_FILTER" ref="myLogoutFilter" />
         <session-management invalid-session-url="/home/" session-fixation-protection="none">
             <!--<concurrency-control max-sessions="-1" error-if-maximum-exceeded="true" />-->
         </session-management>
         
     </http>
-    
-    <beans:bean id="myLogoutHandler" class="org.cggh.chassis.manta.security.LogoutHandler">
       
-    </beans:bean>
-    
     <beans:bean id="sessionRegistry"
         class="org.springframework.security.core.session.SessionRegistryImpl" />
         
