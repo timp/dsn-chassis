@@ -135,9 +135,44 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 				<value>incTimeOther</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
-	
-			
-			let $new14 := update insert
+
+            let $new9 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/PKInclusionCriteria\[(\d+)\]</label>
+				<value>PKIncCrit</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings
+
+            let $new10 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKtitle\[(\d+)\]</label>
+				<value>PKtitle$7</value>
+			</fieldLabelMapping>
+            into $old//fieldLabelMappings
+
+            let $new11 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKnumOfSamples\[(\d+)\]</label>
+				<value>PKnoOfSamps$7</value>
+			</fieldLabelMapping>
+            into $old//fieldLabelMappings
+
+            let $new12 := update insert
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKregimen\[(\d+)\]</label>
+				<value>PKregi$7</value>
+			</fieldLabelMapping>
+            into $old//fieldLabelMappings
+
+            let $new13 := update insert
+            <fieldLabelMapping deprecated="n" filter="ignore">
+				<label>/atom:entry\[(\d+)\]/app:control\[(\d+)\]/app:draft\[(\d+)\]</label>
+				<value>DraftStatus</value>
+			</fieldLabelMapping>
+			into $old//fieldLabelMappings			           			
+
+	        
+	        let $new14 := update insert
 			<fieldLabelMapping deprecated="n" filter="ignore">
 				<label>/atom:entry\[(\d+)\]/app:control\[(\d+)\]/app:draft\[(\d+)\]</label>
 				<value>DraftStatus</value>
@@ -181,7 +216,7 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 				<value>SSQVersion</value>
 			</fieldLabelMapping>
 			into $old//fieldLabelMappings
-			
+
         return $old
 
     

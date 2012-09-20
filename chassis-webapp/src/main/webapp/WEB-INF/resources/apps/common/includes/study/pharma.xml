@@ -16,12 +16,16 @@
                    <xforms:hint>e.g. Clinical study with additional data on drug concentrations</xforms:hint>
             </xforms:textarea>
             <xforms:input ref="samplingTimes">
-                   <xforms:label class="fourWide">Sampling Times </xforms:label>
+                   <xforms:label class="fourWide">Sampling Times</xforms:label>
                    <xforms:hint>e.g. Day 7</xforms:hint>
             </xforms:input><br/>
             <xforms:textarea ref="PKcomments">
                    <xforms:label>Comments</xforms:label>
                    <xforms:hint></xforms:hint>
+            </xforms:textarea>
+            <xforms:textarea ref="PKInclusionCriteria">
+                <xforms:label>Inclusion Criteria</xforms:label>
+                <xforms:hint></xforms:hint>
             </xforms:textarea>
             <xforms:group ref="samples">
                 <h3>Sample</h3>
@@ -164,7 +168,9 @@
                         <th>Units of Measure</th>
                         <th>Fat Amount</th>
                         <th>Lower LoQ</th>
-                        <th></th>
+                        <th>Title</th>
+                        <th>Number of Samples</th>
+                        <th>Regimen</th>
                     </tr>
                     <xforms:repeat nodeset="analyte" id="analyte-rep">
                         <tr>
@@ -231,8 +237,18 @@
                             </td>
 
                             <td class="form-td">
-                               
+                                <xforms:input ref="PKtitle" class="eightWide">
+                                </xforms:input>
                             </td>
+                            <td class="form-td">
+                                <xforms:input ref="PKnumOfSamples" class="fourWide">
+                                </xforms:input>
+                            </td>
+                            <td class="form-td">
+                                <xforms:input ref="PKregimen" class="eightWide">
+                                </xforms:input>
+                            </td>
+
                         </tr>
                     </xforms:repeat>
                     <tr>

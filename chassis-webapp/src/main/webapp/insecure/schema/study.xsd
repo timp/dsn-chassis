@@ -329,6 +329,6 @@
   <xs:element name="hypoxantine-finalConcentration" type="optionalDecimal"/>
   <xs:element name="oroticAcid-finalConcentration" type="optionalDecimal"/>
   <xs:element name="NaHCO3-finalConcentration" type="optionalDecimal"/>
-  
+
 </xs:schema>
 

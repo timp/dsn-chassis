@@ -978,16 +978,19 @@
         <xs:element ref="studyDesign" minOccurs="0" />
         <xs:element ref="samplingTimes" minOccurs="0" />
         <xs:element ref="PKcomments" minOccurs="0" />
+        <xs:element ref="PKInclusionCriteria" minOccurs="0" />
         <xs:element ref="samples" minOccurs="0" />
         <xs:element ref="analytes" minOccurs="0" />
+        <xs:element minOccurs="0" ref="sampleMatrixType"/>
         <xs:element ref="assayReferences"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="studyDesign" type="xs:string"/>
+  <xs:element name="studyDesign" type="longString"/>
   <xs:element name="samplingTimes" type="xs:string"/>
   <xs:element name="PKcomments" type="longString"/>
-  <xs:element name="samples">
+  <xs:element name="PKInclusionCriteria" type="longString"/>
+    <xs:element name="samples">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="sample"/>
@@ -1010,7 +1013,9 @@
         <xs:element minOccurs="0" ref="unitsOfMeasureOther"/>
         <xs:element minOccurs="0" ref="fatAmount"/>
         <xs:element minOccurs="0" ref="lowerLoQ"/>
-        <xs:element minOccurs="0" ref="sampleMatrixType"/>
+        <xs:element minOccurs="0" ref="PKtitle"/>
+        <xs:element minOccurs="0" ref="PKnumOfSamples"/>
+        <xs:element minOccurs="0" ref="PKregimen"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1293,4 +1298,10 @@
   <xs:element name="hour" type="optionalDecimal"/>
   <xs:element name="dose" type="xs:string"/>
   <xs:element name="doseUnit" type="xs:string"/>
+
+    <xs:element name="PKtitle" type="xs:string"/>
+    <xs:element name="PKnumOfSamples" type="optionalInteger"/>
+    <xs:element name="PKregimen" type="xs:string"/>
+
+
 </xs:schema>

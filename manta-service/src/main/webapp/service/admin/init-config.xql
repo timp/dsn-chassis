@@ -1069,6 +1069,12 @@ let $values2 :=
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/PKcomments\[(\d+)\]</label>
 				<value>PKcomment</value>
 			</fieldLabelMapping>
+
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/PKInclusionCriteria\[(\d+)\]</label>
+				<value>PKIncCrit</value>
+			</fieldLabelMapping>
+
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/samples\[(\d+)\]/sample\[(\d+)\]/anticoagulent\[(\d+)\]</label>
 				<value>Anticoagulant$7</value>
@@ -1109,6 +1115,20 @@ let $values2 :=
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/lowerLoQ\[(\d+)\]</label>
 				<value>LLOQ$7</value>
 			</fieldLabelMapping>
+
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKtitle\[(\d+)\]</label>
+				<value>PKtitle$7</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKnumOfSamples\[(\d+)\]</label>
+				<value>PKnoOfSamps$7</value>
+			</fieldLabelMapping>
+			<fieldLabelMapping deprecated="n">
+				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/analytes\[(\d+)\]/analyte\[(\d+)\]/PKregimen\[(\d+)\]</label>
+				<value>PKregi$7</value>
+			</fieldLabelMapping>
+
 			<fieldLabelMapping deprecated="n">
 				<label>/atom:entry\[(\d+)\]/atom:content\[(\d+)\]/study\[(\d+)\]/study-info\[(\d+)\]/pharmacology\[(\d+)\]/sampleMatrixType\[(\d+)\]</label>
 				<value>SampleMatrix$5</value>

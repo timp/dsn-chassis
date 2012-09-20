@@ -1,0 +1,1 @@
+This module - chassis-model-pruned is historical, superseded by chassis-model.

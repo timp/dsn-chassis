@@ -314,6 +314,7 @@
                 <studyDesign/>
                 <samplingTimes/>
                 <PKcomments/>
+                <PKInclusionCriteria/>
                 <samples>
                     <sample>
                         <anticoagulent />
@@ -335,6 +336,9 @@
                         <unitsOfMeasureOther />
                         <fatAmount />
                         <lowerLoQ />
+                        <PKtitle />
+                        <PKnumOfSamples />
+                        <PKregimen />
                     </analyte>
                 </analytes>
                 <sampleMatrixType />
