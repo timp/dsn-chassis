@@ -859,6 +859,288 @@ declare function local:modify-nodes($old-study-infos) as element( atom:entry )*
 			let $pi := update insert <proxy-for-institution/> following $old//registrant-has-agreed-to-the-terms
 			let $pn := update insert <proxy-for-name/> following $old//registrant-has-agreed-to-the-terms
 
+             let $fix3 := if (count($old//clinical) = 0) then
+				let $f3 := update insert
+            <clinical>
+                <treatment>
+                    <regimens>
+                        <regimen>
+                            <regimenName />
+                            <regimenSupervision />
+                            <regimenUrl />
+                            <drugs />
+                        </regimen>
+                    </regimens>
+                    <regimenAllocation>
+                        <regimenAllocationMethod />
+                        <blinding />
+                        <randomisationProportion />
+                    </regimenAllocation>
+                </treatment>
+                <followup>
+                    <duration />
+                    <feverMeasurement />
+                    <haemoglobinRecording>
+                        <haemoglobinRecordingType />
+                    </haemoglobinRecording>
+                </followup>
+                <microscopy>
+                    <microscopyStain />
+                    <microscopyStainOther />
+                    <asexualParasitemia>
+                     <asexualParasitemiaNegativeCount />
+           <asexualParasitemiaPositiveThickUnit />
+           <asexualParasitemiaPositiveThickUnitOther />
+           <asexualParasitemiaPositiveThinUnit />
+           <asexualParasitemiaPositiveThinUnitOther />
+                    </asexualParasitemia>
+                    <sexualParasitemia>
+                     <sexualParasitemiaNegativeCount />
+           <sexualParasitemiaPositiveThickUnit />
+           <sexualParasitemiaPositiveThickUnitOther />
+           <sexualParasitemiaPositiveThinUnit />
+           <sexualParasitemiaPositiveThinUnitOther />
+                    </sexualParasitemia>
+                    <thickFilmCalculationOfParasitemia>
+                        <thickFilmFormula />
+                        <thickFilmFormulaOther />
+                    </thickFilmCalculationOfParasitemia>
+                    <thinFilmCalculationOfParasitemia>
+                        <thinFilmFormula />
+                        <thinFilmFormulaOther />
+                    </thinFilmCalculationOfParasitemia>
+                    <qualityControl>
+                        <internal>
+                            <percentageRereadBySecondMicroscopist />
+                            <rereadSlideSelectionMechanism />
+                            <rereadSlideSelectionMechanismOther />
+                        </internal>
+                        <external>
+                            <percentageRereadBySecondMicroscopist />
+                            <rereadSlideSelectionMechanism />
+                            <rereadSlideSelectionMechanismOther />
+                        </external>
+                    </qualityControl>
+                </microscopy>
+                <geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+                    <applicability />
+                    <applicable>
+                        <markers>
+                            <recrudescenceMarker>
+                                <markerName />
+                                <markerOther />
+                                <numberOfMicroSatellites />
+                            </recrudescenceMarker>
+                        </markers>
+                        <genotypingLaboratory />
+                        <markerDiscriminantOpen>
+                            <markerDiscriminant />
+                            <markerDiscriminantOther />
+                        </markerDiscriminantOpen>
+                        <analysisProtocol>
+                            <mixedAllelesOpen>
+                                <mixedAlleles />
+                                <mixedAllelesOther />
+                                <recrudescence />
+                                <reinfection />
+                            </mixedAllelesOpen>
+                        </analysisProtocol>
+                    </applicable>
+                </geneotypingToDistinguishBetweenRecrudescenceAndReinfection>
+            </clinical>
+			following $old//inclusionExclusionCriteria
+				return $f3
+			  else
+			  	()
+
+
+
+
+  let $fix4 := if (count($old//molecular) = 0) then
+				let $f4 := update insert
+
+            <molecular>
+
+                <criteria>
+                    <sampleSourceOpen>
+                        <sampleSource />
+                        <sampleSourceOther />
+                    </sampleSourceOpen>
+                    <malariaStatus />
+                </criteria>
+                <sample>
+                    <sampleTypeOpen>
+                        <sampleType />
+                        <sampleTypeOther />
+                        <wholeBloodSource />
+                        <dateCultureIsolated />
+                    </sampleTypeOpen>
+                </sample>
+
+                <genotypedMarkers />
+
+
+                <mixedResistanceAlleles>
+                    <mixedResistanceAllelesInclusion />
+                    <mixedResistanceAllelesDesignation />
+                </mixedResistanceAlleles>
+
+                <additionalGenotypicInformation>
+                    <sequencedLoci>
+                        <wholeGenomesSequenced />
+            <resistanceLociSequenced />
+                        <resistanceLoci>
+                            <resistanceLocus>
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
+                            </resistanceLocus>
+                        </resistanceLoci>
+            <otherLociGenotyped />
+                        <otherLoci>
+                          <otherLocus>
+                <locusTypeOpen>
+                  <locusType />
+                  <locusTypeOther />
+                </locusTypeOpen>
+                <locusName />
+                          </otherLocus>
+                        </otherLoci>
+                    </sequencedLoci>
+                    <infectionComplexityEstimated />
+                    <infectionComplexityEstimationlociOpen>
+                        <infectionComplexityEstimationloci />
+                        <infectionComplexityEstimationlociOther />
+                    </infectionComplexityEstimationlociOpen>
+                </additionalGenotypicInformation>
+            </molecular>
+			following $old//clinical
+				return $f4
+			  else
+			  	()
+            
+			let $fix5 := if (count($old//invitro) = 0) then
+				let $f5 := update insert
+            <invitro>
+                <analysisSite />
+                <culture>
+                    <incubatorSystem />
+                    <co2percentage />
+                    <co2Other />
+                    <o2percentage />
+                    <o2Other />
+                    <healthyErythrocytesSource />
+                    <hematocritpercent />
+                    <bloodGroup />
+                </culture>
+                <drugSusceptibilityMedium>
+                    <medium />
+                    <mediumOther />
+                    <preparation />
+                    <serum />
+                    <serum-finalConcentration />
+                    <NaHCO3-finalConcentration />
+                    <hypoxantine>
+                        <hypoxantine-added />
+                        <hypoxantine-finalConcentration />
+                    </hypoxantine>
+                    <oroticAcid>
+                        <oroticAcid-added />
+                        <oroticAcid-finalConcentration />
+                    </oroticAcid>
+                    <glucose>
+                        <glucose-added />
+                        <glucose-finalConcentration />
+                    </glucose>
+                    <antibioticTreatments />
+                </drugSusceptibilityMedium>
+                <susceptibility>
+                    <timeOfIncubation />
+                    <timeOfIncubationOther />
+                    <susceptibilityMethod />
+                    <precursorAdded/>
+                    <precursorAddedOther/>
+                </susceptibility>
+                
+                <invitroDrugs />
+                <platePreparationMethod />
+                <platesPreparationDate />
+                <plateBatches />
+                <referenceClone/>
+                <referenceCloneOther/>
+            </invitro>
+			following $old//molecular
+				return $f5
+			  else
+			  	()
+
+            
+			let $fix6 := if (count($old//pharmacology) = 0) then
+				let $f6 := update insert
+            <pharmacology>
+                <studyDesign/>
+                <samplingTimes/>
+                <PKcomments/>
+                <PKInclusionCriteria/>
+                <samples>
+                    <sample>
+                        <anticoagulent />
+                        <centrifugeTime />
+                        <storages>
+                            <storage>
+                              <storageTemperature />
+                              <storageDuration />
+                              <storageDurationUnit />
+                            </storage>
+                        </storages>
+                    </sample>
+                </samples>
+                <analytes>
+                    <analyte>
+                        <drugMeasured />
+                        <targetDose />
+                        <unitsOfMeasure />
+                        <unitsOfMeasureOther />
+                        <fatAmount />
+                        <lowerLoQ />
+                        <PKtitle />
+                        <PKnumOfSamples />
+                        <PKregimen />
+                    </analyte>
+                </analytes>
+                <sampleMatrixType />
+                <assayReferences>
+                    <assayReference>
+                        <referenceType>url</referenceType>
+                        <url />
+                        <doi />
+                        <upload>
+                            <uploadedUrl />
+                        </upload>
+                        <note />
+                        <assayValidated />
+                    </assayReference>
+                </assayReferences>
+            </pharmacology>
+            	following $old//invitro
+				return $f6
+			  else
+			  	()
+ 			let $sitefix := for $osite in $old//site
+			let $fix1 := if (count($osite//transmissionIntensityAgeFromUnits) = 0) then
+				let $f1 := update insert <transmissionIntensityAgeFromUnits/> following $osite//transmissionIntensityAgeFrom
+				return $f1
+			  else
+			  	()
+			 let $fix2 := if (count($osite//transmissionIntensityAgeToUnits) = 0) then
+				let $f2 := update insert <transmissionIntensityAgeToUnits/> following $osite//transmissionIntensityAgeTo
+				return $f2
+			  else
+			  	()
+            return $fix1            
+            
         return $profile
 
      
