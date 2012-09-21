@@ -243,11 +243,11 @@
   <xs:element name="site">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="country"/>
+        <xs:element ref="country" minOccurs="0"/>
         <xs:element ref="region" minOccurs="0"/>
         <xs:element ref="district" minOccurs="0"/>
         <xs:element ref="locality" minOccurs="0"/>
-        <xs:element ref="lookupAddress"/>
+        <xs:element ref="lookupAddress" minOccurs="0"/>
         <xs:element ref="siteCode" minOccurs="0"/>
         <xs:sequence minOccurs="0">
           <xs:element ref="testingDelay"/>
@@ -418,7 +418,7 @@
   <xs:element name="regimenAllocation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="regimenAllocationMethod"/>
+        <xs:element ref="regimenAllocationMethod" minOccurs="0"/>
         <xs:element ref="blinding" minOccurs="0"/>
         <xs:element ref="randomisationProportion" minOccurs="0"/>
       </xs:sequence>
@@ -819,9 +819,9 @@
   <xs:element name="invitro">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="analysisSite"/>
+        <xs:element ref="analysisSite" minOccurs="0"/>
         <xs:element minOccurs="0" ref="culture"/>
-        <xs:element ref="drugSusceptibilityMedium"/>
+        <xs:element minOccurs="0" ref="drugSusceptibilityMedium"/>
         <xs:element minOccurs="0" ref="susceptibility"/>
         <xs:element minOccurs="0" ref="invitroDrugs"/>
         <xs:element minOccurs="0" ref="platePreparationMethod"/>
@@ -847,9 +847,9 @@
           <xs:element ref="o2percentage"/>
           <xs:element ref="o2Other" minOccurs="0"/>
         </xs:sequence>
-        <xs:element ref="healthyErythrocytesSource"/>
+        <xs:element ref="healthyErythrocytesSource" minOccurs="0"/>
         <xs:element minOccurs="0" ref="hematocritpercent"/>
-        <xs:element ref="bloodGroup"/>
+        <xs:element ref="bloodGroup" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -944,7 +944,7 @@
       <xs:sequence>
         <xs:element ref="timeOfIncubation"/>
         <xs:element minOccurs="0" ref="timeOfIncubationOther"/>        
-        <xs:element ref="susceptibilityMethod"/>
+        <xs:element minOccurs="0" ref="susceptibilityMethod"/>
         <xs:element minOccurs="0" ref="precursorAdded"/>
         <xs:element minOccurs="0" ref="precursorAddedOther"/>       
       </xs:sequence>
@@ -1000,8 +1000,8 @@
   </xs:element>
   <xs:element name="studyDesign" type="longString"/>
   <xs:element name="samplingTimes" type="xs:string"/>
-  <xs:element minOccurs="0" name="PKcomments" type="longString"/>
-  <xs:element minOccurs="0" name="PKInclusionCriteria" type="longString"/>
+  <xs:element name="PKcomments" type="longString"/>
+  <xs:element name="PKInclusionCriteria" type="longString"/>
     <xs:element name="samples">
     <xs:complexType>
       <xs:sequence>
