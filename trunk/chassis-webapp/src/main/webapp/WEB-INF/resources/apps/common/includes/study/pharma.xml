@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
     xmlns:ev="http://www.w3.org/2001/xml-events"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-      xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
-       xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atom="http://www.w3.org/2005/Atom">
     
     <xforms:group ref="pharmacology">
 
