@@ -175,9 +175,9 @@
                                 </xforms:trigger>
                             </td>
                         	<td colspan="5">
-                                <xforms:input ref="PKtitle">
+                                <xforms:textarea ref="PKtitle">
                                 	<xforms:label>Title:</xforms:label>
-                                </xforms:input>
+                                </xforms:textarea>
                         	</td>
                       </tr>
                       <tr>
