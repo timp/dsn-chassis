@@ -70,13 +70,13 @@
         <xs:element ref="curator-notes"/>
         <xs:element ref="study-status"/>
         <xs:element ref="modules"/>
-        <xs:element minOccurs="0" ref="study-info"/>
+        <xs:element ref="study-info"/>
         <xs:element ref="atombeat:group"/>
       </xs:sequence>
       <xs:attribute name="profile" use="required">
         <xs:simpleType >
           <xs:restriction base="xs:anyURI">
-            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/2.2"/>
+            <xs:enumeration value="http://www.cggh.org/2010/chassis/manta/3.0"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -221,10 +221,10 @@
         <xs:element ref="sites"/>
         <xs:element ref="pathogens"/>
         <xs:element ref="inclusionExclusionCriteria"/>
-        <xs:element minOccurs="0" ref="clinical"/>
-        <xs:element minOccurs="0" ref="molecular"/>
-        <xs:element minOccurs="0" ref="invitro"/>
-        <xs:element minOccurs="0" ref="pharmacology"/>
+        <xs:element ref="clinical"/>
+        <xs:element ref="molecular"/>
+        <xs:element ref="invitro"/>
+        <xs:element ref="pharmacology"/>
       </xs:sequence>
       <xs:attribute name="profile" type="xs:anyURI"/>
     </xs:complexType>
@@ -281,9 +281,9 @@
         <xs:element ref="parasitePrevalenceYear"/>
         <xs:element ref="transmissionIntensityLevel"/>
         <xs:element ref="transmissionIntensityAgeFrom"/>
-        <xs:element minOccurs="0" ref="transmissionIntensityAgeFromUnits"/>
+        <xs:element ref="transmissionIntensityAgeFromUnits"/>
         <xs:element ref="transmissionIntensityAgeTo"/>
-        <xs:element minOccurs="0" ref="transmissionIntensityAgeToUnits"/>
+        <xs:element ref="transmissionIntensityAgeToUnits"/>
         <xs:element ref="entomologicalInoculationRate"/>
         <xs:element ref="entomologicalInoculationRateYear"/>
         <xs:element ref="seasonalTransmission"/>
