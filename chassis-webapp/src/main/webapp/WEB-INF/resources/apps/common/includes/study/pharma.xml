@@ -161,21 +161,11 @@
                 <h4> Drug/metabolites measured <span style="font-size:smaller; font-weight:normal;"
                         >please list all</span>
                 </h4>
-                <table class="repeat-table">
-                    <tr>
-                        <th/>
-                        <th>Concentration name <br/> (parent or metabolite) </th>
-                        <th>Target Dose (Total mg/kg)</th>
-                        <th>Units of Measure</th>
-                        <th>Fat Amount</th>
-                        <th>Lower LoQ</th>
-                        <th>Title</th>
-                        <th>Number of Samples</th>
-                        <th>Regimen</th>
-                    </tr>
+                <table class="repeat-table" width="100%">
+                    
                     <xforms:repeat nodeset="analyte" id="analyte-rep">
-                        <tr>
-                            <td class="action-td">
+                      <tr>
+                              <td class="action-td">
                                 <xforms:trigger appearance="minimal">
                                     <xforms:label>
                                         <img src="/apps/common/theme/remove.gif" alt="remove"/>
@@ -184,9 +174,25 @@
                                         at="index('analyte-rep')"/>
                                 </xforms:trigger>
                             </td>
-                            <td class="form-td">
-                                <xforms:select1 appearance="minimal" ref="drugMeasured">
-                                    <xforms:label class="invisible">Molecule measured </xforms:label>
+                        	<td colspan="5">
+                                <xforms:input ref="PKtitle">
+                                	<xforms:label>Title:</xforms:label>
+                                </xforms:input>
+                        	</td>
+                      </tr>
+                      <tr>
+                      		<td/>
+                        	<td colspan="5">
+                                <xforms:input ref="PKregimen">
+                                <xforms:label>Regimen</xforms:label>
+                                </xforms:input>
+                        	</td>
+                      </tr>
+                      <tr>
+                      		<td/>
+                        	<td colspan="5">
+                               <xforms:select1 appearance="minimal" ref="drugMeasured">
+                                    <xforms:label>Concentration name (parent or metabolite) </xforms:label>
                                     <xforms:itemset model="mod-study-info"
                                          nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration[not(@value = 'Other')]">
                                          <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
@@ -201,17 +207,19 @@
                                     <xforms:hint>Name of drug given or metabolite
                                         measured</xforms:hint>
                                 </xforms:select1>
-
-                            </td>
+                        	</td>
+                      </tr>
+                      <tr>
+                      		<td/>
                             <td class="form-td">
                                 <xforms:input ref="targetDose" class="eightWide">
-                                    <xforms:label class="invisible"/>
-                                    <xforms:hint>e.g. 72 mg/kg</xforms:hint>
+                                    <xforms:label>Target Dose (Total mg/kg)</xforms:label>
+                                    <xforms:hint>e.g. 72</xforms:hint>
                                 </xforms:input>
                             </td>
                             <td class="form-td">
                                 <xforms:select1 appearance="minimal" ref="unitsOfMeasure">
-                                    <xforms:label class="invisible"/>
+                                    <xforms:label>Units of Measure</xforms:label>
                                     <xforms:itemset model="mod-study-info"
                                         nodeset="instance('study-info-resources')//xs:simpleType[@name='unitsOfMeasure']/xs:restriction/xs:enumeration">
                                         <xforms:label ref="@value"/>
@@ -220,33 +228,27 @@
                                      
                                 </xforms:select1>
                                 <xforms:input ref="unitsOfMeasureOther" class="fourWide">
-                                    <xforms:label class="invisible"/>
+                                    
                                     <xforms:hint>Unit of measure usually ng/ml or ug/ml</xforms:hint>
                                 </xforms:input>
                             </td>
                             <td class="form-td">
                                 <xforms:input ref="fatAmount" class="fourWide">
-                                    <xforms:label class="invisible"/>
+                                    <xforms:label>Fat Amount</xforms:label>
                                     <xforms:hint>Amount of fat taken with the drug</xforms:hint>
                                 </xforms:input>
                             </td>
                             <td class="form-td">
                                 <xforms:input ref="lowerLoQ" class="fourWide">
-                                    <xforms:label class="invisible"/>
+                                    <xforms:label>Lower LoQ</xforms:label>
                                     <xforms:hint>Lower limit of quantification</xforms:hint>
                                 </xforms:input>
                             </td>
 
-                            <td class="form-td">
-                                <xforms:input ref="PKtitle" class="eightWide">
-                                </xforms:input>
-                            </td>
+                            
                             <td class="form-td">
                                 <xforms:input ref="PKnumOfSamples" class="fourWide">
-                                </xforms:input>
-                            </td>
-                            <td class="form-td">
-                                <xforms:input ref="PKregimen" class="eightWide">
+                                	<xforms:label>Number of Samples</xforms:label>
                                 </xforms:input>
                             </td>
 
