@@ -544,7 +544,22 @@
 				<chassis.url>http://localhost:8080</chassis.url>
 			</properties>
 		</profile>
-		
+
+        <profile>
+            <id>test-chassis</id>
+            <properties>
+                <profileId>production</profileId>
+
+                <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+                <cas.url>https://app-dev.wwarn.org/sso</cas.url>
+                <chassis.url>https://app-dev.wwarn.org</chassis.url>
+                <exist-data>/srv/chassis-data/exist</exist-data>
+                <orbeonLogs>/var/log/tomcat7/manta-service.log</orbeonLogs>
+                <log4j-priority>info</log4j-priority>
+                <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+            </properties>
+        </profile>
+
 		<profile>
 			<id>production</id>
 			<properties>
@@ -557,8 +572,6 @@
 				<orbeonLogs>/var/log/tomcat7/manta-service.log</orbeonLogs>
 				<log4j-priority>info</log4j-priority>
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
-				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
-				<alfresco-uri>https://www.wwarn.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
 		<profile>
