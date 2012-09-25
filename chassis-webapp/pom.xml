@@ -436,6 +436,7 @@
 				<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
+
 		<profile>
 			<id>app-dev</id>
 			<properties>
@@ -483,7 +484,27 @@
 				<alfresco-uri>https://www.wwarn.org/alfresco/</alfresco-uri>
 			</properties>
 		</profile>
-		<profile>
+
+        <profile>
+            <id>test-chassis</id>
+            <properties>
+                <profileId>test-chassis</profileId>
+                <google-api-key>ABQIAAAALKEGMPfIYQSA-VwL_MMJwxSlb90VRGuJIkqh0iHprgnoFbPqfRT6op4Km2XwtyBOI0RrlbrWQC48tA</google-api-key>
+                <bing-maps-key>AuOCY3s1rvqxHcDurxIKubBo-z6ZGkvgCARq2OOnbeijZOovs2EtQx7j0fe5y0eB</bing-maps-key>
+                <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
+                <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
+                <cas.url>https://app-dev.wwarn.org/sso</cas.url>
+                <chassis.url>https://app-dev.wwarn.org</chassis.url>
+                <orbeonLogs>/var/log/tomcat7/chassis-webapp.log</orbeonLogs>
+                <log4j-priority>info</log4j-priority>
+                <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
+                <google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
+                <alfresco-uri>https://app-dev.wwarn.org/alfresco/</alfresco-uri>
+            </properties>
+        </profile>
+
+
+        <profile>
 			<id>tomcatNotRunning</id>
 			<!-- Ensure that something is listening on 8080 for tests -->
 			<activation>
