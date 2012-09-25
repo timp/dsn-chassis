@@ -9,7 +9,8 @@
 	xmlns:atombeat="http://purl.org/atombeat/xmlns"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	xmlns:at="http://purl.org/atompub/tombstones/1.0"
-	 xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns">
+	xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
 	<div id="bd" class="clearfix">
 		<div class="no-bg">
@@ -108,7 +109,7 @@
 							    	<xforms:group ref="instance('ins-submitted-media-feed')[exists(atom:entry)]">
 							    		
 							    		
-									    	<fr:datatable paginated="false">
+									    	<table paginated="false">
 									    		<thead>
 									    			<tr>
 									    				<th fr:sortable="true" fr:resizeable="true">Code</th>
@@ -156,10 +157,10 @@
 									    				</tr>
 									    			</xforms:repeat>
 									    		</tbody>
-									    	</fr:datatable>
+									    	</table>
 									</xforms:group>
 											<xforms:group ref="instance('ins-submitted-media-feed')[exists(at:deleted-entry)]">		
-											<fr:datatable paginated="false">
+											<table paginated="false">
 							    				<thead>
 							    					<tr>
 							    					<th fr:sortable="true" fr:resizeable="true">Code</th>
@@ -192,7 +193,7 @@
 							    						</tr>
 							    						</xforms:repeat>
 							    				</tbody>
-							    			</fr:datatable>
+							    			</table>
 									</xforms:group>
 									</span>
 								</xforms:group>
@@ -222,7 +223,7 @@
 										
 										<div id="list-of-curated-files-container">
 											
-											<fr:datatable paginated="false">
+											<table paginated="false">
 												<thead>
 													<tr>
 														<th fr:sortable="true" fr:resizeable="true">Code</th>
@@ -269,7 +270,7 @@
 														</tr>
 													</xforms:repeat>
 												</tbody>
-											</fr:datatable>
+											</table>
 											
 										</div>
 										
@@ -284,7 +285,7 @@
 								
 								<div id="list-of-alf-files-container">
 									
-									<fr:datatable paginated="false">
+									<table paginated="false">
 										<thead>
 											<tr>
 												<th fr:sortable="true" fr:resizeable="true">Code</th>
@@ -327,7 +328,7 @@
 												</tr>
 											</xforms:repeat>
 										</tbody>
-									</fr:datatable>
+									</table>
 									
 								</div>
 								
