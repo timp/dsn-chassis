@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings 
+ version="2.1"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_1.xsd"
+ xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+ xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+ jaxb:extensionBindingPrefixes="hj orm">
+	
+  <jaxb:bindings schemaLocation="ar.xsd" node="/xs:schema">
+   
+    <jaxb:bindings node="xs:element[@name='comment']/xs:complexType">
+     <hj:entity name="Gloss">
+      <orm:table name="Gloss"/>
+     </hj:entity>
+     <jaxb:class name="Gloss" /> 
+    </jaxb:bindings>
+  
+  </jaxb:bindings>
+
+</jaxb:bindings>
