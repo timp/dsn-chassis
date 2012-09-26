@@ -1,9 +1,0 @@
-<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-	<atom:content type="application/vnd.atombeat+xml">
-			<atombeat:groups xmlns:atombeat="http://purl.org/atombeat/xmlns">
-				<atombeat:group id="GROUP_ADMINISTRATORS">
-					<atombeat:member>{$user}</atombeat:member>
-				</atombeat:group>
-			</atombeat:groups>		
-	</atom:content>
-</atom:entry>

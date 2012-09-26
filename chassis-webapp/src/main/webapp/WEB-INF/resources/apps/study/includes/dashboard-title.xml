@@ -1,1 +1,0 @@
-<h1 xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"  xmlns:xs="http://www.w3.org/2001/XMLSchema">Study dashboard - <xforms:output value="instance('ins-study-entry')//studyTitle"/> (<xforms:output value="instance('ins-study-entry')/manta:id"/>)</h1>
