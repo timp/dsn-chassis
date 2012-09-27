@@ -1,0 +1,9 @@
+<controller xmlns="http://www.orbeon.com/oxf/controller">
+
+    <page path="/spike/upload" view="upload.xhtml"/>
+    <page path="/spike/case-report-form" view="case-report-form.xhtml"/>
+    
+    <page path="/spike/map-unittest" view="map-unittest.xhtml"/>
+    <epilogue url="oxf:/config/epilogue.xpl"/>
+
+</controller>
