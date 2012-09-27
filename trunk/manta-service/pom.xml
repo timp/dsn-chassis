@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-service</artifactId>
-	<version>3.0-alpha-1-SNAPSHOT</version>
+	<version>3.0-alpha-1</version>
 	<packaging>war</packaging>
 	<name>manta-service</name>
 	<description>Chassis Manta Web Atombeat Service</description>
@@ -345,9 +344,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-service</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta-service</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-service</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</url>
 	</scm>
 	<build>
 		<extensions>
