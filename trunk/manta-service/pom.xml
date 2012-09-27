@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cggh.chassis</groupId>
 	<artifactId>manta-service</artifactId>
-	<version>3.0-alpha-1</version>
+	<version>3.0-alpha-2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>manta-service</name>
 	<description>Chassis Manta Web Atombeat Service</description>
@@ -344,9 +344,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</connection>
-		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</developerConnection>
-		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/tags/manta-service-3.0-alpha-1</url>
+		<connection>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-service</connection>
+		<developerConnection>scm:svn:https://dsn-chassis.googlecode.com/svn/trunk/manta-service</developerConnection>
+		<url>scm:svn:http://dsn-chassis.googlecode.com/svn/trunk/manta-service</url>
 	</scm>
 	<build>
 		<extensions>
