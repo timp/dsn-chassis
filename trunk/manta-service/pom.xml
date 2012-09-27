@@ -337,7 +337,7 @@
 		<dependency>
 			<groupId>org.cggh.chassis</groupId>
 			<artifactId>chassis-model</artifactId>
-			<version>0.0.6</version>
+			<version>3.0</version>
 			<scope>test</scope>
 		</dependency>
 
