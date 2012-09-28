@@ -430,7 +430,7 @@
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://www.cggh.org/sso</cas.url>
 				<chassis.url>https://cloud1.cggh.org</chassis.url>
-				<test-email>ian.wright@wwarn.org</test-email>
+				<test-email>richard.cooksey@wwarn.org</test-email>
 				<orbeonLogs>/var/log/tomcat7/chassis-webapp.log</orbeonLogs>
 				<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
 			</properties>
@@ -447,7 +447,7 @@
 				<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
 				<cas.url>https://app-dev.wwarn.org/sso</cas.url>
 				<chassis.url>https://app-dev.wwarn.org</chassis.url>
-				<test-email>ian.wright@wwarn.org</test-email>
+				<test-email>richard.cooksey@wwarn.org</test-email>
 				<orbeonLogs>/var/log/tomcat6/chassis-webapp.log</orbeonLogs>
 				<use-alfresco>false</use-alfresco>
 				<tomcat.url>http://localhost:8080/manager</tomcat.url>
@@ -481,7 +481,8 @@
 				<log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
 				<google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
 				<alfresco-uri>https://www.wwarn.org/alfresco/</alfresco-uri>
-			</properties>
+                <use-alfresco>true</use-alfresco>
+            </properties>
 		</profile>
 
         <profile>
@@ -493,12 +494,13 @@
                 <oxf.epilogue.xforms.inspector>false</oxf.epilogue.xforms.inspector>
                 <contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>
                 <cas.url>https://app-dev.wwarn.org/sso</cas.url>
-                <chassis.url>https://app-dev.wwarn.org</chassis.url>
+                <chassis.url>https://demo.wwarn.org</chassis.url>
                 <orbeonLogs>/var/log/tomcat7/chassis-webapp.log</orbeonLogs>
                 <log4j-priority>info</log4j-priority>
                 <log4j-appender-ref>RollingFileAppender</log4j-appender-ref>
                 <google-analytics-web-property-id>UA-7755559-10</google-analytics-web-property-id>
                 <alfresco-uri>https://app-dev.wwarn.org/alfresco/</alfresco-uri>
+                <use-alfresco>true</use-alfresco>
             </properties>
         </profile>
 
