@@ -12,7 +12,8 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     xmlns:saxon="http://saxon.sf.net/"
      xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
-     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
     <xxforms:variable name="alfresco-uri" select="xxforms:property('chassis.alfresco.uri')"
         as="xs:anyURI"/>
     <xxforms:variable name="alfresco-username"

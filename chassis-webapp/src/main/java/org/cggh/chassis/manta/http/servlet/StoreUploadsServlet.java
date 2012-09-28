@@ -1,30 +1,5 @@
 package org.cggh.chassis.manta.http.servlet;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.stream.StreamResult;
-
-
 import org.apache.log4j.Logger;
 import org.cggh.chassis.manta.security.ProxyServlet;
 import org.cggh.chassis.manta.util.ConfigurableNamespacePrefixMapperImpl;
@@ -36,6 +11,24 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 public class StoreUploadsServlet extends HttpServlet {
 
@@ -204,8 +197,8 @@ public class StoreUploadsServlet extends HttpServlet {
 				org.w3._2005.atom.Entry.class);
 		// String sEntry = ProxyServlet.<String>doProxiedMethod(mockReq,
 		// mockResp, HttpMethod.POST, uploadInputStream, String.class);
-		System.out.println(mockResp.getStatus());
-		System.out.println(mockResp.getContentAsString());
+	//	System.out.println(mockResp.getStatus());
+	//	System.out.println(mockResp.getContentAsString());
 
 		uploadResponse.setStatus(mockResp.getStatus());
 		
@@ -267,24 +260,33 @@ public class StoreUploadsServlet extends HttpServlet {
 		return uploadResponse;
 	}
 
-	private void setRequestURL(String targetCollectionUri,
+	public static void setRequestURL(String targetCollectionUri,
 			MockHttpServletRequest mockReq) throws MalformedURLException {
 		URL targ = new URL(targetCollectionUri);
 		String serverName = targ.getHost();
 		int port = targ.getPort();
 		String proto = targ.getProtocol();
 		mockReq.setServerName(serverName);
-		if (port > 0) {
-			mockReq.setServerPort(port);
-		} else {
-			mockReq.setServerPort(8080);
-		}
+
+		mockReq.setServerPort(port);
+
 		mockReq.setRequestURI(targ.getPath());
 		mockReq.setProtocol(proto);
-		//mockReq.setScheme(proto);
+		mockReq.setScheme(proto);
 		String url = mockReq.getRequestURI();
-		String uri = mockReq.getRequestURL().toString();
+
 	}
+
+    public static String requestToURL(HttpServletRequest req) {
+        StringBuffer url = new StringBuffer(req.getScheme());
+        url.append("://").append(req.getServerName());
+        int port = req.getServerPort();
+        if (port > 0) {
+            url.append(':').append(port);
+        }
+        url.append(req.getRequestURI());
+        return url.toString();
+    }
 
 	private org.w3._2005.atom.Entry updateEntry(
 			org.w3._2005.atom.Entry savedEntry, HttpSession session)
