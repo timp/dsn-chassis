@@ -1,0 +1,23 @@
+<!--  
+A closed list of the category of studies.     
+-->
+<modules 
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns="">
+    <module>
+        <label>Clinical</label>
+        <value>clinical</value>
+    </module>
+    <module>
+        <label>Molecular</label>
+        <value>molecular</value>
+    </module>
+    <module>
+        <label><xhtml:em>in vitro</xhtml:em></label> <!-- doesn't look like xhtml works here -->
+        <value>invitro</value>
+    </module>
+    <module>
+        <label>Pharmacology</label>
+        <value>pharmacology</value>
+    </module>
+</modules>

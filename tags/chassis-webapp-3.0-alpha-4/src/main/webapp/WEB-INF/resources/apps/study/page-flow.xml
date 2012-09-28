@@ -1,0 +1,32 @@
+<!--
+  Copyright (C) 2009 Orbeon, Inc.
+
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<controller xmlns="http://www.orbeon.com/oxf/controller" xmlns:xxforms="http://orbeon.org/oxf/xml/xforms">
+
+  <page id="root" path="/study/"/>
+  
+  <page path="/study/dashboard" view="study-dashboard.xhtml"/>
+  <page path="/study/email-lock" model="email-lock.xpl"/>
+  <page path="/study/email-complete" view="email-complete.xpl"/>
+  
+   <page path="/study/file-details" view="file-details.xhtml"/>
+  <page path="/study/tombstone-details" view="tombstone-details.xhtml"/>
+  <page path="/study/pubmed-query" view="../contributor/pubmed-query.xpl"/>
+  <page path="/study/pubmed-citation-query" view="../contributor/pubmed-citation-query.xpl"/>
+  <page path="/study/crossref-query" view="../contributor/crossref-query.xpl"/>
+  
+  <page path="/study/transform-study" view="../cmis/transform-study.xpl"/>
+  
+  <epilogue url="oxf:/config/epilogue.xpl"/>
+
+</controller>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xforms:model id="cmis-rest-model" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"
+    xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/"
+    xmlns:alf="http://www.alfresco.org"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:saxon="http://saxon.sf.net/"
+     xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:fr="http://orbeon.org/oxf/xml/form-runner">
+    <xxforms:variable name="alfresco-uri" select="xxforms:property('chassis.alfresco.uri')"
+        as="xs:anyURI"/>
+    <xxforms:variable name="alfresco-username"
+        select="xxforms:property('chassis.alfresco.username')"
+        as="xs:string"/>
+    <xxforms:variable name="alfresco-credentials"
+        select="xxforms:property('chassis.alfresco.credentials')"
+        as="xs:string"/>
+    <xxforms:variable name="is-send-alfresco" select="xxforms:property('chassis.alfresco.send')" as="xs:boolean"/>
+    
+    <xxforms:variable name="alf-ticket" select="instance('ins-cmis-rest-auth')/ticket"/>
+    <xxforms:variable name="studies-root" select="'WWARN/studies'" as="xs:string"/>
+    <xxforms:variable name="files-root" select="''" as="xs:string"/>
+    <!--
+curl “http://localhost:8080/alfresco/s/api/login?u=admin&pw=admin”
+Returns this:
+<?xml version="1.0" encoding="UTF-8"?>
+<ticket>TICKET_44740de7943f7bab5be61f787c62660ff3008299</ticket>
+If you go this route, you’ll want to copy and paste the ticket (everything
+between the open and closing ticket tags) somewhere convenient. Every call
+you make from here on out will require it, like this:
+curl
+"http://localhost:8080/alfresco/s/cmis?alf_ticket=TICKET_44740de7943f7b
+ab5be61f787c62660ff3008299"
+    -->
+    <xforms:instance id="ins-cmis-rest-control">
+        <control>
+            <site/>
+            <file/>
+            <modules/>
+            <workflowName/>
+            <status/>
+            <outputFileNodeRef/>
+            <studyFileNodeRef/>
+            <ticketAuth/>
+        </control>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-auth">
+        <ticket xmlns=""/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-create-site">
+        <xi:include href="create-site.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+
+    <xforms:instance id="ins-cmis-rest-create-space">
+        <xi:include href="create-space.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-create-file">
+        <xi:include href="create-file.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-create-file-result">
+        <atom:entry/>
+    </xforms:instance>
+    <xforms:instance id="ins-cmis-rest-create-file-template">
+        <xi:include href="create-file.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-update-file">
+        <xi:include href="create-file.xml" xxi:omit-xml-base="true"/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-binary-data">
+        <study/>
+    </xforms:instance>
+    
+    <xforms:instance id="ins-cmis-rest-workflow">
+        <atom:entry/>
+    </xforms:instance>
+    <xforms:instance id="ins-cmis-rest-workflow-response">
+        <atom:entry/>
+    </xforms:instance>
+   <!-- start Alf media - will only work when filter is active -->     
+    <xforms:instance id="ins-cmis-rest">
+        <request/>
+    </xforms:instance>
+    
+    <!-- Note that this has to be done as part of the xforms-model-construct-done stage -->
+    <xforms:action ev:event="cmis-rest-get-ticket" if="$is-send-alfresco">
+        <xforms:insert 
+            nodeset="instance('ins-cmis-rest')"
+            origin="xxforms:get-request-attribute('alf_ticket')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//ticketAuth" value="instance('ins-cmis-rest')"/>
+    </xforms:action>
+    
+    <xforms:instance id="ins-cmis-rest-media-feed">
+        <atom:feed/>
+    </xforms:instance>
+    
+    <xforms:action ev:event="cmis-rest-get-files" if="$is-send-alfresco">
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-get-files-submission"/>
+    </xforms:action>
+    
+    <xforms:submission
+        id="cmis-rest-get-files-submission"
+        resource="{$alfresco-uri}service/cmis/p/WWARN/Studies/{instance('ins-cmis-rest-control')//site}/descendants?alf_ticket={instance('ins-cmis-rest')}"
+        method="get"
+        replace="instance"
+        instance="ins-cmis-rest-media-feed"
+        serialization="none">
+        <!-- Returns 500 even for permission denied - expect to get permission denied for contributor 
+            <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the uploaded media.</xforms:message>
+        -->
+    </xforms:submission>
+    
+    <!-- end Alf media -->
+    
+    <!-- xxforms attribs work for http auth -->
+    <xforms:submission ref="instance('ins-cmis-rest-auth')" id="cmis-rest-auth-submission" method="get"
+        action="{$alfresco-uri}s/api/login?u={$alfresco-username}&amp;pw={$alfresco-credentials}"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-auth" if="$is-send-alfresco">
+        <xforms:action ev:event="xforms-submit-done"> </xforms:action>
+    </xforms:submission>
+    
+    <xforms:action ev:event="cmis-rest-create-study" if="$is-send-alfresco">
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:content')//manta:id"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//file" value="'study.xml'"/>
+        <xxforms:variable name="study-id" select="event('fr:content')//manta:id"/>
+        <xxforms:variable name="study-title" select="event('fr:content')//studyTitle"/>
+        <xxforms:variable name="edit" select="event('fr:content')//atom:link[@rel='edit']/@href"/>
+        <xxforms:variable name="study-url" select="concat(substring-before($edit,'/repository'),'/repository/study/dashboard?study=',$edit)" />
+        <xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-site">
+            <xxforms:context name="fr:title" select="$study-id"/>
+            <xxforms:context name="fr:description" select="$study-title"/>
+            <xxforms:context name="fr:studyURL" select="$study-url" />
+        </xforms:dispatch>
+        <xforms:dispatch target="cmis-rest-model" name="cmis-rest-create-document">
+            <xxforms:context name="fr:name" select="'study'"/>
+            <xxforms:context name="fr:title" select="$study-id"/>
+            <xxforms:context name="fr:description" select="$study-title"/>
+            <xxforms:context name="fr:site" select="$study-id"/>
+            <xxforms:context name="fr:author" select="event('fr:content')//atom:author/atom:email"/>
+            <!--  should really be instance('ins-study-entry')//atom:content/@type -->
+            <xxforms:context name="fr:mime-type" select="'text/xml'"/>
+            <xxforms:context name="fr:file-ext" select="'.xml'"/>
+            <xxforms:context name="fr:content" select="event('fr:content')"/>
+        </xforms:dispatch>
+    </xforms:action>
+    
+    <xforms:action ev:event="cmis-rest-update-study" if="$is-send-alfresco">
+        <xxforms:variable name="study-id" select="event('fr:content')//manta:id"/>
+        <xxforms:variable name="study-title" select="event('fr:content')//studyTitle"/>
+        <xxforms:variable name="study-metadata" value="$study-id"/>
+        <xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-folder">
+            <xxforms:context name="fr:title" select="$study-id"/>
+            <xxforms:context name="fr:site" select="$study-id"/>
+            <xxforms:context name="fr:description" select="$study-title"/>
+            <xxforms:context name="fr:modules" select="event('fr:content')//modules"/>
+            <xxforms:context name="fr:admins" select="event('fr:content')//atombeat:group[@id='GROUP_ADMINISTRATORS']/*"/>
+        </xforms:dispatch>
+        <xforms:dispatch target="cmis-rest-model" name="cmis-rest-update-document">
+            <xxforms:context name="fr:name" select="'study'"/>
+            <xxforms:context name="fr:file-ext" select="'.xml'"/>
+            <xxforms:context name="fr:site" select="$study-id"/>
+            <xxforms:context name="fr:title" select="$study-title"/>
+            <xxforms:context name="fr:author" select="event('fr:content')//atom:author/atom:email"/>
+            <!--  should really be instance('ins-study-entry')//atom:content/@type -->
+            <xxforms:context name="fr:mime-type" select="'text/xml'"/>
+            <xxforms:context name="fr:content" select="event('fr:content')"/>
+        </xforms:dispatch>
+    </xforms:action>   
+   
+    <xforms:action ev:event="cmis-rest-create-site">
+        <!-- 
+        <xforms:send submission="cmis-rest-auth-submission"/>
+        -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-site')//atom:title" value="event('fr:title')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-site')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']/cmis:value" value="'F:wc:studyFolder'"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-site')//cmis:propertyString[@propertyDefinitionId='cm:title']/cmis:value" value="event('fr:description')"/> 
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-site')//cmis:propertyString[@propertyDefinitionId='wc:studyInfoLink']/cmis:value" value="event('fr:studyURL')"/>        
+        <xforms:send submission="cmis-rest-create-site-submission"/>
+    </xforms:action>
+
+    <xforms:action ev:event="cmis-rest-start-workflow">
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//workflowName" value="event('fr:workflowName')"/>
+        <xforms:delete nodeset="instance('ins-cmis-rest-workflow')/atom:entry/*"/>
+        <xforms:insert 
+            context="instance('ins-cmis-rest-workflow')" 
+            nodeset="atom:entry"
+            origin="event('fr:content')/*"/>
+        <xforms:send submission="cmis-rest-start-workflow-submission"/>
+    </xforms:action>
+    <xforms:instance id="clinical">
+        <cmis:value>Clinical</cmis:value>
+    </xforms:instance>
+    
+    <xforms:action ev:event="cmis-rest-update-folder">
+         <!-- Save the event values for later -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//modules" value="event('fr:modules')"/>
+        <xforms:send submission="cmis-rest-get-folder-record"/>
+        <!-- Update meta-data -->
+        
+        <!-- set title -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//alf:properties/cmis:propertyString[@propertyDefinitionId='cm:title']/cmis:value" value="event('fr:description')"/>
+        <!-- end of set title -->
+        <!-- set modules -->
+        <xforms:delete nodeset="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:modules']/*"/>
+        <!-- transformed into the correct format by transform-study -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:modules']" value="instance('ins-cmis-rest-control')//modules"/>           
+        <!-- end of modules -->
+        <xforms:delete nodeset="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:countries']/*"/>
+        <xforms:insert context="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:countries']"
+            origin="xxforms:instance('ins-country-items')//country[value=xxforms:instance('ins-sq-study-info-entry')//country]/label"/>
+        
+        <xforms:delete nodeset="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:admins']/*"/>
+        <xforms:insert context="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:admins']"
+                origin="event('fr:admins')"/>
+            
+        <xforms:send submission="sub-transform-study"/>
+        
+        
+        <xforms:send submission="cmis-rest-update-folder-submission"/>
+    </xforms:action>
+    
+    <xforms:action ev:event="cmis-rest-delete-site">
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-delete-site-submission"/>
+    </xforms:action>
+    
+    <!-- Used to create the study.xml file in the study folder -->
+    <xforms:action ev:event="cmis-rest-create-document">
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:title" value="concat(event('fr:name'),event('fr:file-ext'))"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:summary" value="event('fr:description')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmisra:content/cmisra:base64" value="saxon:string-to-base64Binary(saxon:serialize(event('fr:content'), 'xml'), 'UTF-8')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmisra:content/cmisra:mediatype" value="event('fr:mime-type')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="event('fr:mime-type')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cm:author']/cmis:value" value="event('fr:author')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']/cmis:value" value="'D:wc:studyInfo'"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cm:description']//cmis:value" value="event('fr:description')" />
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cm:title']//cmis:value" value="event('fr:title')" />
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-create-file-submission"/>
+    </xforms:action>
+    
+    <xforms:action ev:event="cmis-rest-update-document">
+        <!-- Save the event values for later -->
+        <!-- <xforms:setvalue ref="instance('ins-cmis-rest-binary-data')" value="saxon:string-to-base64Binary(saxon:serialize(event('fr:content'), 'xml'), 'UTF-8')"/> -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-binary-data')" value="xxforms:instance('ins-study-entry')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//atom:summary" value="event('fr:title')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//atom:content/@type" value="event('fr:mime-type')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="event('fr:mime-type')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-update-file')//cmis:propertyString[@propertyDefinitionId='cm:author']/cmis:value" value="event('fr:author')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:title" value="concat(event('fr:name'),event('fr:file-ext'))"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//file" value="instance('ins-cmis-rest-create-file')//atom:title"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-get-file-record"/>
+        <!-- Update meta-data -->
+        <!-- Need to check if the event can be used and can discard update-file instance -->
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:summary" value="instance('ins-cmis-rest-update-file')//atom:summary"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:content/@type" value="//atom:content/@type"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@cmis:propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@cmis:propertyDefinitionId='cm:author']/cmis:value" value="instance('ins-cmis-rest-update-file')//cmis:propertyString[@propertyDefinitionId='cm:author']/cmis:value"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']/cmis:value" value="'D:wc:studyInfo'"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        <xforms:send submission="cmis-rest-update-file-submission"/>
+        <!-- Update the file contents -->
+        <xxforms:variable name="edit-media-link" select="instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href"
+            value="concat($alfresco-uri, substring-after($edit-media-link,'/alfresco/'))" />
+        <xforms:send submission="cmis-rest-update-file-content-submission"/>
+    </xforms:action>
+    
+    <xforms:action ev:event="cmis-rest-upload-file">
+        
+        <xxforms:variable name="media-type" select="event('fr:media-type')"/>
+        <xxforms:variable name="content" select="event('fr:file-content')"/>
+        <xforms:delete
+            nodeset="instance('ins-cmis-rest-create-file')/atom:entry/*" />
+        <xforms:insert
+            context="instance('ins-cmis-rest-create-file')/atom:entry"
+            origin="instance('ins-cmis-rest-create-file-template')/atom:entry/*"
+            at="last()" position="after" />
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-control')//site" value="event('fr:site')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')" value="instance('ins-cmis-rest-create-file')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:title" value="event('fr:media-title')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:summary" value="event('fr:media-summary')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category/@term" value="event('fr:media-term')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//atom:category/@label" value="event('fr:media-label')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmisra:content/cmisra:base64" value="$content"/>
+        
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmisra:content/cmisra:mediatype" value="$media-type"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cmis:contentStreamMimeType']/cmis:value" value="$media-type"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:dataFile'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/DataFile')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:dataDictionary'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/DataDictionary')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:protocol'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/Protocol')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:publication'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/Publication')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:other'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/Other')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='cm:description']//cmis:value" value="event('fr:media-entry')//atom:category/@label" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/Other')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyId[@propertyDefinitionId='cmis:objectTypeId']//cmis:value" value="'D:wc:output'" if="contains(event('fr:media-term'),'http://www.cggh.org/2010/chassis/terms/Explorer')"/>
+        
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileSource']//cmis:value" value="event('fr:source')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:fileId']//cmis:value" value="event('fr:media-fileId')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:submitter']//cmis:value" value="event('fr:submitter')"/>
+        <xforms:setvalue ref="instance('ins-cmis-rest-create-file')//cmis:propertyString[@propertyDefinitionId='wc:derivationsComments']//cmis:value" value="event('fr:der-comment')"/>
+        
+        <xforms:send submission="cmis-rest-create-file-submission-ticket" if="not(empty((instance('ins-cmis-rest-control')//ticketAuth/text())))"/>
+        <xforms:send submission="cmis-rest-create-file-submission" if="empty(instance('ins-cmis-rest-control')//ticketAuth/text())"/>
+        
+        <xforms:action ev:event="xforms-submit-done" xxforms:iterate="tokenize(event('fr:der-selection'), ' ')" >
+            <xforms:setvalue ref="instance('ins-cmis-rest-control')/studyFileNodeRef" value="instance('ins-cmis-rest-create-file-result')//cmis:propertyId[@queryName='cmis:objectId']/cmis:value"/>
+            <xforms:setvalue ref="instance('ins-cmis-rest-control')/outputFileNodeRef" value="context()"/>
+            <xforms:send submission="cmis-rest-create-file-derivation" />
+        </xforms:action>
+        
+    </xforms:action>
+<!-- End of actions -->   
+    <xforms:submission ref="instance('ins-cmis-rest-create-site')" id="cmis-rest-create-site-submission" method="post"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/children"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-site" if="$is-send-alfresco">
+    </xforms:submission>
+    
+    <!-- These submissions are the same apart from the action definition -->
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-study-file-submission" method="post"
+        action="{instance('ins-cmis-rest-create-space')//atom:link[@rel='down' and @type='application/atom+xml;type=feed' ]/@href}"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
+    </xforms:submission>
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission" method="post"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+				<xforms:message  level="modal" 
+				value="concat('An error occurred while creating a file in Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+		</xforms:action>        
+		<xforms:action ev:event="xforms-submit-done">
+        	<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+			</xforms:action>        
+    </xforms:submission>
+    <!-- Same as above with different authentication -->
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-create-file-submission-ticket" method="post"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children?alf_ticket={instance('ins-cmis-rest')}"
+        mediatype="application/atom+xml"
+        replace="instance" instance="ins-cmis-rest-create-file-result" if="$is-send-alfresco">
+        <xforms:action ev:event="xforms-submit-error">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+            <xforms:message  level="modal" 
+				value="concat('An error occurred while creating a file in Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+		</xforms:action>        
+		<xforms:action ev:event="xforms-submit-done">
+        	<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+        </xforms:action>        
+    </xforms:submission>
+    <xforms:instance id="temp">
+        <ticket xmlns=""/>
+    </xforms:instance>
+   <!-- Don't ask why but the element of ins-cmis-rest-control are passed as parameters to this get.... -->
+    <xforms:submission id="cmis-rest-create-file-derivation" method="get" replace="none" instance="temp"
+        action="{$alfresco-uri}service/wwarn/createDerivedAssoc?alf_ticket={instance('ins-cmis-rest')}" 
+        />
+    <!-- upload a file -->
+    <xforms:submission ref="xxforms:instance('ins-upload')" id="cmis-rest-upload-file-submission" method="post"
+        serialization="multipart/form-data"
+        resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}children"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="none" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+    	    <xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'fail'"/>
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
+		<xforms:action ev:event="xforms-submit-done">
+			<xforms:setvalue ref="instance('ins-cmis-rest-control')//status" value="'ok'"/>
+      </xforms:action>			        
+    </xforms:submission>
+    <!-- updating -->
+    <!-- study -->
+    <xforms:submission id="sub-transform-study" action="http://localhost:8080/repository/study/transform-study"
+        replace="instance" method="post" ref="instance('ins-cmis-rest-create-file')"
+        instance="ins-cmis-rest-create-file">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>                
+    </xforms:submission>
+    <xforms:submission id="cmis-rest-get-folder-record" method="get"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco"
+        serialization="none">
+    </xforms:submission>
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-update-folder-submission" method="put"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
+    </xforms:submission>
+    <!-- file -->
+    <xforms:submission id="cmis-rest-get-file-record" method="get"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}{instance('ins-cmis-rest-control')//file}"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco"
+        serialization="none">
+    </xforms:submission>
+    <xforms:submission ref="instance('ins-cmis-rest-create-file')" id="cmis-rest-update-file-submission" method="put"
+        action="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/{$files-root}{instance('ins-cmis-rest-control')//file}"
+        mediatype="application/atom+xml"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="instance" instance="ins-cmis-rest-create-file" if="$is-send-alfresco">
+			<xforms:action ev:event="xforms-submit-error">
+				<xforms:message  level="modal" 
+					value="concat('An error occurred while submitting file to Alfresco. Please inform an administrator.(error-type:',event('error-type'), ')')" />
+			</xforms:action>        
+    </xforms:submission>
+    <!-- Actually update the file - this is for XML content -->
+    <xforms:submission ref="xxforms:instance('ins-study-entry')" id="cmis-rest-update-file-content-submission" method="put"
+        resource="{instance('ins-cmis-rest-create-file')//atom:link[@rel='edit-media']/@href}"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="none" if="$is-send-alfresco">
+        <!-- Together with mediatype="text/plain" serialization="application/x-www-form-urlencoded" omit-xml-declaration="true"
+            <xforms:setvalue ev:event="xforms-submit-serialize" ref="event('submission-body')" value="/myXSLValue"> -->
+    </xforms:submission>
+    <!-- deleting including all descendants -->
+    <xforms:submission id="cmis-rest-delete-site-submission" method="delete"
+        resource="{$alfresco-uri}service/cmis/p/{$studies-root}/{instance('ins-cmis-rest-control')//site}/descendants"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        replace="none"  if="$is-send-alfresco">
+    </xforms:submission>
+    <!--  start a workflow -->
+    <xforms:submission ref="instance('ins-cmis-rest-workflow')" id="cmis-rest-start-workflow-submission" method="post"
+        resource="{$alfresco-uri}service/wwarn/startworkflow?workflow={instance('ins-cmis-rest-control')//workflowName}"
+        xxforms:username="{$alfresco-username}" xxforms:password="{$alfresco-credentials}"
+        mediatype="application/atom+xml"
+        instance="ins-cmis-rest-workflow-response"
+        replace="instance" if="$is-send-alfresco">
+    </xforms:submission>
+</xforms:model>

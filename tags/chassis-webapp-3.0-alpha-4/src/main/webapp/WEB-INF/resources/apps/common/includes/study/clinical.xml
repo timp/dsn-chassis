@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xforms:group ref="clinical">
+
+        <div id="clinical-questions-container">
+
+            <h2>Clinical Questions</h2>
+
+            <h3>Treatments</h3>
+            <xforms:group ref="treatment">
+                <xforms:group ref="regimens">
+                    <h5>Regimen</h5>
+                    <table class="repeat-table">
+                        <xforms:repeat nodeset="regimen" id="regimen-rep">
+                            <tr>
+                                <td class="action-td">
+                                    <xforms:trigger appearance="minimal">
+                                        <xforms:label>
+                                            <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                        </xforms:label>
+                                        <xforms:delete ev:event="DOMActivate" context="."
+                                            nodeset="." at="index('regimen-rep')"/>
+                                    </xforms:trigger>
+                                </td>
+                                <td class="form-td">
+                                    <xforms:input ref="regimenName">
+                                        <xforms:label class="fixed-width">Regimen
+                                            name</xforms:label>
+                                    </xforms:input>
+                                    <br/>
+                                    <xforms:select1 ref="regimenSupervision" appearance="minimal">
+                                        <xforms:label class="fixed-width">Supervision </xforms:label>
+                                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item>
+                                        <xforms:itemset model="mod-study-info"
+                                            nodeset="instance('ins-supervisionType-items')/supervisionType">
+                                            <xforms:label ref="label"/>
+                                            <xforms:value ref="value"/>
+                                        </xforms:itemset>
+                                    </xforms:select1>
+                                    <br/>
+                                    <xforms:input ref="regimenUrl">
+                                        <xforms:label class="fixed-width">Description URL </xforms:label>
+                                        <xforms:hint>A URL of a page which describes the regimen </xforms:hint>
+                                        <xforms:alert>Enter a valid URL</xforms:alert>
+                                        <xforms:send ev:event="xforms-value-changed"
+                                            submission="sub-check-regimen-url"/>
+                                    </xforms:input>
+
+                                    <xforms:group ref="drugs">
+                                        <table class="repeat-table">
+                                            <xforms:repeat nodeset="drug" id="rep-drug">
+                                                <tr>
+                                                  <td>
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/remove.gif"
+                                                  alt="remove"/>
+                                                  </xforms:label>
+                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                  nodeset="." at="index('rep-drug')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  
+                                                      
+                                                      <xforms:select1 appearance="minimal" ref="name">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/drugName"/>
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugName']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                          <xforms:action ev:event="xforms-value-changed">
+                                                                <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement....
+                                                                <xforms:rebuild model="mod-study-dashboard" /> 
+                                                                -->
+                                                           </xforms:action> 
+                                                      </xforms:select1>
+                                                      <xforms:input ref="drugNameOther">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/drugNameOther"/>
+                                                      </xforms:input>
+                                                  <xforms:group ref="activeIngredients">
+                                                  <table class="repeat-table">
+                                                  <xforms:repeat nodeset="activeIngredient"
+                                                  id="rep-activeIngredient">
+                                                  <tr>
+                                                  <td>
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/remove.gif"
+                                                  alt="remove"/>
+                                                  </xforms:label>
+                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                  nodeset="." at="index('rep-activeIngredient')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="form-td">
+                                                      <xforms:select1 appearance="minimal" ref="activeIngredientName">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/activeIngredient"/>
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugMolecules']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="for $currentItemName in @value return $resources/common/drugs/drugMolecule/name[@ref = $currentItemName]"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                      </xforms:select1>
+                                                  <xforms:input ref="activeIngredientNameOther">
+                                                      <xforms:label model="mod-study-info" ref="$resources/clinical/drug/activeIngredientOther"/>
+                                                  </xforms:input>
+                                                  <xforms:input ref="activeIngredientMgPerDose"
+                                                  class="fourWide">
+                                                  <xforms:label>Mg per dose</xforms:label>
+                                                  </xforms:input>
+                                                  </td>
+                                                  </tr>
+                                                  </xforms:repeat>
+                                                  <tr>
+                                                  <td class="action-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="activeIngredient"
+                                                  at="last()" position="after"
+                                                  origin="xxforms:instance('ins-drug')//activeIngredient"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="add-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>Add an active ingredient </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="activeIngredient"
+                                                  at="last()" position="after"
+                                                  origin="xxforms:instance('ins-drug')//activeIngredient"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  </tr>
+                                                  </table>
+                                                  </xforms:group>
+                                                  <xforms:select1 ref="administrationRoute"
+                                                  appearance="minimal">
+                                                  <xforms:label class="fixed-width">Administration
+                                                  Route </xforms:label>
+                                                  
+                                                  <xforms:itemset model="mod-study-info"
+                                                      nodeset="instance('study-info-resources')//xs:simpleType[@name='administrationRoutes']/xs:restriction/xs:enumeration">
+                                                      <xforms:label ref="for $currentItemName in @value return $resources/clinical/drug//adminRoute[@ref = $currentItemName]"/>
+                                                      <xforms:value ref="@value"/>
+                                                  </xforms:itemset>
+                                                  </xforms:select1>
+                                                      <br/>
+                                                      <xforms:select1 ref="tradeName"
+                                                          appearance="minimal">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeName"/>
+                                                          
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugTradeName']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="@value"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                          <xforms:action ev:event="xforms-value-changed">
+                                                             
+                                                            <xforms:insert ref="instance('binding-control')//rebuild" value="something"/>
+                                                            <!--  the rebuild is what should make it work however it's actually the previous statement....
+                                                            <xforms:rebuild model="mod-study-dashboard" />
+                                                            -->
+                                                                
+                                                          </xforms:action>
+                                                      </xforms:select1>
+                                                      <xforms:input ref="tradeNameOther">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/tradeNameOther"/>
+                                                      </xforms:input>
+                                                     
+                                                  <br/>
+                                                      <xforms:select1 ref="manufacturer"
+                                                          appearance="minimal">
+                                                          <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manufacturer"/>
+                                                          
+                                                          <xforms:itemset model="mod-study-info"
+                                                              nodeset="instance('study-info-resources')//xs:simpleType[@name='drugManufacturer']/xs:restriction/xs:enumeration">
+                                                              <xforms:label ref="@value"/>
+                                                              <xforms:value ref="@value"/>
+                                                          </xforms:itemset>
+                                                      </xforms:select1>
+                                                  <xforms:input ref="manufacturerOther">
+                                                      <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manufacturerOther"/>
+                                                  <xforms:hint>The manufacturer of the
+                                                  drug</xforms:hint>
+                                                  </xforms:input>
+                                                  
+                                                      <br/>
+                                                      <xforms:group ref="batches">
+                                                          <table class="repeat-table">
+                                                          <xforms:repeat nodeset="drugBatch" id="rep-batch">
+                                                              <tr><td>
+                                                              <xforms:trigger appearance="minimal">
+                                                                  <xforms:label>
+                                                                      <img src="/apps/common/theme/remove.gif"
+                                                                          alt="remove"/>
+                                                                  </xforms:label>
+                                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                                      nodeset="." at="index('rep-batch')"/>
+                                                              </xforms:trigger>
+                                                                  </td><td class="form-td">
+                                                              <xforms:input ref="batchNumber">
+                                                                  <xforms:label class="fixed-width">Batch Number </xforms:label>
+                                                              </xforms:input>
+                                                                  </td>
+                                                              </tr>
+                                                <tr><td></td><td class="form-td">
+                                                    <xforms:input ref="manufactureDate">
+                                                        <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/manDate"/>
+                                                        <xforms:hint>The date the drug was manufactured</xforms:hint>
+                                                    </xforms:input>
+                                                              <xforms:input ref="expiryDate">
+                                                                  <xforms:label class="fixed-width" model="mod-study-info" ref="$resources/clinical/drug/expDate"/>
+                                                                  <xforms:hint>The date the drug expires</xforms:hint>
+                                                              </xforms:input>
+                                                                  </td></tr>
+                                                          </xforms:repeat>
+                                                              </table>
+                                                          <xforms:trigger appearance="minimal">
+                                                              <xforms:label>
+                                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                              </xforms:label>
+                                                              <xforms:insert ev:event="DOMActivate" context="."
+                                                                  nodeset="drugBatch" at="count(../drugBatch)" position="after"
+                                                                  origin="xxforms:instance('ins-drug-batch')"/>
+                                                          </xforms:trigger>
+                                                          
+                                                          <xforms:trigger appearance="minimal">
+                                                              <xforms:label model="mod-study-info" ref="$resources/clinical/drug/addBatch"/>
+                                                              <xforms:insert ev:event="DOMActivate" context="."
+                                                                  nodeset="drugBatch" at="count(../drugBatch)" position="after"
+                                                                  origin="xxforms:instance('ins-drug-batch')"/>
+                                                          </xforms:trigger>
+                                                      </xforms:group>
+                                                      
+                                                  <xforms:select1 ref="drugStorage"
+                                                  appearance="minimal">
+                                                  <xforms:label class="fixed-width">Drug storage </xforms:label>
+                                                      <xforms:itemset model="mod-study-info"
+                                                          nodeset="instance('study-info-resources')//xs:simpleType[@name='drugStorage']/xs:restriction/xs:enumeration">
+                                                          <xforms:label ref="for $currentItemName in @value return $resources/clinical/drug//storage[@ref = $currentItemName]"/>
+                                                          <xforms:value ref="@value"/>
+                                                      </xforms:itemset>
+                                                  </xforms:select1>
+                                                  <br/>
+                                                  <xforms:select1 ref="drugDosingDeterminant" appearance="minimal">
+                                                      <xforms:label class="fixed-width">Dosing determinant </xforms:label>
+                                                      <xforms:item>
+                                                          <xforms:label>please select</xforms:label>
+                                                          <xforms:value/>
+                                                      </xforms:item>
+                                                      <xforms:itemset model="mod-study-info"
+                                                          nodeset="instance('ins-drugDosingDeterminant-items')/drugDosingDeterminant">
+                                                          <xforms:label ref="label"/>
+                                                          <xforms:value ref="value"/>
+                                                       </xforms:itemset>
+                                                  </xforms:select1>
+                                            
+                                                      <xforms:group ref="ageDosing">
+
+                                                  <table class="repeat-table">
+	                                                  <tr><th/><th>Day</th><th>Hour</th><th> From <span style="font-size:smaller; font-weight: normal;">(years)</span></th><th> To <span style="font-size:smaller; font-weight: normal;">(years)</span></th><th>Dose</th><th>Unit</th></tr>
+                                                  <xforms:repeat nodeset="ageDosingSchedule"
+                                                  id="rep-ageDosingSchedule">
+	                                                  <tr>
+		                                                  <td>
+		                                                  <xforms:trigger appearance="minimal">
+		                                                      <xforms:label><img src="/apps/common/theme/remove.gif" alt="remove"/></xforms:label>
+		                                                      <xforms:delete ev:event="DOMActivate" context="." nodeset="." at="index('rep-ageDosingSchedule')"/>
+		                                                  </xforms:trigger>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="day" class="fourWide">
+		                                                          <xforms:label/>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="hour" class="fourWide">
+		                                                          <xforms:label/>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="ageFrom" class="fourWide">
+		                                                          <xforms:label/>
+		                                                          <xforms:hint>years</xforms:hint>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="ageTo" class="fourWide">
+		                                                          <xforms:label/>
+		                                                          <xforms:hint>years</xforms:hint>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:input ref="dose" class="fourWide">
+		                                                          <xforms:label/>
+		                                                          <xforms:alert>Must be a number</xforms:alert>
+		                                                      </xforms:input>
+		                                                  </td>
+		                                                  <td class="form-td">
+		                                                      <xforms:select1 ref="doseUnit" appearance="minimal">
+		                                                          <xforms:label/>
+		                                                          <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
+		                                                              <xforms:label>Tablets</xforms:label>
+		                                                              <xforms:value>tablets</xforms:value>
+		                                                          </xforms:item>
+		                                                          <xforms:item>
+		                                                              <xforms:label>Mg</xforms:label>
+		                                                              <xforms:value>mg</xforms:value>
+		                                                          </xforms:item>
+		                                                      </xforms:select1>
+		                                                  </td>
+	                                                  </tr>
+                                                  </xforms:repeat>
+	                                                  <tr>
+	                                                      <td class="action-td">
+	                                                          <xforms:trigger appearance="minimal">
+	                                                              <xforms:label><img src="/apps/common/theme/add.gif" alt="add"/></xforms:label>
+	                                                              <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="ageDosingSchedule"
+	                                                                  at="count(../ageDosingSchedule)" position="after"
+	                                                                  origin="xxforms:instance('ins-ageDosingSchedule')"/>
+	                                                          </xforms:trigger>
+	                                                      </td>
+	                                                      <td class="add-td" colspan="6">
+	                                                          <xforms:trigger appearance="minimal">
+	                                                              <xforms:label>Add a schedule</xforms:label>
+	                                                              <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="ageDosingSchedule"
+	                                                                  at="count(../ageDosingSchedule)" position="after"
+	                                                                  origin="xxforms:instance('ins-ageDosingSchedule')"/>
+	                                                          </xforms:trigger>
+	                                                      </td>
+	                                                  </tr>
+                                                  </table>
+
+
+
+                                                  </xforms:group>
+                                                      
+                                                  <xforms:group ref="weightGroupDosing">
+
+                                                  <table class="repeat-table">
+                                                  <tr>
+                                                      <th/><th>Day</th><th>Hour</th>
+                                                      <th> From <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+                                                      <th> To <span style="font-size:smaller; font-weight: normal;">(kgs)</span></th>
+                                                      <th>Dose</th><th>Unit</th>
+                                                  </tr>
+                                                  <xforms:repeat nodeset="weightGroupDosingSchedule" id="rep-weightGroupDosingSchedule">
+                                                      <tr>
+                                                          <td>
+                                                              <xforms:trigger appearance="minimal">
+                                                                  <xforms:label>
+                                                                      <img src="/apps/common/theme/remove.gif" alt="remove"/>
+                                                                  </xforms:label>
+                                                                  <xforms:delete ev:event="DOMActivate" context="." nodeset="." at="index('rep-weightGroupDosingSchedule')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="day" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="hour" class="fourWide">
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                      <xforms:label/>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="weightGroupFrom" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:hint>kgs</xforms:hint>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="weightGroupTo" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:hint>kgs</xforms:hint>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="dose" class="fourWide">
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  <xforms:label/>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:select1 ref="doseUnit"
+                                                  appearance="minimal">
+                                                  <xforms:label/>
+                                                  <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
+                                                  <xforms:label>Tablets</xforms:label>
+                                                  <xforms:value>tablets</xforms:value>
+                                                  </xforms:item>
+                                                  <xforms:item>
+                                                  <xforms:label>Mg</xforms:label>
+                                                  <xforms:value>mg</xforms:value>
+                                                  </xforms:item>
+                                                  </xforms:select1>
+                                                  </td>
+                                                  </tr>
+                                                  </xforms:repeat>
+                                                  <tr>
+                                                  <td class="action-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="weightGroupDosingSchedule"
+                                                  at="count(../weightGroupDosingSchedule)"
+                                                  position="after"
+                                                  origin="xxforms:instance('ins-weightGroupDosingSchedule')"
+                                                  />
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="add-td" colspan="6">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>Add a schedule</xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="weightGroupDosingSchedule"
+                                                  at="count(../weightGroupDosingSchedule)"
+                                                  position="after"
+                                                  origin="xxforms:instance('ins-weightGroupDosingSchedule')"
+                                                  />
+                                                  </xforms:trigger>
+                                                  
+                                                  
+                                                  <!-- Not sure why ref="../tradeName = 'Coartem'" doesn't work -->
+                                                  <xforms:trigger appearance="minimal">
+                                            	  	<xforms:label><br/>Add standard Coartem dosing</xforms:label>
+                                            	  	<xforms:delete ev:event="DOMActivate" context="." nodeset="weightGroupDosingSchedule"/>
+                                            	  	 <xforms:insert ev:event="DOMActivate" context="."
+	                                                                  nodeset="weightGroupDosingSchedule"
+	                                                                  origin="xxforms:instance('ins-coartem-dose')//weightGroupDosing/*"/>
+                                            	  </xforms:trigger>
+                                            	  
+                                                  </td>
+                                                  </tr>
+                                                  </table>
+
+
+                                                  </xforms:group>
+                                                  <xforms:group ref="weightDosing">
+                                                  <table class="repeat-table">
+                                                  <tr>
+                                                  <th/>
+                                                  <th>Day</th>
+                                                  <th>Hour</th>
+                                                  <th>Dose</th>
+                                                  </tr>
+                                                  <xforms:repeat nodeset="weightDosingSchedule"
+                                                  id="rep-weightDosingSchedule">
+                                                  <tr>
+                                                  <td>
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/remove.gif"
+                                                  alt="remove"/>
+                                                  </xforms:label>
+                                                  <xforms:delete ev:event="DOMActivate" context="."
+                                                  nodeset="." at="index('rep-weightDosingSchedule')"
+                                                  />
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="day" class="fourWide">
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                      <xforms:label/>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="hour" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  </xforms:input>
+                                                  </td>
+                                                  <td class="form-td">
+                                                  <xforms:input ref="dose" class="fourWide">
+                                                      <xforms:label/>
+                                                      <xforms:alert>Must be a number</xforms:alert>
+                                                  </xforms:input>
+                                                  </td>
+                                                  </tr>
+                                                  </xforms:repeat>
+                                                  <tr>
+                                                  <td class="action-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="weightDosingSchedule"
+                                                  at="count(../weightDosingSchedule)"
+                                                  position="after"
+                                                  origin="xxforms:instance('ins-weightDosingSchedule')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  <td class="add-td" colspan="3">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>Add a schedule</xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="weightDosingSchedule"
+                                                  at="count(../weightDosingSchedule)"
+                                                  position="after"
+                                                  origin="xxforms:instance('ins-weightDosingSchedule')"/>
+                                                  </xforms:trigger>
+                                                  </td>
+                                                  </tr>
+                                                  </table>
+
+                                                  </xforms:group>
+                                                  <br/>
+                                                  <xforms:select1 ref="feeding" appearance="minimal">
+                                                  <xforms:label class="fixed-width">Food intake </xforms:label>
+                                                  <xforms:item>
+                                                  <xforms:label>unknown</xforms:label>
+                                                  <xforms:value/>
+                                                  </xforms:item>
+                                                  <xforms:itemset model="mod-study-info"
+                                                  nodeset="instance('ins-feeding-items')/feeding">
+                                                  <xforms:label ref="label"/>
+                                                  <xforms:value ref="value"/>
+                                                  </xforms:itemset>
+                                                  <xforms:item>
+                                                  <xforms:label>other</xforms:label>
+                                                  <xforms:value>other</xforms:value>
+                                                  </xforms:item>
+                                                  </xforms:select1>
+                                                  <xforms:input ref="feedingOther">
+                                                  <xforms:label>Feeding regime</xforms:label>
+                                                  </xforms:input>
+                                                  <xforms:input ref="fatPerMeal">
+                                                  <xforms:label>Mg/meal</xforms:label>
+                                                  </xforms:input>
+                                                  <br/>
+                                                  <xforms:select1 appearance="minimal"
+                                                  ref="readministeredOnVomitting">
+                                                  <xforms:label model="mod-study-info" ref="$resources/clinical/drug/readmin"/>
+                                                  <xforms:itemset model="mod-study-info"
+                            nodeset="instance('study-info-resources')//xs:simpleType[@name='yesNo']/xs:restriction/xs:enumeration">
+                        <xforms:label ref="for $currentItemName in @value return $resources/yesNo/option[@ref = $currentItemName]"/>
+                        <xforms:value ref="@value"/>
+                    </xforms:itemset>
+                                                  <xforms:alert>Please select</xforms:alert>
+                                                  </xforms:select1>
+                                                  <br/>
+                                                  <xforms:textarea ref="comments">
+                                                  <xforms:label> Comments <br/> (eg major deviations
+                                                  from normal) </xforms:label>
+                                                  </xforms:textarea>
+                                                  </td>
+                                                </tr>
+                                            </xforms:repeat>
+                                            <tr>
+                                                <td class="action-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>
+                                                  <img src="/apps/common/theme/add.gif" alt="add"/>
+                                                  </xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="drug" at="count(../drug)"
+                                                  position="after" origin="xxforms:instance('ins-drug')"/>
+                                                  </xforms:trigger>
+                                                </td>
+                                                <td class="add-td">
+                                                  <xforms:trigger appearance="minimal">
+                                                  <xforms:label>Add a drug</xforms:label>
+                                                  <xforms:insert ev:event="DOMActivate" context="."
+                                                  nodeset="drug" at="count(../drug)"
+                                                  position="after" origin="xxforms:instance('ins-drug')"/>
+                                                  </xforms:trigger>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </xforms:group>
+                                </td>
+                            </tr>
+                        </xforms:repeat>
+                        <tr>
+                            <td class="action-td">
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label>
+                                        <img src="/apps/common/theme/add.gif" alt="add"/>
+                                    </xforms:label>
+                                    <xforms:insert ev:event="DOMActivate" context="."
+                                        nodeset="regimen" at="count(../regimen)" position="after"
+                                        origin="xxforms:instance('ins-regimen')"/>
+                                </xforms:trigger>
+                            </td>
+                            <td class="add-td">
+                                <xforms:trigger appearance="minimal">
+                                    <xforms:label>Add a regimen</xforms:label>
+                                    <xforms:insert ev:event="DOMActivate" context="."
+                                        nodeset="regimen" at="count(../regimen)" position="after"
+                                        origin="xxforms:instance('ins-regimen')"/>
+                                </xforms:trigger>
+                            </td>
+                        </tr>
+                    </table>
+                </xforms:group>
+
+
+
+                <xforms:group ref="regimenAllocation">
+
+                    <xforms:select1 appearance="minimal" ref="regimenAllocationMethod">
+                        <xforms:label class="fixed-width"> Regimen allocation </xforms:label>
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-regimenAllocationMethod-items')/regimenAllocationMethod">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                    </xforms:select1>
+
+                    <br/>
+
+
+                    <xforms:select1 appearance="minimal" ref="blinding">
+                        <xforms:label class="fixed-width">Blinding</xforms:label>
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-blinding-items')/blinding">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                    </xforms:select1>
+                </xforms:group>
+
+            </xforms:group>
+
+
+            <h4>Followup</h4>
+            <xforms:group ref="followup">
+                <xforms:input ref="duration" class="fourWide">
+                    <xforms:label>Maximum duration of follow up</xforms:label>
+                    <xforms:alert>Must be an integer number of days</xforms:alert>
+                </xforms:input>
+                <br/>
+                <xforms:select1 ref="feverMeasurement" appearance="minimal">
+                    <xforms:label>Fever measurement</xforms:label>
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                        nodeset="instance('ins-feverMeasurementMethod-items')/feverMeasurementMethod">
+                        <xforms:label ref="label"/>
+                        <xforms:value ref="value"/>
+                    </xforms:itemset>
+                    <xforms:alert>
+                        <xforms:output value="concat('Enter a value for the ', name(), ' field')"/>
+                    </xforms:alert>
+                </xforms:select1>
+                <br/>
+                <xforms:group ref="haemoglobinRecording">
+                    <xforms:select1 ref="haemoglobinRecordingType" appearance="minimal">
+                        <xforms:label class="fixed-width">Haemoglobin recording </xforms:label>
+                        <xforms:item>
+                            <xforms:label/>
+                            <xforms:value/>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-haemoglobinRecordingType-items')/haemoglobinRecordingType">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                    </xforms:select1>
+                </xforms:group>
+
+            </xforms:group>
+            <xforms:group ref="microscopy">
+                <xforms:label>
+                    <h4>Microscopy</h4>
+                </xforms:label>
+                <xforms:select1 ref="microscopyStain" appearance="minimal">
+                    <xforms:label class="fixed-width">Stain</xforms:label>
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                        nodeset="instance('ins-microscopyStain-items')/microscopyStain">
+                        <xforms:label ref="label"/>
+                        <xforms:value ref="value"/>
+                    </xforms:itemset>
+                    <xforms:item>
+                        <xforms:label>other</xforms:label>
+                        <xforms:value>other</xforms:value>
+                    </xforms:item>
+                    <xforms:item>
+                        <xforms:label>unknown</xforms:label>
+                        <xforms:value/>
+                    </xforms:item>
+                </xforms:select1>
+
+                <xforms:input ref="microscopyStainOther">
+                    <xforms:label/>
+                </xforms:input>
+                <br/>
+                <xforms:group ref="asexualParasitemia">
+                    <xforms:label>
+                        <h5>Asexual Parasitemia</h5>
+                    </xforms:label>
+
+                    <xforms:input ref="asexualParasitemiaNegativeCount" class="fourWide">
+                        <xforms:label>How many fields were reviewed before diagnosis of negative was
+                            made?</xforms:label>
+                    </xforms:input>
+                    <br/>
+                    <xforms:select1 ref="asexualParasitemiaPositiveThickUnit" appearance="minimal">
+                        <xforms:label>If positive, quantification of thick film: fields per </xforms:label>
+                        <xforms:item>
+                            <xforms:label>N/A</xforms:label>
+                            <xforms:value>na</xforms:value>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-whiteBloodCellCount-items')/whiteBloodCellCount">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="asexualParasitemiaPositiveThickUnitOther">
+                        <xforms:label/>
+                    </xforms:input>
+
+                    <br/>
+                    <xforms:select1 ref="asexualParasitemiaPositiveThinUnit" appearance="minimal">
+                        <xforms:label>If positive, quantification of thin film: fields per </xforms:label>
+                        <xforms:item>
+                            <xforms:label>N/A</xforms:label>
+                            <xforms:value>na</xforms:value>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-redBloodCellCount-items')/redBloodCellCount">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="asexualParasitemiaPositiveThinUnitOther">
+                        <xforms:label/>
+                    </xforms:input>
+                </xforms:group>
+
+                <xforms:group ref="sexualParasitemia">
+                    <xforms:label>
+                        <h5>Sexual Parasitemia</h5>
+                    </xforms:label>
+
+                    <xforms:input ref="sexualParasitemiaNegativeCount" class="fourWide">
+                        <xforms:label>How many fields were reviewed before diagnosis of negative was
+                            made?</xforms:label>
+                    </xforms:input>
+                    <br/>
+
+                    <xforms:select1 ref="sexualParasitemiaPositiveThickUnit" appearance="minimal">
+                        <xforms:label>If positive, quantification of thick film: fields per </xforms:label>
+                        <xforms:item>
+                            <xforms:label>N/A</xforms:label>
+                            <xforms:value>na</xforms:value>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-whiteBloodCellCount-items')/whiteBloodCellCount">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="sexualParasitemiaPositiveThickUnitOther">
+                        <xforms:label/>
+                    </xforms:input>
+
+                    <br/>
+                    <xforms:select1 ref="sexualParasitemiaPositiveThinUnit" appearance="minimal">
+                        <xforms:label>If positive, quantification of thin film: fields per </xforms:label>
+                        <xforms:item>
+                            <xforms:label>N/A</xforms:label>
+                            <xforms:value>na</xforms:value>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-redBloodCellCount-items')/redBloodCellCount">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="sexualParasitemiaPositiveThinUnitOther">
+                        <xforms:label/>
+                    </xforms:input>
+
+
+                </xforms:group>
+
+
+                <xforms:select1 ref="separateSpeciesCounts" appearance="minimal">
+                    <xforms:label class="fixed-width">If mixed species, was each species quantified
+                        separately?</xforms:label>
+                    <xforms:item>
+                        <xforms:label>N/A</xforms:label>
+                        <xforms:value>na</xforms:value>
+                    </xforms:item>
+                    <xforms:itemset model="mod-study-info"
+                        nodeset="instance('ins-boolean-items')/boolean">
+                        <xforms:label ref="label"/>
+                        <xforms:value ref="value"/>
+                    </xforms:itemset>
+                    <xforms:alert>
+                        <xforms:output value="concat('Enter a value for the ', name(), ' field')"/>
+                    </xforms:alert>
+                </xforms:select1>
+
+                <xforms:group ref="thickFilmCalculationOfParasitemia">
+                    <xforms:select1 ref="thickFilmFormula" appearance="minimal">
+                        <xforms:label>Formula for thick film </xforms:label>
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>(X per Y WBC *  WBC) /  Y WBC</xforms:label>
+                            <xforms:value>(X per Y WBC *  WBC) /  Y WBC</xforms:value>
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>(X per Y WBC *  8000) /  Y WBC</xforms:label>
+                            <xforms:value>(X per Y WBC *  8000) /  Y WBC</xforms:value>
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="thickFilmFormulaOther">
+                        <xforms:label/>
+                        <xforms:hint>Enter other formula</xforms:hint>
+                    </xforms:input>
+                    <br/>
+                    <xforms:select1 ref="WBCSource" appearance="minimal">
+                        <xforms:label>WBC source </xforms:label>
+                        <xforms:item>
+                            <xforms:label>unknown</xforms:label>
+                            <xforms:value>unknown</xforms:value>
+                        </xforms:item>
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-whiteBloodCellCountSource-items')/whiteBloodCellCountSource">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                    </xforms:select1>
+                    <xforms:input ref="WBCAssumed" class="fourWide">
+                        <xforms:label>WBC per µl</xforms:label>
+                    </xforms:input>
+                    <br/>
+                    <xforms:input ref="thickFilmCalculationOfParasitemiaOther">
+                        <xforms:label>Other method</xforms:label>
+                    </xforms:input>
+                </xforms:group>
+
+                <xforms:group ref="thinFilmCalculationOfParasitemia">
+                    <xforms:select1 ref="thinFilmFormula" appearance="minimal">
+                        <xforms:label>Formula for thin film</xforms:label>
+                        <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:item>
+                            <xforms:label> (X per 1000 RBCs * 125.6) * Hct</xforms:label>
+                            <xforms:value>htc</xforms:value>
+                        </xforms:item>
+                        <xforms:item>
+                            <xforms:label>other</xforms:label>
+                            <xforms:value>other</xforms:value>
+                        </xforms:item>
+                    </xforms:select1>
+                    <xforms:input ref="thinFilmFormulaOther">
+                        <xforms:label/>
+                        <xforms:hint>Enter other formula</xforms:hint>
+                    </xforms:input>
+                    <br/>
+                    <xforms:select1 ref="HtcSource" appearance="minimal">
+                        <xforms:label>Htc source </xforms:label>
+                        <xforms:item>
+                            <xforms:label>unknown</xforms:label>
+                            <xforms:value>unknown</xforms:value>
+                        </xforms:item>
+
+                        <xforms:itemset model="mod-study-info"
+                            nodeset="instance('ins-HtcSource-items')/HtcSource">
+                            <xforms:label ref="label"/>
+                            <xforms:value ref="value"/>
+                        </xforms:itemset>
+                    </xforms:select1>
+                    <xforms:input ref="HtcAssumed" class="fourWide">
+                        <xforms:label>Htc %</xforms:label>
+                        <xforms:alert>
+                            <xforms:output
+                                value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')"
+                            />
+                        </xforms:alert>
+                    </xforms:input>
+                    <br/>
+                    <xforms:input ref="thinFilmCalculationOfParasitemiaOther">
+                        <xforms:label>Other method</xforms:label>
+                    </xforms:input>
+                </xforms:group>
+
+                <xforms:group ref="qualityControl">
+                    <h4>Quality control</h4>
+                    <xforms:group ref="internal">
+                        <h5>Internal</h5>
+                        <xforms:input ref="percentageRereadBySecondMicroscopist" class="fourWide">
+                            <xforms:label>Percentage of slides reread by second microscopist </xforms:label>
+                            <xforms:alert>
+                                <xforms:output
+                                    value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')"
+                                />
+                            </xforms:alert>
+                        </xforms:input>
+                        <br/>
+                        <xforms:select1 ref="rereadSlideSelectionMechanism" appearance="minimal">
+                            <xforms:label>How were slides selected to be re-read? </xforms:label>
+                            <xforms:item>
+                                <xforms:label>unknown</xforms:label>
+                                <xforms:value>unknown</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>random</xforms:label>
+                                <xforms:value>random</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>other</xforms:label>
+                                <xforms:value>other</xforms:value>
+                            </xforms:item>
+
+                        </xforms:select1>
+                        <xforms:input ref="rereadSlideSelectionMechanismOther">
+                            <xforms:label/>
+                        </xforms:input>
+                    </xforms:group>
+                    <xforms:group ref="external">
+                        <h5>External</h5>
+                        <xforms:input ref="percentageRereadBySecondMicroscopist" class="fourWide">
+                            <xforms:label>Percentage of slides reread by second microscopist </xforms:label>
+                            <xforms:alert>
+                                <xforms:output
+                                    value="concat('Enter an integer value between 0 and 100 for the ', name(), ' field ')"
+                                />
+                            </xforms:alert>
+                        </xforms:input>
+                        <br/>
+                        <xforms:select1 ref="rereadSlideSelectionMechanism" appearance="minimal">
+                            <xforms:label>How were slides selected to be re-read? </xforms:label>
+                            <xforms:item>
+                                <xforms:label>unknown</xforms:label>
+                                <xforms:value>unknown</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>random</xforms:label>
+                                <xforms:value>random</xforms:value>
+                            </xforms:item>
+                            <xforms:item>
+                                <xforms:label>other</xforms:label>
+                                <xforms:value>other</xforms:value>
+                            </xforms:item>
+
+                        </xforms:select1>
+                        <xforms:input ref="rereadSlideSelectionMechanismOther">
+                            <xforms:label/>
+                        </xforms:input>
+                    </xforms:group>
+                </xforms:group>
+            </xforms:group>
+            <h4>Genotyping for recrudescence vs reinfection</h4>
+            <xforms:group ref="geneotypingToDistinguishBetweenRecrudescenceAndReinfection">
+                <xforms:select1 ref="applicability" appearance="minimal">
+                    <xforms:label>Was genotyping for recrudescence vs reinfection done? </xforms:label>
+                    <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                        nodeset="instance('ins-boolean-items')/boolean">
+                        <xforms:label ref="label"/>
+                        <xforms:value ref="value"/>
+                    </xforms:itemset>
+                    <xforms:alert>Please select</xforms:alert>
+                </xforms:select1>
+
+                <xforms:group ref="applicable">
+                    <xforms:group ref="markers">
+                        <table class="repeat-table">
+                            <xforms:repeat nodeset="recrudescenceMarker"
+                                id="recrudescenceMarker-rep">
+                                <tr>
+                                    <td class="action-td">
+                                        <xforms:trigger appearance="minimal">
+                                            <xforms:label>
+                                                <img src="/apps/common/theme/remove.gif"
+                                                  alt="remove"/>
+                                            </xforms:label>
+                                            <xforms:delete ev:event="DOMActivate" context="."
+                                                nodeset="." at="index('recrudescenceMarker-rep')"/>
+                                        </xforms:trigger>
+                                    </td>
+                                    <td>
+                                        <xforms:select1 ref="markerName" appearance="minimal">
+                                            <xforms:label>Marker</xforms:label>
+                                            <xforms:item>
+                                            <xforms:label><!-- Nullable -->
+                                            </xforms:label>
+                                            <xforms:value />
+                                        </xforms:item><xforms:itemset model="mod-study-info"
+                                                nodeset="instance('ins-recrudescenceMarker-items')/recrudescenceMarker">
+                                                <xforms:label ref="label"/>
+                                                <xforms:value ref="value"/>
+                                            </xforms:itemset>
+                                            <xforms:item>
+                                                <xforms:label>other </xforms:label>
+                                                <xforms:value>other</xforms:value>
+                                            </xforms:item>
+                                        </xforms:select1>
+                                        <xforms:input ref="markerOther">
+                                            <xforms:label/>
+                                        </xforms:input>
+                                        <xforms:input ref="numberOfMicroSatellites" class="fourWide">
+                                            <xforms:label>Number of micro satellites</xforms:label>
+                                        </xforms:input>
+                                    </td>
+                                </tr>
+                            </xforms:repeat>
+                            <tr>
+                                <td class="action-td">
+                                    <xforms:trigger appearance="minimal">
+                                        <xforms:label>
+                                            <img src="/apps/common/theme/add.gif" alt="add"/>
+                                        </xforms:label>
+                                        <xforms:insert ev:event="DOMActivate" context="."
+                                            nodeset="recrudescenceMarker"
+                                            at="count(../recrudescenceMarker)" position="after"
+                                            origin="xxforms:instance('ins-recrudescenceMarker')"/>
+                                    </xforms:trigger>
+                                </td>
+                                <td class="add-td">
+                                    <xforms:trigger appearance="minimal">
+                                        <xforms:label>Add a marker</xforms:label>
+                                        <xforms:insert ev:event="DOMActivate" context="."
+                                            nodeset="recrudescenceMarker"
+                                            at="count(../recrudescenceMarker)" position="after"
+                                            origin="xxforms:instance('ins-recrudescenceMarker')"/>
+                                    </xforms:trigger>
+                                </td>
+                            </tr>
+                        </table>
+                    </xforms:group>
+
+
+                    <xforms:input ref="genotypingLaboratory" class="fixed-Width">
+                        <xforms:label> Genotyping laboratory </xforms:label>
+                    </xforms:input>
+                    <br/>
+                    <xforms:group ref="markerDiscriminantOpen">
+                        <xforms:select1 ref="markerDiscriminant" appearance="minimal">
+                            <xforms:label>Method of discrimination</xforms:label>
+                            <xforms:item>
+                                <xforms:label>please select</xforms:label>
+                                <xforms:value/>
+                            </xforms:item>
+                            <xforms:itemset model="mod-study-info"
+                                nodeset="instance('ins-markerDiscriminant-items')//markerDiscriminant">
+                                <xforms:label ref="label"/>
+                                <xforms:value ref="value"/>
+                            </xforms:itemset>
+                            <xforms:item>
+                                <xforms:label>other </xforms:label>
+                                <xforms:value>other</xforms:value>
+                            </xforms:item>
+                            <xforms:alert>Please select a method</xforms:alert>
+                        </xforms:select1>
+                        <xforms:input ref="markerDiscriminantOther">
+                            <xforms:label/>
+                        </xforms:input>
+                    </xforms:group>
+                    <xforms:group ref="analysisProtocol">
+                        <h5>Analysis protocol</h5>
+
+                        <xforms:group ref="mixedAllelesOpen">
+                            <xforms:select1 ref="mixedAlleles" appearance="minimal">
+                                <xforms:label>Mixed alleles were defined as </xforms:label>
+                                <xforms:item>
+                                    <xforms:label>please select</xforms:label>
+                                    <xforms:value/>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>recrudescence</xforms:label>
+                                    <xforms:value>recrudescence</xforms:value>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>reinfection</xforms:label>
+                                    <xforms:value>reinfection</xforms:value>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>other</xforms:label>
+                                    <xforms:value>other</xforms:value>
+                                </xforms:item>
+                                <xforms:alert>Please select</xforms:alert>
+                            </xforms:select1>
+
+                            <xforms:input ref="mixedAllelesOther"/>
+
+                            <xforms:select1 ref="recrudescence" appearance="minimal">
+                                <xforms:label>recrudescence defined as </xforms:label>
+                                <xforms:item>
+                                    <xforms:label>please select</xforms:label>
+                                    <xforms:value/>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>old alleles only</xforms:label>
+                                    <xforms:value>old</xforms:value>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>old and new alleles </xforms:label>
+                                    <xforms:value>oldAndNew</xforms:value>
+                                </xforms:item>
+                                <xforms:alert>Please select</xforms:alert>
+                            </xforms:select1>
+
+                            <xforms:select1 ref="reinfection" appearance="minimal">
+                                <xforms:label>reinfection defined as </xforms:label>
+                                <xforms:item>
+                                    <xforms:label>please select</xforms:label>
+                                    <xforms:value/>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>new alleles only</xforms:label>
+                                    <xforms:value>new</xforms:value>
+                                </xforms:item>
+                                <xforms:item>
+                                    <xforms:label>old and new alleles </xforms:label>
+                                    <xforms:value>oldAndNew</xforms:value>
+                                </xforms:item>
+                                <xforms:alert>Please select</xforms:alert>
+                            </xforms:select1>
+                        </xforms:group>
+
+                    </xforms:group>
+                </xforms:group>
+            </xforms:group>
+
+        </div>
+
+    </xforms:group>
+</div>
