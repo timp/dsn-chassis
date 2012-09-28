@@ -1,18 +1,7 @@
 package org.cggh.chassis.manta.security;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
+import org.cggh.chassis.manta.http.servlet.StoreUploadsServlet;
 import org.cggh.chassis.manta.util.CASUtil;
 import org.cggh.chassis.manta.util.RestRequestHandler;
 import org.cggh.chassis.manta.util.RestResponseExtractor;
@@ -21,6 +10,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class ProxyServlet extends HttpServlet {
 
@@ -40,7 +40,9 @@ public class ProxyServlet extends HttpServlet {
 			HttpServletResponse resp, HttpMethod methodType, InputStream is,
 			Class responseClass) throws ServletException, IOException {
 		String target = req.getRequestURL().toString();
-		String dest = target.replaceFirst("repository", "repo");
+        String url = StoreUploadsServlet.requestToURL(req);
+
+		String dest = url.replaceFirst("repository", "repo");
 		// .replaceFirst("http://localhost:8080", "https://kwiat33");
 
 		String nextSep = "?";
@@ -132,7 +134,9 @@ public class ProxyServlet extends HttpServlet {
 		return (response);
 	}
 
-	@Override
+
+
+    @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// super.doGet(req, resp);
