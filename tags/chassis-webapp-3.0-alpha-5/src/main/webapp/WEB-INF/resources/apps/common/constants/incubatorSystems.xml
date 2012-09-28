@@ -1,0 +1,18 @@
+<!--  
+A closed list of types of sample incubator, 
+used in the in-vitro section.   
+-->
+<incubatorSystems xmlns="">
+    <incubatorSystem>
+		<label>CO2 incubator</label>
+		<value>co2incubator</value>
+    </incubatorSystem>
+    <incubatorSystem>
+		<label>incubation chamber</label>
+		<value>incubationchamber</value>
+    </incubatorSystem>
+    <incubatorSystem>
+		<label>candle jar</label>
+		<value>candlejar</value>
+    </incubatorSystem>
+</incubatorSystems>

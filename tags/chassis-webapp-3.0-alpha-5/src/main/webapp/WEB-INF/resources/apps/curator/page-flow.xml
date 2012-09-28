@@ -1,0 +1,13 @@
+<controller xmlns="http://www.orbeon.com/oxf/controller">
+
+  <page id="root" path="/curator/">
+    <action><result page="home"/></action>
+  </page>
+
+  <page id="home" path="/curator/home" view="home.xhtml"/>
+  
+  <page path="/curator/upload-curated-files" view="upload-curated-files.xhtml"/>
+ 
+  <epilogue url="oxf:/config/epilogue.xpl"/>
+
+</controller>

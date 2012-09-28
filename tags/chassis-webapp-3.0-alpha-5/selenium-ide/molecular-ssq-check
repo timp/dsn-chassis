@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>molecular-ssq</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">molecular-ssq</td></tr>
+</thead><tbody>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label='Sample source']</td>
+	<td>clinic/hospital visit</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label='Malaria disease status']</td>
+	<td>asymptomatic only</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label='Sample type']</td>
+	<td>ex-vivo parasite</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label = 'Genotyping method']</td>
+	<td>pyrosequencing</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label='pfcrt 72']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label='pvmdr1 976']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[../label='other' and contains(../../../label,'Ovale')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=//input[contains(../../label,'Ovale')]</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>xpath=//input[contains(../../label,'Ovale')]</td>
+	<td>other ovale</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label='Sample selection method']</td>
+	<td>random subset genotyped</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>xpath=(//input[contains(../../label[3],'proportion')])[2]</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[contains(../label,'Mixed resistance')]</td>
+	<td>included in data set</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=//input[contains(../label,'mixed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>xpath=//input[contains(../label,'mixed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[contains(../label,'Whole genome')]</td>
+	<td>no</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=(//select[contains(../label[2],'Resistance loci')])[2]</td>
+	<td>yes</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>xpath=//input[../../label = 'Locus name']</td>
+	<td>locus1</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=(//select[contains(../label[3],'Other loci')])[3]</td>
+	<td>yes</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>xpath=//select[../label = 'Other locus type']</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[../label = 'Other locus type']</td>
+	<td>gene / gene fragment</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>xpath=(//input[../../label = 'Locus name'])[2]</td>
+	<td>locus2</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[contains(../label,'complexity of infection')]</td>
+	<td>yes</td>
+</tr>
+</tbody></table>
+</body>
+</html>
