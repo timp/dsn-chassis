@@ -1,0 +1,48 @@
+<xforms:model
+    xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    id="mod-current-user">
+    
+    <xforms:instance id="ins-current-user">
+        <user xmlns="">
+            <name/>
+            <language/>
+            <country/>
+            <roles/>
+        </user>
+    </xforms:instance>
+    
+    <xforms:action 
+        ev:event="xforms-model-construct-done">
+        <xforms:setvalue ref="instance('ins-current-user')/name" value="xxforms:get-remote-user()"/>
+    </xforms:action>
+    
+    <xforms:action 
+        ev:event="xforms-model-construct-done">
+        <xforms:insert 
+            nodeset="instance('ins-current-user')/roles" 
+            at="1" 
+            position="before" 
+            origin="xxforms:get-request-attribute('user-roles-xml')"/>
+    </xforms:action>
+    
+    <!--  will not be null due to filter setting it. -->
+    <xforms:action 
+        ev:event="xforms-model-construct-done">
+        <xforms:setvalue ref="instance('ins-current-user')/language" value="xxforms:get-request-attribute('user-language')"/>
+    </xforms:action>
+    
+    <!--  will not be null due to filter setting it. -->
+    <xforms:action 
+        ev:event="xforms-model-construct-done">
+        <xforms:setvalue ref="instance('ins-current-user')/country" value="xxforms:get-request-attribute('user-country')"/>
+    </xforms:action>
+    
+</xforms:model>

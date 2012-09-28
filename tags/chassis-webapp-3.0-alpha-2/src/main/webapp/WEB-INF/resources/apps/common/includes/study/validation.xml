@@ -1,0 +1,49 @@
+<div xmlns:xforms="http://www.w3.org/2002/xforms"
+xmlns:atom="http://www.w3.org/2005/Atom" 
+xmlns:atombeat="http://purl.org/atombeat/xmlns"  
+xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+xmlns:app="http://www.w3.org/2007/app">
+	<!-- Ensure that the current user cannot remove themselves as administrator. -->
+	<xforms:bind
+		nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group">
+		<xforms:bind nodeset="atombeat:member[text()=xxforms:get-remote-user()]"
+			readonly="true()" />
+	</xforms:bind>
+
+	<!-- Require valid email addresses in the permissions field -->
+	<xforms:bind
+		nodeset="instance('ins-permissions-entry')//atombeat:groups/atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member"
+		type="xforms:email" required="true()" />
+	<!-- Check email addresses in acknowledgements (not required) -->
+	<!-- <xforms:bind nodeset="instance('ins-study-entry')//atom:content/study/acknowledgements/person/email-address" 
+		type="xforms:email" /> -->
+
+	<xforms:bind nodeset="instance('ins-study-entry')//studyTitle"
+		required="true()" />
+	<xforms:bind
+		nodeset="instance('ins-study-entry')//atom:content/study/publications">
+
+		<xforms:bind nodeset="publication"
+			relevant="instance('ins-study-entry')//atom:content/study/study-is-published='Yes'">
+
+			<!-- Should be able to add URLs and DOIs without adding a PubMedID. -->
+			<!-- <xforms:bind nodeset="pmid" required="true()"/> -->
+
+		</xforms:bind>
+
+	</xforms:bind>
+	<xforms:bind
+		nodeset="instance('ins-study-entry')//atom:content/study/publications/publication/publication-references/publication-reference"
+		required="true()" />
+
+	<xforms:bind nodeset="instance('ins-control')/add-publication-trigger"
+		relevant="instance('ins-study-entry')/atom:content/study/study-is-published='Yes'" />
+
+
+	<xforms:bind nodeset="instance('ins-control')/copy-answers-control"
+		relevant="instance('ins-study-feed')[count(atom:entry[atom:id!=instance('ins-study-entry')/atom:id and (empty(app:control) or app:control/app:draft != 'yes')])>1]" />
+	
+	<xforms:bind nodeset="instance('ins-control')/copy-answers-trigger"
+		readonly="../href-to-copy-study-info-from = ''" />
+
+</div>

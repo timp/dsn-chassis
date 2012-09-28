@@ -1,0 +1,212 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html xmlns:xforms="http://www.w3.org/2002/xforms"
+	xmlns:f="http://orbeon.org/oxf/xml/formatting"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:app="http://www.w3.org/2007/app">
+
+<head>
+
+<title>Report home</title>
+
+
+<xforms:model xxforms:forward-submission-headers="cookie">
+
+	<xxforms:variable name="is-send-alfresco"
+		select="xxforms:property('chassis.alfresco.send')" as="xs:boolean" />
+
+	<!-- non-persistent model for application state -->
+	<xforms:instance id="ins-control">
+		<control xmlns=""> <contributor-controls /> <curator-controls />
+		<administrator-controls /> <delete-study-href /> <delete-study-id /> </control>
+	</xforms:instance>
+	
+	<!--  -->
+
+	<xforms:instance id="ins-study-feed">
+		<atom:feed />
+	</xforms:instance>
+
+	<xforms:instance id="ins-contributors">
+		<contributors />
+	</xforms:instance>
+
+	<xforms:submission id="sub-retrieve-study-feed"
+		resource="/service/content/studies?filter=simple" method="get" replace="instance"
+		instance="ins-study-feed" serialization="none">
+		<!-- TODO error handling -->
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output
+				value="event('error-type')" />) while retrieving a list of studies.
+               	</xforms:message>
+		<xforms:action ev:event="xforms-submit-done">
+			<xforms:send submission="sub-fetch-contributors" />
+		</xforms:action>
+	</xforms:submission>
+
+	<xforms:submission id="sub-fetch-contributors"
+		resource="/report/fetch-contributors" replace="instance" method="get"
+		instance="ins-contributors" serialization="none">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while trying to retrieve author information.
+		</xforms:message>
+
+	</xforms:submission>
+	
+	<xforms:submission id="sub-query-pubmed" action="/study/pubmed-query"
+		replace="instance" method="post" ref="instance('ins-study-entry')"
+		instance="ins-study-entry" relevant="false">
+
+		<xforms:message ev:event="xforms-submit-error" level="modal">
+			An error occurred (
+			<xforms:output value="event('error-type')" />
+			) while trying to retrieve author information.
+		</xforms:message>
+
+	</xforms:submission>
+	
+	<xforms:send ev:event="xforms-model-construct-done"
+		submission="sub-retrieve-study-feed" />
+
+</xforms:model>
+
+<xi:include href="../common/includes/current-user-model.xml" />
+</head>
+<body>
+	<!-- Body header -->
+                
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix no-help-box">
+				                <div class="no-bg">
+				                	<div class="main oneCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+		
+		<div id="content" class="home">
+    
+		<h2>All Studies</h2>
+    	
+    	<xforms:group ref="instance('ins-study-feed')[empty(atom:entry)]">
+
+    		<p>There are no registered studies.</p>
+    	
+    	</xforms:group>
+    	
+    	<xforms:group ref="instance('ins-study-feed')[exists(atom:entry)]">
+
+			<div id="list-of-studies-container">
+
+	    	<fr:datatable width="100%">
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="false" fr:resizeable="true">ID</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Created</th>
+	    				<!--		    				<th fr:sortable="true" fr:resizeable="true">Creator</th>-->
+	    				<th fr:sortable="false" fr:resizeable="true">First Name</th>
+	    				<th fr:sortable="true" fr:resizeable="true">Last Name</th>
+	    				<th fr:sortable="false" fr:resizeable="false">Institution</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat id="study-list" nodeset="xxforms:sort(instance('ins-study-feed')/atom:entry[not(app:control/app:draft/text() = 'yes')], atom:published, 'text', 'descending')">
+
+	    				<tr class="repeated-element">
+	    					<td>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="manta:id"/></a>
+	    					</td>
+	    					<td>
+	    						<a href="../study/dashboard?study={atom:link[@rel='edit']/@href}"><xforms:output value="atom:content/study/studyTitle"/></a>
+	    					</td>
+	    					<td nowrap="nowrap">
+	    						<xforms:output ref="atom:published" xxforms:format="format-dateTime(xs:dateTime(.), '[Y0001]-[M01]-[D01]')"/>
+	    					</td>
+	    					<!--
+	    						<td>
+	    						<xforms:output value="atom:author/atom:email"/>
+	    						</td>
+	    					-->
+	    					<td>
+	    						<!-- NB: This wouldn't work because "sort keys must be valid in an element that is external to the xforms:repeat where they appear". See http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/datatable#TOC-Main-Restrictions --> 
+	    						<!-- <xforms:output ref="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/> -->
+	    						<xforms:output ref="for $study-status in (./atom:author/atom:email)
+					    							return
+					    							instance('ins-contributors')/contributor[mail=$study-status]/first-name
+					    							"/>
+	    						<!-- <xforms:output value="string-join( atom:link[@rel='http://purl.org/atombeat/rel/security-descriptor']//atombeat:group[@id='GROUP_ADMINISTRATORS']/atombeat:member , ' ' )"/> -->
+	    					</td>	
+	    					<td>
+	    						<!-- NB: This wouldn't work because "sort keys must be valid in an element that is external to the xforms:repeat where they appear". See http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/datatable#TOC-Main-Restrictions --> 
+	    						<!-- <xforms:output ref="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/> -->
+	    						<xforms:output ref="for $study-status in (./atom:author/atom:email)
+					    							return
+					    							instance('ins-contributors')/contributor[mail=$study-status]/last-name
+					    							"/>
+	    					</td>    					
+	    					<td nowrap="nowrap">
+	    						<!-- NB: This wouldn't work because "sort keys must be valid in an element that is external to the xforms:repeat where they appear". See http://wiki.orbeon.com/forms/doc/developer-guide/xbl-components/datatable#TOC-Main-Restrictions --> 
+	    						<!-- <xforms:output ref="instance('ins-study-status')/statusType[value = xxforms:context('study-list')/atom:content/study/study-status]/label"/> -->
+	    						<xforms:output ref="for $study-status in (./atom:author/atom:email)
+					    							return
+					    							instance('ins-contributors')/contributor[mail=$study-status]/inst-name
+					    							"/>
+	    							
+
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+	    	
+	    	</div>
+	    	
+    	</xforms:group>
+    	
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+    	
+</body>
+</html>
