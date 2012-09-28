@@ -280,14 +280,17 @@ public class StoreUploadsServlet extends HttpServlet {
     public static String requestToURL(HttpServletRequest req) {
         String serverName = req.getServerName();
         int port = req.getServerPort();
+        String scheme = req.getScheme();
         String host = req.getHeader("x-forwarded-host");
+        //If forwarded assume forwarded from https
         if (host != null && host.length() > 0) {
             if (!host.contains(":")) {
                 port = -1;
+                scheme = "https";
             }
             serverName = host;
         }
-        StringBuilder url = new StringBuilder(req.getScheme());
+        StringBuilder url = new StringBuilder(scheme);
         url.append("://").append(serverName);
 
         if (port > 0) {
