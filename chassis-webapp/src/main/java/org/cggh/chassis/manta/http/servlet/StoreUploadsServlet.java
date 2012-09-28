@@ -278,9 +278,18 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
     public static String requestToURL(HttpServletRequest req) {
-        StringBuffer url = new StringBuffer(req.getScheme());
-        url.append("://").append(req.getServerName());
+        String serverName = req.getServerName();
         int port = req.getServerPort();
+        String host = req.getHeader("x-forwarded-host");
+        if (host != null && host.length() > 0) {
+            if (!host.contains(":")) {
+                port = -1;
+            }
+            serverName = host;
+        }
+        StringBuilder url = new StringBuilder(req.getScheme());
+        url.append("://").append(serverName);
+
         if (port > 0) {
             url.append(':').append(port);
         }
