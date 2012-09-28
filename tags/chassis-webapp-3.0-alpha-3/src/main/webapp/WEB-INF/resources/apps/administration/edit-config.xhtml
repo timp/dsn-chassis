@@ -1,0 +1,229 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+    xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:atombeat="http://purl.org/atombeat/xmlns"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+	xmlns:app="http://www.w3.org/2007/app">
+
+    <head>
+    
+        <title>Edit configuration</title>
+        			
+        <xforms:model id="mod-config">
+        
+            <xforms:instance id="ins-config-entry">
+				<atom:entry/>
+			</xforms:instance>
+        	
+        	 <xforms:instance id="ins-config-template">
+				<atom:entry/>
+			</xforms:instance>
+			
+			<!-- Try to get the saved draft when the model has been constructed, if there is a draft parameter. -->
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-get-config-entry" 
+				if="exists(xxforms:get-request-parameter('config'))"/>
+
+			<!-- This tries to get the current draft (by request-parameter). -->
+			<xforms:submission 
+				id="sub-get-config-entry"
+				resource="{xxforms:get-request-parameter('config')}"
+				method="get"
+				replace="instance"
+				instance="ins-config-entry"
+				serialization="none">
+			
+				<xforms:action ev:event="xforms-submit-done">
+					<xforms:insert context="xxforms:instance('ins-config-template')" origin="instance('ins-config-entry')//atom:content/child::*[1]/child::*[1]"/>
+				</xforms:action>
+                <xforms:action ev:event="xforms-submit-error">
+                	
+                	<xforms:message level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while retrieving the config.</xforms:message>
+                	
+                </xforms:action>
+                     
+			</xforms:submission>  
+			
+
+			
+            <xforms:submission 
+            	id="sub-put-config-entry" 
+            	ref="instance('ins-config-entry')"
+                resource="{instance('ins-config-entry')/atom:link[@rel='edit']/@href}"
+                method="put" 
+                replace="instance" 
+                instance="ins-config-entry"
+                mediatype="application/atom+xml"
+            	relevant="false"> 
+                
+                <xforms:action ev:event="xforms-submit-done">
+                	
+                	<xforms:message>The entry has been saved.</xforms:message>
+                
+                </xforms:action>
+                
+                <xforms:message ev:event="xforms-submit-error" level="modal">An error occurred (<xforms:output value="event('error-type')"/>) while saving the entry.</xforms:message>
+                                
+            </xforms:submission>
+		</xforms:model>
+			        
+    </head>
+    
+    <body>
+    
+		<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+			
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before bd id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+                		
+	<div id="bd" class="clearfix no-help-box">
+		
+		<div class="no-bg">
+			<div class="main oneCol">
+				
+				<div id="content" class="study-dashboard">
+                		
+		<!-- End of After body header, before bd id -->
+		<!-- 
+							<xforms:textarea mediatype="text/html" model="mod-config" ref="instance('ins-config-entry')//atom:content" appearance="xxforms:autosize">
+								<xforms:label>Config values</xforms:label>
+							</xforms:textarea>
+							 -->								
+			 <table>
+                    
+                    <xforms:repeat nodeset="//atom:content/child::*/child::*" id="rep-url">
+                        
+                        <tr class="repeated-element">
+                            
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-url')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td>
+                                	<xforms:input ref="@deprecated">
+                                        <xforms:label>Deprecated:</xforms:label>
+                                    </xforms:input>
+                                    <xforms:input ref="@filter">
+                                        <xforms:label>Filter:</xforms:label>
+                                    </xforms:input>
+                                    <xforms:input ref="label">
+                                        <xforms:label>Label:</xforms:label>
+                                    </xforms:input>
+                                    <xforms:input ref="value">
+                                        <xforms:label>value:</xforms:label>
+                                    </xforms:input>
+                                
+                                        <xforms:trigger ref=".[preceding-sibling::*]">
+                                            <xforms:label>Move up <img alt="move up"
+                                                  src="/apps/study/common/up.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="preceding-sibling::*[1]"
+                                                  position="before"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                        <xforms:trigger ref=".[following-sibling::*]">
+                                            <xforms:label>Move down <img alt="move down"
+                                                  src="/apps/study/common/down.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="following-sibling::*[1]"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+                    
+                    <tr>
+                        <td colspan="2">
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="//atom:content/child::*[1]"
+                                    at="last()" position="after"
+                                    origin="instance('ins-config-template')/child::*"/>
+                            </xforms:trigger>
+                            <xforms:trigger appearance="minimal" class="addRemove">
+                                <xforms:label>Add an entry (duplicates first entry)</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="//atom:content/child::*[1]" 
+                                    at="last()" position="after"
+                                    origin="instance('ins-config-template')/child::*"/>
+                            </xforms:trigger>
+                            
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            		
+								
+<p>
+									<span id="title-save-changes-button-container">
+										<xforms:trigger>
+											<xforms:label>Save changes</xforms:label>
+											<xforms:action ev:event="DOMActivate">
+												<xforms:send submission="sub-put-config-entry"/>
+											</xforms:action>
+										</xforms:trigger>
+									</span>
+								</p>
+								</div>
+								</div>
+								</div>
+								</div>
+		<!-- After bd id, before ft id -->
+		                	
+		                	<div class="background">
+		                	
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After bd id, before ft id -->
+
+    </body>
+    
+</html>
+

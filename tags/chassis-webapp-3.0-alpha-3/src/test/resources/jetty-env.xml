@@ -1,0 +1,22 @@
+<Configure id="repository" class="org.mortbay.jetty.webapp.WebAppContext">
+    <New id="myds" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>jdbc/wwarn_drupal</Arg>
+        <Arg>
+            <New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+                <Set name="Url">jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true</Set>
+                <Set name="User">drupal6</Set>
+                <Set name="Password">drupal6</Set>
+            </New>
+            
+        </Arg>
+    </New>
+    <New id="exds" class="org.mortbay.jetty.plus.naming.Resource">
+        <Arg>bean/existConfigFactory</Arg>
+        <Arg>
+        <New class="org.cggh.chassis.manta.util.config.ExistConfig">
+            <Set name="Username">admin</Set>
+            <Set name="Password"/>
+        </New>
+        </Arg>
+    </New>
+</Configure>

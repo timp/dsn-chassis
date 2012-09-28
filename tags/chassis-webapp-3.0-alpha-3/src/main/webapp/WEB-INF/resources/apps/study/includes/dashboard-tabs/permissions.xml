@@ -1,0 +1,65 @@
+<?oxygen NVDLSchema="../../../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<div 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xforms="http://www.w3.org/2002/xforms" 
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	
+	<div id="bd" class="clearfix">
+		<div class="no-bg">
+			
+			<!-- Help boxes. Comment out if not needed. -->
+			<div class="help">
+
+						<xi:include href="../help-boxes/for-dashboard-tabs/for-contributor/permissions.xml"/>
+
+				
+			</div>
+			
+			
+			<div class="main twoCol">
+				
+				<div id="content" class="study-dashboard">
+					
+					<xi:include href="../dashboard-title.xml"/>
+					
+										
+					
+						<div class="yui-navset yui-navset-top">
+							
+							<xi:include href="../dashboard-tabs-menu.xml"/>
+							
+							
+							<div class="yui-content">
+								<xi:include href="../../../common/includes/panes/permissions.xml"/>
+							   
+								<!-- If the user has PUT access to the security descriptor. -->
+								
+								<xforms:group ref="instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/groups' and contains(@atombeat:allow, 'PUT')]">
+									<p>
+										<span id="permissions-save-changes-button-container">
+											<xforms:trigger ref="instance('ins-control')/save-permissions-trigger">
+												<xforms:label>Save changes</xforms:label>
+												<xforms:action ev:event="DOMActivate" if="../permissions-entry-is-valid = 'true'">
+													<xforms:send submission="sub-put-permissions-entry"/>
+												</xforms:action>
+												<xforms:action ev:event="DOMActivate" if="not(../permissions-entry-is-valid = 'true')">
+													<xforms:message>Please complete all required fields.</xforms:message>
+												</xforms:action>
+											</xforms:trigger>
+										</span>
+									</p>
+									
+								</xforms:group>						
+							</div>
+							
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

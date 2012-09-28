@@ -1,0 +1,113 @@
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- TODO: ensure a file is selected before Upload is triggered -->
+    <!-- <xforms:bind nodeset="instance('ins-upload')/media" required="true()" 
+        /> -->
+
+    <xforms:action ev:event="xxforms-invalid" ev:observer="ins-upload">
+        <xforms:setvalue ev:event="xforms-value-changed"
+            ref="instance('ins-control')/upload-is-valid">false</xforms:setvalue>
+    </xforms:action>
+    <xforms:action ev:event="xxforms-valid" ev:observer="ins-upload">
+        <xforms:setvalue ev:event="xforms-value-changed"
+            ref="instance('ins-control')/upload-is-valid">true</xforms:setvalue>
+    </xforms:action>
+
+    <!--+ | New way of handling uploads, avoids the need to use an intermediate 
+        | servlet for handling uploads - you can post files (one at a time) | directly 
+        to AtomBeat using a multipart/form-data request. + -->
+
+
+    <!-- files are uploaded one at a time, this instance holds the data to be 
+        posted -->
+
+    <xforms:instance id="ins-upload" xxforms:validation="skip">
+        <upload xmlns=""
+            scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term=""
+            label="">
+            <summary />
+            <category />
+            <media xsi:type="xs:anyURI" filename="" mediatype="" size="" />
+        </upload>
+    </xforms:instance>
+
+    <!-- this is a fresh instance to use when clearing out the main instance 
+        after each upload -->
+    <xforms:instance id="ins-upload-empty">
+        <upload xmlns=""
+            scheme="http://www.cggh.org/2010/chassis/scheme/FileTypes" term=""
+            label="">
+            <summary />
+            <category />
+            <media xsi:type="xs:anyURI" filename="" mediatype="" size="" />
+        </upload>
+    </xforms:instance>
+
+    <xforms:instance id="ins-uploaded-file">
+        <atom:entry/>
+    </xforms:instance>
+    
+    <!-- some bindings on the upload instance -->
+    <xforms:bind nodeset="instance('ins-upload')">
+        <xforms:bind nodeset="@term" required="true()" />
+        <xforms:bind nodeset="@label"
+            relevant="../@term='http://www.cggh.org/2010/chassis/terms/Other'"
+            required="../@term='http://www.cggh.org/2010/chassis/terms/Other'" />
+        <xforms:bind nodeset="category"
+            calculate="concat('scheme=&quot;', ../@scheme, '&quot;; term=&quot;', ../@term, '&quot;; label=&quot;', ../@label, '&quot;;')" />
+    </xforms:bind>
+
+    <xforms:submission id="sub-after-upload" method="put"
+        resource="{instance('ins-uploaded-file')/atom:link[@rel='edit']/@href}"
+        ref="instance('ins-uploaded-file')"
+        replace="none"  mediatype="application/atom+xml"
+        >
+        <xforms:action ev:event="xforms-submit-done">
+            <xforms:message level="modal">
+                Your file has been submitted. Thank you.
+            </xforms:message>
+           
+            <!-- refresh submitted media -->
+            <xforms:send submission="sub-get-submitted-media-feed" />
+            
+        </xforms:action>
+    </xforms:submission>
+    <!-- this is the submission that sends the file to atombeat ... it uses 
+        a multipart/form-data POST request, which (thankfully) both Orbeon and AtomBeat 
+        support, although this is not standard Atom Protocol ... check the http traffic 
+        to see what's being sent -->
+
+    <xforms:submission id="sub-post-upload" method="form-data-post"
+        resource="{instance('ins-study-entry')/atom:link[@rel='http://www.cggh.org/2010/chassis/terms/submittedMedia']/@href}"
+        ref="instance('ins-upload')" instance="ins-uploaded-file" replace="instance" >
+
+        <xforms:header>
+            <xforms:name>Accept</xforms:name>
+            <xforms:value>application/atom+xml</xforms:value>
+        </xforms:header>
+
+        <xforms:action ev:event="xforms-submit-done">
+            <!-- Fix filename when there are an extended characters in the filename 
+            RFC only allows ASCII in headers so filename won't be right otherwise -->
+            <xforms:setvalue ref="instance('ins-uploaded-file')//atom:title" value="instance('ins-upload')//media/@filename"/>
+            
+            <xforms:send submission="sub-after-upload" />
+            
+        </xforms:action>
+                
+        <!-- TODO error handling -->
+        <xforms:message ev:event="xforms-submit-error" level="modal" if="event('response-status-code')=409">
+            Please do not upload two files with the same name.
+        </xforms:message>
+        <xforms:message ev:event="xforms-submit-error" level="modal" if="not(event('response-status-code')=409)">
+            An error occurred (
+            <xforms:output value="event('error-type')" />
+            ) while posting an upload.
+        </xforms:message>
+
+    </xforms:submission>
+	
+</div>

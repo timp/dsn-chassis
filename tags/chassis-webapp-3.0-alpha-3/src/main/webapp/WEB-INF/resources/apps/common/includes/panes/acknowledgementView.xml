@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns:xforms="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:atom="http://www.w3.org/2005/Atom">
+<div class="institution-textbox-container">
+    <xforms:repeat nodeset="instance('ins-study-entry')//acknowledgements/institutions/institution-ack">
+        <p>
+            <xforms:output ref="institution-name">
+                <xforms:label>Institution:</xforms:label>
+            </xforms:output>
+            <br/>
+            <xforms:repeat nodeset="institution-websites/institution-url">
+                <br/>
+                <xforms:output ref=".">
+                    <xforms:label>URL:</xforms:label>
+                </xforms:output>
+                
+            </xforms:repeat>
+        </p>
+    </xforms:repeat>
+</div>
+
+<xforms:group
+    ref="instance('ins-study-entry')/atom:content/study/acknowledgements/people[empty(person)]">
+    <p>There are no personal acknowledgements.</p>
+</xforms:group>
+
+<xforms:group
+    ref="instance('ins-study-entry')/atom:content/study/acknowledgements/people[exists(person)]">
+    <ol>
+        <xforms:repeat nodeset="person">
+            <li class="acknowledgement-form-summary-item">
+                <xforms:output ref="first-name">
+                    <xforms:label>First name:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:output ref="middle-name">
+                    <xforms:label>Middle name:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:output ref="family-name">
+                    <xforms:label>Family name:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:output ref="email-address">
+                    <xforms:label>Email address:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:output ref="person-is-contactable">
+                    <xforms:label>Contactable:</xforms:label>
+                </xforms:output>
+                <br/>
+                <xforms:output ref="institution">
+                    <xforms:label>Institution:</xforms:label>
+                </xforms:output>
+            </li>
+        </xforms:repeat>
+    </ol>
+</xforms:group>
+</div>

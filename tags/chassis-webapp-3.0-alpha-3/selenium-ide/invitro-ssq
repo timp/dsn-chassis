@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>invitro-ssq</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">invitro-ssq</td></tr>
+</thead><tbody>
+<!--site section-->
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Typical sampling')]</td>
+	<td>label=greater than 72 hours</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Anticoa')]</td>
+	<td>label=ACD</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Transport')]</td>
+	<td>label=-20°C</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Transport')]</td>
+	<td>label=ambient</td>
+</tr>
+<!--clinical section-->
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Where')]</td>
+	<td>somewhere</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Incubator')]</td>
+	<td>label=CO2 incubator</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'CO')]</td>
+	<td>label=10%</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'erythrocyte')]</td>
+	<td>label=blood bank</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Hematocrit')]</td>
+	<td>45</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Blood group')]</td>
+	<td>label=O</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Medium')]</td>
+	<td>label=RPMI 1640</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Preparation')]</td>
+	<td>label=extemporaneous</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Serum')]</td>
+	<td>label=Albumax</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Serum final')]</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'NaHCO')]</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Hypoxanthine')]</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Final Hypo')]</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'orotic')]</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Final orotic')]</td>
+	<td>7</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'glucose')]</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Final glucose')]</td>
+	<td>8</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//a[. = 'Add an antibiotic']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Antibiotic')]</td>
+	<td>label=gentamycin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[contains(../label,'Antibiotic final')]</td>
+	<td>9</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Time of incubation')]</td>
+	<td>label=48 hours</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=(//select[contains(../label,'Method used')])</td>
+	<td>label=HRP2 ELISA</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//a[. = 'Add a drug' and ../../../../../../h4[. = 'Drugs stock solutions']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'Molecule')]</td>
+	<td>label=atovaquone (AV)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=(//select[contains((../label),'Solvent of stock')])</td>
+	<td>label=methanol</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains((../label),'Final concentration (g/l)')])</td>
+	<td>10</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=(//select[contains((../label),'provided by the WWARN')])</td>
+	<td>label=no</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains((../label),'provided')])</td>
+	<td>somebody</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
+	<td>label=extemporaneous</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains(../label,'Preparation Date')])</td>
+	<td>25.3.2011</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
+	<td>extemporaneous</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>xpath=(//input[contains(../label,'Preparation Date')])</td>
+	<td>25.3.2011</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'batches')]</td>
+	<td>label=batches</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//a[. = 'Add a Batch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//select[contains(../label,'3D7 provided')]</td>
+	<td>label=yes</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=(//select[contains(../label,'3D7 information')])</td>
+	<td>label=no</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains(../label,'Preparation date')])</td>
+	<td>26.3.2011</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains(../label,'3D7 para')])</td>
+	<td>99</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[contains(../label,'Ring forms')])</td>
+	<td>23</td>
+</tr>
+</tbody></table>
+</body>
+</html>
