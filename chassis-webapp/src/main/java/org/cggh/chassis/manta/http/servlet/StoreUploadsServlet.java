@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.w3._2005.atom.Entry;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -183,7 +184,7 @@ public class StoreUploadsServlet extends HttpServlet {
 		InputStream uploadInputStream = tempFileUrl.openStream();
 		MockHttpServletRequest mockReq = new MockHttpServletRequest();
 		
-		setRequestURL(targetCollectionUri, mockReq);
+		setRequestURL(targetCollectionUri, mockReq, req);
 
 		mockReq.setSession(req.getSession());
 		
@@ -215,7 +216,7 @@ public class StoreUploadsServlet extends HttpServlet {
 			//therefore file names containing accented characters need to be changed
 			String utf8Name = new String(fileName.getBytes("UTF8"),"UTF8");
 			savedEntry.getTitle().setContent(utf8Name);
-			updateEntry(savedEntry, req.getSession());
+			updateEntry(savedEntry, req);
 		}
 		uploadResponse.setEntry(savedEntry);
 		/*
@@ -261,7 +262,7 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
 	public static void setRequestURL(String targetCollectionUri,
-			MockHttpServletRequest mockReq) throws MalformedURLException {
+			MockHttpServletRequest mockReq, HttpServletRequest req) throws MalformedURLException {
 		URL targ = new URL(targetCollectionUri);
 		String serverName = targ.getHost();
 		int port = targ.getPort();
@@ -273,7 +274,11 @@ public class StoreUploadsServlet extends HttpServlet {
 		mockReq.setRequestURI(targ.getPath());
 		mockReq.setProtocol(proto);
 		mockReq.setScheme(proto);
-		String url = mockReq.getRequestURI();
+		if (req != null) {
+			mockReq.setScheme(req.getScheme());
+			mockReq.setServerName(req.getServerName());
+			mockReq.setServerPort(req.getServerPort());
+		}
 
 	}
 
@@ -301,12 +306,12 @@ public class StoreUploadsServlet extends HttpServlet {
     }
 
 	private org.w3._2005.atom.Entry updateEntry(
-			org.w3._2005.atom.Entry savedEntry, HttpSession session)
+			Entry savedEntry, HttpServletRequest req)
 			throws MalformedURLException, IOException, ServletException {
 		org.w3._2005.atom.Entry response = null;
 		MockHttpServletRequest mockReq;
 		MockHttpServletResponse mockResp;
-		
+		HttpSession session = req.getSession();
 		String editLocation = null;
 		Iterator<org.w3._2005.atom.Link> iter = savedEntry.getLink().iterator();
 		while (iter.hasNext()) {
@@ -320,7 +325,7 @@ public class StoreUploadsServlet extends HttpServlet {
 		mockReq.setSession(session);
 		mockReq.addHeader("Content-Type", "application/atom+xml;type=entry");
 		
-		setRequestURL(editLocation, mockReq);
+		setRequestURL(editLocation, mockReq, req);
 		
 		Jaxb2Marshaller jaxb = new Jaxb2Marshaller();
 		jaxb.setClassesToBeBound(org.w3._2005.atom.Entry.class);
