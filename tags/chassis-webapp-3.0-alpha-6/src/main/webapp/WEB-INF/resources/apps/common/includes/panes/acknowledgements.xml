@@ -1,0 +1,299 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+ xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	 xmlns:atombeat="http://purl.org/atombeat/xmlns">
+
+    <h2>Acknowledgements</h2>
+    <!-- If the user has PUT access to the study entry. -->
+    <xforms:group
+        ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'PUT')]">
+        
+       
+        <p class="form-navi">
+            <span id="lookup-container">
+                <xforms:trigger class="alignLeft" style="width: 300px">
+                    <xforms:label>Look up contributors by PUBMED id</xforms:label>
+                    <xforms:action ev:event="DOMActivate">
+                        <xforms:send submission="sub-query-pubmed"/>
+                    </xforms:action>
+                </xforms:trigger>
+                <xforms:trigger class="alignRight" >
+                    <xforms:label>Look up contributors by DOI</xforms:label>
+                    <xforms:action ev:event="DOMActivate">
+                        <xforms:send submission="sub-query-crossref"/>
+                    </xforms:action>
+                </xforms:trigger>
+            </span>
+        </p>
+        
+        
+        
+        
+        
+        <xforms:group id="list-of-acknowledgements"
+            ref="instance('ins-study-entry')/atom:content/study/acknowledgements">
+ 
+                       
+            
+            <span id="editable-list-of-acknowledgements-container">
+            
+                <table class="wide-table">
+                <xforms:repeat nodeset="institutions/institution-ack" id="rep-inst">
+                    <tr class="repeated-element">
+                            
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-url')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td class="acknowledgement-form-cell">
+                                <span class="institution-textbox-container">
+                        
+                                    <xforms:input ref="institution-name">
+                                        <xforms:label>Institution:</xforms:label>
+                                    </xforms:input>
+                                 </span>
+                            </td>
+                        </tr>
+                        <tr><td colspan="2">
+                            <table class="wide-table">
+                    
+                    <xforms:repeat nodeset="institution-websites/institution-url" id="rep-url">
+                        
+                        <tr class="repeated-element">
+                            
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-url')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td class="acknowledgement-form-cell">
+                                <span class="institution-textbox-container">
+                                    <xforms:input ref=".">
+                                        <xforms:label>Institution Website URL:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                            </td>
+                        </tr>
+                    </xforms:repeat> <!-- rep-url -->
+                    
+                    <tr>
+                        <td colspan="2">
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institution-websites"
+                                    at="last()" position="after"
+                                    origin="xxforms:element('institution-url')"/>
+                            </xforms:trigger>
+                            <xforms:trigger appearance="minimal" class="addRemove">
+                                <xforms:label>Add an Institutional URL</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institution-websites" 
+                                    at="last()" position="after"
+                                    origin="xxforms:element('institution-url')"/>
+                            </xforms:trigger>
+                            
+                        </td>
+                    </tr>
+                    
+                </table>
+                </td><td>
+                <div class="acknowledgement-movement-triggers">
+
+                                    <span class="move-acknowledgment-up-button">
+                                        <xforms:trigger ref=".[preceding-sibling::*]">
+                                            <xforms:label>Move up <img alt="move up"
+                                                  src="/apps/study/common/up.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="preceding-sibling::*[1]"
+                                                  position="before"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+
+                                    <span class="move-acknowledgment-down-button">
+                                        <xforms:trigger ref=".[following-sibling::*]">
+                                            <xforms:label>Move down <img alt="move down"
+                                                  src="/apps/study/common/down.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="following-sibling::*[1]"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+                                </div>
+                </td></tr>
+                </xforms:repeat>
+                <tr>
+                        <td colspan="2">
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institutions"
+                                    at="last()" position="after"
+                                    origin="xxforms:instance('ins-site-template')//institution-ack"/>
+                            </xforms:trigger>
+                            <xforms:trigger appearance="minimal" class="addRemove">
+                                <xforms:label>Add an Institution</xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="institutions" 
+                                    at="last()" position="after"
+                                    origin="xxforms:instance('ins-site-template')//institution-ack"/>
+                            </xforms:trigger>
+                            
+                        </td>
+                    </tr>
+                </table>               
+            </span>
+            
+            <span id="editable-list-of-acknowledgements-container">
+
+                <table>
+
+                    <xforms:repeat nodeset="people/person" id="rep-person">
+
+                        <tr class="repeated-element">
+
+                            <td class="acknowledgement-deletion-cell">
+                                <xforms:trigger class="addRemove">
+                                    <xforms:delete ev:event="DOMActivate" context="." nodeset="."
+                                        at="index('rep-person')"/>
+                                    <xforms:label>
+                                        <img alt="remove" src="/apps/study/common/remove.gif"/>
+                                    </xforms:label>
+                                </xforms:trigger>
+                            </td>
+                            <td class="acknowledgement-form-cell">
+                                <span class="xforms-label">Contactable?:</span>
+                                <xforms:select ref="person-is-contactable" appearance="full">
+                                    <xforms:choices>
+                                        <xforms:item>
+                                            <xforms:label class="invisible"/>
+                                            <xforms:value>Yes</xforms:value>
+                                        </xforms:item>
+                                    </xforms:choices>
+                                </xforms:select>
+                                <br/>
+                                <span class="first-name-textbox-container">
+                                    <xforms:input ref="first-name">
+                                        <xforms:label>First name:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                                <br/>
+                                <span class="middle-name-textbox-container">
+                                    <xforms:input ref="middle-name">
+                                        <xforms:label>Middle name:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                                <br/>
+                                <span class="family-name-textbox-container">
+                                    <xforms:input ref="family-name">
+                                        <xforms:label>Family name:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                                <br/>
+                                <span class="email-address-textbox-container">
+                                    <xforms:input ref="email-address">
+                                        <xforms:label>Email address:</xforms:label>
+                                        <xforms:alert>Please provide a valid email
+                                            address.</xforms:alert>
+                                    </xforms:input>
+                                </span>
+                                <br/>
+                                <span class="personal-institution-textbox-container">
+                                    <xforms:input ref="institution">
+                                        <xforms:label>Institution:</xforms:label>
+                                    </xforms:input>
+                                </span>
+                                <br/>
+
+
+
+                                <div class="acknowledgement-movement-triggers">
+
+                                    <span class="move-acknowledgment-up-button">
+                                        <xforms:trigger ref=".[preceding-sibling::*]">
+                                            <xforms:label>Move up <img alt="move up"
+                                                  src="/apps/study/common/up.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="preceding-sibling::*[1]"
+                                                  position="before"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+
+                                    <span class="move-acknowledgment-down-button">
+                                        <xforms:trigger ref=".[following-sibling::*]">
+                                            <xforms:label>Move down <img alt="move down"
+                                                  src="/apps/study/common/down.gif"/></xforms:label>
+                                            <xforms:action ev:event="DOMActivate">
+                                                <xforms:insert origin="context()"
+                                                  nodeset="following-sibling::*[1]"/>
+                                                <xforms:delete nodeset="."/>
+                                            </xforms:action>
+                                        </xforms:trigger>
+                                    </span>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </xforms:repeat>
+
+                    <tr>
+                        <td>
+                            <xforms:trigger class="addRemove">
+                                <xforms:label>
+                                    <img alt="add" src="/apps/study/common/add.gif"/>
+                                </xforms:label>
+                                <xforms:insert ev:event="DOMActivate" context="people" nodeset="person"
+                                    at="last()" position="after"
+                                    origin="instance('ins-study-template')//person"/>
+                            </xforms:trigger>
+                        </td>
+                        <td>
+                            <span id="add-acknowledgement-link-container">
+                                <xforms:trigger appearance="minimal" class="addRemove">
+                                    <xforms:label>Add an acknowledgement</xforms:label>
+                                    <xforms:insert ev:event="DOMActivate" context="people"
+                                        nodeset="person" at="last()" position="after"
+                                        origin="instance('ins-study-template')//person"/>
+                                </xforms:trigger>
+                            </span>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </span>
+
+        </xforms:group>
+    </xforms:group>
+
+    <!-- If the user has GET access to the study entry, but not PUT access. -->
+    <xforms:group
+        ref="instance('ins-study-entry')/atom:link[@rel='edit' and contains(@atombeat:allow, 'GET')]">
+        <xforms:group
+            ref="instance('ins-study-entry')/atom:link[@rel='edit' and not(contains(@atombeat:allow, 'PUT'))]">
+            
+            <xi:include href="acknowledgementView.xml"/>
+       
+        </xforms:group>
+    </xforms:group>
+
+</div>

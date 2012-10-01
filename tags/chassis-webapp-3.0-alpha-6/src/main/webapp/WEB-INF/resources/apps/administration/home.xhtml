@@ -1,0 +1,187 @@
+<!--
+  Copyright (C) 2010 University of Oxford.
+  
+  This program is free software; you can redistribute it and/or modify it under the terms of the
+  GNU Lesser General Public License as published by the Free Software Foundation; either version
+  2.1 of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  The full text of the license is available at http://www.gnu.org/copyleft/lesser.html
+  -->
+<?oxygen NVDLSchema="../../../../../oxygen/samples/nvdl/xhtml-xforms-11-orbeon.nvdl"?>
+<html 
+	xmlns:xforms="http://www.w3.org/2002/xforms"
+    xmlns:f="http://orbeon.org/oxf/xml/formatting" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xxforms="http://orbeon.org/oxf/xml/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:manta="http://www.cggh.org/2010/chassis/manta/xmlns"
+	xmlns:atombeat="http://purl.org/atombeat/xmlns"
+	xmlns:ae="http://purl.org/atom/ext/"
+	xmlns:app="http://www.w3.org/2007/app">
+    
+    <head>
+    
+        <title>Administrator home</title>
+        
+        <xforms:model>
+
+        	<!-- non-persistent model for application state -->
+        	<xforms:instance id="ins-control">
+        		<control xmlns="">
+        			<contributor-controls/>
+        			<curator-controls/>
+        			<administrator-controls/>
+        			<delete-study/>
+        		</control>
+        	</xforms:instance>
+        	
+			<xforms:bind nodeset="instance('ins-control')/contributor-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/curator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR'"/>
+			<xforms:bind nodeset="instance('ins-control')/administrator-controls" relevant="xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_ADMINISTRATOR'"/>
+			<xforms:bind id="delete-bind" nodeset="instance('ins-control')/delete-study" />
+
+
+			<xforms:instance id="ins-config-feed">
+				<atom:feed/>
+			</xforms:instance>
+			
+			<xforms:submission 
+				id="sub-retrieve-config-feed"
+				resource="/service/content/config"
+				method="get"
+				replace="instance"
+				instance="ins-config-feed"
+				serialization="none">
+				<!-- TODO error handling -->
+                <xforms:message ev:event="xforms-submit-error" level="modal">
+                	An error occurred (<xforms:output value="event('error-type')"/>) while retrieving a list of studies.
+               	</xforms:message>
+			</xforms:submission>
+			
+			<xforms:send 
+				ev:event="xforms-model-construct-done" 
+				submission="sub-retrieve-config-feed"/>
+			
+			
+        </xforms:model>
+
+       	<xi:include href="../common/includes/current-user-model.xml"/>
+
+    </head>
+    <body>
+
+	<!-- Body header -->
+                <div id="header" class="header">
+					<h1 class="logo"><a href="/" target="_blank" f:url-norewrite="true">WWARN - Worldwide Antimalarial Resistance Network</a></h1>
+					
+							    <div id="block-menu-primary-links">
+								    <ul id="primary" class="clearfix">
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/home">Data Home</a></li>
+								    	<li class="active-trail {if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CURATOR')) then 'hidden-tab' else ''}"><a href="/curator/home">Curator Home</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/register-study-wizard">Register Study</a></li>
+								    	<li class="{if (not(xxforms:instance('ins-current-user')//role = 'ROLE_CHASSIS_CONTRIBUTOR')) then 'hidden-tab' else ''}"><a href="/contributor/my-studies">My Studies</a></li>
+								    	<li><a href="/" f:url-norewrite="true" target="_blank">WWARN Website</a></li>
+								    </ul>
+							    </div>
+
+					<div class="secondary-wrap">
+						<xi:include href="../common/includes/current-user-actions.xml"/>
+					</div>
+				</div>
+		<!-- End of Body header -->
+
+		<!-- After body header, before content id -->
+                <div id="holdall">
+                	<div id="main-inner">
+                		<div class="content page">
+		                	<div id="bd" class="clearfix no-help-box">
+				                <div class="no-bg">
+				                	<div class="main oneCol">
+				                	
+				                	
+		<!-- End of After body header, before content id -->
+		
+		<div id="content" class="home">
+    
+		<h1>Administrator home</h1>
+		
+    	<xforms:group ref="instance('ins-config-feed')[exists(atom:entry)]">
+
+			<div id="list-of-studies-container">
+
+	    	<fr:datatable width="100%">
+	    		<thead>
+	    			<tr>
+	    				<th fr:sortable="true" fr:resizeable="true">Title</th>
+	    				<th fr:sortable="false" fr:resizeable="true">Actions</th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<xforms:repeat id="config-list" nodeset="xxforms:sort(instance('ins-config-feed')/atom:entry[not(app:control/app:draft/text() = 'yes')], atom:published, 'text', 'descending')">
+
+
+
+	    				<tr class="repeated-element">
+	    					<td>
+	    						<xforms:output value="atom:title"/>
+	    					</td>
+
+	    					<td>
+	    						<span class="view-study-link-container"><a href="edit-config?config={atom:link[@rel='edit']/@href}">Edit</a></span><span style="margin: 50px;"></span>
+	    						
+	    						
+	    					</td>
+	    				</tr>
+	    			</xforms:repeat>
+	    		</tbody>
+	    	</fr:datatable>
+	    	
+	    	</div>
+	    	
+    	</xforms:group>
+    	
+    	<ul>
+    		<li><a href="/service/admin/update-1.1-1.2/index.xhtml">Upgrade 1.1 to 1.2 (Config collection)</a></li>
+    		<li><a href="/service/admin/update-1.3-1.4/index.xhtml">Upgrade 1.3 to 1.4</a></li>
+    		<li><a href="/service/admin/update-1.4-1.5/index.xhtml">Upgrade 1.4 to 1.5</a></li>
+    		<li><a href="/service/admin/update-1.5-2.0/index.xhtml">Upgrade 1.5 to 2.0</a></li>
+    		<li><a href="/service/admin/update-2.0-2.1/index.xhtml">Upgrade 2.0 to 2.1</a></li>
+    		<li><a href="/service/admin/update-2.1-3.0/index.xhtml">Upgrade 2.1 to 3.0</a></li>
+    	</ul>
+    	<hr/>
+    	<ul>
+    		<li><a href="/service/admin/reindex.xql">Reindex</a></li>
+    		<li><a href="/service/admin/backup.xql">Backup</a></li>
+    		<li><a href="/admin/admin.xql">Exist admin</a></li>
+    		<li><a href="/admin/admin.xql?panel=browse&amp;collection=/db/atombeat/content/studies">Studies collection admin</a></li>
+    	</ul>
+    	</div>
+
+   	<!-- After content id, before ft id -->
+				                	</div>
+				                </div>
+		                	</div>
+		                	
+		                	<div class="background">
+		                	    	<!-- blue box -->
+		                	</div>
+		                	
+                		</div>
+                	</div>
+                </div>
+
+		<!-- End of After content id, before ft id -->
+
+    	
+    	
+    </body>
+</html>
+
