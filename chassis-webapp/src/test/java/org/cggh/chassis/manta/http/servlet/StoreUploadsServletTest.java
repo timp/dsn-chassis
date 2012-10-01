@@ -14,7 +14,7 @@ public class StoreUploadsServletTest extends TestCase {
             String testURL = "https://demo.wwarn.org:443/repo/service/content/media/curated/MNZMZ";
             MockHttpServletRequest mockReq = new MockHttpServletRequest();
 
-            StoreUploadsServlet.setRequestURL(testURL, mockReq);
+            StoreUploadsServlet.setRequestURL(testURL, mockReq, null);
             String uri = StoreUploadsServlet.requestToURL(mockReq);
 
             assertEquals(testURL,uri);
