@@ -8,8 +8,8 @@
   * Checkout wwarn-cas
   * Create the database using the script in resources/min-db.sql
   * Follow the instructions for configuring tomcat datasources in ChassisCASDatabaseSetup
-
   * Configure Apache
+  * DeFlobUlise
 
 == Apache Configuration ==
 
