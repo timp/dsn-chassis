@@ -102,6 +102,15 @@
         <logDirectory>/var/log/tomcat7/</logDirectory>
       </properties>
     </profile>
+    <profile>
+      <id>app-dev</id>
+      <properties>
+        <profileId>app-dev</profileId>
+        <host.name>app-dev.wwarn.org</host.name>
+        <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+        <logDirectory>/var/log/tomcat6/</logDirectory>
+      </properties>
+    </profile>
   </profiles>
   
   <scm>
