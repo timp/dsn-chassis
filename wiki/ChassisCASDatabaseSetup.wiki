@@ -1,4 +1,4 @@
-#summary How to configure the database connection for Chassis and CAS
+#summary How to configure the authorisation database connection for Chassis and CAS
 
 
 = Tomcat configuration =
