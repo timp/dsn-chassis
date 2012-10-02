@@ -7,7 +7,7 @@
 
   * Checkout wwarn-cas
   * Create the database using the script in resources/min-db.sql
-  * Configure tomcat datasources as in ChassisCASDatabaseSetup
+  * Configure tomcat datasources as in [ChassisCASDatabaseSetup]
   * Configure Apache
 
 == Apache Configuration ==
