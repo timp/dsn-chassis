@@ -69,10 +69,11 @@
 
   <properties>
     <cas.version>3.4.6</cas.version>
-    <cas.securityContext.ticketValidator.casServerUrlPrefix>http://localhost:8080/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
+    <host.name>localhost</host.name>
+    <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
     <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
     <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
-    <host.name>localhost</host.name>
+    
     <servletZone>sso</servletZone>
     <database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
     <logDirectory>/data/atombeat/logs/</logDirectory>
@@ -87,9 +88,6 @@
       <properties>
         <profileId>cloud1</profileId>
         <host.name>cloud1.cggh.org</host.name>
-        <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
-        <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
-        <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
         <logDirectory>/var/log/tomcat7/</logDirectory>
       </properties>
     </profile>
@@ -98,7 +96,6 @@
       <properties>
         <profileId>production</profileId>
         <host.name>www.wwarn.org</host.name>
-        <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
         <logDirectory>/var/log/tomcat7/</logDirectory>
       </properties>
     </profile>
@@ -107,7 +104,6 @@
       <properties>
         <profileId>app-dev</profileId>
         <host.name>app-dev.wwarn.org</host.name>
-        <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
         <logDirectory>/var/log/tomcat6/</logDirectory>
       </properties>
     </profile>
