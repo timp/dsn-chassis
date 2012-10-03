@@ -73,10 +73,10 @@
     <cas.securityContext.ticketValidator.casServerUrlPrefix>http://${host.name}/sso</cas.securityContext.ticketValidator.casServerUrlPrefix>
     <cas.securityContext.serviceProperties.service>${cas.securityContext.ticketValidator.casServerUrlPrefix}/services/j_acegi_cas_security_check</cas.securityContext.serviceProperties.service>
     <cas.securityContext.casProcessingFilterEntryPoint.loginUrl>${cas.securityContext.ticketValidator.casServerUrlPrefix}/login</cas.securityContext.casProcessingFilterEntryPoint.loginUrl>
-    
     <servletZone>sso</servletZone>
     <database.hibernate.dialect>org.hibernate.dialect.MySQLDialect</database.hibernate.dialect>
-    <logDirectory>/data/atombeat/logs/</logDirectory>
+    <logDirectory>/var/log/tomcat7/</logDirectory>
+    <!--  logDirectory>/data/atombeat/logs/</logDirectory -->
     <tomcat.username>admin</tomcat.username>
     <tomcat.password />
     <tomcat.url>http://localhost:8080/manager/html</tomcat.url>
@@ -88,7 +88,6 @@
       <properties>
         <profileId>cloud1</profileId>
         <host.name>cloud1.cggh.org</host.name>
-        <logDirectory>/var/log/tomcat7/</logDirectory>
       </properties>
     </profile>
     <profile>
@@ -96,7 +95,6 @@
       <properties>
         <profileId>production</profileId>
         <host.name>www.wwarn.org</host.name>
-        <logDirectory>/var/log/tomcat7/</logDirectory>
       </properties>
     </profile>
     <profile>
