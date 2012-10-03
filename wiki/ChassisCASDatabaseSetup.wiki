@@ -4,7 +4,7 @@
 = Tomcat configuration =
 This assumes that you will be running Chassis and CAS (manta-webapp and wwarn-cas) in the same Tomcat instance. If not then the Resource element can be added to the application context directly.
 
-In {{{server.xml}} add to the GlobalNamingResources element the following definition of the JDBC connection to the drupal database, changing the username and password: 
+In {{{server.xml}}} add to the GlobalNamingResources element the following definition of the JDBC connection to the drupal database, changing the username and password: 
 {{{
  <Resource 
     auth="Container" 
