@@ -55,7 +55,6 @@ make-ssl-cert generate-default-snakeoil --force-overwrite
 cd /etc/ssl/certs/java
 cp cacerts cacerts.orig
 keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -alias apache -keystore ./cacerts
-}}}
 
 Enter keystore password:  changeit
 Owner: CN=cloud1.cggh.org
@@ -69,6 +68,9 @@ Certificate fingerprints:
 	 Version: 1
 Trust this certificate? [no]:  yes
 Certificate was added to keystore
+
+}}}
+
 
 7. Restart apache2 and tomcat:
 {{{
