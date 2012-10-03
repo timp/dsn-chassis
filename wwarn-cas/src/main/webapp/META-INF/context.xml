@@ -1,3 +1,6 @@
 <Context docBase="wwarn-cas" path="/sso">
-	<ResourceLink global="jdbc/wwarn_drupal" name="jdbc/wwarn_drupal" type="javax.sql.DataSource"/>
+	<ResourceLink
+       global="jdbc/wwarn_drupal" 
+       name="jdbc/wwarn_drupal" 
+       type="javax.sql.DataSource"/>
 </Context>
