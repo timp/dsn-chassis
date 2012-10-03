@@ -1,14 +1,13 @@
 package org.cggh.casutils.test;
 
-public class AppDevHttpsCasTest extends CasProtectedResourceDownloaderSpec {
+public class LocalhostHttpCasTest extends CasProtectedResourceDownloaderSpec {
 
-  public AppDevHttpsCasTest(String name) {
+  public LocalhostHttpCasTest(String name) {
     super(name);
   }
 
-  @Override
   String getCasProxyProtocol() {
-    return "https://";
+    return "http://";
   }
 
   @Override
@@ -17,25 +16,32 @@ public class AppDevHttpsCasTest extends CasProtectedResourceDownloaderSpec {
     // return "test-chassis.wwarn.ox.ac.uk";
    // return "test-chassis.wwarn.org";
    // return "demo.wwarn.org";
-    return "app-dev.wwarn.org";
+    return "localhost";
   }
 
   @Override
   String getServiceHostUrl() {
     //return "http://test-chassis.wwarn.ox.ac.uk:8080";
-    return "http://app-dev.wwarn.org";
+    return "http://localhost:8080";
   }
   
+  @Override
+  String getContentUrl() { 
+    return "http://localhost:8080/";
+  }
   
   @Override
+  String getTestStudyUrl() { 
+    return "http://localhost:8080/sso/login";
+  }
+  @Override
   String getCasProxyPort() {
-    return "";
+    return "8080";
   }
 
   @Override
   String getTestZipFileUrl() { 
-    return getContentUrl() + "media/curated/MTSUX/292bfe0f-3f53-4457-a7cb-02f4c51b25db.media";
-    // "media/curated/ZAZBM/d5064bae-870b-4ebc-8013-b282af180983.media"; 
+    return "http://localhost:8080/manager/images/tomcat.gif"; 
   }
   @Override
   String getUser() {
@@ -50,7 +56,7 @@ public class AppDevHttpsCasTest extends CasProtectedResourceDownloaderSpec {
   @Override
   String getStudyId() {
     //return "QNSTN";
-    return "ZTKKS";//"FMDMQ";//"ZAZBM";
+    return "login";//"FMDMQ";//"ZAZBM";
   }
 
 }
