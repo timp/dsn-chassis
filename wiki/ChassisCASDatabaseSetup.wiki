@@ -33,7 +33,7 @@ in server.xml add to the GlobalNamingResources element the definition of the JDB
 />
 }}}
 
-In the context for the application link to the connection
+In the {{{context.xml}}} for the application link to the connection
 {{{
   <ResourceLink 
      global="jdbc/wwarn_drupal" 
