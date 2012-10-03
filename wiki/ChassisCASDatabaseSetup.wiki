@@ -42,4 +42,4 @@ This connection is used in the {{{context.xml}}} for the application
    />
 }}}
 
-Add the {{{mysql-connector-java-5.1.6.jar}} to the tomcat endorsed directory (the same place as the manta-config jar).
+Add the {{{mysql-connector-java-5.1.6.jar}}} to the tomcat endorsed directory (the same place as the manta-config jar).
