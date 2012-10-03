@@ -2,9 +2,9 @@
 
 
 = Tomcat configuration =
-This assumes that you will be running Chassis and CAS (manta-webapp and wwarn-cas) in the same Tomcat instance. If not then the Resource element can be added to the application context directly
+This assumes that you will be running Chassis and CAS (manta-webapp and wwarn-cas) in the same Tomcat instance. If not then the Resource element can be added to the application context directly.
 
-in server.xml add to the GlobalNamingResources element the definition of the JDBC connection to the drupal database
+In {{{server.xml}} add to the GlobalNamingResources element the definition of the JDBC connection to the drupal database
 {{{
  <Resource 
     auth="Container" 
@@ -27,8 +27,8 @@ in server.xml add to the GlobalNamingResources element the definition of the JDB
     timeBetweenEvictionRunsMillis="5000" 
     type="javax.sql.DataSource"
     url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true"
-    username="username" 
-    password="password"
+<font color='red'>    username="username" 
+    password="password"</font>
     validationInterval="30000" 
     validationQuery="SELECT 1"
 />
