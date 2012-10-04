@@ -283,8 +283,8 @@ public class StoreUploadsServlet extends HttpServlet {
 
   public static String requestToURL(HttpServletRequest req) {
     String serverName = req.getServerName();
-    int port = req.getServerPort();
     // FIXME HACK Something in the stack is translating or defaulting https to http
+    int port = 443; //req.getServerPort();
     String scheme = "https";//req.getScheme();
     System.err.println("x-forwarded-host:"  +req.getHeader("x-forwarded-host"));
     /*
