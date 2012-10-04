@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,8 +25,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
-import org.jasig.cas.client.util.AbstractCasFilter;
-import org.jasig.cas.client.validation.Assertion;
 
 /**
  * Servlet implementation class ChangeContentType
@@ -44,7 +41,6 @@ public class CasAlfrescoProxy extends HttpServlet {
 	 * Default constructor.
 	 */
 	public CasAlfrescoProxy() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
