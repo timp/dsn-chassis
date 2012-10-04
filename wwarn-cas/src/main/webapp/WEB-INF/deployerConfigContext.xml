@@ -167,7 +167,7 @@
                     <bean class="org.jasig.cas.services.RegisteredServiceImpl">
                         <property name="id" value="2" />
                         <property name="name" value="IMAPS" />
-                        <property name="description" value="Only Allows HTTPS Urls" />
+                        <property name="description" value="Only Allows IMAPS Urls" />
                         <property name="serviceId" value="imaps://**" />
                     </bean>
 
