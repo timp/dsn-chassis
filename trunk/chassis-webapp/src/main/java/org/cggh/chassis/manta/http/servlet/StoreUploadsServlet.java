@@ -281,12 +281,13 @@ public class StoreUploadsServlet extends HttpServlet {
 
 	}
 
-    public static String requestToURL(HttpServletRequest req) {
-        String serverName = req.getServerName();
-        int port = req.getServerPort();
-        String scheme = req.getScheme();
-        System.err.println("x-forwarded-host:"  +req.getHeader("x-forwarded-host"));
-        /*
+  public static String requestToURL(HttpServletRequest req) {
+    String serverName = req.getServerName();
+    int port = req.getServerPort();
+    // FIXME HACK Something in the stack is translating or defaulting https to http
+    String scheme = "https";//req.getScheme();
+    System.err.println("x-forwarded-host:"  +req.getHeader("x-forwarded-host"));
+    /*
         String host = req.getHeader("x-forwarded-host");
         //If forwarded assume forwarded from https
         if (host != null && host.length() > 0) {
@@ -296,18 +297,18 @@ public class StoreUploadsServlet extends HttpServlet {
             }
             serverName = host;
         }
-       */
+    */
 
-        StringBuilder url = new StringBuilder(scheme);
-        url.append("://").append(serverName);
+    StringBuilder url = new StringBuilder(scheme);
+    url.append("://").append(serverName);
 
-        if (port > 0) {
-            url.append(':').append(port);
-        }
-        url.append(req.getRequestURI());
-        System.err.println("URL:" + url.toString());
-        return url.toString();
+    if (port > 0) {
+      url.append(':').append(port);
     }
+    url.append(req.getRequestURI());
+    System.err.println("URL:" + url.toString());
+    return url.toString();
+  }
 
 	private org.w3._2005.atom.Entry updateEntry(
 			Entry savedEntry, HttpServletRequest req)
@@ -368,11 +369,10 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
 	private void sendBadRequest(String message, HttpServletResponse res) {
-		// TODO Auto-generated method stub
 		try {
 			res.sendError(500, "TODO");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		  // Better than throwing a Runtime
 			e.printStackTrace();
 		}
 	}
