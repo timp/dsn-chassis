@@ -67,7 +67,6 @@ public class StoreUploadsServlet extends HttpServlet {
 	}
 
 	public StoreUploadsServlet() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -286,6 +285,8 @@ public class StoreUploadsServlet extends HttpServlet {
         String serverName = req.getServerName();
         int port = req.getServerPort();
         String scheme = req.getScheme();
+        System.err.println("x-forwarded-host:"  +req.getHeader("x-forwarded-host"));
+        /*
         String host = req.getHeader("x-forwarded-host");
         //If forwarded assume forwarded from https
         if (host != null && host.length() > 0) {
@@ -295,6 +296,8 @@ public class StoreUploadsServlet extends HttpServlet {
             }
             serverName = host;
         }
+       */
+
         StringBuilder url = new StringBuilder(scheme);
         url.append("://").append(serverName);
 
@@ -302,6 +305,7 @@ public class StoreUploadsServlet extends HttpServlet {
             url.append(':').append(port);
         }
         url.append(req.getRequestURI());
+        System.err.println("URL:" + url.toString());
         return url.toString();
     }
 
