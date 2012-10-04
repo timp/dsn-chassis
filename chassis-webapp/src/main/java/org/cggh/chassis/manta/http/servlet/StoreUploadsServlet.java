@@ -284,20 +284,18 @@ public class StoreUploadsServlet extends HttpServlet {
   public static String requestToURL(HttpServletRequest req) {
     String serverName = req.getServerName();
     // FIXME HACK Something in the stack is translating or defaulting https to http
-    int port = -1; //req.getServerPort();
-    String scheme = "https";//req.getScheme();
+    int port = req.getServerPort();
+    String scheme = req.getScheme();
     System.err.println("x-forwarded-host:"  +req.getHeader("x-forwarded-host"));
-    /*
-        String host = req.getHeader("x-forwarded-host");
-        //If forwarded assume forwarded from https
-        if (host != null && host.length() > 0) {
-            if (!host.contains(":")) {
-                port = -1;
-                scheme = "https";
-            }
-            serverName = host;
-        }
-    */
+    String host = req.getHeader("x-forwarded-host");
+    //If forwarded assume forwarded from https
+    if (host != null && host.length() > 0) {
+      if (!host.contains(":")) {
+        port = -1;
+        scheme = "https";
+      }
+      serverName = host;
+    }
 
     StringBuilder url = new StringBuilder(scheme);
     url.append("://").append(serverName);
