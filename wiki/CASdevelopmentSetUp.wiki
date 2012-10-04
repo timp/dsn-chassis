@@ -71,8 +71,17 @@ Certificate was added to keystore
 
 }}}
 
+7. To run the tests you are also going to need to setup trust for localhost
 
-7. Restart apache2 and tomcat:
+{{{
+ keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -alias localhost -keystore ./cacerts
+
+
+ keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -alias localhost -keystore ./cacerts
+
+}}}
+
+8. Restart apache2 and tomcat:
 {{{
 /etc/init.d/apache2 restart
 /etc/init.d/tomcat restart
