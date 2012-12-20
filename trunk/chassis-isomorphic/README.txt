@@ -13,3 +13,10 @@ A named user, who does not have a password, is manually configured on the databa
 curl -X POST -HContent-type:application/xml  -HAccept:application/xml --data @/var/chassis-download/www.wwarn.org/studies/TETAJ.xml http://localhost:8080/chassis-pruned/service/study
 
 
+To handle passwords you will need to add a file /var/chassis-isomorphic/chassisDb.properties 
+containign a line password=<password> then 
+
+mysql> create user chassisDb@localhost identified by '<password>';
+mysql> grant all on chassisDb.* to chassisDb;
+mysql> grant all on chassispruned.* to chassisDb;
+
