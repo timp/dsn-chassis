@@ -40,10 +40,38 @@ public class ProxyServlet extends HttpServlet {
 			HttpServletResponse resp, HttpMethod methodType, InputStream is,
 			Class responseClass) throws ServletException, IOException {
 		String target = req.getRequestURL().toString();
-        String url = StoreUploadsServlet.requestToURL(req);
+        	String url = StoreUploadsServlet.requestToURL(req);
+	
+		if (logger.isDebugEnabled()) {
+			logger.debug("target:" + target);
+			logger.debug("url:" + url);
+/*
+			Enumeration<String> reqHeaders = req.getHeaderNames();
 
+			while (reqHeaders.hasMoreElements()) {
+				String head = reqHeaders.nextElement();
+				Enumeration<String> values = req.getHeaders(head);
+				while (values.hasMoreElements()) {
+					String value = values.nextElement();
+					logger.debug("Request header " + head + ":" + value);
+				}
+			}
+*/
+		}
 		String dest = url.replaceFirst("repository", "repo");
-		// .replaceFirst("http://localhost:8080", "https://kwiat33");
+		String forwardHost = req.getHeader("x-forwarded-host");
+		if (forwardHost != null) {
+			//If we get here then the service is being called from behind an apache proxy
+			String host = req.getHeader("host");
+			//Assuming that repo is installed in the same server as repository
+			//Replace apache host with tomcat host
+			//This is necessary to make sure that the proxy ticket fetched from org.cggh.chassis.manta.util.CASUtil
+			//has the right matching host
+			String dest1 = dest.replaceFirst(forwardHost, host);
+			//Assuming that tomcat is using http
+			dest = dest1.replaceFirst("https","http");
+			logger.debug("Destination:" + dest);
+		}
 
 		String nextSep = "?";
 		Enumeration<String> params = req.getParameterNames();
@@ -63,8 +91,7 @@ public class ProxyServlet extends HttpServlet {
 				.<E> getResponseExtractor(responseClass, restClient);
 
 		/* If you want to validate the ticket */
-		// String
-		// newDest="https://kwiat33/sso/proxyValidate?service="+dest+"&ticket={ticket}";
+		// String newDest="https://alfresco/sso/proxyValidate?service="+dest+"&ticket={ticket}";
 		// dest = newDest;
 
 		// Comment out if validating ticket
@@ -72,7 +99,6 @@ public class ProxyServlet extends HttpServlet {
 			dest += nextSep + "ticket={ticket}";
 			nextSep = "&";
 		}
-
 		logger.debug(dest);
 
 		E response;
@@ -115,7 +141,7 @@ public class ProxyServlet extends HttpServlet {
 			Entry<String, List<String>> head = iter.next();
 			String headName = head.getKey();
 			if (!(headName.equalsIgnoreCase("Set-Cookie") || headName
-					.equalsIgnoreCase("Transfer-Encoding"))) {
+					.equalsIgnoreCase("Transfer-Encoding") || headName.equals("Content-Encoding"))) {
 				Iterator<String> values = head.getValue().iterator();
 				while (values.hasNext()) {
 					String value = values.next();
