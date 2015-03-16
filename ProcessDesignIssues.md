@@ -1,0 +1,170 @@
+
+
+---
+
+# Use Cases #
+
+## Preamble ##
+
+### Roles ###
+
+  * **submitter** - creates the data
+  * **curator** - works on the data to meet quality control criteria
+  * **standardiser** - transforms data into a standard form
+
+N.B. the same person might be both curator and standardiser.
+
+### Notational Conventions ###
+
+  * letters _A_, _B_, _C_, etc., denote some data, not in a standard form
+  * letters _A'_, _B'_, _C'_, etc., denote some data in a standard form
+  * _A_ -> _B_ denotes that _B_ was derived from _A_
+  * ignore any colouring in the derivation graph ascii art, it's accidental
+
+## Use Case 1 (Regular, Linear) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B_ (curation)
+  1. _B_ -> _C'_ (standardisation)
+
+### Derivation Graph ###
+
+```
+A -> B -> C'
+```
+
+### Notes ###
+
+This is a **regular**, **linear** case, where submission leads to curation, which leads to standardisation.
+
+## Use Case 2 (Goofy, Linear) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B'_ (standardisation)
+  1. _B'_-> _C'_ (curation)
+
+### Derivation Graph ###
+
+```
+A -> B'-> C'
+```
+
+### Notes ###
+
+This is a "**goofy**", **linear** case, where some curation occurs after standardisation.
+
+## Use Case 3 (Goofy, Linear, Pre-Standardised) ##
+
+### Sequence of Events ###
+
+  1. _A'_-> _B'_ (curation)
+
+### Derivation Graph ###
+
+```
+A'-> B'
+```
+
+### Notes ###
+
+This is a "**goofy**", **linear** case, where some curation occurs after standardisation, and where the data comes "pre-standardised".
+
+## Use Case 4 (Regular, Branched) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B_ (curation)
+  1. _B_ -> _C'_ (standardisation)
+  1. _B_ -> _D_ (curation)
+  1. _D_ -> _E'_ (standardisation)
+
+### Derivation Graph ###
+
+```
+A -> B -> C'
+     |
+     v
+     D -> E'
+```
+
+### Notes ###
+
+This is a **regular** case, where curation always precedes standardisation, with a **branch** in the derivation graph caused by two standardisation events.
+
+## Use Case 5 (Regular, Submitter Revision) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B_ (curation)
+  1. _B_ -> _C'_ (standardisation)
+  1. _A_ -> _D_ (revised submission)
+  1. _D_ -> _E_ (curation)
+  1. _E_ -> _F'_ (standardisation)
+
+### Derivation Graph ###
+
+```
+A -> B -> C'
+|
+v
+D -> E -> F'
+```
+
+### Notes ###
+
+This is a **regular** case, where curation always precedes standardisation, with a **branch** in the derivation graph caused by the submitter's revised submission.
+
+## Use Case 6 (Branched, With a Switch) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B_ (curation)
+  1. _B_ -> _C'_ (standardisation)
+  1. _B_ -> _D_ (curation)
+  1. _D_ -> _E'_ (standardisation)
+  1. _E'_ -> _F'_ (curation)
+
+### Derivation Graph ###
+
+```
+A -> B -> C'
+     |
+     v
+     D -> E'-> F'
+```
+
+### Notes ###
+
+This case has a **switch** between **regular** and **goofy**, i.e., where curation precedes standardisation in some parts of the derivation graph but not in others, with a **branch** in the derivation graph.
+
+## Use Case 7 (Regular, Branched, Multi-Standardisation) ##
+
+### Sequence of Events ###
+
+  1. -> _A_ (submission)
+  1. _A_ -> _B_ (curation)
+  1. _B_ -> _C'_ (standardisation)
+  1. _B_ -> _D_ (curation)
+  1. _B_ -> _E'_ (standardisation)
+
+### Derivation Graph ###
+
+```
+A -> B -> C'
+     |
+     +--> E'
+     |
+     v
+     D
+```
+
+### Notes ###
+
+This is a **regular** case, where two different standardisation transformations are applied to the same input.

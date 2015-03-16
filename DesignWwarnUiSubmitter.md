@@ -1,0 +1,168 @@
+This page has notes on the design for the submitter application in the wwarn/ui project.
+
+
+
+## User-Interface Design ##
+
+The user-interface design (static mockup) starts from:
+
+  * http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/
+
+[Journey A](http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/A/10.html) is the submitter first time submitting data, assuming no studies previously created.
+
+[Journey B](http://dsn-chassis.googlecode.com/svn/trunk/wwarn/docs/content/design/apps/submitter/journeys/B/10.html) is the submitter second time submitting data, assuming submitting to a study previously created.
+
+## Client Application Architecture ##
+
+### Widget Hierarchy ###
+
+  * SubmitterApplicationWidget
+    * SubmitterHomeWidget
+    * SelectStudyWidget
+    * UploadFilesWidget
+    * SubmitWidget
+    * AddInformationWidget
+
+### Widget Events ###
+
+| **Source** | **Event** |
+|:-----------|:----------|
+| SubmitterHomeWidget | SubmitDataNavigationEvent |
+| SelectStudyWidget | ProceedActionEvent |
+| SelectStudyWidget | CancelActionEvent |
+| UploadFilesWidget | StepBackNavigationEvent |
+| UploadFilesWidget | ProceedActionEvent |
+| UploadFilesWidget | CancelActionEvent |
+| SubmitWidget | StepBackNavigationEvent |
+| SubmitWidget | ProceedActionEvent |
+| SubmitWidget | CancelActionEvent |
+| AddInformationWidget | SubmitterHomeNavigationEvent |
+
+## Service API ##
+
+### chassis-generic-service-exist/atom/edit/studies - Studies Collection ###
+
+Partial Atom Protocol...
+
+  * POST Content-Type: application/atom+xml;type=entry -- create new study entries
+
+### chassis-generic-service-exist/atom/edit/studies?id=... - Study Entries ###
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing study entry
+  * PUT Content-Type: application/atom+xml;type=entry -- update existing study entries
+
+### chassis-generic-service-exist/query.studies.xql - Studies Query Service ###
+
+  * GET -- return an Atom feed document containing all study entries in studies collection where the authenticated user is an owner of the study
+
+### chassis-generic-service-exist/atom/edit/submissions - Submissions Collection ###
+
+Partial Atom Protocol...
+
+  * POST Content-Type: application/atom+xml;type=entry -- create new submission entries
+
+### chassis-generic-service-exist/query/submissions.xql - Submissions Query Service ###
+
+  * GET -- return an Atom feed document containing all submission entries in the submissions collection where the authenticated user is an owner of the submission
+
+### chassis-generic-service-exist/atom/edit/media - Media Collection ###
+
+Partial Atom Protocol...
+
+  * POST Content-Type: **/** -- create new media entries
+
+### chassis-generic-service-exist/atom/edit/media/resource... - Media Entries ###
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing media entry
+
+### chassis-generic-service-exist/atom/edit/media?id=... - Media-Link Entries ###
+
+Partial Atom Protocol...
+
+  * GET -- retrieve an existing media-link entry
+  * PUT Content-Type: application/atom+xml;type=entry -- update existing media-link entries
+
+### chassis-generic-service-exist/query/media.xql - Media Query Service ###
+
+  * GET -- return an Atom feed document containing all media-link entries in the media collection where the authenticated user is an owner of the entry
+  * GET ?submitted=no -- return an Atom feed document containing all media-link entries in the media collection where the authenticated user is an owner of the entry, and where the media entry is not linked from a submission
+
+### chassis-wwarn-ui/submitter/upload - File Upload Form Submission Handler ###
+
+  * POST Content-Type: multipart/form-data -- expected fields: file (the file to upload); summary; type
+
+## Animation ##
+
+Below the behaviour of the application, in terms of the events communicated between widgets in the client application, and in terms of the service calls (HTTP requests) made, is animated against the user-interface design (static mockup).
+
+### Journey A ###
+
+#### -> A10 ####
+
+**Screen**
+
+A/10.html
+
+**User-Action**
+
+User navigates to the screen.
+
+**Behaviour**
+
+The SubmitterHomeWidget makes a GET request to the Submissions Query Service URL to retrieve a feed of all submissions for the current user. It then uses the feed to generate a count of submissions, files and studies, and renders.
+
+#### A10 -> A20 ####
+
+**User-Action**
+
+User clicks "submit data" link.
+
+**Behaviour**
+
+The SubmitterHomeWidget fires a SubmitDataNavigationEvent, which is handled by the SubmitterApplicationWidget. The SubmitterApplicationWidget tells the SelectStudyWidget to refresh itself, then passes control of the screen to the SelectStudyWidget.
+
+When told to refresh itself, the SelectStudyWidget makes a GET request to the Studies Query Service URL, to retrieve a feed of all study entries owned by the user. In this case, the feed is empty (no studies created yet), so only the "Create Study" section is rendered.
+
+#### A20 -> A30 ####
+
+**User-Action**
+
+User clicks "create study and proceed".
+
+**Behaviour**
+
+The SelectStudyWidget constructs a new Atom entry document, populating it with the title, summary, submitter emails and modules, then sends the Atom entry document as the body of a POST request to the Studies Collection URL.
+
+If the response to this request is successful (201 Created), the SelectStudyWidget instantiates a ProceedActionEvent, stores the ID of the newly created study in the event, and fires it. The event is handled by the SubmittedApplicationWidget, which passes the ID of the selected study to the UploadFilesWidget and tells it to refresh itself, and then passes control of the screen to the UploadFilesWidget.
+
+When told to refresh itself, the UploadFilesWidget makes a GET request to the Media Query Service URL, with the query parameter "submitted=no". In this case, no files have been previously uploaded, so the returned feed is empty, and only the "Upload a File" section is rendered.
+
+#### A30 -> A40 ####
+
+**User-Action**
+
+User clicks "Upload File".
+
+**Behaviour**
+
+The "Upload File" button causes the HTML form to be submitted to the File Upload Form Submission Handler, which is a servlet. The servlet parses the multipart/form-data content POSTed from the form. It stores the summary and type fields, and streams the file field as the body of a POST request to the Media Collection URL. It receives a 201 Created response from the Media Collection URL, which contains the media-link entry document for the newly created media resource. It stores the summary and type information in the media-link entry document, and PUTs it back to the media-link entry URL. It receives a 200 OK response containing the modified media-link entry document, then passes that on as the body of a 200 response to the client (the UploadFilesWidget).
+
+When the UploadFilesWidget receives a successful response from the File Upload Form Submission Handler servlet, it then refreshes itself. The first part of the refresh involves making a GET request to the Media Query Service URL, with the query parameter "submitted=no". In this case, the returned feed is now not empty, but contains a single entry, so the table of files uploaded so far is rendered, in addition to the "Upload a File" section.
+
+#### A40 -> A50 ####
+
+**User-Action**
+
+User clicks "Proceed".
+
+**Behaviour**
+
+The UploadFilesWidget instantiates a ProceedActionEvent, stores the ID of the currently selected study in the event, and fires it. The event is handled by the SubmittedApplicationWidget, which passes the study ID onto the SubmitWidget and tells it to refresh itself, then passes control of the screen to the SubmitWidget.
+
+When told to refresh itself, the SubmitWidget makes a GET request to the Media Query Service URL, with the query parameter "submitted=no". It uses the returned feed to render the table of files to be submitted.
+
+TODO how does the UploadFilesWidget or the SubmitWidget get the study title? Can they be passed it as part of the proceed action event, or do they need to do a GET on the study url?

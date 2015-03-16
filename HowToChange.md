@@ -1,0 +1,88 @@
+# Details #
+
+## Define the XML change you want to make ##
+
+It's a good idea (although not strictly necessary) to start by changing the XML schema held in the chassis-model project. The advantage of starting here is that it will help ensure that your change fits nicely within the schema e.g. not reusing a previously used element name. You'll need to do this later anyway.
+
+This means: resources/chassis.xsd and making the same modifications to schema/chassis-pruned.xsd (with the addition of minOccurs=0)
+
+Don't forget to change the version number in the profile attribute.
+
+## Start with an empty database ##
+
+Delete the contents of your exist data directory - the files will be recreated when you restart the application.
+
+Don't forget to recreate the collections via the developer home page and repopulate the config collection from the admin page.
+
+## Change the new study template ##
+
+In src/main/webapp/WEB-INF/resources/apps/common/templates/study add your new element(s)
+
+## Change the input form ##
+
+This will probably be in src/main/webapp/WEB-INF/resources/apps/common/includes/study
+
+Copy an example of a similar field
+
+If you need validation e.g. number only field then you'll need to change the schema in src/main/webapp/insecure/schema
+
+For a drop down the values are held as enumerations in the schema - the labels are in src/main/webapp/WEB-INF/resources/apps/common/resources.xml - you can read the wiki page on how this works or just copy an example.
+
+Field labels are sometimes text strings, sometimes in resources.xml - they should be in resources.xml but haven't yet all been moved.
+
+More complex things such as displaying the other text input field when the other drop option is selected are controlled via the bindings in src/main/webapp/WEB-INF/resources/apps/common/templates/includes/study/study-info-bindings.xml
+
+## Test the change ##
+
+Fire it up, create a new study and test that it works as expected.
+
+Now is a good time to change the selenium test script - load up the Selenium IDE in firefox and choose either create-study-suite or ssq-suite from the selenium-ide directory (you'll need to run these as slow as possible)
+
+You can, of course, create your new test study using the first suite and then test the ssq with the second.
+
+## Migration ##
+
+Once you know that the change works for new studies then you can look at migration of the existing data.
+
+First load up a copy of the current db - this can be done using scripts/restore-chassis-exist.sh (set up for cygwin under Windows) - note that this has to be done with Spring authentication not CAS authentication enabled and you will need to set passwords etc in the script.
+
+Once this has been done you will need to reindex the database by calling service/admin/reindex.xql in the browser.
+
+When you've done this it's quite a good idea to stop the server and take a copy of the exist directory - it's easier to restore by copying this back instead of rerunning the restore script.
+
+Now create a new directory under webapp/service/admin with an index.xhtml file and link to it from WEB-INF/resources/app/administration/home.xhtml
+
+Take a copy of an earlier migration script (be careful with SVN here - in particular don't just copy an earlier directory) you will probably need update-study-info.xql.
+
+You need to change the old and new version numbers.
+The work is done in modify-nodes
+
+Testing is done in check-changes - you will first need to update the test study at the top of the script to ensure that it matches a current study
+(Testing is done by inserting the test study into a test collection and then running the changes on that collection)
+
+Once you have completed this then you can run the script via the Administration page off developers home (logged in as an admin)
+
+## Test again ##
+Use the selenium scripts on the migrated data
+
+## Flattener ##
+
+At the moment it is necessary to map the XPath for elements to short names for the flattener.
+The mappings are held in the config collection and need to be updated in two places service/admin/init-config.xql and with an update script in your migration directory update-field-mappings.xql
+
+## Changing the database ##
+
+Make your changes to the XML Schema in chassis-model, if you haven't already done so. (You need to change the main schema and the pruned schema but the chassis-model-pruned project is obsolete)
+
+It's a good idea to download the studies feed of your database and validate it with the revised schema - download via repository/service/content/studies
+
+Once you are happy with this then release a new version of the jar.
+
+Change the version of the jar in chassis-rest and release a new version.
+
+Change the versions in importChassisMetadata and test that.
+
+You may then need to update, and release, the database views held in chassisViewsCore
+
+## One more thing ##
+You also need to update the chassis-isomorphic project which is used to validate the integrity of the database using Jenkins - (this could almost certainly be done with the importChassisMetadata app instead)

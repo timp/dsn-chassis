@@ -1,0 +1,61 @@
+# Introduction #
+
+AtomBeat is an [Atom Protocol](http://www.atomenabled.org/developers/protocol/atom-protocol-spec.php) implementation for [eXist](http://exist.sourceforge.net/).
+
+## Features ##
+
+  * Standard Atom Protocol operations are supported: create, retrieve, update and delete Atom entries and media resources; retrieve feeds of Atom collection members.
+
+  * Extensions to the Atom Protocol for creating Atom collections and for updating collection metadata.
+
+  * Optional extensions to the Atom Protocol for versioning of collection members: retrieve feeds of revision history for any given Atom entry; retrieve any previous revision of an Atom entry.
+
+  * Optional security system for management of Access Control Lists for Atom collections and collection members; specify fine-grained access control rules for users, groups and roles; easily integrated with external authentication and user role management systems, e.g., via Spring Security.
+
+## eXist already has an Atom Protocol implementation, why do another? ##
+
+There are a couple of reasons why we've rolled our own Atom Protocol implementation, rather than using the Atom servlet that comes bundled with eXist...
+
+  * The main reason was that we wanted to experiment with new features, like versioning and access control, and we found it easier to do that by starting from scratch and working entirely in XQuery, rather than working with the existing Java servlet code.
+
+  * The eXist Atom servlet has a couple of inconsistencies in the way it handles URLs in HTTP headers and Atom links. For example, when POSTing a new Atom entry to a collection, the 201 response should include a "Location" header, whose value should be an absolute URL, but the value returned by eXist is relative to the Atom servlet path. The href attribute values set in edit links are relative to the member's collection, which isn't necessarily incorrect, but is inconvenient if you want to use Atom links to link entries in different collections, then write queries to do joins across those collections. And the href attribute value in the edit-media link is relative to the collection URL with a "/" appended. All of this means that you need to bake some special URL-handling logic into clients interacting with the eXist Atom servlet. AtomBeat uses absolute URLs throughout HTTP headers and Atom links, which should make writing client code and server-side queries a bit more straightforward.
+
+  * eXist has its own security system, which borrows heavily from the Unix model of users and groups. This is fine for many use cases, but there are situations where this is not sufficient to express the desired security model. For example, if you want to have an Atom collection where readers can retrieve any entry, authors can create entries and update any entry they have created, and editors can update any entry, you cannot implement that with the Unix model of one user (owner) and group per resource. Hence we are experimenting with a more flexible security system based on access control lists. However, there are pros and cons here, see the section on security below.
+
+  * eXist can be configured to authenticate users via HTTP basic or digest authentication, and the user's credentials can be either stored in the eXist database or can be drawn from an LDAP repository. While this is fine for many situations, other scenarios require integration with single-sign-on authentication systems and a variety of user databases. Rather than try to implement any of this ourselves, we have designed AtomBeat to work with a wide range of authentication systems. For example, it is straightforward to use AtomBeat with Spring Security, which gives you access to implementations of a variety of authentication mechanisms including OpenID and CAS, and configurable integration with a variety of user databases.
+
+# TODO #
+
+In no particular order, the following is a memo list of features yet to be implemented...
+
+  * add content-location headers to responses where appropriate
+
+  * change response to update-media (PUT) operation - send 200 with media-link entry and content-location, or 204?
+
+  * make history link appear/disappear depending on whether history is enabled
+
+  * implement security protocol for updating ACLs
+
+  * implement search protocol and feed pagination
+
+  * rebrand as "AtomBeat"
+
+  * implement DELETE
+
+  * update feed date updated
+
+  * update entry date updated when media updated
+
+  * send etags and implement conditional GET and PUT with if-match and if-none-match
+
+  * tests for security system with atom protocol
+
+  * finish implementing security in atom protocol
+
+  * add list-collection operation to security constants
+
+  * add hooks for customisable before- and after- functions in atomdb
+
+  * implement history/versioning for media resources
+
+  * fix revision comments - they're in the wrong place!

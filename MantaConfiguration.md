@@ -1,0 +1,187 @@
+Setup a VirtualBox VM using Ubuntu
+> attach a second, host only adapter
+> Install - select Lamp
+
+
+Add to /etc/hosts or C:\Windows\system32\drivers\etc\hosts on host machine
+```
+192.168.56.20	chassis
+```
+apt-get install emacs
+
+On vm add to /etc/network/interfaces
+```
+auto eth1
+iface eth1 inet static
+        address 192.168.56.20
+        netmask 255.255.255.0
+```
+```
+sudo apt-get install-openssh-server
+
+/etc/init.d/networking restart
+```
+You should now be able to ssh into the VM, no need to use the VirtualBox window.
+
+You should now be able to see 'It works!' on http://chassis/
+```
+sudo a2enmod ssl
+sudo a2enmod rewrite
+sudo a2enmod proxy
+sudo a2enmod proxy_httpd
+sudo a2ensite default-ssl
+```
+Update /etc/apache2/sites-available/default-ssl
+```
+ProxyRequests Off
+        <Proxy *>
+                Order deny,allow
+                Allow from all
+        </Proxy>
+
+        <Location /sso>
+           ProxyPass http://chassis:8080/sso
+           ProxyPassReverse http://chassis:8080/sso
+        </Location>
+
+        <Location /repository>
+           ProxyPass  http://chassis:8080/repository
+           ProxyPassReverse  http://chassis:8080/repository
+        </Location>
+
+        <Location /repo>
+           ProxyPass http://chassis:8080/repo
+           ProxyPassReverse http://chassis:8080/repo
+        </Location>
+
+```
+```
+sudo /etc/init.d/apache2 restart
+sudo apt-get install tomcat7
+sudo apt-get install tomcat7-admin
+sudo apt-get install maven2
+sudo apt-get install subversion
+sudo apt-get install openjdk-6-jdk
+```
+
+ssh into vm as non-privileged user
+```
+ssh chassis
+mkdir workspace
+cd workspace
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/manta-service 
+cd manta-service
+mvn install 
+cd ..
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/chassis-webapp 
+cd chassis-webapp
+mvn install 
+cd ..
+svn checkout http://dsn-chassis.googlecode.com/svn/trunk/wwarn-cas
+cd wwarn-cas
+mvn install 
+cd resources
+mysql -u root
+create schema wwarn_drupal;
+source min-db.sql;
+quit;
+cd ..
+cd ..
+svn checkout http://dsn-chassis.googlecode.com/svn/tags/manta-config-0.2-alpha-4
+cd manta-config-0.2-alpha-4
+mvn install
+
+sudo mkdir /usr/share/tomcat7/endorsed
+sudo cp target/manta-config-0.2-alpha-4.jar /usr/share/tomcat7/endorsed/
+
+sudo cp ~/.m2/repository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar /usr/share/tomcat7/endorsed/
+
+sudo emacs /etc/tomcat7/server.xml
+```
+To GlobalNamingResources add
+```
+ <Resource auth="Container" factory="org.apache.naming.factory.BeanFactory" name="bean/existConfigFactory" type="org.cggh.chassis.manta.util.config.ExistConfig" username="admin" password=""
+       serviceBaseURL="https://chassis/repository/service"/>
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" initialSize="10" jdbcInterceptors="ConnectionState;StatementFinalizer;SlowQueryReportJmx(threshold=10000)" jmxEnabled="true" logAbandoned="true" maxActive="100" maxIdle="100" maxWait="10000" minEvictableIdleTimeMillis="30000" minIdle="10" name="jdbc/wwarn_drupal" password="" removeAbandoned="true" removeAbandonedTimeout="60" testOnBorrow="true" testOnReturn="false" testWhileIdle="true" timeBetweenEvictionRunsMillis="5000" type="javax.sql.DataSource" url="jdbc:mysql://127.0.0.1:3306/wwarn_drupal?autoReconnect=true" username="root" validationInterval="30000" validationQuery="SELECT 1"/>
+```
+
+Make sure you have enough memory for tomcat - you can get away with less if you only upload small files
+
+e.g. in /usr/share/tomcat7/bin/catalina.sh
+```
+CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2048m"
+```
+
+```
+
+
+sudo emacs /etc/tomcat7/tomcat-users.xml 
+add 
+```
+```
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="admin" password="" roles="tomcat,manager-gui,manager-script,ma
+nager-jmx,manager-status"/>
+```
+
+Import the apache self-signed certificate into the java cacerts file
+
+## Create Self-signed certificate ##
+
+(This example is replacing the default Apache file you might like to call it something different)
+
+The `ssleay.cnf` is used to ensure the CN in the certificate is the same as the hostname, though following command is interactive (use hostname chassis)
+```
+sudo su
+cd ~
+cp /usr/share/ssl-cert/ssleay.cnf .
+make-ssl-cert ssleay.cnf generate-default-snakeoil --force-overwrite
+```
+
+Check this has worked by checking the date of the file - if not you can use
+```
+openssl req -new -x509 -days 3650 -nodes -out /etc/ssl/certs/ssl-cert-snakeoil.pem -keyout /etc/ssl/private/ssl-cert-snakeoil.key
+```
+
+## Import the certificates to the JVM ##
+Default password is changeit
+
+```
+cd  /etc/ssl/certs/java/
+keytool -import -file /etc/ssl/certs/ssl-cert-snakeoil.pem -keystore ./cacerts
+```
+
+
+## Set up directories and install the applications ##
+
+
+```
+sudo mkdir /data
+sudo mkdir /data/atombeat
+sudo mkdir /data/atombeat/exist
+sudo mkdir /data/atombeat/logs
+sudo chown -R tomcat7:tomcat7 /data
+sudo service tomcat7 restart
+cd ~/workspace/manta-service/
+mvn tomcat:deploy -Dcas.url=https://chassis/sso -Dchassis.url=https://chassis
+cd ~/workspace/chassis-webapp/
+mvn tomcat:deploy  -Dcas.url=https://chassis/sso -Dchassis.url=https://chassis
+cd ~/workspace/wwarn-cas
+mvn tomcat:deploy
+
+```
+
+## Configure Chassis ##
+
+Point browser at https://chassis/repository/home/
+
+Login in as admin
+
+Install fresh data
+
+Initialize the config collection (from the Administrator page)

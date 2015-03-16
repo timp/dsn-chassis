@@ -1,0 +1,84 @@
+# Introduction #
+
+At the end of each sprint, the following procedure will be carried out.
+
+The aim is to have working code at the end of each sprint compiled, packaged and deployed at least to a test environment to demo internally.
+
+# SVN Tagging #
+
+Before carrying out an end-of-sprint build and package of the Chassis source code projects, the first step is to create SVN version tags to record the state of the source.
+
+The tag name convention is to create a version identifier, e.g. `0.1-alpha-2`, and use this as the base for a tag name for each source code project.
+
+E.g., for the `0.1-alpha-2` version, the projects at
+
+```
+trunk/generic/client/gwt
+trunk/generic/lib/gwt
+trunk/generic/lib/java
+trunk/generic/service/user
+trunk/generic/service/exist
+```
+
+should get copied to
+
+```
+tags/0.1-alpha-2/generic/client/gwt
+tags/0.1-alpha-2/generic/lib/gwt
+tags/0.1-alpha-2/generic/lib/java
+tags/0.1-alpha-2/generic/service/user
+tags/0.1-alpha-2/generic/service/exist
+```
+
+respectively.
+
+Version identifiers, e.g., `0.1-alpha-2` or `0.1-beta-5` or `0.1-RC-3` or `0.1-final` are constructed using (release number)-(development stage)-(iteration number within development stage). For development stages, "alpha" means not feature complete, "beta" means feature complete but not thoroughly tested, "RC" means release candidate, "final" means the version actually released.
+
+For example
+```
+svn mkdir  https://dsn-chassis.googlecode.com/svn/tags/1.0-RC1
+svn copy cas https://dsn-chassis.googlecode.com/svn/tags/1.0-RC1/cas
+```
+# Building #
+
+The plain Java and Dynamic Web Projects, i.e., any projects that do **not** have any client-side GWT code, which includes the `generic/lib/java`, `generic/service/user` and `generic/service/exist` projects, do **not** require an additional build step prior to packaging.
+
+The projects which have client-side GWT code, which includes the `generic/client/gwt` projects, **do** require a build (compile) stage prior to packaging.
+
+To compile the `generic/client/gwt` project using the Google plugin for Eclipse, click the GWT Compile Project button, and select the entry point modules you want to compile.
+
+After compilation, remember to add any GWT compiled output folders to svn:ignore, as committing these to svn can cause problems.
+
+Note that the `generic/lib/gwt` project will not need to be explicitly built, as this will be included in the build of the `generic/client/gwt` project because it is on the build path.
+
+# Packaging #
+
+Currently, the three projects that need to be packaged are:
+
+  * `generic/service/user`
+  * `generic/service/exist`
+  * `generic/client/gwt`
+
+## Packaging the `generic/service/user` Project ##
+
+To package the `generic/service/user` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
+
+The exported WAR should be named `chassis-generic-service-user-(version id).war`, e.g., `chassis-generic-service-user-0.1-alpha-2.war`.
+
+## Packaging the `generic/service/exist` Project ##
+
+To package the `generic/service/exist` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
+
+The exported WAR should be named `chassis-generic-service-exist-(version id).war`, e.g., `chassis-generic-service-exist-0.1-alpha-2.war`.
+
+## Packaging the `generic/client/gwt` Project ##
+
+To package the `generic/client/gwt` dynamic web project using Eclipse, select "Export" from the context menu and export as a WAR.
+
+The exported WAR should be named `chassis-generic-client-gwt-(version id).war`, e.g., `chassis-generic-client-gwt-0.1-alpha-2.war`.
+
+Note that, because this project has client-side GWT code, all GWT code will need to be compiled prior to packaging.
+
+# Creating Downloads #
+
+Once all WARs are created, upload them to the [downloads section](http://code.google.com/p/dsn-chassis/downloads/list) of this site.

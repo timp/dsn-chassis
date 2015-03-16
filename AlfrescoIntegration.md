@@ -1,0 +1,37 @@
+# Introduction #
+
+Add the following to the settings.xml for the user who builds the war (you or jenkins) (NB Use correct password)
+```
+<settings>
+ <profiles>
+  <profile>
+<id>alfresco-profile</id>
+<activation>
+<activeByDefault>true</activeByDefault>
+</activation>
+<properties>
+<test-email>timp@well.ox.ac.uk</test-email>
+<use-alfresco>true</use-alfresco>
+<alfresco-uri>https://www.cggh.org/alfresco/</alfresco-uri>
+<alfresco-username>admin</alfresco-username>
+<alfresco-password>ASK_SYSADMIN</alfresco-password>
+
+<!-- Needed for cas-enabled  developer setup on localhost -->
+<!--                                                                                                                                                          
+<contextConfigLocation>WEB-INF/applicationContext-security-cas.xml</contextConfigLocation>                                                                    
+                                                                                                                                                              
+<cas.url>https://cloud1.cggh.org/sso</cas.url>                                                                                                                
+<chassis.url>http://kwiat33:8080</chassis.url>                                                                                                                
+   -->
+</properties>
+</profile>
+ </profiles>
+</settings>
+
+
+```
+Edit your JNDI file (/srv/chassis-manta/context/repository.xml)
+```
+<Environment name="alfrescoApp" type="java.lang.String" value="https://www.cggh.org/alfresco"/>
+
+```

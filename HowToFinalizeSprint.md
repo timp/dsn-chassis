@@ -1,0 +1,55 @@
+# Introduction #
+
+During the PreSprintPlanningMeeting the version that is being sprinted towards is defined.
+At the end of the sprint, prior to the SprintDemo the versions of deliverables are
+changed to the defined version number.
+
+# Version Examples #
+
+An example release version number sequence
+
+  * chassis-generic-client-gwt-0.1-alpha-1.war
+  * chassis-generic-client-gwt-0.1-alpha-2.war
+  * chassis-generic-client-gwt-0.1-alpha-3.war
+  * chassis-generic-client-gwt-0.1-beta-1.war
+  * chassis-generic-client-gwt-0.1-beta-2.war
+  * chassis-generic-client-gwt-0.1-beta-3.war
+  * chassis-generic-client-gwt-0.1-rc-1.war
+  * chassis-generic-client-gwt-0.1-rc-2.war
+  * chassis-generic-client-gwt-0.1-rc-3.war
+  * chassis-generic-client-gwt-0.1.war
+
+The artifact id is made up of the following elements
+  * Module name (_chassis-generic-client-gwt_)
+  * Major version number (_0_)
+  * Minor version number (_1_)
+  * Optional status (_alpha/beta/rc_)
+  * Sprint attempt (**should be**  _1_)
+  * File type
+
+# Release Procedure #
+This is delegated to Maven.
+Ensure you have Tomcat running on 8080 before starting.
+Accept the Maven generated defaults:
+<pre>
+mvn release:prepare<br>
+</pre>
+This will create one artefact per project. Upload to
+http://code.google.com/p/dsn-chassis/downloads/list and tag as featured.
+Tag previous featured dowbnloads as deprecated.
+<pre>
+mvn release:perform<br>
+</pre>
+This will set the version to the SNAPSHOT being aimed for in the next sprint.
+
+
+<br />
+# Notes #
+
+The maven plugin ensures that there are no uncommitted changes.
+
+A non-SNAPSHOT build should not depend upon any SNAPSHOT artifacts.
+
+Beta versions imply no guarantee that the API will not change.
+
+All the artifacts inherit their version from a single parent pom to enable easy maintenance of the above mechanism.
